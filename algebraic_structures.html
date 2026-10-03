@@ -37,12 +37,15 @@
         table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.95rem; }
         th, td { border: 1px solid var(--border); padding: 0.75rem; text-align: left; }
         th { background: #f1f5f9; color: #0f172a; }
+
+        .example-card { background: #fffbeb; border: 1px solid #fde68a; border-radius: 6px; padding: 1rem 1.25rem; margin: 1rem 0; }
+        .example-card h4 { margin-top: 0; color: #b45309; font-size: 0.95rem; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>Deep Dive: Algebraic Structures (Groups, Rings, Fields)</h1>
+            <h1>Deep Dive: Algebraic Structures (Groups, Rings, and Fields)</h1>
             <a href="week1.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">&larr; Back to Week 1 Module</a>
         </div>
 
@@ -51,24 +54,49 @@
                 In abstract algebra, we study sets equipped with operations and analyze the structural rules (axioms) they satisfy. By organizing number systems into <strong>Groups</strong>, <strong>Rings</strong>, and <strong>Fields</strong>, mathematicians establish universal theorems that apply across wildly different branches of mathematics.
             </div>
 
-            <h2>1. The Building Blocks: Axioms</h2>
+            <h2>1. The Building Blocks: Axioms with Concrete Examples</h2>
             <p>To understand the algebraic hierarchy, we build up from fundamental operational rules:</p>
-            <ul>
-                <li><strong>Closure:</strong> Combining any two elements in the set using the operation produces another element within the set ($\forall a, b \in S, a \circ b \in S$).</li>
-                <li><strong>Associativity:</strong> Grouping does not matter: $(a \circ b) \circ c = a \circ (b \circ c)$.</li>
-                <li><strong>Identity Element:</strong> An element $e$ leaves others unchanged: $a \circ e = a$.</li>
-                <li><strong>Inverses:</strong> Every element has an opposite or reciprocal that undoes it, yielding the identity: $a \circ a^{-1} = e$.</li>
-                <li><strong>Commutativity:</strong> Order does not matter: $a \circ b = b \circ a$.</li>
-            </ul>
 
-            <h2>2. Hierarchy Comparison Table</h2>
+            <div class="example-card">
+                <h4>1. Closure</h4>
+                <p><strong>Rule:</strong> Combining any two elements in the set produces another element within the set ($\forall a, b \in S, a \circ b \in S$).</p>
+                <p><strong>Example in $\mathbb{Z}$:</strong> Take $4$ and $-7$. Their sum is $4 + (-7) = -3$. Since $-3 \in \mathbb{Z}$, integers are closed under addition.</p>
+            </div>
+
+            <div class="example-card">
+                <h4>2. Associativity</h4>
+                <p><strong>Rule:</strong> Grouping does not change the result: $(a \circ b) \circ c = a \circ (b \circ c)$.</p>
+                <p><strong>Example in $\mathbb{R}$:</strong> $(2 + 3) + 4 = 5 + 4 = 9$, and $2 + (3 + 4) = 2 + 7 = 9$. Addition is associative.</p>
+            </div>
+
+            <div class="example-card">
+                <h4>3. Identity Element</h4>
+                <p><strong>Rule:</strong> An element $e$ exists that leaves any target element unchanged: $a \circ e = a$.</p>
+                <p><strong>Example in $\mathbb{Z}$ (Addition):</strong> $0$ is the additive identity because $5 + 0 = 5$. <br>
+                <strong>Example in $\mathbb{Q}$ (Multiplication):</strong> $1$ is the multiplicative identity because $\frac{3}{4} \times 1 = \frac{3}{4}$.</p>
+            </div>
+
+            <div class="example-card">
+                <h4>4. Inverses</h4>
+                <p><strong>Rule:</strong> Every element has a counterpart that undoes it, yielding the identity: $a \circ a^{-1} = e$.</p>
+                <p><strong>Example in $\mathbb{Z}$ (Additive Inverses):</strong> For $7$, its inverse is $-7$ because $7 + (-7) = 0$.<br>
+                <strong>Example in $\mathbb{Q}$ (Multiplicative Inverses):</strong> For $\frac{2}{3}$, its reciprocal is $\frac{3}{2}$ because $\frac{2}{3} \times \frac{3}{2} = 1$. (Note that $0$ has no multiplicative inverse!).</p>
+            </div>
+
+            <div class="example-card">
+                <h4>5. Commutativity</h4>
+                <p><strong>Rule:</strong> Order does not matter: $a \circ b = b \circ a$.</p>
+                <p><strong>Example in $\mathbb{R}$:</strong> $3 \times 5 = 15$ and $5 \times 3 = 15$. Multiplication is commutative.</p>
+            </div>
+
+            <h2>2. Hierarchy Comparison Table with Examples</h2>
             <table>
                 <thead>
                     <tr>
                         <th>Structure</th>
                         <th>Operations</th>
                         <th>Key Properties Required</th>
-                        <th>Examples</th>
+                        <th>Concrete Example</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -76,19 +104,19 @@
                         <td><strong>Group</strong></td>
                         <td>1 Operation ($+$)</td>
                         <td>Closure, Associativity, Identity, Inverses</td>
-                        <td>$(\mathbb{Z}, +), (\mathbb{R}, +)$</td>
+                        <td>$(\mathbb{Z}, +)$:<br>&bull; Closed ($a+b \in \mathbb{Z}$)<br>&bull; Assoc. ($(a+b)+c = a+(b+c)$)<br>&bull; Identity ($0$)<br>&bull; Inverse ($-a$)</td>
                     </tr>
                     <tr>
                         <td><strong>Commutative Ring</strong></td>
                         <td>2 Operations ($+, \times$)</td>
                         <td>Additive group, Multiplicative associativity & commutativity, Distributivity</td>
-                        <td>$(\mathbb{Z}, +, \times)$</td>
+                        <td>$(\mathbb{Z}, +, \times)$:<br>&bull; Addition forms a group<br>&bull; Multiplication is associative & commutative<br>&bull; Distributive: $2(3+4) = 2(3) + 2(4)$</td>
                     </tr>
                     <tr>
                         <td><strong>Field</strong></td>
                         <td>2 Operations ($+, \times$)</td>
                         <td>Ring + every non-zero element has a multiplicative inverse (division)</td>
-                        <td>$(\mathbb{Q}, +, \times), (\mathbb{R}, +, \times)$</td>
+                        <td>$(\mathbb{Q}, +, \times)$:<br>&bull; All ring properties hold<br>&bull; Every $q \neq 0$ has $q^{-1} = \frac{1}{q}$ (e.g., $5$ has $\frac{1}{5}$)</td>
                     </tr>
                 </tbody>
             </table>
@@ -116,19 +144,19 @@
                     `• Addition Group? <span style="color: #ef4444; font-weight: bold;">NO</span> (Lacks identity 0 and additive inverses like -1).<br>` +
                     `• Ring? <span style="color: #ef4444; font-weight: bold;">NO</span> (Fails group axioms under addition).<br>` +
                     `• Field? <span style="color: #ef4444; font-weight: bold;">NO</span>.<br>` +
-                    `<em>Summary:</em> ℕ is a commutative monoid under addition and multiplication, but lacks the structural symmetry of groups or rings.`;
+                    `<em>Example failure:</em> You cannot solve $x + 5 = 2$ in ℕ because $x = -3 \notin \mathbb{N}$.`;
             } else if (sys === 'Z') {
                 output.innerHTML = `<strong>System: Integers (ℤ)</strong><br>` +
                     `• Addition Group? <span style="color: #10b981; font-weight: bold;">YES</span> (Closed, associative, identity 0, inverses like -5 exist).<br>` +
                     `• Commutative Ring? <span style="color: #10b981; font-weight: bold;">YES</span> (Addition forms a group, multiplication is associative/commutative, and distributes over addition).<br>` +
-                    `• Field? <span style="color: #ef4444; font-weight: bold;">NO</span> (Fails multiplicative inverses; e.g., $3x = 1$ has no integer solution).<br>` +
-                    `<em>Summary:</em> ℤ is a classic commutative ring with unity, but division is not closed.`;
+                    `• Field? <span style="color: #ef4444; font-weight: bold;">NO</span> (Fails multiplicative inverses).<br>` +
+                    `<em>Example failure:</em> You cannot solve $3x = 1$ in ℤ because $x = \frac{1}{3} \notin \mathbb{Z}$.`;
             } else if (sys === 'Q') {
                 output.innerHTML = `<strong>System: Rational Numbers (ℚ)</strong><br>` +
                     `• Addition Group? <span style="color: #10b981; font-weight: bold;">YES</span>.<br>` +
                     `• Commutative Ring? <span style="color: #10b981; font-weight: bold;">YES</span>.<br>` +
-                    `• Field? <span style="color: #10b981; font-weight: bold;">YES</span> (Every non-zero fraction $p/q$ has a reciprocal $q/p$ within ℚ).<br>` +
-                    `<em>Summary:</em> ℚ is a fully fledged field, allowing unlimited addition, subtraction, multiplication, and non-zero division!`;
+                    `• Field? <span style="color: #10b981; font-weight: bold;">YES</span>.<br>` +
+                    `<em>Example success:</em> For any non-zero fraction $\\frac{a}{b} \in \mathbb{Q}$, its multiplicative reciprocal $\\frac{b}{a}$ also lives inside ℚ!`;
             }
         }
     </script>
