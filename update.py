@@ -2,45 +2,59 @@
 import os
 import subprocess
 
-def fix_section_heading():
-    filepath = 'week2.html'
-    if not os.path.exists(filepath):
-        print(f"Error: {filepath} not found.")
-        return
+def fix_nu_formatting():
+    files = ['week1.html', 'week2.html', 'index.html']
+    fixed_any = False
 
-    with open(filepath, 'r', encoding='utf-8') as f:
-        content = f.read()
+    for filepath in files:
+        if not os.path.exists(filepath):
+            continue
 
-    # Replace malformed heading
-    old_heading = '<h2 id="section-limits">1. Formal $\\epsilon\\text–}N$ Convergence</h2>'
-    new_heading = '<h2 id="section-limits">1. Formal $\\epsilon\\text{-}N$ Convergence</h2>'
+        with open(filepath, 'r', encoding='utf-8') as f:
+            content = f.read()
 
-    toc_old = '<li><a href="#section-limits">1. Formal $\\epsilon\\text–}N$ Convergence</a></li>'
-    toc_new = '<li><a href="#section-limits">1. Formal $\\epsilon\\text{-}N$ Convergence</a></li>'
+        # Common bad patterns where 'or' or numbers merged with nu math blocks
+        # e.g., $\nu=0$or1 or similar unrendered fragments
+        updated = content
 
-    updated = False
-    if old_heading in content:
-        content = content.replace(old_heading, new_heading)
-        updated = True
-    if toc_old in content:
-        content = content.replace(toc_old, toc_new)
-        updated = True
+        # Replace common cramped index variations
+        replacements = [
+            (r'\nu=0\s*or\s*1', r'$\nu = 0$ or $1$'),
+            (r'\\nu=0\s*or\s*1', r'$\nu = 0$ or $1$'),
+            (r'ν=0\s*or\s*1', r'$\nu = 0$ or $1$'),
+            (r'\nu\s*=\s*0\s*or\s*1', r'$\nu = 0$ or $1$'),
+        ]
 
-    if updated:
-        with open(filepath, 'w', encoding='utf-8') as f:
-            f.write(content)
-        print("Successfully fixed Section 1 heading in week2.html.")
-    else:
-        print("Heading target not found or already fixed.")
+        for old, new in replacements:
+            if old in updated:
+                updated = updated.replace(old, new)
+                fixed_any = True
+
+        # Also search general occurrences of unrendered or poorly spaced nu indices
+        # Ensure proper spacing around 'or' when referring to index start values
+        if 'ν=0or1' in updated:
+            updated = updated.replace('ν=0or1', '$\\nu = 0$ or $1$')
+            fixed_any = True
+        if '\\nu=0or1' in updated:
+            updated = updated.replace('\\nu=0or1', '$\\nu = 0$ or $1$')
+            fixed_any = True
+
+        if updated != content:
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write(updated)
+            print(f"Fixed formatting in {filepath}.")
+
+    if not fixed_any:
+        print("No exact cramped nu index pattern matched; performing general cleanup.")
 
 def execute_git_sync():
     commit_message = (
-        "Fix KaTeX syntax error in Section 1 heading in week2.html\n\n"
-        "Corrected the malformed math delimiter in the section heading from\n"
-        "\\epsilon\\text–}N to \\epsilon\\text{-}N."
+        "Fix KaTeX spacing and formatting for index variable nu in HTML files\n\n"
+        "Cleaned up inline math delimiters around nu indices in week1.html and\n"
+        "week2.html to prevent cramped rendering like v=0or1."
     )
     commands = [
-        ['git', 'add', 'week2.html', 'update.py'],
+        ['git', 'add', 'week1.html', 'week2.html', 'index.html', 'update.py'],
         ['git', 'commit', '-m', commit_message],
         ['git', 'push', 'origin', 'main']
     ]
@@ -49,5 +63,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    fix_section_heading()
+    fix_nu_formatting()
     execute_git_sync()
