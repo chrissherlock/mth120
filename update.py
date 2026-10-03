@@ -30,7 +30,7 @@ def write_week1_module():
         .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
 
         .intro-lead { font-size: 1.1rem; color: #1e293b; line-height: 1.7; margin-bottom: 1.5rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-        .intro-graphic { background: #090d16; border-radius: 8px; padding: 1.5rem; display: flex; justify-content: center; margin-bottom: 2.5rem; box-shadow: inset 0 2px 4px rgba(0,0,0,0.4); border: 1px solid #334155; }
+        .intro-graphic { background: #090d16; border-radius: 8px; padding: 1.5rem; display: center; justify-content: center; margin-bottom: 2.5rem; box-shadow: inset 0 2px 4px rgba(0,0,0,0.4); border: 1px solid #334155; }
 
         h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; }
         h3 { color: #1e293b; margin-top: 1.5rem; }
@@ -52,6 +52,21 @@ def write_week1_module():
             justify-content: center;
             align-items: center;
             text-align: center;
+        }
+
+        .reassurance-note {
+            background: #fffbeb;
+            border: 1px solid #fed7aa;
+            border-left: 4px solid #f59e0b;
+            border-radius: 6px;
+            padding: 1rem 1.25rem;
+            margin: -0.75rem 0 1.75rem 0;
+            font-size: 0.92rem;
+            color: #78350f;
+            line-height: 1.6;
+        }
+        .reassurance-note strong {
+            color: #92400e;
         }
 
         /* Diagram Container Styles */
@@ -409,6 +424,17 @@ def write_week1_module():
                     <div class="notation-item"><span class="notation-sym">$|a_n - L| < \epsilon$</span><span class="notation-desc">The distance between term $a_n$ and limit $L$ is strictly less than $\epsilon$</span></div>
                     <div class="notation-item"><span class="notation-sym">$\lceil x \rceil$</span><span class="notation-desc">Ceiling function: smallest integer greater than or equal to $x$</span></div>
                 </div>
+            </div>
+
+            <!-- REASSURANCE NOTE FOR BEGINNERS -->
+            <div class="reassurance-note">
+                <strong>Don't be intimidated by the symbols!</strong> If upside-down A's ($\forall$), backward E's ($\exists$), or little ceiling corners ($\lceil \dots \rceil$) look like hieroglyphics, that is completely normal when you first meet them. They are simply mathematicians' shorthand for everyday thoughts:
+                <ul style="margin: 0.4rem 0 0 1.25rem; padding: 0;">
+                    <li><strong>$\forall$ (For all):</strong> Think of this as <em>"No matter what tolerance you throw at me..."</em></li>
+                    <li><strong>$\exists$ (There exists):</strong> Think of this as <em>"We can always point to a specific milestone..."</em></li>
+                    <li><strong>$\lceil x \rceil$ (Ceiling):</strong> Simply means <em>"round up to the next whole number"</em> (e.g., $\lceil 4.2 \rceil = 5$), because position indices must be integers!</li>
+                </ul>
+                As you step through the games and interactive models below, you'll see this notation in action as an interactive conversation rather than dry rules.
             </div>
 
             <p>With sets and real numbers established, we explore <strong>sequences</strong>—the fundamental bridge from discrete math to continuous calculus.</p>
@@ -913,9 +939,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Prevent line-wrapping of (L-eps, L+eps) interval in Section 3 infobox\n\n"
-        "Wrapped the interval expression in a nowrap span within week1.html to ensure "
-        "the error neighborhood stays intact on a single line."
+        "Add friendly beginner reassurance note below Section 3 notation box\n\n"
+        "Inserted a warm, accessible explanatory note demystifying quantifiers and "
+        "ceiling brackets for first-time learners in week1.html."
     )
 
     commands = [
@@ -929,7 +955,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with nowrap on interval...")
+    print("Writing Week 1 module with beginner reassurance note...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
