@@ -343,6 +343,30 @@ def write_week1_module():
             $$a_n = f(n)$$
             The entire infinite collection is expressed as $(a_n)_{n=1}^\infty = (a_1, a_2, a_3, \dots, a_n, \dots)$.</p>
 
+            <div class="diagram-card" style="margin: 1.5rem 0; width: 100%; box-sizing: border-box;">
+                <h5>Sequence Mapping: Domain ($\mathbb{N}$) to Codomain ($\mathbb{R}$)</h5>
+                <svg width="520" height="150" viewBox="0 0 520 150">
+                    <!-- Domain Box -->
+                    <rect x="20" y="20" width="140" height="110" rx="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+                    <text x="90" y="38" font-family="sans-serif" font-size="11" fill="#475569" font-weight="bold" text-anchor="middle">Domain (ℕ)</text>
+                    <circle cx="90" cy="55" r="12" fill="#fed7aa" stroke="#d97706"/><text x="90" y="59" font-family="sans-serif" font-size="10" fill="#92400e" font-weight="bold" text-anchor="middle">1</text>
+                    <circle cx="90" cy="80" r="12" fill="#fed7aa" stroke="#d97706"/><text x="90" y="84" font-family="sans-serif" font-size="10" fill="#92400e" font-weight="bold" text-anchor="middle">2</text>
+                    <circle cx="90" cy="105" r="12" fill="#fed7aa" stroke="#d97706"/><text x="90" y="109" font-family="sans-serif" font-size="10" fill="#92400e" font-weight="bold" text-anchor="middle">3</text>
+                    <text x="90" y="125" font-family="sans-serif" font-size="10" fill="#64748b" text-anchor="middle">...</text>
+
+                    <!-- Arrow Mapping -->
+                    <path d="M 170 75 Q 235 45 300 75" fill="none" stroke="#d97706" stroke-width="2" marker-end="url(#arrow)"/>
+                    <text x="235" y="50" font-family="sans-serif" font-size="11" fill="#b45309" font-weight="bold" text-anchor="middle">f(n) = aₙ</text>
+
+                    <!-- Codomain Box -->
+                    <rect x="310" y="20" width="190" height="110" rx="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+                    <text x="405" y="38" font-family="sans-serif" font-size="11" fill="#475569" font-weight="bold" text-anchor="middle">Codomain (ℝ)</text>
+                    <circle cx="360" cy="55" r="12" fill="#fde68a" stroke="#d97706"/><text x="360" y="59" font-family="sans-serif" font-size="10" fill="#b45309" font-weight="bold" text-anchor="middle">a₁</text>
+                    <circle cx="415" cy="80" r="12" fill="#fde68a" stroke="#d97706"/><text x="415" y="84" font-family="sans-serif" font-size="10" fill="#b45309" font-weight="bold" text-anchor="middle">a₂</text>
+                    <circle cx="380" cy="110" r="12" fill="#fde68a" stroke="#d97706"/><text x="380" y="114" font-family="sans-serif" font-size="10" fill="#b45309" font-weight="bold" text-anchor="middle">a₃</text>
+                </svg>
+            </div>
+
             <div class="definition-box">
                 <p><strong>Explicit vs. Recursive Formulations:</strong></p>
                 <ul>
@@ -357,6 +381,41 @@ def write_week1_module():
                 <li><strong>Monotonicity:</strong> A sequence is <em>monotonically increasing</em> if each term is greater than or equal to the last ($a_n \le a_{n+1}$ for all $n$), and <em>monotonically decreasing</em> if $a_n \ge a_{n+1}$. If it strictly alternates or wanders without a directional trend, it is non-monotonic.</li>
                 <li><strong>Boundedness:</strong> A sequence is <em>bounded above</em> if there exists a real number $M$ such that $a_n \le M$ for all $n$, and <em>bounded below</em> if $a_n \ge m$ for all $n$. A sequence that is both bounded above and below is simply called bounded.</li>
             </ul>
+
+            <div class="diagram-grid">
+                <div class="diagram-card">
+                    <h5>Boundedness (Upper & Lower Limits)</h5>
+                    <svg width="240" height="120" viewBox="0 0 240 120">
+                        <!-- Upper Bound M -->
+                        <line x1="20" y1="25" x2="220" y2="25" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3"/>
+                        <text x="25" y="20" font-family="sans-serif" font-size="9" fill="#ef4444">Upper Bound M</text>
+                        <!-- Lower Bound m -->
+                        <line x1="20" y1="95" x2="220" y2="95" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="3"/>
+                        <text x="25" y="110" font-family="sans-serif" font-size="9" fill="#3b82f6">Lower Bound m</text>
+                        <!-- Sequence points trapped inside -->
+                        <circle cx="40" cy="80" r="4" fill="#d97706"/>
+                        <circle cx="80" cy="65" r="4" fill="#d97706"/>
+                        <circle cx="120" cy="50" r="4" fill="#d97706"/>
+                        <circle cx="160" cy="45" r="4" fill="#d97706"/>
+                        <circle cx="200" cy="42" r="4" fill="#d97706"/>
+                        <path d="M 40 80 L 80 65 L 120 50 L 160 45 L 200 42" fill="none" stroke="#d97706" stroke-width="1.5"/>
+                    </svg>
+                </div>
+                <div class="diagram-card">
+                    <h5>Monotonicity (Increasing Trend)</h5>
+                    <svg width="240" height="120" viewBox="0 0 240 120">
+                        <line x1="20" y1="100" x2="220" y2="100" stroke="#94a3b8" stroke-width="1"/>
+                        <line x1="20" y1="100" x2="20" y2="15" stroke="#94a3b8" stroke-width="1"/>
+                        <!-- Stepwise increasing points -->
+                        <circle cx="50" cy="85" r="4" fill="#10b981"/>
+                        <circle cx="90" cy="65" r="4" fill="#10b981"/>
+                        <circle cx="130" cy="45" r="4" fill="#10b981"/>
+                        <circle cx="170" cy="30" r="4" fill="#10b981"/>
+                        <path d="M 50 85 L 90 65 L 130 45 L 170 30" fill="none" stroke="#10b981" stroke-width="1.5"/>
+                        <text x="110" y="115" font-family="sans-serif" font-size="9" fill="#475569">aₙ ≤ aₙ₊₁ (Increasing)</text>
+                    </svg>
+                </div>
+            </div>
 
             <h3>The Informal Idea of a Limit</h3>
             <p>When studying a sequence, our primary question is: <em>What value do the terms $a_n$ settle down toward as our index $n$ marches off toward infinity ($n \to \infty$)?</em></p>
@@ -708,7 +767,8 @@ def write_week1_module():
         reset();
     </script>
 </body>
-</html>"""
+</html>
+"""
     with open('week1.html', 'w') as f:
         f.write(html_content)
 
@@ -730,9 +790,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Expand What Is a Sequence section in week1.html\n\n"
-        "Added deep explanations covering function-theoretic definition, explicit "
-        "vs recursive formulations, and core behavioral properties like monotonicity and boundedness."
+        "Add explanatory SVG diagrams for sequence mapping and behaviors\n\n"
+        "Inserted visual SVG diagrams illustrating the function-theoretic mapping of "
+        "sequences and their core behavioral properties (boundedness and monotonicity) in week1.html."
     )
 
     commands = [
@@ -746,7 +806,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with expanded sequence explanation...")
+    print("Writing Week 1 module with sequence diagrams...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
