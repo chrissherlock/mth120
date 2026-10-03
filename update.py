@@ -273,18 +273,22 @@ def write_week1_module():
             <div class="diagram-grid">
                 <div class="diagram-card">
                     <h5>Algebraic Failure: Subtraction in $\mathbb{N}$</h5>
-                    <svg width="240" height="90" viewBox="0 0 240 90">
-                        <text x="15" y="30" font-family="sans-serif" font-size="11" fill="#0f172a">Equation: $x + 5 = 2$</text>
-                        <text x="15" y="55" font-family="sans-serif" font-size="11" fill="#ef4444" font-weight="bold">Result: $x = -3 \notin \mathbb{N}$</text>
-                        <text x="15" y="78" font-family="sans-serif" font-size="10" fill="#64748b">&rarr; Expands to Integers ($\mathbb{Z}$)</text>
+                    <svg width="240" height="120" viewBox="0 0 240 120">
+                        <rect x="10" y="10" width="220" height="100" rx="6" fill="#fffbeb" stroke="#fde68a" stroke-width="1.5"/>
+                        <text x="20" y="32" font-family="sans-serif" font-size="11" fill="#0f172a" font-weight="bold">1. Equation: x + 5 = 2</text>
+                        <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#0f172a">2. Isolate x: x = 2 - 5</text>
+                        <text x="20" y="78" font-family="sans-serif" font-size="11" fill="#ef4444" font-weight="bold">3. Result: x = -3 ∉ ℕ</text>
+                        <text x="20" y="100" font-family="sans-serif" font-size="10" fill="#b45309" font-weight="bold">→ Solution: Expand to ℤ</text>
                     </svg>
                 </div>
                 <div class="diagram-card">
                     <h5>Algebraic Failure: Division in $\mathbb{Z}$</h5>
-                    <svg width="240" height="90" viewBox="0 0 240 90">
-                        <text x="15" y="30" font-family="sans-serif" font-size="11" fill="#0f172a">Equation: $2x = 3$</text>
-                        <text x="15" y="55" font-family="sans-serif" font-size="11" fill="#ef4444" font-weight="bold">Result: $x = \frac{3}{2} \notin \mathbb{Z}$</text>
-                        <text x="15" y="78" font-family="sans-serif" font-size="10" fill="#64748b">&rarr; Expands to Rationals ($\mathbb{Q}$)</text>
+                    <svg width="240" height="120" viewBox="0 0 240 120">
+                        <rect x="10" y="10" width="220" height="100" rx="6" fill="#fffbeb" stroke="#fde68a" stroke-width="1.5"/>
+                        <text x="20" y="32" font-family="sans-serif" font-size="11" fill="#0f172a" font-weight="bold">1. Equation: 2x = 3</text>
+                        <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#0f172a">2. Isolate x: x = 3 / 2</text>
+                        <text x="20" y="78" font-family="sans-serif" font-size="11" fill="#ef4444" font-weight="bold">3. Result: x = 1.5 ∉ ℤ</text>
+                        <text x="20" y="100" font-family="sans-serif" font-size="10" fill="#b45309" font-weight="bold">→ Solution: Expand to ℚ</text>
                     </svg>
                 </div>
             </div>
@@ -695,9 +699,10 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Fix awkward label wrapping in closure failure diagrams\n\n"
-        "Adjusted diagram card grid layout and padding to prevent single-letter \n"
-        "number system symbols (like N) from wrapping awkwardly beneath section headers."
+        "Upgrade closure failure SVG diagrams for visual clarity\n\n"
+        "Replaced text-heavy cards with structured SVG diagrams that visually map \n"
+        "out the equation, step-by-step arithmetic, invalid set membership, and the \n"
+        "bridge to the expanded number system."
     )
 
     commands = [
