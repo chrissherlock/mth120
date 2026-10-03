@@ -57,6 +57,7 @@ def write_week1_module():
         select { width: 100%; padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border); font-family: system-ui, sans-serif; }
 
         .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+        .example-list li { margin-bottom: 0.75rem; }
     </style>
 </head>
 <body>
@@ -75,13 +76,45 @@ def write_week1_module():
             <p>Before we can do calculus, we need a precise language to talk about collections of objects. A <strong>set</strong> is any well-defined collection of objects, called <em>elements</em> or <em>members</em>.</p>
 
             <div class="definition-box">
-                <p><strong>Notation Examples:</strong></p>
+                <p><strong>Basic Notation:</strong></p>
                 <ul>
                     <li><strong>Roster Notation:</strong> Listing elements explicitly, e.g., $A = \{1, 2, 3, 4\}$.</li>
-                    <li><strong>Set-Builder Notation:</strong> Defining elements by a property, e.g., $B = \{x \in \mathbb{R} \mid x^2 > 4\}$. Read: "The set of all $x$ in $\mathbb{R}$ such that $x^2$ is strictly greater than 4."</li>
                     <li><strong>Membership:</strong> $x \in A$ means "$x$ is an element of $A$". $x \notin A$ means it is not.</li>
                 </ul>
             </div>
+
+            <h3>Anatomy of Set-Builder Notation</h3>
+            <p>When dealing with infinite or continuous sets where listing elements is impossible, we use <strong>set-builder notation</strong>. This defines a set by stating the properties that its members must satisfy rather than listing them explicitly.</p>
+
+            <div class="definition-box">
+                <p><strong>Standard Structure:</strong></p>
+                <p>$$A = \{ x \in S \mid P(x) \}$$</p>
+                <ul>
+                    <li><strong>$x$ (The Variable):</strong> Represents an arbitrary candidate element.</li>
+                    <li><strong>$\in S$ (The Domain):</strong> The universal number system or set where candidates are drawn from (e.g., $x \in \mathbb{R}$).</li>
+                    <li><strong>$\mid$ or $:$ (The Separator):</strong> Read aloud as <strong>"such that"</strong>. It acts as a strict logical filter.</li>
+                    <li><strong>$P(x)$ (The Predicate):</strong> The rule, equation, or inequality that $x$ must satisfy to gain membership.</li>
+                </ul>
+            </div>
+
+            <h3>Step-by-Step Translation Examples</h3>
+            <ul class="example-list">
+                <li><strong>Finite Set (Even Numbers):</strong> <br>
+                    $A = \{ n \in \mathbb{N} \mid n \text{ is even and } n < 10 \}$ <br>
+                    <em>Translation:</em> "The set of all natural numbers $n$ such that $n$ is even and strictly less than 10" $\rightarrow \{2, 4, 6, 8\}$.</li>
+                <li><strong>Continuous Interval (Inequalities):</strong> <br>
+                    $B = \{ x \in \mathbb{R} \mid 1 \leq x < 5 \}$ <br>
+                    <em>Translation:</em> "The set of all real numbers $x$ such that $x$ is greater than or equal to 1 and strictly less than 5" $\rightarrow [1, 5)$.</li>
+                <li><strong>Transformed Elements:</strong> <br>
+                    $C = \{ y \in \mathbb{R} \mid y = x^2 \text{ for some } x \in \mathbb{Z} \}$ <br>
+                    <em>Translation:</em> "The set of all real numbers $y$ such that $y$ equals the square of some integer $x$" $\rightarrow \{0, 1, 4, 9, 16, \dots\}$.</li>
+            </ul>
+
+            <h3>Common Beginner Pitfalls</h3>
+            <ul>
+                <li><strong>Domain vs. Condition Confusion:</strong> The expression <em>before</em> the vertical bar tells you where you are looking (the pool of candidates); the expression <em>after</em> tells you who qualifies (the filter).</li>
+                <li><strong>Redundant Restrictions:</strong> Writing $\{x \mid x \in \mathbb{R}\}$ is simply shorthand for the entire set of real numbers $\mathbb{R}$.</li>
+            </ul>
 
             <h3>Core Set Operations</h3>
             <p>We combine and manipulate sets using fundamental logic operations:</p>
@@ -312,16 +345,33 @@ def write_week1_module():
     with open('week1.html', 'w') as f:
         f.write(html_content)
 
+def update_curriculum_index():
+    if not os.path.exists('index.html'):
+        print("index.html not found in current directory. Please run in root.")
+        return
+
+    with open('index.html', 'r') as f:
+        content = f.read()
+
+    target = '<a href="#" class="module-link">View Module</a>'
+    replacement = '<a href="${item.week === 1 ? \'week1.html\' : \'#\'}" class="module-link">View Module</a>'
+
+    updated_content = content.replace(target, replacement)
+
+    with open('index.html', 'w') as f:
+        f.write(updated_content)
+
 def execute_git_sync():
     commit_message = (
-        "Add introductory paragraph to Week 1 module\n\n"
-        "Inserted an introductory overview right below the header in week1.html \n"
-        "to frame the transition from discrete set theory and number systems \n"
-        "into the rigorous study of sequences and limits."
+        "Add in-depth set-builder notation guide to Week 1 module\n\n"
+        "Inserted a dedicated subsection breaking down the structural\n"
+        "anatomy of set-builder notation, step-by-step translation\n"
+        "examples, and common beginner pitfalls regarding domains and\n"
+        "predicates."
     )
 
     commands = [
-        ['git', 'add', 'update.py', 'week1.html'],
+        ['git', 'add', 'update.py', 'week1.html', 'index.html'],
         ['git', 'commit', '-m', commit_message],
         ['git', 'push', 'origin', 'main']
     ]
@@ -333,6 +383,8 @@ def execute_git_sync():
 if __name__ == "__main__":
     print("Writing Week 1 module...")
     write_week1_module()
+    print("Updating index.html routing...")
+    update_curriculum_index()
     print("Committing and pushing to GitHub...")
     execute_git_sync()
     print("Deployment complete.")
