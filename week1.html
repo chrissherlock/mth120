@@ -82,8 +82,8 @@
         .simulator-guide ol { margin: 0.5rem 0 0 1.25rem; padding: 0; }
         .simulator-guide li { margin-bottom: 0.5rem; }
 
-        /* Interactive Simulator & Game Styles */
-        .simulator, .game-box { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 1.5rem; background: var(--card); box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        /* Interactive Simulator & Walkthrough Styles */
+        .simulator, .game-box, .stepper-walkthrough { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 1.5rem; background: var(--card); box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .game-header { background: #0f172a; color: #fbbf24; padding: 1rem 1.5rem; font-family: monospace; font-size: 0.95rem; display: flex; justify-content: space-between; align-items: center; }
         .game-body { padding: 1.5rem; background: #f8fafc; display: flex; flex-direction: column; gap: 1rem; border-bottom: 1px solid var(--border); }
         .game-explainer { background: #fef3c7; border: 1px solid #fde68a; padding: 1.25rem; border-radius: 6px; font-size: 0.95rem; color: #92400e; margin-bottom: 0.5rem; line-height: 1.7; }
@@ -93,25 +93,34 @@
         .game-btn:disabled { background: #94a3b8; cursor: not-allowed; }
         .game-canvas-wrap { background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; display: flex; justify-content: center; }
 
-        .telemetry { background: var(--telemetry-bg); color: var(--telemetry-text); padding: 0.75rem 1.5rem; font-family: monospace; display: flex; gap: 2rem; font-size: 0.9rem; align-items: center;}
-        .canvas-container { padding: 2rem; background: #f1f5f9; display: flex; justify-content: center; border-bottom: 1px solid var(--border); }
+        .telemetry { background: var(--telemetry-bg); color: var(--telemetry-text); padding: 0.75rem 1.5rem; font-family: monospace; display: flex; gap: 2rem; font-size: 0.88rem; align-items: center; flex-wrap: wrap; }
+        .canvas-container { padding: 1.5rem; background: #f1f5f9; display: flex; justify-content: center; border-bottom: 1px solid var(--border); }
         .controls-pane { display: flex; gap: 2rem; padding: 1.5rem; background: var(--card); border-bottom: 1px solid var(--border); align-items: flex-start; }
-        .nav-buttons { display: flex; flex-direction: column; gap: 0.5rem; min-width: 120px; }
-        button { background: var(--accent); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; transition: background 0.2s; }
+        .nav-buttons { display: flex; flex-direction: column; gap: 0.5rem; min-width: 130px; }
+        button { background: var(--accent); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; transition: background 0.2s; font-size: 0.9rem; }
         button:hover { background: var(--accent-hover); }
         button:disabled { background: #94a3b8; cursor: not-allowed; }
-        .step-summary { flex-grow: 1; font-size: 0.95rem; color: #334155; line-height: 1.5; }
+        .step-summary { flex-grow: 1; font-size: 0.95rem; color: #334155; line-height: 1.6; }
+        .analysis-panes { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
         .pane { background: var(--card); padding: 1.5rem; }
         .pane h4 { margin-top: 0; color: var(--accent); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
         .pane p { margin: 0 0 0.75rem 0; }
         .pane p:last-child { margin-bottom: 0; }
-        .toggle-group { min-width: 220px; }
-        select { width: 100%; padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border); font-family: system-ui, sans-serif; background: #fff; color: var(--text); }
+        .toggle-group { min-width: 240px; }
+        select { width: 100%; padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border); font-family: system-ui, sans-serif; background: #fff; color: var(--text); font-size: 0.9rem; }
 
         .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
         .aside-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #b45309; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
         .aside-box h4 { margin-top: 0; color: #b45309; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
         .example-list li { margin-bottom: 0.75rem; }
+
+        /* Formula Breakdown Stage Styles */
+        .formula-stage-wrap { background: #0f172a; padding: 1.5rem; border-bottom: 1px solid #334155; display: flex; justify-content: center; }
+        .formula-display { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; justify-content: center; font-size: 1.25rem; font-weight: 500; }
+        .formula-chunk { padding: 0.45rem 0.8rem; border-radius: 6px; border: 2px solid transparent; color: #94a3b8; transition: all 0.35s ease; cursor: pointer; user-select: none; }
+        .formula-chunk.active { border-color: #fbbf24; background: rgba(251, 191, 36, 0.15); color: #ffffff; box-shadow: 0 0 16px rgba(251, 191, 36, 0.35); transform: translateY(-2px); }
+        .formula-chunk.completed { border-color: #059669; color: #a7f3d0; background: rgba(16, 185, 129, 0.1); }
+        .formula-sep { color: #475569; font-weight: 300; }
     </style>
 </head>
 <body>
@@ -532,6 +541,97 @@
                 <p>$$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad \forall n > N, \quad |a_n - L| < \epsilon$$</p>
             </div>
 
+            <!-- INTERACTIVE CLAUSE-BY-CLAUSE DEFINITION STEPPER -->
+            <div class="stepper-walkthrough" id="definition-walkthrough">
+                <div class="telemetry">
+                    <span>CLAUSE FOCUS: <span id="fw-tel-clause" style="color: #fbbf24;">1. The Challenge (∀ϵ > 0)</span></span>
+                    <span>QUANTIFIER: <span id="fw-tel-quant" style="color: #38bdf8;">Universal (∀)</span></span>
+                    <span>ACTIVE ROLE: <span id="fw-tel-role" style="color: #f472b6;">The Skeptic</span></span>
+                    <span>VARIABLE SCOPING: <span id="fw-tel-scope" style="color: #a7f3d0;">Independent (ϵ arbitrary)</span></span>
+                </div>
+
+                <!-- Animated Illuminated Expression Bar -->
+                <div class="formula-stage-wrap">
+                    <div class="formula-display">
+                        <div class="formula-chunk active" id="chunk-0" onclick="setFormulaStep(0)">
+                            $\forall \epsilon > 0$
+                        </div>
+                        <span class="formula-sep">,</span>
+                        <div class="formula-chunk" id="chunk-1" onclick="setFormulaStep(1)">
+                            $\exists N \in \mathbb{N}$
+                        </div>
+                        <span class="formula-sep" style="font-size: 0.95rem; font-family: sans-serif; margin: 0 0.2rem;">such that</span>
+                        <div class="formula-chunk" id="chunk-2" onclick="setFormulaStep(2)">
+                            $\forall n > N$
+                        </div>
+                        <span class="formula-sep">,</span>
+                        <div class="formula-chunk" id="chunk-3" onclick="setFormulaStep(3)">
+                            $|a_n - L| < \epsilon$
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Synchronized Visual Canvas -->
+                <div class="canvas-container">
+                    <svg id="fw-canvas" width="620" height="150" viewBox="0 0 620 150">
+                        <!-- Background baseline target -->
+                        <line x1="40" y1="75" x2="580" y2="75" stroke="#94a3b8" stroke-dasharray="3" stroke-width="1.5"/>
+                        <text x="585" y="79" font-family="sans-serif" font-size="11" fill="#64748b">L</text>
+
+                        <!-- Zone 1: Epsilon Band highlight -->
+                        <rect id="fw-svg-epsband" x="40" y="45" width="540" height="60" fill="#fde68a" opacity="0.3" stroke="#f59e0b" stroke-dasharray="4" stroke-width="1.5"/>
+                        <text id="fw-svg-epslbl1" x="50" y="40" font-family="sans-serif" font-size="10" fill="#d97706" font-weight="bold">+ϵ</text>
+                        <text id="fw-svg-epslbl2" x="50" y="118" font-family="sans-serif" font-size="10" fill="#d97706" font-weight="bold">-ϵ</text>
+
+                        <!-- Zone 2: N Threshold line -->
+                        <line id="fw-svg-nline" x1="280" y1="15" x2="280" y2="135" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="4" opacity="0.2"/>
+                        <text id="fw-svg-nlbl" x="285" y="28" font-family="sans-serif" font-size="11" fill="#ef4444" font-weight="bold" opacity="0.2">Threshold N</text>
+
+                        <!-- Zone 3: Tail Points (n <= N vs n > N) -->
+                        <g id="fw-svg-pts">
+                            <circle cx="100" cy="20" r="5" fill="#94a3b8" opacity="0.5"/>
+                            <circle cx="160" cy="35" r="5" fill="#94a3b8" opacity="0.5"/>
+                            <circle cx="220" cy="45" r="5" fill="#94a3b8" opacity="0.5"/>
+                            <circle cx="280" cy="45" r="5" fill="#fbbf24" stroke="#d97706" stroke-width="2"/>
+                            <!-- Trapped points past N -->
+                            <circle cx="340" cy="62" r="6" fill="#10b981" id="pt-trapped-1"/>
+                            <circle cx="400" cy="70" r="6" fill="#10b981" id="pt-trapped-2"/>
+                            <circle cx="460" cy="73" r="6" fill="#10b981" id="pt-trapped-3"/>
+                            <circle cx="520" cy="74" r="6" fill="#10b981" id="pt-trapped-4"/>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- Navigation Controls and Inline Preview -->
+                <div class="controls-pane">
+                    <div class="nav-buttons">
+                        <button id="btn-fw-prev" onclick="stepFormula(-1)" disabled>Prev Clause</button>
+                        <button id="btn-fw-next" onclick="stepFormula(1)">Next Clause</button>
+                        <button id="btn-fw-reset" onclick="resetFormula()" style="background-color: #64748b;">Reset</button>
+                    </div>
+                    <div class="step-summary" id="fw-step-summary"></div>
+                    <div class="toggle-group">
+                        <label for="fw-dimension-toggle" style="font-size: 0.85rem; font-weight: bold; color: #475569; display: block; margin-bottom: 0.5rem;">PERSPECTIVE DIMENSION:</label>
+                        <select id="fw-dimension-toggle" onchange="changeFormulaPerspective()">
+                            <option value="adversarial">Adversarial Game (Skeptic vs. System)</option>
+                            <option value="verification">Verification Engine (Test Spec vs. Cert)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Paired Analytical Panes -->
+                <div class="analysis-panes">
+                    <div class="pane">
+                        <h4>What Is Happening (Exact Low-Level Mechanics)</h4>
+                        <div id="fw-pane-what"></div>
+                    </div>
+                    <div class="pane">
+                        <h4>Why The System Does This (Design Rationale & Tradeoffs)</h4>
+                        <div id="fw-pane-why"></div>
+                    </div>
+                </div>
+            </div>
+
             <h3>The $\epsilon-N$ Definition Decoded (The Challenge Game)</h3>
             <p>The formal definition of a limit above is essentially an interactive challenge game between two players:</p>
             <ul>
@@ -681,6 +781,192 @@
     </div>
 
     <script>
+        /* ==========================================================================
+           FORMULA STEPPER MODULE (CLAUSE-BY-CLAUSE BREAKDOWN)
+           ========================================================================== */
+        const formulaState = {
+            step: 0,
+            perspective: 'adversarial'
+        };
+
+        const formulaClauses = [
+            {
+                clauseTitle: "1. The Challenge (∀ϵ > 0)",
+                quantifier: "Universal (∀)",
+                role: "The Skeptic",
+                scope: "Independent (Arbitrary Error Budget)",
+                summary: "<strong>Step 1: The Skeptic issues an error challenge.</strong> The universal quantifier $\\forall \\epsilon > 0$ asserts that no matter how tiny or stringent a positive tolerance budget is chosen, the sequence must be prepared to satisfy it.",
+                adversarialWhat: "<p>The Skeptic initiates the game by picking an arbitrary tolerance $\\epsilon > 0$. This establishes the target boundary corridor $(L - \\epsilon, L + \\epsilon)$ on the vertical axis.</p>",
+                adversarialWhy: "<p>If the definition only worked for <em>some</em> tolerances (like $\\epsilon = 0.5$), a sequence oscillating between $0$ and $0.3$ would falsely pass. Requiring <em>all</em> positive $\\epsilon$ eliminates any false positives.</p>",
+                verificationWhat: "<p>The verification framework initializes an unbounded test input parameter $\\epsilon \\in (0, \\infty)$. The candidate system cannot reject or restrict this parameter.</p>",
+                verificationWhy: "<p>Universal quantification guarantees total test coverage over the open interval. The algorithm must remain certified down to infinitesimally small margins.</p>"
+            },
+            {
+                clauseTitle: "2. The Response (∃N ∈ ℕ)",
+                quantifier: "Existential (∃)",
+                role: "The System (Prover)",
+                scope: "Dependent (N is chosen after ϵ is known)",
+                summary: "<strong>Step 2: The System establishes a finite cutoff index.</strong> The existential quantifier $\\exists N \\in \\mathbb{N}$ guarantees that there is at least one whole counting number $N$ past which convergence will occur.",
+                adversarialWhat: "<p>Knowing the Skeptic's $\\epsilon$, the System solves for a milestone index $N$. On the visual diagram, this establishes the vertical red threshold boundary on the horizontal index line.</p>",
+                adversarialWhy: "<p>Order matters critically: $N$ is chosen <em>after</em> $\\epsilon$ is declared ($N = N(\\epsilon)$). Tighter error bands require larger index milestones. If $N$ had to be chosen before $\\epsilon$, convergence would be impossible.</p>",
+                verificationWhat: "<p>The solver generates a concrete certificate value $N = \\lceil g(\\epsilon) \\rceil \\in \\mathbb{N}$, pinning an execution cycle milestone after which compliance is guaranteed.</p>",
+                verificationWhy: "<p>Existential scoping requires existence, not uniqueness. Any valid milestone index is sufficient to satisfy the verification requirement.</p>"
+            },
+            {
+                clauseTitle: "3. The Tail Scope (∀n > N)",
+                quantifier: "Universal (∀)",
+                role: "The Verification Filter",
+                scope: "Infinite Tail (All future index positions)",
+                summary: "<strong>Step 3: Checking all subsequent terms in the infinite tail.</strong> The condition $\\forall n > N$ focuses solely on what happens after the milestone, disregarding initial temporary fluctuations.",
+                adversarialWhat: "<p>The evaluator scans every index position strictly beyond the cutoff line ($n = N+1, N+2, N+3, \\dots$). The first $N$ terms are ignored.</p>",
+                adversarialWhy: "<p>Convergence is an asymptotic property. A sequence can begin wildly erratic or sit directly on the boundary line ($a_N = \\epsilon$); all that matters is that it settles down permanently for all $n > N$.</p>",
+                verificationWhat: "<p>A stream filter isolates the infinite suffix stream $\{a_n \\mid n \\in \\mathbb{N}, n > N\}$. All terms prior to $N$ are pruned from the evaluation buffer.</p>",
+                verificationWhy: "<p>Guarantees that compliance is not an intermittent spike, but an invariant condition that holds indefinitely.</p>"
+            },
+            {
+                clauseTitle: "4. The Guarantee (|aₙ - L| < ϵ)",
+                quantifier: "Predicate / Metric",
+                role: "The Bound Invariant",
+                scope: "Absolute Distance Invariant",
+                summary: "<strong>Step 4: Ensuring terms remain strictly trapped inside tolerance.</strong> The inequality $|a_n - L| < \\epsilon$ guarantees that the distance between each term and the limit is strictly less than the error budget.",
+                adversarialWhat: "<p>For every point in the tail, the vertical distance $|a_n - L|$ is evaluated. Every point must reside strictly inside the illuminated yellow band, never touching or exceeding the boundary.</p>",
+                adversarialWhy: "<p>Strict inequality ($<$) prevents terms on the boundary fence from claiming victory. With all four clauses chained together, the definition certifies that $a_n \\to L$.</p>",
+                verificationWhat: "<p>The numerical predicate asserts $\\text{abs}(a_n - L) < \\epsilon$ across the filtered stream. If every evaluated residual returns true, the proof certificate is valid.</p>",
+                verificationWhy: "<p>This metric formulation translates geometric closeness into a formal algebraic invariant that can be rigorously computed.</p>"
+            }
+        ];
+
+        function setFormulaStep(stepIdx) {
+            formulaState.step = stepIdx;
+            updateFormulaUI();
+        }
+
+        function stepFormula(dir) {
+            formulaState.step += dir;
+            if (formulaState.step < 0) formulaState.step = 0;
+            if (formulaState.step > 3) formulaState.step = 3;
+            updateFormulaUI();
+        }
+
+        function resetFormula() {
+            formulaState.step = 0;
+            updateFormulaUI();
+        }
+
+        function changeFormulaPerspective() {
+            formulaState.perspective = document.getElementById('fw-dimension-toggle').value;
+            updateFormulaUI();
+        }
+
+        function updateFormulaUI() {
+            const idx = formulaState.step;
+            const current = formulaClauses[idx];
+            const isAdversarial = formulaState.perspective === 'adversarial';
+
+            // Update formula chunks
+            for (let i = 0; i < 4; i++) {
+                const el = document.getElementById(`chunk-${i}`);
+                el.classList.remove('active', 'completed');
+                if (i === idx) {
+                    el.classList.add('active');
+                } else if (i < idx) {
+                    el.classList.add('completed');
+                }
+            }
+
+            // Update Telemetry
+            document.getElementById('fw-tel-clause').innerText = current.clauseTitle;
+            document.getElementById('fw-tel-quant').innerText = current.quantifier;
+            document.getElementById('fw-tel-role').innerText = current.role;
+            document.getElementById('fw-tel-scope').innerText = current.scope;
+
+            // Update Navigation Button States
+            document.getElementById('btn-fw-prev').disabled = (idx === 0);
+            document.getElementById('btn-fw-next').disabled = (idx === 3);
+
+            // Update Summary & Panes
+            document.getElementById('fw-step-summary').innerHTML = current.summary;
+            document.getElementById('fw-pane-what').innerHTML = isAdversarial ? current.adversarialWhat : current.verificationWhat;
+            document.getElementById('fw-pane-why').innerHTML = isAdversarial ? current.adversarialWhy : current.verificationWhy;
+
+            // Render Math inside updated text
+            if (window.renderMathInElement) {
+                renderMathInElement(document.getElementById('definition-walkthrough'), {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ]
+                });
+            }
+
+            // Synchronize Visual Canvas
+            updateFormulaCanvas(idx);
+        }
+
+        function updateFormulaCanvas(step) {
+            const epsBand = document.getElementById('fw-svg-epsband');
+            const epsLbl1 = document.getElementById('fw-svg-epslbl1');
+            const epsLbl2 = document.getElementById('fw-svg-epslbl2');
+            const nLine = document.getElementById('fw-svg-nline');
+            const nLbl = document.getElementById('fw-svg-nlbl');
+
+            const trapped1 = document.getElementById('pt-trapped-1');
+            const trapped2 = document.getElementById('pt-trapped-2');
+            const trapped3 = document.getElementById('pt-trapped-3');
+            const trapped4 = document.getElementById('pt-trapped-4');
+
+            // Default canvas resets
+            epsBand.setAttribute('opacity', '0.2');
+            epsBand.setAttribute('stroke', '#cbd5e1');
+            epsLbl1.setAttribute('fill', '#94a3b8');
+            epsLbl2.setAttribute('fill', '#94a3b8');
+
+            nLine.setAttribute('opacity', '0.2');
+            nLbl.setAttribute('opacity', '0.2');
+
+            [trapped1, trapped2, trapped3, trapped4].forEach(pt => {
+                pt.setAttribute('fill', '#94a3b8');
+                pt.setAttribute('r', '5');
+            });
+
+            if (step === 0) {
+                // Emphasize Epsilon Band
+                epsBand.setAttribute('opacity', '0.6');
+                epsBand.setAttribute('stroke', '#f59e0b');
+                epsBand.setAttribute('stroke-width', '2.5');
+                epsLbl1.setAttribute('fill', '#d97706');
+                epsLbl2.setAttribute('fill', '#d97706');
+            } else if (step === 1) {
+                // Emphasize N Cutoff Line
+                epsBand.setAttribute('opacity', '0.35');
+                nLine.setAttribute('opacity', '1');
+                nLine.setAttribute('stroke', '#ef4444');
+                nLbl.setAttribute('opacity', '1');
+            } else if (step === 2) {
+                // Emphasize Tail Selection past N
+                epsBand.setAttribute('opacity', '0.35');
+                nLine.setAttribute('opacity', '0.8');
+                nLbl.setAttribute('opacity', '0.8');
+                [trapped1, trapped2, trapped3, trapped4].forEach(pt => {
+                    pt.setAttribute('fill', '#38bdf8');
+                    pt.setAttribute('r', '6');
+                });
+            } else if (step === 3) {
+                // Emphasize Permanent Containment (< eps)
+                epsBand.setAttribute('opacity', '0.7');
+                epsBand.setAttribute('stroke', '#10b981');
+                nLine.setAttribute('opacity', '0.8');
+                nLbl.setAttribute('opacity', '0.8');
+                [trapped1, trapped2, trapped3, trapped4].forEach(pt => {
+                    pt.setAttribute('fill', '#10b981');
+                    pt.setAttribute('r', '7');
+                });
+            }
+        }
+
+        /* ==========================================================================
+           EPSILON CHALLENGE GAME
+           ========================================================================== */
         const challengeState = { active: false, eps: 0.2, reqN: 5, currentDisplayN: 5 };
 
         function startChallenge(eps) {
@@ -806,6 +1092,9 @@
             svg.innerHTML = svgContent;
         }
 
+        /* ==========================================================================
+           DUAL-TRACK SIMULATOR MODULE
+           ========================================================================== */
         const state = { step: 0, seq: 'reciprocal', eps: 0.2 };
         const data = {
             reciprocal: [1.0, 0.5, 0.333, 0.25, 0.2, 0.166, 0.142, 0.125],
@@ -908,7 +1197,9 @@
             }
         }
 
+        // Initializations on load
         reset();
+        resetFormula();
     </script>
 </body>
 </html>
