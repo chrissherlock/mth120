@@ -3,8 +3,6 @@ import os
 import subprocess
 
 def write_week1_module():
-    # Using a raw string (r"") prevents Python from eating backslashes,
-    # keeping all LaTeX commands perfectly intact for KaTeX.
     html_content = r"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -116,26 +114,26 @@ def write_week1_module():
             {
                 phase: "Initialization", n: 1,
                 summary: "Setting the boundary constraint.",
-                what: "The sequence initializes. We establish an arbitrary error band $\epsilon = 0.2$ (the blue zone).",
+                what: "The sequence initializes. We establish an arbitrary error band $\\epsilon = 0.2$ (the blue zone).",
                 why: "We must demonstrate that the sequence can permanently enter and remain within *any* arbitrary boundary we set around $L=0$."
             },
             {
                 phase: "Iteration", n: 3,
                 summary: "Terms approach but remain outside the boundary.",
-                what: "We calculate $a_2$ and $a_3$. The values are decreasing but still strictly greater than $\epsilon$.",
-                why: "The sequence is monotonic decreasing, but we have not yet found the index $N$ where the constraint $\vert{}a_n - 0\vert{} < \epsilon$ is satisfied."
+                what: "We calculate $a_2$ and $a_3$. The values are decreasing but still strictly greater than $\\epsilon$.",
+                why: "The sequence is monotonic decreasing, but we have not yet found the index $N$ where the constraint $\vert{}a_n - 0\vert{} < \\epsilon$ is satisfied."
             },
             {
                 phase: "Threshold Discovery", n: 5,
                 summary: "Calculating the critical index N.",
                 what: "We set $1/n < 0.2$, algebraically rearranging to $n > 1/0.2$, meaning $n > 5$. We mark $N=5$ with the red threshold line.",
-                why: "We are reverse-engineering the required index based on the chosen $\\epsilon$. If $\epsilon$ changes, $N$ must adapt mathematically."
+                why: "We are reverse-engineering the required index based on the chosen $\\epsilon$. If $\\epsilon$ changes, $N$ must adapt mathematically."
             },
             {
                 phase: "Convergence Verification", n: 8,
                 summary: "All subsequent terms remain trapped within epsilon.",
-                what: "For all $n > 5$ (e.g., $n=6, 7, 8$), the points fall strictly inside the blue $\epsilon$ band.",
-                why: "This fulfills the universal quantifier $\forall n > N$. Because we can perform this algebraic mapping for *any* $\epsilon > 0$, the limit is proven."
+                what: "For all $n > 5$ (e.g., $n=6, 7, 8$), the points fall strictly inside the blue $\\epsilon$ band.",
+                why: "This fulfills the universal quantifier $\\forall n > N$. Because we can perform this algebraic mapping for *any* $\\epsilon > 0$, the limit is proven."
             }
         ];
 
@@ -164,7 +162,15 @@ def write_week1_module():
             document.getElementById('pane-what').innerHTML = current.what;
             document.getElementById('pane-why').innerHTML = current.why;
 
-            if(window.renderMathInElement) renderMathInElement(document.body);
+            // Re-render math with the correct delimiters config
+            if(window.renderMathInElement) {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ]
+                });
+            }
             renderCanvas();
         }
 
@@ -213,7 +219,6 @@ def update_curriculum_index():
     with open('index.html', 'r') as f:
         content = f.read()
 
-    # Using standard string replacement to avoid regex escape issues
     target = '<a href="#" class="module-link">View Module</a>'
     replacement = '<a href="${item.week === 1 ? \'week1.html\' : \'#\'}" class="module-link">View Module</a>'
 
@@ -224,16 +229,16 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Fix LaTeX escaping and JS template injection in update script\n\n"
-        "Converted the HTML payload variable to a Python raw string to ensure\n"
-        "all LaTeX backslashes bypass Python's escape sequence parsing. Replaced\n"
-        "the absolute value \\vert command with standard pipes. Switched the \n"
-        "index.html injection method from re.sub to standard string replacement\n"
-        "to protect JavaScript template literals from corruption."
+        "Fix KaTeX dynamic rendering and JS LaTeX escaping\n\n"
+        "Corrected JavaScript string escaping by doubling backslashes for LaTeX \n"
+        "commands inside the narratives array to prevent JS parser consumption. \n"
+        "Updated the renderMathInElement call in updateUI() to include the explicit \n"
+        "delimiter configuration, ensuring inline math ($) renders correctly when \n"
+        "navigating simulator steps."
     )
 
     commands = [
-        ['git', 'add', 'update.py', 'week1.html', 'index.html'],
+        ['git', 'add', 'update.py', 'week1.html'],
         ['git', 'commit', '-m', commit_message],
         ['git', 'push', 'origin', 'main']
     ]

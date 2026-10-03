@@ -109,26 +109,26 @@
             {
                 phase: "Initialization", n: 1,
                 summary: "Setting the boundary constraint.",
-                what: "The sequence initializes. We establish an arbitrary error band $\epsilon = 0.2$ (the blue zone).",
+                what: "The sequence initializes. We establish an arbitrary error band $\\epsilon = 0.2$ (the blue zone).",
                 why: "We must demonstrate that the sequence can permanently enter and remain within *any* arbitrary boundary we set around $L=0$."
             },
             {
                 phase: "Iteration", n: 3,
                 summary: "Terms approach but remain outside the boundary.",
-                what: "We calculate $a_2$ and $a_3$. The values are decreasing but still strictly greater than $\epsilon$.",
-                why: "The sequence is monotonic decreasing, but we have not yet found the index $N$ where the constraint $\vert{}a_n - 0\vert{} < \epsilon$ is satisfied."
+                what: "We calculate $a_2$ and $a_3$. The values are decreasing but still strictly greater than $\\epsilon$.",
+                why: "The sequence is monotonic decreasing, but we have not yet found the index $N$ where the constraint $\vert{}a_n - 0\vert{} < \\epsilon$ is satisfied."
             },
             {
                 phase: "Threshold Discovery", n: 5,
                 summary: "Calculating the critical index N.",
                 what: "We set $1/n < 0.2$, algebraically rearranging to $n > 1/0.2$, meaning $n > 5$. We mark $N=5$ with the red threshold line.",
-                why: "We are reverse-engineering the required index based on the chosen $\\epsilon$. If $\epsilon$ changes, $N$ must adapt mathematically."
+                why: "We are reverse-engineering the required index based on the chosen $\\epsilon$. If $\\epsilon$ changes, $N$ must adapt mathematically."
             },
             {
                 phase: "Convergence Verification", n: 8,
                 summary: "All subsequent terms remain trapped within epsilon.",
-                what: "For all $n > 5$ (e.g., $n=6, 7, 8$), the points fall strictly inside the blue $\epsilon$ band.",
-                why: "This fulfills the universal quantifier $\forall n > N$. Because we can perform this algebraic mapping for *any* $\epsilon > 0$, the limit is proven."
+                what: "For all $n > 5$ (e.g., $n=6, 7, 8$), the points fall strictly inside the blue $\\epsilon$ band.",
+                why: "This fulfills the universal quantifier $\\forall n > N$. Because we can perform this algebraic mapping for *any* $\\epsilon > 0$, the limit is proven."
             }
         ];
 
@@ -157,7 +157,15 @@
             document.getElementById('pane-what').innerHTML = current.what;
             document.getElementById('pane-why').innerHTML = current.why;
 
-            if(window.renderMathInElement) renderMathInElement(document.body);
+            // Re-render math with the correct delimiters config
+            if(window.renderMathInElement) {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ]
+                });
+            }
             renderCanvas();
         }
 
