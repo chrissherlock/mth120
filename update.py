@@ -43,7 +43,7 @@ def write_structures_subpage():
         .output-display { font-family: monospace; background: #ffffff; padding: 1rem; border: 1px solid var(--border); border-radius: 4px; margin-top: 1rem; color: #0f172a; }
 
         table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.95rem; table-layout: fixed; }
-        th, td { border: 1px solid var(--border); padding: 0.75rem; text-align: left; vertical-align: top; word-wrap: break-word; }
+        th, td { border: 1px solid var(--border); padding: 0.75rem; text-align: left; vertical-align: top; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         th { background: #f1f5f9; color: #0f172a; }
 
         .example-card { background: #fffbeb; border: 1px solid #fde68a; border-radius: 6px; padding: 1rem 1.25rem; margin: 1rem 0; }
@@ -98,7 +98,7 @@ def write_structures_subpage():
             </div>
 
             <h2>2. Understanding Algebraic Notation: What does $(S, \circ)$ mean?</h2>
-            <p>Throughout the table below, you will see shorthand expressions enclosed in parentheses, such as $(\mathbb{Z}, +)$ or $(\mathbb{Q}, +, \times)$. This is standard algebraic shorthand used to define a mathematical "workspace." It couples two things together:</p>
+            <p>Throughout the table below, you will see shorthand expressions enclosed in parentheses, such as $(\mathbb{Z}, +)$ or $(\mathbb{Z}, +, \times)$. This is standard algebraic shorthand used to define a mathematical "workspace." It couples two things together:</p>
             <ul>
                 <li><strong>The Set (First Element):</strong> The pool of numbers you are allowed to use. For example, $\mathbb{Z}$ means you are working with the integers $\{\dots, -2, -1, 0, 1, 2, \dots\}$.</li>
                 <li><strong>The Operations (Following Elements):</strong> The rules used to combine those numbers. For instance, $(\mathbb{Z}, +)$ pairs the integers specifically with <strong>addition</strong>, while $(\mathbb{Z}, +, \times)$ pairs them with <strong>both addition and multiplication</strong>.</li>
@@ -109,10 +109,10 @@ def write_structures_subpage():
             <table>
                 <thead>
                     <tr>
-                        <th style="width: 18%;">Structure</th>
-                        <th style="width: 22%;">Operations</th>
+                        <th style="width: 15%;">Structure</th>
+                        <th style="width: 18%;">Operations</th>
                         <th style="width: 32%;">Key Properties Required</th>
-                        <th style="width: 28%;">Concrete Example</th>
+                        <th style="width: 35%;">Concrete Example</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -209,9 +209,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Add explanatory guide for algebraic shorthand notation before table\n\n"
-        "Inserted a clear conceptual breakdown in algebraic_structures.html explaining \n"
-        "how bracketed notation like (Z, +) couples a set with its operational rules."
+        "Prevent formula wrapping in algebraic structures table cells\n\n"
+        "Added white-space: nowrap styling to table data cells in algebraic_structures.html \n"
+        "to ensure mathematical formulas and bullet points display cleanly on a single line."
     )
 
     commands = [
