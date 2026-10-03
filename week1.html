@@ -67,6 +67,60 @@
             margin-bottom: 0.25rem;
         }
 
+        /* Scoping Infobox Table & Cards */
+        .scoping-box {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-left: 5px solid #d97706;
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin: 1.75rem 0;
+        }
+        .scoping-box h4 {
+            margin-top: 0;
+            color: #92400e;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .scoping-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.92rem;
+        }
+        .scoping-table th, .scoping-table td {
+            border: 1px solid #fed7aa;
+            padding: 0.6rem 0.85rem;
+            text-align: left;
+        }
+        .scoping-table th {
+            background: #fef3c7;
+            color: #92400e;
+            font-weight: 600;
+        }
+        .scoping-table td {
+            background: #ffffff;
+            color: #1e293b;
+        }
+        .swap-card-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin: 1rem 0;
+        }
+        .swap-card {
+            background: #ffffff;
+            border: 1px solid #fed7aa;
+            border-radius: 6px;
+            padding: 1rem;
+        }
+        .swap-card h5 {
+            margin: 0 0 0.5rem 0;
+            font-size: 0.95rem;
+        }
+
         /* Diagram Container Styles */
         .diagram-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
         .diagram-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; align-items: center; min-width: 0; }
@@ -712,6 +766,58 @@
                 </div>
             </div>
 
+            <!-- VARIABLE SCOPING EXPLANATION INFOBOX -->
+            <div class="scoping-box">
+                <h4>💡 Key Concept: Variable Scoping and Quantifier Order</h4>
+                <p>In mathematical logic, <strong>variable scoping</strong> defines which symbols are active, what role they play, and most crucially: <em>which earlier variables they are allowed to know about and depend upon</em>. Reading quantifiers left-to-right creates a strict chain of dependency:</p>
+
+                <table class="scoping-table">
+                    <thead>
+                        <tr>
+                            <th>Variable</th>
+                            <th>Quantifier Scope</th>
+                            <th>Role &amp; Dependency Rule</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>$\epsilon$ (epsilon)</strong></td>
+                            <td>Outer / Independent ($\forall \epsilon > 0$)</td>
+                            <td>Introduced first. The external error tolerance challenge. It is completely independent and does not know about $N$ or $n$.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>$N$</strong></td>
+                            <td>Dependent ($\exists N \in \mathbb{N}$)</td>
+                            <td>Introduced second inside the scope of $\epsilon$. Because $\epsilon$ is already declared, <strong>$N$ is allowed to depend on $\epsilon$</strong> (i.e., $N = N(\epsilon) = \lceil 1/\epsilon \rceil$).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>$n$</strong></td>
+                            <td>Local Tail Scope ($\forall n > N$)</td>
+                            <td>Introduced third. Acts as a runner scanning every single index strictly past the milestone $N$ already locked in.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h5 style="margin: 1.25rem 0 0.5rem 0; color: #92400e; font-size: 0.98rem;">⚠️ The Quantifier Swap Trap (Why Order Matters)</h5>
+                <p>Reversing the order of quantifiers completely breaks the meaning of the statement:</p>
+                <div class="swap-card-grid">
+                    <div class="swap-card" style="border-left: 4px solid #10b981;">
+                        <h5 style="color: #065f46;">✅ Correct Convergence: $\forall \epsilon > 0, \exists N \in \mathbb{N}$</h5>
+                        <p style="margin: 0; font-size: 0.9rem; line-height: 1.55;">
+                            <em>"Pick any error tolerance $\epsilon$ you like. Once I inspect your choice, I get to calculate a suitable milestone $N$ tailored specifically to that $\epsilon$."</em><br>
+                            <strong>Result:</strong> Tighter tolerances get larger milestones ($N$ depends on $\epsilon$).
+                        </p>
+                    </div>
+                    <div class="swap-card" style="border-left: 4px solid #ef4444;">
+                        <h5 style="color: #991b1b;">❌ Swapped Collapse: $\exists N \in \mathbb{N}, \forall \epsilon > 0$</h5>
+                        <p style="margin: 0; font-size: 0.9rem; line-height: 1.55;">
+                            <em>"I must commit to a single milestone $N$ upfront. Then, that exact same $N$ must magically work for every single $\epsilon > 0$ that exists, even $\epsilon = 10^{-100}$."</em><br>
+                            <strong>Result:</strong> Completely impossible for sequences like $1/n$—no single $N$ can beat all errors simultaneously!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
             <h3>The $\epsilon-N$ Definition Decoded (The Challenge Game)</h3>
             <p>The formal definition of a limit above is essentially an interactive challenge game between two players:</p>
             <ul>
@@ -972,6 +1078,12 @@
                         {left: '$', right: '$', display: false}
                     ]
                 });
+                renderMathInElement(document.querySelector('.scoping-box'), {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ]
+                });
             }
 
             updateFormulaCanvas(idx);
@@ -1193,7 +1305,7 @@
             const thresholdX = originX + (reqN * (maxXScale / maxN));
             svgContent += `
                 <line x1="${thresholdX}" y1="15" x2="${thresholdX}" y2="${originY + 10}" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"/>
-                <text x="${thresholdX + 5}" y="25" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="bold" fill="#ef4444">N = ${reqN} (Cutoff)</text>
+                <text x="${thresholdX + 5}" y="25" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ef4444">N = ${reqN} (Cutoff)</text>
             `;
 
             svg.innerHTML = svgContent;
@@ -1230,7 +1342,7 @@
             {
                 phase: "Convergence Verification", n: 8, indexVal: 8,
                 summary: "<strong>Goal:</strong> Fulfill the universal quantifier condition to formally certify the limit.",
-                what: "<p><strong>Abstract Formalism:</strong> For all subsequent indices $n > N$, terms remain strictly trapped within the $\\epsilon neighborhood.</p><p><strong>Applied Mechanics:</strong> The residual error remains flat and negligible across all further computation steps.</p>",
+                what: "<p><strong>Abstract Formalism:</strong> For all subsequent indices $n > N$, terms remain strictly trapped within the $\\epsilon$ neighborhood.</p><p><strong>Applied Mechanics:</strong> The residual error remains flat and negligible across all further computation steps.</p>",
                 why: "<p><strong>Formal Rationale:</strong> This satisfies $\\forall n > N$. Because this inequality holds for <em>any</em> arbitrary $\\epsilon > 0$, the limit $\\lim_{n\\to\\infty} a_n = L$ is verified.</p><p><strong>System Constraint:</strong> Guarantees long-term numerical stability against unexpected divergence.</p>"
             }
         ];
