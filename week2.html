@@ -328,6 +328,36 @@
             </div>
 
             <!-- SECTION 2 -->
+            
+            <div class="aside-box" style="margin-top: 1.5rem;">
+                <h4>🎯 Worked Example 1: The $\epsilon\text{-}N$ Scratchpad Method</h4>
+                <p>Prove formally that $\lim_{n\to\infty} \frac{2n+1}{n} = 2$:</p>
+                <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
+                    <li style="margin-bottom: 0.4rem;"><strong>Step 1: The Scratchpad Analysis.</strong> Start with $|a_n - L| < \epsilon$:
+                        $$\left|\frac{2n+1}{n} - 2\right| = \left|2 + \frac{1}{n} - 2\right| = \left|\frac{1}{n}\right| = \frac{1}{n} < \epsilon$$
+                    </li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Step 2: Solving for $n$.</strong> Rearranging gives $n > \frac{1}{\epsilon}$.</li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Step 3: Choosing $N$.</strong> Choose an integer $N \ge \frac{1}{\epsilon}$ (formally $N = \lceil 1/\epsilon \rceil$).</li>
+                    <li><strong>Step 4: Formal Proof Write-Up.</strong> Given $\epsilon > 0$, let $N = \lceil 1/\epsilon \rceil$. For any $n > N$, we have $n > \frac{1}{\epsilon}$, which implies $\frac{1}{n} < \epsilon$, proving $\left|\frac{2n+1}{n} - 2\right| < \epsilon$. Q.E.D.</li>
+                </ol>
+            </div>
+
+            <div class="aside-box" style="margin-top: 1.5rem;">
+                <h4>🎯 Worked Example 2: Applying Algebraic Limit Laws</h4>
+                <p>Evaluate $\lim_{n\to\infty} \frac{3n^2 - 1}{2n^2 + 5}$ using the Limit Laws:</p>
+                <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
+                    <li style="margin-bottom: 0.4rem;"><strong>Step 1: Divide by highest power.</strong> Divide both numerator and denominator by $n^2$:
+                        $$\lim_{n\to\infty} \frac{3 - \frac{1}{n^2}}{2 + \frac{5}{n^2}}$$
+                    </li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Step 2: Apply Quotient &amp; Sum Laws.</strong> Because $\lim \frac{1}{n^2} = 0$, we apply the arithmetic laws:
+                        $$\frac{\lim(3) - \lim\left(\frac{1}{n^2}\right)}{\lim(2) + \lim\left(\frac{5}{n^2}\right)}$$
+                    </li>
+                    <li><strong>Step 3: Final Calculation.</strong> Substituting standard limits gives:
+                        $$\frac{3 - 0}{2 + 0} = \frac{3}{2}$$
+                    </li>
+                </ol>
+            </div>
+
             <h2 id="section-theorems">2. Limit Theorems &amp; Arithmetic</h2>
             <p>Computing limits directly from the formal $\epsilon\text{-}N$ definition for every new sequence can quickly become cumbersome. Instead, mathematicians build a toolkit of <strong>Limit Theorems</strong>—fundamental arithmetic rules and bounding principles that let us combine known limits to evaluate complex new ones instantly.</p>
 
