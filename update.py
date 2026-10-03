@@ -123,7 +123,7 @@ def write_week1_module():
                     </div>
                     <div class="pane">
                         <h4>Why The System Does This (Rationale)</h4>
-                        <div id="pane-why">To rigorously prove convergence, we cannot just say "it gets smaller." We must demonstrate that the sequence can permanently enter and remain within *any* arbitrary boundary we set.</div>
+                        <div id="pane-why">To rigorously prove convergence, we cannot just say "it gets smaller." We must demonstrate that the sequence can permanently enter and remain within <em>any</em> arbitrary boundary we set.</div>
                     </div>
                 </div>
             </div>
@@ -142,7 +142,7 @@ def write_week1_module():
                 phase: "Initialization", n: 1,
                 summary: "Setting the boundary constraint.",
                 what: "The sequence initializes. We establish an arbitrary error band $\\epsilon = 0.2$ (the blue zone).",
-                why: "We must demonstrate that the sequence can permanently enter and remain within *any* arbitrary boundary we set around $L=0$."
+                why: "We must demonstrate that the sequence can permanently enter and remain within <em>any</em> arbitrary boundary we set around $L=0$."
             },
             {
                 phase: "Iteration", n: 3,
@@ -160,7 +160,7 @@ def write_week1_module():
                 phase: "Convergence Verification", n: 8,
                 summary: "All subsequent terms remain trapped within epsilon.",
                 what: "For all $n > 5$ (e.g., $n=6, 7, 8$), the points fall strictly inside the blue $\\epsilon$ band.",
-                why: "This fulfills the universal quantifier $\\forall n > N$. Because we can perform this algebraic mapping for *any* $\\epsilon > 0$, the limit is proven."
+                why: "This fulfills the universal quantifier $\\forall n > N$. Because we can perform this algebraic mapping for <em>any</em> $\\epsilon > 0$, the limit is proven."
             }
         ];
 
@@ -258,11 +258,10 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Fix JavaScript escape sequences for KaTeX telemetry strings\n\n"
-        "Double-escaped LaTeX macros (\\\\vert, \\\\epsilon, \\\\forall, \\\\frac) \n"
-        "inside the JavaScript narratives array and updateUI function. This \n"
-        "prevents the browser's JS parser from converting single backslashes \n"
-        "into control characters before KaTeX can render the mathematics."
+        "Replace Markdown emphasis with HTML tags in JS narratives\n\n"
+        "Converted literal asterisks (*any*) to standard HTML emphasis tags \n"
+        "(<em>any</em>) inside the JavaScript narratives array since innerHTML \n"
+        "does not natively parse Markdown syntax."
     )
 
     commands = [
