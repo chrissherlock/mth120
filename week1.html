@@ -905,8 +905,8 @@
                     </div>
 
                     <div class="game-canvas-wrap">
-                        <svg id="game-plot" viewBox="0 0 740 260">
-                            <text x="260" y="135" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>
+                        <svg id="game-plot" viewBox="0 0 740 320">
+                            <text x="260" y="160" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>
                         </svg>
                     </div>
 
@@ -1237,7 +1237,7 @@
         }
 
         /* ==========================================================================
-           EPSILON CHALLENGE GAME (FIXED LEFT MARGIN FOR EPSILON LABELS)
+           EPSILON CHALLENGE GAME (WITH TALLER SVG VIEWBOX & FULL BAND HEIGHT)
            ========================================================================== */
         const challengeState = { active: false, eps: 0.2, reqN: 5, currentDisplayN: 5 };
 
@@ -1270,7 +1270,7 @@
             document.getElementById('cg-tel-status').innerText = 'Standby';
             document.getElementById('cg-tel-status').style.color = '#64748b';
 
-            document.getElementById('game-plot').innerHTML = '<text x="260" y="135" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>';
+            document.getElementById('game-plot').innerHTML = '<text x="260" y="160" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>';
         }
 
         function updateChallengeUI() {
@@ -1309,17 +1309,17 @@
         function renderGameSVG(eps, reqN, curN) {
             const svg = document.getElementById('game-plot');
             const maxN = Math.max(14, reqN + 4);
-            const originX = 90; // Expanded left margin to prevent clipping negative epsilon labels
-            const originY = 205;
+            const originX = 90;
+            const originY = 245; // Shifted origin down to give plenty of room for negative tolerance band
             const maxXScale = 610;
 
             let maxYScale;
             if (eps <= 0.05) {
-                maxYScale = 1100;
+                maxYScale = 1400;
             } else if (eps <= 0.1) {
-                maxYScale = 600;
+                maxYScale = 750;
             } else {
-                maxYScale = 220;
+                maxYScale = 250;
             }
 
             const topY = originY - (eps * maxYScale);
@@ -1328,8 +1328,8 @@
             const bandY = topY;
 
             let svgContent = `
-                <!-- Tolerance corridor -->
-                <rect x="${originX}" y="${bandY}" width="${maxXScale}" height="${bandHeight}" fill="#fef3c7" opacity="0.75"/>
+                <!-- Tolerance corridor spanning full height from topY to bottomY -->
+                <rect x="${originX}" y="${bandY}" width="${maxXScale}" height="${bandHeight}" fill="#fef3c7" opacity="0.8"/>
                 <line x1="${originX}" y1="${topY}" x2="${originX + maxXScale}" y2="${topY}" stroke="#d97706" stroke-width="1.8" stroke-dasharray="4"/>
                 <line x1="${originX}" y1="${bottomY}" x2="${originX + maxXScale}" y2="${bottomY}" stroke="#d97706" stroke-width="1.8" stroke-dasharray="4"/>
 

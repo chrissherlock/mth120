@@ -913,8 +913,8 @@ def write_week1_module():
                     </div>
 
                     <div class="game-canvas-wrap">
-                        <svg id="game-plot" viewBox="0 0 740 260">
-                            <text x="260" y="135" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>
+                        <svg id="game-plot" viewBox="0 0 740 320">
+                            <text x="260" y="160" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>
                         </svg>
                     </div>
 
@@ -1245,7 +1245,7 @@ def write_week1_module():
         }
 
         /* ==========================================================================
-           EPSILON CHALLENGE GAME (FIXED LEFT MARGIN FOR EPSILON LABELS)
+           EPSILON CHALLENGE GAME (WITH TALLER SVG VIEWBOX & FULL BAND HEIGHT)
            ========================================================================== */
         const challengeState = { active: false, eps: 0.2, reqN: 5, currentDisplayN: 5 };
 
@@ -1278,7 +1278,7 @@ def write_week1_module():
             document.getElementById('cg-tel-status').innerText = 'Standby';
             document.getElementById('cg-tel-status').style.color = '#64748b';
 
-            document.getElementById('game-plot').innerHTML = '<text x="260" y="135" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>';
+            document.getElementById('game-plot').innerHTML = '<text x="260" y="160" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>';
         }
 
         function updateChallengeUI() {
@@ -1317,17 +1317,17 @@ def write_week1_module():
         function renderGameSVG(eps, reqN, curN) {
             const svg = document.getElementById('game-plot');
             const maxN = Math.max(14, reqN + 4);
-            const originX = 90; // Expanded left margin to prevent clipping negative epsilon labels
-            const originY = 205;
+            const originX = 90;
+            const originY = 245; // Shifted origin down to give plenty of room for negative tolerance band
             const maxXScale = 610;
 
             let maxYScale;
             if (eps <= 0.05) {
-                maxYScale = 1100;
+                maxYScale = 1400;
             } else if (eps <= 0.1) {
-                maxYScale = 600;
+                maxYScale = 750;
             } else {
-                maxYScale = 220;
+                maxYScale = 250;
             }
 
             const topY = originY - (eps * maxYScale);
@@ -1336,8 +1336,8 @@ def write_week1_module():
             const bandY = topY;
 
             let svgContent = `
-                <!-- Tolerance corridor -->
-                <rect x="${originX}" y="${bandY}" width="${maxXScale}" height="${bandHeight}" fill="#fef3c7" opacity="0.75"/>
+                <!-- Tolerance corridor spanning full height from topY to bottomY -->
+                <rect x="${originX}" y="${bandY}" width="${maxXScale}" height="${bandHeight}" fill="#fef3c7" opacity="0.8"/>
                 <line x1="${originX}" y1="${topY}" x2="${originX + maxXScale}" y2="${topY}" stroke="#d97706" stroke-width="1.8" stroke-dasharray="4"/>
                 <line x1="${originX}" y1="${bottomY}" x2="${originX + maxXScale}" y2="${bottomY}" stroke="#d97706" stroke-width="1.8" stroke-dasharray="4"/>
 
@@ -1543,9 +1543,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Fix left margin clipping for negative epsilon labels in renderGameSVG\n\n"
-        "Increased originX offset to 90 in week1.html to ensure tight negative "
-        "tolerance labels like -ε (0.05) are fully visible without truncation."
+        "Restore missing bottom tolerance corridor and fix band clipping in renderGameSVG\n\n"
+        "Adjusted vertical coordinate bounds in week1.html so the bottom -ε tolerance "
+        "band is fully rendered and visible for tight tolerances."
     )
 
     commands = [
@@ -1559,7 +1559,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with unclipped negative epsilon labels...")
+    print("Writing Week 1 module with fully restored bottom tolerance corridor...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
