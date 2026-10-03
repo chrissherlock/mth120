@@ -1,38 +1,1060 @@
 #!/usr/bin/env python3
-import re
+import os
 import subprocess
-import sys
 
-def patch_geometric_gap_heading():
-    filepath = 'week1.html'
-    try:
-        with open(filepath, 'r', encoding='utf-8') as f:
-            content = f.read()
-    except FileNotFoundError:
-        print(f"Error: {filepath} not found.")
-        sys.exit(1)
+def write_week1_module():
+    if os.path.exists('week1.html'):
+        os.remove('week1.html')
 
-    pattern = r'<h5>The Geometric Gap:\s*Constructing\s*(?:&radic;2|\\?\$?\\sqrt\{2\}\\?\$?|2)\s*on the Number Line</h5>'
-    replacement = '<h5>The Geometric Gap: Constructing &radic;2 on the Number Line</h5>'
+    html_content = r"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1: Sets, Numbers, and Sequences | MTHS120</title>
+    <!-- KaTeX Integration -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+    <style>
+        :root {
+            --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
+            --accent: #d97706; --accent-hover: #b45309;
+            --telemetry-bg: #f8fafc; --telemetry-text: #334155;
+            --track1-bg: #fffbeb; --track2-bg: #fff7ed;
+            --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; }
+        .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
 
-    new_content, count = re.subn(pattern, replacement, content)
+        .intro-lead { font-size: 1.1rem; color: #1e293b; line-height: 1.7; margin-bottom: 1.5rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .intro-graphic { background: #f8fafc; border-radius: 8px; padding: 2rem; display: flex; justify-content: center; margin-bottom: 2.5rem; border: 1px solid var(--border); }
+        .intro-graphic svg { width: 100%; max-width: 780px; height: auto; display: block; }
 
-    if count == 0:
-        fallback_pattern = r'<h5>The Geometric Gap:[^<]*</h5>'
-        new_content, count = re.subn(fallback_pattern, replacement, content)
+        .toc-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.75rem; margin: 1.75rem 0 2.5rem 0; }
+        .toc-box h4 { margin: 0 0 0.75rem 0; color: #92400e; font-size: 1.05rem; }
+        .toc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.5rem 1.5rem; margin: 0; padding-left: 1.25rem; }
+        .toc-grid li { margin-bottom: 0.35rem; font-size: 0.95rem; }
+        .toc-grid a { color: #b45309; text-decoration: none; font-weight: 500; }
+        .toc-grid a:hover { text-decoration: underline; color: var(--accent-hover); }
 
-    if count > 0:
-        with open(filepath, 'w', encoding='utf-8') as f:
-            f.write(new_content)
-        print(f"Successfully updated heading in {filepath} ({count} occurrence(s)).")
-    else:
-        print("Warning: Heading pattern not found. No changes made.")
+        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+        h3 { color: #1e293b; margin-top: 1.5rem; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+
+        .infobox { background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.25rem 0 1.75rem 0; }
+        .infobox h4 { margin: 0 0 0.85rem 0; color: #0f172a; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-ui); }
+        .notation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 0.85rem 1.75rem; font-size: 0.95rem; }
+        .notation-item { display: grid; grid-template-columns: minmax(130px, max-content) 1fr; gap: 0.75rem; align-items: center; }
+        .notation-sym { font-weight: 600; color: var(--accent); white-space: nowrap; display: flex; justify-content: center; align-items: center; text-align: center; }
+        .notation-desc { min-width: 0; word-break: break-word; line-height: 1.5; color: #334155; }
+
+        .infobox-intro {
+            font-size: 0.93rem;
+            color: #475569;
+            line-height: 1.6;
+            margin: 0 0 1.25rem 0;
+            padding-bottom: 0.85rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .infobox-intro strong { color: #92400e; }
+
+        .scoping-box {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-left: 5px solid var(--accent);
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin: 1.75rem 0;
+        }
+        .scoping-box h4 { margin-top: 0; color: #92400e; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; }
+        .scoping-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.92rem; }
+        .scoping-table th, .scoping-table td { border: 1px solid #fed7aa; padding: 0.6rem 0.85rem; text-align: left; }
+        .scoping-table th { background: #fef3c7; color: #92400e; font-weight: 600; }
+        .scoping-table td { background: #ffffff; color: #1e293b; }
+        .swap-card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin: 1rem 0; }
+        .swap-card { background: #ffffff; border: 1px solid #fed7aa; border-radius: 6px; padding: 1rem; }
+        .swap-card h5 { margin: 0 0 0.5rem 0; font-size: 0.95rem; }
+
+        .diagram-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.75rem 0; }
+        .diagram-card {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 0;
+        }
+        .diagram-card h5 {
+            margin: 0 0 1.15rem 0;
+            color: #b45309;
+            font-size: 1.05rem;
+            text-align: center;
+            font-weight: 700;
+        }
+        .diagram-card svg { width: 100%; height: auto; display: block; }
+
+        .game-box, .stepper-walkthrough {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 1.5rem;
+            background: var(--card);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .telemetry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.75rem;
+            padding: 0.85rem 1.25rem;
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border);
+        }
+        .telemetry-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 0.55rem 0.85rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            min-width: 0;
+        }
+        .telemetry-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: #64748b;
+        }
+        .telemetry-badge {
+            font-size: 0.92rem;
+            font-weight: 600;
+            line-height: 1.3;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .game-header {
+            background: #f8fafc;
+            color: #b45309;
+            padding: 1rem 1.5rem;
+            font-size: 0.92rem;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .game-body { padding: 1.5rem; background: #ffffff; display: flex; flex-direction: column; gap: 1rem; border-bottom: 1px solid var(--border); }
+        .game-explainer { background: #fef3c7; border: 1px solid #fde68a; padding: 1.25rem; border-radius: 6px; font-size: 0.95rem; color: #92400e; margin-bottom: 0.5rem; line-height: 1.7; }
+        .game-controls { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+        .game-btn { background: var(--accent); color: white; border: none; padding: 0.55rem 1.1rem; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.92rem; transition: background 0.2s; }
+        .game-btn:hover { background: var(--accent-hover); }
+        .game-canvas-wrap { background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1.75rem; display: flex; justify-content: center; }
+        .game-canvas-wrap svg { width: 100%; height: auto; display: block; }
+
+        .formula-stage-wrap { background: #f8fafc; padding: 1.25rem; border-bottom: 1px solid var(--border); display: flex; justify-content: center; }
+        .formula-display { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; justify-content: center; font-size: 1.25rem; font-weight: 500; }
+        .formula-chunk {
+            padding: 0.45rem 0.85rem;
+            border-radius: 6px;
+            border: 2px solid #e2e8f0;
+            color: #475569;
+            background: #ffffff;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+        }
+        .formula-chunk.active { border-color: #d97706; background: #fef3c7; color: #92400e; transform: translateY(-2px); }
+        .formula-chunk.completed { border-color: #059669; color: #065f46; background: #ecfdf5; }
+        .formula-sep { color: #64748b; font-weight: 400; white-space: nowrap; }
+
+        .canvas-container { padding: 2rem; background: #f1f5f9; display: flex; justify-content: center; border-bottom: 1px solid var(--border); }
+        .canvas-container svg { width: 100%; height: auto; display: block; }
+
+        .controls-pane { display: flex; gap: 2rem; padding: 1.5rem; background: var(--card); border-bottom: 1px solid var(--border); align-items: flex-start; }
+        .nav-buttons { display: flex; flex-direction: column; gap: 0.5rem; min-width: 140px; }
+        button { background: var(--accent); color: white; border: none; padding: 0.55rem 1rem; border-radius: 4px; cursor: pointer; font-weight: 600; width: 100%; transition: background 0.2s; font-size: 0.92rem; }
+        button:hover { background: var(--accent-hover); }
+        button:disabled { background: #94a3b8; cursor: not-allowed; }
+        .step-summary { flex-grow: 1; font-size: 0.97rem; color: #334155; line-height: 1.6; }
+        .analysis-panes { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
+        .pane { background: var(--card); padding: 1.5rem; }
+        .pane h4 { margin-top: 0; color: var(--accent); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; font-weight: 700; }
+        .pane p { margin: 0 0 0.75rem 0; line-height: 1.6; font-size: 0.95rem; }
+        .pane p:last-child { margin-bottom: 0; }
+        .toggle-group { min-width: 250px; }
+        select { width: 100%; padding: 0.55rem; border-radius: 4px; border: 1px solid var(--border); background: #fff; color: var(--text); font-size: 0.92rem; }
+
+        .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .aside-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #b45309; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .aside-box h4 { margin-top: 0; color: #b45309; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .example-list li { margin-bottom: 0.75rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Week 1: Sets, Numbers, and Sequences</h1>
+            <a href="index.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">&larr; Back to Curriculum Index</a>
+        </div>
+
+        <div class="module-content">
+            <div class="intro-lead">
+                Welcome to Week 1 of MTHS120. Before we can analyze continuous change, accumulation, and rates of variation, we must first master the language used to construct mathematical models. This module bridges discrete foundational concepts—starting with set theory notation and the structured hierarchy of our number systems—into the rigorous study of sequences and limits.
+            </div>
+
+            <!-- TABLE OF CONTENTS -->
+            <div class="toc-box">
+                <h4>📌 Module Table of Contents</h4>
+                <ul class="toc-grid">
+                    <li><a href="#section-sets">1. Set Theory Foundations</a></li>
+                    <li><a href="#section-numbers">2. The Hierarchy of Number Systems</a></li>
+                    <li><a href="#section-sequences">3. Sequences and the Limit Concept</a></li>
+                </ul>
+            </div>
+
+            <!-- DECORATIVE TOPIC ILLUSTRATION SVG -->
+            <div class="intro-graphic">
+                <svg viewBox="0 0 740 150">
+                    <g transform="translate(20, 10)">
+                        <rect x="0" y="0" width="210" height="130" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+                        <circle cx="85" cy="65" r="42" fill="#d97706" opacity="0.25"/>
+                        <circle cx="130" cy="65" r="42" fill="#fbbf24" opacity="0.35"/>
+                        <text x="65" y="70" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold">A</text>
+                        <text x="145" y="70" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold">B</text>
+                        <text x="105" y="118" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b" text-anchor="middle" font-weight="600">Set Theory (A ∪ B)</text>
+                    </g>
+                    <g transform="translate(255, 10)">
+                        <rect x="0" y="0" width="220" height="130" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+                        <rect x="15" y="15" width="190" height="98" rx="6" fill="#fffbeb" stroke="#fde68a" stroke-dasharray="3"/>
+                        <text x="25" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#d97706" font-weight="bold">ℝ (Real)</text>
+                        <rect x="35" y="40" width="150" height="66" rx="4" fill="none" stroke="#d97706"/>
+                        <text x="45" y="56" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#b45309">ℚ ⊃ ℤ ⊃ ℕ</text>
+                        <circle cx="110" cy="85" r="16" fill="#fed7aa" stroke="#d97706"/>
+                        <text x="110" y="90" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#92400e" font-weight="bold" text-anchor="middle">ℕ</text>
+                        <text x="110" y="122" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b" text-anchor="middle" font-weight="600">Number Systems</text>
+                    </g>
+                    <g transform="translate(500, 10)">
+                        <rect x="0" y="0" width="220" height="130" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+                        <line x1="20" y1="95" x2="200" y2="95" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3"/>
+                        <text x="195" y="90" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#d97706" font-weight="bold">L=0</text>
+                        <circle cx="45" cy="40" r="5" fill="#d97706"/><line x1="45" y1="40" x2="80" y2="62" stroke="#d97706" stroke-width="1.5"/>
+                        <circle cx="80" cy="62" r="5" fill="#d97706"/><line x1="80" y1="62" x2="115" y2="78" stroke="#d97706" stroke-width="1.5"/>
+                        <circle cx="115" cy="78" r="5" fill="#10b981"/><line x1="115" y1="78" x2="150" y2="87" stroke="#10b981" stroke-width="1.5"/>
+                        <circle cx="150" cy="87" r="5" fill="#10b981"/><line x1="150" y1="87" x2="185" y2="91" stroke="#10b981" stroke-width="1.5"/>
+                        <circle cx="185" cy="91" r="6" fill="#10b981"/>
+                        <text x="110" y="122" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b" text-anchor="middle" font-weight="600">Sequence Limits (aₙ → L)</text>
+                    </g>
+                </svg>
+            </div>
+
+            <p>Mathematics does not begin with complex equations; it begins with an act of classification: gathering distinct objects together and defining a <strong>set</strong>. From that foundation, we establish operations, explore how number systems expand to provide solutions to previously unsolvable equations, and ultimately study infinite processes rigorously.</p>
+
+            <h3>The Conceptual Arc of Week 1</h3>
+            <ul>
+                <li><strong>Sets (Foundational Objects):</strong> Provide the language of logic, bundling distinct elements and defining spaces unambiguously.</li>
+                <li><strong>Number Systems (Algebraic Solvability):</strong> One useful way to understand familiar number systems is to see how each provides solutions to equations that could not be solved within a smaller system.</li>
+                <li><strong>Sequence Limits (Formalizing Infinity):</strong> Sequences transition us from discrete steps to continuous behavior via the formal $\epsilon-N$ definition of a limit.</li>
+            </ul>
+
+            <h2 id="section-sets">1. Set Theory Foundations</h2>
+
+            <!-- SECTION 1 NOTATION INFOBOX -->
+            <div class="infobox">
+                <h4>📖 Notation Reference: Set Theory</h4>
+                <div class="infobox-intro">
+                    <strong>Getting comfortable with set notation:</strong> Symbols like $\in$, $\subseteq$, $\cup$, and $\cap$ simply provide shorthand precision for describing collections, containment, and combinations.
+                </div>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym">$x \in A$</span><span class="notation-desc">$x$ is an element of set $A$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$x \notin A$</span><span class="notation-desc">$x$ is not an element of set $A$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \subseteq B$</span><span class="notation-desc">$A$ is a subset of $B$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \subset B$</span><span class="notation-desc">$A$ is a proper subset of $B$ ($A \subseteq B$ and $A \neq B$)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\emptyset$</span><span class="notation-desc">The empty set (contains no elements)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathcal{P}(A)$</span><span class="notation-desc">Power set: collection of all subsets of $A$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \cup B$</span><span class="notation-desc">Union: elements in $A$, $B$, or both</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \cap B$</span><span class="notation-desc">Intersection: elements in both $A$ and $B$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \setminus B$</span><span class="notation-desc">Relative complement: elements in $A$ but not in $B$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \times B$</span><span class="notation-desc">Cartesian product: set of ordered pairs $(a, b)$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mid$ &nbsp; or &nbsp; $:$</span><span class="notation-desc">"Such that" (used as a filter condition)</span></div>
+                </div>
+            </div>
+
+            <p>A <strong>set</strong> is any well-defined collection of distinct mathematical objects, called <em>elements</em>. If $x$ is an element of set $A$, we write $x \in A$; otherwise, $x \notin A$.</p>
+
+            <div class="definition-box">
+                <p><strong>Specifying Sets:</strong></p>
+                <ul>
+                    <li><strong>Roster Notation:</strong> Explicitly listing members within braces, e.g., $A = \{2, 3, 5, 7\}$.</li>
+                    <li><strong>Set-Builder Notation:</strong> Specifying members by a property: $B = \{ x \in \mathbb{N} \mid x \text{ is prime and } x < 10 \}$.</li>
+                </ul>
+            </div>
+
+            <h3>Anatomy of Set-Builder Notation</h3>
+            <p>Set-builder notation is standard when specifying continuous intervals or infinite sets:</p>
+
+            <div class="definition-box">
+                <p>$$A = \{ x \in S \mid P(x) \}$$</p>
+                <ul>
+                    <li><strong>$x$:</strong> The candidate variable.</li>
+                    <li><strong>$\in S$:</strong> The universe or domain where candidates are chosen from (e.g., $x \in \mathbb{R}$).</li>
+                    <li><strong>$\mid$ or $:$:</strong> Read as <strong>"such that"</strong>.</li>
+                    <li><strong>$P(x)$:</strong> The predicate or condition candidates must satisfy.</li>
+                </ul>
+            </div>
+
+            <h3>Subsets and the Power Set</h3>
+            <p>A set $A$ is a <strong>subset</strong> of $B$ (denoted $A \subseteq B$) if every element of $A$ is also an element of $B$. If $A \subseteq B$ but $A \neq B$, then $A$ is a <em>proper subset</em> ($A \subset B$). The empty set $\emptyset$ satisfies $\emptyset \subseteq A$ for every set $A$.</p>
+
+            <div class="definition-box">
+                <p><strong>The Power Set $\mathcal{P}(A)$:</strong></p>
+                <p>The <strong>power set</strong> of a set $A$, denoted $\mathcal{P}(A)$, is the set of all subsets of $A$.</p>
+                <p>If $A$ is a finite set with $n$ elements, then its power set has exactly $2^n$ elements:</p>
+                <p>$$|\mathcal{P}(A)| = 2^n$$</p>
+            </div>
+
+            <p>For example, if $A = \{1, 2\}$, the subsets of $A$ are:</p>
+            <ol>
+                <li>The subset with zero elements: $\emptyset$</li>
+                <li>Subsets with one element: $\{1\}$ and $\{2\}$</li>
+                <li>The subset with two elements: $\{1, 2\}$</li>
+            </ol>
+            <p>Therefore, $\mathcal{P}(A) = \{ \emptyset, \{1\}, \{2\}, \{1, 2\} \}$, giving $|\mathcal{P}(A)| = 2^2 = 4$ elements.</p>
+
+            <!-- POWER SET VISUALIZATION DIAGRAM -->
+            <div class="diagram-card" style="margin: 1.5rem 0; width: 100%; box-sizing: border-box;">
+                <h5>Subsets Forming the Power Set $\mathcal{P}(A)$ for $A = \{1, 2\}$</h5>
+                <svg viewBox="0 0 740 180">
+                    <rect x="15" y="10" width="710" height="160" rx="10" fill="#fffbeb" stroke="#fde68a" stroke-width="1.5"/>
+                    <text x="35" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#92400e" font-weight="bold">Collection of all subsets: 𝒫(A) has |𝒫(A)| = 2² = 4 elements</text>
+
+                    <g transform="translate(45, 50)">
+                        <rect x="0" y="0" width="135" height="95" rx="6" fill="#ffffff" stroke="#d97706" stroke-width="1.2"/>
+                        <text x="67.5" y="35" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold" text-anchor="middle">∅</text>
+                        <text x="67.5" y="70" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b" text-anchor="middle">Zero elements</text>
+                    </g>
+                    <g transform="translate(200, 50)">
+                        <rect x="0" y="0" width="135" height="95" rx="6" fill="#ffffff" stroke="#d97706" stroke-width="1.2"/>
+                        <text x="67.5" y="35" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold" text-anchor="middle">{1}</text>
+                        <text x="67.5" y="70" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b" text-anchor="middle">One element</text>
+                    </g>
+                    <g transform="translate(355, 50)">
+                        <rect x="0" y="0" width="135" height="95" rx="6" fill="#ffffff" stroke="#d97706" stroke-width="1.2"/>
+                        <text x="67.5" y="35" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold" text-anchor="middle">{2}</text>
+                        <text x="67.5" y="70" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b" text-anchor="middle">One element</text>
+                    </g>
+                    <g transform="translate(510, 50)">
+                        <rect x="0" y="0" width="185" height="95" rx="6" fill="#ffffff" stroke="#d97706" stroke-width="1.2"/>
+                        <text x="92.5" y="35" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold" text-anchor="middle">{1, 2}</text>
+                        <text x="92.5" y="70" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b" text-anchor="middle">All elements (A itself)</text>
+                    </g>
+                </svg>
+            </div>
+
+            <h3>Core Set Operations Visualized</h3>
+            <div class="diagram-grid">
+                <div class="diagram-card">
+                    <h5>Subset Inclusion ($A \subseteq B$)</h5>
+                    <svg viewBox="0 0 360 170">
+                        <rect x="10" y="10" width="340" height="150" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.2"/>
+                        <text x="25" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#64748b" font-weight="600">Universal Set U</text>
+                        <ellipse cx="180" cy="95" rx="140" ry="55" fill="#fed7aa" opacity="0.45" stroke="#d97706" stroke-width="1.2"/>
+                        <text x="280" y="105" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#b45309" font-weight="bold">B</text>
+                        <ellipse cx="140" cy="95" rx="75" ry="38" fill="#fde68a" opacity="0.65" stroke="#d97706" stroke-width="1.2"/>
+                        <text x="135" y="100" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#b45309" font-weight="bold">A</text>
+                    </svg>
+                </div>
+                <div class="diagram-card">
+                    <h5>Union ($A \cup B$) &mdash; "Or"</h5>
+                    <svg viewBox="0 0 360 170">
+                        <rect x="10" y="10" width="340" height="150" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.2"/>
+                        <text x="25" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#64748b" font-weight="600">Combined Elements (A ∪ B)</text>
+                        <circle cx="145" cy="95" r="52" fill="#fed7aa" opacity="0.65" stroke="#d97706" stroke-width="1.2"/>
+                        <circle cx="215" cy="95" r="52" fill="#fed7aa" opacity="0.65" stroke="#d97706" stroke-width="1.2"/>
+                        <text x="130" y="100" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#b45309" font-weight="bold">A</text>
+                        <text x="225" y="100" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#b45309" font-weight="bold">B</text>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="diagram-grid">
+                <div class="diagram-card">
+                    <h5>Intersection ($A \cap B$) &mdash; "And"</h5>
+                    <svg viewBox="0 0 360 170">
+                        <rect x="10" y="10" width="340" height="150" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.2"/>
+                        <text x="25" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#64748b" font-weight="600">Shared Overlap (A ∩ B)</text>
+                        <circle cx="145" cy="95" r="52" fill="#ffffff" stroke="#d97706" stroke-width="1.2"/>
+                        <circle cx="215" cy="95" r="52" fill="#ffffff" stroke="#d97706" stroke-width="1.2"/>
+                        <path d="M 180 57 A 52 52 0 0 1 180 133 A 52 52 0 0 1 180 57 Z" fill="#d97706" opacity="0.75"/>
+                        <text x="125" y="100" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#b45309" font-weight="bold">A</text>
+                        <text x="230" y="100" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#b45309" font-weight="bold">B</text>
+                    </svg>
+                </div>
+                <div class="diagram-card">
+                    <h5>Complement ($A^c = U \setminus A$)</h5>
+                    <!-- Shading outside circle A, leaving A unshaded -->
+                    <svg viewBox="0 0 360 170">
+                        <defs>
+                            <mask id="complement-mask">
+                                <rect x="10" y="10" width="340" height="150" fill="white"/>
+                                <circle cx="180" cy="95" r="48" fill="black"/>
+                            </mask>
+                        </defs>
+                        <rect x="10" y="10" width="340" height="150" rx="8" fill="#fde68a" opacity="0.55" mask="url(#complement-mask)"/>
+                        <rect x="10" y="10" width="340" height="150" rx="8" fill="none" stroke="#cbd5e1" stroke-width="1.2"/>
+                        <text x="25" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#92400e" font-weight="600">Aᶜ (Shaded Region Outside A)</text>
+                        <circle cx="180" cy="95" r="48" fill="#ffffff" stroke="#d97706" stroke-width="1.2"/>
+                        <text x="175" y="101" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#b45309" font-weight="bold">A</text>
+                    </svg>
+                </div>
+            </div>
+
+            <h2 id="section-numbers">2. The Hierarchy of Number Systems</h2>
+
+            <!-- SECTION 2 NOTATION INFOBOX -->
+            <div class="infobox">
+                <h4>📖 Notation Reference: Number Systems</h4>
+                <div class="infobox-intro">
+                    <strong>Number systems and algebraic structure:</strong> One useful way to understand the familiar number systems is to see how each provides solutions to equations that could not be solved within a smaller system.
+                </div>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{N}$</span><span class="notation-desc">Natural numbers: counting numbers $\{1, 2, 3, \dots\}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{Z}$</span><span class="notation-desc">Integers: $\{\dots, -2, -1, 0, 1, 2, \dots\}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{Q}$</span><span class="notation-desc">Rational numbers: quotients $\{p/q \mid p, q \in \mathbb{Z}, q \neq 0\}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{R}$</span><span class="notation-desc">Real numbers: rational and irrational numbers</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\subset$</span><span class="notation-desc">Strict set containment: $\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$[a, b]$</span><span class="notation-desc">Closed interval: $\{x \in \mathbb{R} \mid a \le x \le b\}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$(a, b)$</span><span class="notation-desc">Open interval: $\{x \in \mathbb{R} \mid a < x < b\}$</span></div>
+                </div>
+            </div>
+
+            <div class="diagram-card" style="margin: 1.5rem 0; width: 100%; box-sizing: border-box;">
+                <h5>Nested Set Containment Hierarchy ($\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$)</h5>
+                <svg viewBox="0 0 740 220">
+                    <rect x="15" y="12" width="710" height="196" rx="10" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+                    <text x="35" y="38" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">ℝ (Real Numbers)</text>
+
+                    <rect x="45" y="52" width="650" height="142" rx="8" fill="#fffbeb" stroke="#fde68a" stroke-width="1.5"/>
+                    <text x="65" y="76" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#92400e" font-weight="bold">ℚ (Rational Numbers: Fractions p/q)</text>
+
+                    <rect x="85" y="90" width="570" height="92" rx="8" fill="#fef3c7" stroke="#fbbf24" stroke-width="1.5"/>
+                    <text x="105" y="114" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold">ℤ (Integers: Negatives, 0, Positives)</text>
+
+                    <ellipse cx="370" cy="150" rx="210" ry="24" fill="#fed7aa" stroke="#d97706" stroke-width="1.5"/>
+                    <text x="370" y="156" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold" text-anchor="middle">ℕ (Natural Numbers: 1, 2, 3...)</text>
+                </svg>
+            </div>
+
+            <!-- ASIDE: SOLVING EQUATIONS -->
+            <div class="aside-box">
+                <h4>💡 Context: Expanding Systems to Solve Equations</h4>
+                <p>Examining equations that fail to have solutions in smaller systems illustrates why larger systems are constructed:</p>
+                <ul>
+                    <li>In $\mathbb{N}$, the equation $x + 5 = 2$ has no solution. Adjoining additive inverses forms $\mathbb{Z}$.</li>
+                    <li>In $\mathbb{Z}$, the equation $2x = 3$ has no solution. Adjoining multiplicative inverses forms the field of rationals $\mathbb{Q}$.</li>
+                    <li>In $\mathbb{Q}$, the equation $x^2 = 2$ has no solution. Adjoining irrational limits forms the real numbers $\mathbb{R}$.</li>
+                </ul>
+            </div>
+
+            <h3>Real Numbers and Completeness</h3>
+            <p>Between any two rational numbers, another rational number exists (the rationals are <em>dense</em>). However, $\mathbb{Q}$ still contains "holes" geometrically: the diagonal of a unit square has length $\sqrt{2}$, yet no rational number satisfies $(p/q)^2 = 2$.</p>
+
+            <div class="diagram-card" style="margin: 1.5rem 0; width: 100%; box-sizing: border-box;">
+                <h5>The Geometric Gap: Constructing &radic;2 on the Number Line</h5>
+                <svg viewBox="0 0 740 200">
+                    <defs>
+                        <marker id="num-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+                        </marker>
+                    </defs>
+                    <line x1="40" y1="145" x2="710" y2="145" stroke="#64748b" stroke-width="1.2" marker-end="url(#num-arrow)"/>
+                    <circle cx="130" cy="145" r="4.5" fill="#64748b"/><text x="125" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">0</text>
+                    <circle cx="370" cy="145" r="4.5" fill="#64748b"/><text x="365" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">1</text>
+                    <circle cx="610" cy="145" r="4.5" fill="#64748b"/><text x="605" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">2</text>
+
+                    <polygon points="130,145 370,145 370,65" fill="#fef3c7" opacity="0.65" stroke="#d97706" stroke-width="1.2"/>
+                    <text x="245" y="135" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#d97706" font-weight="bold">1</text>
+                    <text x="382" y="108" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#d97706" font-weight="bold">1</text>
+
+                    <line x1="130" y1="145" x2="370" y2="65" stroke="#ef4444" stroke-width="1.2"/>
+                    <text x="220" y="92" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#ef4444">&radic;2 (&notin; ℚ)</text>
+
+                    <path d="M 370 65 A 240 240 0 0 1 470 145" fill="none" stroke="#ef4444" stroke-width="1.0" stroke-dasharray="4"/>
+                    <circle cx="470" cy="145" r="5" fill="#ef4444"/>
+                    <text x="445" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#ef4444">&radic;2 ≈ 1.414</text>
+                </svg>
+            </div>
+
+            <div class="definition-box">
+                <p><strong>Completeness of $\mathbb{R}$:</strong></p>
+                <ul>
+                    <li><strong>Intuition:</strong> Completeness ensures that the real number line has no "gaps" or missing points.</li>
+                    <li><strong>Formal Property (Least Upper Bound Axiom):</strong> Every non-empty subset of $\mathbb{R}$ that is bounded above has a least upper bound (supremum) in $\mathbb{R}$.</li>
+                </ul>
+            </div>
+
+            <h2 id="section-sequences">3. Sequences and the Limit Concept</h2>
+
+            <!-- SECTION 3 NOTATION INFOBOX -->
+            <div class="infobox">
+                <h4>📖 Notation Reference: Sequences &amp; Limits</h4>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym">$\forall$</span><span class="notation-desc">Universal quantifier: "for all" or "for every"</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\exists$</span><span class="notation-desc">Existential quantifier: "there exists"</span></div>
+                    <div class="notation-item"><span class="notation-sym">$(a_n)$</span><span class="notation-desc">Sequence: an ordered list $(a_1, a_2, a_3, \dots)$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$a_n$</span><span class="notation-desc">General term of the sequence at index $n \in \mathbb{N}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\lim_{n\to\infty} a_n = L$</span><span class="notation-desc">The sequence $a_n$ converges to limit $L$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\epsilon > 0$</span><span class="notation-desc">Arbitrary positive distance tolerance</span></div>
+                    <div class="notation-item"><span class="notation-sym">$N \in \mathbb{N}$</span><span class="notation-desc">Cutoff index past which terms satisfy $|a_n - L| < \epsilon$</span></div>
+                </div>
+            </div>
+
+            <p>Formally, a sequence of real numbers is a function $f: \mathbb{N} \to \mathbb{R}$. We denote the output $f(n)$ as $a_n$, expressing the sequence as $(a_n)_{n=1}^\infty$.</p>
+
+            <h3>The Formal Definition of Convergence</h3>
+            <div class="definition-box">
+                <p>A sequence $(a_n)$ converges to a limit $L$, written $\lim_{n\to\infty} a_n = L$, if:</p>
+                <p>$$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad \forall n > N, \quad |a_n - L| < \epsilon$$</p>
+            </div>
+
+            <!-- CLAUSE STEPPER -->
+            <div class="stepper-walkthrough" id="definition-walkthrough">
+                <div class="telemetry-grid">
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Active Clause</span>
+                        <span class="telemetry-badge" id="fw-tel-clause" style="color: #b45309;">1. The Challenge (∀ϵ > 0)</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Quantifier</span>
+                        <span class="telemetry-badge" id="fw-tel-quant" style="color: #0369a1;">Universal (∀)</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Logical Role</span>
+                        <span class="telemetry-badge" id="fw-tel-role" style="color: #be185d;">Given tolerance</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Scope</span>
+                        <span class="telemetry-badge" id="fw-tel-scope" style="color: #047857;">Arbitrary positive real</span>
+                    </div>
+                </div>
+
+                <div class="formula-stage-wrap">
+                    <div class="formula-display">
+                        <div class="formula-chunk active" id="chunk-0" onclick="setFormulaStep(0)">$\forall \epsilon > 0$</div>
+                        <span class="formula-sep">,</span>
+                        <div class="formula-chunk" id="chunk-1" onclick="setFormulaStep(1)">$\exists N \in \mathbb{N}$</div>
+                        <span class="formula-sep" style="font-size: 0.95rem; margin: 0 0.2rem;">such that</span>
+                        <div class="formula-chunk" id="chunk-2" onclick="setFormulaStep(2)">$\forall n > N$</div>
+                        <span class="formula-sep">,</span>
+                        <div class="formula-chunk" id="chunk-3" onclick="setFormulaStep(3)">$|a_n - L| < \epsilon$</div>
+                    </div>
+                </div>
+
+                <div class="canvas-container">
+                    <svg id="fw-canvas" viewBox="0 0 740 180">
+                        <line x1="50" y1="90" x2="690" y2="90" stroke="#94a3b8" stroke-dasharray="3" stroke-width="1.2"/>
+                        <text x="700" y="94" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#64748b" font-weight="700">L</text>
+
+                        <rect id="fw-svg-epsband" x="50" y="55" width="640" height="70" fill="#fde68a" opacity="0.3" stroke="#f59e0b" stroke-dasharray="4" stroke-width="1.2"/>
+                        <text id="fw-svg-epslbl1" x="65" y="48" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#d97706" font-weight="bold">+ϵ</text>
+                        <text id="fw-svg-epslbl2" x="65" y="142" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#d97706" font-weight="bold">-ϵ</text>
+
+                        <line id="fw-svg-nline" x1="330" y1="20" x2="330" y2="160" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="5" opacity="0.2"/>
+                        <text id="fw-svg-nlbl" x="338" y="34" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#ef4444" font-weight="bold" opacity="0.2">Cutoff N</text>
+
+                        <g id="fw-svg-pts">
+                            <circle cx="120" cy="25" r="5" fill="#94a3b8" opacity="0.5"/>
+                            <circle cx="190" cy="42" r="5" fill="#94a3b8" opacity="0.5"/>
+                            <circle cx="260" cy="55" r="5" fill="#94a3b8" opacity="0.5"/>
+                            <circle cx="330" cy="55" r="5" fill="#fbbf24" stroke="#d97706" stroke-width="1.5"/>
+
+                            <circle cx="400" cy="74" r="6" fill="#10b981" id="pt-trapped-1"/>
+                            <circle cx="470" cy="84" r="6" fill="#10b981" id="pt-trapped-2"/>
+                            <circle cx="540" cy="88" r="6" fill="#10b981" id="pt-trapped-3"/>
+                            <circle cx="610" cy="89" r="6" fill="#10b981" id="pt-trapped-4"/>
+                        </g>
+                    </svg>
+                </div>
+
+                <div class="controls-pane">
+                    <div class="nav-buttons">
+                        <button id="btn-fw-prev" onclick="stepFormula(-1)" disabled>Prev Clause</button>
+                        <button id="btn-fw-next" onclick="stepFormula(1)">Next Clause</button>
+                    </div>
+                    <div class="step-summary" id="fw-step-summary"></div>
+                    <div class="toggle-group">
+                        <label for="fw-dimension-toggle" style="font-size: 0.85rem; font-weight: 700; color: #475569; display: block; margin-bottom: 0.5rem;">FRAMEWORK VIEW:</label>
+                        <select id="fw-dimension-toggle" onchange="changeFormulaPerspective()">
+                            <option value="adversarial">Adversarial Game (Skeptic vs. Prover)</option>
+                            <option value="verification">Analogy: Software Specification</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="analysis-panes">
+                    <div class="pane">
+                        <h4 id="fw-heading-what">Mathematical Mechanics</h4>
+                        <div id="fw-pane-what"></div>
+                    </div>
+                    <div class="pane">
+                        <h4 id="fw-heading-why">Logical Rationale</h4>
+                        <div id="fw-pane-why"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUANTIFIER ORDER & SCOPING -->
+            <div class="scoping-box">
+                <h4>💡 Quantifier Order and Dependency</h4>
+                <p>Quantifiers are read from left to right, creating a clear dependency chain:</p>
+
+                <table class="scoping-table">
+                    <thead>
+                        <tr>
+                            <th>Variable</th>
+                            <th>Scope</th>
+                            <th>Dependency Rule</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>$\epsilon$</strong></td>
+                            <td>$\forall \epsilon > 0$</td>
+                            <td>Arbitrary positive tolerance, chosen independently of $N$.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>$N$</strong></td>
+                            <td>$\exists N \in \mathbb{N}$</td>
+                            <td>Chosen <em>after</em> inspecting $\epsilon$. $N$ depends directly on $\epsilon$ (i.e. $N = N(\epsilon)$).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>$n$</strong></td>
+                            <td>$\forall n > N$</td>
+                            <td>Runs over all indices strictly past cutoff $N$.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h5 style="margin: 1.25rem 0 0.5rem 0; color: #92400e; font-size: 0.98rem;">⚠️ Why Quantifier Order Matters ($\forall \epsilon \, \exists N$ vs $\exists N \, \forall \epsilon$)</h5>
+                <div class="swap-card-grid">
+                    <div class="swap-card" style="border-left: 4px solid #10b981;">
+                        <h5 style="color: #065f46;">Standard Convergence: $\forall \epsilon > 0, \exists N \in \mathbb{N}$</h5>
+                        <p style="margin: 0; font-size: 0.9rem; line-height: 1.55;">
+                            <em>"For any tolerance $\epsilon > 0$ you provide, a suitable index $N$ can be found."</em><br>
+                            Smaller tolerances typically require larger values of $N$.
+                        </p>
+                    </div>
+                    <div class="swap-card" style="border-left: 4px solid #ef4444;">
+                        <h5 style="color: #991b1b;">Swapped Quantifiers: $\exists N \in \mathbb{N}, \forall \epsilon > 0$</h5>
+                        <p style="margin: 0; font-size: 0.9rem; line-height: 1.55;">
+                            <em>"A single fixed $N$ exists that simultaneously satisfies every $\epsilon > 0$."</em><br>
+                            This is far stronger than ordinary convergence. It requires terms to eventually equal $L$ exactly ($a_n = L$ for all $n > N$), which fails for sequences like $1/n$ that only approach the limit asymptotically.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INTERACTIVE EPSILON CHALLENGE -->
+            <div class="game-box">
+                <div class="game-header">
+                    <span>Illustrating the Definition: $a_n = \frac{1}{n}$ ($L = 0$)</span>
+                    <span>Finite Sample Visualization</span>
+                </div>
+
+                <div class="telemetry-grid" id="game-telemetry">
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Sequence</span>
+                        <span class="telemetry-badge" style="color: #0369a1;">$a_n = 1/n$ ($L = 0$)</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Tolerance (ϵ)</span>
+                        <span class="telemetry-badge" id="cg-tel-eps" style="color: #b45309;">Select below</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Suitable Cutoff (N)</span>
+                        <span class="telemetry-badge" id="cg-tel-reqn" style="color: #be185d;">—</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Term Displayed</span>
+                        <span class="telemetry-badge" id="cg-tel-val" style="color: #334155;">—</span>
+                    </div>
+                </div>
+
+                <div class="game-body">
+                    <div class="game-explainer">
+                        <strong>Examining the Sample Terms:</strong><br>
+                        For $a_n = 1/n$ and a given $\epsilon$, we solve $\frac{1}{n} < \epsilon$, which gives $n > \frac{1}{\epsilon}$. One convenient choice is $N = \lceil 1/\epsilon \rceil$ (any larger integer $N$ is also valid). Select a tolerance $\epsilon$ to observe how terms beyond $N$ lie inside the corridor $(L-\epsilon, L+\epsilon)$ for this finite sample.
+                    </div>
+
+                    <div class="game-controls">
+                        <button class="game-btn" onclick="startChallenge(0.2)">Test $\epsilon = 0.2$</button>
+                        <button class="game-btn" onclick="startChallenge(0.1)">Test $\epsilon = 0.1$</button>
+                        <button class="game-btn" onclick="startChallenge(0.05)">Test $\epsilon = 0.05$</button>
+                    </div>
+
+                    <div class="game-canvas-wrap">
+                        <svg id="game-plot" viewBox="0 0 740 260">
+                            <text x="260" y="130" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b">Select an &epsilon; budget above to illustrate the sample.</text>
+                        </svg>
+                    </div>
+
+                    <div class="game-controls" id="step-controls" style="display: none;">
+                        <button class="game-btn" id="btn-challenge-next" onclick="advanceChallengeStep()">Step Forward ($n = N + 1$)</button>
+                        <button class="game-btn" style="background-color: #64748b;" onclick="resetChallenge()">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const formulaState = {
+            step: 0,
+            perspective: 'adversarial'
+        };
+
+        const formulaClauses = [
+            {
+                clauseTitle: "1. The Challenge (∀ϵ > 0)",
+                quantifier: "Universal (∀)",
+                advRole: "Given tolerance",
+                advScope: "Arbitrary positive real",
+                advSummary: "<strong>Step 1: Establishing tolerance.</strong> The condition begins by considering any arbitrary positive distance $\\epsilon > 0$. The sequence must be able to meet any degree of accuracy demanded.",
+                advWhat: "<p>We are given an arbitrary number $\\epsilon > 0$, forming a neighborhood $(L - \\epsilon, L + \\epsilon)$ around the limit.</p>",
+                advWhy: "<p>Requiring the condition to hold for all positive $\\epsilon$ prevents sequences that oscillate away from $L$ from being considered convergent.</p>",
+                verRole: "Analogy: Test constraint",
+                verScope: "Parameter specification",
+                verSummary: "<strong>Analogy Note:</strong> This software analogy is not part of the mathematical definition; it is simply one way of visualizing logical structure.",
+                verWhat: "<p>In an engineering analogy, $\\epsilon > 0$ functions like an arbitrary accuracy specification passed to a routine.</p>",
+                verWhy: "<p>A stable system must satisfy specifications across arbitrary tolerances without hard-coded limits.</p>"
+            },
+            {
+                clauseTitle: "2. The Response (∃N ∈ ℕ)",
+                quantifier: "Existential (∃)",
+                advRole: "Finding a witness index",
+                advScope: "Dependent on ϵ (N = N(ϵ))",
+                advSummary: "<strong>Step 2: Identifying cutoff index N.</strong> Having been given $\\epsilon$, we must show that an integer index $N$ exists past which terms stay within tolerance.",
+                advWhat: "<p>For $a_n = 1/n$, solving $1/n < \\epsilon$ yields $n > 1/\\epsilon$. One convenient choice is $N = \\lceil 1/\\epsilon \\rceil$. Any larger integer $N$ is also a valid witness.</p>",
+                advWhy: "<p>Because $N$ is chosen after $\\epsilon$, it is allowed to depend on $\\epsilon$. Tighter tolerances typically demand larger cutoff indices.</p>",
+                verRole: "Analogy: Bound synthesis",
+                verScope: "Calculated latency cutoff",
+                verSummary: "<strong>Analogy Note:</strong> This software analogy is not part of the mathematical definition; it is simply one way of visualizing logical structure.",
+                verWhat: "<p>In an engineering analogy, finding $N$ is like determining an execution cycle cutoff after which an error bound is guaranteed.</p>",
+                verWhy: "<p>The existential quantifier requires finding at least one valid index $N$; uniqueness is not required.</p>"
+            },
+            {
+                clauseTitle: "3. The Tail Scope (∀n > N)",
+                quantifier: "Universal (∀)",
+                advRole: "Evaluation of the tail",
+                advScope: "All subsequent indices",
+                advSummary: "<strong>Step 3: Examining all terms past N.</strong> The definition requires that every single term with index $n > N$ satisfies the distance condition.",
+                advWhat: "<p>We evaluate all indices strictly past $N$ ($n = N+1, N+2, N+3, \\dots$). Initial transient terms with $n \\le N$ are disregarded.</p>",
+                advWhy: "<p>Convergence is a property of the long-term tail of the sequence, not its initial terms.</p>",
+                verRole: "Analogy: Suffix invariant",
+                verScope: "Steady-state operation",
+                verSummary: "<strong>Analogy Note:</strong> This software analogy is not part of the mathematical definition; it is simply one way of visualizing logical structure.",
+                verWhat: "<p>In an engineering analogy, this corresponds to checking the invariant solely across steady-state execution past initialization.</p>",
+                verWhy: "<p>Initial transients do not affect long-term convergence.</p>"
+            },
+            {
+                clauseTitle: "4. The Distance Condition (|aₙ - L| < ϵ)",
+                quantifier: "Inequality (<)",
+                advRole: "Proximity condition",
+                advScope: "Distance inside (L-ϵ, L+ϵ)",
+                advSummary: "<strong>Step 4: Confirming distance constraint.</strong> For all $n > N$, the distance between $a_n$ and $L$ must remain strictly less than $\\epsilon$.",
+                advWhat: "<p>Each term $a_n$ with $n > N$ satisfies $|a_n - L| < \\epsilon$, placing it strictly within $(L - \\epsilon, L + \\epsilon)$.</p>",
+                advWhy: "<p>When this hold for every $\\epsilon > 0$, we have proven mathematically that $\\lim_{n\\to\\infty} a_n = L$.</p>",
+                verRole: "Analogy: Invariant assertion",
+                verScope: "Safety check",
+                verSummary: "<strong>Analogy Note:</strong> This software analogy is not part of the mathematical definition; it is simply one way of visualizing logical structure.",
+                verWhat: "<p>In an engineering analogy, this is the assertion check $\\text{abs}(a_n - L) < \\epsilon$ evaluated on steady-state outputs.</p>",
+                verWhy: "<p>Metric distance provides an unambiguous criterion for proximity.</p>"
+            }
+        ];
+
+        function setFormulaStep(stepIdx) {
+            formulaState.step = stepIdx;
+            updateFormulaUI();
+        }
+
+        function stepFormula(dir) {
+            formulaState.step += dir;
+            if (formulaState.step < 0) formulaState.step = 0;
+            if (formulaState.step > 3) formulaState.step = 3;
+            updateFormulaUI();
+        }
+
+        function changeFormulaPerspective() {
+            formulaState.perspective = document.getElementById('fw-dimension-toggle').value;
+            updateFormulaUI();
+        }
+
+        function updateFormulaUI() {
+            const idx = formulaState.step;
+            const current = formulaClauses[idx];
+            const isAdv = (formulaState.perspective === 'adversarial');
+
+            for (let i = 0; i < 4; i++) {
+                const el = document.getElementById(`chunk-${i}`);
+                el.classList.remove('active', 'completed');
+                if (i === idx) {
+                    el.classList.add('active');
+                } else if (i < idx) {
+                    el.classList.add('completed');
+                }
+            }
+
+            document.getElementById('fw-tel-clause').innerText = current.clauseTitle;
+            document.getElementById('fw-tel-quant').innerText = current.quantifier;
+            document.getElementById('fw-tel-role').innerText = isAdv ? current.advRole : current.verRole;
+            document.getElementById('fw-tel-scope').innerText = isAdv ? current.advScope : current.verScope;
+
+            document.getElementById('btn-fw-prev').disabled = (idx === 0);
+            document.getElementById('btn-fw-next').disabled = (idx === 3);
+
+            document.getElementById('fw-heading-what').innerText = isAdv ? "Mathematical Mechanics" : "Software Analogy Mechanics";
+            document.getElementById('fw-heading-why').innerText = isAdv ? "Logical Rationale" : "Analogy Context";
+
+            document.getElementById('fw-step-summary').innerHTML = isAdv ? current.advSummary : current.verSummary;
+            document.getElementById('fw-pane-what').innerHTML = isAdv ? current.advWhat : current.verWhat;
+            document.getElementById('fw-pane-why').innerHTML = isAdv ? current.advWhy : current.verWhy;
+
+            if (window.renderMathInElement) {
+                renderMathInElement(document.getElementById('definition-walkthrough'), {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ]
+                });
+            }
+
+            updateFormulaCanvas(idx);
+        }
+
+        function updateFormulaCanvas(step) {
+            const epsBand = document.getElementById('fw-svg-epsband');
+            const epsLbl1 = document.getElementById('fw-svg-epslbl1');
+            const epsLbl2 = document.getElementById('fw-svg-epslbl2');
+            const nLine = document.getElementById('fw-svg-nline');
+            const nLbl = document.getElementById('fw-svg-nlbl');
+
+            const trapped1 = document.getElementById('pt-trapped-1');
+            const trapped2 = document.getElementById('pt-trapped-2');
+            const trapped3 = document.getElementById('pt-trapped-3');
+            const trapped4 = document.getElementById('pt-trapped-4');
+
+            epsBand.setAttribute('opacity', '0.2');
+            epsBand.setAttribute('stroke', '#cbd5e1');
+            epsLbl1.setAttribute('fill', '#94a3b8');
+            epsLbl2.setAttribute('fill', '#94a3b8');
+
+            nLine.setAttribute('opacity', '0.2');
+            nLbl.setAttribute('opacity', '0.2');
+
+            [trapped1, trapped2, trapped3, trapped4].forEach(pt => {
+                pt.setAttribute('fill', '#94a3b8');
+                pt.setAttribute('r', '6');
+            });
+
+            if (step === 0) {
+                epsBand.setAttribute('opacity', '0.6');
+                epsBand.setAttribute('stroke', '#f59e0b');
+                epsBand.setAttribute('stroke-width', '2.5');
+                epsLbl1.setAttribute('fill', '#d97706');
+                epsLbl2.setAttribute('fill', '#d97706');
+            } else if (step === 1) {
+                epsBand.setAttribute('opacity', '0.35');
+                nLine.setAttribute('opacity', '1');
+                nLine.setAttribute('stroke', '#ef4444');
+                nLbl.setAttribute('opacity', '1');
+            } else if (step === 2) {
+                epsBand.setAttribute('opacity', '0.35');
+                nLine.setAttribute('opacity', '0.8');
+                nLbl.setAttribute('opacity', '0.8');
+                [trapped1, trapped2, trapped3, trapped4].forEach(pt => {
+                    pt.setAttribute('fill', '#38bdf8');
+                    pt.setAttribute('r', '7.5');
+                });
+            } else if (step === 3) {
+                epsBand.setAttribute('opacity', '0.7');
+                epsBand.setAttribute('stroke', '#10b981');
+                nLine.setAttribute('opacity', '0.8');
+                nLbl.setAttribute('opacity', '0.8');
+                [trapped1, trapped2, trapped3, trapped4].forEach(pt => {
+                    pt.setAttribute('fill', '#10b981');
+                    pt.setAttribute('r', '8.5');
+                });
+            }
+        }
+
+        /* EPSILON CHALLENGE */
+        const challengeState = { active: false, eps: 0.2, reqN: 5, currentDisplayN: 5 };
+
+        function startChallenge(eps) {
+            challengeState.active = true;
+            challengeState.eps = eps;
+            challengeState.reqN = Math.ceil(1 / eps);
+            challengeState.currentDisplayN = challengeState.reqN;
+
+            document.getElementById('step-controls').style.display = 'flex';
+            updateChallengeUI();
+        }
+
+        function advanceChallengeStep() {
+            challengeState.currentDisplayN++;
+            const maxAllowed = Math.max(30, challengeState.reqN + 10);
+            if (challengeState.currentDisplayN > maxAllowed) {
+                challengeState.currentDisplayN = maxAllowed;
+            }
+            updateChallengeUI();
+        }
+
+        function resetChallenge() {
+            challengeState.active = false;
+            document.getElementById('step-controls').style.display = 'none';
+            document.getElementById('cg-tel-eps').innerText = 'Select below';
+            document.getElementById('cg-tel-reqn').innerText = '—';
+            document.getElementById('cg-tel-val').innerText = '—';
+
+            renderGameSVG(null, 0, 0);
+        }
+
+        function updateChallengeUI() {
+            const eps = challengeState.eps;
+            const reqN = challengeState.reqN;
+            const curN = challengeState.currentDisplayN;
+            const atTerm = (1 / curN);
+
+            document.getElementById('cg-tel-eps').innerHTML = `$${eps}$`;
+            document.getElementById('cg-tel-reqn').innerHTML = `$N = ${reqN}$`;
+            document.getElementById('cg-tel-val').innerHTML = `$a_{${curN}} = ${atTerm.toFixed(3)}$`;
+
+            if(window.renderMathInElement) {
+                renderMathInElement(document.getElementById('game-telemetry'), {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ]
+                });
+            }
+            renderGameSVG(eps, reqN, curN);
+        }
+
+        function renderGameSVG(eps, reqN, curN) {
+            const svg = document.getElementById('game-plot');
+            const originX = 90;
+            const originY = 130;
+            const maxXScale = 610;
+
+            let svgContent = `
+                <defs>
+                    <marker id="game-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+                    </marker>
+                    <marker id="eps-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#d97706"/>
+                    </marker>
+                </defs>
+                <line x1="${originX}" y1="${originY}" x2="${originX + maxXScale}" y2="${originY}" stroke="#64748b" stroke-width="1.0"/>
+                <text x="${originX - 35}" y="${originY + 5}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700" fill="#64748b">L=0</text>
+
+                <line x1="${originX}" y1="240" x2="${originX}" y2="25" stroke="#64748b" stroke-width="1.0" marker-end="url(#game-arrow)"/>
+                <text x="${originX}" y="18" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="13" fill="#64748b" font-weight="600">a<tspan dy="3" font-size="10">n</tspan></text>
+
+                <line x1="${originX}" y1="${originY}" x2="715" y2="${originY}" stroke="#64748b" stroke-width="1.0" marker-end="url(#game-arrow)"/>
+                <text x="722" y="134" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="13" fill="#64748b" font-weight="600">n</text>
+            `;
+
+            if (eps === null) {
+                for (let n = 1; n <= 10; n++) {
+                    const cx = originX + (n * (maxXScale / 14));
+                    svgContent += `<line x1="${cx}" y1="${originY}" x2="${cx}" y2="${originY + 5}" stroke="#94a3b8" stroke-width="0.8"/>`;
+                    svgContent += `<text x="${cx - 4}" y="${originY + 18}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#475569" font-weight="600">${n}</text>`;
+                }
+                svg.innerHTML = svgContent;
+                return;
+            }
+
+            const maxN = Math.max(14, reqN + 4);
+            const scaleFactor = eps <= 0.05 ? 900 : (eps <= 0.1 ? 550 : 220);
+
+            const topY = originY - (eps * scaleFactor);
+            const bottomY = originY + (eps * scaleFactor);
+            const bandHeight = bottomY - topY;
+
+            svgContent += `
+                <rect x="${originX}" y="${topY}" width="${maxXScale}" height="${bandHeight}" fill="#fef3c7" opacity="0.8"/>
+                <line x1="${originX}" y1="${topY}" x2="${originX + maxXScale}" y2="${topY}" stroke="#d97706" stroke-width="1.0" stroke-dasharray="4"/>
+                <line x1="${originX}" y1="${bottomY}" x2="${originX + maxXScale}" y2="${bottomY}" stroke="#d97706" stroke-width="1.0" stroke-dasharray="4"/>
+
+                <text x="25" y="${topY + 4}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" font-weight="600" fill="#d97706">L + &epsilon;</text>
+                <line x1="60" y1="${topY}" x2="88" y2="${topY}" stroke="#d97706" stroke-width="0.8" marker-end="url(#eps-arrow)"/>
+
+                <text x="25" y="${bottomY + 4}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" font-weight="600" fill="#d97706">L - &epsilon;</text>
+                <line x1="60" y1="${bottomY}" x2="88" y2="${bottomY}" stroke="#d97706" stroke-width="0.8" marker-end="url(#eps-arrow)"/>
+            `;
+
+            for (let n = 1; n <= curN; n++) {
+                const val = 1 / n;
+                const cx = originX + (n * (maxXScale / maxN));
+                const cy = originY - (val * scaleFactor);
+
+                if (n % 2 === 0 || n === 1 || n === reqN || n === curN) {
+                    svgContent += `<line x1="${cx}" y1="${originY}" x2="${cx}" y2="${originY + 5}" stroke="#94a3b8" stroke-width="0.8"/>`;
+                    svgContent += `<text x="${cx - 5}" y="${originY + 18}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#475569" font-weight="600">${n}</text>`;
+                }
+
+                if (cy < 20 || cy > 240) continue;
+
+                const inside = n > reqN;
+                const onBoundary = n === reqN;
+                let fillColor = '#d97706';
+                let strokeAttr = '';
+                let r = 5;
+
+                if (inside) {
+                    fillColor = '#10b981';
+                    r = 7;
+                } else if (onBoundary) {
+                    fillColor = '#fbbf24';
+                    strokeAttr = 'stroke="#d97706" stroke-width="1.2"';
+                    r = 6;
+                }
+
+                svgContent += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fillColor}" ${strokeAttr}/>`;
+            }
+
+            const thresholdX = originX + (reqN * (maxXScale / maxN));
+            svgContent += `
+                <line x1="${thresholdX}" y1="20" x2="${thresholdX}" y2="240" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="4"/>
+                <text x="${thresholdX + 6}" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="bold" fill="#ef4444">N = ${reqN} (Cutoff)</text>
+            `;
+
+            svg.innerHTML = svgContent;
+        }
+
+        // Initialize on load
+        setFormulaStep(0);
+        renderGameSVG(null, 0, 0);
+    </script>
+</body>
+</html>
+"""
+    with open('week1.html', 'w') as f:
+        f.write(html_content)
 
 def execute_git_sync():
     commit_message = (
-        "Use entity-encoded square root in geometric gap heading\n\n"
-        "Replaced the heading in week1.html to use &radic;2 for reliable\n"
-        "cross-browser rendering without LaTeX delimiters."
+        "Refine mathematical terminology, diagrams, and proof claims in Week 1\n\n"
+        "Addressed feedback on power sets, complement shading, real completeness,\n"
+        "quantifier order nuance, and simulator claims while fixing a JS global leak."
     )
 
     commands = [
@@ -46,5 +1068,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    patch_geometric_gap_heading()
+    write_week1_module()
     execute_git_sync()
