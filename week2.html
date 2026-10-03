@@ -292,10 +292,10 @@
                 </div>
             </div>
 
-            <!-- QUANTIFIER ORDER & SCOPING -->
+                        <!-- QUANTIFIER ORDER & SCOPING -->
             <div class="scoping-box">
-                <h4>💡 Quantifier Order and Dependency</h4>
-                <p>Quantifiers are read from left to right, creating a clear dependency chain:</p>
+                <h4>💡 Quantifier Order, Scope, and Dependency</h4>
+                <p>Quantifiers are read strictly from left to right, creating a hierarchy of scope and dependency:</p>
                 <table class="scoping-table">
                     <thead>
                         <tr><th>Variable</th><th>Scope</th><th>Dependency Rule</th></tr>
@@ -306,6 +306,34 @@
                         <tr><td><strong>$n$</strong></td><td>$\forall n > N$</td><td>Runs over all indices strictly past cutoff $N$.</td></tr>
                     </tbody>
                 </table>
+
+                <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px dashed #fed7aa;">
+                    <h5 style="margin: 0 0 0.5rem 0; color: #92400e; font-size: 0.98rem;">⚠️ Why Order Matters: The Fatal Quantifier Swap</h5>
+                    <p style="margin: 0 0 0.75rem 0; font-size: 0.93rem; line-height: 1.6; color: #1e293b;">
+                        In standard English, changing word order often preserves meaning. In mathematical logic, <strong>swapping nested quantifiers completely breaks the definition</strong>. Compare these two statements:
+                    </p>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 0.75rem;">
+                        <div style="background: #ffffff; border: 1px solid #bbf7d0; border-left: 4px solid #10b981; border-radius: 4px; padding: 0.85rem;">
+                            <strong style="color: #047857; font-size: 0.9rem;">Correct Definition ($\forall \epsilon \; \exists N$):</strong>
+                            <p style="margin: 0.35rem 0 0 0; font-size: 0.88rem; color: #1e293b;">
+                                <em>"For every tolerance $\epsilon > 0$, there exists an index $N$..."</em><br>
+                                $N$ is allowed to react to $\epsilon$. Make $\epsilon$ smaller, and $N$ can push further down the sequence ($N = \lceil 1/\epsilon \rceil$).
+                            </p>
+                        </div>
+                        <div style="background: #ffffff; border: 1px solid #fecaca; border-left: 4px solid #ef4444; border-radius: 4px; padding: 0.85rem;">
+                            <strong style="color: #b91c1c; font-size: 0.9rem;">Illegal Swap ($\exists N \; \forall \epsilon$):</strong>
+                            <p style="margin: 0.35rem 0 0 0; font-size: 0.88rem; color: #1e293b;">
+                                <em>"There exists a single index $N$ such that for every $\epsilon > 0$..."</em><br>
+                                Demands a single, fixed cutoff index that beats <em>every positive number simultaneously</em>.
+                            </p>
+                        </div>
+                    </div>
+
+                    <p style="margin: 0; font-size: 0.9rem; color: #475569; line-height: 1.5;">
+                        <strong>The consequence:</strong> If $|a_n - L| < \epsilon$ holds for <em>all</em> $\epsilon > 0$ past some fixed $N$, the only non-negative distance strictly less than every positive real is zero ($|a_n - L| = 0$). The swapped statement only holds for sequences that are <strong>eventually constant</strong> ($a_n = L$). For ordinary convergent sequences like $a_n = \frac{1}{n}$, no single $N$ can satisfy all $\epsilon$, proving order is essential.
+                    </p>
+                </div>
             </div>
 
             <div class="widget-instructions">
