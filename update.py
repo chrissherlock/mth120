@@ -23,7 +23,7 @@ def patch_algebraic_structures():
                     </li>
                     <li>
                         <strong>Commutative Ring $(\mathbb{Z}, +, \times)$:</strong> A set where addition is an abelian group, and multiplication is associative, commutative, and distributive over addition.
-                        <em>Course connection:</em> Lacks multiplicative inverses. Equations like $2x = 3$ have no solution in the ring $\mathbb{Z}$, motivating expansion. (In linear algebra, $n \times n$ matrices $M_n(\mathbb{R})$ form a non-commutative ring where matrix multiplication is associative and distributive, but $AB \neq BA$).
+                        <em>Course connection:</em> Lacks multiplicative inverses. Equations like $2x = 3$ have no solution in the ring $\mathbb{Z}$, motivating expansion. (In linear algebra, $n \times n$ matrices $M_n(\mathbb{R})$ form a non-commutative ring where matrix multiplication is associative and distributive, <span style="white-space: nowrap;">but $AB \neq BA$)</span>.
                     </li>
                     <li>
                         <strong>Field $(\mathbb{Q}, +, \times)$ &amp; $(\mathbb{R}, +, \times)$:</strong> A commutative ring where every non-zero element has a multiplicative inverse ($a^{-1} = 1/a$).
@@ -38,25 +38,24 @@ def patch_algebraic_structures():
 
     target_pattern = r'<!-- (?:ALGEBRAIC STRUCTURES & EQUATIONS ASIDE|ASIDE:\s*SOLVING EQUATIONS) -->[\s\S]*?</div>\s*</div>'
 
-    # Using lambda _: replacement prevents Python's re template parser from evaluating LaTeX backslashes
     new_content, count = re.subn(target_pattern, lambda _: replacement, content)
 
     if count == 0:
-        fallback_pattern = r'<div class="aside-box">[\s\S]*?<h4>💡 Aside: (?:Groups, Rings, Fields, and Solvability|Context: Expanding Systems to Solve Equations)</h4>[\s\S]*?</div>'
+        fallback_pattern = r'<div class="aside-box">[\s\S]*?<h4>💡 (?:Algebraic Structures|Aside: Groups, Rings, Fields, and Solvability|Aside: Context: Expanding Systems to Solve Equations)[\s\S]*?</h4>[\s\S]*?</div>'
         new_content, count = re.subn(fallback_pattern, lambda _: replacement, content)
 
     if count > 0:
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(new_content)
-        print(f"Successfully linked algebraic structures to course content in {filepath}.")
+        print(f"Successfully updated algebraic structures aside in {filepath}.")
     else:
         print("Warning: Target aside box not found. No modifications made.")
 
 def execute_git_sync():
     commit_message = (
-        "Link groups, rings, fields, and solvability to course syllabus\n\n"
-        "Updated aside-box in week1.html to explicitly tie algebraic structures\n"
-        "to number expansions, Gaussian pivot division in vector spaces, and C."
+        "Prevent line-wrapping for matrix non-commutativity note in week1.html\n\n"
+        "Wrapped the AB != BA expression in a nowrap span to ensure clean inline\n"
+        "rendering across responsive viewports."
     )
     commands = [
         ['git', 'add', 'week1.html', 'update.py'],
