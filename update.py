@@ -37,8 +37,8 @@ def write_week1_module():
 
         /* Diagram Container Styles */
         .diagram-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
-        .diagram-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; align-items: center; }
-        .diagram-card h5 { margin: 0 0 0.5rem 0; color: #b45309; font-size: 0.95rem; text-align: center; }
+        .diagram-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; align-items: center; min-width: 0; }
+        .diagram-card h5 { margin: 0 0 0.75rem 0; color: #b45309; font-size: 0.95rem; text-align: center; white-space: nowrap; }
 
         /* Dual-Track Layout */
         .dual-track-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; margin-bottom: 2rem; }
@@ -195,7 +195,7 @@ def write_week1_module():
             $$A \times B = \{ (a, b) \mid a \in A \text{ and } b \in B \}$$
             When $A = \mathbb{R}$ and $B = \mathbb{R}$, this operation constructs the familiar 2D coordinate plane $\mathbb{R}^2$.</p>
 
-            <div class="diagram-card" style="margin: 1.5rem 0;">
+            <div class="diagram-card" style="margin: 1.5rem 0; width: 100%; box-sizing: border-box;">
                 <h5>Discrete Cartesian Grid ($A = \{1,2,3\} \times B = \{1,2\}$)</h5>
                 <svg width="300" height="130" viewBox="0 0 300 130">
                     <line x1="50" y1="100" x2="270" y2="100" stroke="#64748b" stroke-width="1.5"/>
@@ -247,7 +247,7 @@ def write_week1_module():
             <h2>2. The Hierarchy of Number Systems</h2>
             <p>Mathematics constructs its universe of numbers step by step, algebraically expanding systems to solve equations and geometric problems that previous systems could not express. Each expansion resolves an <strong>algebraic closure failure</strong> of the previous system.</p>
 
-            <div class="diagram-card" style="margin: 1.5rem 0;">
+            <div class="diagram-card" style="margin: 1.5rem 0; width: 100%; box-sizing: border-box;">
                 <h5>Nested Set Containment Hierarchy ($\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$ )</h5>
                 <svg width="520" height="150" viewBox="0 0 520 150">
                     <rect x="10" y="10" width="500" height="130" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
@@ -272,19 +272,19 @@ def write_week1_module():
 
             <div class="diagram-grid">
                 <div class="diagram-card">
-                    <h5>Closure Failure 1: Subtraction in $\mathbb{N}$</h5>
+                    <h5>Algebraic Failure: Subtraction in $\mathbb{N}$</h5>
                     <svg width="240" height="90" viewBox="0 0 240 90">
-                        <text x="20" y="30" font-family="sans-serif" font-size="11" fill="#0f172a">Equation: $x + 5 = 2$</text>
-                        <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#ef4444" font-weight="bold">Result: $x = -3 \notin \mathbb{N}$</text>
-                        <text x="20" y="78" font-family="sans-serif" font-size="10" fill="#64748b">&rarr; Forces expansion to Integers ($\mathbb{Z}$)</text>
+                        <text x="15" y="30" font-family="sans-serif" font-size="11" fill="#0f172a">Equation: $x + 5 = 2$</text>
+                        <text x="15" y="55" font-family="sans-serif" font-size="11" fill="#ef4444" font-weight="bold">Result: $x = -3 \notin \mathbb{N}$</text>
+                        <text x="15" y="78" font-family="sans-serif" font-size="10" fill="#64748b">&rarr; Expands to Integers ($\mathbb{Z}$)</text>
                     </svg>
                 </div>
                 <div class="diagram-card">
-                    <h5>Closure Failure 2: Division in $\mathbb{Z}$</h5>
+                    <h5>Algebraic Failure: Division in $\mathbb{Z}$</h5>
                     <svg width="240" height="90" viewBox="0 0 240 90">
-                        <text x="20" y="30" font-family="sans-serif" font-size="11" fill="#0f172a">Equation: $2x = 3$</text>
-                        <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#ef4444" font-weight="bold">Result: $x = \frac{3}{2} \notin \mathbb{Z}$</text>
-                        <text x="20" y="78" font-family="sans-serif" font-size="10" fill="#64748b">&rarr; Forces expansion to Rationals ($\mathbb{Q}$)</text>
+                        <text x="15" y="30" font-family="sans-serif" font-size="11" fill="#0f172a">Equation: $2x = 3$</text>
+                        <text x="15" y="55" font-family="sans-serif" font-size="11" fill="#ef4444" font-weight="bold">Result: $x = \frac{3}{2} \notin \mathbb{Z}$</text>
+                        <text x="15" y="78" font-family="sans-serif" font-size="10" fill="#64748b">&rarr; Expands to Rationals ($\mathbb{Q}$)</text>
                     </svg>
                 </div>
             </div>
@@ -295,14 +295,13 @@ def write_week1_module():
             <h3>Real Numbers ($\mathbb{R}$): Filling the Geometric Gaps</h3>
             <p>Despite being dense (meaning between any two rational numbers, another rational always exists), $\mathbb{Q}$ contains massive structural "holes." For instance, applying the Pythagorean theorem to a right triangle with side lengths of 1 gives a hypotenuse of $\sqrt{2}$. Yet, <strong>Theorem:</strong> There is no rational number $p/q$ such that $(p/q)^2 = 2$.</p>
 
-            <div class="diagram-card" style="margin: 1.5rem 0;">
+            <div class="diagram-card" style="margin: 1.5rem 0; width: 100%; box-sizing: border-box;">
                 <h5>The Geometric Gap: Constructing $\sqrt{2}$ on the Number Line</h5>
                 <svg width="460" height="110" viewBox="0 0 460 110">
                     <line x1="30" y1="80" x2="430" y2="80" stroke="#64748b" stroke-width="2"/>
                     <circle cx="100" cy="80" r="4" fill="#64748b"/><text x="97" y="98" font-family="sans-serif" font-size="10" fill="#64748b">0</text>
                     <circle cx="240" cy="80" r="4" fill="#64748b"/><text x="235" y="98" font-family="sans-serif" font-size="10" fill="#64748b">1</text>
                     <circle cx="380" cy="80" r="4" fill="#64748b"/><text x="375" y="98" font-family="sans-serif" font-size="10" fill="#64748b">2</text>
-                    <!-- Right triangle legs and hypotenuse arc -->
                     <polygon points="100,80 240,80 240,40" fill="none" stroke="#d97706" stroke-width="1.5"/>
                     <text x="170" y="75" font-family="sans-serif" font-size="9" fill="#d97706">1</text>
                     <text x="245" y="62" font-family="sans-serif" font-size="9" fill="#d97706">1</text>
@@ -696,11 +695,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Expand Number Systems section with detailed proofs and SVG architecture diagrams\n\n"
-        "Added comprehensive subsections covering algebraic closure failures, field axioms,\n"
-        "irrational geometric gaps, and the Completeness Axiom, accompanied by four custom\n"
-        "inline SVG visualizers (hierarchy nesting, equation bridging, sqrt(2) geometry, \n"
-        "and completeness upper bounds)."
+        "Fix awkward label wrapping in closure failure diagrams\n\n"
+        "Adjusted diagram card grid layout and padding to prevent single-letter \n"
+        "number system symbols (like N) from wrapping awkwardly beneath section headers."
     )
 
     commands = [
