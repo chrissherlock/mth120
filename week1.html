@@ -46,7 +46,7 @@
             <p>We begin by formalizing collections of objects as <strong>sets</strong> ($A = \{1, 2, 3\}$) and mapping relationships via <strong>functions</strong> ($f: X \rightarrow Y$). This extends to the rigorous definition of <strong>sequences</strong>: functions mapping from $\mathbb{N}$ to $\mathbb{R}$, denoted $(a_n)_{n=0}^\infty$.</p>
 
             <h3>The $\epsilon-N$ Convergence Definition</h3>
-            <p>A sequence $(a_n)$ converges to a limit $L$ if, for any error margin $\epsilon > 0$, there exists a threshold index $N$ such that for all $n > N$, the distance $ert{}a_n - Lert{} < \epsilon$.</p>
+            <p>A sequence $(a_n)$ converges to a limit $L$ if, for any error margin $\epsilon > 0$, there exists a threshold index $N$ such that for all $n > N$, the distance $\vert{}a_n - L\vert{} < \epsilon$.</p>
 
             <div class="simulator">
                 <div class="telemetry">
@@ -59,14 +59,10 @@
 
                 <div class="canvas-container">
                     <svg id="plot" width="600" height="200" viewBox="0 0 600 200">
-                        <!-- Axes -->
                         <line x1="40" y1="160" x2="580" y2="160" stroke="#94a3b8" stroke-width="2"/>
                         <line x1="40" y1="20" x2="40" y2="160" stroke="#94a3b8" stroke-width="2"/>
-                        <!-- Epsilon Band (Dynamic) -->
                         <rect id="eps-band" x="40" y="100" width="540" height="60" fill="#bae6fd" opacity="0.5"/>
-                        <!-- Threshold Line (Dynamic) -->
                         <line id="n-threshold" x1="200" y1="20" x2="200" y2="160" stroke="#ef4444" stroke-width="2" stroke-dasharray="4" opacity="0"/>
-                        <!-- Points will be injected here -->
                         <g id="points-group"></g>
                     </svg>
                 </div>
@@ -120,13 +116,13 @@
                 phase: "Iteration", n: 3,
                 summary: "Terms approach but remain outside the boundary.",
                 what: "We calculate $a_2$ and $a_3$. The values are decreasing but still strictly greater than $\epsilon$.",
-                why: "The sequence is monotonic decreasing, but we have not yet found the index $N$ where the constraint $ert{}a_n - 0ert{} < \epsilon$ is satisfied."
+                why: "The sequence is monotonic decreasing, but we have not yet found the index $N$ where the constraint $\vert{}a_n - 0\vert{} < \epsilon$ is satisfied."
             },
             {
                 phase: "Threshold Discovery", n: 5,
                 summary: "Calculating the critical index N.",
                 what: "We set $1/n < 0.2$, algebraically rearranging to $n > 1/0.2$, meaning $n > 5$. We mark $N=5$ with the red threshold line.",
-                why: "We are reverse-engineering the required index based on the chosen $\epsilon$. If $\epsilon$ changes, $N$ must adapt mathematically."
+                why: "We are reverse-engineering the required index based on the chosen $\\epsilon$. If $\epsilon$ changes, $N$ must adapt mathematically."
             },
             {
                 phase: "Convergence Verification", n: 8,

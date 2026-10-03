@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 import os
 import subprocess
-import re
 
 def write_week1_module():
-    html_content = """<!DOCTYPE html>
+    # Using a raw string (r"") prevents Python from eating backslashes,
+    # keeping all LaTeX commands perfectly intact for KaTeX.
+    html_content = r"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -49,10 +50,10 @@ def write_week1_module():
 
         <div class="module-content">
             <h2>1. Theoretical Foundations</h2>
-            <p>We begin by formalizing collections of objects as <strong>sets</strong> ($A = \\{1, 2, 3\\}$) and mapping relationships via <strong>functions</strong> ($f: X \\rightarrow Y$). This extends to the rigorous definition of <strong>sequences</strong>: functions mapping from $\\mathbb{N}$ to $\\mathbb{R}$, denoted $(a_n)_{n=0}^\\infty$.</p>
+            <p>We begin by formalizing collections of objects as <strong>sets</strong> ($A = \{1, 2, 3\}$) and mapping relationships via <strong>functions</strong> ($f: X \rightarrow Y$). This extends to the rigorous definition of <strong>sequences</strong>: functions mapping from $\mathbb{N}$ to $\mathbb{R}$, denoted $(a_n)_{n=0}^\infty$.</p>
 
-            <h3>The $\\epsilon-N$ Convergence Definition</h3>
-            <p>A sequence $(a_n)$ converges to a limit $L$ if, for any error margin $\\epsilon > 0$, there exists a threshold index $N$ such that for all $n > N$, the distance $\vert{}a_n - L\vert{} < \\epsilon$.</p>
+            <h3>The $\epsilon-N$ Convergence Definition</h3>
+            <p>A sequence $(a_n)$ converges to a limit $L$ if, for any error margin $\epsilon > 0$, there exists a threshold index $N$ such that for all $n > N$, the distance $\vert{}a_n - L\vert{} < \epsilon$.</p>
 
             <div class="simulator">
                 <div class="telemetry">
@@ -65,14 +66,10 @@ def write_week1_module():
 
                 <div class="canvas-container">
                     <svg id="plot" width="600" height="200" viewBox="0 0 600 200">
-                        <!-- Axes -->
                         <line x1="40" y1="160" x2="580" y2="160" stroke="#94a3b8" stroke-width="2"/>
                         <line x1="40" y1="20" x2="40" y2="160" stroke="#94a3b8" stroke-width="2"/>
-                        <!-- Epsilon Band (Dynamic) -->
                         <rect id="eps-band" x="40" y="100" width="540" height="60" fill="#bae6fd" opacity="0.5"/>
-                        <!-- Threshold Line (Dynamic) -->
                         <line id="n-threshold" x1="200" y1="20" x2="200" y2="160" stroke="#ef4444" stroke-width="2" stroke-dasharray="4" opacity="0"/>
-                        <!-- Points will be injected here -->
                         <g id="points-group"></g>
                     </svg>
                 </div>
@@ -84,7 +81,7 @@ def write_week1_module():
                         <button id="btn-reset" onclick="reset()">Reset</button>
                     </div>
                     <div class="step-summary" id="step-summary">
-                        <strong>Scenario:</strong> We are tracking consecutive measurements of a process that decays over time. We need to prove it eventually stabilizes near 0 within a strict tolerance ($\\epsilon$).
+                        <strong>Scenario:</strong> We are tracking consecutive measurements of a process that decays over time. We need to prove it eventually stabilizes near 0 within a strict tolerance ($\epsilon$).
                     </div>
                     <div class="toggle-group">
                         <select id="seq-toggle" onchange="changeSeq()">
@@ -97,7 +94,7 @@ def write_week1_module():
                 <div class="analysis-panes">
                     <div class="pane">
                         <h4>What Is Happening (Mechanics)</h4>
-                        <div id="pane-what">The sequence initializes at $n=1$. The target limit is $L=0$. We establish an arbitrary error band $\\epsilon = 0.2$ (the blue zone).</div>
+                        <div id="pane-what">The sequence initializes at $n=1$. The target limit is $L=0$. We establish an arbitrary error band $\epsilon = 0.2$ (the blue zone).</div>
                     </div>
                     <div class="pane">
                         <h4>Why The System Does This (Rationale)</h4>
@@ -119,26 +116,26 @@ def write_week1_module():
             {
                 phase: "Initialization", n: 1,
                 summary: "Setting the boundary constraint.",
-                what: "The sequence initializes. We establish an arbitrary error band $\\epsilon = 0.2$ (the blue zone).",
+                what: "The sequence initializes. We establish an arbitrary error band $\epsilon = 0.2$ (the blue zone).",
                 why: "We must demonstrate that the sequence can permanently enter and remain within *any* arbitrary boundary we set around $L=0$."
             },
             {
                 phase: "Iteration", n: 3,
                 summary: "Terms approach but remain outside the boundary.",
-                what: "We calculate $a_2$ and $a_3$. The values are decreasing but still strictly greater than $\\epsilon$.",
-                why: "The sequence is monotonic decreasing, but we have not yet found the index $N$ where the constraint $\vert{}a_n - 0\vert{} < \\epsilon$ is satisfied."
+                what: "We calculate $a_2$ and $a_3$. The values are decreasing but still strictly greater than $\epsilon$.",
+                why: "The sequence is monotonic decreasing, but we have not yet found the index $N$ where the constraint $\vert{}a_n - 0\vert{} < \epsilon$ is satisfied."
             },
             {
                 phase: "Threshold Discovery", n: 5,
                 summary: "Calculating the critical index N.",
                 what: "We set $1/n < 0.2$, algebraically rearranging to $n > 1/0.2$, meaning $n > 5$. We mark $N=5$ with the red threshold line.",
-                why: "We are reverse-engineering the required index based on the chosen $\\epsilon$. If $\\epsilon$ changes, $N$ must adapt mathematically."
+                why: "We are reverse-engineering the required index based on the chosen $\\epsilon$. If $\epsilon$ changes, $N$ must adapt mathematically."
             },
             {
                 phase: "Convergence Verification", n: 8,
                 summary: "All subsequent terms remain trapped within epsilon.",
-                what: "For all $n > 5$ (e.g., $n=6, 7, 8$), the points fall strictly inside the blue $\\epsilon$ band.",
-                why: "This fulfills the universal quantifier $\\forall n > N$. Because we can perform this algebraic mapping for *any* $\\epsilon > 0$, the limit is proven."
+                what: "For all $n > 5$ (e.g., $n=6, 7, 8$), the points fall strictly inside the blue $\epsilon$ band.",
+                why: "This fulfills the universal quantifier $\forall n > N$. Because we can perform this algebraic mapping for *any* $\epsilon > 0$, the limit is proven."
             }
         ];
 
@@ -204,20 +201,19 @@ def write_week1_module():
         reset();
     </script>
 </body>
-</html>
-"""
+</html>"""
     with open('week1.html', 'w') as f:
         f.write(html_content)
 
 def update_curriculum_index():
     if not os.path.exists('index.html'):
-        print("index.html not found in current directory. Creating placeholder...")
+        print("index.html not found in current directory. Please run in root.")
         return
 
     with open('index.html', 'r') as f:
         content = f.read()
 
-    # Using standard strings prevents literal backslashes from breaking the JS parser
+    # Using standard string replacement to avoid regex escape issues
     target = '<a href="#" class="module-link">View Module</a>'
     replacement = '<a href="${item.week === 1 ? \'week1.html\' : \'#\'}" class="module-link">View Module</a>'
 
@@ -227,9 +223,18 @@ def update_curriculum_index():
         f.write(updated_content)
 
 def execute_git_sync():
+    commit_message = (
+        "Fix LaTeX escaping and JS template injection in update script\n\n"
+        "Converted the HTML payload variable to a Python raw string to ensure\n"
+        "all LaTeX backslashes bypass Python's escape sequence parsing. Replaced\n"
+        "the absolute value \\vert command with standard pipes. Switched the \n"
+        "index.html injection method from re.sub to standard string replacement\n"
+        "to protect JavaScript template literals from corruption."
+    )
+
     commands = [
-        ['git', 'add', 'week1.html', 'index.html'],
-        ['git', 'commit', '-m', 'Add Week 1 module with interactive epsilon-N sequence simulator\n\nCreated week1.html covering Sets, Numbers, and Sequences. Integrated \nKaTeX for mathematical typesetting and implemented a directed narrative \nstepper to visualize sequence convergence limits. Updated the main \nindex.html grid to actively link to the new Week 1 module.'],
+        ['git', 'add', 'update.py', 'week1.html', 'index.html'],
+        ['git', 'commit', '-m', commit_message],
         ['git', 'push', 'origin', 'main']
     ]
 
