@@ -35,13 +35,13 @@ def write_week1_module():
         h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; }
         h3 { color: #1e293b; margin-top: 1.5rem; }
 
-        /* Infobox Styles with Badge Keycap Layout */
-        .infobox { background: #f1f5f9; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.25rem 0 1.75rem 0; }
+        /* Infobox Styles: Clean Typography */
+        .infobox { background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.25rem 0 1.75rem 0; }
         .infobox h4 { margin: 0 0 0.85rem 0; color: #0f172a; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
-        .notation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 0.85rem 1.5rem; font-size: 0.95rem; }
-        .notation-item { display: grid; grid-template-columns: minmax(135px, max-content) 1fr; gap: 0.85rem; align-items: center; }
-        .notation-sym { font-family: monospace; font-weight: bold; color: var(--accent); white-space: nowrap; background: #e2e8f0; border: 1px solid #cbd5e1; border-radius: 4px; padding: 0.2rem 0.55rem; display: inline-flex; align-items: center; justify-content: flex-start; }
-        .notation-desc { min-width: 0; word-break: break-word; line-height: 1.45; }
+        .notation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 0.85rem 1.75rem; font-size: 0.95rem; }
+        .notation-item { display: grid; grid-template-columns: minmax(130px, max-content) 1fr; gap: 0.75rem; align-items: baseline; }
+        .notation-sym { font-weight: 600; color: var(--accent); white-space: nowrap; }
+        .notation-desc { min-width: 0; word-break: break-word; line-height: 1.5; color: #334155; }
 
         /* Diagram Container Styles */
         .diagram-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
@@ -902,9 +902,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Style notation keys as vertically-aligned badges in infoboxes\n\n"
-        "Updated .notation-item and .notation-sym in week1.html to use vertical centering "
-        "and structured badge styling, enhancing scannability and balancing KaTeX line heights."
+        "Remove box outlines from notation references in week1.html\n\n"
+        "Stripped badge backgrounds and borders from .notation-sym, restoring clean "
+        "mathematical typography while preserving grid alignment."
     )
 
     commands = [
@@ -918,7 +918,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with badge-styled notation keys...")
+    print("Writing Week 1 module with clean notation typography...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
