@@ -327,6 +327,17 @@ def write_week1_module():
                 </svg>
             </div>
 
+            <!-- NARRATIVE INTRODUCTION -->
+            <p>Mathematics does not begin with complex formulas or calculus; it begins with an act of imagination: drawing a circle around a collection of thoughts and calling it a <strong>set</strong>. From that simple foundational step, mathematics constructs an entire universe, expanding its boundaries whenever reality demands a number that does not yet exist, and ultimately learning to stare infinity in the eye without blinking.</p>
+
+            <h3>The Conceptual Arc of Week 1</h3>
+            <p>Our journey this week spans three profound shifts in mathematical thought:</p>
+            <ul>
+                <li><strong>Sets (The Lego Bricks):</strong> Before measuring curves or solving equations, we need objects to work with. Sets provide the foundational grammar of logic, allowing us to bundle distinct objects and carve up space with surgical precision.</li>
+                <li><strong>Number Systems (Algebraic Desperation):</strong> Every major expansion in our number systems was triggered by an algebraic failure—from inventing negative numbers to solve subtraction to invoking real completeness to fill geometric gaps like $\sqrt{2}$.</li>
+                <li><strong>Sequence Limits (Taming the Infinite):</strong> Sequences turn infinity into a rigorous game of precision, bridging discrete math to continuous calculus through the $\epsilon-N$ definition.</li>
+            </ul>
+
             <h2>1. Set Theory Foundations</h2>
 
             <!-- SECTION 1 NOTATION INFOBOX -->
@@ -557,7 +568,7 @@ def write_week1_module():
                     <line x1="50" y1="145" x2="690" y2="145" stroke="#64748b" stroke-width="2.5"/>
                     <circle cx="130" cy="145" r="6" fill="#64748b"/><text x="125" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">0</text>
                     <circle cx="370" cy="145" r="6" fill="#64748b"/><text x="365" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">1</text>
-                    <circle cx="610" cy="145" r="6" fill="#64748b"/><text x="605" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="bold">2</text>
+                    <circle cx="610" cy="145" r="6" fill="#64748b"/><text x="605" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">2</text>
 
                     <polygon points="130,145 370,145 370,65" fill="#fef3c7" opacity="0.65" stroke="#d97706" stroke-width="2"/>
                     <text x="245" y="135" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#d97706" font-weight="bold">1</text>
@@ -943,7 +954,7 @@ def write_week1_module():
 
             <!-- DUAL-TRACK SIMULATOR GUIDE AND PURPOSE -->
             <div class="simulator-guide">
-                <h4>🎛 Purpose &amp; Instructions for the Dual-Track Simulator</h4>
+                <h4>&#127918; Purpose &amp; Instructions for the Dual-Track Simulator</h4>
                 <p><strong>What is this?</strong> The simulator below bridges pure mathematical theory (Track 1) with practical numerical engineering (Track 2). It lets you step through how sequence convergence operates under the hood, showing both the logical proof requirements and the real-world error-correction mechanics side by side.</p>
                 <p><strong>How to use it:</strong></p>
                 <ol>
@@ -1540,9 +1551,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Correct epsilon boundary labels to L + ε and L - ε in renderGameSVG\n\n"
-        "Updated week1.html boundary labels to correctly indicate upper (L + ε) "
-        "and lower (L - ε) bounds around limit L=0, maintaining strictly positive ε > 0."
+        "Fix Dual-Track Simulator SVG layout and HTML entity encoding\n\n"
+        "Restored the lower tolerance band visibility in week1.html and replaced "
+        "raw unicode symbols with clean HTML entity encoding."
     )
 
     commands = [
@@ -1556,7 +1567,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with corrected epsilon boundary labels...")
+    print("Writing Week 1 module with fully fixed simulator canvas and encoding...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
