@@ -2,7 +2,7 @@
 import os
 import subprocess
 
-def expand_squeeze_theorem_explanation():
+def add_reciprocal_comparison_to_squeeze_example():
     filepath = 'week2.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
@@ -11,28 +11,42 @@ def expand_squeeze_theorem_explanation():
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # Old concise text snippet for the Squeeze Theorem intro
-    old_squeeze_intro = '''            <h3 style="margin-top: 2rem;">The Squeeze Theorem (Sandwich Theorem)</h3>
-            <p>Sometimes a sequence is too complex or oscillatory to evaluate directly, but it can be trapped between two simpler sequences that share the exact same limit. This is formalized by the <strong>Squeeze Theorem</strong>:</p>'''
+    # Old Classic Example block
+    old_classic_example = '''            <div class="aside-box" style="margin-top: 1.5rem;">
+                <h4>🎯 Classic Example: Applying the Squeeze Theorem</h4>
+                <p>Consider evaluating $\lim_{n\to\infty} \frac{\sin(n)}{n}$. Because sine oscillates between $-1$ and $1$, we know:</p>
+                <p style="text-align: center; margin: 0.75rem 0;">$$-\frac{1}{n} \le \frac{\sin(n)}{n} \le \frac{1}{n}$$</p>
+                <p>Since $\lim_{n\to\infty} \left(-\frac{1}{n}\right) = 0$ and $\lim_{n\to\infty} \left(\frac{1}{n}\right) = 0$, the Squeeze Theorem forces our middle sequence to also converge:</p>
+                <p style="text-align: center; margin-top: 0.75rem;">$$\lim_{n\to\infty} \frac{\sin(n)}{n} = 0$$</p>
+            </div>'''
 
-    # Expanded, rigorous, and intuitive replacement block
-    expanded_squeeze_intro = '''            <h3 style="margin-top: 2rem;">The Squeeze Theorem (Sandwich Theorem)</h3>
-            <p>Sometimes a sequence is too wild, complex, or oscillatory to evaluate directly using standard arithmetic laws. However, if we can bound it—trapping it from above by a larger sequence and from below by a smaller sequence that both converge to the <em>exact same limit</em>—the middle sequence has nowhere else to go. This powerful principle is formalized as the <strong>Squeeze Theorem</strong> (also known as the Sandwich Theorem):</p>
-            <p><strong>Geometric Intuition:</strong> Imagine two tracker curves or enclosing walls closing in symmetrically from the ceiling and floor toward a common target $L$. As $n$ approaches infinity, the gap between the upper and lower bounds vanishes to zero. Any sequence forced to live inside that narrowing gap is mathematically compressed into sharing that exact same limit.</p>'''
+    # Expanded Classic Example block featuring both sin(n)/n and n/sin(n)
+    expanded_classic_example = '''            <div class="aside-box" style="margin-top: 1.5rem;">
+                <h4>🎯 Classic Example: Applying the Squeeze Theorem</h4>
+                <p>Consider evaluating $\lim_{n\to\infty} \frac{\sin(n)}{n}$. Because sine oscillates between $-1$ and $1$, we know:</p>
+                <p style="text-align: center; margin: 0.75rem 0;">$$-\frac{1}{n} \le \frac{\sin(n)}{n} \le \frac{1}{n}$$</p>
+                <p>Since $\lim_{n\to\infty} \left(-\frac{1}{n}\right) = 0$ and $\lim_{n\to\infty} \left(\frac{1}{n}\right) = 0$, the Squeeze Theorem forces our middle sequence to also converge:</p>
+                <p style="text-align: center; margin-top: 0.75rem;">$$\lim_{n\to\infty} \frac{\sin(n)}{n} = 0$$</p>
 
-    if old_squeeze_intro in content:
-        content = content.replace(old_squeeze_intro, expanded_squeeze_intro)
+                <hr style="border: none; border-top: 1px solid #fde68a; margin: 1.25rem 0;">
+
+                <p><strong>Cautionary Contrast: What about the reciprocal $\frac{n}{\sin(n)}$?</strong></p>
+                <p>It is easy to confuse $\frac{\sin(n)}{n}$ with its reciprocal $\frac{n}{\sin(n)}$. However, as $n$ grows while $\sin(n)$ periodically approaches $0$ near integer multiples of $\pi$, the ratio $\frac{n}{\sin(n)}$ shoots off toward $\pm\infty$ with wild, unbounded oscillations. Therefore, <strong>$\lim_{n\to\infty} \frac{n}{\sin(n)}$ diverges</strong> and the Squeeze Theorem cannot be applied here.</p>
+            </div>'''
+
+    if old_classic_example in content:
+        content = content.replace(old_classic_example, expanded_classic_example)
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
-        print("Successfully expanded Squeeze Theorem explanation in week2.html.")
+        print("Successfully added n/sin(n) comparison to Squeeze Theorem example in week2.html.")
     else:
-        print("Squeeze Theorem intro anchor not found in week2.html.")
+        print("Classic Example block not found in week2.html.")
 
 def execute_git_sync():
     commit_message = (
-        "Expand Squeeze Theorem explanation and intuition in week2.html\n\n"
-        "Added detailed geometric and physical intuition for the Squeeze Theorem\n"
-        "before presenting the formal limit inequalities in week2.html."
+        "Add comparison for n / sin(n) divergence in Squeeze Theorem classic example\n\n"
+        "Expanded the Squeeze Theorem classic example box in week2.html to contrast\n"
+        "the convergent sin(n)/n with the divergent reciprocal n / sin(n)."
     )
     commands = [
         ['git', 'add', 'week2.html', 'update.py'],
@@ -44,5 +58,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    expand_squeeze_theorem_explanation()
+    add_reciprocal_comparison_to_squeeze_example()
     execute_git_sync()
