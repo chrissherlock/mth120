@@ -271,13 +271,7 @@
                         <button id="btn-fw-next" onclick="stepFormula(1)">Next Clause</button>
                     </div>
                     <div class="step-summary" id="fw-step-summary"></div>
-                    <div class="toggle-group">
-                        <label for="fw-dimension-toggle" style="font-size: 0.85rem; font-weight: 700; color: #475569; display: block; margin-bottom: 0.5rem;">FRAMEWORK VIEW:</label>
-                        <select id="fw-dimension-toggle" onchange="changeFormulaPerspective()">
-                            <option value="adversarial">Adversarial Game (Skeptic vs. Prover)</option>
-                            <option value="verification">Analogy: Software Specification</option>
-                        </select>
-                    </div>
+
                 </div>
 
                 <div class="analysis-panes">
@@ -778,39 +772,31 @@
     </div>
 
     <script>
-        const formulaState = { step: 0, perspective: 'adversarial' };
+        const formulaState = { step: 0 };
         const formulaClauses = [
             {
-                clauseTitle: "1. The Challenge (∀ϵ > 0)", quantifier: "Universal (∀)", advRole: "Given tolerance", advScope: "Arbitrary positive real",
-                advSummary: "<strong>Step 1: Establishing tolerance.</strong> Consider any arbitrary positive distance $\\epsilon > 0$.",
-                advWhat: "<p>We are given an arbitrary number $\\epsilon > 0$, forming a neighborhood $(L - \\epsilon, L + \\epsilon)$ around the limit.</p>",
-                advWhy: "<p>Requiring the condition to hold for all positive $\\epsilon$ prevents oscillations away from $L$.</p>",
-                verRole: "Test constraint", verScope: "Parameter specification", verSummary: "Analogy parameter.",
-                verWhat: "<p>Input accuracy specification.</p>", verWhy: "<p>Stable systems satisfy arbitrary tolerances.</p>"
+                clauseTitle: "1. The Challenge (∀ϵ > 0)", quantifier: "Universal (∀)", role: "Given tolerance", scope: "Arbitrary positive real",
+                summary: "<strong>Step 1: Establishing tolerance.</strong> Consider any arbitrary positive distance $\epsilon > 0$.",
+                what: "<p>We are given an arbitrary positive distance $\epsilon > 0$, forming a symmetric neighborhood $(L - \epsilon, L + \epsilon)$ around the target limit $L$.</p>",
+                why: "<p>Demanding the condition holds for every $\epsilon > 0$ ensures the sequence cannot settle at or bounce toward any other value.</p>"
             },
             {
-                clauseTitle: "2. The Response (∃N ∈ ℕ)", quantifier: "Existential (∃)", advRole: "Finding a witness index", advScope: "Dependent on ϵ",
-                advSummary: "<strong>Step 2: Identifying cutoff index N.</strong> An integer $N$ exists past which terms stay within tolerance.",
-                advWhat: "<p>For $a_n = 1/n$, one convenient choice is $N = \\lceil 1/\\epsilon \\rceil$.</p>",
-                advWhy: "<p>Allows $N$ to depend directly on $\\epsilon$.</p>",
-                verRole: "Bound synthesis", verScope: "Latency cutoff", verSummary: "Analogy cutoff.",
-                verWhat: "<p>Execution cycle cutoff.</p>", verWhy: "<p>Ensures compliance.</p>"
+                clauseTitle: "2. The Response (∃N ∈ ℕ)", quantifier: "Existential (∃)", role: "Cutoff index", scope: "Dependent on ϵ",
+                summary: "<strong>Step 2: Identifying cutoff index N.</strong> An integer $N$ exists past which terms remain trapped.",
+                what: "<p>We determine an integer index $N$ based on $\epsilon$. For example, with $a_n = 1/n$, choosing $N = \lceil 1/\epsilon \rceil$ ensures $1/N \le \epsilon$.</p>",
+                why: "<p>Because $N$ is chosen after $\epsilon$, it can push as far out down the sequence tail as necessary to satisfy tiny tolerances.</p>"
             },
             {
-                clauseTitle: "3. The Tail Scope (∀n > N)", quantifier: "Universal (∀)", advRole: "Evaluation of the tail", advScope: "All subsequent indices",
-                advSummary: "<strong>Step 3: Examining all terms past N.</strong> Every term with index $n > N$ satisfies the distance condition.",
-                advWhat: "<p>We evaluate all indices strictly past $N$ ($n = N+1, N+2, \dots$).</p>",
-                advWhy: "<p>Convergence is a property of the long-term tail.</p>",
-                verRole: "Suffix invariant", verScope: "Steady-state", verSummary: "Analogy tail check.",
-                verWhat: "<p>Checking steady-state execution.</p>", verWhy: "<p>Initial transients do not affect convergence.</p>"
+                clauseTitle: "3. The Tail Scope (∀n > N)", quantifier: "Universal (∀)", role: "Tail evaluation", scope: "All indices past N",
+                summary: "<strong>Step 3: Examining all terms past N.</strong> Every subsequent index $n > N$ is evaluated.",
+                what: "<p>We evaluate the infinite tail: all terms $a_n$ where $n \in \{N+1, N+2, N+3, \dots\}$.</p>",
+                why: "<p>Convergence is strictly a long-term asymptotic property. A sequence may fluctuate wildy for early terms, provided the tail stays bounded.</p>"
             },
             {
-                clauseTitle: "4. The Distance Condition (|aₙ - L| < ϵ)", quantifier: "Inequality (<)", advRole: "Proximity condition", advScope: "Distance inside band",
-                advSummary: "<strong>Step 4: Confirming distance constraint.</strong> For all $n > N$, $|a_n - L| < \\epsilon$.",
-                advWhat: "<p>Each term $a_n$ with $n > N$ sits strictly within $(L - \\epsilon, L + \\epsilon)$.</p>",
-                advWhy: "<p>Proves mathematically that $\\lim a_n = L$.</p>",
-                verRole: "Invariant assertion", verScope: "Safety check", verSummary: "Analogy assertion.",
-                verWhat: "<p>Assertion check evaluated on outputs.</p>", verWhy: "<p>Metric distance provides proximity.</p>"
+                clauseTitle: "4. The Distance Condition (|aₙ - L| < ϵ)", quantifier: "Inequality (<)", role: "Proximity condition", scope: "Distance within band",
+                summary: "<strong>Step 4: Confirming distance constraint.</strong> For all $n > N$, $ert{}a_n - Lert{} < \epsilon$.",
+                what: "<p>Every term $a_n$ with index $n > N$ lies strictly inside the open interval $(L - \epsilon, L + \epsilon)$.</p>",
+                why: "<p>This guarantees that the entire infinite tail stays trapped within the tolerance window without ever escaping.</p>"
             }
         ];
 
@@ -821,14 +807,9 @@
             if (formulaState.step > 3) formulaState.step = 3;
             updateFormulaUI();
         }
-        function changeFormulaPerspective() {
-            formulaState.perspective = document.getElementById('fw-dimension-toggle').value;
-            updateFormulaUI();
-        }
         function updateFormulaUI() {
             const idx = formulaState.step;
             const current = formulaClauses[idx];
-            const isAdv = (formulaState.perspective === 'adversarial');
             for (let i = 0; i < 4; i++) {
                 const el = document.getElementById(`chunk-${i}`);
                 el.classList.remove('active', 'completed');
@@ -837,15 +818,15 @@
             }
             document.getElementById('fw-tel-clause').innerText = current.clauseTitle;
             document.getElementById('fw-tel-quant').innerText = current.quantifier;
-            document.getElementById('fw-tel-role').innerText = isAdv ? current.advRole : current.verRole;
-            document.getElementById('fw-tel-scope').innerText = isAdv ? current.advScope : current.verScope;
+            document.getElementById('fw-tel-role').innerText = current.role;
+            document.getElementById('fw-tel-scope').innerText = current.scope;
             document.getElementById('btn-fw-prev').disabled = (idx === 0);
             document.getElementById('btn-fw-next').disabled = (idx === 3);
-            document.getElementById('fw-heading-what').innerText = isAdv ? "Mathematical Mechanics" : "Software Analogy Mechanics";
-            document.getElementById('fw-heading-why').innerText = isAdv ? "Logical Rationale" : "Analogy Context";
-            document.getElementById('fw-step-summary').innerHTML = isAdv ? current.advSummary : current.verSummary;
-            document.getElementById('fw-pane-what').innerHTML = isAdv ? current.advWhat : current.verWhat;
-            document.getElementById('fw-pane-why').innerHTML = isAdv ? current.advWhy : current.verWhy;
+            document.getElementById('fw-heading-what').innerText = "Mathematical Mechanics";
+            document.getElementById('fw-heading-why').innerText = "Logical Rationale";
+            document.getElementById('fw-step-summary').innerHTML = current.summary;
+            document.getElementById('fw-pane-what').innerHTML = current.what;
+            document.getElementById('fw-pane-why').innerHTML = current.why;
             if (window.renderMathInElement) {
                 renderMathInElement(document.getElementById('definition-walkthrough'), { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });
             }

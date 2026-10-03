@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 import os
+import re
 import subprocess
 
-def expand_nested_quantifier_mechanics():
+def strip_software_analogy():
     filepath = 'week2.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
@@ -11,94 +12,89 @@ def expand_nested_quantifier_mechanics():
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    expanded_scoping_box = r'''            <!-- QUANTIFIER ORDER & SCOPING -->
-            <div class="scoping-box">
-                <h4>💡 Quantifier Order, Scope, and Dependency</h4>
-                <p>In formal analysis, statements often string together multiple quantifiers: $\forall \epsilon > 0 \quad \exists N \in \mathbb{N} \quad \forall n > N \dots$ To parse these without getting lost, think of them as <strong>nested scopes</strong> and <strong>sequential turns in a game</strong>.</p>
+    # 1. Remove the toggle-group HTML from the controls pane
+    toggle_html_pattern = r'\s*<div class="toggle-group">[\s\S]*?</div>\s*(?=\n\s*</div>\s*\n\s*<div class="analysis-panes">)'
+    content = re.sub(toggle_html_pattern, '\n', content)
 
-                <!-- 3 Mechanics of Nested Quantifiers -->
-                <div style="background: #ffffff; border: 1px solid #fed7aa; border-radius: 6px; padding: 1rem 1.25rem; margin-bottom: 1.25rem;">
-                    <h5 style="margin: 0 0 0.65rem 0; color: #92400e; font-size: 0.98rem;">⚙️ How Chained Quantifiers Actually Work</h5>
-                    <ol style="margin: 0 0 0 1.25rem; padding: 0; font-size: 0.92rem; line-height: 1.6; color: #1e293b;">
-                        <li style="margin-bottom: 0.5rem;">
-                            <strong>Left-to-Right Evaluation Order:</strong> Quantifiers execute strictly from left to right like lines in a computer program. You cannot jump ahead to inner variables until all outer variables have already been instantiated.
-                        </li>
-                        <li style="margin-bottom: 0.5rem;">
-                            <strong>Lexical Scope &amp; Function Dependency:</strong> Every quantifier opens a scope that wraps around everything to its right. Inner existential variables are allowed to "see" and depend on all previously declared variables:
-                            <div style="margin: 0.35rem 0; padding: 0.4rem 0.75rem; background: #f8fafc; border-left: 3px solid #0284c7; border-radius: 3px; font-family: monospace; font-size: 0.88rem;">
-                                &forall; &epsilon; &gt; 0 { &exist; N = N(&epsilon;) { &forall; n &gt; N { |a_n - L| &lt; &epsilon; } } }
-                            </div>
-                            Because $N$ sits inside the scope of $\epsilon$, it is mathematically a <em>function</em> of $\epsilon$ ($N(\epsilon)$).
-                        </li>
-                        <li>
-                            <strong>The Commutativity Rule (Same vs. Alternating):</strong>
-                            Quantifiers of the same type commute freely without changing meaning ($\forall x \, \forall y \equiv \forall y \, \forall x$). However, <strong>alternating quantifiers ($\forall \exists$ vs. $\exists \forall$) cannot be swapped</strong> because swapping inverts who gets to react to whom.
-                        </li>
-                    </ol>
-                </div>
+    # 2. Replace the formulaClauses array and UI logic in the script block
+    old_script_pattern = r'const formulaState = \{ step: 0, perspective: \'adversarial\' \};[\s\S]*?function updateFormulaCanvas\(step\)'
 
-                <table class="scoping-table">
-                    <thead>
-                        <tr><th>Variable</th><th>Scope</th><th>Dependency Rule</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><strong>$\epsilon$</strong></td><td>$\forall \epsilon > 0$</td><td>Outer scope. Chosen independently of everything that follows.</td></tr>
-                        <tr><td><strong>$N$</strong></td><td>$\exists N \in \mathbb{N}$</td><td>Inner to $\epsilon$. Chosen <em>after</em> inspecting $\epsilon$ ($N = N(\epsilon)$).</td></tr>
-                        <tr><td><strong>$n$</strong></td><td>$\forall n > N$</td><td>Inner to both $\epsilon$ and $N$. Runs over all indices strictly past cutoff $N$.</td></tr>
-                    </tbody>
-                </table>
+    new_script_block = r'''const formulaState = { step: 0 };
+        const formulaClauses = [
+            {
+                clauseTitle: "1. The Challenge (∀ϵ > 0)", quantifier: "Universal (∀)", role: "Given tolerance", scope: "Arbitrary positive real",
+                summary: "<strong>Step 1: Establishing tolerance.</strong> Consider any arbitrary positive distance $\\epsilon > 0$.",
+                what: "<p>We are given an arbitrary positive distance $\\epsilon > 0$, forming a symmetric neighborhood $(L - \\epsilon, L + \\epsilon)$ around the target limit $L$.</p>",
+                why: "<p>Demanding the condition holds for every $\\epsilon > 0$ ensures the sequence cannot settle at or bounce toward any other value.</p>"
+            },
+            {
+                clauseTitle: "2. The Response (∃N ∈ ℕ)", quantifier: "Existential (∃)", role: "Cutoff index", scope: "Dependent on ϵ",
+                summary: "<strong>Step 2: Identifying cutoff index N.</strong> An integer $N$ exists past which terms remain trapped.",
+                what: "<p>We determine an integer index $N$ based on $\\epsilon$. For example, with $a_n = 1/n$, choosing $N = \\lceil 1/\\epsilon \\rceil$ ensures $1/N \\le \\epsilon$.</p>",
+                why: "<p>Because $N$ is chosen after $\\epsilon$, it can push as far out down the sequence tail as necessary to satisfy tiny tolerances.</p>"
+            },
+            {
+                clauseTitle: "3. The Tail Scope (∀n > N)", quantifier: "Universal (∀)", role: "Tail evaluation", scope: "All indices past N",
+                summary: "<strong>Step 3: Examining all terms past N.</strong> Every subsequent index $n > N$ is evaluated.",
+                what: "<p>We evaluate the infinite tail: all terms $a_n$ where $n \\in \\{N+1, N+2, N+3, \\dots\\}$.</p>",
+                why: "<p>Convergence is strictly a long-term asymptotic property. A sequence may fluctuate wildy for early terms, provided the tail stays bounded.</p>"
+            },
+            {
+                clauseTitle: "4. The Distance Condition (|aₙ - L| < ϵ)", quantifier: "Inequality (<)", role: "Proximity condition", scope: "Distance within band",
+                summary: "<strong>Step 4: Confirming distance constraint.</strong> For all $n > N$, $\vert{}a_n - L\vert{} < \\epsilon$.",
+                what: "<p>Every term $a_n$ with index $n > N$ lies strictly inside the open interval $(L - \\epsilon, L + \\epsilon)$.</p>",
+                why: "<p>This guarantees that the entire infinite tail stays trapped within the tolerance window without ever escaping.</p>"
+            }
+        ];
 
-                <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px dashed #fed7aa;">
-                    <h5 style="margin: 0 0 0.5rem 0; color: #92400e; font-size: 0.98rem;">⚠️ The Concrete Consequence: The Fatal Quantifier Swap</h5>
-                    <p style="margin: 0 0 0.75rem 0; font-size: 0.93rem; line-height: 1.6; color: #1e293b;">
-                        Notice what happens to the dependency chain when you swap the first two quantifiers:
-                    </p>
+        function setFormulaStep(stepIdx) { formulaState.step = stepIdx; updateFormulaUI(); }
+        function stepFormula(dir) {
+            formulaState.step += dir;
+            if (formulaState.step < 0) formulaState.step = 0;
+            if (formulaState.step > 3) formulaState.step = 3;
+            updateFormulaUI();
+        }
+        function updateFormulaUI() {
+            const idx = formulaState.step;
+            const current = formulaClauses[idx];
+            for (let i = 0; i < 4; i++) {
+                const el = document.getElementById(`chunk-${i}`);
+                el.classList.remove('active', 'completed');
+                if (i === idx) el.classList.add('active');
+                else if (i < idx) el.classList.add('completed');
+            }
+            document.getElementById('fw-tel-clause').innerText = current.clauseTitle;
+            document.getElementById('fw-tel-quant').innerText = current.quantifier;
+            document.getElementById('fw-tel-role').innerText = current.role;
+            document.getElementById('fw-tel-scope').innerText = current.scope;
+            document.getElementById('btn-fw-prev').disabled = (idx === 0);
+            document.getElementById('btn-fw-next').disabled = (idx === 3);
+            document.getElementById('fw-heading-what').innerText = "Mathematical Mechanics";
+            document.getElementById('fw-heading-why').innerText = "Logical Rationale";
+            document.getElementById('fw-step-summary').innerHTML = current.summary;
+            document.getElementById('fw-pane-what').innerHTML = current.what;
+            document.getElementById('fw-pane-why').innerHTML = current.why;
+            if (window.renderMathInElement) {
+                renderMathInElement(document.getElementById('definition-walkthrough'), { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });
+            }
+            updateFormulaCanvas(idx);
+        }
+        function updateFormulaCanvas(step)'''
 
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 0.75rem;">
-                        <div style="background: #ffffff; border: 1px solid #bbf7d0; border-left: 4px solid #10b981; border-radius: 4px; padding: 0.85rem;">
-                            <strong style="color: #047857; font-size: 0.9rem;">Correct Definition ($\forall \epsilon \; \exists N$):</strong>
-                            <p style="margin: 0.35rem 0 0 0; font-size: 0.88rem; color: #1e293b;">
-                                <em>"For every tolerance $\epsilon > 0$, there exists an index $N$..."</em><br>
-                                $N$ is allowed to react to $\epsilon$. Shrink $\epsilon \to 0$, and $N$ simply walks further down the sequence ($N = \lceil 1/\epsilon \rceil$).
-                            </p>
-                        </div>
-                        <div style="background: #ffffff; border: 1px solid #fecaca; border-left: 4px solid #ef4444; border-radius: 4px; padding: 0.85rem;">
-                            <strong style="color: #b91c1c; font-size: 0.9rem;">Illegal Swap ($\exists N \; \forall \epsilon$):</strong>
-                            <p style="margin: 0.35rem 0 0 0; font-size: 0.88rem; color: #1e293b;">
-                                <em>"There exists a single index $N$ such that for every $\epsilon > 0$..."</em><br>
-                                Because $N$ is now declared outer to $\epsilon$, it cannot react to $\epsilon$. It must be chosen blindly upfront to satisfy <em>all</em> positive $\epsilon$ at once.
-                            </p>
-                        </div>
-                    </div>
-
-                    <p style="margin: 0; font-size: 0.9rem; color: #475569; line-height: 1.5;">
-                        <strong>Why this destroys convergence:</strong> If $|a_n - L| < \epsilon$ holds for <em>all</em> $\epsilon > 0$ past some fixed $N$, the only non-negative distance strictly smaller than every positive number is zero ($|a_n - L| = 0$). That means $a_n = L$ for all $n > N$. The swapped condition is so restrictive that it only holds for sequences that become <strong>permanently constant</strong>. For typical convergent sequences like $a_n = \frac{1}{n}$, no single $N$ can work for all $\epsilon$, showing that nesting order dictates mathematical meaning.
-                    </p>
-                </div>
-            </div>'''
-
-    start_marker = '<!-- QUANTIFIER ORDER & SCOPING -->'
-    end_marker = '<div class="widget-instructions">'
-
-    start_idx = content.find(start_marker)
-    end_idx = content.find(end_marker)
-
-    if start_idx == -1 or end_idx == -1:
-        print("Could not find the scoping box section in week2.html.")
-        return
-
-    content = content[:start_idx] + expanded_scoping_box + '\n\n            ' + content[end_idx:]
-
-    with open(filepath, 'w', encoding='utf-8') as f:
-        f.write(content)
-    print("Successfully expanded nested quantifier evaluation mechanics in week2.html.")
+    if re.search(old_script_pattern, content):
+        content = re.sub(old_script_pattern, new_script_block, content)
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write(content)
+        print("Successfully removed software specification analogy from week2.html.")
+    else:
+        print("Could not locate script section to update in week2.html.")
 
 def execute_git_sync():
     commit_message = (
-        "Add comprehensive nested quantifier evaluation mechanics to week2.html\n\n"
-        "Expanded the scoping section in week2.html with a detailed breakdown \n"
-        "of how nested quantifiers operate, explaining left-to-right evaluation,\n"
-        "lexical scoping dependencies, and the alternating quantifier rule."
+        "Remove software specification analogy from definition stepper\n\n"
+        "Removed the software specification perspective and toggle dropdown from\n"
+        "the epsilon-N clause stepper in week2.html, focusing the telemetry,\n"
+        "summary, and analytical panes strictly on mathematical mechanics."
     )
     commands = [
         ['git', 'add', 'week2.html', 'update.py'],
@@ -110,5 +106,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    expand_nested_quantifier_mechanics()
+    strip_software_analogy()
     execute_git_sync()
