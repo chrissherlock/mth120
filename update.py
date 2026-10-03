@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 import os
+import re
 import subprocess
 
-def update_sequence_reassurance():
-    filepath = 'week1.html'
+def clean_index_citations():
+    filepath = 'index.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
         return
@@ -11,32 +12,24 @@ def update_sequence_reassurance():
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    old_intro = (
-        '<strong>Discrete modeling:</strong> Sequences are functions '
-        '$f: \\mathbb{N} \\to \\mathbb{R}$ mapping indices to real values.'
-    )
-    new_intro = (
-        '<strong>Think of a sequence simply as an endless ordered list</strong> '
-        '—like a musical playlist or numbered parking spots—where every step '
-        'has its own designated number.'
-    )
+    # Strip all patterns from index.html
+    cleaned_content = re.sub(r'\s*\+\]', '', content)
 
-    if old_intro in content:
-        content = content.replace(old_intro, new_intro)
+    if cleaned_content != content:
         with open(filepath, 'w', encoding='utf-8') as f:
-            f.write(content)
-        print("Successfully updated sequence mechanics intro with friendly reassurance.")
+            f.write(cleaned_content)
+        print("Successfully removed citations from index.html.")
     else:
-        print("Warning: Target text not found.")
+        print("No citations found in index.html.")
 
 def execute_git_sync():
     commit_message = (
-        "Warm up sequence mechanics intro with friendly reassurance\n\n"
-        "Replaced clinical intro in week1.html with a comforting, accessible\n"
-        "explanation of sequences for beginners."
+        "Remove all citation markers from index.html\n\n"
+        "Cleaned up index.html by stripping out stray reference\n"
+        "markers to maintain a citation-free course interface."
     )
     commands = [
-        ['git', 'add', 'week1.html', 'update.py'],
+        ['git', 'add', 'index.html', 'update.py'],
         ['git', 'commit', '-m', commit_message],
         ['git', 'push', 'origin', 'main']
     ]
@@ -45,5 +38,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    update_sequence_reassurance()
+    clean_index_citations()
     execute_git_sync()
