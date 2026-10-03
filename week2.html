@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}});"></script>
     <style>
         :root {
             --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
@@ -330,7 +330,7 @@
                 verRole: "Invariant assertion", verScope: "Safety check", verSummary: "Analogy assertion.",
                 verWhat: "<p>Assertion check evaluated on outputs.</p>", verWhy: "<p>Metric distance provides proximity.</p>"
             }
-        ];
+        ;
 
         function setFormulaStep(stepIdx) { formulaState.step = stepIdx; updateFormulaUI(); }
         function stepFormula(dir) {
@@ -345,7 +345,7 @@
         }
         function updateFormulaUI() {
             const idx = formulaState.step;
-            const current = formulaClauses[idx];
+            const current = formulaClauses[idx;
             const isAdv = (formulaState.perspective === 'adversarial');
             for (let i = 0; i < 4; i++) {
                 const el = document.getElementById(`chunk-${i}`);
@@ -365,7 +365,7 @@
             document.getElementById('fw-pane-what').innerHTML = isAdv ? current.advWhat : current.verWhat;
             document.getElementById('fw-pane-why').innerHTML = isAdv ? current.advWhy : current.verWhy;
             if (window.renderMathInElement) {
-                renderMathInElement(document.getElementById('definition-walkthrough'), { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });
+                renderMathInElement(document.getElementById('definition-walkthrough'), { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} });
             }
             updateFormulaCanvas(idx);
         }
@@ -411,7 +411,7 @@
             document.getElementById('cg-tel-val').innerHTML = `$a_{${curN}} = ${atTerm.toFixed(3)}$`;
             document.getElementById('cg-tel-status').innerHTML = curN > reqN ? `Inside (+${(eps - atTerm).toFixed(3)})` : `Boundary/Outside`;
             if(window.renderMathInElement) {
-                renderMathInElement(document.getElementById('game-telemetry'), { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });
+                renderMathInElement(document.getElementById('game-telemetry'), { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} });
             }
             renderGameSVG(eps, reqN, curN);
         }

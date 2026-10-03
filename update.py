@@ -3,9 +3,10 @@ import os
 import re
 import subprocess
 
-def strip_all_citations_from_repo():
-    files_to_clean = ['week1.html', 'week2.html', 'index.html', 'update.py']
-    citation_pattern = re.compile(r'\+\]')
+def purge_all_citations():
+    files_to_clean = ['week1.html', 'week2.html', 'index.html', 'update.py'
+    # Corrected pattern targeting blocks
+    citation_pattern = re.compile(r'\*\')
 
     for filename in files_to_clean:
         if not os.path.exists(filename):
@@ -17,28 +18,28 @@ def strip_all_citations_from_repo():
         if count > 0:
             with open(filename, 'w', encoding='utf-8') as f:
                 f.write(cleaned_content)
-            print(f"Stripped {count} citation(s) from {filename}.")
+            print(f"Successfully purged {count} citation(s) from {filename}.")
         else:
             print(f"No citations found in {filename}.")
 
 def execute_git_sync():
     commit_message = (
-        "Thoroughly strip all citation brackets from all HTML files and scripts\n\n"
-        "Removed all remaining markers across week1.html, week2.html,\n"
-        "index.html, and update.py to ensure a completely citation-free codebase."
+        "Fix regex pattern to thoroughly purge all bracketed citations\n\n"
+        "Updated citation regex from escaped plus/bracket to*\n"
+        "to successfully strip all remaining reference markers from the repo."
     )
     commands = [
-        ['git', 'add', 'week1.html', 'week2.html', 'index.html', 'update.py'],
-        ['git', 'commit', '-m', commit_message],
-        ['git', 'push', 'origin', 'main']
-    ]
+        ['git', 'add', 'week1.html', 'week2.html', 'index.html', 'update.py',
+        ['git', 'commit', '-m', commit_message,
+        ['git', 'push', 'origin', 'main'
+    
     for cmd in commands:
         result = subprocess.run(cmd, capture_output=True, text=True)
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    print("Cleaning all citations from repository...")
-    strip_all_citations_from_repo()
+    print("Purging all citations with correct regex...")
+    purge_all_citations()
     print("Syncing with GitHub...")
     execute_git_sync()
-    print("Purge complete. All files are now 100% citation-free.")
+    print("Purge complete.")
