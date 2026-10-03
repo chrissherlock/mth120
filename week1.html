@@ -27,12 +27,13 @@
         h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; }
         h3 { color: #1e293b; margin-top: 1.5rem; }
 
-        /* Infobox Styles */
+        /* Infobox Styles with Non-Overlapping Grid Layout */
         .infobox { background: #f1f5f9; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.25rem 0 1.75rem 0; }
         .infobox h4 { margin: 0 0 0.75rem 0; color: #0f172a; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
-        .notation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.75rem 1.5rem; font-size: 0.95rem; }
-        .notation-item { display: flex; align-items: baseline; gap: 0.75rem; }
-        .notation-sym { font-family: monospace; font-weight: bold; color: var(--accent); min-width: 65px; }
+        .notation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.75rem 1.5rem; font-size: 0.95rem; }
+        .notation-item { display: grid; grid-template-columns: minmax(130px, max-content) 1fr; gap: 0.75rem; align-items: baseline; }
+        .notation-sym { font-family: monospace; font-weight: bold; color: var(--accent); white-space: nowrap; }
+        .notation-desc { min-width: 0; word-break: break-word; }
 
         /* Diagram Container Styles */
         .diagram-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
@@ -136,17 +137,17 @@
             <div class="infobox">
                 <h4>📖 Notation Reference: Set Theory</h4>
                 <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$x \in A$</span><span>$x$ is an element of set $A$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$x \notin A$</span><span>$x$ is not an element of set $A$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$A \subseteq B$</span><span>$A$ is a subset of $B$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$A \subset B$</span><span>$A$ is a proper subset of $B$ ($A \neq B$)</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\emptyset$</span><span>The empty set (contains no elements)</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\mathcal{P}(A)$</span><span>Power set: collection of all subsets of $A$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$A \cup B$</span><span>Union: elements in $A$, $B$, or both</span></div>
-                    <div class="notation-item"><span class="notation-sym">$A \cap B$</span><span>Intersection: elements in both $A$ and $B$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$A \setminus B$</span><span>Relative complement / difference: in $A$ but not $B$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$A \times B$</span><span>Cartesian product: set of ordered pairs $(a, b)$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\mid$ or $:$</span><span>"Such that" (used as a filter in set-builder forms)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$x \in A$</span><span class="notation-desc">$x$ is an element of set $A$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$x \notin A$</span><span class="notation-desc">$x$ is not an element of set $A$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \subseteq B$</span><span class="notation-desc">$A$ is a subset of $B$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \subset B$</span><span class="notation-desc">$A$ is a proper subset of $B$ ($A \neq B$)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\emptyset$</span><span class="notation-desc">The empty set (contains no elements)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathcal{P}(A)$</span><span class="notation-desc">Power set: collection of all subsets of $A$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \cup B$</span><span class="notation-desc">Union: elements in $A$, $B$, or both</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \cap B$</span><span class="notation-desc">Intersection: elements in both $A$ and $B$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \setminus B$</span><span class="notation-desc">Relative complement / difference: in $A$ but not $B$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \times B$</span><span class="notation-desc">Cartesian product: set of ordered pairs $(a, b)$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mid$ or $:$</span><span class="notation-desc">"Such that" (used as a filter in set-builder forms)</span></div>
                 </div>
             </div>
 
@@ -275,14 +276,14 @@
             <div class="infobox">
                 <h4>📖 Notation Reference: Number Systems</h4>
                 <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$\mathbb{N}$</span><span>Natural numbers: counting numbers $\{1, 2, 3, \dots\}$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\mathbb{Z}$</span><span>Integers: $\{\dots, -2, -1, 0, 1, 2, \dots\}$ (from German <em>Zahlen</em>)</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\mathbb{Q}$</span><span>Rational numbers: ratios/quotients $\{p/q \mid p, q \in \mathbb{Z}, q \neq 0\}$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\mathbb{R}$</span><span>Real numbers: continuous line of all rational and irrational numbers</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\subset$</span><span>Strict set containment: $\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$[a, b]$</span><span>Closed interval: $\{x \in \mathbb{R} \mid a \le x \le b\}$ (endpoints included)</span></div>
-                    <div class="notation-item"><span class="notation-sym">$(a, b)$</span><span>Open interval: $\{x \in \mathbb{R} \mid a < x < b\}$ (endpoints excluded)</span></div>
-                    <div class="notation-item"><span class="notation-sym">$(S, \circ)$</span><span>Algebraic structure: set $S$ equipped with binary operation $\circ$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{N}$</span><span class="notation-desc">Natural numbers: counting numbers $\{1, 2, 3, \dots\}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{Z}$</span><span class="notation-desc">Integers: $\{\dots, -2, -1, 0, 1, 2, \dots\}$ (from German <em>Zahlen</em>)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{Q}$</span><span class="notation-desc">Rational numbers: ratios/quotients $\{p/q \mid p, q \in \mathbb{Z}, q \neq 0\}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{R}$</span><span class="notation-desc">Real numbers: continuous line of all rational and irrational numbers</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\subset$</span><span class="notation-desc">Strict set containment: $\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$[a, b]$</span><span class="notation-desc">Closed interval: $\{x \in \mathbb{R} \mid a \le x \le b\}$ (endpoints included)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$(a, b)$</span><span class="notation-desc">Open interval: $\{x \in \mathbb{R} \mid a < x < b\}$ (endpoints excluded)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$(S, \circ)$</span><span class="notation-desc">Algebraic structure: set $S$ equipped with binary operation $\circ$</span></div>
                 </div>
             </div>
 
@@ -378,16 +379,16 @@
             <div class="infobox">
                 <h4>📖 Notation Reference: Sequences, Limits &amp; Quantifiers</h4>
                 <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$\forall$</span><span><strong>Universal Quantifier:</strong> "for all" or "for every" ($\forall \epsilon > 0$)</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\exists$</span><span><strong>Existential Quantifier:</strong> "there exists" or "we can find" ($\exists N \in \mathbb{N}$)</span></div>
-                    <div class="notation-item"><span class="notation-sym">$(a_n)$</span><span>Sequence: an ordered list $(a_1, a_2, a_3, \dots, a_n, \dots)$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$a_n$</span><span>General term of sequence at position/index $n \in \mathbb{N}$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$n \to \infty$</span><span>Index $n$ grows arbitrarily large without bound toward infinity</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\lim_{n\to\infty} a_n = L$</span><span>The sequence $a_n$ converges to target limit value $L$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\epsilon$ (epsilon)</span><span>Positive error tolerance budget; defines a neighborhood $(L-\epsilon, L+\epsilon)$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$N$</span><span>Threshold cutoff index beyond which all terms must stay strictly inside $\epsilon$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$|a_n - L| < \epsilon$</span><span>The distance between term $a_n$ and limit $L$ is strictly less than $\epsilon$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\lceil x \rceil$</span><span>Ceiling function: smallest integer greater than or equal to $x$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\forall$</span><span class="notation-desc"><strong>Universal Quantifier:</strong> "for all" or "for every" ($\forall \epsilon > 0$)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\exists$</span><span class="notation-desc"><strong>Existential Quantifier:</strong> "there exists" or "we can find" ($\exists N \in \mathbb{N}$)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$(a_n)$</span><span class="notation-desc">Sequence: an ordered list $(a_1, a_2, a_3, \dots, a_n, \dots)$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$a_n$</span><span class="notation-desc">General term of sequence at position/index $n \in \mathbb{N}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$n \to \infty$</span><span class="notation-desc">Index $n$ grows arbitrarily large without bound toward infinity</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\lim_{n\to\infty} a_n = L$</span><span class="notation-desc">The sequence $a_n$ converges to target limit value $L$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\epsilon$ (epsilon)</span><span class="notation-desc">Positive error tolerance budget; defines a neighborhood $(L-\epsilon, L+\epsilon)$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$N$</span><span class="notation-desc">Threshold cutoff index beyond which all terms must stay strictly inside $\epsilon$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$|a_n - L| < \epsilon$</span><span class="notation-desc">The distance between term $a_n$ and limit $L$ is strictly less than $\epsilon$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\lceil x \rceil$</span><span class="notation-desc">Ceiling function: smallest integer greater than or equal to $x$</span></div>
                 </div>
             </div>
 
@@ -852,7 +853,7 @@
                 if(idx > 0) {
                     const prevVal = data[state.seq][idx - 1];
                     const px = 80 + ((idx - 1) * 60);
-                    const py = 160 - (prevVal * 140);
+                    py = 160 - (prevVal * 140);
                     group.innerHTML += `<line x1="${px}" y1="${py}" x2="${cx}" y2="${cy}" stroke="#d97706" stroke-width="2" opacity="0.5"/>`;
                 }
             });
