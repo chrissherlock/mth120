@@ -98,11 +98,46 @@ def write_week1_module():
         }
         .diagram-card svg { width: 100%; height: auto; display: block; }
 
+        .widget-instructions {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--accent);
+            border-radius: 6px;
+            padding: 1.25rem 1.5rem;
+            margin: 2rem 0 1rem 0;
+        }
+        .widget-instructions h4 {
+            margin: 0 0 0.65rem 0;
+            color: #0f172a;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .widget-instructions ol {
+            margin: 0.5rem 0 0.85rem 1.25rem;
+            padding: 0;
+        }
+        .widget-instructions li {
+            margin-bottom: 0.45rem;
+            font-size: 0.95rem;
+            color: #334155;
+        }
+        .widget-instructions ul {
+            margin: 0.35rem 0 0.5rem 1.25rem;
+            padding: 0;
+        }
+        .widget-instructions ul li {
+            margin-bottom: 0.3rem;
+            font-size: 0.92rem;
+            color: #475569;
+        }
+
         .game-box, .stepper-walkthrough {
             border: 1px solid var(--border);
             border-radius: 8px;
             overflow: hidden;
-            margin-top: 1.5rem;
+            margin-top: 1rem;
             background: var(--card);
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
@@ -151,7 +186,6 @@ def write_week1_module():
             border-bottom: 1px solid var(--border);
         }
         .game-body { padding: 1.5rem; background: #ffffff; display: flex; flex-direction: column; gap: 1rem; border-bottom: 1px solid var(--border); }
-        .game-explainer { background: #fef3c7; border: 1px solid #fde68a; padding: 1.25rem; border-radius: 6px; font-size: 0.95rem; color: #92400e; margin-bottom: 0.5rem; line-height: 1.7; }
         .game-controls { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
         .game-btn { background: var(--accent); color: white; border: none; padding: 0.55rem 1.1rem; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.92rem; transition: background 0.2s; }
         .game-btn:hover { background: var(--accent-hover); }
@@ -399,7 +433,6 @@ def write_week1_module():
                 </div>
                 <div class="diagram-card">
                     <h5>Complement ($A^c = U \setminus A$)</h5>
-                    <!-- Shading outside circle A, leaving A unshaded -->
                     <svg viewBox="0 0 360 170">
                         <defs>
                             <mask id="complement-mask">
@@ -477,7 +510,7 @@ def write_week1_module():
                     <line x1="40" y1="145" x2="710" y2="145" stroke="#64748b" stroke-width="1.2" marker-end="url(#num-arrow)"/>
                     <circle cx="130" cy="145" r="4.5" fill="#64748b"/><text x="125" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">0</text>
                     <circle cx="370" cy="145" r="4.5" fill="#64748b"/><text x="365" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">1</text>
-                    <circle cx="610" cy="145" r="4.5" fill="#64748b"/><text x="605" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">2</text>
+                    <circle cx="610" cy="145" r="4.5" fill="#64748b"/><text x="605" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="bold">2</text>
 
                     <polygon points="130,145 370,145 370,65" fill="#fef3c7" opacity="0.65" stroke="#d97706" stroke-width="1.2"/>
                     <text x="245" y="135" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#d97706" font-weight="bold">1</text>
@@ -661,6 +694,36 @@ def write_week1_module():
                 </div>
             </div>
 
+            <!-- INSTRUCTIONS FOR ILLUSTRATING THE DEFINITION -->
+            <div class="widget-instructions">
+                <h4>📖 Guide: Exploring the &epsilon;–N Definition with $a_n = \frac{1}{n}$</h4>
+                <p style="margin: 0 0 0.5rem 0; font-size: 0.95rem; color: #334155;">
+                    This widget illustrates how the formal definition of convergence operates on a concrete sample of terms for $\lim_{n\to\infty} \frac{1}{n} = 0$:
+                </p>
+                <ol>
+                    <li>
+                        <strong>Choose an Error Tolerance ($\epsilon$):</strong> Click a tolerance button below to set the distance band $(L-\epsilon, L+\epsilon) = (-\epsilon, +\epsilon)$ around $L=0$:
+                        <ul>
+                            <li><strong>$\epsilon = 0.2$</strong> &rarr; Wide band ($N = 5$)</li>
+                            <li><strong>$\epsilon = 0.1$</strong> &rarr; Medium band ($N = 10$)</li>
+                            <li><strong>$\epsilon = 0.05$</strong> &rarr; Narrow band ($N = 20$)</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Observe the Cutoff Milestone ($N$):</strong> The dashed red line marks $N = \lceil 1/\epsilon \rceil$. To satisfy $\left|\frac{1}{n} - 0\right| < \epsilon$, we require $n > \frac{1}{\epsilon}$. At $n = N$, the term sits directly on the boundary ($a_5 = 0.2$). The definition demands $n > N$, so compliance begins strictly after this fence line.
+                    </li>
+                    <li>
+                        <strong>Step Forward Past the Cutoff:</strong> Click <strong>Step Forward ($n = N + 1$)</strong> to trace subsequent terms. Terms turn green once they enter the interior of the shaded tolerance band.
+                    </li>
+                    <li>
+                        <strong>Reset and Compare:</strong> Reset and choose a smaller $\epsilon$. Notice how tightening the tolerance pushes the red cutoff milestone $N$ farther to the right, showing why $N$ depends directly on $\epsilon$ ($N = N(\epsilon)$).
+                    </li>
+                </ol>
+                <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 4px; padding: 0.75rem 1rem; font-size: 0.9rem; color: #92400e;">
+                    <strong>Key Concept:</strong> $N = \lceil 1/\epsilon \rceil$ is a <em>convenient choice</em>, not a unique number—any larger integer also works. Additionally, this widget visualizes a finite sample ($n \le 30$); formal convergence proves that the entire infinite tail stays trapped.
+                </div>
+            </div>
+
             <!-- INTERACTIVE EPSILON CHALLENGE -->
             <div class="game-box">
                 <div class="game-header">
@@ -688,11 +751,6 @@ def write_week1_module():
                 </div>
 
                 <div class="game-body">
-                    <div class="game-explainer">
-                        <strong>Examining the Sample Terms:</strong><br>
-                        For $a_n = 1/n$ and a given $\epsilon$, we solve $\frac{1}{n} < \epsilon$, which gives $n > \frac{1}{\epsilon}$. One convenient choice is $N = \lceil 1/\epsilon \rceil$ (any larger integer $N$ is also valid). Select a tolerance $\epsilon$ to observe how terms beyond $N$ lie inside the corridor $(L-\epsilon, L+\epsilon)$ for this finite sample.
-                    </div>
-
                     <div class="game-controls">
                         <button class="game-btn" onclick="startChallenge(0.2)">Test $\epsilon = 0.2$</button>
                         <button class="game-btn" onclick="startChallenge(0.1)">Test $\epsilon = 0.1$</button>
@@ -968,7 +1026,7 @@ def write_week1_module():
                 <line x1="${originX}" y1="240" x2="${originX}" y2="25" stroke="#64748b" stroke-width="1.0" marker-end="url(#game-arrow)"/>
                 <text x="${originX}" y="18" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="13" fill="#64748b" font-weight="600">a<tspan dy="3" font-size="10">n</tspan></text>
 
-                <line x1="${originX}" y1="${originY}" x2="715" y2="${originY}" stroke="#64748b" stroke-width="1.0" marker-end="url(#game-arrow)"/>
+                <line x1="${originX}" y1="715" x2="${originX}" y2="${originY}" stroke="#64748b" stroke-width="1.0" marker-end="url(#game-arrow)"/>
                 <text x="722" y="134" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="13" fill="#64748b" font-weight="600">n</text>
             `;
 
@@ -983,7 +1041,7 @@ def write_week1_module():
             }
 
             const maxN = Math.max(14, reqN + 4);
-            const scaleFactor = eps <= 0.05 ? 900 : (eps <= 0.1 ? 550 : 220);
+            let scaleFactor = eps <= 0.05 ? 900 : (eps <= 0.1 ? 550 : 220);
 
             const topY = originY - (eps * scaleFactor);
             const bottomY = originY + (eps * scaleFactor);
@@ -1052,9 +1110,9 @@ def write_week1_module():
 
 def execute_git_sync():
     commit_message = (
-        "Refine mathematical terminology, diagrams, and proof claims in Week 1\n\n"
-        "Addressed feedback on power sets, complement shading, real completeness,\n"
-        "quantifier order nuance, and simulator claims while fixing a JS global leak."
+        "Add guided walkthrough instructions to epsilon-N widget in week1.html\n\n"
+        "Inserted student-facing instructions covering controls, milestone cutoff\n"
+        "observation, and conceptual takeaways directly above the widget."
     )
 
     commands = [
