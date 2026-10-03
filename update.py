@@ -583,8 +583,9 @@ def write_week1_module():
 
         function advanceChallengeStep() {
             challengeState.currentDisplayN++;
-            if (challengeState.currentDisplayN > 14) {
-                challengeState.currentDisplayN = 14;
+            const maxAllowed = Math.max(30, challengeState.reqN + 10);
+            if (challengeState.currentDisplayN > maxAllowed) {
+                challengeState.currentDisplayN = maxAllowed;
             }
             updateChallengeUI();
         }
@@ -620,7 +621,7 @@ def write_week1_module():
 
         function renderGameSVG(eps, reqN, curN) {
             const svg = document.getElementById('game-plot');
-            const maxN = 14;
+            const maxN = Math.max(14, reqN + 4);
             const width = 560;
             const height = 210;
             const originX = 50;
@@ -797,9 +798,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Increase SVG height and vertical scale for Epsilon Challenge diagram\n\n"
-        "Adjusted viewBox height to 210 and increased vertical scaling in renderGameSVG "
-        "within week1.html to give the diagram more headroom."
+        "Fix dynamic maxN and step limits for tight epsilon values in Epsilon Challenge\n\n"
+        "Updated maxN calculation and advanceChallengeStep capping limits in week1.html \n"
+        "to fully support stepping forward with epsilon = 0.05 and smaller."
     )
 
     commands = [
@@ -813,7 +814,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with taller SVG diagram...")
+    print("Writing Week 1 module with dynamic epsilon chart scaling...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
