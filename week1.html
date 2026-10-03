@@ -118,17 +118,22 @@
             </ul>
 
             <h2>2. The Hierarchy of Number Systems</h2>
-            <p>Mathematics builds its universe of numbers step by step, expanding systems to solve equations that previous systems couldn't handle.</p>
+            <p>Mathematics constructs its universe of numbers step by step, algebraically expanding systems to solve equations and geometric problems that previous systems could not express.</p>
 
-            <ul>
-                <li><strong>Natural Numbers ($\mathbb{N}$):</strong> $\{1, 2, 3, 4, \dots\}$ (sometimes including $0$). Used for counting. <em>Limitation:</em> You cannot subtract larger from smaller without breaking out of the set.</li>
-                <li><strong>Integers ($\mathbb{Z}$):</strong> $\{\dots, -2, -1, 0, 1, 2, \dots\}$. Includes negatives and zero. <em>Limitation:</em> You cannot divide ($3 \div 2$) and stay inside $\mathbb{Z}$.</li>
-                <li><strong>Rational Numbers ($\mathbb{Q}$):</strong> Numbers expressible as a fraction $\frac{p}{q}$ where $p, q \in \mathbb{Z}$ and $q \neq 0$. Includes terminating and repeating decimals.</li>
-                <li><strong>Real Numbers ($\mathbb{R}$):</strong> All rational numbers <em>plus</em> irrational numbers (like $\sqrt{2}$ or $\pi$) whose decimals never terminate or repeat. $\mathbb{R}$ fills all the "gaps" on the number line.</li>
-            </ul>
+            <h3>Natural Numbers ($\mathbb{N}$): The Counting Foundation</h3>
+            <p>We begin with $\mathbb{N} = \{1, 2, 3, 4, \dots\}$ (sometimes including $0$). <strong>Algebraic Property:</strong> Closed under addition and multiplication (combining any two natural numbers always yields another natural number). <strong>Limitation:</strong> Not closed under subtraction. Attempting to solve $x + 5 = 2$ forces us outside $\mathbb{N}$ because negative numbers do not exist here.</p>
+
+            <h3>Integers ($\mathbb{Z}$): Adding Inverses</h3>
+            <p>To resolve subtraction failures, we adjoin additive inverses and zero, forming $\mathbb{Z} = \{\dots, -2, -1, 0, 1, 2, \dots\}$. <strong>Algebraic Property:</strong> Forms an additive group and a commutative ring. <strong>Limitation:</strong> Not closed under division. Attempting to solve $2x = 3$ yields $x = \frac{3}{2}$, which has no solution inside $\mathbb{Z}$.</p>
+
+            <h3>Rational Numbers ($\mathbb{Q}$): The Field of Ratios</h3>
+            <p>We expand our universe to quotients of integers: $\mathbb{Q} = \{ \frac{p}{q} \mid p, q \in \mathbb{Z}, q \neq 0 \}$. <strong>Algebraic Property:</strong> Forms a <em>field</em>—fully closed under addition, subtraction, multiplication, and division (excluding division by zero). Every rational number has a decimal expansion that either terminates (e.g., $\frac{1}{4} = 0.25$) or repeats infinitely (e.g., $\frac{1}{3} = 0.333\dots$).</p>
+
+            <h3>Real Numbers ($\mathbb{R}$): Filling the Gaps</h3>
+            <p>Despite being dense (meaning between any two rational numbers, another rational always exists), $\mathbb{Q}$ contains massive structural "holes." For instance, applying the Pythagorean theorem to a right triangle with side lengths of 1 gives a hypotenuse of $\sqrt{2}$. Yet, <strong>Theorem:</strong> There is no rational number $p/q$ such that $(p/q)^2 = 2$.</p>
 
             <div class="definition-box">
-                <p><strong>Why Real Analysis Matters:</strong> The rational numbers ($\mathbb{Q}$) have "holes" (e.g., no rational number squared equals $2$). Calculus requires the <em>Completeness Property</em> of the Real Numbers ($\mathbb{R}$) to guarantee that limits, suprema, and integrals don't fall into empty space.</p>
+                <p><strong>The Completeness Property:</strong> To perform calculus, we require the real numbers ($\mathbb{R}$). $\mathbb{R}$ consists of all rationals combined with irrational numbers (non-repeating, non-terminating decimals like $\sqrt{2}$ or $\pi$). Crucially, $\mathbb{R}$ satisfies the <em>Least Upper Bound Property</em> (Completeness Axiom), ensuring there are no empty gaps on the number line. Without completeness, limits, suprema, and integrals could fall into nothingness.</p>
             </div>
 
             <h2>3. Sequences and the Limit Concept</h2>
