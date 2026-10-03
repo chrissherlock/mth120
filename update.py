@@ -48,6 +48,7 @@ def write_structures_subpage():
 
         .example-card { background: #fffbeb; border: 1px solid #fde68a; border-radius: 6px; padding: 1rem 1.25rem; margin: 1rem 0; }
         .example-card h4 { margin-top: 0; color: #b45309; font-size: 0.95rem; }
+        .table-note { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid var(--accent); padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; font-size: 0.95rem; color: #1e293b; line-height: 1.6; }
     </style>
 </head>
 <body>
@@ -137,6 +138,15 @@ def write_structures_subpage():
                 </tbody>
             </table>
 
+            <div class="table-note">
+                <strong>📌 Note on Division: Rings vs. Fields</strong><br>
+                Does this mean you can *only* do division on a field? Not quite!
+                <ul>
+                    <li><strong>In a Ring (like $\mathbb{Z}$):</strong> You have <em>restricted division</em>. You can divide if numbers divide evenly (e.g., $6 \div 2 = 3$). However, division is not universally closed; if numbers don't divide evenly (e.g., $3 \div 2 = 1.5$), the answer falls outside the integers ($\notin \mathbb{Z}$) because rings lack multiplicative inverses.</li>
+                    <li><strong>In a Field (like $\mathbb{Q}$ or $\mathbb{R}$):</strong> You have <em>universal, unrestricted division</em>. Because a field guarantees that every non-zero element possesses a multiplicative reciprocal ($a^{-1}$), you can divide by any non-zero number freely without ever escaping the system.</li>
+                </ul>
+            </div>
+
             <div class="interactive-box">
                 <h3>🧪 Interactive Algebraic Structure Inspector</h3>
                 <p>Select a number system to inspect which algebraic structures it satisfies:</p>
@@ -209,10 +219,10 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Clarify operations versus inverse properties in algebraic structures subpage\n\n"
-        "Added a clarifying note to algebraic_structures.html explaining that additive \n"
-        "and multiplicative inverses are structural properties rather than separate binary \n"
-        "operations, demystifying why fields have only two fundamental operations."
+        "Add note on division in rings versus fields below comparison table\n\n"
+        "Inserted a clarifying note beneath the hierarchy comparison table in \n"
+        "algebraic_structures.html explaining the distinction between restricted \n"
+        "division in commutative rings and universal division in fields."
     )
 
     commands = [

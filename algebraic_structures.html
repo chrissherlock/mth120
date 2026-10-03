@@ -40,6 +40,7 @@
 
         .example-card { background: #fffbeb; border: 1px solid #fde68a; border-radius: 6px; padding: 1rem 1.25rem; margin: 1rem 0; }
         .example-card h4 { margin-top: 0; color: #b45309; font-size: 0.95rem; }
+        .table-note { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid var(--accent); padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; font-size: 0.95rem; color: #1e293b; line-height: 1.6; }
     </style>
 </head>
 <body>
@@ -128,6 +129,15 @@
                     </tr>
                 </tbody>
             </table>
+
+            <div class="table-note">
+                <strong>📌 Note on Division: Rings vs. Fields</strong><br>
+                Does this mean you can *only* do division on a field? Not quite!
+                <ul>
+                    <li><strong>In a Ring (like $\mathbb{Z}$):</strong> You have <em>restricted division</em>. You can divide if numbers divide evenly (e.g., $6 \div 2 = 3$). However, division is not universally closed; if numbers don't divide evenly (e.g., $3 \div 2 = 1.5$), the answer falls outside the integers ($\notin \mathbb{Z}$) because rings lack multiplicative inverses.</li>
+                    <li><strong>In a Field (like $\mathbb{Q}$ or $\mathbb{R}$):</strong> You have <em>universal, unrestricted division</em>. Because a field guarantees that every non-zero element possesses a multiplicative reciprocal ($a^{-1}$), you can divide by any non-zero number freely without ever escaping the system.</li>
+                </ul>
+            </div>
 
             <div class="interactive-box">
                 <h3>🧪 Interactive Algebraic Structure Inspector</h3>
