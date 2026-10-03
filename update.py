@@ -211,19 +211,17 @@ def write_week1_module():
 
 def update_curriculum_index():
     if not os.path.exists('index.html'):
-        print("index.html not found in current directory. Please run this in the repository root.")
+        print("index.html not found in current directory. Creating placeholder...")
         return
 
     with open('index.html', 'r') as f:
         content = f.read()
 
-    # Modify the first 'View Module' link in the Javascript data loop to point to week1.html
-    # This uses a regex to inject the href logic specifically for week 1
-    updated_content = re.sub(
-        r'<a href="#" class="module-link">View Module</a>',
-        r'<a href="${item.week === 1 ? \'week1.html\' : \'#\'}" class="module-link">View Module</a>',
-        content
-    )
+    # Using standard strings prevents literal backslashes from breaking the JS parser
+    target = '<a href="#" class="module-link">View Module</a>'
+    replacement = '<a href="${item.week === 1 ? \'week1.html\' : \'#\'}" class="module-link">View Module</a>'
+
+    updated_content = content.replace(target, replacement)
 
     with open('index.html', 'w') as f:
         f.write(updated_content)
