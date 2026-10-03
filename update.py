@@ -74,6 +74,8 @@ def write_week1_module():
         select { width: 100%; padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border); font-family: system-ui, sans-serif; background: #fff; color: var(--text); }
 
         .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .aside-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #b45309; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .aside-box h4 { margin-top: 0; color: #b45309; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
         .example-list li { margin-bottom: 0.75rem; }
     </style>
 </head>
@@ -262,6 +264,17 @@ def write_week1_module():
                     <ellipse cx="260" cy="100" rx="140" ry="18" fill="#fed7aa" stroke="#d97706" stroke-width="1.5"/>
                     <text x="260" y="104" font-family="sans-serif" font-size="10" fill="#b45309" font-weight="bold" text-anchor="middle">ℕ (Natural Numbers: 1, 2, 3...)</text>
                 </svg>
+            </div>
+
+            <!-- ALGEBRAIC STRUCTURES ASIDE -->
+            <div class="aside-box">
+                <h4>💡 Aside: What is a Group, Ring, and Field?</h4>
+                <p>In abstract algebra, mathematicians classify number systems by the rules their operations obey:</p>
+                <ul>
+                    <li><strong>Additive Group ($\mathbb{Z}$):</strong> A set with an operation (addition) that is associative, has an identity element ($0$), and where every element has an opposite/inverse (e.g., $5 + (-5) = 0$).</li>
+                    <li><strong>Commutative Ring ($\mathbb{Z}$):</strong> A system equipped with <em>two</em> operations (addition and multiplication). Addition forms a group, multiplication is associative and commutative ($a \times b = b \times a$), and multiplication distributes over addition ($a(b+c) = ab + ac$). However, multiplicative inverses (reciprocals) are not guaranteed (e.g., $3 \times x = 1$ has no integer solution).</li>
+                    <li><strong>Field ($\mathbb{Q}, \mathbb{R}$):</strong> A ring where <em>every</em> non-zero element also possesses a multiplicative inverse (reciprocal), meaning you can freely divide by any non-zero number without escaping the system.</li>
+                </ul>
             </div>
 
             <h3>Natural Numbers ($\mathbb{N}$): The Counting Foundation</h3>
