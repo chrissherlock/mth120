@@ -17,7 +17,7 @@
         }
         body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
         .container { max-width: 1200px; margin: 0 auto; }
-        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; }
+        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
         .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
 
         .intro-lead { font-size: 1.1rem; color: #1e293b; line-height: 1.7; margin-bottom: 1.5rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -45,16 +45,11 @@
         .scoping-table th, .scoping-table td { border: 1px solid #fed7aa; padding: 0.6rem 0.85rem; text-align: left; }
         .scoping-table th { background: #fef3c7; color: #92400e; font-weight: 600; }
         .scoping-table td { background: #ffffff; color: #1e293b; }
-        .swap-card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin: 1rem 0; }
-        .swap-card { background: #ffffff; border: 1px solid #fed7aa; border-radius: 6px; padding: 1rem; }
-        .swap-card h5 { margin: 0 0 0.5rem 0; font-size: 0.95rem; }
 
         .widget-instructions { background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 2rem 0 1rem 0; }
         .widget-instructions h4 { margin: 0 0 0.65rem 0; color: #0f172a; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; }
         .widget-instructions ol { margin: 0.5rem 0 0.85rem 1.25rem; padding: 0; }
         .widget-instructions li { margin-bottom: 0.45rem; font-size: 0.95rem; color: #334155; }
-        .widget-instructions ul { margin: 0.35rem 0 0.5rem 1.25rem; padding: 0; }
-        .widget-instructions ul li { margin-bottom: 0.3rem; font-size: 0.92rem; color: #475569; }
 
         .game-box, .stepper-walkthrough { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 1.5rem; background: var(--card); box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .telemetry-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0.75rem; padding: 0.85rem 1.25rem; background: #f8fafc; border-bottom: 1px solid var(--border); }
@@ -101,21 +96,23 @@
 </head>
 <body>
     <div class="container">
-        <div class="header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <!-- TOP NAVIGATION HEADER -->
+        <div class="header">
             <div>
                 <h1>Week 2: Limits of Sequences</h1>
                 <a href="index.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">&larr; Back to Curriculum Index</a>
             </div>
-            <div style="display: flex; gap: 0.5rem;">
+            <div>
                 <a href="week1.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">&larr; Prev: Week 1</a>
             </div>
         </div>
 
         <div class="module-content">
             <div class="intro-lead">
-                Welcome to Week 2 of MTHS120. In accordance with Topic 2 of the official lecture notes (Sections 4, 5, and 6), this module formalizes infinity and sequence convergence via the rigorous $\epsilon\text{-}N$ definition, limit arithmetic, the Squeeze Theorem, monotonic convergence to the supremum, and infinite limits.
+                Welcome to Week 2 of MTHS120. This module formalizes infinity and sequence convergence via the rigorous $\epsilon\text{-}N$ definition, limit arithmetic, the Squeeze Theorem, monotonic convergence to the supremum, and infinite limits.
             </div>
 
+            <!-- TABLE OF CONTENTS -->
             <div class="toc-box">
                 <h4>📌 Module Table of Contents</h4>
                 <ul class="toc-grid">
@@ -126,6 +123,7 @@
                 </ul>
             </div>
 
+            <!-- SECTION 1 -->
             <h2 id="section-limits">1. Formal $\epsilon\text{–}N$ Convergence</h2>
             <div class="infobox">
                 <h4>📖 Notation Reference: Sequences &amp; Limits</h4>
@@ -289,14 +287,23 @@
                 </div>
             </div>
 
+            <!-- SECTION 2 -->
             <h2 id="section-theorems">2. Limit Theorems &amp; Arithmetic</h2>
             <p>Theorem 1 establishes that if $(a_n) \to K$ and $(b_n) \to L$, then sums ($K \pm L$), scalar multiples ($cK$), products ($KL$), and quotients ($K/L$ for $L \neq 0$) converge accordingly. The <strong>Squeeze Theorem</strong> (Theorem 4) proves that if $a_n \le b_n \le c_n$ and $\lim a_n = \lim c_n = L$, then $\lim b_n = L$.</p>
 
+            <!-- SECTION 3 -->
             <h2 id="section-supremum">3. Limits and Supremum</h2>
             <p>Theorem 2 establishes the Monotone Convergence Theorem: Any increasing sequence that is bounded above converges, and its limit equals its supremum ($\lim a_n = \sup\{a_n\}$). This connects set completeness directly to analysis.</p>
 
+            <!-- SECTION 4 -->
             <h2 id="section-infinity">4. Infinity as a Limit</h2>
             <p>A sequence tends to infinity ($\lim a_n = \infty$) if for any large $M$, all terms past some index $N$ satisfy $a_n > M$. Unbounded increasing sequences diverge to infinity (Proposition 7).</p>
+
+            <!-- BOTTOM NAVIGATION FOOTER -->
+            <div style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <a href="week1.html" style="background: var(--accent); color: white; padding: 0.6rem 1.2rem; border-radius: 6px; text-decoration: none; font-weight: 600; transition: background 0.2s;">&larr; Previous: Week 1 Module</a>
+                <a href="index.html" style="color: var(--accent); text-decoration: none; font-weight: 600;">Back to Index &rarr;</a>
+            </div>
         </div>
     </div>
 
