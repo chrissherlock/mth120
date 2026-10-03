@@ -21,25 +21,34 @@ def write_week1_module():
         :root {
             --bg: #f8fafc; --text: #1e293b; --card: #ffffff; --border: #e2e8f0;
             --accent: #0ea5e9; --telemetry-bg: #1e293b; --telemetry-text: #38bdf8;
+            --track1-bg: #f0f9ff; --track2-bg: #fdf4ff;
         }
         body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
         .container { max-width: 1200px; margin: 0 auto; }
         .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; }
         .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 2rem; }
 
+        /* Dual-Track Layout */
+        .dual-track-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; margin-bottom: 2rem; }
+        .track-card { padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border); }
+        .track-formal { background: var(--track1-bg); border-color: #bae6fd; }
+        .track-applied { background: var(--track2-bg); border-color: #f5d0fe; }
+        .track-card h3 { margin-top: 0; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; }
+
         /* Interactive Simulator Styles */
         .simulator { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 2rem; }
         .telemetry { background: var(--telemetry-bg); color: var(--telemetry-text); padding: 0.75rem 1.5rem; font-family: monospace; display: flex; gap: 2rem; font-size: 0.9rem; align-items: center;}
         .canvas-container { padding: 2rem; background: #f1f5f9; display: flex; justify-content: center; border-bottom: 1px solid var(--border); }
-        .controls-pane { display: flex; gap: 2rem; padding: 1.5rem; background: var(--card); border-bottom: 1px solid var(--border); align-items: center; }
-        .nav-buttons { display: flex; gap: 0.5rem; }
-        button { background: var(--accent); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .controls-pane { display: flex; gap: 2rem; padding: 1.5rem; background: var(--card); border-bottom: 1px solid var(--border); align-items: flex-start; }
+        .nav-buttons { display: flex; flex-direction: column; gap: 0.5rem; min-width: 120px; }
+        button { background: var(--accent); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; }
         button:disabled { background: var(--border); cursor: not-allowed; }
-        .step-summary { flex-grow: 1; font-size: 0.95rem; color: #475569; }
+        .step-summary { flex-grow: 1; font-size: 0.95rem; color: #475569; line-height: 1.5; }
         .analysis-panes { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
         .pane { background: var(--card); padding: 1.5rem; }
-        .pane h4 { margin-top: 0; color: var(--accent); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }
-        .toggle-group { margin-bottom: 1rem; }
+        .pane h4 { margin-top: 0; color: var(--accent); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+        .toggle-group { min-width: 220px; }
+        select { width: 100%; padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border); font-family: system-ui, sans-serif; }
     </style>
 </head>
 <body>
@@ -50,19 +59,30 @@ def write_week1_module():
         </div>
 
         <div class="module-content">
-            <h2>1. Theoretical Foundations</h2>
-            <p>We begin by formalizing collections of objects as <strong>sets</strong> ($A = \{1, 2, 3\}$) and mapping relationships via <strong>functions</strong> ($f: X \rightarrow Y$). This extends to the rigorous definition of <strong>sequences</strong>: functions mapping from $\mathbb{N}$ to $\mathbb{R}$, denoted $(a_n)_{n=0}^\infty$.</p>
+            <h2>1. Theoretical Foundations &amp; Real-World Context</h2>
+            <p>To master calculus and linear algebra, we must evaluate concepts through a <strong>Dual-Track Architecture</strong>: rigorously building abstract formal definitions while mapping them directly to physical systems[cite: 2, 3].</p>
 
-            <h3>The $\epsilon-N$ Convergence Definition</h3>
-            <p>A sequence $(a_n)$ converges to a limit $L$ if, for any error margin $\epsilon > 0$, there exists a threshold index $N$ such that for all $n > N$, the distance $\vert{}a_n - L\vert{} < \epsilon$.</p>
+            <div class="dual-track-grid">
+                <div class="track-card track-formal">
+                    <h3>📐 Track 1: Abstract Formalism (Pure Theory)</h3>
+                    <p>A sequence is a function $f: \mathbb{N} \rightarrow \mathbb{R}$[cite: 24]. We say that $\lim_{n\to\infty} a_n = L$ if:</p>
+                    <p>$$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad \forall n > N, \quad |a_n - L| < \epsilon$$</p>
+                    <p>This universal-existential quantifier structure forms the bedrock of real analysis, proving that points permanently enter and remain within an arbitrary neighborhood[cite: 13, 24].</p>
+                </div>
+                <div class="track-card track-applied">
+                    <h3>🎛️ Track 2: Applied Mechanics (Real-World Analog)</h3>
+                    <p>Imagine tuning an AV hall control box to suppress audio line interference. The noise level across processing cycles represents our sequence ($a_n$).</p>
+                    <p>We want total signal elimination ($L=0$), but hardware performance requires proving the attenuation filter reliably drops noise beneath an audible threshold ($\epsilon = 0.2$) past a specific latency cycle ($N$).</p>
+                </div>
+            </div>
 
             <div class="simulator">
                 <div class="telemetry">
                     <span>PHASE: <span id="tel-phase">Initialization</span></span>
-                    <span>SEQ: <span id="tel-seq">$a_n = \frac{1}{n}$</span></span>
-                    <span>$n =$ <span id="tel-n">1</span></span>
-                    <span>$a_n =$ <span id="tel-val">$1.000$</span></span>
-                    <span>$\epsilon =$ <span id="tel-eps">$0.2$</span></span>
+                    <span>ARCHITECTURE: <span id="tel-seq">$a_n = \frac{1}{n}$</span></span>
+                    <span>INDEX ($n$) = <span id="tel-n">1</span></span>
+                    <span>VALUE ($a_n$) = <span id="tel-val">$1.000$</span></span>
+                    <span>TOLERANCE ($\epsilon$) = <span id="tel-eps">$0.2$</span></span>
                 </div>
 
                 <div class="canvas-container">
@@ -101,17 +121,16 @@ def write_week1_module():
 
                 <div class="controls-pane">
                     <div class="nav-buttons">
-                        <button id="btn-prev" onclick="step(-1)" disabled>Prev</button>
-                        <button id="btn-next" onclick="step(1)">Next</button>
-                        <button id="btn-reset" onclick="reset()">Reset</button>
+                        <button id="btn-prev" onclick="step(-1)" disabled>Prev Step</button>
+                        <button id="btn-next" onclick="step(1)">Next Step</button>
+                        <button id="btn-reset" onclick="reset()" style="background-color: var(--text-muted);">Reset</button>
                     </div>
-                    <div class="step-summary" id="step-summary">
-                        <strong>Scenario:</strong> We are tracking consecutive measurements of a process that decays over time. We need to prove it eventually stabilizes near 0 within a strict tolerance ($\epsilon$).
-                    </div>
+                    <div class="step-summary" id="step-summary"></div>
                     <div class="toggle-group">
+                        <label for="seq-toggle" style="font-size: 0.85rem; font-weight: bold; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">COMPARE ARCHITECTURE:</label>
                         <select id="seq-toggle" onchange="changeSeq()">
-                            <option value="reciprocal">Sequence: 1/n</option>
-                            <option value="geometric">Sequence: 2^(-n)</option>
+                            <option value="reciprocal">Linear Attenuator ($a_n = \frac{1}{n}$)</option>
+                            <option value="geometric">Exponential Filter ($a_n = 2^{-n}$)</option>
                         </select>
                     </div>
                 </div>
@@ -119,11 +138,11 @@ def write_week1_module():
                 <div class="analysis-panes">
                     <div class="pane">
                         <h4>What Is Happening (Mechanics)</h4>
-                        <div id="pane-what">The sequence initializes at $n=1$. The target limit is $L=0$. We establish an arbitrary error band $\epsilon = 0.2$ (the blue zone).</div>
+                        <div id="pane-what"></div>
                     </div>
                     <div class="pane">
                         <h4>Why The System Does This (Rationale)</h4>
-                        <div id="pane-why">To rigorously prove convergence, we cannot just say "it gets smaller." We must demonstrate that the sequence can permanently enter and remain within <em>any</em> arbitrary boundary we set.</div>
+                        <div id="pane-why"></div>
                     </div>
                 </div>
             </div>
@@ -140,27 +159,27 @@ def write_week1_module():
         const narratives = [
             {
                 phase: "Initialization", n: 1,
-                summary: "Setting the boundary constraint.",
-                what: "The sequence initializes. We establish an arbitrary error band $\\epsilon = 0.2$ (the blue zone).",
-                why: "We must demonstrate that the sequence can permanently enter and remain within <em>any</em> arbitrary boundary we set around $L=0$."
+                summary: "<strong>Goal:</strong> Initialize the sequence mapping $f: \\mathbb{N} \\rightarrow \\mathbb{R}$ and establish the error bound constraints for our AV suppression filter.",
+                what: "The sequence initializes at index $n=1$, yielding $a_1 = 1.0$. Simultaneously, our applied system defines target limit $L=0$ and audible error tolerance $\\epsilon = 0.2$ (the blue zone).",
+                why: "To rigorously prove convergence under real analysis axioms, we cannot rely on informal intuition. We must establish that the sequence domain maps to a bounded codomain where arbitrary $\\epsilon$-neighborhoods can be applied."
             },
             {
                 phase: "Iteration", n: 3,
-                summary: "Terms approach but remain outside the boundary.",
-                what: "We calculate $a_2$ and $a_3$. The values are decreasing but still strictly greater than $\\epsilon$.",
-                why: "The sequence is monotonic decreasing, but we have not yet found the index $N$ where the constraint $\\vert{}a_n - 0\\vert{} < \\epsilon$ is satisfied."
+                summary: "<strong>Goal:</strong> Evaluate intermediate terms as the sequence progresses through preliminary index steps.",
+                what: "The system computes $a_2$ and $a_3$. In formal terms, the terms are decreasing monotonically; in applied terms, the filter is actively attenuating signal interference.",
+                why: "Monotonic decrease guarantees downward motion, but does not yet satisfy convergence bounds. We must observe further iterations to locate the critical threshold index where terms permanently cross into the tolerance band."
             },
             {
                 phase: "Threshold Discovery", n: 5,
-                summary: "Calculating the critical index N.",
-                what: "We set $1/n < 0.2$, algebraically rearranging to $n > 1/0.2$, meaning $n > 5$. We mark $N=5$ with the red threshold line.",
-                why: "We are reverse-engineering the required index based on the chosen $\\epsilon$. If $\\epsilon$ changes, $N$ must adapt mathematically."
+                summary: "<strong>Goal:</strong> Algebraically solve for the critical threshold index $N$ dictated by the $\\epsilon-N$ definition.",
+                what: "We evaluate $\vert{}a_n - 0\vert{} < 0.2$. For $a_n = 1/n$, this yields $n > 5$. We set $N=5$, rendering the red threshold boundary on our canvas.",
+                why: "This step operationalizes the existential quantifier $\\exists N$ in the formal definition. It proves that the abstract theoretical limit is directly tied to a concrete computational latency requirement."
             },
             {
                 phase: "Convergence Verification", n: 8,
-                summary: "All subsequent terms remain trapped within epsilon.",
-                what: "For all $n > 5$ (e.g., $n=6, 7, 8$), the points fall strictly inside the blue $\\epsilon$ band.",
-                why: "This fulfills the universal quantifier $\\forall n > N$. Because we can perform this algebraic mapping for <em>any</em> $\\epsilon > 0$, the limit is proven."
+                summary: "<strong>Goal:</strong> Fulfill the universal quantifier condition to formally certify the limit.",
+                what: "For all subsequent indices $n > 5$ (such as $n=6, 7, 8$), terms remain strictly trapped within the $\\epsilon$ neighborhood.",
+                why: "This satisfies $\\forall n > N$. Because this inequality holds true for <em>any</em> arbitrary $\\epsilon > 0$ we choose, the limit $\\lim_{n\\to\\infty} a_n = L$ is formally verified."
             }
         ];
 
@@ -188,7 +207,7 @@ def write_week1_module():
             document.getElementById('tel-phase').innerText = current.phase;
             document.getElementById('tel-n').innerText = current.n;
 
-            document.getElementById('step-summary').innerHTML = `<strong>Scenario:</strong> ${current.summary}`;
+            document.getElementById('step-summary').innerHTML = current.summary;
             document.getElementById('pane-what').innerHTML = current.what;
             document.getElementById('pane-why').innerHTML = current.why;
 
@@ -240,28 +259,13 @@ def write_week1_module():
     with open('week1.html', 'w') as f:
         f.write(html_content)
 
-def update_curriculum_index():
-    if not os.path.exists('index.html'):
-        print("index.html not found in current directory. Please run in root.")
-        return
-
-    with open('index.html', 'r') as f:
-        content = f.read()
-
-    target = '<a href="#" class="module-link">View Module</a>'
-    replacement = '<a href="${item.week === 1 ? \'week1.html\' : \'#\'}" class="module-link">View Module</a>'
-
-    updated_content = content.replace(target, replacement)
-
-    with open('index.html', 'w') as f:
-        f.write(updated_content)
-
 def execute_git_sync():
     commit_message = (
-        "Replace Markdown emphasis with HTML tags in JS narratives\n\n"
-        "Converted literal asterisks (*any*) to standard HTML emphasis tags \n"
-        "(<em>any</em>) inside the JavaScript narratives array since innerHTML \n"
-        "does not natively parse Markdown syntax."
+        "Implement Dual-Track Pedagogical Architecture in Week 1 module\n\n"
+        "Added a formal Abstract Formalism track alongside the Applied Mechanics \n"
+        "scenario. This ensures the simulator presents rigorous definitions, axioms, \n"
+        "and epsilon-N proofs directly from the course notes, while mapping them \n"
+        "in lockstep to the real-world AV signal processing application."
     )
 
     commands = [
@@ -277,8 +281,6 @@ def execute_git_sync():
 if __name__ == "__main__":
     print("Writing Week 1 module...")
     write_week1_module()
-    print("Updating index.html routing...")
-    update_curriculum_index()
     print("Committing and pushing to GitHub...")
     execute_git_sync()
     print("Deployment complete.")
