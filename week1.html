@@ -94,7 +94,7 @@
         }
         .swap-card h5 { margin: 0 0 0.5rem 0; font-size: 0.95rem; }
 
-        /* LARGE RESPONSIVE DIAGRAM CONTAINERS */
+        /* Large Responsive Diagram Containers */
         .diagram-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.75rem 0; }
         .diagram-card {
             background: #f8fafc;
@@ -479,7 +479,6 @@
 
             <p>Mathematics constructs its universe of numbers step by step, algebraically expanding systems to solve equations and geometric problems that previous systems could not express. Each expansion resolves an <strong>algebraic closure failure</strong> of the previous system.</p>
 
-            <!-- FULL-WIDTH SCALED UP NESTED HIERARCHY -->
             <div class="diagram-card" style="margin: 1.5rem 0; width: 100%; box-sizing: border-box;">
                 <h5>Nested Set Containment Hierarchy ($\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$)</h5>
                 <svg viewBox="0 0 740 220">
@@ -544,7 +543,6 @@
             <h3>Real Numbers ($\mathbb{R}$): Filling the Geometric Gaps</h3>
             <p>Despite being dense (meaning between any two rational numbers, another rational always exists), $\mathbb{Q}$ contains massive structural "holes." For instance, applying the Pythagorean theorem to a right triangle with side lengths of 1 gives a hypotenuse of $\sqrt{2}$. Yet, <strong>Theorem:</strong> There is no rational number $p/q$ such that $(p/q)^2 = 2$.</p>
 
-            <!-- FULL-WIDTH SCALED UP GEOMETRIC GAP DIAGRAM -->
             <div class="diagram-card" style="margin: 1.5rem 0; width: 100%; box-sizing: border-box;">
                 <h5>The Geometric Gap: Constructing $\sqrt{2}$ on the Number Line</h5>
                 <svg viewBox="0 0 740 200">
@@ -1239,7 +1237,7 @@
         }
 
         /* ==========================================================================
-           EPSILON CHALLENGE GAME
+           EPSILON CHALLENGE GAME (FIXED LEFT MARGIN FOR EPSILON LABELS)
            ========================================================================== */
         const challengeState = { active: false, eps: 0.2, reqN: 5, currentDisplayN: 5 };
 
@@ -1311,9 +1309,9 @@
         function renderGameSVG(eps, reqN, curN) {
             const svg = document.getElementById('game-plot');
             const maxN = Math.max(14, reqN + 4);
-            const originX = 65;
+            const originX = 90; // Expanded left margin to prevent clipping negative epsilon labels
             const originY = 205;
-            const maxXScale = 630;
+            const maxXScale = 610;
 
             let maxYScale;
             if (eps <= 0.05) {
@@ -1332,67 +1330,68 @@
             let svgContent = `
                 <!-- Tolerance corridor -->
                 <rect x="${originX}" y="${bandY}" width="${maxXScale}" height="${bandHeight}" fill="#fef3c7" opacity="0.75"/>
-                <line x1="${originX}" y1="${topY}" x2="${originX + maxXScale}" y2="${topY}" stroke="#d97706" stroke-width="1.2" stroke-dasharray="4"/>
-                <line x1="${originX}" y1="${bottomY}" x2="${originX + maxXScale}" y2="${bottomY}" stroke="#d97706" stroke-width="1.2" stroke-dasharray="4"/>
+                <line x1="${originX}" y1="${topY}" x2="${originX + maxXScale}" y2="${topY}" stroke="#d97706" stroke-width="1.8" stroke-dasharray="4"/>
+                <line x1="${originX}" y1="${bottomY}" x2="${originX + maxXScale}" y2="${bottomY}" stroke="#d97706" stroke-width="1.8" stroke-dasharray="4"/>
 
                 <!-- Zero Target Line -->
-                <line x1="${originX}" y1="${originY}" x2="${originX + maxXScale}" y2="${originY}" stroke="#64748b" stroke-width="1.5"/>
-                <text x="${originX - 32}" y="${originY + 4}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748b">L=0</text>
+                <line x1="${originX}" y1="${originY}" x2="${originX + maxXScale}" y2="${originY}" stroke="#64748b" stroke-width="2.2"/>
+                <text x="${originX - 35}" y="${originY + 5}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700" fill="#64748b">L=0</text>
 
-                <!-- Axes going all the way down and across -->
-                <line x1="${originX}" y1="20" x2="${originX}" y2="${originY}" stroke="#64748b" stroke-width="1.5"/>
-                <line x1="${originX}" y1="${originY}" x2="${originX + maxXScale}" y2="${originY}" stroke="#64748b" stroke-width="1.5"/>
+                <!-- Axis Line -->
+                <line x1="${originX}" y1="20" x2="${originX}" y2="${originY + 18}" stroke="#64748b" stroke-width="2.2"/>
 
-                <!-- Epsilon boundary indicator lines and labels -->
-                <text x="8" y="${topY + 4}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" font-weight="600" fill="#d97706">+&epsilon; (${eps})</text>
-                <line x1="55" y1="${topY}" x2="${originX}" y2="${topY}" stroke="#d97706" stroke-width="1" stroke-dasharray="2"/>
+                <!-- Fully visible Epsilon labels with generous left margin -->
+                <text x="12" y="${topY + 4}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="bold" fill="#d97706">+&epsilon; (${eps})</text>
+                <line x1="75" y1="${topY}" x2="${originX}" y2="${topY}" stroke="#d97706" stroke-width="1.5" stroke-dasharray="2"/>
 
-                <text x="8" y="${bottomY + 4}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" font-weight="600" fill="#d97706">-&epsilon; (${eps})</text>
-                <line x1="55" y1="${bottomY}" x2="${originX}" y2="${bottomY}" stroke="#d97706" stroke-width="1" stroke-dasharray="2"/>
+                <text x="12" y="${bottomY + 4}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="bold" fill="#d97706">-&epsilon; (${eps})</text>
+                <line x1="75" y1="${bottomY}" x2="${originX}" y2="${bottomY}" stroke="#d97706" stroke-width="1.5" stroke-dasharray="2"/>
             `;
 
-            // Render sequence points and clean horizontal axis numbers
             for (let n = 1; n <= curN; n++) {
                 const val = 1 / n;
                 const cx = originX + (n * (maxXScale / maxN));
                 const cy = originY - (val * maxYScale);
 
-                // Tick mark and index number on horizontal axis
-                svgContent += `<line x1="${cx}" y1="${originY}" x2="${cx}" y2="${originY + 5}" stroke="#64748b" stroke-width="1"/>`;
-                svgContent += `<text x="${cx - 4}" y="${originY + 18}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#475569" font-weight="500">${n}</text>`;
+                if (n % 2 === 0 || n === 1 || n === reqN || n === curN) {
+                    svgContent += `<line x1="${cx}" y1="${originY}" x2="${cx}" y2="${originY + 6}" stroke="#94a3b8" stroke-width="1.5"/>`;
+                    svgContent += `<text x="${cx - 5}" y="${originY + 20}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#475569" font-weight="600">${n}</text>`;
+                }
 
-                if (cy < 20) continue;
+                if (cy < 20) {
+                    continue;
+                }
 
                 const inside = n > reqN;
                 const onBoundary = n === reqN;
                 let fillColor = '#d97706';
                 let strokeAttr = '';
-                let r = 4;
+                let r = 5;
 
                 if (inside) {
                     fillColor = '#10b981';
-                    r = 5.5;
+                    r = 7;
                 } else if (onBoundary) {
                     fillColor = '#fbbf24';
-                    strokeAttr = 'stroke="#d97706" stroke-width="1.5"';
-                    r = 5;
+                    strokeAttr = 'stroke="#d97706" stroke-width="2"';
+                    r = 6;
                 }
 
                 svgContent += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fillColor}" ${strokeAttr}/>`;
 
                 if (n === curN && inside) {
                     svgContent += `
-                        <line x1="${cx}" y1="${topY}" x2="${cx}" y2="${cy}" stroke="#10b981" stroke-width="1.5" stroke-dasharray="2"/>
-                        <circle cx="${cx}" cy="${topY}" r="3" fill="#ef4444"/>
-                        <text x="${cx + 6}" y="${(topY + cy) / 2 + 3}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#059669" font-weight="600">inside corridor</text>
+                        <line x1="${cx}" y1="${topY}" x2="${cx}" y2="${cy}" stroke="#10b981" stroke-width="2" stroke-dasharray="3"/>
+                        <circle cx="${cx}" cy="${topY}" r="3.5" fill="#ef4444"/>
+                        <text x="${cx + 8}" y="${(topY + cy) / 2 + 4}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#059669" font-weight="bold">inside corridor</text>
                     `;
                 }
             }
 
             const thresholdX = originX + (reqN * (maxXScale / maxN));
             svgContent += `
-                <line x1="${thresholdX}" y1="20" x2="${thresholdX}" y2="${originY}" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"/>
-                <text x="${thresholdX + 5}" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="bold" fill="#ef4444">N = ${reqN} (Cutoff)</text>
+                <line x1="${thresholdX}" y1="20" x2="${thresholdX}" y2="${originY + 12}" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="5"/>
+                <text x="${thresholdX + 6}" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="bold" fill="#ef4444">N = ${reqN} (Cutoff)</text>
             `;
 
             svg.innerHTML = svgContent;
