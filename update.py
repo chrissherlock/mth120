@@ -101,9 +101,9 @@ def write_structures_subpage():
             <p>Throughout the table below, you will see shorthand expressions enclosed in parentheses, such as $(\mathbb{Z}, +)$ or $(\mathbb{Z}, +, \times)$. This is standard algebraic shorthand used to define a mathematical "workspace." It couples two things together:</p>
             <ul>
                 <li><strong>The Set (First Element):</strong> The pool of numbers you are allowed to use. For example, $\mathbb{Z}$ means you are working with the integers $\{\dots, -2, -1, 0, 1, 2, \dots\}$.</li>
-                <li><strong>The Operations (Following Elements):</strong> The rules used to combine those numbers. For instance, $(\mathbb{Z}, +)$ pairs the integers specifically with <strong>addition</strong>, while $(\mathbb{Z}, +, \times)$ pairs them with <strong>both addition and multiplication</strong>.</li>
+                <li><strong>The Operations (Following Elements):</strong> The fundamental rules used to combine those numbers. For instance, $(\mathbb{Z}, +)$ pairs the integers specifically with <strong>addition</strong>, while $(\mathbb{Z}, +, \times)$ pairs them with <strong>both addition and multiplication</strong>.</li>
             </ul>
-            <p>Depending on which operations you attach to a set, its algebraic classification changes entirely!</p>
+            <p><strong>A Quick Note on Operations vs. Inverses:</strong> When the table below lists "2 Operations ($+, \times$)" for a Field, you might wonder: <em>"What about division or inverses?"</em> In abstract algebra, an **inverse** (like $-a$ or $a^{-1}$) is not a separate standalone operation; rather, it is a <strong>structural property or guarantee</strong> that elements must satisfy using those existing operations. Subtraction is simply shorthand for adding an additive inverse ($a + (-a)$), and division is shorthand for multiplying by a multiplicative reciprocal ($a \times b^{-1}$). Thus, a field has only two fundamental binary operations, but guarantees that both additive and multiplicative inverses exist for all non-zero elements!</p>
 
             <h2>3. Hierarchy Comparison Table with Examples</h2>
             <table>
@@ -209,9 +209,10 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Allow natural wrapping in Key Properties table column\n\n"
-        "Removed global nowrap table cell constraints in algebraic_structures.html \n"
-        "so that descriptive text in the Key Properties column wraps naturally."
+        "Clarify operations versus inverse properties in algebraic structures subpage\n\n"
+        "Added a clarifying note to algebraic_structures.html explaining that additive \n"
+        "and multiplicative inverses are structural properties rather than separate binary \n"
+        "operations, demystifying why fields have only two fundamental operations."
     )
 
     commands = [
