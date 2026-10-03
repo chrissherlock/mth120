@@ -425,18 +425,18 @@
             $$\text{For } n=10: a_{10} = \frac{1}{10} = 0.1$$
             As $n$ gets larger, the numbers shrink closer and closer to $0$. We say the limit is $0$, written as $\lim_{n\to\infty} \frac{1}{n} = 0$.</p>
 
+            <div class="definition-box">
+                <p><strong>Formal Definition of Convergence:</strong></p>
+                <p>We say a sequence $(a_n)$ converges to a limit $L$, denoted $\lim_{n\to\infty} a_n = L$, if:</p>
+                <p>$$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad \forall n > N, \quad |a_n - L| < \epsilon$$</p>
+            </div>
+
             <h3>The $\epsilon-N$ Definition Decoded (The Challenge Game)</h3>
-            <p>The formal definition of a limit is an interactive challenge between two players:</p>
+            <p>The formal definition of a limit above is essentially an interactive challenge game between two players:</p>
             <ul>
                 <li><strong>Your Role (The Skeptic / $\epsilon$):</strong> You pick an error tolerance budget ($\epsilon$). For example, you demand that all numbers in the sequence eventually land and stay within a narrow zone of $\pm 0.1$ around zero.</li>
                 <li><strong>The System's Role ($N$):</strong> The system must find a specific cutoff position index ($N$). It wins the challenge if it can prove that *every single term* past that index ($n > N$) stays safely inside your error zone forever.</li>
             </ul>
-
-            <div class="definition-box">
-                <p><strong>Formal Definition of Convergence:</strong></p>
-                <p>We say $\lim_{n\to\infty} a_n = L$ if:</p>
-                <p>$$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad \forall n > N, \quad |a_n - L| < \epsilon$$</p>
-            </div>
 
             <!-- INTERACTIVE EPSILON CHALLENGE GAME -->
             <div class="game-box">
@@ -476,7 +476,7 @@
                 </div>
             </div>
 
-            <p style="margin-top: 2rem;">To explore these mechanics further across multiple architectures, review the formal convergence definition below and use the <strong>Dual-Track Simulator</strong>:</p>
+            <p style="margin-top: 2rem;">To explore these mechanics further across multiple architectures, review the dual tracks below and test the <strong>Dual-Track Simulator</strong>:</p>
 
             <div class="dual-track-grid">
                 <div class="track-card track-formal">
@@ -719,7 +719,7 @@
                 phase: "Convergence Verification", n: 8, indexVal: 8,
                 summary: "<strong>Goal:</strong> Fulfill the universal quantifier condition to formally certify the limit.",
                 what: "<p><strong>Abstract Formalism:</strong> For all subsequent indices $n > N$, terms remain strictly trapped within the $\\epsilon$ neighborhood.</p><p><strong>Applied Mechanics:</strong> The residual error remains flat and negligible across all further computation steps.</p>",
-                why: "<p><strong>Formal Rationale:</strong> This satisfies $\\forall n > N$. Because this inequality holds for <em>any</i> arbitrary $\\epsilon > 0$, the limit $\\lim_{n\\to\\infty} a_n = L$ is verified.</p><p><strong>System Constraint:</strong> Guarantees long-term numerical stability against unexpected divergence.</p>"
+                why: "<p><strong>Formal Rationale:</strong> This satisfies $\\forall n > N$. Because this inequality holds for <em>any</em> arbitrary $\\epsilon > 0$, the limit $\\lim_{n\\to\\infty} a_n = L$ is verified.</p><p><strong>System Constraint:</strong> Guarantees long-term numerical stability against unexpected divergence.</p>"
             }
         ];
 
