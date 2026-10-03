@@ -311,7 +311,7 @@
                         <text x="195" y="90" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#d97706" font-weight="bold">L=0</text>
                         <circle cx="45" cy="40" r="5" fill="#d97706"/><line x1="45" y1="40" x2="80" y2="62" stroke="#d97706" stroke-width="1.5"/>
                         <circle cx="80" cy="62" r="5" fill="#d97706"/><line x1="80" y1="62" x2="115" y2="78" stroke="#d97706" stroke-width="1.5"/>
-                        <circle cx="115" cy="78" r="5" fill="#10b981"/><line x1="115" y1="78" x2="150" y2="87" stroke="#10b981" stroke-width="1.5"/>
+                        <circle cx="115" cy="78" r="5" fill="#d97706"/><line x1="115" y1="78" x2="150" y2="87" stroke="#d97706" stroke-width="1.5"/>
                         <circle cx="150" cy="87" r="5" fill="#10b981"/><line x1="150" y1="87" x2="185" y2="91" stroke="#10b981" stroke-width="1.5"/>
                         <circle cx="185" cy="91" r="6" fill="#10b981"/>
                         <text x="110" y="122" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b" text-anchor="middle" font-weight="600">Sequence Limits (aₙ → L)</text>
@@ -841,7 +841,7 @@
                     </tbody>
                 </table>
 
-                <h5 style="margin: 1.25rem 0 0.5rem 0; color: #92400e; font-size: 0.98rem;">⚠️ The Quantifier Swap Trap (Why Order Matters)</h5>
+                <h5 style="margin: 1.25rem 0 0.5rem 0; color: #92400e; font-size: 0.98rem;">⚠️️ The Quantifier Swap Trap (Why Order Matters)</h5>
                 <p>Reversing the order of quantifiers completely breaks the meaning of the statement:</p>
                 <div class="swap-card-grid">
                     <div class="swap-card" style="border-left: 4px solid #10b981;">
@@ -950,7 +950,7 @@
                 <p><strong>What is this?</strong> The simulator below bridges pure mathematical theory (Track 1) with practical numerical engineering (Track 2). It lets you step through how sequence convergence operates under the hood, showing both the logical proof requirements and the real-world error-correction mechanics side by side.</p>
                 <p><strong>How to use it:</strong></p>
                 <ol>
-                    <li><strong>Compare Architectures:</strong> Use the dropdown in the bottom right to switch between a <em>Linear Attenuator ($a_n = 1/n$)</em> and an <em>Exponential Decay ($a_n = 2^{-n}$)</em> stream.</li>
+                    <li><strong>Compare Architectures:</strong> Use the dropdown in the bottom right to switch between a <em>Linear Attenuator ($a_n = 1/n$)</em> and an <i>Exponential Decay ($a_n = 2^{-n}$)</i> stream.</li>
                     <li><strong>Step Through Phases:</strong> Click <strong>Next Step</strong> to advance from Initialization through Threshold Discovery to final Convergence Verification.</li>
                     <li><strong>Analyze Telemetry:</strong> Track the structured telemetry cards at the top for current position indices ($n$), active values ($a_n$), and error tolerances ($\epsilon$).</li>
                     <li><strong>Read Paired Panes:</strong> Examine the lower explanation panels to understand both *what* mechanical operations are occurring and *why* real analysis axioms require them.</li>
@@ -988,23 +988,26 @@
                             <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
                                 <path d="M 0 0 L 10 5 L 0 10 z" fill="#d97706"/>
                             </marker>
+                            <marker id="axis-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+                            </marker>
                         </defs>
 
                         <!-- Symmetric Tolerance Corridor spanning +ε and -ε around center L=0 -->
                         <rect id="eps-band" x="90" y="82" width="610" height="96" fill="#fde68a" opacity="0.6"/>
 
                         <!-- Upper bound line (L + ε) and Lower bound line (L - ε) -->
-                        <line x1="90" y1="82" x2="700" y2="82" stroke="#d97706" stroke-width="1.2" stroke-dasharray="4"/>
-                        <line x1="90" y1="178" x2="700" y2="178" stroke="#d97706" stroke-width="1.2" stroke-dasharray="4"/>
+                        <line x1="90" y1="82" x2="700" y2="82" stroke="#d97706" stroke-width="1.0" stroke-dasharray="4"/>
+                        <line x1="90" y1="178" x2="700" y2="178" stroke="#d97706" stroke-width="1.0" stroke-dasharray="4"/>
 
-                        <!-- Axes with Arrowheads -->
-                        <line x1="90" y1="130" x2="700" y2="130" stroke="#64748b" stroke-width="1.5"/>
+                        <!-- Thinner Axes with Arrowheads -->
+                        <line x1="90" y1="130" x2="700" y2="130" stroke="#64748b" stroke-width="1.0"/>
                         <polygon points="705,130 697,126 697,134" fill="#64748b"/>
 
-                        <line x1="90" y1="240" x2="90" y2="35" stroke="#64748b" stroke-width="1.5"/>
+                        <line x1="90" y1="240" x2="90" y2="35" stroke="#64748b" stroke-width="1.0"/>
                         <polygon points="90,30 86,38 94,38" fill="#64748b"/>
 
-                        <!-- Axis Labels: centered directly over the y-axis arrowhead -->
+                        <!-- Axis Labels: centered over the y-axis arrowhead -->
                         <text x="90" y="22" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="13" fill="#64748b" font-weight="600">a<tspan dy="3" font-size="10">n</tspan></text>
                         <text x="712" y="134" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="13" fill="#64748b" font-weight="600">n</text>
 
@@ -1012,17 +1015,17 @@
                         <text x="58" y="134" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b" font-weight="600">0</text>
 
                         <text x="25" y="78" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#d97706" font-weight="600">L + ϵ</text>
-                        <line x1="60" y1="82" x2="88" y2="82" stroke="#d97706" stroke-width="1" marker-end="url(#arrow)"/>
+                        <line x1="60" y1="82" x2="88" y2="82" stroke="#d97706" stroke-width="0.8" marker-end="url(#arrow)"/>
 
                         <text x="25" y="186" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#d97706" font-weight="600">L - ϵ</text>
-                        <line x1="60" y1="178" x2="88" y2="178" stroke="#d97706" stroke-width="1" marker-end="url(#arrow)"/>
+                        <line x1="60" y1="178" x2="88" y2="178" stroke="#d97706" stroke-width="0.8" marker-end="url(#arrow)"/>
 
                         <text x="42" y="48" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b">1.0</text>
                         <text x="42" y="234" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b">-0.2</text>
-                        <line x1="84" y1="230" x2="90" y2="230" stroke="#64748b" stroke-width="1"/>
+                        <line x1="84" y1="230" x2="90" y2="230" stroke="#64748b" stroke-width="0.8"/>
 
                         <!-- Horizontal Index Ticks (1 to 8) -->
-                        <path d="M160 130 v5 M220 130 v5 M280 130 v5 M340 130 v5 M400 130 v5 M460 130 v5 M520 130 v5 M580 130 v5" stroke="#94a3b8" stroke-width="1" fill="none"/>
+                        <path d="M160 130 v5 M220 130 v5 M280 130 v5 M340 130 v5 M400 130 v5 M460 130 v5 M520 130 v5 M580 130 v5" stroke="#94a3b8" stroke-width="0.8" fill="none"/>
                         <text x="156" y="148" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b">1</text>
                         <text x="216" y="148" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b">2</text>
                         <text x="276" y="148" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b">3</text>
@@ -1033,7 +1036,7 @@
                         <text x="576" y="148" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b">8</text>
 
                         <!-- Threshold Cutoff Line N -->
-                        <line id="n-threshold" x1="340" y1="35" x2="340" y2="240" stroke="#ef4444" stroke-width="2" stroke-dasharray="4" opacity="0"/>
+                        <line id="n-threshold" x1="340" y1="35" x2="340" y2="240" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4" opacity="0"/>
 
                         <!-- Dynamic Sequence Points Group -->
                         <g id="points-group"></g>
@@ -1272,7 +1275,7 @@
         }
 
         /* ==========================================================================
-           EPSILON CHALLENGE GAME (CLEAN INITIAL STATE WITH NO POINTS OR CORRIDOR)
+           EPSILON CHALLENGE GAME (CLEAN INITIAL STATE WITH THIN AXIS LINES)
            ========================================================================== */
         const challengeState = { active: false, eps: 0.2, reqN: 5, currentDisplayN: 5 };
 
@@ -1347,38 +1350,39 @@
             const originY = 130; // Center anchored L = 0
             const maxXScale = 610;
 
-            // Base clean axes and grid (always rendered)
             let svgContent = `
                 <defs>
                     <marker id="game-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
                         <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
                     </marker>
+                    <marker id="eps-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#d97706"/>
+                    </marker>
                 </defs>
-                <!-- Zero Target Line -->
-                <line x1="${originX}" y1="${originY}" x2="${originX + maxXScale}" y2="${originY}" stroke="#64748b" stroke-width="2.2"/>
+                <!-- Thin Zero Target Line -->
+                <line x1="${originX}" y1="${originY}" x2="${originX + maxXScale}" y2="${originY}" stroke="#64748b" stroke-width="1.2"/>
                 <text x="${originX - 35}" y="${originY + 5}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700" fill="#64748b">L=0</text>
 
-                <!-- Vertical Axis with Arrow -->
-                <line x1="${originX}" y1="240" x2="${originX}" y2="25" stroke="#64748b" stroke-width="2.2" marker-end="url(#game-arrow)"/>
+                <!-- Thin Vertical Axis with Arrow -->
+                <line x1="${originX}" y1="240" x2="${originX}" y2="25" stroke="#64748b" stroke-width="1.2" marker-end="url(#game-arrow)"/>
                 <text x="${originX}" y="18" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="13" fill="#64748b" font-weight="600">a<tspan dy="3" font-size="10">n</tspan></text>
 
-                <!-- Horizontal Axis with Arrow -->
-                <line x1="${originX}" y1="${originY}" x2="715" y2="${originY}" stroke="#64748b" stroke-width="2.2" marker-end="url(#game-arrow)"/>
+                <!-- Thin Horizontal Axis with Arrow -->
+                <line x1="${originX}" y1="${originY}" x2="715" y2="${originY}" stroke="#64748b" stroke-width="1.2" marker-end="url(#game-arrow)"/>
                 <text x="722" y="134" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="13" fill="#64748b" font-weight="600">n</text>
             `;
 
-            // If user has not picked an epsilon yet (initial state or reset), show empty graph grid
+            // If user has not picked an epsilon yet (initial state or reset), show clean graph grid
             if (eps === null) {
                 for (let n = 1; n <= 10; n++) {
                     const cx = originX + (n * (maxXScale / 14));
-                    svgContent += `<line x1="${cx}" y1="${originY}" x2="${cx}" y2="${originY + 6}" stroke="#94a3b8" stroke-width="1.5"/>`;
-                    svgContent += `<text x="${cx - 4}" y="${originY + 20}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#475569" font-weight="600">${n}</text>`;
+                    svgContent += `<line x1="${cx}" y1="${originY}" x2="${cx}" y2="${originY + 5}" stroke="#94a3b8" stroke-width="0.8"/>`;
+                    svgContent += `<text x="${cx - 4}" y="${originY + 18}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#475569" font-weight="600">${n}</text>`;
                 }
                 svg.innerHTML = svgContent;
                 return;
             }
 
-            // Active challenge state rendering below
             const maxN = Math.max(14, reqN + 4);
             let scaleFactor = eps <= 0.05 ? 900 : (eps <= 0.1 ? 550 : 220);
 
@@ -1389,11 +1393,14 @@
             svgContent += `
                 <!-- Symmetric tolerance corridor spanning symmetrically around center -->
                 <rect x="${originX}" y="${topY}" width="${maxXScale}" height="${bandHeight}" fill="#fef3c7" opacity="0.8"/>
-                <line x1="${originX}" y1="${topY}" x2="${originX + maxXScale}" y2="${topY}" stroke="#d97706" stroke-width="1.8" stroke-dasharray="4"/>
-                <line x1="${originX}" y1="${bottomY}" x2="${originX + maxXScale}" y2="${bottomY}" stroke="#d97706" stroke-width="1.8" stroke-dasharray="4"/>
+                <line x1="${originX}" y1="${topY}" x2="${originX + maxXScale}" y2="${topY}" stroke="#d97706" stroke-width="1.0" stroke-dasharray="4"/>
+                <line x1="${originX}" y1="${bottomY}" x2="${originX + maxXScale}" y2="${bottomY}" stroke="#d97706" stroke-width="1.0" stroke-dasharray="4"/>
 
-                <text x="12" y="${topY + 4}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="bold" fill="#d97706">L + &epsilon; (${eps})</text>
-                <text x="12" y="${bottomY + 4}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="bold" fill="#d97706">L - &epsilon; (${eps})</text>
+                <text x="25" y="${topY + 4}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" font-weight="600" fill="#d97706">L + &epsilon; (${eps})</text>
+                <line x1="60" y1="${topY}" x2="88" y2="${topY}" stroke="#d97706" stroke-width="0.8" marker-end="url(#eps-arrow)"/>
+
+                <text x="25" y="${bottomY + 4}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" font-weight="600" fill="#d97706">L - &epsilon; (${eps})</text>
+                <line x1="60" y1="${bottomY}" x2="88" y2="${bottomY}" stroke="#d97706" stroke-width="0.8" marker-end="url(#eps-arrow)"/>
             `;
 
             for (let n = 1; n <= curN; n++) {
@@ -1402,8 +1409,8 @@
                 const cy = originY - (val * scaleFactor);
 
                 if (n % 2 === 0 || n === 1 || n === reqN || n === curN) {
-                    svgContent += `<line x1="${cx}" y1="${originY}" x2="${cx}" y2="${originY + 6}" stroke="#94a3b8" stroke-width="1.5"/>`;
-                    svgContent += `<text x="${cx - 5}" y="${originY + 20}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#475569" font-weight="600">${n}</text>`;
+                    svgContent += `<line x1="${cx}" y1="${originY}" x2="${cx}" y2="${originY + 5}" stroke="#94a3b8" stroke-width="0.8"/>`;
+                    svgContent += `<text x="${cx - 5}" y="${originY + 18}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#475569" font-weight="600">${n}</text>`;
                 }
 
                 if (cy < 20 || cy > 240) continue;
@@ -1419,7 +1426,7 @@
                     r = 7;
                 } else if (onBoundary) {
                     fillColor = '#fbbf24';
-                    strokeAttr = 'stroke="#d97706" stroke-width="2"';
+                    strokeAttr = 'stroke="#d97706" stroke-width="1.5"';
                     r = 6;
                 }
 
@@ -1427,8 +1434,8 @@
 
                 if (n === curN && inside) {
                     svgContent += `
-                        <line x1="${cx}" y1="${topY}" x2="${cx}" y2="${cy}" stroke="#10b981" stroke-width="2" stroke-dasharray="3"/>
-                        <circle cx="${cx}" cy="${topY}" r="3.5" fill="#ef4444"/>
+                        <line x1="${cx}" y1="${topY}" x2="${cx}" y2="${cy}" stroke="#10b981" stroke-width="1.5" stroke-dasharray="3"/>
+                        <circle cx="${cx}" cy="${topY}" r="3" fill="#ef4444"/>
                         <text x="${cx + 8}" y="${(topY + cy) / 2 + 4}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#059669" font-weight="bold">inside corridor</text>
                     `;
                 }
@@ -1436,8 +1443,8 @@
 
             const thresholdX = originX + (reqN * (maxXScale / maxN));
             svgContent += `
-                <line x1="${thresholdX}" y1="20" x2="${thresholdX}" y2="240" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="5"/>
-                <text x="${thresholdX + 6}" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="bold" fill="#ef4444">N = ${reqN} (Cutoff)</text>
+                <line x1="${thresholdX}" y1="20" x2="${thresholdX}" y2="240" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4"/>
+                <text x="${thresholdX + 6}" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="bold" fill="#ef4444">N = ${reqN} (Cutoff)</text>
             `;
 
             svg.innerHTML = svgContent;
@@ -1539,7 +1546,7 @@
                     const prevVal = dualTrackData[dualTrackState.seq][idx - 1];
                     const px = 160 + ((idx - 1) * 60);
                     py = 130 - (prevVal * 100);
-                    group.innerHTML += `<line x1="${px}" y1="${py}" x2="${cx}" y2="${cy}" stroke="#d97706" stroke-width="2" opacity="0.6"/>`;
+                    group.innerHTML += `<line x1="${px}" y1="${py}" x2="${cx}" y2="${cy}" stroke="#d97706" stroke-width="1.5" opacity="0.6"/>`;
                 }
             });
 
@@ -1556,8 +1563,6 @@
         // Initializations on load
         resetDualTrack();
         resetFormula();
-
-        // Initial render for challenge game (blank grid state)
         renderGameSVG(null, 0, 0);
     </script>
 </body>
