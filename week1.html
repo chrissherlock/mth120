@@ -161,5 +161,52 @@
             <p>$$\sum_{\nu=0}^{n-1} q^\nu = \frac{1 - q^n}{1 - q}$$</p>
         </div>
     </div>
+
+            <h2 id="section-sums">4. Sums and Partial Sums</h2>
+            <div class="infobox">
+                <h4>📖 Notation Reference: Summation Mechanics</h4>
+                <div class="infobox-intro">
+                    <strong>Meet the sigma machine:</strong> The Greek letter sigma ($\sum$) is simply shorthand for adding up a string of numbers without having to write out endless plus signs.
+                </div>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym">$\sum$</span><span class="notation-desc">Sigma operator: shorthand instruction to add numbers together</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\nu = 0$ or $1$</span><span class="notation-desc">Lower limit: the starting index value</span></div>
+                    <div class="notation-item"><span class="notation-sym">$n$</span><span class="notation-desc">Upper limit: the final index value where the sum stops</span></div>
+                    <div class="notation-item"><span class="notation-sym">$b_\nu$</span><span class="notation-desc">General term being added at each step</span></div>
+                    <div class="notation-item"><span class="notation-sym">$s_n$</span><span class="notation-desc">Partial sum: the running total up to index $n$</span></div>
+                </div>
+            </div>
+
+            <p>When studying sequences, we often want to know what happens when we add their terms together. Writing out $b_0 + b_1 + b_2 + \dots + b_n$ gets messy very quickly, so we use <strong>summation notation</strong>:</p>
+
+            <div class="definition-box">
+                <p>$$\sum_{\nu=0}^{n} b_\nu = b_0 + b_1 + b_2 + \dots + b_n$$</p>
+            </div>
+
+            <h3>Anatomy of a Summation</h3>
+            <p>Think of $\sum$ as a loop in computer programming or an assembly line:</p>
+            <ul>
+                <li><strong>The Index ($\nu$):</strong> The counter variable (sometimes written as $i$ or $k$) that ticks upward by whole numbers.</li>
+                <li><strong>The Starting Point (Lower Limit):</strong> Where the counter begins (e.g., $\nu = 0$ or $\nu = 1$).</li>
+                <li><strong>The Stopping Point (Upper Limit):</strong> The final number $n$ where the counting finishes.</li>
+                <li><strong>The Formula ($b_\v$):</strong> The rule evaluated at each step of the counter.</li>
+            </ul>
+
+            <h3>Partial Sums: The Running Total</h3>
+            <p>As we saw with our coin-collection analogy, a <strong>partial sum</strong> ($s_n$) is simply a running total of a sequence up to step $n$:</p>
+
+            <div class="definition-box">
+                <p>$$s_n = \sum_{\nu=0}^{n} b_\nu$$</p>
+            </div>
+
+            <p>Instead of just looking at individual terms, partial sums allow us to watch how an accumulation grows. Two famous summation formulas appear frequently in your coursework:</p>
+
+            <ul class="example-list">
+                <li><strong>Sum of the First $n$ Integers (Triangular Numbers):</strong><br>
+                $$\sum_{\nu=1}^{n} \nu = 1 + 2 + 3 + \dots + n = \frac{n(n+1)}{2}$$</li>
+                <li><strong>Geometric Series Partial Sum:</strong><br>
+                $$\sum_{\nu=0}^{n-1} q^\nu = 1 + q + q^2 + \dots + q^{n-1} = \frac{1 - q^n}{1 - q} \quad (\text{for } q \neq 1)$$</li>
+            </ul>
+</div>
 </body>
 </html>
