@@ -311,7 +311,7 @@
                         <text x="195" y="90" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#d97706" font-weight="bold">L=0</text>
                         <circle cx="45" cy="40" r="5" fill="#d97706"/><line x1="45" y1="40" x2="80" y2="62" stroke="#d97706" stroke-width="1.5"/>
                         <circle cx="80" cy="62" r="5" fill="#d97706"/><line x1="80" y1="62" x2="115" y2="78" stroke="#d97706" stroke-width="1.5"/>
-                        <circle cx="115" cy="78" r="5" fill="#10b981"/><line x1="115" y1="78" x2="150" y2="87" stroke="#10b981" stroke-width="1.5"/>
+                        <circle cx="115" cy="78" r="5" fill="#d97706"/><line x1="115" y1="78" x2="150" y2="87" stroke="#d97706" stroke-width="1.5"/>
                         <circle cx="150" cy="87" r="5" fill="#10b981"/><line x1="150" y1="87" x2="185" y2="91" stroke="#10b981" stroke-width="1.5"/>
                         <circle cx="185" cy="91" r="6" fill="#10b981"/>
                         <text x="110" y="122" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b" text-anchor="middle" font-weight="600">Sequence Limits (aₙ → L)</text>
@@ -359,6 +359,39 @@
                     <li><strong>Set-Builder Notation:</strong> Defining members by a logical predicate rule: $B = \{ x \in \mathbb{N} \mid x \text{ is prime and } x < 10 \}$.</li>
                 </ul>
             </div>
+
+            <h3>Anatomy of Set-Builder Notation</h3>
+            <p>When dealing with infinite or continuous sets where listing elements is impossible, we use <strong>set-builder notation</strong>. This defines a set by stating the properties that its members must satisfy rather than listing them explicitly.</p>
+
+            <div class="definition-box">
+                <p><strong>Standard Structure:</strong></p>
+                <p>$$A = \{ x \in S \mid P(x) \}$$</p>
+                <ul>
+                    <li><strong>$x$ (The Variable):</strong> Represents an arbitrary candidate element.</li>
+                    <li><strong>$\in S$ (The Domain):</strong> The universal number system or set where candidates are drawn from (e.g., $x \in \mathbb{R}$).</li>
+                    <li><strong>$\mid$ or $:$ (The Separator):</strong> Read aloud as <strong>"such that"</strong>. It acts as a strict logical filter.</li>
+                    <li><strong>$P$ (The Predicate):</strong> The rule, equation, or inequality that $x$ must satisfy to gain membership.</li>
+                </ul>
+            </div>
+
+            <h3>Step-by-Step Translation Examples</h3>
+            <ul class="example-list">
+                <li><strong>Finite Set (Even Numbers):</strong> <br>
+                    $A = \{ n \in \mathbb{N} \mid n \text{ is even and } n < 10 \}$ <br>
+                    <em>Translation:</em> "The set of all natural numbers $n$ such that $n$ is even and strictly less than 10" $\rightarrow \{2, 4, 6, 8\}$.</li>
+                <li><strong>Continuous Interval (Inequalities):</strong> <br>
+                    $B = \{ x \in \mathbb{R} \mid 1 \leq x < 5 \}$ <br>
+                    <em>Translation:</em> "The set of all real numbers $x$ such that $x$ is greater than or equal to 1 and strictly less than 5" $\rightarrow [1, 5)$.</li>
+                <li><strong>Transformed Elements:</strong> <br>
+                    $C = \{ y \in \mathbb{R} \mid y = x^2 \text{ for some } x \in \mathbb{Z} \}$ <br>
+                    <em>Translation:</em> "The set of all real numbers $y$ such that $y$ equals the square of some integer $x$" $\rightarrow \{0, 1, 4, 9, 16, \dots\}$.</li>
+            </ul>
+
+            <h3>Common Beginner Pitfalls</h3>
+            <ul>
+                <li><strong>Domain vs. Condition Confusion:</strong> The expression <em>before</em> the vertical bar tells you where you are looking (the pool of candidates); the expression <em>after</em> tells you who qualifies (the filter).</li>
+                <li><strong>Redundant Restrictions:</strong> Writing $\{x \mid x \in \mathbb{R}\}$ is simply shorthand for the entire set of real numbers $\mathbb{R}$.</li>
+            </ul>
 
             <h3>Subsets and Power Sets Explained for Beginners</h3>
             <p>To understand subsets, think of a club. Suppose you have a main club $B$ consisting of all students in your university studying computer science. Now, suppose club $A$ consists only of students in that same university studying computer science who also play chess. Because every single member of chess-playing computer science students ($A$) is also a computer science student ($B$), we say $A$ is a <strong>subset</strong> of $B$, written as:</p>
@@ -523,39 +556,6 @@
             <p>What happens when we take this idea from finite sets of numbers to the continuous realm of real numbers? If we take the Cartesian product of the real number line with itself:</p>
             <p>$$\mathbb{R} \times \mathbb{R} = \mathbb{R}^2 = \{ (x, y) \mid x \in \mathbb{R} \text{ and } y \in \mathbb{R} \}$$</p>
             <p>We are no longer building isolated dots on a grid. Instead, we are pairing every single real number on the horizontal axis with every single real number on the vertical axis. This continuous pairing fills every possible point on the 2D coordinate plane—giving us the geometric foundation needed to graph functions, calculate slopes, and ultimately do calculus!</p>
-
-            <h2>Anatomy of Set-Builder Notation</h2>
-            <p>When dealing with infinite or continuous sets where listing elements is impossible, we use <strong>set-builder notation</strong>. This defines a set by stating the properties that its members must satisfy rather than listing them explicitly.</p>
-
-            <div class="definition-box">
-                <p><strong>Standard Structure:</strong></p>
-                <p>$$A = \{ x \in S \mid P(x) \}$$</p>
-                <ul>
-                    <li><strong>$x$ (The Variable):</strong> Represents an arbitrary candidate element.</li>
-                    <li><strong>$\in S$ (The Domain):</strong> The universal number system or set where candidates are drawn from (e.g., $x \in \mathbb{R}$).</li>
-                    <li><strong>$\mid$ or $:$ (The Separator):</strong> Read aloud as <strong>"such that"</strong>. It acts as a strict logical filter.</li>
-                    <li><strong>$P$ (The Predicate):</strong> The rule, equation, or inequality that $x$ must satisfy to gain membership.</li>
-                </ul>
-            </div>
-
-            <h3>Step-by-Step Translation Examples</h3>
-            <ul class="example-list">
-                <li><strong>Finite Set (Even Numbers):</strong> <br>
-                    $A = \{ n \in \mathbb{N} \mid n \text{ is even and } n < 10 \}$ <br>
-                    <em>Translation:</em> "The set of all natural numbers $n$ such that $n$ is even and strictly less than 10" $\rightarrow \{2, 4, 6, 8\}$.</li>
-                <li><strong>Continuous Interval (Inequalities):</strong> <br>
-                    $B = \{ x \in \mathbb{R} \mid 1 \leq x < 5 \}$ <br>
-                    <em>Translation:</em> "The set of all real numbers $x$ such that $x$ is greater than or equal to 1 and strictly less than 5" $\rightarrow [1, 5)$.</li>
-                <li><strong>Transformed Elements:</strong> <br>
-                    $C = \{ y \in \mathbb{R} \mid y = x^2 \text{ for some } x \in \mathbb{Z} \}$ <br>
-                    <em>Translation:</em> "The set of all real numbers $y$ such that $y$ equals the square of some integer $x$" $\rightarrow \{0, 1, 4, 9, 16, \dots\}$.</li>
-            </ul>
-
-            <h3>Common Beginner Pitfalls</h3>
-            <ul>
-                <li><strong>Domain vs. Condition Confusion:</strong> The expression <em>before</em> the vertical bar tells you where you are looking (the pool of candidates); the expression <em>after</em> tells you who qualifies (the filter).</li>
-                <li><strong>Redundant Restrictions:</strong> Writing $\{x \mid x \in \mathbb{R}\}$ is simply shorthand for the entire set of real numbers $\mathbb{R}$.</li>
-            </ul>
 
             <h2>2. The Hierarchy of Number Systems</h2>
 
@@ -1199,7 +1199,7 @@
                 verRole: "Solver / Certificate Generator",
                 verScope: "Witness Assignment (Latency Bound)",
                 verSummary: "<strong>Step 2: Synthesizing the compliance milestone.</strong> The engine computes an execution cycle witness $N \\in \\mathbb{N}$ proving the point beyond which the system enters its invariant state.",
-                advWhat: "<p>The solver generates a concrete certificate $N = g(\\epsilon)$, establishing a finite latency bound after which execution compliance is guaranteed.</p>",
+                verWhat: "<p>The solver generates a concrete certificate $N = g(\\epsilon)$, establishing a finite latency bound after which execution compliance is guaranteed.</p>",
                 verWhy: "<p>Existential quantification produces a concrete proof witness. It does not need to be unique; finding any valid integer $N$ proves the system eventually settles.</p>"
             },
             {
@@ -1451,15 +1451,15 @@
                     </marker>
                 </defs>
                 <!-- Thin Zero Target Line -->
-                <line x1="${originX}" y1="${originY}" x2="${originX + maxXScale}" y2="${originY}" stroke="#64748b" stroke-width="1.0"/>
+                <line x1="${originX}" y1="${originY}" x2="${originX + maxXScale}" y2="${originY}" stroke="#64748b" stroke-width="1.2"/>
                 <text x="${originX - 35}" y="${originY + 5}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700" fill="#64748b">L=0</text>
 
                 <!-- Thin Vertical Axis with Arrow -->
-                <line x1="${originX}" y1="240" x2="${originX}" y2="25" stroke="#64748b" stroke-width="1.0" marker-end="url(#game-arrow)"/>
+                <line x1="${originX}" y1="240" x2="${originX}" y2="25" stroke="#64748b" stroke-width="1.2" marker-end="url(#game-arrow)"/>
                 <text x="${originX}" y="18" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="13" fill="#64748b" font-weight="600">a<tspan dy="3" font-size="10">n</tspan></text>
 
                 <!-- Thin Horizontal Axis with Arrow -->
-                <line x1="${originX}" y1="${originY}" x2="715" y2="${originY}" stroke="#64748b" stroke-width="1.0" marker-end="url(#game-arrow)"/>
+                <line x1="${originX}" y1="${originY}" x2="715" y2="${originY}" stroke="#64748b" stroke-width="1.2" marker-end="url(#game-arrow)"/>
                 <text x="722" y="134" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="13" fill="#64748b" font-weight="600">n</text>
             `;
 
@@ -1636,7 +1636,7 @@
                     const prevVal = dualTrackData[dualTrackState.seq][idx - 1];
                     const px = 160 + ((idx - 1) * 60);
                     py = 130 - (prevVal * 100);
-                    group.innerHTML += `<line x1="${px}" y1="${py}" x2="${cx}" y2="${cy}" stroke="#d97706" stroke-width="1.2" opacity="0.6"/>`;
+                    group.innerHTML += `<line x1="${px}" y1="${py}" x2="${cx}" y2="${cy}" stroke="#d97706" stroke-width="1.5" opacity="0.6"/>`;
                 }
             });
 
