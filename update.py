@@ -40,8 +40,14 @@ def write_week1_module():
         .track-applied { background: var(--track2-bg); border-color: #f5d0fe; }
         .track-card h4 { margin-top: 0; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; color: #0369a1; }
 
-        /* Interactive Simulator Styles */
-        .simulator { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 2rem; }
+        /* Interactive Simulator & Game Styles */
+        .simulator, .game-box { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 2rem; background: var(--card); }
+        .game-header { background: #0f172a; color: #38bdf8; padding: 1rem 1.5rem; font-family: monospace; font-size: 0.95rem; display: flex; justify-content: space-between; align-items: center; }
+        .game-body { padding: 1.5rem; background: #f8fafc; display: flex; flex-direction: column; gap: 1rem; border-bottom: 1px solid var(--border); }
+        .game-controls { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+        .game-btn { background: #0ea5e9; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .game-btn:hover { background: #0284c7; }
+
         .telemetry { background: var(--telemetry-bg); color: var(--telemetry-text); padding: 0.75rem 1.5rem; font-family: monospace; display: flex; gap: 2rem; font-size: 0.9rem; align-items: center;}
         .canvas-container { padding: 2rem; background: #f1f5f9; display: flex; justify-content: center; border-bottom: 1px solid var(--border); }
         .controls-pane { display: flex; gap: 2rem; padding: 1.5rem; background: var(--card); border-bottom: 1px solid var(--border); align-items: flex-start; }
@@ -158,14 +164,10 @@ def write_week1_module():
             $$1, \quad 0.5, \quad 0.333\dots, \quad 0.25, \quad 0.2, \quad \dots$$
             As $n$ gets larger and larger, the denominator grows, and the fraction shrinks toward $0$. Informally, we say "the limit of $1/n$ as $n$ approaches infinity is $0$," written as $\lim_{n\to\infty} \frac{1}{n} = 0$.</p>
 
-            <h3>Why "Getting Closer" Isn't Enough</h3>
-            <p>In calculus, phrases like "gets closer and closer" or "approaches arbitrarily close" are dangerously vague. For instance, does $a_n = \frac{1}{\sqrt{n}}$ get close to 0? Yes. But how fast? Can we guarantee it stays within a strict margin of error forever?</p>
-            <p>To do real analysis, we need a bulletproof, mathematically rigorous definition that eliminates ambiguity.</p>
-
             <h3>The $\epsilon-N$ Definition Decoded (The Challenge Game)</h3>
-            <p>The formal definition of a limit is best understood as a <strong>game between two players</strong>:</p>
+            <p>The formal definition of a limit is an interactive challenge between two players:</p>
             <ul>
-                <li><strong>Player 1 (The Skeptic / $\epsilon$):</strong> Picks an arbitrarily small error tolerance $\epsilon > 0$ (e.g., $\epsilon = 0.2$). They challenge you to trap the sequence within $L - \epsilon$ and $L + \epsilon$.</li>
+                <li><strong>Player 1 (The Skeptic / $\epsilon$):</strong> Picks an error tolerance $\epsilon > 0$ and challenges you to trap the sequence within $L - \epsilon$ and $L + \epsilon$.</li>
                 <li><strong>Player 2 (You / $N$):</strong> Must find a cutoff index $N \in \mathbb{N}$ such that <em>every single term</em> from that point onward ($n > N$) stays safely inside the target zone.</li>
             </ul>
 
@@ -173,10 +175,28 @@ def write_week1_module():
                 <p><strong>Formal Definition of Convergence:</strong></p>
                 <p>We say $\lim_{n\to\infty} a_n = L$ if:</p>
                 <p>$$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad \forall n > N, \quad |a_n - L| < \epsilon$$</p>
-                <p>If you can successfully find such an $N$ no matter how maliciously small Player 1 makes $\epsilon$, the limit is formally proven.</p>
             </div>
 
-            <p>To experience this game hands-on, use the <strong>Dual-Track Simulator</strong> below, which maps the abstract formal definition of a limit against a concrete numerical iteration stream.</p>
+            <!-- INTERACTIVE EPSILON CHALLENGE GAME -->
+            <div class="game-box">
+                <div class="game-header">
+                    <span>🎮 INTERACTIVE CHALLENGE GAME: Test Your $\epsilon$</span>
+                    <span>Sequence: $a_n = \frac{1}{n}$ (Target $L = 0$)</span>
+                </div>
+                <div class="game-body">
+                    <p><strong>Step 1:</strong> Select a challenge tolerance ($\epsilon$) for the Skeptic:</p>
+                    <div class="game-controls">
+                        <button class="game-btn" onclick="runChallenge(0.2)">Set $\epsilon = 0.2$</button>
+                        <button class="game-btn" onclick="runChallenge(0.1)">Set $\epsilon = 0.1$</button>
+                        <button class="game-btn" onclick="runChallenge(0.05)">Set $\epsilon = 0.05$</button>
+                    </div>
+                    <div id="game-output" style="font-family: monospace; background: #ffffff; padding: 1rem; border: 1px solid var(--border); border-radius: 4px; color: #0f172a;">
+                        <em>Select an $\epsilon$ above to challenge the system and calculate required threshold index $N$.</em>
+                    </div>
+                </div>
+            </div>
+
+            <p style="margin-top: 2rem;">To explore this mechanics further across multiple architectures, use the <strong>Dual-Track Simulator</strong> below:</p>
 
             <div class="dual-track-grid">
                 <div class="track-card track-formal">
@@ -266,6 +286,18 @@ def write_week1_module():
     </div>
 
     <script>
+        function runChallenge(eps) {
+            const requiredN = Math.ceil(1 / eps);
+            const output = document.getElementById('game-output');
+            output.innerHTML = `<strong>Challenge Accepted!</strong><br>` +
+                `• Skeptic's Error Tolerance: $\\epsilon = ${eps}$<br>` +
+                `• System Calculation: Solve $\\frac{1}{n} < ${eps} \\implies n > \\frac{1}{${eps}} = ${1/eps}$<br>` +
+                `• <strong>Winning Threshold:</strong> $N = ${requiredN}$. All terms for $n > ${requiredN}$ are strictly trapped within $\\pm ${eps}$ of $0$!`;
+            if(window.renderMathInElement) {
+                renderMathInElement(output);
+            }
+        }
+
         const state = { step: 0, seq: 'reciprocal', eps: 0.2 };
         const data = {
             reciprocal: [1.0, 0.5, 0.333, 0.25, 0.2, 0.166, 0.142, 0.125],
@@ -288,7 +320,7 @@ def write_week1_module():
             {
                 phase: "Threshold Discovery", n: 5, indexVal: 5,
                 summary: "<strong>Goal:</strong> Algebraically solve for the critical threshold index $N$ dictated by the $\\epsilon-N$ definition.",
-                what: "<p><strong>Abstract Formalism:</strong> We evaluate $|a_n - 0| < 0.2$. For linear decay ($1/n$), this yields $n > 5$. For exponential decay ($2^{-n}$), it crosses at $n > 2$.</p><p><strong>Applied Mechanics:</strong> We set the threshold index $N$, rendering the red threshold boundary on our canvas to mark the computation latency required for target precision.</p>",
+                what: "<p><strong>Abstract Formalism:</strong> We evaluate $\vert{}a_n - 0\vert{} < 0.2$. For linear decay ($1/n$), this yields $n > 5$. For exponential decay ($2^{-n}$), it crosses at $n > 2$.</p><p><strong>Applied Mechanics:</strong> We set the threshold index $N$, rendering the red threshold boundary on our canvas to mark the computation latency required for target precision.</p>",
                 why: "<p><strong>Formal Rationale:</strong> This operationalizes the existential quantifier $\\exists N$ in the formal definition.</p><p><strong>System Constraint:</strong> Establishes the exact execution latency required before the system certifies output stability.</p>"
             },
             {
@@ -393,11 +425,10 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Rewrite Section 3 with step-by-step limit intuition and challenge game analogy\n\n"
-        "Replaced the abrupt jump into epsilon-N definitions with an intuitive buildup:\n"
-        "defining sequences as ordered lists, exploring informal limits via term \n"
-        "expansions, explaining the necessity of mathematical rigor, and framing \n"
-        "the formal definition as an interactive challenge game between epsilon and N."
+        "Embed interactive Epsilon Challenge Game in Week 1 module\n\n"
+        "Added a dedicated interactive widget where users can test different \n"
+        "epsilon tolerances against a sequence, challenging the system to dynamically \n"
+        "calculate and display the required threshold index N."
     )
 
     commands = [
