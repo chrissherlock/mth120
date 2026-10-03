@@ -53,7 +53,7 @@
 
         <div class="module-content">
             <h2>1. Theoretical Foundations &amp; Real-World Context</h2>
-            <p>To master calculus and linear algebra, we evaluate concepts through a <strong>Dual-Track Architecture</strong>: rigorously building abstract formal definitions while mapping them directly to physical systems.</p>
+            <p>To master calculus and linear algebra, we evaluate concepts through a <strong>Dual-Track Architecture</strong>: rigorously building abstract formal definitions while mapping them directly to numerical execution models.</p>
 
             <div class="dual-track-grid">
                 <div class="track-card track-formal">
@@ -64,8 +64,8 @@
                 </div>
                 <div class="track-card track-applied">
                     <h3>🎛️ Track 2: Applied Mechanics (Real-World Analog)</h3>
-                    <p>Imagine tuning a digital signal processing (DSP) stream to eliminate network transmission error residuals. The residual error across cycles represents our sequence ($a_n$).</p>
-                    <p>We want total error eradication ($L=0$), but operational performance requires proving the algorithmic filter reliably drops residuals beneath an acceptable threshold ($\epsilon = 0.2$) past a specific latency cycle ($N$).</p>
+                    <p>Imagine tracking a numerical error-correction stream where successive approximation residuals represent our sequence ($a_n$).</p>
+                    <p>We want total error eradication ($L=0$), but operational performance requires proving the recurrence relation reliably drops residuals beneath an acceptable tolerance threshold ($\epsilon = 0.2$) past a specific execution index ($N$).</p>
                 </div>
             </div>
 
@@ -123,7 +123,7 @@
                         <label for="seq-toggle" style="font-size: 0.85rem; font-weight: bold; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">COMPARE ARCHITECTURE:</label>
                         <select id="seq-toggle" onchange="changeSeq()">
                             <option value="reciprocal">Linear Attenuator (a_n = 1/n)</option>
-                            <option value="geometric">Exponential Filter (a_n = 2^-n)</option>
+                            <option value="geometric">Exponential Decay (a_n = 2^-n)</option>
                         </select>
                     </div>
                 </div>
@@ -152,27 +152,27 @@
         const narratives = [
             {
                 phase: "Initialization", n: 1, indexVal: 1,
-                summary: "<strong>Goal:</strong> Initialize the sequence mapping $f: \\mathbb{N} \\rightarrow \\mathbb{R}$ and establish the error bound constraints for our digital signal processing filter.",
-                what: "<p><strong>Abstract Formalism:</strong> The sequence initializes at index $n=1$, yielding $a_1 = 1.0$ under the selected mapping rule.</p><p><strong>Applied Mechanics:</strong> Our DSP stream boots up, defining a target error floor $L=0$ and an acceptable residual tolerance $\\epsilon = 0.2$ (the blue band).</p>",
-                why: "<p><strong>Formal Rationale:</strong> Under real analysis axioms, we cannot rely on loose intuition. We must establish that the sequence domain maps to a bounded codomain where arbitrary $\\epsilon$-neighborhoods can be applied.</p><p><strong>System Constraint:</strong> Defining $\\epsilon$ upfront ensures performance verification before data streams are committed.</p>"
+                summary: "<strong>Goal:</strong> Initialize the sequence mapping $f: \\mathbb{N} \\rightarrow \\mathbb{R}$ and establish error bound constraints for our numerical iteration stream.",
+                what: "<p><strong>Abstract Formalism:</strong> The sequence initializes at index $n=1$, yielding $a_1 = 1.0$ under the selected mapping rule.</p><p><strong>Applied Mechanics:</strong> Our iterative computation begins, defining a target limit $L=0$ and an acceptable residual tolerance $\\epsilon = 0.2$ (the blue band).</p>",
+                why: "<p><strong>Formal Rationale:</strong> Under real analysis axioms, we cannot rely on loose intuition. We must establish that the sequence domain maps to a bounded codomain where arbitrary $\\epsilon$-neighborhoods can be tested.</p><p><strong>System Constraint:</strong> Defining $\\epsilon$ upfront ensures convergence bounds are specified before executing subsequent steps.</p>"
             },
             {
                 phase: "Iteration", n: 3, indexVal: 3,
                 summary: "<strong>Goal:</strong> Evaluate intermediate terms as the sequence progresses through preliminary index steps.",
-                what: "<p><strong>Abstract Formalism:</strong> The system computes $a_2$ and $a_3$. The terms decrease monotonically.</p><p><strong>Applied Mechanics:</strong> The algorithmic filter actively dampens transmission errors across cycles $n=2$ and $n=3$, bringing the residual down toward the threshold.</p>",
+                what: "<p><strong>Abstract Formalism:</strong> The system computes $a_2$ and $a_3$. The terms decrease monotonically.</p><p><strong>Applied Mechanics:</strong> The recurrence relation actively dampens residual error across steps $n=2$ and $n=3$, bringing the value down toward the target limit.</p>",
                 why: "<p><strong>Formal Rationale:</strong> Monotonic decrease guarantees downward motion, but does not yet satisfy convergence bounds.</p><p><strong>System Constraint:</strong> Lowering the value is insufficient; we must locate the exact index where terms permanently cross into tolerance.</p>"
             },
             {
                 phase: "Threshold Discovery", n: 5, indexVal: 5,
                 summary: "<strong>Goal:</strong> Algebraically solve for the critical threshold index $N$ dictated by the $\\epsilon-N$ definition.",
-                what: "<p><strong>Abstract Formalism:</strong> We evaluate $|a_n - 0| < 0.2$. For linear attenuation ($1/n$), this yields $n > 5$. For exponential filtering ($2^{-n}$), it crosses at $n > 2$.</p><p><strong>Applied Mechanics:</strong> We set the threshold index $N$, rendering the red threshold boundary on our canvas to mark the latency required for clean transmission.</p>",
-                why: "<p><strong>Formal Rationale:</strong> This operationalizes the existential quantifier $\\exists N$ in the formal definition.</p><p><strong>System Constraint:</strong> Establishes the exact processing latency required before the system certifies signal stability.</p>"
+                what: "<p><strong>Abstract Formalism:</strong> We evaluate $|a_n - 0| < 0.2$. For linear decay ($1/n$), this yields $n > 5$. For exponential decay ($2^{-n}$), it crosses at $n > 2$.</p><p><strong>Applied Mechanics:</strong> We set the threshold index $N$, rendering the red threshold boundary on our canvas to mark the computation latency required for target precision.</p>",
+                why: "<p><strong>Formal Rationale:</strong> This operationalizes the existential quantifier $\\exists N$ in the formal definition.</p><p><strong>System Constraint:</strong> Establishes the exact execution latency required before the system certifies output stability.</p>"
             },
             {
                 phase: "Convergence Verification", n: 8, indexVal: 8,
                 summary: "<strong>Goal:</strong> Fulfill the universal quantifier condition to formally certify the limit.",
-                what: "<p><strong>Abstract Formalism:</strong> For all subsequent indices $n > N$, terms remain strictly trapped within the $\\epsilon$ neighborhood.</p><p><strong>Applied Mechanics:</strong> The residual error remains flat and negligible across all further processing cycles.</p>",
-                why: "<p><strong>Formal Rationale:</strong> This satisfies $\\forall n > N$. Because this inequality holds for <em>any</em> arbitrary $\\epsilon > 0$, the limit $\\lim_{n\\to\\infty} a_n = L$ is verified.</p><p><strong>System Constraint:</strong> Guarantees long-term stability against unexpected signal distortion.</p>"
+                what: "<p><strong>Abstract Formalism:</strong> For all subsequent indices $n > N$, terms remain strictly trapped within the $\\epsilon$ neighborhood.</p><p><strong>Applied Mechanics:</strong> The residual error remains flat and negligible across all further computation steps.</p>",
+                why: "<p><strong>Formal Rationale:</strong> This satisfies $\\forall n > N$. Because this inequality holds for <em>any</em> arbitrary $\\epsilon > 0$, the limit $\\lim_{n\\to\\infty} a_n = L$ is verified.</p><p><strong>System Constraint:</strong> Guarantees long-term numerical stability against unexpected divergence.</p>"
             }
         ];
 
