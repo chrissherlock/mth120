@@ -488,7 +488,6 @@ def write_week1_module():
 
             <p>Mathematics constructs its universe of numbers step by step, algebraically expanding systems to solve equations and geometric problems that previous systems could not express. Each expansion resolves an <strong>algebraic closure failure</strong> of the previous system.</p>
 
-            <!-- SCALED UP NESTED HIERARCHY DIAGRAM -->
             <div class="diagram-card" style="margin: 1.5rem 0; width: 100%; box-sizing: border-box;">
                 <h5>Nested Set Containment Hierarchy ($\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$)</h5>
                 <svg viewBox="0 0 740 220">
@@ -553,24 +552,25 @@ def write_week1_module():
             <h3>Real Numbers ($\mathbb{R}$): Filling the Geometric Gaps</h3>
             <p>Despite being dense (meaning between any two rational numbers, another rational always exists), $\mathbb{Q}$ contains massive structural "holes." For instance, applying the Pythagorean theorem to a right triangle with side lengths of 1 gives a hypotenuse of $\sqrt{2}$. Yet, <strong>Theorem:</strong> There is no rational number $p/q$ such that $(p/q)^2 = 2$.</p>
 
+            <!-- SCALED UP GEOMETRIC GAP DIAGRAM -->
             <div class="diagram-card" style="margin: 1.5rem 0; width: 100%; box-sizing: border-box;">
                 <h5>The Geometric Gap: Constructing $\sqrt{2}$ on the Number Line</h5>
-                <svg viewBox="0 0 620 160">
-                    <line x1="40" y1="120" x2="580" y2="120" stroke="#64748b" stroke-width="2.5"/>
-                    <circle cx="120" cy="120" r="5" fill="#64748b"/><text x="116" y="145" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#64748b" font-weight="600">0</text>
-                    <circle cx="300" cy="120" r="5" fill="#64748b"/><text x="296" y="145" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#64748b" font-weight="600">1</text>
-                    <circle cx="480" cy="120" r="5" fill="#64748b"/><text x="476" y="145" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#64748b" font-weight="600">2</text>
+                <svg viewBox="0 0 740 200">
+                    <line x1="50" y1="145" x2="690" y2="145" stroke="#64748b" stroke-width="2.5"/>
+                    <circle cx="130" cy="145" r="6" fill="#64748b"/><text x="125" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">0</text>
+                    <circle cx="370" cy="145" r="6" fill="#64748b"/><text x="365" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">1</text>
+                    <circle cx="610" cy="145" r="6" fill="#64748b"/><text x="605" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">2</text>
 
-                    <polygon points="120,120 300,120 300,60" fill="#fef3c7" opacity="0.6" stroke="#d97706" stroke-width="2"/>
-                    <text x="205" y="112" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#d97706" font-weight="bold">1</text>
-                    <text x="310" y="92" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#d97706" font-weight="bold">1</text>
+                    <polygon points="130,145 370,145 370,65" fill="#fef3c7" opacity="0.65" stroke="#d97706" stroke-width="2"/>
+                    <text x="245" y="135" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#d97706" font-weight="bold">1</text>
+                    <text x="382" y="108" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#d97706" font-weight="bold">1</text>
 
-                    <line x1="120" y1="120" x2="300" y2="60" stroke="#ef4444" stroke-width="2.5"/>
-                    <text x="185" y="78" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#ef4444" font-weight="bold">&radic;2 (&notin; ℚ)</text>
+                    <line x1="130" y1="145" x2="370" y2="65" stroke="#ef4444" stroke-width="3"/>
+                    <text x="220" y="92" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#ef4444" font-weight="bold">&radic;2 (&notin; ℚ)</text>
 
-                    <path d="M 300 60 A 189 189 0 0 1 374 120" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"/>
-                    <circle cx="374" cy="120" r="6" fill="#ef4444"/>
-                    <text x="360" y="145" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#ef4444" font-weight="bold">&radic;2 ≈ 1.414</text>
+                    <path d="M 370 65 A 240 240 0 0 1 470 145" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="5"/>
+                    <circle cx="470" cy="145" r="7" fill="#ef4444"/>
+                    <text x="450" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#ef4444" font-weight="bold">&radic;2 ≈ 1.414</text>
                 </svg>
             </div>
 
@@ -1061,7 +1061,7 @@ def write_week1_module():
                 advRole: "The Skeptic",
                 advScope: "Free Choice (Arbitrary Error Budget)",
                 advSummary: "<strong>Step 1: The Skeptic issues an error challenge.</strong> The universal quantifier $\\forall \\epsilon > 0$ asserts that no matter how tiny or stringent a positive tolerance budget is chosen, the sequence must be prepared to satisfy it.",
-                advWhat: "<p>The Skeptic picks any positive number $\\epsilon > 0$, no matter how tiny (e.g., $0.1, 0.001, 10^{-6}$). This forms a physical target band $(L - \\epsilon, L + \\epsilon)$ around the limit.</p>",
+                advWhat: "<p>The Skeptic picks any positive number $\\epsilon > 0$, no matter how tiny (e.g., $0.1, 0.001, 10^{-6}$). This forms a physical target band $(L - \\epsilon, L + \\epsilon)$ on the vertical axis.</p>",
                 advWhy: "<p>If the definition only required passing for <em>some</em> tolerances (like $\\epsilon = 0.5$), a broken sequence bouncing between $0$ and $0.4$ could falsely claim convergence. Testing <em>all</em> positive $\\epsilon$ guarantees the skeptic cannot catch the sequence out.</p>",
                 verRole: "Test Input Generator (Fuzzer)",
                 verScope: "Unconstrained Input Parameter (ϵ ∈ ℝ⁺)",
@@ -1076,7 +1076,7 @@ def write_week1_module():
                 advScope: "Dependent Response (N = N(ϵ))",
                 advSummary: "<strong>Step 2: The Prover announces a cutoff milestone.</strong> Having seen the Skeptic's $\\epsilon$, the Prover inspects the sequence and declares an index $N$ where terms will permanently enter tolerance.",
                 advWhat: "<p>The Prover solves the inequality $|a_n - L| < \\epsilon$ to find the integer milestone $N = \\lceil 1/\\epsilon \\rceil$. This erects a cutoff fence line at index position $N$.</p>",
-                advWhy: "<p><strong>Order is vital:</strong> The Prover picks $N$ <em>after</em> seeing the Skeptic's $\\epsilon$. Tighter challenges demand larger milestones. If the Prover had to lock in $N$ first, no sequence could survive arbitrary $\\epsilon$ challenges.</p>",
+                advWhy: "<p><strong>Order is vital:</strong> The Prover picks $N$ <i>after</i> seeing the Skeptic's $\\epsilon$. Tighter challenges demand larger milestones. If the Prover had to lock in $N$ first, no sequence could survive arbitrary $\\epsilon$ challenges.</p>",
                 verRole: "Solver / Certificate Generator",
                 verScope: "Witness Assignment (Latency Bound)",
                 verSummary: "<strong>Step 2: Synthesizing the compliance milestone.</strong> The engine computes an execution cycle witness $N \\in \\mathbb{N}$ proving the point beyond which the system enters its invariant state.",
@@ -1088,7 +1088,7 @@ def write_week1_module():
                 quantifier: "Universal (∀)",
                 advRole: "The Referee (Auditor)",
                 advScope: "Infinite Tail Evaluation",
-                advSummary: "<strong>Step 3: Auditing every term in the infinite tail.</strong> The referee ignores early terms ($n \\le N$) and checks that <em>every single term</em> strictly after the fence stays inside tolerance.",
+                advSummary: "<strong>Step 3: Auditing every term in the infinite tail.</strong> The referee ignores early terms ($n \\le N$) and checks that <i>every single term</i> strictly after the fence stays inside tolerance.",
                 advWhat: "<p>The auditor sweeps through all index positions strictly past $N$ ($n = N+1, N+2, N+3, \\dots$). The first $N$ terms can behave wildly or touch the boundary line; they are entirely discarded.</p>",
                 advWhy: "<p>Limits evaluate long-term destination, not initial journey. A sequence can oscillate violently for the first million terms, but as long as it stabilizes permanently after $N$, it converges.</p>",
                 verRole: "Tail Suffix Filter",
@@ -1104,7 +1104,7 @@ def write_week1_module():
                 advScope: "Strict Boundary Invariant",
                 advSummary: "<strong>Step 4: Confirming all tail terms are strictly trapped.</strong> The sequence wins the game if the distance $|a_n - L|$ is strictly less than $\\epsilon$ for every term past $N$.",
                 advWhat: "<p>For every term $a_n$ with $n > N$, the vertical distance to $L$ is checked. All terms must sit strictly within the yellow band, with visible clearance beneath the ceiling line.</p>",
-                advWhy: "<p>Strict inequality ($<$) guarantees that terms sitting on the boundary line fence ($\vert{}a_N - L\vert{} = \epsilon$) do not count. The terms must enter the interior forever to seal victory.</p>",
+                advWhy: "<p>Strict inequality ($<$) prevents terms on the boundary fence from claiming victory. With all four clauses chained together, the definition certifies that $a_n \\to L$.</p>",
                 verRole: "Assertion Oracle (Assert Check)",
                 verScope: "Certified Safety Invariant",
                 verSummary: "<strong>Step 4: Executing invariant assertion.</strong> The test harness evaluates the Boolean assertion $\\text{abs}(a_n - L) < \\epsilon$. If this assertion passes for all tail terms, the convergence contract is verified.",
@@ -1545,9 +1545,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Scale up Nested Set Containment Hierarchy diagram in week1.html\n\n"
-        "Expanded viewBox dimensions to 740x220 with larger fonts and proportional "
-        "box spacing to improve legibility of the set hierarchy."
+        "Scale up Geometric Gap diagram for sqrt(2) on the number line\n\n"
+        "Expanded viewBox dimensions to 740x180 with larger fonts, proportional "
+        "right triangle geometry, and clear callout annotations in week1.html."
     )
 
     commands = [
@@ -1561,7 +1561,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with enlarged Nested Set diagram...")
+    print("Writing Week 1 module with scaled up Geometric Gap diagram...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
