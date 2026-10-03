@@ -2,7 +2,7 @@
 import os
 import subprocess
 
-def rebuild_week1_html():
+def restore_simple_progressive_diagram():
     filepath = 'week1.html'
 
     html_content = r"""<!DOCTYPE html>
@@ -180,7 +180,6 @@ def rebuild_week1_html():
                 </li>
             </ul>
             <p>We can define these mappings either explicitly with a closed-form rule or recursively relative to previous terms.</p>
-
             <div class="aside-box">
                 <h4>💡 Recipe Analogy: Explicit vs. Recursive Formulas</h4>
                 <ul>
@@ -189,234 +188,89 @@ def rebuild_week1_html():
                 </ul>
             </div>
 
-            <!-- FINITE SAMPLE INTERACTIVE SIMULATOR (Directed Narrative Stepper) -->
-            <div id="fs-simulator" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1.5rem; margin-top: 2rem; margin-bottom: 2rem;">
+            <!-- FINITE SAMPLE VISUALIZATION -->
+            <div id="finite-sample-container" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1.25rem; margin-top: 1.5rem; margin-bottom: 1.5rem;">
+                <p style="font-size: 0.85rem; font-weight: 700; color: #64748b; margin-top: 0; margin-bottom: 0.75rem; text-align: center;">VISUALIZATION: Finite Sample vs. The Infinite Sequence</p>
+                <svg viewBox="0 0 800 290" style="width: 100%; height: auto; display: block;">
+                    <!-- Background Grid -->
+                    <line x1="80" y1="230" x2="760" y2="230" stroke="#f1f5f9" stroke-width="1"/>
+                    <line x1="80" y1="170" x2="760" y2="170" stroke="#f1f5f9" stroke-width="1" stroke-dasharray="3"/>
+                    <line x1="80" y1="110" x2="760" y2="110" stroke="#f1f5f9" stroke-width="1" stroke-dasharray="3"/>
+                    <line x1="80" y1="50" x2="760" y2="50" stroke="#f1f5f9" stroke-width="1" stroke-dasharray="3"/>
 
-                <!-- Scenario Arc & Toggles -->
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 1rem;">
-                    <div style="flex: 1; padding-right: 1.5rem;">
-                        <h3 style="margin-top: 0; color: #0f172a; margin-bottom: 0.5rem;">Interactive Simulator: The Finite Window vs. Infinite Reality</h3>
-                        <p style="margin: 0; font-size: 0.95rem; color: #475569;"><strong>Scenario:</strong> You are computing sequence terms to understand its behavior. Because you lack infinite time and compute power, you can only generate a small, finite sample. We must mathematically distinguish this observable sample from the true infinite sequence.</p>
-                    </div>
-                    <!-- Comparative Dimension Toggle -->
-                    <div style="min-width: 160px; text-align: right; border-left: 1px solid #e2e8f0; padding-left: 1.5rem;">
-                        <label style="font-size: 0.85rem; font-weight: bold; color: #64748b; display: block; margin-bottom: 0.35rem;">Perspective</label>
-                        <select id="fs-toggle" onchange="fsSim.replay()" style="padding: 0.4rem; border-radius: 4px; border: 1px solid #cbd5e1; width: 100%; font-family: inherit; font-size: 0.9rem;">
-                            <option value="standard">Standard View</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Live State Telemetry -->
-                <div style="display: flex; gap: 1rem; margin-bottom: 1rem; background: #f8fafc; padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid #e2e8f0; font-family: monospace; font-size: 0.9rem;">
-                    <div style="flex: 1.5;"><strong>PHASE:</strong> <span id="fs-phase" style="color: #0f172a;">Awaiting Compute...</span></div>
-                    <div style="flex: 1;"><strong>INDEX $n$:</strong> <span id="fs-index">0</span></div>
-                    <div style="flex: 1;"><strong>MODE:</strong> <span id="fs-mode" style="color: #0284c7; font-weight: bold;">Observation</span></div>
-                    <div style="flex: 1; text-align: right;"><strong>STATUS:</strong> <span id="fs-status" style="color: #10b981; font-weight: bold;">Auto-Running</span></div>
-                </div>
-
-                <!-- Synchronized Visual Canvas -->
-                <svg viewBox="0 0 800 290" style="width: 100%; height: auto; display: block; border: 1px solid #e2e8f0; border-radius: 4px; background: #fcfcfc;">
-                    <!-- Grid Lines & Axes -->
-                    <line x1="80" y1="230" x2="760" y2="230" stroke="#e2e8f0" stroke-width="1"/>
-                    <line x1="80" y1="170" x2="760" y2="170" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3"/>
-                    <line x1="80" y1="110" x2="760" y2="110" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3"/>
-                    <line x1="80" y1="50" x2="760" y2="50" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3"/>
-
+                    <!-- Axes -->
                     <line x1="80" y1="230" x2="760" y2="230" stroke="#0f172a" stroke-width="2"/>
                     <line x1="80" y1="25" x2="80" y2="245" stroke="#0f172a" stroke-width="2"/>
                     <text x="725" y="250" font-size="11" font-weight="bold" fill="#64748b">Index n</text>
                     <text x="35" y="35" font-size="11" font-weight="bold" fill="#64748b">Value a_n</text>
 
-                    <!-- Regions (Syncs with telemetry) -->
-                    <g id="fs-region-sample" style="opacity: 0; transition: opacity 0.5s;">
-                        <rect x="85" y="40" width="375" height="185" fill="#f0f9ff" opacity="0.6" rx="4"/>
-                        <text x="210" y="58" font-size="11" font-weight="bold" fill="#0284c7">Observed Finite Sample (n = 1 to 6)</text>
-                        <line x1="465" y1="35" x2="465" y2="235" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4"/>
-                    </g>
+                    <!-- Finite Sample Shading (Left Side) -->
+                    <rect x="85" y="40" width="375" height="185" fill="#f0f9ff" opacity="0.6" rx="4"/>
+                    <text x="210" y="58" font-size="11" font-weight="bold" fill="#0284c7">Observed Finite Sample (n = 1 to 6)</text>
 
-                    <g id="fs-region-tail" style="opacity: 0; transition: opacity 0.5s;">
-                        <rect x="470" y="40" width="280" height="185" fill="#f0fdf4" opacity="0.6" rx="4"/>
-                        <text x="535" y="58" font-size="11" font-weight="bold" fill="#047857">Infinite Continuation Tail</text>
-                    </g>
+                    <!-- Infinite Tail Shading (Right Side) -->
+                    <rect x="470" y="40" width="280" height="185" fill="#f0fdf4" opacity="0.6" rx="4"/>
+                    <text x="535" y="58" font-size="11" font-weight="bold" fill="#047857">Infinite Continuation Tail</text>
 
-                    <!-- Points container -->
-                    <g id="fs-points"></g>
+                    <!-- Vertical Projection Guidelines -->
+                    <line x1="125" y1="230" x2="125" y2="200" stroke="#cbd5e1" stroke-dasharray="2"/>
+                    <line x1="180" y1="230" x2="180" y2="170" stroke="#cbd5e1" stroke-dasharray="2"/>
+                    <line x1="235" y1="230" x2="235" y2="148" stroke="#cbd5e1" stroke-dasharray="2"/>
+                    <line x1="290" y1="230" x2="290" y2="132" stroke="#cbd5e1" stroke-dasharray="2"/>
+                    <line x1="345" y1="230" x2="345" y2="120" stroke="#cbd5e1" stroke-dasharray="2"/>
+                    <line x1="400" y1="230" x2="400" y2="110" stroke="#cbd5e1" stroke-dasharray="2"/>
+
+                    <!-- Finite Sample Points (Sky Blue) -->
+                    <circle class="fs-pt" cx="125" cy="200" r="5" fill="#0284c7" opacity="0" style="transition: opacity 0.3s ease;"/>
+                    <circle class="fs-pt" cx="180" cy="170" r="5" fill="#0284c7" opacity="0" style="transition: opacity 0.3s ease;"/>
+                    <circle class="fs-pt" cx="235" cy="148" r="5" fill="#0284c7" opacity="0" style="transition: opacity 0.3s ease;"/>
+                    <circle class="fs-pt" cx="290" cy="132" r="5" fill="#0284c7" opacity="0" style="transition: opacity 0.3s ease;"/>
+                    <circle class="fs-pt" cx="345" cy="120" r="5" fill="#0284c7" opacity="0" style="transition: opacity 0.3s ease;"/>
+                    <circle class="fs-pt" cx="400" cy="110" r="5" fill="#0284c7" opacity="0" style="transition: opacity 0.3s ease;"/>
+
+                    <!-- Index Numbers on X Axis -->
+                    <text x="121" y="248" font-size="10" fill="#64748b">1</text>
+                    <text x="176" y="248" font-size="10" fill="#64748b">2</text>
+                    <text x="231" y="248" font-size="10" fill="#64748b">3</text>
+                    <text x="286" y="248" font-size="10" fill="#64748b">4</text>
+                    <text x="341" y="248" font-size="10" fill="#64748b">5</text>
+                    <text x="396" y="248" font-size="10" fill="#64748b">6</text>
+
+                    <!-- SEPARATOR LINE -->
+                    <line x1="465" y1="35" x2="465" y2="235" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4"/>
+
+                    <!-- GREEN CONTINUATION DOTS (THE INFINITE TAIL) -->
+                    <g id="green-tail-dots">
+                        <circle class="fs-pt" cx="490" cy="102" r="5.5" fill="#10b981" opacity="0" style="transition: opacity 0.3s ease;"/>
+                        <circle class="fs-pt" cx="535" cy="95" r="5.5" fill="#10b981" opacity="0" style="transition: opacity 0.3s ease;"/>
+                        <circle class="fs-pt" cx="580" cy="89" r="5.5" fill="#10b981" opacity="0" style="transition: opacity 0.3s ease;"/>
+                        <circle class="fs-pt" cx="625" cy="84" r="5.5" fill="#10b981" opacity="0" style="transition: opacity 0.3s ease;"/>
+                        <circle class="fs-pt" cx="670" cy="80" r="5.5" fill="#10b981" opacity="0" style="transition: opacity 0.3s ease;"/>
+                        <circle class="fs-pt" cx="715" cy="77" r="5.5" fill="#10b981" opacity="0" style="transition: opacity 0.3s ease;"/>
+                        <text class="fs-pt" x="735" y="80" font-size="16" font-weight="bold" fill="#10b981" opacity="0" style="transition: opacity 0.3s ease;">...</text>
+                    </g>
+                    <text x="486" y="248" font-size="10" font-weight="bold" fill="#047857">7</text>
+                    <text x="531" y="248" font-size="10" font-weight="bold" fill="#047857">8</text>
+                    <text x="576" y="248" font-size="10" font-weight="bold" fill="#047857">9</text>
+                    <text x="621" y="248" font-size="10" font-weight="bold" fill="#047857">10</text>
+                    <text x="662" y="248" font-size="10" font-weight="bold" fill="#047857">n &rarr; &infin;</text>
                 </svg>
-
-                <!-- Navigation & Inline Preview -->
-                <div style="display: flex; gap: 1.5rem; align-items: center; margin-top: 1rem; padding: 1rem; background: #f1f5f9; border-radius: 6px; border: 1px solid #e2e8f0;">
-                    <div style="display: flex; gap: 0.5rem; flex-shrink: 0;">
-                        <button onclick="fsSim.prev()" id="fs-btn-prev" style="padding: 0.5rem 1rem; cursor: pointer; border: 1px solid #cbd5e1; border-radius: 4px; background: #fff; font-weight: bold; color: #334155; transition: all 0.2s;">&larr; Prev</button>
-                        <button onclick="fsSim.next()" id="fs-btn-next" style="padding: 0.5rem 1rem; cursor: pointer; border: 1px solid #0284c7; border-radius: 4px; background: #0284c7; color: #fff; font-weight: bold; transition: all 0.2s;">Next &rarr;</button>
-                        <button onclick="fsSim.reset()" style="padding: 0.5rem 1rem; cursor: pointer; border: 1px solid #cbd5e1; border-radius: 4px; background: #fff; color: #64748b; margin-left: 0.5rem;">Reset</button>
-                        <button onclick="fsSim.replay()" style="padding: 0.5rem 1rem; cursor: pointer; border: 1px solid #cbd5e1; border-radius: 4px; background: #fff; color: #334155; font-weight: bold; margin-left: 0.5rem; transition: all 0.2s;">&#8634; Auto-Run</button>
-                    </div>
-                    <div id="fs-preview" style="font-size: 0.95rem; color: #1e293b; font-style: italic; border-left: 3px solid #cbd5e1; padding-left: 1rem;">
-                        Initializing simulation...
-                    </div>
+                <div style="margin-top: 0.85rem; padding: 0.75rem 1rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid #10b981; border-radius: 4px; font-size: 0.9rem; color: #065f46;">
+                    <strong>The Infinite Reality:</strong> Any computational plot only ever reveals a <em>finite sample</em> (the blue terms $a_1, \dots, a_6$). The <strong style="color: #047857;">emerald green dots</strong> represent the infinite tail ($a_7, a_8, a_9, \dots$) which continues without end for every $n \in \mathbb{N}$.
                 </div>
 
-                <!-- Paired Analytical Panes -->
-                <div style="display: flex; gap: 1.5rem; margin-top: 1.5rem; flex-wrap: wrap;">
-                    <div style="flex: 1; min-width: 300px; background: #fff; border: 1px solid #e2e8f0; border-top: 4px solid #0284c7; border-radius: 6px; padding: 1.25rem;">
-                        <h4 style="margin-top: 0; color: #0284c7; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.75rem;">What Is Happening</h4>
-                        <div id="fs-pane-what" style="font-size: 0.93rem; line-height: 1.6; color: #334155;"></div>
-                    </div>
-                    <div style="flex: 1; min-width: 300px; background: #fff; border: 1px solid #e2e8f0; border-top: 4px solid #10b981; border-radius: 6px; padding: 1.25rem;">
-                        <h4 style="margin-top: 0; color: #047857; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.75rem;">Why The System Does This</h4>
-                        <div id="fs-pane-why" style="font-size: 0.93rem; line-height: 1.6; color: #334155;"></div>
-                    </div>
-                </div>
+                <!-- Progressive Animation Script -->
+                <script>
+                    window.addEventListener('DOMContentLoaded', () => {
+                        const points = document.querySelectorAll('.fs-pt');
+                        points.forEach((pt, index) => {
+                            setTimeout(() => {
+                                pt.style.opacity = '1';
+                            }, 300 + (index * 200)); // Fades each point in progressively every 200ms
+                        });
+                    });
+                </script>
             </div>
-
-            <script>
-                const fsSim = (function() {
-                    let currentTick = 0;
-                    let timer = null;
-
-                    const samplePts = [
-                        {cx: 125, cy: 200, n: 1}, {cx: 180, cy: 170, n: 2}, {cx: 235, cy: 148, n: 3},
-                        {cx: 290, cy: 132, n: 4}, {cx: 345, cy: 120, n: 5}, {cx: 400, cy: 110, n: 6}
-                    ];
-
-                    const tailPts = [
-                        {cx: 490, cy: 102, n: 7}, {cx: 535, cy: 95, n: 8}, {cx: 580, cy: 89, n: 9},
-                        {cx: 625, cy: 84, n: 10}, {cx: 670, cy: 80, n: "n"}, {cx: 715, cy: 77, n: "..."}
-                    ];
-
-                    const states = [
-                        {
-                            tick: 0,
-                            phase: "Awaiting Compute",
-                            index: "0",
-                            mode: "Observation",
-                            preview: "The coordinate system is ready. No sequence terms have been computed yet.",
-                            what: "We have an empty grid. The horizontal axis represents the natural number index $n$, and the vertical axis represents the actual sequence value $a_n$.",
-                            why: "Sequences map $\\mathbb{N} \\to \\mathbb{R}$. Unlike continuous functions which form unbroken solid lines, sequence terms only exist at exact integer coordinates."
-                        },
-                        {
-                            tick: 1,
-                            phase: "Generating Sample",
-                            index: "1 - 6",
-                            mode: "Computation",
-                            preview: "Computing the first 6 terms of the sequence.",
-                            what: "The system calculates the first 6 terms, plotting them as discrete blue points. A blue shaded region marks this 'Finite Sample' zone.",
-                            why: "Because we have finite time and memory, we can only compute a partial list. This sample gives us a strong hint about the sequence's trajectory, but it is not the sequence itself."
-                        },
-                        {
-                            tick: 2,
-                            phase: "Infinite Projection",
-                            index: "\u221E",
-                            mode: "Abstraction",
-                            preview: "Extending the pattern to infinity with the green tail.",
-                            what: "Emerald green points illuminate to the right of the sample, followed by an ellipsis. A green shaded region marks the 'Infinite Continuation Tail'.",
-                            why: "This is the crucial conceptual leap in real analysis. The green dots represent the infinite reality of the sequence. Any mathematical proof about the sequence's limit must apply to this eternal green tail, not just the blue sample."
-                        }
-                    ];
-
-                    function render() {
-                        const state = states[currentTick];
-
-                        // Update Telemetry
-                        document.getElementById('fs-phase').textContent = state.phase;
-                        document.getElementById('fs-index').textContent = state.index;
-                        document.getElementById('fs-mode').textContent = state.mode;
-                        document.getElementById('fs-status').textContent = (timer !== null) ? "Auto-Running" : "Manual";
-
-                        // Update Panes & Preview
-                        document.getElementById('fs-preview').innerHTML = `<strong>Current Focus:</strong> ${state.preview}`;
-                        document.getElementById('fs-pane-what').innerHTML = state.what;
-                        document.getElementById('fs-pane-why').innerHTML = state.why;
-
-                        if (typeof renderMathInElement === 'function') {
-                            renderMathInElement(document.getElementById('fs-pane-what'), {delimiters: [{left: '$', right: '$', display: false}]});
-                            renderMathInElement(document.getElementById('fs-pane-why'), {delimiters: [{left: '$', right: '$', display: false}]});
-                        }
-
-                        // Update SVG Layers
-                        const gPts = document.getElementById('fs-points');
-                        let svg = '';
-
-                        if (currentTick >= 1) {
-                            document.getElementById('fs-region-sample').style.opacity = 1;
-                            samplePts.forEach(pt => {
-                                svg += `<line x1="${pt.cx}" y1="230" x2="${pt.cx}" y2="${pt.cy}" stroke="#cbd5e1" stroke-dasharray="2"/>`;
-                                svg += `<circle cx="${pt.cx}" cy="${pt.cy}" r="5" fill="#0284c7" />`;
-                                svg += `<text x="${pt.cx - 4}" y="248" font-size="10" fill="#64748b">${pt.n}</text>`;
-                            });
-                        } else {
-                            document.getElementById('fs-region-sample').style.opacity = 0;
-                        }
-
-                        if (currentTick >= 2) {
-                            document.getElementById('fs-region-tail').style.opacity = 1;
-                            tailPts.forEach(pt => {
-                                svg += `<circle cx="${pt.cx}" cy="${pt.cy}" r="5.5" fill="#10b981" />`;
-                                if(pt.n === "...") {
-                                    svg += `<text x="${pt.cx + 15}" y="80" font-size="16" font-weight="bold" fill="#10b981">...</text>`;
-                                } else if (pt.n === "n") {
-                                    svg += `<text x="${pt.cx - 4}" y="248" font-size="10" font-weight="bold" fill="#047857">n &rarr; &infin;</text>`;
-                                } else {
-                                    svg += `<text x="${pt.cx - 4}" y="248" font-size="10" font-weight="bold" fill="#047857">${pt.n}</text>`;
-                                }
-                            });
-                        } else {
-                            document.getElementById('fs-region-tail').style.opacity = 0;
-                        }
-
-                        gPts.innerHTML = svg;
-
-                        // Buttons
-                        document.getElementById('fs-btn-prev').disabled = (currentTick === 0);
-                        document.getElementById('fs-btn-prev').style.opacity = (currentTick === 0) ? 0.4 : 1;
-                        document.getElementById('fs-btn-next').disabled = (currentTick === 2);
-                        document.getElementById('fs-btn-next').style.opacity = (currentTick === 2) ? 0.4 : 1;
-                    }
-
-                    function tick() {
-                        if (currentTick < 2) {
-                            currentTick++;
-                            render();
-                        } else {
-                            clearInterval(timer);
-                            timer = null;
-                            document.getElementById('fs-status').textContent = "Complete";
-                        }
-                    }
-
-                    return {
-                        init: function() {
-                            render();
-                            timer = setInterval(tick, 2500); // Progress every 2.5 seconds
-                        },
-                        next: function() {
-                            clearInterval(timer); timer = null;
-                            if (currentTick < 2) { currentTick++; render(); }
-                        },
-                        prev: function() {
-                            clearInterval(timer); timer = null;
-                            if (currentTick > 0) { currentTick--; render(); }
-                        },
-                        reset: function() {
-                            clearInterval(timer); timer = null;
-                            currentTick = 0;
-                            render();
-                        },
-                        replay: function() {
-                            clearInterval(timer);
-                            currentTick = 0;
-                            render();
-                            timer = setInterval(tick, 2500);
-                        }
-                    };
-                })();
-
-                window.addEventListener('DOMContentLoaded', () => {
-                    setTimeout(() => fsSim.init(), 400);
-                });
-            </script>
-            <!-- END FINITE SAMPLE SIMULATOR -->
 
             <!-- SECTION 4 -->
             <h2 id="section-sums">4. Sums and Partial Sums</h2>
@@ -538,15 +392,14 @@ def rebuild_week1_html():
 
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(html_content)
-    print("Successfully generated pristine week1.html with compliant stepper.")
+    print("Successfully generated week1.html with the original diagram and simple progressive animation.")
 
 def execute_git_sync():
     commit_message = (
-        "Restore pristine week1.html with compliant auto-playing sequence widget\n\n"
-        "Rebuilt week1.html from the known-good base. Replaced the static finite \n"
-        "sample block with a fully compliant Directed Narrative Stepper that \n"
-        "automatically plays on load, features live telemetry and paired analytical \n"
-        "panes, and explicitly renders the emerald green continuation dots."
+        "Restore original Finite Sample diagram with simple progressive animation\n\n"
+        "Reverted week1.html to the clean, original visualization. Removed the heavy\n"
+        "simulator framework and added a lightweight script to automatically fade in\n"
+        "the blue sequence points and green infinite tail points progressively on load."
     )
     commands = [
         ['git', 'add', 'week1.html', 'update.py'],
@@ -558,5 +411,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    rebuild_week1_html()
+    restore_simple_progressive_diagram()
     execute_git_sync()
