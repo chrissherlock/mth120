@@ -460,7 +460,7 @@ def write_week1_module():
                     <em>Translation:</em> "The set of all real numbers $x$ such that $x$ is greater than or equal to 1 and strictly less than 5" $\rightarrow [1, 5)$.</li>
                 <li><strong>Transformed Elements:</strong> <br>
                     $C = \{ y \in \mathbb{R} \mid y = x^2 \text{ for some } x \in \mathbb{Z} \}$ <br>
-                    <em>Translation:</em> "The set of all real numbers $y$ such that $y$ equals the square of some integer $x$" $\rightarrow \{0, 1, 4, 9, 16, \dots\}$.</li>
+                    <em>Translation:</em> "The set of all real numbers $y$ such y equals the square of some integer $x$" $\rightarrow \{0, 1, 4, 9, 16, \dots\}$.</li>
             </ul>
 
             <h3>Common Beginner Pitfalls</h3>
@@ -482,7 +482,7 @@ def write_week1_module():
                     <div class="notation-item"><span class="notation-sym">$\subset$</span><span class="notation-desc">Strict set containment: $\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$</span></div>
                     <div class="notation-item"><span class="notation-sym">$[a, b]$</span><span class="notation-desc">Closed interval: $\{x \in \mathbb{R} \mid a \le x \le b\}$ (endpoints included)</span></div>
                     <div class="notation-item"><span class="notation-sym">$(a, b)$</span><span class="notation-desc">Open interval: $\{x \in \mathbb{R} \mid a < x < b\}$ (endpoints excluded)</span></div>
-                    <div class="notation-item"><span class="notation-sym">(S, \circ)</span><span class="notation-desc">Algebraic structure: set $S$ equipped with binary operation $\circ$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$(S, \circ)$</span><span class="notation-desc">Algebraic structure: set $S$ equipped with binary operation $\circ$</span></div>
                 </div>
             </div>
 
@@ -1522,9 +1522,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Scale up SVG diagrams and enable responsive viewBox sizing\n\n"
-        "Expanded diagram dimensions across all sections in week1.html with larger "
-        "viewBoxes, proportional line strokes, and responsive full-width container scaling."
+        "Wrap (S, \\circ) in math delimiters in Section 2 notation reference\n\n"
+        "Fixed missing KaTeX delimiters for algebraic structure entry in week1.html "
+        "so (S, \\circ) renders as mathematical typography instead of raw text."
     )
 
     commands = [
@@ -1538,7 +1538,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with scaled up, responsive diagrams...")
+    print("Writing Week 1 module with KaTeX-wrapped algebraic structure symbol...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
