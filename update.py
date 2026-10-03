@@ -488,20 +488,21 @@ def write_week1_module():
 
             <p>Mathematics constructs its universe of numbers step by step, algebraically expanding systems to solve equations and geometric problems that previous systems could not express. Each expansion resolves an <strong>algebraic closure failure</strong> of the previous system.</p>
 
+            <!-- SCALED UP NESTED HIERARCHY DIAGRAM -->
             <div class="diagram-card" style="margin: 1.5rem 0; width: 100%; box-sizing: border-box;">
                 <h5>Nested Set Containment Hierarchy ($\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$)</h5>
-                <svg viewBox="0 0 680 180">
-                    <rect x="10" y="10" width="660" height="160" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.8"/>
-                    <text x="25" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#64748b" font-weight="bold">ℝ (Real Numbers: All terminating, repeating & non-repeating decimals)</text>
+                <svg viewBox="0 0 740 220">
+                    <rect x="15" y="12" width="710" height="196" rx="10" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2"/>
+                    <text x="35" y="38" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">ℝ (Real Numbers: All terminating, repeating & non-repeating decimals)</text>
 
-                    <rect x="40" y="44" width="600" height="114" rx="6" fill="#fffbeb" stroke="#fde68a" stroke-width="1.8"/>
-                    <text x="55" y="64" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#92400e" font-weight="bold">ℚ (Rational Numbers: Fractions p/q)</text>
+                    <rect x="45" y="52" width="650" height="142" rx="8" fill="#fffbeb" stroke="#fde68a" stroke-width="2"/>
+                    <text x="65" y="76" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#92400e" font-weight="bold">ℚ (Rational Numbers: Fractions p/q)</text>
 
-                    <rect x="80" y="74" width="520" height="74" rx="6" fill="#fef3c7" stroke="#fbbf24" stroke-width="1.8"/>
-                    <text x="95" y="94" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#b45309" font-weight="bold">ℤ (Integers: Negatives, 0, Positives)</text>
+                    <rect x="85" y="90" width="570" height="92" rx="8" fill="#fef3c7" stroke="#fbbf24" stroke-width="2"/>
+                    <text x="105" y="114" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold">ℤ (Integers: Negatives, 0, Positives)</text>
 
-                    <ellipse cx="340" cy="122" rx="190" ry="20" fill="#fed7aa" stroke="#d97706" stroke-width="1.8"/>
-                    <text x="340" y="127" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#b45309" font-weight="bold" text-anchor="middle">ℕ (Natural Numbers: 1, 2, 3...)</text>
+                    <ellipse cx="370" cy="150" rx="210" ry="24" fill="#fed7aa" stroke="#d97706" stroke-width="2"/>
+                    <text x="370" y="156" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold" text-anchor="middle">ℕ (Natural Numbers: 1, 2, 3...)</text>
                 </svg>
             </div>
 
@@ -1046,7 +1047,7 @@ def write_week1_module():
 
     <script>
         /* ==========================================================================
-           FORMULA STEPPER MODULE (DISTINCT ADVERSARIAL vs VERIFICATION PERSPECTIVES)
+           FORMULA STEPPER MODULE (CLAUSE-BY-CLAUSE BREAKDOWN)
            ========================================================================== */
         const formulaState = {
             step: 0,
@@ -1057,13 +1058,11 @@ def write_week1_module():
             {
                 clauseTitle: "1. The Challenge (∀ϵ > 0)",
                 quantifier: "Universal (∀)",
-                // Adversarial Framing
                 advRole: "The Skeptic",
                 advScope: "Free Choice (Arbitrary Error Budget)",
-                advSummary: "<strong>Step 1: The Skeptic issues an error challenge.</strong> The skeptic demands that terms eventually settle inside an arbitrary tolerance $\\epsilon > 0$. The smaller the $\\epsilon$, the harder the test.",
+                advSummary: "<strong>Step 1: The Skeptic issues an error challenge.</strong> The universal quantifier $\\forall \\epsilon > 0$ asserts that no matter how tiny or stringent a positive tolerance budget is chosen, the sequence must be prepared to satisfy it.",
                 advWhat: "<p>The Skeptic picks any positive number $\\epsilon > 0$, no matter how tiny (e.g., $0.1, 0.001, 10^{-6}$). This forms a physical target band $(L - \\epsilon, L + \\epsilon)$ around the limit.</p>",
                 advWhy: "<p>If the definition only required passing for <em>some</em> tolerances (like $\\epsilon = 0.5$), a broken sequence bouncing between $0$ and $0.4$ could falsely claim convergence. Testing <em>all</em> positive $\\epsilon$ guarantees the skeptic cannot catch the sequence out.</p>",
-                // Verification Framing
                 verRole: "Test Input Generator (Fuzzer)",
                 verScope: "Unconstrained Input Parameter (ϵ ∈ ℝ⁺)",
                 verSummary: "<strong>Step 1: Setting test harness tolerance.</strong> An automated verification harness injects an arbitrary, strictly positive bound constraint $\\epsilon \\in (0, \\infty)$ into the system contract.",
@@ -1073,13 +1072,11 @@ def write_week1_module():
             {
                 clauseTitle: "2. The Response (∃N ∈ ℕ)",
                 quantifier: "Existential (∃)",
-                // Adversarial Framing
                 advRole: "The Prover (Defender)",
                 advScope: "Dependent Response (N = N(ϵ))",
                 advSummary: "<strong>Step 2: The Prover announces a cutoff milestone.</strong> Having seen the Skeptic's $\\epsilon$, the Prover inspects the sequence and declares an index $N$ where terms will permanently enter tolerance.",
                 advWhat: "<p>The Prover solves the inequality $|a_n - L| < \\epsilon$ to find the integer milestone $N = \\lceil 1/\\epsilon \\rceil$. This erects a cutoff fence line at index position $N$.</p>",
                 advWhy: "<p><strong>Order is vital:</strong> The Prover picks $N$ <em>after</em> seeing the Skeptic's $\\epsilon$. Tighter challenges demand larger milestones. If the Prover had to lock in $N$ first, no sequence could survive arbitrary $\\epsilon$ challenges.</p>",
-                // Verification Framing
                 verRole: "Solver / Certificate Generator",
                 verScope: "Witness Assignment (Latency Bound)",
                 verSummary: "<strong>Step 2: Synthesizing the compliance milestone.</strong> The engine computes an execution cycle witness $N \\in \\mathbb{N}$ proving the point beyond which the system enters its invariant state.",
@@ -1089,13 +1086,11 @@ def write_week1_module():
             {
                 clauseTitle: "3. The Tail Scope (∀n > N)",
                 quantifier: "Universal (∀)",
-                // Adversarial Framing
                 advRole: "The Referee (Auditor)",
                 advScope: "Infinite Tail Evaluation",
                 advSummary: "<strong>Step 3: Auditing every term in the infinite tail.</strong> The referee ignores early terms ($n \\le N$) and checks that <em>every single term</em> strictly after the fence stays inside tolerance.",
                 advWhat: "<p>The auditor sweeps through all index positions strictly past $N$ ($n = N+1, N+2, N+3, \\dots$). The first $N$ terms can behave wildly or touch the boundary line; they are entirely discarded.</p>",
                 advWhy: "<p>Limits evaluate long-term destination, not initial journey. A sequence can oscillate violently for the first million terms, but as long as it stabilizes permanently after $N$, it converges.</p>",
-                // Verification Framing
                 verRole: "Tail Suffix Filter",
                 verScope: "Stream Invariant Precondition",
                 verSummary: "<strong>Step 3: Filtering the tail stream.</strong> The engine filters out transient startup cycles ($n \\le N$) and applies a continuous invariant check across all subsequent execution cycles.",
@@ -1105,13 +1100,11 @@ def write_week1_module():
             {
                 clauseTitle: "4. The Guarantee (|aₙ - L| < ϵ)",
                 quantifier: "Metric Predicate (<)",
-                // Adversarial Framing
                 advRole: "The Winning Condition",
                 advScope: "Strict Boundary Invariant",
                 advSummary: "<strong>Step 4: Confirming all tail terms are strictly trapped.</strong> The sequence wins the game if the distance $|a_n - L|$ is strictly less than $\\epsilon$ for every term past $N$.",
                 advWhat: "<p>For every term $a_n$ with $n > N$, the vertical distance to $L$ is checked. All terms must sit strictly within the yellow band, with visible clearance beneath the ceiling line.</p>",
-                advWhy: "<p>Strict inequality ($<$) guarantees that terms sitting on the boundary line fence ($\vert{}a_N - L\vert{} = \\epsilon$) do not count. The terms must enter the interior forever to seal victory.</p>",
-                // Verification Framing
+                advWhy: "<p>Strict inequality ($<$) guarantees that terms sitting on the boundary line fence ($\vert{}a_N - L\vert{} = \epsilon$) do not count. The terms must enter the interior forever to seal victory.</p>",
                 verRole: "Assertion Oracle (Assert Check)",
                 verScope: "Certified Safety Invariant",
                 verSummary: "<strong>Step 4: Executing invariant assertion.</strong> The test harness evaluates the Boolean assertion $\\text{abs}(a_n - L) < \\epsilon$. If this assertion passes for all tail terms, the convergence contract is verified.",
@@ -1147,7 +1140,6 @@ def write_week1_module():
             const current = formulaClauses[idx];
             const isAdv = (formulaState.perspective === 'adversarial');
 
-            // 1. Update illuminated expression chunks
             for (let i = 0; i < 4; i++) {
                 const el = document.getElementById(`chunk-${i}`);
                 el.classList.remove('active', 'completed');
@@ -1158,8 +1150,7 @@ def write_week1_module():
                 }
             }
 
-            // 2. Update telemetry labels and badges based on active perspective
-            document.getElementById('fw-lbl-clause').innerText = isAdv ? "Game Clause" : "Test Specification";
+            document.getElementById('fw-lbl-clause').innerText = isAdv ? "Clause Focus" : "Test Specification";
             document.getElementById('fw-tel-clause').innerText = current.clauseTitle;
 
             document.getElementById('fw-lbl-quant').innerText = isAdv ? "Quantifier" : "Contract Scope";
@@ -1171,11 +1162,9 @@ def write_week1_module():
             document.getElementById('fw-lbl-scope').innerText = isAdv ? "Scoping Rule" : "System State";
             document.getElementById('fw-tel-scope').innerText = isAdv ? current.advScope : current.verScope;
 
-            // 3. Update navigation button states
             document.getElementById('btn-fw-prev').disabled = (idx === 0);
             document.getElementById('btn-fw-next').disabled = (idx === 3);
 
-            // 4. Update pane headings and content
             document.getElementById('fw-heading-what').innerText = isAdv ? "Game Mechanics: What Is Happening" : "System Execution: What Is Happening";
             document.getElementById('fw-heading-why').innerText = isAdv ? "Game Strategy: Design Rationale" : "Verification Rationale: Invariant Motivation";
 
@@ -1183,7 +1172,6 @@ def write_week1_module():
             document.getElementById('fw-pane-what').innerHTML = isAdv ? current.advWhat : current.verWhat;
             document.getElementById('fw-pane-why').innerHTML = isAdv ? current.advWhy : current.verWhy;
 
-            // 5. Render Math in updated elements
             if (window.renderMathInElement) {
                 renderMathInElement(document.getElementById('definition-walkthrough'), {
                     delimiters: [
@@ -1191,9 +1179,14 @@ def write_week1_module():
                         {left: '$', right: '$', display: false}
                     ]
                 });
+                renderMathInElement(document.querySelector('.scoping-box'), {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ]
+                });
             }
 
-            // 6. Synchronize SVG canvas
             updateFormulaCanvas(idx);
         }
 
@@ -1219,7 +1212,7 @@ def write_week1_module():
 
             [trapped1, trapped2, trapped3, trapped4].forEach(pt => {
                 pt.setAttribute('fill', '#94a3b8');
-                pt.setAttribute('r', '5');
+                pt.setAttribute('r', '6');
             });
 
             if (step === 0) {
@@ -1239,7 +1232,7 @@ def write_week1_module():
                 nLbl.setAttribute('opacity', '0.8');
                 [trapped1, trapped2, trapped3, trapped4].forEach(pt => {
                     pt.setAttribute('fill', '#38bdf8');
-                    pt.setAttribute('r', '7');
+                    pt.setAttribute('r', '7.5');
                 });
             } else if (step === 3) {
                 epsBand.setAttribute('opacity', '0.7');
@@ -1248,7 +1241,7 @@ def write_week1_module():
                 nLbl.setAttribute('opacity', '0.8');
                 [trapped1, trapped2, trapped3, trapped4].forEach(pt => {
                     pt.setAttribute('fill', '#10b981');
-                    pt.setAttribute('r', '8');
+                    pt.setAttribute('r', '8.5');
                 });
             }
         }
@@ -1552,10 +1545,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Differentiate Adversarial Game and Verification Engine perspectives\n\n"
-        "Updated formulaClauses, dynamic telemetry cards, and pane headings in "
-        "week1.html to ensure a distinct conceptual contrast between the game and "
-        "verification engine views."
+        "Scale up Nested Set Containment Hierarchy diagram in week1.html\n\n"
+        "Expanded viewBox dimensions to 740x220 with larger fonts and proportional "
+        "box spacing to improve legibility of the set hierarchy."
     )
 
     commands = [
@@ -1569,7 +1561,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with distinct perspective dimensions...")
+    print("Writing Week 1 module with enlarged Nested Set diagram...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
