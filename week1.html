@@ -234,6 +234,7 @@
             cursor: pointer;
             user-select: none;
             box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+            white-space: nowrap;
         }
         .formula-chunk.active {
             border-color: #d97706;
@@ -247,7 +248,7 @@
             color: #065f46;
             background: #ecfdf5;
         }
-        .formula-sep { color: #64748b; font-weight: 400; }
+        .formula-sep { color: #64748b; font-weight: 400; white-space: nowrap; }
 
         .canvas-container { padding: 2rem; background: #f1f5f9; display: flex; justify-content: center; border-bottom: 1px solid var(--border); }
         .canvas-container svg { width: 100%; height: auto; display: block; }
@@ -940,7 +941,7 @@
                     </tbody>
                 </table>
 
-                <h5 style="margin: 1.25rem 0 0.5rem 0; color: #92400e; font-size: 0.98rem;">⚠️ The Quantifier Swap Trap (Why Order Matters)</h5>
+                <h5 style="margin: 1.25rem 0 0.5rem 0; color: #92400e; font-size: 0.98rem;">⚠️️ The Quantifier Swap Trap (Why Order Matters)</h5>
                 <p>Reversing the order of quantifiers completely breaks the meaning of the statement:</p>
                 <div class="swap-card-grid">
                     <div class="swap-card" style="border-left: 4px solid #10b981;">
@@ -1207,7 +1208,7 @@
                 verRole: "Solver / Certificate Generator",
                 verScope: "Witness Assignment (Latency Bound)",
                 verSummary: "<strong>Step 2: Synthesizing the compliance milestone.</strong> The engine computes an execution cycle witness $N \\in \\mathbb{N}$ proving the point beyond which the system enters its invariant state.",
-                advWhat: "<p>The solver generates a concrete certificate $N = g(\\epsilon)$, establishing a finite latency bound after which execution compliance is guaranteed.</p>",
+                verWhat: "<p>The solver generates a concrete certificate $N = g(\\epsilon)$, establishing a finite latency bound after which execution compliance is guaranteed.</p>",
                 verWhy: "<p>Existential quantification produces a concrete proof witness. It does not need to be unique; finding any valid integer $N$ proves the system eventually settles.</p>"
             },
             {
@@ -1221,7 +1222,7 @@
                 verRole: "Tail Suffix Filter",
                 verScope: "Stream Invariant Precondition",
                 verSummary: "<strong>Step 3: Filtering the tail stream.</strong> The engine filters out transient startup cycles ($n \\le N$) and applies a continuous invariant check across all subsequent execution cycles.",
-                advWhat: "<p>The test runner evaluates the infinite stream suffix $\{a_n \\mid n > N\}$. Startup warmup phases are ignored, focusing solely on steady-state operation.</p>",
+                verWhat: "<p>The test runner evaluates the infinite stream suffix $\{a_n \\mid n > N\}$. Startup warmup phases are ignored, focusing solely on steady-state operation.</p>",
                 verWhy: "<p>Transient numerical drift during algorithm initialization does not violate convergence; the specification only mandates long-term steady-state compliance.</p>"
             },
             {
@@ -1235,7 +1236,7 @@
                 verRole: "Assertion Oracle (Assert Check)",
                 verScope: "Certified Safety Invariant",
                 verSummary: "<strong>Step 4: Executing invariant assertion.</strong> The test harness evaluates the Boolean assertion $\\text{abs}(a_n - L) < \\epsilon$. If this assertion passes for all tail terms, the convergence contract is verified.",
-                advWhat: "<p>The verification oracle evaluates the invariant condition $\\text{abs}(a_n - L) < \\epsilon$ across all cycles $n > N$. If true, limit certification is approved.</p>",
+                verWhat: "<p>The verification oracle evaluates the invariant condition $\\text{abs}(a_n - L) < \\epsilon$ across all cycles $n > N$. If true, limit certification is approved.</p>",
                 verWhy: "<p>Metric distance provides an algebraic test condition that can be evaluated mechanically without geometric ambiguity.</p>"
             }
         ];
