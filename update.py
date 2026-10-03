@@ -593,8 +593,18 @@ def write_week1_module():
         function resetChallenge() {
             challengeState.active = false;
             document.getElementById('step-controls').style.display = 'none';
-            document.getElementById('game-output').innerHTML = '<em>Challenge reset. Select an $\\epsilon$ budget above to start.</em>';
+            const output = document.getElementById('game-output');
+            output.innerHTML = '<em>Challenge reset. Select an $\\epsilon$ budget above to start.</em>';
             document.getElementById('game-plot').innerHTML = '<text x="180" y="110" font-family="sans-serif" font-size="13" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>';
+
+            if(window.renderMathInElement) {
+                renderMathInElement(output, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ]
+                });
+            }
         }
 
         function updateChallengeUI() {
@@ -798,9 +808,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Fix dynamic maxN and step limits for tight epsilon values in Epsilon Challenge\n\n"
-        "Updated maxN calculation and advanceChallengeStep capping limits in week1.html \n"
-        "to fully support stepping forward with epsilon = 0.05 and smaller."
+        "Fix raw LaTeX leakage on Epsilon Challenge reset\n\n"
+        "Invoked KaTeX rendering on the game output element within resetChallenge() \n"
+        "in week1.html so that epsilon symbols render correctly after a reset."
     )
 
     commands = [
@@ -814,7 +824,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with dynamic epsilon chart scaling...")
+    print("Writing Week 1 module with fixed reset LaTeX rendering...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
