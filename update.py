@@ -53,7 +53,7 @@ def write_structures_subpage():
 <body>
     <div class="container">
         <div class="header">
-            <h1>Deep Dive: Algebraic Structures (Groups, Rings, and Fields)</h1>
+            <h1>Deep Dive: Groups, Rings, and Fields</h1>
             <a href="week1.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">&larr; Back to Week 1 Module</a>
         </div>
 
@@ -97,7 +97,15 @@ def write_structures_subpage():
                 <p><strong>Example in $\mathbb{R}$:</strong> $3 \times 5 = 15$ and $5 \times 3 = 15$. Multiplication is commutative.</p>
             </div>
 
-            <h2>2. Hierarchy Comparison Table with Examples</h2>
+            <h2>2. Understanding Algebraic Notation: What does $(S, \circ)$ mean?</h2>
+            <p>Throughout the table below, you will see shorthand expressions enclosed in parentheses, such as $(\mathbb{Z}, +)$ or $(\mathbb{Q}, +, \times)$. This is standard algebraic shorthand used to define a mathematical "workspace." It couples two things together:</p>
+            <ul>
+                <li><strong>The Set (First Element):</strong> The pool of numbers you are allowed to use. For example, $\mathbb{Z}$ means you are working with the integers $\{\dots, -2, -1, 0, 1, 2, \dots\}$.</li>
+                <li><strong>The Operations (Following Elements):</strong> The rules used to combine those numbers. For instance, $(\mathbb{Z}, +)$ pairs the integers specifically with <strong>addition</strong>, while $(\mathbb{Z}, +, \times)$ pairs them with <strong>both addition and multiplication</strong>.</li>
+            </ul>
+            <p>Depending on which operations you attach to a set, its algebraic classification changes entirely!</p>
+
+            <h2>3. Hierarchy Comparison Table with Examples</h2>
             <table>
                 <thead>
                     <tr>
@@ -201,9 +209,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Widen Operations column in algebraic structures table\n\n"
-        "Set explicit column width percentages on the hierarchy comparison table in \n"
-        "algebraic_structures.html to give the Operations column more breathing room."
+        "Add explanatory guide for algebraic shorthand notation before table\n\n"
+        "Inserted a clear conceptual breakdown in algebraic_structures.html explaining \n"
+        "how bracketed notation like (Z, +) couples a set with its operational rules."
     )
 
     commands = [
