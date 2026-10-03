@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 import os
+import re
 import subprocess
 
-def inject_friendly_intro():
+def convert_orientation_to_unboxed_prose():
     filepath = 'week1.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
@@ -11,39 +12,42 @@ def inject_friendly_intro():
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    welcome_box = r'''            <!-- ORIENTATION & ROADMAP -->
-            <div class="aside-box" style="background: #f8fafc; border-left: 4px solid var(--accent); border-color: #cbd5e1; margin: 2rem 0;">
-                <h4 style="color: #0f172a;">🌱 Finding Your Footing in Pure Mathematics</h4>
-                <p>If you are transitioning from high school calculus or applied algebra, Week 1 can feel like stepping into a whole new world. Up until now, mathematics has mostly been about <em>calculating answers</em>—finding $x$, taking a derivative, or plotting curves. Here, we step behind the curtain to examine <strong>the structural machinery itself</strong>.</p>
-                <p style="margin-bottom: 0.5rem;">Think of this week as laying the bedrock across three core ideas:</p>
-                <ul style="margin: 0 0 0.5rem 1.25rem; padding: 0;">
-                    <li style="margin-bottom: 0.4rem;"><strong>Sets and Functions:</strong> The fundamental grammar and nouns of modern mathematics. Before we can talk about numbers doing things, we need a precise way to collect them and describe how they interact.</li>
-                    <li style="margin-bottom: 0.4rem;"><strong>Numbers and Completeness:</strong> Why fractions ($\mathbb{Q}$) alone leave microscopic gaps on the ruler, and how the real numbers ($\mathbb{R}$) form a seamless continuum.</li>
-                    <li><strong>Sequences and Sums:</strong> Your entry point into infinity. A sequence is an endless list marching forward step by step, setting the stage for limits and continuous analysis.</li>
+    unboxed_intro = r'''            <!-- ORIENTATION & ROADMAP -->
+            <div style="margin: 2.25rem 0 2rem 0;">
+                <h3 style="margin-top: 0; color: #0f172a;">Finding Your Footing in Pure Mathematics</h3>
+                <p>If you are transitioning from high school calculus or introductory algebra, Week 1 can feel like stepping into unfamiliar territory. Up until now, mathematics has mostly focused on <em>calculating answers</em>—finding $x$, evaluating integrals, or graphing functions. Here, we step behind the scenes to examine <strong>the structural machinery itself</strong>.</p>
+                <p>Think of this module as building the foundation across three main pillars:</p>
+                <ul style="margin: 0.5rem 0 1rem 1.5rem; padding: 0;">
+                    <li style="margin-bottom: 0.5rem;"><strong>Sets and Functions:</strong> The fundamental grammar of modern mathematics. Before analyzing numerical behavior, we need precise ways to gather objects together and establish mappings between them.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Numbers and Completeness:</strong> Why fractions ($\mathbb{Q}$) leave tiny gaps on the number line, and how the real numbers ($\mathbb{R}$) form an unbroken continuum.</li>
+                    <li><strong>Sequences and Sums:</strong> Your entry point into infinity. A sequence is an endless list progressing step by step, creating the bridge to limits and continuous analysis.</li>
                 </ul>
-                <p style="margin-top: 0.75rem; margin-bottom: 0;">Don't let the formal notation intimidate you. Every strange symbol you encounter is just shorthand for a clear, intuitive idea. Take it one line at a time!</p>
+                <p>Don't be intimidated by the formal symbols. Mathematical notation is simply concise shorthand for clear, intuitive concepts. Take each idea one step at a time.</p>
             </div>'''
 
-    target = '            <!-- SECTION 1 -->'
-    replacement = welcome_box + '\n\n' + target
-
-    if '🌱 Finding Your Footing in Pure Mathematics' in content:
-        print("Orientation section already present in week1.html.")
-        return
-
-    if target in content:
-        content = content.replace(target, replacement, 1)
-        with open(filepath, 'w', encoding='utf-8') as f:
-            f.write(content)
-        print("Successfully injected friendly orientation into week1.html.")
+    pattern_boxed = r'[ \t]*<!-- ORIENTATION & ROADMAP -->[\s\S]*?</div>[ \t]*(?=\n\s*<!-- SECTION 1 -->)'
+    if re.search(pattern_boxed, content):
+        # Using a callable bypasses replacement template escape parsing
+        content = re.sub(pattern_boxed, lambda _: unboxed_intro.strip(), content)
+        print("Replaced boxed orientation with unboxed prose in week1.html.")
     else:
-        print("Target anchor '<!-- SECTION 1 -->' not found in week1.html.")
+        target = '<!-- SECTION 1 -->'
+        if target in content:
+            content = content.replace(target, unboxed_intro + '\n\n            <!-- SECTION 1 -->', 1)
+            print("Inserted unboxed orientation before Section 1 in week1.html.")
+        else:
+            print("Target anchor '<!-- SECTION 1 -->' not found in week1.html.")
+            return
+
+    with open(filepath, 'w', encoding='utf-8') as f:
+        f.write(content)
 
 def execute_git_sync():
     commit_message = (
-        "Add friendly orientation section after TOC in week1.html\n\n"
-        "Inserted an accessible roadmap and orientation guide beneath the Table\n"
-        "of Contents to bridge the transition to pure mathematical thinking."
+        "Fix LaTeX escape crash and unbox orientation section in week1.html\n\n"
+        "Resolved a re.PatternError caused by regex template evaluation of LaTeX\n"
+        "macros (\\mathbb) by passing a callable to re.sub. Converted the boxed\n"
+        "orientation section after the Table of Contents into unboxed prose."
     )
     commands = [
         ['git', 'add', 'week1.html', 'update.py'],
@@ -55,5 +59,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    inject_friendly_intro()
+    convert_orientation_to_unboxed_prose()
     execute_git_sync()
