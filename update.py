@@ -252,8 +252,8 @@ def write_week1_module():
         }
         .formula-chunk.completed {
             border-color: #059669;
-            color: #065f46;
-            background: #ecfdf5;
+            color: #a7f3d0;
+            background: rgba(16, 185, 129, 0.1);
         }
         .formula-sep { color: #64748b; font-weight: 400; }
 
@@ -414,7 +414,7 @@ def write_week1_module():
 
             <h3>Cartesian Products ($A \times B$)</h3>
             <p>The Cartesian product pairs elements from two sets into ordered pairs:
-            $$A \times B = \{ (a, b) \mid a \in A \text{ and } b \in B \}$$
+            $$A \times B = \{ (a, b) \mid A \in A \text{ and } b \in B \}$$
             When $A = \mathbb{R}$ and $B = \mathbb{R}$, this operation constructs the familiar 2D coordinate plane $\mathbb{R}^2$.</p>
 
             <div class="diagram-card" style="margin: 1.5rem 0; width: 100%; box-sizing: border-box;">
@@ -901,7 +901,7 @@ def write_week1_module():
                         <strong>How This Game Works:</strong><br>
                         • <strong>The Sequence:</strong> We are testing $a_n = \frac{1}{n}$, which produces the shrinking list: $1, 0.5, 0.33, 0.25, 0.2, 0.16, \dots$ heading toward $0$.<br>
                         • <strong>Your Challenge:</strong> Click a tolerance button below to pick your error budget ($\epsilon$). You demand that sequence terms fall <em>strictly inside</em> the $\pm \epsilon$ band ($\vert{}a_n - 0\vert{} < \epsilon$).<br>
-                        • <strong>Dynamic Visual Zoom:</strong> For tighter tolerances ($\epsilon = 0.1$ and $0.05$), the vertical scale zooms in automatically around $0$ so you can clearly see the corridor interior and confirm that points past $N$ drop below the ceiling!<br>
+                        • <strong>Dynamic Visual Zoom:</strong> For tighter tolerances ($\epsilon = 0.1$ and $0.05$), the vertical scale zooms in around the center limit $L=0$ so you can clearly see the corridor interior and confirm that points past $N$ drop below the ceiling!<br>
                         • <strong>Step Forward:</strong> Click "Step Forward" to advance past $N$ and watch the terms safely enter the shaded interior with visible numerical clearance!
                     </div>
 
@@ -913,8 +913,8 @@ def write_week1_module():
                     </div>
 
                     <div class="game-canvas-wrap">
-                        <svg id="game-plot" viewBox="0 0 740 320">
-                            <text x="260" y="160" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>
+                        <svg id="game-plot" viewBox="0 0 740 260">
+                            <text x="260" y="135" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>
                         </svg>
                     </div>
 
@@ -1245,7 +1245,7 @@ def write_week1_module():
         }
 
         /* ==========================================================================
-           EPSILON CHALLENGE GAME (WITH TALLER SVG VIEWBOX & FULL BAND HEIGHT)
+           EPSILON CHALLENGE GAME (CENTER-ANCHORED L=0 AXIS & CORRIDOR)
            ========================================================================== */
         const challengeState = { active: false, eps: 0.2, reqN: 5, currentDisplayN: 5 };
 
@@ -1278,7 +1278,7 @@ def write_week1_module():
             document.getElementById('cg-tel-status').innerText = 'Standby';
             document.getElementById('cg-tel-status').style.color = '#64748b';
 
-            document.getElementById('game-plot').innerHTML = '<text x="260" y="160" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>';
+            document.getElementById('game-plot').innerHTML = '<text x="260" y="130" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>';
         }
 
         function updateChallengeUI() {
@@ -1318,26 +1318,25 @@ def write_week1_module():
             const svg = document.getElementById('game-plot');
             const maxN = Math.max(14, reqN + 4);
             const originX = 90;
-            const originY = 245; // Shifted origin down to give plenty of room for negative tolerance band
+            const originY = 130; // Anchored at exact vertical center
             const maxXScale = 610;
 
-            let maxYScale;
+            let scaleFactor;
             if (eps <= 0.05) {
-                maxYScale = 1400;
+                scaleFactor = 900;
             } else if (eps <= 0.1) {
-                maxYScale = 750;
+                scaleFactor = 550;
             } else {
-                maxYScale = 250;
+                scaleFactor = 220;
             }
 
-            const topY = originY - (eps * maxYScale);
-            const bottomY = originY + (eps * maxYScale);
+            const topY = originY - (eps * scaleFactor);
+            const bottomY = originY + (eps * scaleFactor);
             const bandHeight = bottomY - topY;
-            const bandY = topY;
 
             let svgContent = `
-                <!-- Tolerance corridor spanning full height from topY to bottomY -->
-                <rect x="${originX}" y="${bandY}" width="${maxXScale}" height="${bandHeight}" fill="#fef3c7" opacity="0.8"/>
+                <!-- Symmetric tolerance corridor spanning symmetrically around center -->
+                <rect x="${originX}" y="${topY}" width="${maxXScale}" height="${bandHeight}" fill="#fef3c7" opacity="0.8"/>
                 <line x1="${originX}" y1="${topY}" x2="${originX + maxXScale}" y2="${topY}" stroke="#d97706" stroke-width="1.8" stroke-dasharray="4"/>
                 <line x1="${originX}" y1="${bottomY}" x2="${originX + maxXScale}" y2="${bottomY}" stroke="#d97706" stroke-width="1.8" stroke-dasharray="4"/>
 
@@ -1345,10 +1344,10 @@ def write_week1_module():
                 <line x1="${originX}" y1="${originY}" x2="${originX + maxXScale}" y2="${originY}" stroke="#64748b" stroke-width="2.2"/>
                 <text x="${originX - 35}" y="${originY + 5}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700" fill="#64748b">L=0</text>
 
-                <!-- Axis Line -->
-                <line x1="${originX}" y1="20" x2="${originX}" y2="${originY + 18}" stroke="#64748b" stroke-width="2.2"/>
+                <!-- Vertical Axis -->
+                <line x1="${originX}" y1="20" x2="${originX}" y2="240" stroke="#64748b" stroke-width="2.2"/>
 
-                <!-- Fully visible Epsilon labels with generous left margin -->
+                <!-- Fully visible Epsilon labels -->
                 <text x="12" y="${topY + 4}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="bold" fill="#d97706">+&epsilon; (${eps})</text>
                 <line x1="75" y1="${topY}" x2="${originX}" y2="${topY}" stroke="#d97706" stroke-width="1.5" stroke-dasharray="2"/>
 
@@ -1359,16 +1358,14 @@ def write_week1_module():
             for (let n = 1; n <= curN; n++) {
                 const val = 1 / n;
                 const cx = originX + (n * (maxXScale / maxN));
-                const cy = originY - (val * maxYScale);
+                const cy = originY - (val * scaleFactor);
 
                 if (n % 2 === 0 || n === 1 || n === reqN || n === curN) {
                     svgContent += `<line x1="${cx}" y1="${originY}" x2="${cx}" y2="${originY + 6}" stroke="#94a3b8" stroke-width="1.5"/>`;
                     svgContent += `<text x="${cx - 5}" y="${originY + 20}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#475569" font-weight="600">${n}</text>`;
                 }
 
-                if (cy < 20) {
-                    continue;
-                }
+                if (cy < 20 || cy > 240) continue;
 
                 const inside = n > reqN;
                 const onBoundary = n === reqN;
@@ -1398,7 +1395,7 @@ def write_week1_module():
 
             const thresholdX = originX + (reqN * (maxXScale / maxN));
             svgContent += `
-                <line x1="${thresholdX}" y1="20" x2="${thresholdX}" y2="${originY + 12}" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="5"/>
+                <line x1="${thresholdX}" y1="20" x2="${thresholdX}" y2="240" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="5"/>
                 <text x="${thresholdX + 6}" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="bold" fill="#ef4444">N = ${reqN} (Cutoff)</text>
             `;
 
@@ -1543,9 +1540,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Restore missing bottom tolerance corridor and fix band clipping in renderGameSVG\n\n"
-        "Adjusted vertical coordinate bounds in week1.html so the bottom -ε tolerance "
-        "band is fully rendered and visible for tight tolerances."
+        "Anchor target limit L=0 to center in renderGameSVG\n\n"
+        "Fixed Epsilon Challenge Game canvas by anchoring L=0 to the vertical center "
+        "at y=130, ensuring symmetric and fully visible +ε and -ε tolerance bands."
     )
 
     commands = [
@@ -1559,7 +1556,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with fully restored bottom tolerance corridor...")
+    print("Writing Week 1 module with center-anchored challenge game canvas...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
