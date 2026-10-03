@@ -463,8 +463,8 @@ def write_week1_module():
                     </div>
 
                     <div class="game-canvas-wrap">
-                        <svg id="game-plot" width="560" height="160" viewBox="0 0 560 160">
-                            <text x="180" y="85" font-family="sans-serif" font-size="13" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>
+                        <svg id="game-plot" width="560" height="210" viewBox="0 0 560 210">
+                            <text x="180" y="110" font-family="sans-serif" font-size="13" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>
                         </svg>
                     </div>
 
@@ -593,7 +593,7 @@ def write_week1_module():
             challengeState.active = false;
             document.getElementById('step-controls').style.display = 'none';
             document.getElementById('game-output').innerHTML = '<em>Challenge reset. Select an $\\epsilon$ budget above to start.</em>';
-            document.getElementById('game-plot').innerHTML = '<text x="180" y="85" font-family="sans-serif" font-size="13" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>';
+            document.getElementById('game-plot').innerHTML = '<text x="180" y="110" font-family="sans-serif" font-size="13" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>';
         }
 
         function updateChallengeUI() {
@@ -622,11 +622,11 @@ def write_week1_module():
             const svg = document.getElementById('game-plot');
             const maxN = 14;
             const width = 560;
-            const height = 160;
-            const originX = 40;
-            const originY = 130;
-            const maxXScale = 500;
-            const maxYScale = 110;
+            const height = 210;
+            const originX = 50;
+            const originY = 175;
+            const maxXScale = 480;
+            const maxYScale = 150;
 
             const topY = originY - (eps * maxYScale);
             const bottomY = originY + (eps * maxYScale);
@@ -636,13 +636,13 @@ def write_week1_module():
             let svgContent = `
                 <rect x="${originX}" y="${bandY}" width="${maxXScale}" height="${bandHeight}" fill="#fef3c7" opacity="0.7"/>
                 <line x1="${originX}" y1="${originY}" x2="${originX + maxXScale}" y2="${originY}" stroke="#64748b" stroke-width="2"/>
-                <line x1="${originX}" y1="20" x2="${originX}" y2="${originY}" stroke="#64748b" stroke-width="2"/>
+                <line x1="${originX}" y1="15" x2="${originX}" y2="${originY}" stroke="#64748b" stroke-width="2"/>
                 <text x="5" y="${topY + 4}" font-family="sans-serif" font-size="9" fill="#d97706">+&epsilon;</text>
-                <polyline points="32,${topY - 3} ${originX},${topY} 32,${topY + 3}" fill="none" stroke="#d97706" stroke-width="1.2"/>
-                <line x1="22" y1="${topY}" x2="${originX}" y2="${topY}" stroke="#d97706" stroke-width="0.8" stroke-dasharray="2"/>
+                <polyline points="37,${topY - 3} ${originX},${topY} 37,${topY + 3}" fill="none" stroke="#d97706" stroke-width="1.2"/>
+                <line x1="27" y1="${topY}" x2="${originX}" y2="${topY}" stroke="#d97706" stroke-width="0.8" stroke-dasharray="2"/>
                 <text x="5" y="${bottomY + 4}" font-family="sans-serif" font-size="9" fill="#d97706">-&epsilon;</text>
-                <polyline points="32,${bottomY - 3} ${originX},${bottomY} 32,${bottomY + 3}" fill="none" stroke="#d97706" stroke-width="1.2"/>
-                <line x1="22" y1="${bottomY}" x2="${originX}" y2="${bottomY}" stroke="#d97706" stroke-width="0.8" stroke-dasharray="2"/>
+                <polyline points="37,${bottomY - 3} ${originX},${bottomY} 37,${bottomY + 3}" fill="none" stroke="#d97706" stroke-width="1.2"/>
+                <line x1="27" y1="${bottomY}" x2="${originX}" y2="${bottomY}" stroke="#d97706" stroke-width="0.8" stroke-dasharray="2"/>
             `;
 
             for (let n = 1; n <= curN; n++) {
@@ -651,7 +651,7 @@ def write_week1_module():
                 const cy = originY - (val * maxYScale);
 
                 svgContent += `<line x1="${cx}" y1="${originY}" x2="${cx}" y2="${originY + 4}" stroke="#64748b"/>`;
-                svgContent += `<text x="${cx - 4}" y="${originY + 15}" font-family="sans-serif" font-size="9" fill="#475569">${n}</text>`;
+                svgContent += `<text x="${cx - 4}" y="${originY + 16}" font-family="sans-serif" font-size="9" fill="#475569">${n}</text>`;
 
                 const inside = n > reqN;
                 const fillColor = inside ? '#10b981' : '#d97706';
@@ -797,10 +797,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Add pointer lines and arrows from epsilon labels to error band edges\n\n"
-        "Updated renderGameSVG in week1.html to draw dynamic pointer lines and arrow "
-        "chevrons connecting the +epsilon and -epsilon labels directly to the top and bottom "
-        "boundaries of the tolerance band."
+        "Increase SVG height and vertical scale for Epsilon Challenge diagram\n\n"
+        "Adjusted viewBox height to 210 and increased vertical scaling in renderGameSVG "
+        "within week1.html to give the diagram more headroom."
     )
 
     commands = [
@@ -814,7 +813,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with epsilon label pointer lines...")
+    print("Writing Week 1 module with taller SVG diagram...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
