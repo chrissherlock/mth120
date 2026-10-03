@@ -2,7 +2,7 @@
 import os
 import subprocess
 
-def update_number_systems_reassurance():
+def update_sequence_reassurance():
     filepath = 'week1.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
@@ -12,28 +12,28 @@ def update_number_systems_reassurance():
         content = f.read()
 
     old_intro = (
-        '<strong>Number systems and real analysis:</strong> Building from '
-        'Peano\'s axioms for $\\mathbb{N}$ to the completeness of $\\mathbb{R}$.'
+        '<strong>Discrete modeling:</strong> Sequences are functions '
+        '$f: \\mathbb{N} \\to \\mathbb{R}$ mapping indices to real values.'
     )
     new_intro = (
-        '<strong>Taking it one step at a time:</strong> Every time numbers felt complete, '
-        'mathematics found a new gap—from counting on our fingers to fractions, '
-        'and finally to the seamless real number line.'
+        '<strong>Think of a sequence simply as an endless ordered list</strong> '
+        '—like a musical playlist or numbered parking spots—where every step '
+        'has its own designated number.'
     )
 
     if old_intro in content:
         content = content.replace(old_intro, new_intro)
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
-        print("Successfully updated number systems intro with friendly reassurance.")
+        print("Successfully updated sequence mechanics intro with friendly reassurance.")
     else:
         print("Warning: Target text not found.")
 
 def execute_git_sync():
     commit_message = (
-        "Warm up number systems intro with friendly reassurance\n\n"
+        "Warm up sequence mechanics intro with friendly reassurance\n\n"
         "Replaced clinical intro in week1.html with a comforting, accessible\n"
-        "explanation of number system expansion for beginners."
+        "explanation of sequences for beginners."
     )
     commands = [
         ['git', 'add', 'week1.html', 'update.py'],
@@ -45,5 +45,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    update_number_systems_reassurance()
+    update_sequence_reassurance()
     execute_git_sync()
