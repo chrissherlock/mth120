@@ -192,12 +192,12 @@ def write_week1_module():
                 <div class="game-body">
                     <div class="game-explainer">
                         <strong>How This Game Works:</strong><br>
-                        1. <strong>Step 1:</strong> Pick your error budget ($\epsilon$) below to challenge the sequence.<br>
-                        2. <strong>Step 2:</strong> The system calculates the winning cutoff index ($N$) and renders the error zone on the diagram.<br>
-                        3. <strong>Step 3:</strong> Use the "Step Forward ($n > N$)" button to manually verify that every subsequent term stays trapped inside the blue zone forever!
+                        • <strong>The Sequence:</strong> We are testing $a_n = \frac{1}{n}$, which produces the shrinking list: $1, 0.5, 0.33, 0.25, 0.2, 0.16, \dots$ heading toward $0$.<br>
+                        • <strong>Your Challenge:</strong> Click a tolerance button below to pick your error budget ($\epsilon$). You are demanding that the sequence be trapped within $\pm \epsilon$ of zero.<br>
+                        • <strong>The System's Answer:</strong> The computer calculates the winning cutoff index ($N$) and renders the error zone on the diagram. Use the "Step Forward" button to manually verify that subsequent terms stay trapped inside the zone forever!
                     </div>
 
-                    <p><strong>Step 1: Choose Your Skeptic Budget ($\epsilon$):</strong></p>
+                    <p><strong>Choose Your Error Budget ($\epsilon$):</strong></p>
                     <div class="game-controls">
                         <button class="game-btn" onclick="startChallenge(0.2)">Test $\epsilon = 0.2$ (Wide)</button>
                         <button class="game-btn" onclick="startChallenge(0.1)">Test $\epsilon = 0.1$ (Medium)</button>
@@ -533,10 +533,10 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Complete multi-phase interaction loop in Epsilon Challenge Game\n\n"
-        "Added Step 2 and Step 3 controls to the challenge widget, enabling users \n"
-        "to step forward past the threshold index N and verify that subsequent \n"
-        "sequence points remain permanently trapped within the epsilon error band."
+        "Remove artificial step labels from Epsilon Challenge Game UI\n\n"
+        "Cleaned up the challenge widget controls by removing redundant 'Step 1' \n"
+        "and step-number headers, letting the natural flow of selecting a tolerance \n"
+        "and stepping forward guide the interaction."
     )
 
     commands = [
