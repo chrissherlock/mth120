@@ -2,47 +2,64 @@
 import os
 import subprocess
 
-def add_navigation_footers():
-    # 1. Update week1.html
+def add_top_navigation_headers():
+    # 1. Update week1.html top header
     if os.path.exists('week1.html'):
         with open('week1.html', 'r', encoding='utf-8') as f:
             content = f.read()
 
-        footer_html = r"""
-            <div style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-                <a href="index.html" style="color: var(--accent); text-decoration: none; font-weight: 600;">&larr; Back to Index</a>
-                <a href="week2.html" style="background: var(--accent); color: white; padding: 0.6rem 1.2rem; border-radius: 6px; text-decoration: none; font-weight: 600; transition: background 0.2s;">Next: Week 2 Module &rarr;</a>
-            </div>"""
+        old_header = """        <div class="header">
+            <h1>Week 1: Sets, Numbers, and Sequences</h1>
+            <a href="index.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">&larr; Back to Curriculum Index</a>
+        </div>"""
 
-        if footer_html.strip() not in content:
-            # Insert before the last closing div or body tag
-            content = content.replace('</div>\n</body>', footer_html + '\n        </div>\n    </body>')
+        new_header = """        <div class="header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <h1>Week 1: Sets, Numbers, and Sequences</h1>
+                <a href="index.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">&larr; Back to Curriculum Index</a>
+            </div>
+            <div>
+                <a href="week2.html" style="background: var(--accent); color: white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">Next: Week 2 &rarr;</a>
+            </div>
+        </div>"""
+
+        if old_header in content:
+            content = content.replace(old_header, new_header)
             with open('week1.html', 'w', encoding='utf-8') as f:
                 f.write(content)
 
-    # 2. Update week2.html
+    # 2. Update week2.html top header
     if os.path.exists('week2.html'):
         with open('week2.html', 'r', encoding='utf-8') as f:
             content = f.read()
 
-        footer_html = r"""
-            <div style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-                <a href="week1.html" style="background: var(--accent); color: white; padding: 0.6rem 1.2rem; border-radius: 6px; text-decoration: none; font-weight: 600; transition: background 0.2s;">&larr; Previous: Week 1 Module</a>
-                <a href="index.html" style="color: var(--accent); text-decoration: none; font-weight: 600;">Back to Index &rarr;</a>
-            </div>"""
+        old_header = """        <div class="header">
+            <h1>Week 2: Limits of Sequences | MTHS120</h1>
+            <a href="index.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">&larr; Back to Curriculum Index</a>
+        </div>"""
 
-        if footer_html.strip() not in content:
-            content = content.replace('</div>\n</body>', footer_html + '\n        </div>\n    </body>')
+        new_header = """        <div class="header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <h1>Week 2: Limits of Sequences</h1>
+                <a href="index.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">&larr; Back to Curriculum Index</a>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+                <a href="week1.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">&larr; Prev: Week 1</a>
+            </div>
+        </div>"""
+
+        if old_header in content:
+            content = content.replace(old_header, new_header)
             with open('week2.html', 'w', encoding='utf-8') as f:
                 f.write(content)
 
-    print("Successfully added bottom navigation footers.")
+    print("Successfully added top navigation headers.")
 
 def execute_git_sync():
     commit_message = (
-        "Add bottom-of-page navigation footers across course modules\n\n"
-        "Inserted responsive previous/next navigation bars at the bottom of\n"
-        "week1.html, week2.html, and index.html to streamline user flow."
+        "Add top navigation headers to week1.html and week2.html\n\n"
+        "Inserted a clean, responsive previous/next header navigation bar at the\n"
+        "top of both weekly course modules alongside the page titles."
     )
     commands = [
         ['git', 'add', 'week1.html', 'week2.html', 'update.py'],
@@ -54,5 +71,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    add_navigation_footers()
+    add_top_navigation_headers()
     execute_git_sync()
