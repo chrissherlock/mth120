@@ -2,7 +2,7 @@
 import os
 import subprocess
 
-def update_friendly_reassurance():
+def update_number_systems_reassurance():
     filepath = 'week1.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
@@ -12,28 +12,28 @@ def update_friendly_reassurance():
         content = f.read()
 
     old_intro = (
-        '<strong>The language of science:</strong> Set theory provides the foundational '
-        'grammar for modern mathematics. Functions map inputs from a domain to outputs in a codomain.'
+        '<strong>Number systems and real analysis:</strong> Building from '
+        'Peano\'s axioms for $\\mathbb{N}$ to the completeness of $\\mathbb{R}$.'
     )
     new_intro = (
-        '<strong>Don\'t worry if this feels abstract at first:</strong> '
-        'Set theory is simply the friendly art of grouping things together, '
-        'and functions are just reliable rules that match an input to an output.'
+        '<strong>Taking it one step at a time:</strong> Every time numbers felt complete, '
+        'mathematics found a new gap—from counting on our fingers to fractions, '
+        'and finally to the seamless real number line.'
     )
 
     if old_intro in content:
         content = content.replace(old_intro, new_intro)
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
-        print("Successfully updated set theory intro with friendly reassurance.")
+        print("Successfully updated number systems intro with friendly reassurance.")
     else:
         print("Warning: Target text not found.")
 
 def execute_git_sync():
     commit_message = (
-        "Warm up set theory and function intro with friendly reassurance\n\n"
-        "Replaced clinical introductory text in week1.html with a comforting,\n"
-        "accessible explanation for beginners."
+        "Warm up number systems intro with friendly reassurance\n\n"
+        "Replaced clinical intro in week1.html with a comforting, accessible\n"
+        "explanation of number system expansion for beginners."
     )
     commands = [
         ['git', 'add', 'week1.html', 'update.py'],
@@ -45,5 +45,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    update_friendly_reassurance()
+    update_number_systems_reassurance()
     execute_git_sync()
