@@ -34,8 +34,16 @@ def write_week1_module():
         .intro-graphic { background: #f8fafc; border-radius: 8px; padding: 2rem; display: flex; justify-content: center; margin-bottom: 2.5rem; border: 1px solid var(--border); }
         .intro-graphic svg { width: 100%; max-width: 780px; height: auto; display: block; }
 
-        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; font-family: var(--font-ui); }
-        h3 { color: #1e293b; margin-top: 1.5rem; font-family: var(--font-ui); }
+        /* Table of Contents Styling */
+        .toc-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.75rem; margin: 1.75rem 0 2.5rem 0; font-family: var(--font-ui); }
+        .toc-box h4 { margin: 0 0 0.75rem 0; color: #92400e; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; }
+        .toc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.5rem 1.5rem; margin: 0; padding-left: 1.25rem; }
+        .toc-grid li { margin-bottom: 0.35rem; font-size: 0.95rem; }
+        .toc-grid a { color: #b45309; text-decoration: none; font-weight: 500; }
+        .toc-grid a:hover { text-decoration: underline; color: var(--accent-hover); }
+
+        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+        h3 { color: #1e293b; margin-top: 1.5rem; font-family: var(--font-ui); scroll-margin-top: 2rem; }
 
         /* Infobox Styles */
         .infobox { background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.25rem 0 1.75rem 0; }
@@ -293,6 +301,16 @@ def write_week1_module():
                 Welcome to Week 1 of MTHS120. Before we can analyze continuous change, accumulation, and rates of variation, we must first master the language used to construct the mathematical universe. This module bridges discrete foundational concepts—starting with set theory notation and the hierarchical expansion of our number systems—into the rigorous study of sequences and limits. By examining both abstract formal definitions and their practical numerical behaviors side by side, you will build the analytical intuition necessary to navigate real analysis with confidence.
             </div>
 
+            <!-- TABLE OF CONTENTS -->
+            <div class="toc-box">
+                <h4>📌 Module Table of Contents</h4>
+                <ul class="toc-grid">
+                    <li><a href="#section-sets">1. Set Theory Foundations</a></li>
+                    <li><a href="#section-numbers">2. The Hierarchy of Number Systems</a></li>
+                    <li><a href="#section-sequences">3. Sequences and the Limit Concept</a></li>
+                </ul>
+            </div>
+
             <!-- DECORATIVE TOPIC ILLUSTRATION SVG -->
             <div class="intro-graphic">
                 <svg viewBox="0 0 740 150">
@@ -339,7 +357,7 @@ def write_week1_module():
                 <li><strong>Sequence Limits (Taming the Infinite):</strong> Sequences turn infinity into a rigorous game of precision, bridging discrete math to continuous calculus through the $\epsilon-N$ definition.</li>
             </ul>
 
-            <h2>1. Set Theory Foundations</h2>
+            <h2 id="section-sets">1. Set Theory Foundations</h2>
 
             <!-- SECTION 1 NOTATION INFOBOX -->
             <div class="infobox">
@@ -569,7 +587,7 @@ def write_week1_module():
             <p>$$\mathbb{R} \times \mathbb{R} = \mathbb{R}^2 = \{ (x, y) \mid x \in \mathbb{R} \text{ and } y \in \mathbb{R} \}$$</p>
             <p>We are no longer building isolated dots on a grid. Instead, we are pairing every single real number on the horizontal axis with every single real number on the vertical axis. This continuous pairing fills every possible point on the 2D coordinate plane—giving us the geometric foundation needed to graph functions, calculate slopes, and ultimately do calculus!</p>
 
-            <h2>2. The Hierarchy of Number Systems</h2>
+            <h2 id="section-numbers">2. The Hierarchy of Number Systems</h2>
 
             <!-- SECTION 2 NOTATION INFOBOX -->
             <div class="infobox">
@@ -685,7 +703,7 @@ def write_week1_module():
                 <p><strong>The Completeness Property:</strong> To perform calculus, we require the real numbers ($\mathbb{R}$). $\mathbb{R}$ consists of all rationals combined with irrational numbers (non-repeating, non-terminating decimals like $\sqrt{2}$ or $\pi$). Crucially, $\mathbb{R}$ satisfies the <em>Least Upper Bound Property</em> (Completeness Axiom), ensuring there are no empty gaps on the number line. Without completeness, limits, suprema, and integrals could fall into nothingness.</p>
             </div>
 
-            <h2>3. Sequences and the Limit Concept</h2>
+            <h2 id="section-sequences">3. Sequences and the Limit Concept</h2>
 
             <!-- SECTION 3 NOTATION INFOBOX -->
             <div class="infobox">
@@ -949,7 +967,7 @@ def write_week1_module():
                     </tbody>
                 </table>
 
-                <h5 style="margin: 1.25rem 0 0.5rem 0; color: #92400e; font-size: 0.98rem;">⚠️️ The Quantifier Swap Trap (Why Order Matters)</h5>
+                <h5 style="margin: 1.25rem 0 0.5rem 0; color: #92400e; font-size: 0.98rem;">⚠️ The Quantifier Swap Trap (Why Order Matters)</h5>
                 <p>Reversing the order of quantifiers completely breaks the meaning of the statement:</p>
                 <div class="swap-card-grid">
                     <div class="swap-card" style="border-left: 4px solid #10b981;">
@@ -1696,9 +1714,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Prevent wrapping on formula chunks in definition challenger bar\n\n"
-        "Added white-space: nowrap to formula-chunk and formula-sep in week1.html "
-        "to ensure quantified expressions remain on a single unbroken line."
+        "Add table of contents to week1.html\n\n"
+        "Inserted a structured module Table of Contents navigation card with anchor "
+        "links to all major sections."
     )
 
     commands = [
@@ -1712,7 +1730,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with non-wrapping formula chunks...")
+    print("Writing Week 1 module with Table of Contents...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
