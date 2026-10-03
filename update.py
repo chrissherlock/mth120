@@ -44,6 +44,11 @@ def write_week1_module():
         button { background: var(--accent); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; }
         button:disabled { background: var(--border); cursor: not-allowed; }
         .step-summary { flex-grow: 1; font-size: 0.95rem; color: #475569; line-height: 1.5; }
+        .analysis-panes { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
+        .pane { background: var(--card); padding: 1.5rem; }
+        .pane h4 { margin-top: 0; color: var(--accent); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+        .pane p { margin: 0 0 0.75rem 0; }
+        .pane p:last-child { margin-bottom: 0; }
         .toggle-group { min-width: 220px; }
         select { width: 100%; padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border); font-family: system-ui, sans-serif; }
     </style>
@@ -57,14 +62,14 @@ def write_week1_module():
 
         <div class="module-content">
             <h2>1. Theoretical Foundations &amp; Real-World Context</h2>
-            <p>To master calculus and linear algebra, we must evaluate concepts through a <strong>Dual-Track Architecture</strong>: rigorously building abstract formal definitions while mapping them directly to physical systems[cite: 2, 3].</p>
+            <p>To master calculus and linear algebra, we evaluate concepts through a <strong>Dual-Track Architecture</strong>: rigorously building abstract formal definitions while mapping them directly to physical systems.</p>
 
             <div class="dual-track-grid">
                 <div class="track-card track-formal">
                     <h3>📐 Track 1: Abstract Formalism (Pure Theory)</h3>
-                    <p>A sequence is a function $f: \mathbb{N} \rightarrow \mathbb{R}$[cite: 24]. We say that $\lim_{n\to\infty} a_n = L$ if:</p>
-                    <p>$$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad \forall n > N, \quad \vert{}a_n - L\vert{} < \epsilon$$</p>
-                    <p>This universal-existential quantifier structure forms the bedrock of real analysis, proving that points permanently enter and remain within an arbitrary neighborhood[cite: 13, 24].</p>
+                    <p>A sequence is a function $f: \mathbb{N} \rightarrow \mathbb{R}$. We say that $\lim_{n\to\infty} a_n = L$ if:</p>
+                    <p>$$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad \forall n > N, \quad |a_n - L| < \epsilon$$</p>
+                    <p>This universal-existential quantifier structure forms the bedrock of real analysis, proving that points permanently enter and remain within an arbitrary neighborhood.</p>
                 </div>
                 <div class="track-card track-applied">
                     <h3>🎛️ Track 2: Applied Mechanics (Real-World Analog)</h3>
@@ -157,26 +162,26 @@ def write_week1_module():
             {
                 phase: "Initialization", n: 1,
                 summary: "<strong>Goal:</strong> Initialize the sequence mapping $f: \\mathbb{N} \\rightarrow \\mathbb{R}$ and establish the error bound constraints for our AV suppression filter.",
-                what: "The sequence initializes at index $n=1$, yielding $a_1 = 1.0$. Simultaneously, our applied system defines target limit $L=0$ and audible error tolerance $\\epsilon = 0.2$ (the blue zone).",
-                why: "To rigorously prove convergence under real analysis axioms, we cannot rely on informal intuition. We must establish that the sequence domain maps to a bounded codomain where arbitrary $\\epsilon$-neighborhoods can be applied."
+                what: "<p><strong>Abstract Formalism:</strong> The sequence initializes at index $n=1$, yielding $a_1 = 1.0$ under the mapping rule $f(n) = \\frac{1}{n}$.</p><p><strong>Applied Mechanics:</strong> Our AV control box boots up, defining a target noise floor $L=0$ and an audible error tolerance $\\epsilon = 0.2$ (the blue band).</p>",
+                why: "<p><strong>Formal Rationale:</strong> Under real analysis axioms, we cannot rely on loose intuition. We must establish that the sequence domain maps to a bounded codomain where arbitrary $\\epsilon$-neighborhoods can be tested.</p><p><strong>System Constraint:</strong> Defining $\\epsilon$ upfront ensures hardware compliance before audio channels are unmuted.</p>"
             },
             {
                 phase: "Iteration", n: 3,
                 summary: "<strong>Goal:</strong> Evaluate intermediate terms as the sequence progresses through preliminary index steps.",
-                what: "The system computes $a_2$ and $a_3$. In formal terms, the terms are decreasing monotonically; in applied terms, the filter is actively attenuating signal interference.",
-                why: "Monotonic decrease guarantees downward motion, but does not yet satisfy convergence bounds. We must observe further iterations to locate the critical threshold index where terms permanently cross into the tolerance band."
+                what: "<p><strong>Abstract Formalism:</strong> The system computes $a_2 = 0.5$ and $a_3 = 0.333$. The terms decrease monotonically.</p><p><strong>Applied Mechanics:</strong> The filter actively attenuates line noise across cycles $n=2$ and $n=3$, bringing the interference down toward the threshold.</p>",
+                why: "<p><strong>Formal Rationale:</strong> Monotonic decrease guarantees downward motion, but does not yet satisfy convergence bounds.</p><p><strong>System Constraint:</strong> Lowering the value is insufficient; we must locate the exact index where terms permanently cross into tolerance.</p>"
             },
             {
                 phase: "Threshold Discovery", n: 5,
                 summary: "<strong>Goal:</strong> Algebraically solve for the critical threshold index $N$ dictated by the $\\epsilon-N$ definition.",
-                what: "We evaluate $\vert{}a_n - 0\vert{} < 0.2$. For $a_n = 1/n$, this yields $n > 5$. We set $N=5$, rendering the red threshold boundary on our canvas.",
-                why: "This step operationalizes the existential quantifier $\\exists N$ in the formal definition. It proves that the abstract theoretical limit is directly tied to a concrete computational latency requirement."
+                what: "<p><strong>Abstract Formalism:</strong> We evaluate $|a_n - 0| < 0.2$. For $a_n = 1/n$, this yields $n > 5$.</p><p><strong>Applied Mechanics:</strong> We set $N=5$, rendering the red threshold boundary on our canvas to mark the latency required for clean audio.</p>",
+                why: "<p><strong>Formal Rationale:</strong> This operationalizes the existential quantifier $\\exists N$ in the formal definition.</p><p><strong>System Constraint:</strong> Establishes the exact processing latency required before the system certifies signal stability.</p>"
             },
             {
                 phase: "Convergence Verification", n: 8,
                 summary: "<strong>Goal:</strong> Fulfill the universal quantifier condition to formally certify the limit.",
-                what: "For all subsequent indices $n > 5$ (such as $n=6, 7, 8$), terms remain strictly trapped within the $\\epsilon$ neighborhood.",
-                why: "This satisfies $\\forall n > N$. Because this inequality holds true for <em>any</em> arbitrary $\\epsilon > 0$, the limit $\\lim_{n\\to\\infty} a_n = L$ is formally verified."
+                what: "<p><strong>Abstract Formalism:</strong> For all subsequent indices $n > 5$ (such as $n=6, 7, 8$), terms remain strictly trapped within the $\\epsilon$ neighborhood.</p><p><strong>Applied Mechanics:</strong> The noise output remains flat and imperceptible across all further processing cycles.</p>",
+                why: "<p><strong>Formal Rationale:</strong> This satisfies $\\forall n > N$. Because this inequality holds for <em>any</em> arbitrary $\\epsilon > 0$, the limit $\\lim_{n\\to\\infty} a_n = L$ is verified.</p><p><strong>System Constraint:</strong> Guarantees long-term stability against unexpected signal spikes.</p>"
             }
         ];
 
@@ -258,10 +263,10 @@ def write_week1_module():
 
 def execute_git_sync():
     commit_message = (
-        "Fix raw LaTeX leakage in architecture dropdown menu\n\n"
-        "Replaced KaTeX math delimiters inside HTML <option> elements with clean \n"
-        "plain-text representations, as dropdown menus do not support dynamic \n"
-        "mathematical rendering."
+        "Clean coursework HTML and fix analytical pane formatting\n\n"
+        "Removed all source citation tags from the generated HTML course material \n"
+        "to comply with course formatting rules. Cleaned up text styling and layout \n"
+        "for the Paired Analytical Panes."
     )
 
     commands = [
@@ -277,6 +282,6 @@ def execute_git_sync():
 if __name__ == "__main__":
     print("Writing Week 1 module...")
     write_week1_module()
-    print("Committing and pushing to GitHub...")
+    print("Committing and pushing to GitHuby...")
     execute_git_sync()
     print("Deployment complete.")
