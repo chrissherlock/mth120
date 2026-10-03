@@ -485,10 +485,24 @@ def write_week1_module():
                 </div>
             </div>
 
-            <h3>Cartesian Products ($A \times B$)</h3>
-            <p>The Cartesian product pairs elements from two sets into ordered pairs:
-            $$A \times B = \{ (a, b) \mid a \in A \text{ and } b \in B \}$$
-            When $A = \mathbb{R}$ and $B = \mathbb{R}$, this operation constructs the familiar 2D coordinate plane $\mathbb{R}^2$.</p>
+            <h3>Cartesian Products ($A \times B$): Ordered Pairs and the Plane</h3>
+            <p>Up until now, our set operations (like union and intersection) just lump elements together without caring about order or pairing. But what if we want to pair every item in set $A$ with every item in set $B$? That is where the <strong>Cartesian Product</strong> comes in.</p>
+
+            <div class="definition-box">
+                <p><strong>What is an Ordered Pair? ($a, b$)</strong></p>
+                <p>In standard set theory, order does not matter: $\{1, 2\}$ is the exact same set as $\{2, 1\}$. However, when constructing coordinates and relations, <strong>order is everything</strong>. An <em>ordered pair</em> $(a, b)$ pairs a first element $a$ (from set $A$) with a second element $b$ (from set $B$).</p>
+                <ul>
+                    <li><strong>Order Matters:</strong> The pair $(1, 2)$ represents a completely different point or relationship than $(2, 1)$ (just like plotting coordinates on a map).</li>
+                    <li><strong>Repetition is Allowed:</strong> Unlike standard sets where elements must be unique, an ordered pair can feature identical coordinates, such as $(2, 2)$.</li>
+                </ul>
+            </div>
+
+            <p>Formally, the Cartesian product of two sets $A$ and $B$ is the set of all possible ordered pairs:</p>
+            <p>$$A \times B = \{ (a, b) \mid a \in A \text{ and } b \in B \}$$</p>
+
+            <p><strong>How to Build One (A Concrete Example):</strong><br>
+            Suppose set $A = \{1, 2, 3\}$ represents three horizontal columns, and set $B = \{1, 2\}$ represents two vertical rows. By pairing every element of $A$ with every element of $B$, we generate $3 \times 2 = 6$ unique ordered pairs:</p>
+            <p>$$A \times B = \{ (1,1), (1,2), (2,1), (2,2), (3,1), (3,2) \}$$</p>
 
             <div class="diagram-card" style="margin: 1.5rem 0; width: 100%; box-sizing: border-box;">
                 <h5>Discrete Cartesian Grid ($A = \{1,2,3\} \times B = \{1,2\}$)</h5>
@@ -513,7 +527,12 @@ def write_week1_module():
                 </svg>
             </div>
 
-            <h3>Anatomy of Set-Builder Notation</h3>
+            <h3>The Connection to the Cartesian Plane ($\mathbb{R}^2$)</h3>
+            <p>What happens when we take this idea from finite sets of numbers to the continuous realm of real numbers? If we take the Cartesian product of the real number line with itself:</p>
+            <p>$$\mathbb{R} \times \mathbb{R} = \mathbb{R}^2 = \{ (x, y) \mid x \in \mathbb{R} \text{ and } y \in \mathbb{R} \}$$</p>
+            <p>We are no longer building isolated dots on a grid. Instead, we are pairing every single real number on the horizontal axis with every single real number on the vertical axis. This continuous pairing fills every possible point on the 2D coordinate plane—giving us the geometric foundation needed to graph functions, calculate slopes, and ultimately do calculus!</p>
+
+            <h2>Anatomy of Set-Builder Notation</h2>
             <p>When dealing with infinite or continuous sets where listing elements is impossible, we use <strong>set-builder notation</strong>. This defines a set by stating the properties that its members must satisfy rather than listing them explicitly.</p>
 
             <div class="definition-box">
@@ -640,7 +659,7 @@ def write_week1_module():
                     <line x1="40" y1="145" x2="710" y2="145" stroke="#64748b" stroke-width="1.2" marker-end="url(#num-arrow)"/>
                     <circle cx="130" cy="145" r="4.5" fill="#64748b"/><text x="125" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">0</text>
                     <circle cx="370" cy="145" r="4.5" fill="#64748b"/><text x="365" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">1</text>
-                    <circle cx="610" cy="145" r="4.5" fill="#64748b"/><text x="605" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="bold">2</text>
+                    <circle cx="610" cy="145" r="4.5" fill="#64748b"/><text x="605" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">2</text>
 
                     <polygon points="130,145 370,145 370,65" fill="#fef3c7" opacity="0.65" stroke="#d97706" stroke-width="1.2"/>
                     <text x="245" y="135" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#d97706" font-weight="bold">1</text>
@@ -1188,7 +1207,7 @@ def write_week1_module():
                 verRole: "Solver / Certificate Generator",
                 verScope: "Witness Assignment (Latency Bound)",
                 verSummary: "<strong>Step 2: Synthesizing the compliance milestone.</strong> The engine computes an execution cycle witness $N \\in \\mathbb{N}$ proving the point beyond which the system enters its invariant state.",
-                verWhat: "<p>The solver generates a concrete certificate $N = g(\\epsilon)$, establishing a finite latency bound after which execution compliance is guaranteed.</p>",
+                advWhat: "<p>The solver generates a concrete certificate $N = g(\\epsilon)$, establishing a finite latency bound after which execution compliance is guaranteed.</p>",
                 verWhy: "<p>Existential quantification produces a concrete proof witness. It does not need to be unique; finding any valid integer $N$ proves the system eventually settles.</p>"
             },
             {
@@ -1440,15 +1459,15 @@ def write_week1_module():
                     </marker>
                 </defs>
                 <!-- Thin Zero Target Line -->
-                <line x1="${originX}" y1="${originY}" x2="${originX + maxXScale}" y2="${originY}" stroke="#64748b" stroke-width="1.2"/>
+                <line x1="${originX}" y1="${originY}" x2="${originX + maxXScale}" y2="${originY}" stroke="#64748b" stroke-width="1.0"/>
                 <text x="${originX - 35}" y="${originY + 5}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700" fill="#64748b">L=0</text>
 
                 <!-- Thin Vertical Axis with Arrow -->
-                <line x1="${originX}" y1="240" x2="${originX}" y2="25" stroke="#64748b" stroke-width="1.2" marker-end="url(#game-arrow)"/>
+                <line x1="${originX}" y1="240" x2="${originX}" y2="25" stroke="#64748b" stroke-width="1.0" marker-end="url(#game-arrow)"/>
                 <text x="${originX}" y="18" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="13" fill="#64748b" font-weight="600">a<tspan dy="3" font-size="10">n</tspan></text>
 
                 <!-- Thin Horizontal Axis with Arrow -->
-                <line x1="${originX}" y1="${originY}" x2="715" y2="${originY}" stroke="#64748b" stroke-width="1.2" marker-end="url(#game-arrow)"/>
+                <line x1="${originX}" y1="${originY}" x2="715" y2="${originY}" stroke="#64748b" stroke-width="1.0" marker-end="url(#game-arrow)"/>
                 <text x="722" y="134" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="13" fill="#64748b" font-weight="600">n</text>
             `;
 
@@ -1505,7 +1524,7 @@ def write_week1_module():
                     r = 7;
                 } else if (onBoundary) {
                     fillColor = '#fbbf24';
-                    strokeAttr = 'stroke="#d97706" stroke-width="1.5"';
+                    strokeAttr = 'stroke="#d97706" stroke-width="1.2"';
                     r = 6;
                 }
 
@@ -1513,7 +1532,7 @@ def write_week1_module():
 
                 if (n === curN && inside) {
                     svgContent += `
-                        <line x1="${cx}" y1="${topY}" x2="${cx}" y2="${cy}" stroke="#10b981" stroke-width="1.5" stroke-dasharray="3"/>
+                        <line x1="${cx}" y1="${topY}" x2="${cx}" y2="${cy}" stroke="#10b981" stroke-width="1.2" stroke-dasharray="3"/>
                         <circle cx="${cx}" cy="${topY}" r="3" fill="#ef4444"/>
                         <text x="${cx + 8}" y="${(topY + cy) / 2 + 4}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#059669" font-weight="bold">inside corridor</text>
                     `;
@@ -1522,7 +1541,7 @@ def write_week1_module():
 
             const thresholdX = originX + (reqN * (maxXScale / maxN));
             svgContent += `
-                <line x1="${thresholdX}" y1="20" x2="${thresholdX}" y2="240" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4"/>
+                <line x1="${thresholdX}" y1="20" x2="${thresholdX}" y2="240" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="4"/>
                 <text x="${thresholdX + 6}" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="bold" fill="#ef4444">N = ${reqN} (Cutoff)</text>
             `;
 
@@ -1625,7 +1644,7 @@ def write_week1_module():
                     const prevVal = dualTrackData[dualTrackState.seq][idx - 1];
                     const px = 160 + ((idx - 1) * 60);
                     py = 130 - (prevVal * 100);
-                    group.innerHTML += `<line x1="${px}" y1="${py}" x2="${cx}" y2="${cy}" stroke="#d97706" stroke-width="1.5" opacity="0.6"/>`;
+                    group.innerHTML += `<line x1="${px}" y1="${py}" x2="${cx}" y2="${cy}" stroke="#d97706" stroke-width="1.2" opacity="0.6"/>`;
                 }
             });
 
@@ -1668,9 +1687,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Reorder Section 1 subsections and thin diagram lines\n\n"
-        "Restored logical section ordering for subsets and core operations in week1.html, "
-        "and thinned out strokes across Cartesian, sqrt(2), and Challenge diagrams."
+        "Restore correct subsection order and refine line weights across all diagrams\n\n"
+        "Fixed subsection ordering in week1.html so Complement sits with Union/Intersection, "
+        "and thinned stroke widths across all SVG diagrams."
     )
 
     commands = [
@@ -1684,7 +1703,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with corrected section ordering and thinned lines...")
+    print("Writing Week 1 module with reordered sections and thinned diagrams...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
