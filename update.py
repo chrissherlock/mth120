@@ -460,7 +460,7 @@ def write_week1_module():
                     <em>Translation:</em> "The set of all real numbers $x$ such that $x$ is greater than or equal to 1 and strictly less than 5" $\rightarrow [1, 5)$.</li>
                 <li><strong>Transformed Elements:</strong> <br>
                     $C = \{ y \in \mathbb{R} \mid y = x^2 \text{ for some } x \in \mathbb{Z} \}$ <br>
-                    <em>Translation:</em> "The set of all real numbers $y$ such y equals the square of some integer $x$" $\rightarrow \{0, 1, 4, 9, 16, \dots\}$.</li>
+                    <em>Translation:</em> "The set of all real numbers $y$ such that $y$ equals the square of some integer $x$" $\rightarrow \{0, 1, 4, 9, 16, \dots\}$.</li>
             </ul>
 
             <h3>Common Beginner Pitfalls</h3>
@@ -709,19 +709,19 @@ def write_week1_module():
             <div class="stepper-walkthrough" id="definition-walkthrough">
                 <div class="telemetry-grid">
                     <div class="telemetry-card">
-                        <span class="telemetry-label">Active Clause Focus</span>
+                        <span class="telemetry-label" id="fw-lbl-clause">Clause Focus</span>
                         <span class="telemetry-badge" id="fw-tel-clause" style="color: #b45309;">1. The Challenge (∀ϵ > 0)</span>
                     </div>
                     <div class="telemetry-card">
-                        <span class="telemetry-label">Quantifier Type</span>
+                        <span class="telemetry-label" id="fw-lbl-quant">Quantifier</span>
                         <span class="telemetry-badge" id="fw-tel-quant" style="color: #0369a1;">Universal (∀)</span>
                     </div>
                     <div class="telemetry-card">
-                        <span class="telemetry-label">Assigned Role</span>
+                        <span class="telemetry-label" id="fw-lbl-role">Active Role</span>
                         <span class="telemetry-badge" id="fw-tel-role" style="color: #be185d;">The Skeptic</span>
                     </div>
                     <div class="telemetry-card">
-                        <span class="telemetry-label">Variable Scoping</span>
+                        <span class="telemetry-label" id="fw-lbl-scope">Scoping Rule</span>
                         <span class="telemetry-badge" id="fw-tel-scope" style="color: #047857;">Independent (ϵ arbitrary)</span>
                     </div>
                 </div>
@@ -788,20 +788,20 @@ def write_week1_module():
                     <div class="toggle-group">
                         <label for="fw-dimension-toggle" style="font-size: 0.85rem; font-weight: 700; color: #475569; display: block; margin-bottom: 0.5rem; letter-spacing: 0.02em;">PERSPECTIVE DIMENSION:</label>
                         <select id="fw-dimension-toggle" onchange="changeFormulaPerspective()">
-                            <option value="adversarial">Adversarial Game (Skeptic vs. System)</option>
-                            <option value="verification">Verification Engine (Test Spec vs. Cert)</option>
+                            <option value="adversarial">Adversarial Game (Skeptic vs. Prover)</option>
+                            <option value="verification">Verification Engine (Test Spec vs. Invariant)</option>
                         </select>
                     </div>
                 </div>
 
-                <!-- Paired Analytical Panes -->
+                <!-- Paired Analytical Panes with Dynamic Headings -->
                 <div class="analysis-panes">
                     <div class="pane">
-                        <h4>What Is Happening (Exact Low-Level Mechanics)</h4>
+                        <h4 id="fw-heading-what">Game Mechanics: What Is Happening</h4>
                         <div id="fw-pane-what"></div>
                     </div>
                     <div class="pane">
-                        <h4>Why The System Does This (Design Rationale & Tradeoffs)</h4>
+                        <h4 id="fw-heading-why">Game Strategy: Design Rationale</h4>
                         <div id="fw-pane-why"></div>
                     </div>
                 </div>
@@ -1046,7 +1046,7 @@ def write_week1_module():
 
     <script>
         /* ==========================================================================
-           FORMULA STEPPER MODULE (CLAUSE-BY-CLAUSE BREAKDOWN)
+           FORMULA STEPPER MODULE (DISTINCT ADVERSARIAL vs VERIFICATION PERSPECTIVES)
            ========================================================================== */
         const formulaState = {
             step: 0,
@@ -1057,46 +1057,66 @@ def write_week1_module():
             {
                 clauseTitle: "1. The Challenge (∀ϵ > 0)",
                 quantifier: "Universal (∀)",
-                role: "The Skeptic",
-                scope: "Independent (Arbitrary Error Budget)",
-                summary: "<strong>Step 1: The Skeptic issues an error challenge.</strong> The universal quantifier $\\forall \\epsilon > 0$ asserts that no matter how tiny or stringent a positive tolerance budget is chosen, the sequence must be prepared to satisfy it.",
-                adversarialWhat: "<p>The Skeptic initiates the game by picking an arbitrary tolerance $\\epsilon > 0$. This establishes the target boundary corridor $(L - \\epsilon, L + \\epsilon)$ on the vertical axis.</p>",
-                adversarialWhy: "<p>If the definition only worked for <em>some</em> tolerances (like $\\epsilon = 0.5$), a sequence oscillating between $0$ and $0.3$ would falsely pass. Requiring <em>all</em> positive $\\epsilon$ eliminates any false positives.</p>",
-                verificationWhat: "<p>The verification framework initializes an unbounded test input parameter $\\epsilon \\in (0, \\infty)$. The candidate system cannot reject or restrict this parameter.</p>",
-                verificationWhy: "<p>Universal quantification guarantees total test coverage over the open interval. The algorithm must remain certified down to infinitesimally small margins.</p>"
+                // Adversarial Framing
+                advRole: "The Skeptic",
+                advScope: "Free Choice (Arbitrary Error Budget)",
+                advSummary: "<strong>Step 1: The Skeptic issues an error challenge.</strong> The skeptic demands that terms eventually settle inside an arbitrary tolerance $\\epsilon > 0$. The smaller the $\\epsilon$, the harder the test.",
+                advWhat: "<p>The Skeptic picks any positive number $\\epsilon > 0$, no matter how tiny (e.g., $0.1, 0.001, 10^{-6}$). This forms a physical target band $(L - \\epsilon, L + \\epsilon)$ around the limit.</p>",
+                advWhy: "<p>If the definition only required passing for <em>some</em> tolerances (like $\\epsilon = 0.5$), a broken sequence bouncing between $0$ and $0.4$ could falsely claim convergence. Testing <em>all</em> positive $\\epsilon$ guarantees the skeptic cannot catch the sequence out.</p>",
+                // Verification Framing
+                verRole: "Test Input Generator (Fuzzer)",
+                verScope: "Unconstrained Input Parameter (ϵ ∈ ℝ⁺)",
+                verSummary: "<strong>Step 1: Setting test harness tolerance.</strong> An automated verification harness injects an arbitrary, strictly positive bound constraint $\\epsilon \\in (0, \\infty)$ into the system contract.",
+                verWhat: "<p>The test harness initializes an open input variable $\\epsilon > 0$. The system cannot assume or restrict the scale of $\\epsilon$, simulating arbitrary precision testing.</p>",
+                verWhy: "<p>To mathematically certify stability in numerical software, bounds must hold under worst-case inputs down to floating-point machine precision without failure.</p>"
             },
             {
                 clauseTitle: "2. The Response (∃N ∈ ℕ)",
                 quantifier: "Existential (∃)",
-                role: "The System (Prover)",
-                scope: "Dependent (N is chosen after ϵ is known)",
-                summary: "<strong>Step 2: The System establishes a finite cutoff index.</strong> The existential quantifier $\\exists N \\in \\mathbb{N}$ guarantees that there is at least one whole counting number $N$ past which convergence will occur.",
-                adversarialWhat: "<p>Knowing the Skeptic's $\\epsilon$, the System solves for a milestone index $N$. On the visual diagram, this establishes the vertical red threshold boundary on the horizontal index line.</p>",
-                adversarialWhy: "<p>Order matters critically: $N$ is chosen <em>after</em> $\\epsilon$ is declared ($N = N(\\epsilon)$). Tighter error bands require larger index milestones. If $N$ had to be chosen before $\\epsilon$, convergence would be impossible.</p>",
-                verificationWhat: "<p>The solver generates a concrete certificate value $N = \\lceil g(\\epsilon) \\rceil \\in \\mathbb{N}$, pinning an execution cycle milestone after which compliance is guaranteed.</p>",
-                verificationWhy: "<p>Existential scoping requires existence, not uniqueness. Any valid milestone index is sufficient to satisfy the verification requirement.</p>"
+                // Adversarial Framing
+                advRole: "The Prover (Defender)",
+                advScope: "Dependent Response (N = N(ϵ))",
+                advSummary: "<strong>Step 2: The Prover announces a cutoff milestone.</strong> Having seen the Skeptic's $\\epsilon$, the Prover inspects the sequence and declares an index $N$ where terms will permanently enter tolerance.",
+                advWhat: "<p>The Prover solves the inequality $|a_n - L| < \\epsilon$ to find the integer milestone $N = \\lceil 1/\\epsilon \\rceil$. This erects a cutoff fence line at index position $N$.</p>",
+                advWhy: "<p><strong>Order is vital:</strong> The Prover picks $N$ <em>after</em> seeing the Skeptic's $\\epsilon$. Tighter challenges demand larger milestones. If the Prover had to lock in $N$ first, no sequence could survive arbitrary $\\epsilon$ challenges.</p>",
+                // Verification Framing
+                verRole: "Solver / Certificate Generator",
+                verScope: "Witness Assignment (Latency Bound)",
+                verSummary: "<strong>Step 2: Synthesizing the compliance milestone.</strong> The engine computes an execution cycle witness $N \\in \\mathbb{N}$ proving the point beyond which the system enters its invariant state.",
+                verWhat: "<p>The solver generates a concrete certificate $N = g(\\epsilon)$, establishing a finite latency bound after which execution compliance is guaranteed.</p>",
+                verWhy: "<p>Existential quantification produces a concrete proof witness. It does not need to be unique; finding any valid integer $N$ proves the system eventually settles.</p>"
             },
             {
                 clauseTitle: "3. The Tail Scope (∀n > N)",
                 quantifier: "Universal (∀)",
-                role: "The Verification Filter",
-                scope: "Infinite Tail (All future index positions)",
-                summary: "<strong>Step 3: Checking all subsequent terms in the infinite tail.</strong> The condition $\\forall n > N$ focuses solely on what happens after the milestone, disregarding initial temporary fluctuations.",
-                adversarialWhat: "<p>The evaluator scans every index position strictly beyond the cutoff line ($n = N+1, N+2, N+3, \\dots$). The first $N$ terms are ignored.</p>",
-                adversarialWhy: "<p>Convergence is an asymptotic property. A sequence can begin wildly erratic or sit directly on the boundary line ($a_N = \\epsilon$); all that matters is that it settles down permanently for all $n > N$.</p>",
-                verificationWhat: "<p>A stream filter isolates the infinite suffix stream $\{a_n \\mid n \\in \\mathbb{N}, n > N\}$. All terms prior to $N$ are pruned from the evaluation buffer.</p>",
-                verificationWhy: "<p>Guarantees that compliance is not an intermittent spike, but an invariant condition that holds indefinitely.</p>"
+                // Adversarial Framing
+                advRole: "The Referee (Auditor)",
+                advScope: "Infinite Tail Evaluation",
+                advSummary: "<strong>Step 3: Auditing every term in the infinite tail.</strong> The referee ignores early terms ($n \\le N$) and checks that <em>every single term</em> strictly after the fence stays inside tolerance.",
+                advWhat: "<p>The auditor sweeps through all index positions strictly past $N$ ($n = N+1, N+2, N+3, \\dots$). The first $N$ terms can behave wildly or touch the boundary line; they are entirely discarded.</p>",
+                advWhy: "<p>Limits evaluate long-term destination, not initial journey. A sequence can oscillate violently for the first million terms, but as long as it stabilizes permanently after $N$, it converges.</p>",
+                // Verification Framing
+                verRole: "Tail Suffix Filter",
+                verScope: "Stream Invariant Precondition",
+                verSummary: "<strong>Step 3: Filtering the tail stream.</strong> The engine filters out transient startup cycles ($n \\le N$) and applies a continuous invariant check across all subsequent execution cycles.",
+                verWhat: "<p>The test runner evaluates the infinite stream suffix $\{a_n \\mid n > N\}$. Startup warmup phases are ignored, focusing solely on steady-state operation.</p>",
+                verWhy: "<p>Transient numerical drift during algorithm initialization does not violate convergence; the specification only mandates long-term steady-state compliance.</p>"
             },
             {
                 clauseTitle: "4. The Guarantee (|aₙ - L| < ϵ)",
-                quantifier: "Predicate / Metric",
-                role: "The Bound Invariant",
-                scope: "Absolute Distance Invariant",
-                summary: "<strong>Step 4: Ensuring terms remain strictly trapped inside tolerance.</strong> The inequality $|a_n - L| < \\epsilon$ guarantees that the distance between each term and the limit is strictly less than the error budget.",
-                adversarialWhat: "<p>For every point in the tail, the vertical distance $|a_n - L|$ is evaluated. Every point must reside strictly inside the illuminated yellow band, never touching or exceeding the boundary.</p>",
-                adversarialWhy: "<p>Strict inequality ($<$) prevents terms on the boundary fence from claiming victory. With all four clauses chained together, the definition certifies that $a_n \\to L$.</p>",
-                verificationWhat: "<p>The numerical predicate asserts $\\text{abs}(a_n - L) < \\epsilon$ across the filtered stream. If every evaluated residual returns true, the proof certificate is valid.</p>",
-                verificationWhy: "<p>This metric formulation translates geometric closeness into a formal algebraic invariant that can be rigorously computed.</p>"
+                quantifier: "Metric Predicate (<)",
+                // Adversarial Framing
+                advRole: "The Winning Condition",
+                advScope: "Strict Boundary Invariant",
+                advSummary: "<strong>Step 4: Confirming all tail terms are strictly trapped.</strong> The sequence wins the game if the distance $|a_n - L|$ is strictly less than $\\epsilon$ for every term past $N$.",
+                advWhat: "<p>For every term $a_n$ with $n > N$, the vertical distance to $L$ is checked. All terms must sit strictly within the yellow band, with visible clearance beneath the ceiling line.</p>",
+                advWhy: "<p>Strict inequality ($<$) guarantees that terms sitting on the boundary line fence ($\vert{}a_N - L\vert{} = \\epsilon$) do not count. The terms must enter the interior forever to seal victory.</p>",
+                // Verification Framing
+                verRole: "Assertion Oracle (Assert Check)",
+                verScope: "Certified Safety Invariant",
+                verSummary: "<strong>Step 4: Executing invariant assertion.</strong> The test harness evaluates the Boolean assertion $\\text{abs}(a_n - L) < \\epsilon$. If this assertion passes for all tail terms, the convergence contract is verified.",
+                verWhat: "<p>The verification oracle evaluates the invariant condition $\\text{abs}(a_n - L) < \\epsilon$. If true across all cycles $n > N$, the limit certification is formally approved.</p>",
+                verWhy: "<p>Metric distance provides an algebraic test condition that can be evaluated mechanically without geometric ambiguity.</p>"
             }
         ];
 
@@ -1125,8 +1145,9 @@ def write_week1_module():
         function updateFormulaUI() {
             const idx = formulaState.step;
             const current = formulaClauses[idx];
-            const isAdversarial = formulaState.perspective === 'adversarial';
+            const isAdv = (formulaState.perspective === 'adversarial');
 
+            // 1. Update illuminated expression chunks
             for (let i = 0; i < 4; i++) {
                 const el = document.getElementById(`chunk-${i}`);
                 el.classList.remove('active', 'completed');
@@ -1137,18 +1158,32 @@ def write_week1_module():
                 }
             }
 
+            // 2. Update telemetry labels and badges based on active perspective
+            document.getElementById('fw-lbl-clause').innerText = isAdv ? "Game Clause" : "Test Specification";
             document.getElementById('fw-tel-clause').innerText = current.clauseTitle;
-            document.getElementById('fw-tel-quant').innerText = current.quantifier;
-            document.getElementById('fw-tel-role').innerText = current.role;
-            document.getElementById('fw-tel-scope').innerText = current.scope;
 
+            document.getElementById('fw-lbl-quant').innerText = isAdv ? "Quantifier" : "Contract Scope";
+            document.getElementById('fw-tel-quant').innerText = current.quantifier;
+
+            document.getElementById('fw-lbl-role').innerText = isAdv ? "Active Player" : "Engine Component";
+            document.getElementById('fw-tel-role').innerText = isAdv ? current.advRole : current.verRole;
+
+            document.getElementById('fw-lbl-scope').innerText = isAdv ? "Scoping Rule" : "System State";
+            document.getElementById('fw-tel-scope').innerText = isAdv ? current.advScope : current.verScope;
+
+            // 3. Update navigation button states
             document.getElementById('btn-fw-prev').disabled = (idx === 0);
             document.getElementById('btn-fw-next').disabled = (idx === 3);
 
-            document.getElementById('fw-step-summary').innerHTML = current.summary;
-            document.getElementById('fw-pane-what').innerHTML = isAdversarial ? current.adversarialWhat : current.verificationWhat;
-            document.getElementById('fw-pane-why').innerHTML = isAdversarial ? current.adversarialWhy : current.verificationWhy;
+            // 4. Update pane headings and content
+            document.getElementById('fw-heading-what').innerText = isAdv ? "Game Mechanics: What Is Happening" : "System Execution: What Is Happening";
+            document.getElementById('fw-heading-why').innerText = isAdv ? "Game Strategy: Design Rationale" : "Verification Rationale: Invariant Motivation";
 
+            document.getElementById('fw-step-summary').innerHTML = isAdv ? current.advSummary : current.verSummary;
+            document.getElementById('fw-pane-what').innerHTML = isAdv ? current.advWhat : current.verWhat;
+            document.getElementById('fw-pane-why').innerHTML = isAdv ? current.advWhy : current.verWhy;
+
+            // 5. Render Math in updated elements
             if (window.renderMathInElement) {
                 renderMathInElement(document.getElementById('definition-walkthrough'), {
                     delimiters: [
@@ -1156,14 +1191,9 @@ def write_week1_module():
                         {left: '$', right: '$', display: false}
                     ]
                 });
-                renderMathInElement(document.querySelector('.scoping-box'), {
-                    delimiters: [
-                        {left: '$$', right: '$$', display: true},
-                        {left: '$', right: '$', display: false}
-                    ]
-                });
             }
 
+            // 6. Synchronize SVG canvas
             updateFormulaCanvas(idx);
         }
 
@@ -1522,9 +1552,10 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Wrap (S, \\circ) in math delimiters in Section 2 notation reference\n\n"
-        "Fixed missing KaTeX delimiters for algebraic structure entry in week1.html "
-        "so (S, \\circ) renders as mathematical typography instead of raw text."
+        "Differentiate Adversarial Game and Verification Engine perspectives\n\n"
+        "Updated formulaClauses, dynamic telemetry cards, and pane headings in "
+        "week1.html to ensure a distinct conceptual contrast between the game and "
+        "verification engine views."
     )
 
     commands = [
@@ -1538,7 +1569,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with KaTeX-wrapped algebraic structure symbol...")
+    print("Writing Week 1 module with distinct perspective dimensions...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
