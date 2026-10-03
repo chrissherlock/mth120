@@ -557,7 +557,7 @@ def write_week1_module():
                     <line x1="50" y1="145" x2="690" y2="145" stroke="#64748b" stroke-width="2.5"/>
                     <circle cx="130" cy="145" r="6" fill="#64748b"/><text x="125" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">0</text>
                     <circle cx="370" cy="145" r="6" fill="#64748b"/><text x="365" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">1</text>
-                    <circle cx="610" cy="145" r="6" fill="#64748b"/><text x="605" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">2</text>
+                    <circle cx="610" cy="145" r="6" fill="#64748b"/><text x="605" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="bold">2</text>
 
                     <polygon points="130,145 370,145 370,65" fill="#fef3c7" opacity="0.65" stroke="#d97706" stroke-width="2"/>
                     <text x="245" y="135" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#d97706" font-weight="bold">1</text>
@@ -1245,7 +1245,7 @@ def write_week1_module():
         }
 
         /* ==========================================================================
-           EPSILON CHALLENGE GAME (CORRECTED +/- EPSILON LABELING)
+           EPSILON CHALLENGE GAME (CENTER-ANCHORED L=0 & CORRECTED BOUNDARY LABELS)
            ========================================================================== */
         const challengeState = { active: false, eps: 0.2, reqN: 5, currentDisplayN: 5 };
 
@@ -1347,7 +1347,7 @@ def write_week1_module():
                 <!-- Vertical Axis -->
                 <line x1="${originX}" y1="20" x2="${originX}" y2="240" stroke="#64748b" stroke-width="2.2"/>
 
-                <!-- Corrected boundary labels: +ε (upper) and -ε (lower boundary at L - ε) -->
+                <!-- Corrected boundary labels: L + ε (upper) and L - ε (lower) -->
                 <text x="12" y="${topY + 4}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="bold" fill="#d97706">L + &epsilon; (${eps})</text>
                 <line x1="75" y1="${topY}" x2="${originX}" y2="${topY}" stroke="#d97706" stroke-width="1.5" stroke-dasharray="2"/>
 
