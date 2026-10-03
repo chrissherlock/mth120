@@ -21,7 +21,7 @@ def write_week1_module():
         :root {
             --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
             --accent: #d97706; --accent-hover: #b45309;
-            --telemetry-bg: #f1f5f9; --telemetry-text: #334155;
+            --telemetry-bg: #f8fafc; --telemetry-text: #334155;
             --track1-bg: #fffbeb; --track2-bg: #fff7ed;
             --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
@@ -146,10 +146,58 @@ def write_week1_module():
         .simulator-guide ol { margin: 0.5rem 0 0 1.25rem; padding: 0; }
         .simulator-guide li { margin-bottom: 0.5rem; }
 
-        /* Interactive Simulator & Walkthrough Styles */
-        .simulator, .game-box, .stepper-walkthrough { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 1.5rem; background: var(--card); box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        /* Unified Interactive Card Architecture */
+        .simulator, .game-box, .stepper-walkthrough {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 1.5rem;
+            background: var(--card);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
 
-        /* Light Game Header */
+        /* REFINED TELEMETRY CHIP GRID (GLOBAL FOR ALL WALKTHROUGHS) */
+        .telemetry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.75rem;
+            padding: 0.85rem 1.25rem;
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border);
+            font-family: var(--font-ui);
+        }
+        .telemetry-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 0.55rem 0.85rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+            min-width: 0;
+        }
+        .telemetry-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .telemetry-badge {
+            font-size: 0.92rem;
+            font-weight: 600;
+            line-height: 1.3;
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Light Game Layout */
         .game-header {
             background: #f8fafc;
             color: #b45309;
@@ -170,55 +218,6 @@ def write_week1_module():
         .game-btn:hover { background: var(--accent-hover); }
         .game-btn:disabled { background: #94a3b8; cursor: not-allowed; }
         .game-canvas-wrap { background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; display: flex; justify-content: center; }
-
-        /* Simulator Telemetry */
-        .telemetry {
-            background: #f1f5f9;
-            color: #334155;
-            padding: 0.75rem 1.5rem;
-            font-family: var(--font-ui);
-            font-size: 0.88rem;
-            font-weight: 500;
-            font-variant-numeric: tabular-nums;
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-            flex-wrap: wrap;
-            border-bottom: 1px solid var(--border);
-        }
-
-        /* REFINED TELEMETRY CHIP GRID FOR CONVERGENCE WALKTHROUGH */
-        .telemetry-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-            gap: 0.75rem;
-            padding: 0.85rem 1.25rem;
-            background: #f8fafc;
-            border-bottom: 1px solid var(--border);
-            font-family: var(--font-ui);
-        }
-        .telemetry-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            padding: 0.5rem 0.75rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
-        }
-        .telemetry-label {
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            color: #64748b;
-        }
-        .telemetry-badge {
-            font-size: 0.88rem;
-            font-weight: 600;
-            line-height: 1.3;
-        }
 
         /* Light Formula Stage */
         .formula-stage-wrap {
@@ -285,17 +284,6 @@ def write_week1_module():
         .aside-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #b45309; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
         .aside-box h4 { margin-top: 0; color: #b45309; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-ui); }
         .example-list li { margin-bottom: 0.75rem; }
-
-        #game-output {
-            background: #ffffff;
-            padding: 1.1rem 1.25rem;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            color: #1e293b;
-            font-family: var(--font-ui);
-            font-size: 0.95rem;
-            line-height: 1.65;
-        }
     </style>
 </head>
 <body>
@@ -716,7 +704,7 @@ def write_week1_module():
                 <p>$$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad \forall n > N, \quad |a_n - L| < \epsilon$$</p>
             </div>
 
-            <!-- INTERACTIVE CLAUSE-BY-CLAUSE DEFINITION STEPPER (REFINED TELEMETRY GRID) -->
+            <!-- INTERACTIVE CLAUSE-BY-CLAUSE DEFINITION STEPPER -->
             <div class="stepper-walkthrough" id="definition-walkthrough">
                 <div class="telemetry-grid">
                     <div class="telemetry-card">
@@ -878,12 +866,37 @@ def write_week1_module():
                 <li><strong>The System's Role ($N$):</strong> The system must find a specific cutoff position index ($N$). It wins the challenge if it can prove that *every single term* past that index ($n > N$) stays strictly inside your error zone forever. Note that sitting directly on the boundary ($a_N = \epsilon$) does not count as being strictly inside; terms must satisfy $n > N$ to enter tolerance!</li>
             </ul>
 
-            <!-- INTERACTIVE EPSILON CHALLENGE GAME (LIGHT HEADER) -->
+            <!-- INTERACTIVE EPSILON CHALLENGE GAME -->
             <div class="game-box">
                 <div class="game-header">
                     <span>🎮 INTERACTIVE CHALLENGE GAME: Test Your $\epsilon$</span>
                     <span>Sequence: $a_n = \frac{1}{n}$ (Target Limit $L = 0$)</span>
                 </div>
+
+                <!-- Game Telemetry Grid -->
+                <div class="telemetry-grid" id="game-telemetry">
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Sequence Rule</span>
+                        <span class="telemetry-badge" style="color: #0369a1;">$a_n = 1/n$ ($L = 0$)</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Selected Budget (ϵ)</span>
+                        <span class="telemetry-badge" id="cg-tel-eps" style="color: #b45309;">Awaiting pick</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Required Cutoff (N)</span>
+                        <span class="telemetry-badge" id="cg-tel-reqn" style="color: #be185d;">—</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Current Term (aₙ)</span>
+                        <span class="telemetry-badge" id="cg-tel-val" style="color: #334155;">—</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Tolerance Status</span>
+                        <span class="telemetry-badge" id="cg-tel-status" style="color: #64748b;">Standby</span>
+                    </div>
+                </div>
+
                 <div class="game-body">
                     <div class="game-explainer">
                         <strong>How This Game Works:</strong><br>
@@ -909,10 +922,6 @@ def write_week1_module():
                     <div class="game-controls" id="step-controls" style="display: none;">
                         <button class="game-btn" id="btn-challenge-next" onclick="advanceChallengeStep()">Step Forward ($n = N + 1$)</button>
                         <button class="game-btn" style="background-color: #64748b;" onclick="resetChallenge()">Reset Challenge</button>
-                    </div>
-
-                    <div id="game-output">
-                        <em>Awaiting your $\epsilon$ selection above...</em>
                     </div>
                 </div>
             </div>
@@ -941,18 +950,34 @@ def write_week1_module():
                 <ol>
                     <li><strong>Compare Architectures:</strong> Use the dropdown in the bottom right to switch between a <em>Linear Attenuator ($a_n = 1/n$)</em> and an <em>Exponential Decay ($a_n = 2^{-n}$)</em> stream.</li>
                     <li><strong>Step Through Phases:</strong> Click <strong>Next Step</strong> to advance from Initialization through Threshold Discovery to final Convergence Verification.</li>
-                    <li><strong>Analyze Telemetry:</strong> Track the live status bar at the top for current position indices ($n$), active values ($a_n$), and error tolerances ($\epsilon$).</li>
+                    <li><strong>Analyze Telemetry:</strong> Track the structured telemetry cards at the top for current position indices ($n$), active values ($a_n$), and error tolerances ($\epsilon$).</li>
                     <li><strong>Read Paired Panes:</strong> Examine the lower explanation panels to understand both *what* mechanical operations are occurring and *why* real analysis axioms require them.</li>
                 </ol>
             </div>
 
             <div class="simulator">
-                <div class="telemetry">
-                    <span>PHASE: <span id="tel-phase" style="color: #b45309; font-weight: 600;">Initialization</span></span>
-                    <span>ARCHITECTURE: <span id="tel-seq" style="color: #0369a1; font-weight: 600;">$a_n = \frac{1}{n}$</span></span>
-                    <span>INDEX ($n$) = <span id="tel-n" style="color: #b45309; font-weight: 600;">1</span></span>
-                    <span>VALUE ($a_n$) = <span id="tel-val" style="color: #047857; font-weight: 600;">$1.000$</span></span>
-                    <span>TOLERANCE ($\epsilon$) = <span id="tel-eps" style="color: #be185d; font-weight: 600;">$0.2$</span></span>
+                <!-- Dual-Track Structured Telemetry Grid -->
+                <div class="telemetry-grid">
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Execution Phase</span>
+                        <span class="telemetry-badge" id="tel-phase" style="color: #b45309;">Initialization</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Architecture</span>
+                        <span class="telemetry-badge" id="tel-seq" style="color: #0369a1;">$a_n = \frac{1}{n}$</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Index Position (n)</span>
+                        <span class="telemetry-badge" id="tel-n" style="color: #334155;">1</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Term Output (aₙ)</span>
+                        <span class="telemetry-badge" id="tel-val" style="color: #047857;">$1.000$</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Tolerance Budget (ϵ)</span>
+                        <span class="telemetry-badge" id="tel-eps" style="color: #be185d;">$0.2$</span>
+                    </div>
                 </div>
 
                 <div class="canvas-container">
@@ -1112,7 +1137,6 @@ def write_week1_module():
                 }
             }
 
-            // Update structured telemetry cards
             document.getElementById('fw-tel-clause').innerText = current.clauseTitle;
             document.getElementById('fw-tel-quant').innerText = current.quantifier;
             document.getElementById('fw-tel-role').innerText = current.role;
@@ -1200,7 +1224,7 @@ def write_week1_module():
         }
 
         /* ==========================================================================
-           EPSILON CHALLENGE GAME (WITH DYNAMIC TARGET ZOOMING)
+           EPSILON CHALLENGE GAME (WITH STRUCTURED TELEMETRY CARDS)
            ========================================================================== */
         const challengeState = { active: false, eps: 0.2, reqN: 5, currentDisplayN: 5 };
 
@@ -1226,18 +1250,14 @@ def write_week1_module():
         function resetChallenge() {
             challengeState.active = false;
             document.getElementById('step-controls').style.display = 'none';
-            const output = document.getElementById('game-output');
-            output.innerHTML = '<em>Challenge reset. Select an $\\epsilon$ budget above to start.</em>';
-            document.getElementById('game-plot').innerHTML = '<text x="180" y="110" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>';
+            document.getElementById('cg-tel-eps').innerText = 'Awaiting pick';
+            document.getElementById('cg-tel-eps').style.color = '#b45309';
+            document.getElementById('cg-tel-reqn').innerText = '—';
+            document.getElementById('cg-tel-val').innerText = '—';
+            document.getElementById('cg-tel-status').innerText = 'Standby';
+            document.getElementById('cg-tel-status').style.color = '#64748b';
 
-            if(window.renderMathInElement) {
-                renderMathInElement(output, {
-                    delimiters: [
-                        {left: '$$', right: '$$', display: true},
-                        {left: '$', right: '$', display: false}
-                    ]
-                });
-            }
+            document.getElementById('game-plot').innerHTML = '<text x="180" y="110" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>';
         }
 
         function updateChallengeUI() {
@@ -1245,22 +1265,26 @@ def write_week1_module():
             const reqN = challengeState.reqN;
             const curN = challengeState.currentDisplayN;
 
-            const output = document.getElementById('game-output');
             const atTerm = (1 / curN);
             const clearance = (eps - atTerm).toFixed(4);
             const isInside = curN > reqN;
 
-            output.innerHTML = `<strong>Challenge Active ($\\epsilon = ${eps}$):</strong><br>` +
-                `• Required cutoff index: $N = \\lceil 1/${eps} \\rceil = ${reqN}$<br>` +
-                `• At cutoff index $n = ${reqN}$, term $a_{${reqN}} = ${(1/reqN).toFixed(3)}$ sits directly on the boundary ($|a_n - L| = \\epsilon$).<br>` +
-                `• Currently inspecting term $a_{${curN}} = ${atTerm.toFixed(4)}$: ` +
-                (isInside
-                    ? `<span style="color: #059669; font-weight: 600;">STRONGLY INSIDE</span> (Clearance beneath ceiling: $\\delta = +${clearance}$)</span>`
-                    : `<span style="color: #d97706; font-weight: 600;">ON/OUTSIDE BOUNDARY</span>`) +
-                `<br>• <strong>Status:</strong> All terms for $n > ${reqN}$ are strictly trapped inside the $\\pm ${eps}$ error zone!`;
+            // Update telemetry cards
+            document.getElementById('cg-tel-eps').innerHTML = `$${eps}$`;
+            document.getElementById('cg-tel-reqn').innerHTML = `$N = ${reqN}$`;
+            document.getElementById('cg-tel-val').innerHTML = `$a_{${curN}} = ${atTerm.toFixed(3)}$`;
+
+            const statusEl = document.getElementById('cg-tel-status');
+            if (isInside) {
+                statusEl.innerHTML = `Inside (δ = +${clearance})`;
+                statusEl.style.color = '#059669';
+            } else {
+                statusEl.innerHTML = `On/Outside Line`;
+                statusEl.style.color = '#d97706';
+            }
 
             if(window.renderMathInElement) {
-                renderMathInElement(output, {
+                renderMathInElement(document.getElementById('game-telemetry'), {
                     delimiters: [
                         {left: '$$', right: '$$', display: true},
                         {left: '$', right: '$', display: false}
@@ -1503,9 +1527,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Redesign convergence walkthrough telemetry bar into structured metric grid\n\n"
-        "Replaced plain inline text in week1.html with a 4-column telemetry card layout "
-        "featuring subtle borders, micro-labels, and high-contrast color badges."
+        "Standardize telemetry card grid across all interactive modules\n\n"
+        "Extended the structured card grid telemetry design to the Dual-Track "
+        "Simulator and Epsilon Challenge Game in week1.html for complete UI consistency."
     )
 
     commands = [
@@ -1519,7 +1543,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with polished telemetry grid...")
+    print("Writing Week 1 module with unified telemetry card grids...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
