@@ -35,6 +35,17 @@
         .notation-sym { font-weight: 600; color: var(--accent); white-space: nowrap; }
         .notation-desc { min-width: 0; word-break: break-word; line-height: 1.5; color: #334155; }
 
+        /* Scoped Centering Exclusively for Section 3 */
+        .infobox-section3 .notation-item {
+            align-items: center;
+        }
+        .infobox-section3 .notation-sym {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
         /* Diagram Container Styles */
         .diagram-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
         .diagram-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; align-items: center; min-width: 0; }
@@ -375,8 +386,8 @@
 
             <h2>3. Sequences and the Limit Concept</h2>
 
-            <!-- SECTION 3 NOTATION INFOBOX (INCL. QUANTIFIERS) -->
-            <div class="infobox">
+            <!-- SECTION 3 NOTATION INFOBOX (INCL. QUANTIFIERS, SCOPED WITH .infobox-section3) -->
+            <div class="infobox infobox-section3">
                 <h4>📖 Notation Reference: Sequences, Limits &amp; Quantifiers</h4>
                 <div class="notation-grid">
                     <div class="notation-item"><span class="notation-sym">$\forall$</span><span class="notation-desc"><strong>Universal Quantifier:</strong> "for all" or "for every" ($\forall \epsilon > 0$)</span></div>

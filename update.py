@@ -43,6 +43,17 @@ def write_week1_module():
         .notation-sym { font-weight: 600; color: var(--accent); white-space: nowrap; }
         .notation-desc { min-width: 0; word-break: break-word; line-height: 1.5; color: #334155; }
 
+        /* Scoped Centering Exclusively for Section 3 */
+        .infobox-section3 .notation-item {
+            align-items: center;
+        }
+        .infobox-section3 .notation-sym {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
         /* Diagram Container Styles */
         .diagram-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
         .diagram-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; align-items: center; min-width: 0; }
@@ -383,8 +394,8 @@ def write_week1_module():
 
             <h2>3. Sequences and the Limit Concept</h2>
 
-            <!-- SECTION 3 NOTATION INFOBOX (INCL. QUANTIFIERS) -->
-            <div class="infobox">
+            <!-- SECTION 3 NOTATION INFOBOX (INCL. QUANTIFIERS, SCOPED WITH .infobox-section3) -->
+            <div class="infobox infobox-section3">
                 <h4>📖 Notation Reference: Sequences, Limits &amp; Quantifiers</h4>
                 <div class="notation-grid">
                     <div class="notation-item"><span class="notation-sym">$\forall$</span><span class="notation-desc"><strong>Universal Quantifier:</strong> "for all" or "for every" ($\forall \epsilon > 0$)</span></div>
@@ -902,9 +913,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Remove box outlines from notation references in week1.html\n\n"
-        "Stripped badge backgrounds and borders from .notation-sym, restoring clean "
-        "mathematical typography while preserving grid alignment."
+        "Center notation symbols horizontally and vertically in Section 3 infobox\n\n"
+        "Added a scoped .infobox-section3 class in week1.html to center symbols both "
+        "horizontally and vertically within their column exclusively for Section 3."
     )
 
     commands = [
@@ -918,7 +929,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with clean notation typography...")
+    print("Writing Week 1 module with centered notation keys in Section 3...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
