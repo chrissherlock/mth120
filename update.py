@@ -51,7 +51,7 @@ def write_week1_module():
             <p>We begin by formalizing collections of objects as <strong>sets</strong> ($A = \{1, 2, 3\}$) and mapping relationships via <strong>functions</strong> ($f: X \rightarrow Y$). This extends to the rigorous definition of <strong>sequences</strong>: functions mapping from $\mathbb{N}$ to $\mathbb{R}$, denoted $(a_n)_{n=0}^\infty$.</p>
 
             <h3>The $\epsilon-N$ Convergence Definition</h3>
-            <p>A sequence $(a_n)$ converges to a limit $L$ if, for any error margin $\epsilon > 0$, there exists a threshold index $N$ such that for all $n > N$, the distance $\vert{}a_n - L\vert{} < \epsilon$.</p>
+            <p>A sequence $(a_n)$ converges to a limit $L$ if, for any error margin $\epsilon > 0$, there exists a threshold index $N$ such that for all $n > N$, the distance $|a_n - L| < \epsilon$.</p>
 
             <div class="simulator">
                 <div class="telemetry">
@@ -64,19 +64,41 @@ def write_week1_module():
 
                 <div class="canvas-container">
                     <svg id="plot" width="600" height="200" viewBox="0 0 600 200">
+                        <!-- Epsilon Band (True height of 28px mapping to epsilon 0.2) -->
+                        <rect id="eps-band" x="40" y="132" width="540" height="28" fill="#bae6fd" opacity="0.5"/>
+
                         <!-- Axes -->
                         <line x1="40" y1="160" x2="580" y2="160" stroke="#94a3b8" stroke-width="2"/>
                         <line x1="40" y1="20" x2="40" y2="160" stroke="#94a3b8" stroke-width="2"/>
 
-                        <!-- Axis Labels -->
+                        <!-- Axis Titles -->
                         <text x="585" y="155" font-family="serif" font-style="italic" font-size="14" fill="#64748b">n</text>
-                        <text x="15" y="15" font-family="serif" font-style="italic" font-size="14" fill="#64748b">a_n</text>
-                        <text x="25" y="165" font-family="sans-serif" font-size="12" fill="#64748b">0</text>
+                        <text x="15" y="12" font-family="serif" font-style="italic" font-size="14" fill="#64748b">a<tspan dy="4" font-size="10">n</tspan></text>
 
-                        <!-- Epsilon Band (Dynamic) -->
-                        <rect id="eps-band" x="40" y="100" width="540" height="60" fill="#bae6fd" opacity="0.5"/>
+                        <!-- X-Axis Ticks & Labels -->
+                        <path d="M80 160 v5 M140 160 v5 M200 160 v5 M260 160 v5 M320 160 v5 M380 160 v5 M440 160 v5 M500 160 v5" stroke="#94a3b8" fill="none"/>
+                        <text x="76" y="180" font-family="sans-serif" font-size="10" fill="#64748b">1</text>
+                        <text x="136" y="180" font-family="sans-serif" font-size="10" fill="#64748b">2</text>
+                        <text x="196" y="180" font-family="sans-serif" font-size="10" fill="#64748b">3</text>
+                        <text x="256" y="180" font-family="sans-serif" font-size="10" fill="#64748b">4</text>
+                        <text x="316" y="180" font-family="sans-serif" font-size="10" fill="#64748b">5</text>
+                        <text x="376" y="180" font-family="sans-serif" font-size="10" fill="#64748b">6</text>
+                        <text x="436" y="180" font-family="sans-serif" font-size="10" fill="#64748b">7</text>
+                        <text x="496" y="180" font-family="sans-serif" font-size="10" fill="#64748b">8</text>
+
+                        <!-- Y-Axis Ticks & Labels -->
+                        <path d="M40 20 h-5 M40 90 h-5" stroke="#94a3b8" fill="none"/>
+                        <text x="25" y="165" font-family="sans-serif" font-size="10" fill="#64748b">0</text>
+                        <text x="15" y="94" font-family="sans-serif" font-size="10" fill="#64748b">0.5</text>
+                        <text x="15" y="24" font-family="sans-serif" font-size="10" fill="#64748b">1.0</text>
+
+                        <!-- Epsilon Line Indicator -->
+                        <path d="M40 132 h-5" stroke="#0284c7" fill="none"/>
+                        <text x="12" y="136" font-family="sans-serif" font-size="10" fill="#0284c7">&epsilon;=0.2</text>
+
                         <!-- Threshold Line (Dynamic) -->
                         <line id="n-threshold" x1="200" y1="20" x2="200" y2="160" stroke="#ef4444" stroke-width="2" stroke-dasharray="4" opacity="0"/>
+
                         <!-- Points will be injected here -->
                         <g id="points-group"></g>
                     </svg>
@@ -226,10 +248,11 @@ def write_week1_module():
 
 def execute_git_sync():
     commit_message = (
-        "Add mathematical notation and axis labels to simulator\n\n"
-        "Injected KaTeX delimiters directly into the JavaScript telemetry updates\n"
-        "to ensure sequences and values render properly as equations. Added SVG \n"
-        "text nodes to the canvas to label the x (n) and y (a_n) axes."
+        "Enhance simulator SVG with axis labels and accurate epsilon bounds\n\n"
+        "Replaced the raw 'a_n' SVG text with a proper <tspan> subscript formulation. \n"
+        "Added tick marks and numerical labels to both the x (n) and y (a_n) axes \n"
+        "for precise scale context. Recalculated the blue epsilon band's dimensions \n"
+        "to mathematically align perfectly with the epsilon=0.2 threshold."
     )
 
     commands = [
