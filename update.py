@@ -2,7 +2,7 @@
 import os
 import subprocess
 
-def update_derived_sequences_section():
+def update_week1_with_clarity():
     filepath = 'week1.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
@@ -11,74 +11,61 @@ def update_derived_sequences_section():
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    old_section_5 = r"""            <!-- SECTION 5 -->
-            <h2 id="section-derived">5. Derived Sequences</h2>
-            <div class="infobox">
-                <h4>📖 Notation Reference: Derived Sequences</h4>
-                <div class="infobox-intro">
-                    <strong>The Speedometer Analogy:</strong> While a regular sequence tells you your position (like a car odometer), a derived sequence tells you how fast you are jumping from step to step (like a speedometer).
-                </div>
-                <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$a_n'$</span><span class="notation-desc">Derived sequence: consecutive differences $a_{n+1} - a_n$</span></div>
-                </div>
-            </div>
-
-            <p>The <strong>derived sequence</strong> of $(a_n)$ is defined by consecutive differences $a_n' = a_{n+1} - a_n$. A sequence is constant, increasing, or decreasing if and only if its derived sequence is identically zero, non-negative, or non-positive.</p>
-
+    # 1. Add Bouncer Analogy in Section 1 after Set-Builder explanation
+    bouncer_analogy = r"""
             <div class="aside-box">
-                <h4>💡 Intuitive Guide: Making Sense of Derived Sequences and Partial Sums</h4>
-                <p><strong>Derived sequences</strong> look at how fast a sequence is <em>changing</em> (the speedometer), while <strong>partial sums</strong> look at how much it has <em>accumulated</em> (the running total).</p>
+                <h4>💡 Intuitive Guide: The Club Bouncer Analogy for Set-Builder Notation</h4>
+                <p>If set-builder notation looks intimidating, think of it as a bouncer checking IDs at a club door:</p>
+                <ul>
+                    <li><strong>The Pool ($S$):</strong> The entire crowd waiting in line outside (e.g., all real numbers $\mathbb{R}$).</li>
+                    <li><strong>The Candidate ($x$):</strong> An individual person stepping up to the door.</li>
+                    <li><strong>The Bouncer ($\mid$ or $:$):</strong> The vertical bar reads aloud as <strong>"such that"</strong>—the strict gatekeeper.</li>
+                    <li><strong>The Rule ($P(x)$):</strong> The entry requirement (e.g., "must be greater than 2"). If you pass, you get inside the set curly braces!</li>
+                </ul>
             </div>"""
 
-    new_section_5 = r"""            <!-- SECTION 5 -->
-            <h2 id="section-derived">5. Derived Sequences</h2>
-            <div class="infobox">
-                <h4>📖 Notation Reference: Derived Sequences</h4>
-                <div class="infobox-intro">
-                    <strong>The Speedometer Analogy:</strong> While a regular sequence tells you your position (like a car odometer), a derived sequence tells you how fast you are jumping from step to step (like a speedometer).
-                </div>
-                <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$a_n'$</span><span class="notation-desc">Derived sequence: consecutive differences $a_{n+1} - a_n$</span></div>
-                </div>
-            </div>
+    target_s1 = '<h3>Anatomy of Set-Builder Notation</h3>'
+    if target_s1 in content and 'Club Bouncer Analogy' not in content:
+        content = content.replace(target_s1, target_s1 + bouncer_analogy)
 
-            <p>When you look at a regular sequence, you see its position at each step. A <strong>derived sequence</strong> ($a_n' = a_{n+1} - a_n$) answers a single question: <strong>"How much did the sequence jump from one step to the next?"</strong></p>
+    # 2. Add Recipe Analogy in Section 3 under Sequences
+    recipe_analogy = r"""
+            <div class="aside-box">
+                <h4>💡 Recipe Analogy: Explicit vs. Recursive Formulas</h4>
+                <ul>
+                    <li><strong>Explicit Formula (Instant Recipe):</strong> Tells you exactly how to bake the 100th cake right now without baking the first 99 (e.g., $a_n = 3n + 2$).</li>
+                    <li><strong>Recursive Formula (Step-by-Step Recipe):</strong> Tells you, <em>"Take yesterday's cake and add two extra strawberries to it."</em> You must know the previous term to find the next one (e.g., $a_1 = 5, a_n = a_{n-1} + 2$).</li>
+                </ul>
+            </div>"""
 
-            <div class="definition-box">
-                <p>$$a_n' = a_{n+1} - a_n$$</p>
-            </div>
+    target_s3 = '<p>A sequence is an ordered list of numbers mapping indices from $\mathbb{N}$ to $\mathbb{R}$. We can define them explicitly with a closed-form rule or recursively relative to previous terms.</p>'
+    if target_s3 in content and 'Recipe Analogy' not in content:
+        content = content.replace(target_s3, target_s3 + recipe_analogy)
 
-            <h3>Worked Example: Squares and Differences</h3>
-            <p>Consider the sequence of squares $(a_n) = (1, 4, 9, 16, 25, \dots)$, where $a_n = n^2$. Let's calculate its derived sequence step by step:</p>
-            <ul>
-                <li>$a_1' = a_2 - a_1 = 4 - 1 = 3$</li>
-                <li>$a_2' = a_3 - a_2 = 9 - 4 = 5$</li>
-                <li>$a_3' = a_4 - a_3 = 16 - 9 = 7$</li>
-                <li>$a_4' = a_5 - a_4 = 25 - 16 = 9$</li>
-            </ul>
-            <p>The resulting derived sequence is $(3, 5, 7, 9, \dots)$, which follows the explicit formula $a_n' = 2n + 1$.</p>
+    # 3. Add Side-by-Side Comparison Box between Sums (Section 4) and Derived Sequences (Section 5)
+    comparison_box = r"""
+            <div class="aside-box" style="background: #f1f5f9; border-left: 4px solid #0284c7; border-color: #cbd5e1; margin-top: 2rem;">
+                <h4 style="color: #0369a1;">⚖️ Side-by-Side Comparison: Derived Sequences vs. Partial Sums</h4>
+                <p>It is very common to mix these two up because both involve mathematical operations on sequences. Here is how to keep them straight:</p>
+                <ul>
+                    <li><strong>Derived Sequences ($a_n'$):</strong> Look <em>locally</em> at immediate neighbors to measure <strong>change / speed / slope</strong> ($a_{n+1} - a_n$).</li>
+                    <li><strong>Partial Sums ($s_n$):</strong> Look <em>cumulatively</em> backward at everything that came before to measure <strong>total accumulation / area</strong> ($\sum b_\nu$).</li>
+                </ul>
+            </div>"""
 
-            <h3>Connecting Derived Sequences to Behavior</h3>
-            <p>Derived sequences give us an instant test for monotonicity:</p>
-            <ul>
-                <li><strong>Increasing:</strong> If $a_n' \ge 0$ for all $n$, the sequence never steps backward, so it is monotonically increasing.</li>
-                <li><strong>Decreasing:</strong> If $a_n' \le 0$ for all $n$, the sequence is monotonically decreasing.</li>
-                <li><strong>Constant:</strong> If $a_n' = 0$ for all $n$, every term is identical.</li>
-            </ul>"""
+    target_between = '<h2 id="section-derived">5. Derived Sequences</h2>'
+    if target_between in content and 'Side-by-Side Comparison' not in content:
+        content = content.replace(target_between, comparison_box + '\n\n            ' + target_between)
 
-    if old_section_5 in content:
-        content = content.replace(old_section_5, new_section_5)
-        with open(filepath, 'w', encoding='utf-8') as f:
-            f.write(content)
-        print("Successfully updated Section 5 in week1.html.")
-    else:
-        print("Warning: old Section 5 block not found for replacement.")
+    with open(filepath, 'w', encoding='utf-8') as f:
+        f.write(content)
+    print("Successfully incorporated clarity analogies into week1.html.")
 
 def execute_git_sync():
     commit_message = (
-        "Expand Section 5 with worked example and behavioral tests\n\n"
-        "Added a step-by-step walkthrough of squared terms and their derived\n"
-        "differences to make derived sequences easier to understand."
+        "Incorporate intuitive analogies for set-builder, recipes, and comparison\n\n"
+        "Added the club bouncer analogy for sets, the recipe analogy for sequences,\n"
+        "and a side-by-side contrast box for derived sequences vs. partial sums."
     )
     commands = [
         ['git', 'add', 'week1.html', 'update.py'],
@@ -90,5 +77,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    update_derived_sequences_section()
+    update_week1_with_clarity()
     execute_git_sync()
