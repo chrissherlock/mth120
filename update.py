@@ -2,7 +2,7 @@
 import os
 import subprocess
 
-def expand_sequence_definition():
+def inject_friendly_intro():
     filepath = 'week1.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
@@ -11,33 +11,39 @@ def expand_sequence_definition():
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    old_target = 'A sequence is an ordered list of numbers indexed by $\\mathbb{N}$ (formally, a function mapping $\\mathbb{N}$ to $\\mathbb{R}$). We can define them explicitly with a closed-form rule or recursively relative to previous terms.'
+    welcome_box = r'''            <!-- ORIENTATION & ROADMAP -->
+            <div class="aside-box" style="background: #f8fafc; border-left: 4px solid var(--accent); border-color: #cbd5e1; margin: 2rem 0;">
+                <h4 style="color: #0f172a;">🌱 Finding Your Footing in Pure Mathematics</h4>
+                <p>If you are transitioning from high school calculus or applied algebra, Week 1 can feel like stepping into a whole new world. Up until now, mathematics has mostly been about <em>calculating answers</em>—finding $x$, taking a derivative, or plotting curves. Here, we step behind the curtain to examine <strong>the structural machinery itself</strong>.</p>
+                <p style="margin-bottom: 0.5rem;">Think of this week as laying the bedrock across three core ideas:</p>
+                <ul style="margin: 0 0 0.5rem 1.25rem; padding: 0;">
+                    <li style="margin-bottom: 0.4rem;"><strong>Sets and Functions:</strong> The fundamental grammar and nouns of modern mathematics. Before we can talk about numbers doing things, we need a precise way to collect them and describe how they interact.</li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Numbers and Completeness:</strong> Why fractions ($\mathbb{Q}$) alone leave microscopic gaps on the ruler, and how the real numbers ($\mathbb{R}$) form a seamless continuum.</li>
+                    <li><strong>Sequences and Sums:</strong> Your entry point into infinity. A sequence is an endless list marching forward step by step, setting the stage for limits and continuous analysis.</li>
+                </ul>
+                <p style="margin-top: 0.75rem; margin-bottom: 0;">Don't let the formal notation intimidate you. Every strange symbol you encounter is just shorthand for a clear, intuitive idea. Take it one line at a time!</p>
+            </div>'''
 
-    new_expansion = r'''<p>To truly grasp what a sequence is, it helps to look at it through two complementary lenses—one intuitive and one rigorous:</p>
-            <ul style="margin: 0.5rem 0 1rem 1.25rem; padding: 0;">
-                <li style="margin-bottom: 0.6rem;"><strong>1. The List View (Intuitive):</strong> An endless, ordered string of numbers written as $(a_n) = (a_1, a_2, a_3, a_4, \dots)$. Order matters deeply here: the sequence $(1, 2, 3, \dots)$ is entirely different from $(3, 2, 1, \dots)$. Every number has a definite position.</li>
-                <li style="margin-bottom: 0.6rem;"><strong>2. The Function View (Rigorous):</strong> Formally, a sequence is a function whose domain is the natural numbers $\mathbb{N}$ (or $\mathbb{Z}_+$) and whose codomain is the real numbers $\mathbb{R}$. Instead of writing $f(n)$, mathematicians use subscript notation $a_n$:
-                    <ul style="margin: 0.3rem 0 0.3rem 1.25rem; padding: 0;">
-                        <li><strong>Input ($n$):</strong> The position or index (e.g., $1, 2, 3, \dots$).</li>
-                        <li><strong>Output ($a_n$):</strong> The actual real number sitting at that position.</li>
-                    </ul>
-                </li>
-            </ul>
-            <p>We can define these mappings either explicitly with a closed-form rule or recursively relative to previous terms.</p>'''
+    target = '            <!-- SECTION 1 -->'
+    replacement = welcome_box + '\n\n' + target
 
-    if old_target in content:
-        content = content.replace(old_target, new_expansion)
+    if '🌱 Finding Your Footing in Pure Mathematics' in content:
+        print("Orientation section already present in week1.html.")
+        return
+
+    if target in content:
+        content = content.replace(target, replacement, 1)
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
-        print("Successfully expanded sequence definition in week1.html.")
+        print("Successfully injected friendly orientation into week1.html.")
     else:
-        print("Old target text not found in week1.html.")
+        print("Target anchor '<!-- SECTION 1 -->' not found in week1.html.")
 
 def execute_git_sync():
     commit_message = (
-        "Expand and clarify sequence definition in week1.html\n\n"
-        "Added a detailed breakdown explaining sequences through both an intuitive\n"
-        "list view and a rigorous function mapping view in week1.html."
+        "Add friendly orientation section after TOC in week1.html\n\n"
+        "Inserted an accessible roadmap and orientation guide beneath the Table\n"
+        "of Contents to bridge the transition to pure mathematical thinking."
     )
     commands = [
         ['git', 'add', 'week1.html', 'update.py'],
@@ -49,5 +55,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    expand_sequence_definition()
+    inject_friendly_intro()
     execute_git_sync()
