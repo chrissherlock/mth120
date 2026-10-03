@@ -1,54 +1,88 @@
 #!/usr/bin/env python3
 import os
-import subprocess
 import re
+import subprocess
+import sys
 
-def restore_cartesian_product_material():
+def restore_exact_friendly_intros():
     filepath = 'week1.html'
-    if not os.path.exists(filepath):
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            content = f.read()
+    except FileNotFoundError:
         print(f"Error: {filepath} not found.")
-        return
+        sys.exit(1)
 
-    with open(filepath, 'r', encoding='utf-8') as f:
-        content = f.read()
+    # 1. Section 1 Infobox Intro
+    sec1_intro_replacement = (
+        '<!-- SECTION 1 NOTATION INFOBOX -->\n'
+        '            <div class="infobox">\n'
+        '                <h4>📖 Notation Reference: Set Theory</h4>\n'
+        '                <div class="infobox-intro">\n'
+        '                    <strong>Taking your first steps into set theory notation?</strong> '
+        'It is completely normal if curly braces, union symbols ($\cup$), and intersections ($\cap$) '
+        'look like a secret code at first. Think of them simply as the grammar and punctuation of '
+        'logic—shorthand ways of talking about collections, memberships, and groupings.\n'
+        '                </div>'
+    )
+    content = re.sub(
+        r'<!-- SECTION 1 NOTATION INFOBOX -->[\s\S]*?<div class="infobox-intro">[\s\S]*?</div>(?=\s*<div class="notation-grid">)',
+        lambda _: sec1_intro_replacement,
+        content,
+        count=1
+    )
 
-    # Locate the end of the set operations diagrams block
-    target_anchor = r'<!-- SECTION 2 NOTATION INFOBOX -->'
+    # 2. Section 2 Infobox Intro
+    sec2_intro_replacement = (
+        '<!-- SECTION 2 NOTATION INFOBOX -->\n'
+        '            <div class="infobox">\n'
+        '                <h4>📖 Notation Reference: Number Systems</h4>\n'
+        '                <div class="infobox-intro">\n'
+        '                    <strong>Navigating the expanding universe of numbers?</strong> '
+        'If moving from counting numbers ($\mathbb{N}$) all the way to reals ($\mathbb{R}$) '
+        'feels like a whirlwind of blackboard letters, do not worry! Each letter simply represents '
+        'a tool invented to solve a specific algebraic puzzle that the previous system could not handle.\n'
+        '                </div>'
+    )
+    content = re.sub(
+        r'<!-- SECTION 2 NOTATION INFOBOX -->[\s\S]*?<div class="infobox-intro">[\s\S]*?</div>(?=\s*<div class="notation-grid">)',
+        lambda _: sec2_intro_replacement,
+        content,
+        count=1
+    )
 
-    cartesian_section = r'''<h3>The Cartesian Product ($A \times B$)</h3>
-            <p>Named in honour of René Descartes, the <strong>Cartesian product</strong> constructs a new set of <em>ordered pairs</em> from two constituent sets.</p>
+    # 3. Section 3 Infobox Intro & Header
+    sec3_header_intro_replacement = (
+        '<!-- SECTION 3 NOTATION INFOBOX -->\n'
+        '            <div class="infobox">\n'
+        '                <h4>📖 Notation Reference: Sequences, Limits &amp; Quantifiers</h4>\n\n'
+        '                <div class="infobox-intro">\n'
+        '                    <strong>Don\'t be intimidated by the symbols!</strong> '
+        'If upside-down A\'s ($\forall$), backward E\'s ($\exists$), or little ceiling brackets ($\lceil \dots \\rceil$) '
+        'look unfamiliar, that is completely normal. They are simply mathematicians\' shorthand for everyday concepts:\n'
+        '                    <ul>\n'
+        '                        <li><strong>$\\forall$ (For all):</strong> Read as <em>"No matter how tiny an error budget you pick..."</em></li>\n'
+        '                        <li><strong>$\\exists$ (There exists):</strong> Read as <em>"We can always point to a specific cutoff position..."</em></li>\n'
+        '                        <li><strong>$\\lceil x \\rceil$ (Ceiling):</strong> Means <em>"round up to the next integer"</em> (e.g., $\\lceil 4.2 \\rceil = 5$), because position indices must be whole counting numbers!</li>\n'
+        '                    </ul>\n'
+        '                </div>'
+    )
+    content = re.sub(
+        r'<!-- SECTION 3 NOTATION INFOBOX -->[\s\S]*?<h4>📖 Notation Reference: Sequences[^<]*</h4>[\s\S]*?<div class="infobox-intro">[\s\S]*?</div>(?=\s*<div class="notation-grid">)',
+        lambda _: sec3_header_intro_replacement,
+        content,
+        count=1
+    )
 
-            <div class="definition-box">
-                <p><strong>Formal Definition:</strong></p>
-                <p>$$A \times B = \{ (a, b) \mid a \in A \text{ and } b \in B \}$$</p>
-                <ul>
-                    <li><strong>Ordered Pairs:</strong> In a pair $(a, b)$, order matters: $(a, b) = (c, d)$ if and only if $a = c$ and $b = d$. Unless $A = B$ or one set is empty, $A \times B \neq B \times A$.</li>
-                    <li><strong>Product Cardinality:</strong> If $A$ and $B$ are finite sets with $|A| = m$ and $|B| = n$, the total number of ordered pairs is the product of their sizes:
-                    $$|A \times B| = |A| \cdot |B| = mn$$</li>
-                </ul>
-            </div>
-
-            <p>For example, if $A = \{1, 2, 3\}$ and $B = \{x, y\}$, then:</p>
-            <p>$$A \times B = \{ (1, x), (1, y), (2, x), (2, y), (3, x), (3, y) \}$$</p>
-            <p>Here $|A| = 3$ and $|B| = 2$, yielding $|A \times B| = 3 \times 2 = 6$ ordered pairs. This operation forms the foundation of coordinate geometry: the 2D Cartesian plane is simply the self-product of the real line, $\mathbb{R}^2 = \mathbb{R} \times \mathbb{R}$.</p>
-
-            <!-- SECTION 2 NOTATION INFOBOX -->'''
-
-    if target_anchor in content and 'The Cartesian Product ($A \times B$)' not in content:
-        content = content.replace(target_anchor, cartesian_section)
-        with open(filepath, 'w', encoding='utf-8') as f:
-            f.write(content)
-        print(f"Successfully restored Cartesian product material to {filepath}.")
-    elif 'The Cartesian Product ($A \times B$)' in content:
-        print("Cartesian product material is already present.")
-    else:
-        print("Target anchor not found. Please verify file structure.")
+    with open(filepath, 'w', encoding='utf-8') as f:
+        f.write(content)
+    print(f"Successfully restored exact friendly intros in {filepath}.")
 
 def execute_git_sync():
     commit_message = (
-        "Restore comprehensive Cartesian product section in week1.html\n\n"
-        "Restored the formal definition, ordered pair mechanics, cardinality\n"
-        "rule |A x B| = mn, and Descartes coordinate connection in Section 1."
+        "Restore original friendly infobox intro messages in week1.html\n\n"
+        "Restored the exact friendly intro paragraphs from prior to commit\n"
+        "d25c8e0c across all three notation infoboxes in week1.html."
     )
     commands = [
         ['git', 'add', 'week1.html', 'update.py'],
@@ -60,5 +94,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    restore_cartesian_product_material()
+    restore_exact_friendly_intros()
     execute_git_sync()
