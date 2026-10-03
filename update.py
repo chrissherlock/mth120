@@ -45,11 +45,10 @@ def write_week1_module():
         .game-header { background: #0f172a; color: #38bdf8; padding: 1rem 1.5rem; font-family: monospace; font-size: 0.95rem; display: flex; justify-content: space-between; align-items: center; }
         .game-body { padding: 1.5rem; background: #f8fafc; display: flex; flex-direction: column; gap: 1rem; border-bottom: 1px solid var(--border); }
         .game-explainer { background: #e0f2fe; border: 1px solid #bae6fd; padding: 1.25rem; border-radius: 6px; font-size: 0.95rem; color: #0369a1; margin-bottom: 0.5rem; line-height: 1.7; }
-        .game-explainer ol { margin: 0.5rem 0 0 1.25rem; padding: 0; }
-        .game-explainer li { margin-bottom: 0.5rem; }
         .game-controls { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
         .game-btn { background: #0ea5e9; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold; }
         .game-btn:hover { background: #0284c7; }
+        .game-canvas-wrap { background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; display: flex; justify-content: center; }
 
         .telemetry { background: var(--telemetry-bg); color: var(--telemetry-text); padding: 0.75rem 1.5rem; font-family: monospace; display: flex; gap: 2rem; font-size: 0.9rem; align-items: center;}
         .canvas-container { padding: 2rem; background: #f1f5f9; display: flex; justify-content: center; border-bottom: 1px solid var(--border); }
@@ -168,11 +167,10 @@ def write_week1_module():
             $$\text{For } n=2: a_2 = \frac{1}{2} = 0.5$$
             $$\text{For } n=3: a_3 = \frac{1}{3} \approx 0.333$$
             $$\text{For } n=10: a_{10} = \frac{1}{10} = 0.1$$
-            $$\text{For } n=100: a_{100} = \frac{1}{100} = 0.01$$
             As $n$ gets larger, the numbers shrink closer and closer to $0$. We say the limit is $0$, written as $\lim_{n\to\infty} \frac{1}{n} = 0$.</p>
 
             <h3>The $\epsilon-N$ Definition Decoded (The Challenge Game)</h3>
-            <p>In advanced mathematics, saying a sequence "gets close" to a limit isn't rigorous enough. We need a way to prove it. We turn this into a game between two rules:</p>
+            <p>The formal definition of a limit is an interactive challenge between two players:</p>
             <ul>
                 <li><strong>Your Role (The Skeptic / $\epsilon$):</strong> You pick an error tolerance budget ($\epsilon$). For example, you demand that all numbers in the sequence eventually land and stay within a narrow zone of $\pm 0.1$ around zero.</li>
                 <li><strong>The System's Role ($N$):</strong> The system must find a specific cutoff position index ($N$). It wins the challenge if it can prove that *every single term* past that index ($n > N$) stays safely inside your error zone forever.</li>
@@ -195,7 +193,7 @@ def write_week1_module():
                         <strong>How This Game Works:</strong><br>
                         1. <strong>The Sequence:</strong> We are testing $a_n = \frac{1}{n}$, which produces the shrinking list: $1, 0.5, 0.33, 0.25, 0.2, 0.16, \dots$ heading toward $0$.<br>
                         2. <strong>Your Challenge:</strong> Click a tolerance button below ($\epsilon$). You are telling the system: <em>"Trap this sequence within $\pm \epsilon$ of zero!"</em><br>
-                        3. <strong>The System's Answer:</strong> The computer calculates the exact cutoff position index ($N$) required. Notice how setting a <em>smaller</em> error budget forces the system to look further down the list, picking a <em>larger</em> $N$!
+                        3. <strong>The System's Answer:</strong> The computer calculates the exact cutoff position index ($N$) and displays it on the live diagram below. Notice how a <em>tighter</em> error budget forces the system to look further down the list, picking a <em>larger</em> $N$!
                     </div>
                     <p><strong>Step 1:</strong> Select a challenge tolerance ($\epsilon$) for your error budget:</p>
                     <div class="game-controls">
@@ -203,6 +201,14 @@ def write_week1_module():
                         <button class="game-btn" onclick="runChallenge(0.1)">Test $\epsilon = 0.1$ (Medium Zone)</button>
                         <button class="game-btn" onclick="runChallenge(0.05)">Test $\epsilon = 0.05$ (Tight Zone)</button>
                     </div>
+
+                    <div class="game-canvas-wrap">
+                        <svg id="game-plot" width="560" height="160" viewBox="0 0 560 160">
+                            <!-- Dynamic SVG drawn via JS -->
+                            <text x="200" y="85" font-family="sans-serif" font-size="13" fill="#64748b">Select an &epsilon; above to render challenge diagram.</text>
+                        </svg>
+                    </div>
+
                     <div id="game-output" style="font-family: monospace; background: #ffffff; padding: 1rem; border: 1px solid var(--border); border-radius: 4px; color: #0f172a;">
                         <em>Select an $\epsilon$ tolerance above to test the sequence and see the required winning index $N$.</em>
                     </div>
@@ -219,7 +225,7 @@ def write_week1_module():
                     <p>This universal-existential quantifier structure proves that points permanently enter and remain within an arbitrary neighborhood around $L$.</p>
                 </div>
                 <div class="track-card track-applied">
-                    <h3>🎛️️ Track 2: Applied Mechanics (Numerical Analog)</h3>
+                    <h3>🎛 Track 2: Applied Mechanics (Numerical Analog)</h3>
                     <p>Imagine tracking a numerical error-correction stream where successive approximation residuals represent our sequence ($a_n$).</p>
                     <p>We want total error eradication ($L=0$), but operational performance requires proving the recurrence relation reliably drops residuals beneath an acceptable tolerance threshold ($\epsilon = 0.2$) past a specific execution index ($N$).</p>
                 </div>
@@ -315,6 +321,57 @@ def write_week1_module():
                     ]
                 });
             }
+            renderGameSVG(eps, requiredN);
+        }
+
+        function renderGameSVG(eps, reqN) {
+            const svg = document.getElementById('game-plot');
+            const maxN = 12;
+            const width = 560;
+            const height = 160;
+            const originX = 40;
+            const originY = 130;
+            const maxXScale = 500;
+            const maxYScale = 110; // maps value 1.0 to 110px height
+
+            const bandHeight = eps * maxYScale * 2;
+            const bandY = originY - (eps * maxYScale) - (bandHeight / 2);
+
+            let svgContent = `
+                <rect x="${originX}" y="${bandY}" width="${maxXScale}" height="${bandHeight}" fill="#bae6fd" opacity="0.5"/>
+                <line x1="${originX}" y1="${originY}" x2="${originX + maxXScale}" y2="${originY}" stroke="#94a3b8" stroke-width="2"/>
+                <line x1="${originX}" y1="20" x2="${originX}" y2="${originY}" stroke="#94a3b8" stroke-width="2"/>
+                <text x="${originX - 30}" y="${originY + 5}" font-family="sans-serif" font-size="10" fill="#64748b">0</text>
+                <text x="${originX - 35}" y="${originY - (eps * maxYScale) + 4}" font-family="sans-serif" font-size="9" fill="#0284c7">+&epsilon;</text>
+                <text x="${originX - 35}" y="${originY + (eps * maxYScale) + 4}" font-family="sans-serif" font-size="9" fill="#0284c7">-&epsilon;</text>
+            `;
+
+            // Draw axis markers and points
+            for (let n = 1; n <= maxN; n++) {
+                const val = 1 / n;
+                const cx = originX + (n * (maxXScale / maxN));
+                const cy = originY - (val * maxYScale);
+
+                // Tick
+                svgContent += `<line x1="${cx}" y1="${originY}" x2="${cx}" y2="${originY + 4}" stroke="#94a3b8"/>`;
+                svgContent += `<text x="${cx - 4}" y="${originY + 15}" font-family="sans-serif" font-size="9" fill="#64748b">${n}</text>`;
+
+                // Color points inside/outside zone
+                const inside = n > reqN;
+                const fillColor = inside ? '#10b981' : '#0ea5e9';
+                const r = inside ? 6 : 4;
+
+                svgContent += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fillColor}" />`;
+            }
+
+            // Draw threshold line N
+            const thresholdX = originX + (reqN * (maxXScale / maxN));
+            svgContent += `
+                <line x1="${thresholdX}" y1="15" x2="${thresholdX}" y2="${originY + 10}" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"/>
+                <text x="${thresholdX + 5}" y="25" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ef4444">N = ${reqN} (Cutoff)</text>
+            `;
+
+            svg.innerHTML = svgContent;
         }
 
         const state = { step: 0, seq: 'reciprocal', eps: 0.2 };
@@ -444,10 +501,10 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Refine Epsilon Challenge instructions for maximum clarity\n\n"
-        "Replaced dense instruction text with a plain-language, step-by-step \n"
-        "breakdown that explicitly shows the sequence's running number list, \n"
-        "clarifies the error zone around zero, and explains the winning threshold N."
+        "Embed dynamic interactive SVG diagram inside Epsilon Challenge Game\n\n"
+        "Added a real-time SVG visualizer to the challenge widget that dynamically \n"
+        "renders the epsilon error band, plots sequence points, and illuminates \n"
+        "the calculated threshold index N whenever a tolerance is tested."
     )
 
     commands = [
