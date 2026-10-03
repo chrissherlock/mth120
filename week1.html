@@ -36,7 +36,6 @@
         button { background: var(--accent); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; }
         button:disabled { background: var(--border); cursor: not-allowed; }
         .step-summary { flex-grow: 1; font-size: 0.95rem; color: #475569; line-height: 1.5; }
-        .analysis-panes { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
         .pane { background: var(--card); padding: 1.5rem; }
         .pane h4 { margin-top: 0; color: var(--accent); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
         .pane p { margin: 0 0 0.75rem 0; }
@@ -146,33 +145,33 @@
     <script>
         const state = { step: 0, seq: 'reciprocal', eps: 0.2 };
         const data = {
-            reciprocal: [1, 0.5, 0.333, 0.25, 0.2, 0.166, 0.142, 0.125],
-            geometric: [0.5, 0.25, 0.125, 0.0625, 0.03125, 0.0156, 0.0078, 0.0039]
+            reciprocal: [1.0, 0.5, 0.333, 0.25, 0.2, 0.166, 0.142, 0.125],
+            geometric: [1.0, 0.5, 0.25, 0.125, 0.0625, 0.03125, 0.0156, 0.0078]
         };
 
         const narratives = [
             {
-                phase: "Initialization", n: 1,
+                phase: "Initialization", n: 1, indexVal: 1,
                 summary: "<strong>Goal:</strong> Initialize the sequence mapping $f: \\mathbb{N} \\rightarrow \\mathbb{R}$ and establish the error bound constraints for our AV suppression filter.",
-                what: "<p><strong>Abstract Formalism:</strong> The sequence initializes at index $n=1$, yielding $a_1 = 1.0$ under the mapping rule $f(n) = \\frac{1}{n}$.</p><p><strong>Applied Mechanics:</strong> Our AV control box boots up, defining a target noise floor $L=0$ and an audible error tolerance $\\epsilon = 0.2$ (the blue band).</p>",
-                why: "<p><strong>Formal Rationale:</strong> Under real analysis axioms, we cannot rely on loose intuition. We must establish that the sequence domain maps to a bounded codomain where arbitrary $\\epsilon$-neighborhoods can be tested.</p><p><strong>System Constraint:</strong> Defining $\\epsilon$ upfront ensures hardware compliance before audio channels are unmuted.</p>"
+                what: "<p><strong>Abstract Formalism:</strong> The sequence initializes at index $n=1$, yielding $a_1 = 1.0$ under the selected mapping rule.</p><p><strong>Applied Mechanics:</strong> Our AV control box boots up, defining a target noise floor $L=0$ and an audible error tolerance $\\epsilon = 0.2$ (the blue band).</p>",
+                why: "<p><strong>Formal Rationale:</strong> Under real analysis axioms, we cannot rely on loose intuition. We must establish that the sequence domain maps to a bounded codomain where arbitrary $\\epsilon$-neighborhoods can be applied.</p><p><strong>System Constraint:</strong> Defining $\\epsilon$ upfront ensures hardware compliance before audio channels are unmuted.</p>"
             },
             {
-                phase: "Iteration", n: 3,
+                phase: "Iteration", n: 3, indexVal: 3,
                 summary: "<strong>Goal:</strong> Evaluate intermediate terms as the sequence progresses through preliminary index steps.",
-                what: "<p><strong>Abstract Formalism:</strong> The system computes $a_2 = 0.5$ and $a_3 = 0.333$. The terms decrease monotonically.</p><p><strong>Applied Mechanics:</strong> The filter actively attenuates line noise across cycles $n=2$ and $n=3$, bringing the interference down toward the threshold.</p>",
+                what: "<p><strong>Abstract Formalism:</strong> The system computes $a_2$ and $a_3$. The terms decrease monotonically.</p><p><strong>Applied Mechanics:</strong> The filter actively attenuates line noise across cycles $n=2$ and $n=3$, bringing the interference down toward the threshold.</p>",
                 why: "<p><strong>Formal Rationale:</strong> Monotonic decrease guarantees downward motion, but does not yet satisfy convergence bounds.</p><p><strong>System Constraint:</strong> Lowering the value is insufficient; we must locate the exact index where terms permanently cross into tolerance.</p>"
             },
             {
-                phase: "Threshold Discovery", n: 5,
+                phase: "Threshold Discovery", n: 5, indexVal: 5,
                 summary: "<strong>Goal:</strong> Algebraically solve for the critical threshold index $N$ dictated by the $\\epsilon-N$ definition.",
-                what: "<p><strong>Abstract Formalism:</strong> We evaluate $|a_n - 0| < 0.2$. For $a_n = 1/n$, this yields $n > 5$.</p><p><strong>Applied Mechanics:</strong> We set $N=5$, rendering the red threshold boundary on our canvas to mark the latency required for clean audio.</p>",
+                what: "<p><strong>Abstract Formalism:</strong> We evaluate $|a_n - 0| < 0.2$. For linear attenuation ($1/n$), this yields $n > 5$. For exponential filtering ($2^{-n}$), it crosses at $n > 2$.</p><p><strong>Applied Mechanics:</strong> We set the threshold index $N$, rendering the red threshold boundary on our canvas to mark the latency required for clean audio.</p>",
                 why: "<p><strong>Formal Rationale:</strong> This operationalizes the existential quantifier $\\exists N$ in the formal definition.</p><p><strong>System Constraint:</strong> Establishes the exact processing latency required before the system certifies signal stability.</p>"
             },
             {
-                phase: "Convergence Verification", n: 8,
+                phase: "Convergence Verification", n: 8, indexVal: 8,
                 summary: "<strong>Goal:</strong> Fulfill the universal quantifier condition to formally certify the limit.",
-                what: "<p><strong>Abstract Formalism:</strong> For all subsequent indices $n > 5$ (such as $n=6, 7, 8$), terms remain strictly trapped within the $\\epsilon$ neighborhood.</p><p><strong>Applied Mechanics:</strong> The noise output remains flat and imperceptible across all further processing cycles.</p>",
+                what: "<p><strong>Abstract Formalism:</strong> For all subsequent indices $n > N$, terms remain strictly trapped within the $\\epsilon$ neighborhood.</p><p><strong>Applied Mechanics:</strong> The noise output remains flat and imperceptible across all further processing cycles.</p>",
                 why: "<p><strong>Formal Rationale:</strong> This satisfies $\\forall n > N$. Because this inequality holds for <em>any</em> arbitrary $\\epsilon > 0$, the limit $\\lim_{n\\to\\infty} a_n = L$ is verified.</p><p><strong>System Constraint:</strong> Guarantees long-term stability against unexpected signal spikes.</p>"
             }
         ];
@@ -196,10 +195,10 @@
 
             const seqMath = state.seq === 'reciprocal' ? '$a_n = \\frac{1}{n}$' : '$a_n = 2^{-n}$';
             document.getElementById('tel-seq').innerHTML = seqMath;
-            document.getElementById('tel-val').innerHTML = '$' + data[state.seq][current.n - 1].toFixed(3) + '$';
+            document.getElementById('tel-val').innerHTML = '$' + data[state.seq][current.indexVal - 1].toFixed(3) + '$';
 
             document.getElementById('tel-phase').innerText = current.phase;
-            document.getElementById('tel-n').innerText = current.n;
+            document.getElementById('tel-n').innerText = current.indexVal;
 
             document.getElementById('step-summary').innerHTML = current.summary;
             document.getElementById('pane-what').innerHTML = current.what;
@@ -221,8 +220,8 @@
             const threshold = document.getElementById('n-threshold');
             group.innerHTML = '';
 
-            const currentN = narratives[state.step].n;
-            const pointsToDraw = data[state.seq].slice(0, currentN);
+            const current = narratives[state.step];
+            const pointsToDraw = data[state.seq].slice(0, current.indexVal);
 
             pointsToDraw.forEach((val, idx) => {
                 const cx = 80 + (idx * 60);
