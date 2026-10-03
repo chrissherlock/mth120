@@ -144,6 +144,16 @@
             <div class="definition-box">
                 <p>$$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad \forall n > N, \quad |a_n - L| < \epsilon$$</p>
             </div>
+            <div class="aside-box" style="margin-top: 1.5rem;">
+                <h4>💡 Plain-English Breakdown: What is this formula actually saying?</h4>
+                <p>If looking at $\forall \epsilon > 0, \ \exists N \in \mathbb{N} \ \text{such that} \ \forall n > N, \ |a_n - L| < \epsilon$ makes your head spin, think of it as an <strong>archery challenge</strong> or a <strong>game between two players</strong>:</p>
+                <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
+                    <li style="margin-bottom: 0.5rem;"><strong>1. The Challenger sets a tiny tolerance ($\epsilon$):</strong> Your opponent hands you a tiny positive distance $\epsilon$ (like $0.01$). They draw a narrow target band around the limit $L$: from $L - \epsilon$ up to $L + \epsilon$. They are daring you to find a point where the sequence stays inside forever.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>2. You find a cutoff step ($N$):</strong> You look at the sequence and figure out how far down the list you need to walk—past some index $N$—so that everything after it settles down inside the target band.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>3. The Tail Test ($|a_n - L| < \epsilon$):</strong> The absolute distance between your sequence term $a_n$ and the limit $L$ is smaller than your opponent's tolerance $\epsilon$ for <em>every single step</em> past $N$.</li>
+                </ol>
+                <p style="margin-top: 0.75rem; margin-bottom: 0;">If you can successfully win this game no matter how ridiculously small your opponent makes $\epsilon$, then the sequence truly converges to $L$!</p>
+            </div>
 
             <!-- CLAUSE STEPPER -->
             <div class="stepper-walkthrough" id="definition-walkthrough">
