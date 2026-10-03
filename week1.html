@@ -423,7 +423,28 @@
                     </svg>
                 </div>
                 <div class="diagram-card">
-                    <h5>Complement ($A^c = U \setminus A$)</h5>
+                    <h5>Set Difference ($A \setminus B$) &mdash; "In A, Not B"</h5>
+                    <svg viewBox="0 0 360 170">
+                        <defs>
+                            <mask id="diff-mask">
+                                <circle cx="145" cy="95" r="52" fill="white"/>
+                                <circle cx="215" cy="95" r="52" fill="black"/>
+                            </mask>
+                        </defs>
+                        <rect x="10" y="10" width="340" height="150" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.2"/>
+                        <text x="25" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#64748b" font-weight="600">Difference (A ∖ B)</text>
+                        <circle cx="145" cy="95" r="52" fill="#fde68a" mask="url(#diff-mask)"/>
+                        <circle cx="145" cy="95" r="52" fill="none" stroke="#d97706" stroke-width="1.2"/>
+                        <circle cx="215" cy="95" r="52" fill="none" stroke="#d97706" stroke-width="1.2"/>
+                        <text x="120" y="100" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#b45309" font-weight="bold">A</text>
+                        <text x="230" y="100" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#b45309" font-weight="bold">B</text>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="diagram-grid">
+                <div class="diagram-card">
+                    <h5>Universal Complement ($A^c = U \setminus A$)</h5>
                     <svg viewBox="0 0 360 170">
                         <defs>
                             <mask id="complement-mask">
@@ -438,6 +459,21 @@
                         <text x="175" y="101" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#b45309" font-weight="bold">A</text>
                     </svg>
                 </div>
+                <div class="diagram-card">
+                    <h5>Cartesian Product ($A \times B$)</h5>
+                    <svg viewBox="0 0 360 170">
+                        <rect x="10" y="10" width="340" height="150" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.2"/>
+                        <text x="25" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#64748b" font-weight="600">Ordered Pairs: {1, 2} × {x, y}</text>
+                        <rect x="50" y="55" width="120" height="40" rx="4" fill="#ffffff" stroke="#fed7aa"/>
+                        <text x="110" y="80" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold" text-anchor="middle">(1, x)</text>
+                        <rect x="190" y="55" width="120" height="40" rx="4" fill="#ffffff" stroke="#fed7aa"/>
+                        <text x="250" y="80" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold" text-anchor="middle">(1, y)</text>
+                        <rect x="50" y="105" width="120" height="40" rx="4" fill="#ffffff" stroke="#fed7aa"/>
+                        <text x="110" y="130" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold" text-anchor="middle">(2, x)</text>
+                        <rect x="190" y="105" width="120" height="40" rx="4" fill="#ffffff" stroke="#fed7aa"/>
+                        <text x="250" y="130" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold" text-anchor="middle">(2, y)</text>
+                    </svg>
+                </div>
             </div>
 
             <h2 id="section-numbers">2. The Hierarchy of Number Systems</h2>
@@ -449,7 +485,7 @@
                     <strong>Number systems and algebraic structure:</strong> One useful way to understand the familiar number systems is to see how each provides solutions to equations that could not be solved within a smaller system.
                 </div>
                 <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$\mathbb{N}$</span><span class="notation-desc">Natural numbers: counting numbers $\{1, 2, 3, \dots\}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{N}$</span><span class="notation-desc">Natural numbers: $\{0, 1, 2, \dots\}$ (in MTHS120, $0 \in \mathbb{N}$)</span></div>\n                    <div class="notation-item"><span class="notation-sym">$\mathbb{Z}_+$</span><span class="notation-desc">Positive integers: $\{1, 2, 3, \dots\}$</span></div>
                     <div class="notation-item"><span class="notation-sym">$\mathbb{Z}$</span><span class="notation-desc">Integers: $\{\dots, -2, -1, 0, 1, 2, \dots\}$</span></div>
                     <div class="notation-item"><span class="notation-sym">$\mathbb{Q}$</span><span class="notation-desc">Rational numbers: quotients $\{p/q \mid p, q \in \mathbb{Z}, q \neq 0\}$</span></div>
                     <div class="notation-item"><span class="notation-sym">$\mathbb{R}$</span><span class="notation-desc">Real numbers: rational and irrational numbers</span></div>
