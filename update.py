@@ -31,8 +31,8 @@ def write_week1_module():
         .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
 
         .intro-lead { font-size: 1.1rem; color: #1e293b; line-height: 1.7; margin-bottom: 1.5rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-        .intro-graphic { background: #f8fafc; border-radius: 8px; padding: 1.5rem; display: flex; justify-content: center; margin-bottom: 2.5rem; border: 1px solid var(--border); }
-        .intro-graphic svg { width: 100%; max-width: 860px; height: auto; }
+        .intro-graphic { background: #f8fafc; border-radius: 8px; padding: 2rem; display: flex; justify-content: center; margin-bottom: 2.5rem; border: 1px solid var(--border); }
+        .intro-graphic svg { width: 100%; max-width: 780px; height: auto; display: block; }
 
         h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; font-family: var(--font-ui); }
         h3 { color: #1e293b; margin-top: 1.5rem; font-family: var(--font-ui); }
@@ -102,29 +102,28 @@ def write_week1_module():
         }
         .swap-card h5 { margin: 0 0 0.5rem 0; font-size: 0.95rem; }
 
-        /* Scaled Responsive Diagram Container Styles */
-        .diagram-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
+        /* LARGE RESPONSIVE DIAGRAM CONTAINERS */
+        .diagram-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.75rem 0; }
         .diagram-card {
             background: #f8fafc;
             border: 1px solid var(--border);
             border-radius: 8px;
-            padding: 1.5rem;
+            padding: 1.75rem;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-width: 0;
         }
         .diagram-card h5 {
-            margin: 0 0 1rem 0;
+            margin: 0 0 1.15rem 0;
             color: #b45309;
-            font-size: 1.02rem;
+            font-size: 1.05rem;
             text-align: center;
             font-family: var(--font-ui);
-            font-weight: 600;
+            font-weight: 700;
         }
         .diagram-card svg {
             width: 100%;
-            max-width: 480px;
             height: auto;
             display: block;
         }
@@ -212,8 +211,8 @@ def write_week1_module():
         .game-btn { background: var(--accent); color: white; border: none; padding: 0.55rem 1.1rem; border-radius: 4px; cursor: pointer; font-weight: 600; font-family: var(--font-ui); font-size: 0.92rem; transition: background 0.2s; }
         .game-btn:hover { background: var(--accent-hover); }
         .game-btn:disabled { background: #94a3b8; cursor: not-allowed; }
-        .game-canvas-wrap { background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1.5rem; display: flex; justify-content: center; }
-        .game-canvas-wrap svg { width: 100%; max-width: 820px; height: auto; display: block; }
+        .game-canvas-wrap { background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1.75rem; display: flex; justify-content: center; }
+        .game-canvas-wrap svg { width: 100%; height: auto; display: block; }
 
         /* Formula Stage */
         .formula-stage-wrap {
@@ -259,7 +258,7 @@ def write_week1_module():
         .formula-sep { color: #64748b; font-weight: 400; }
 
         .canvas-container { padding: 2rem; background: #f1f5f9; display: flex; justify-content: center; border-bottom: 1px solid var(--border); }
-        .canvas-container svg { width: 100%; max-width: 860px; height: auto; display: block; }
+        .canvas-container svg { width: 100%; height: auto; display: block; }
 
         .controls-pane { display: flex; gap: 2rem; padding: 1.5rem; background: var(--card); border-bottom: 1px solid var(--border); align-items: flex-start; }
         .nav-buttons { display: flex; flex-direction: column; gap: 0.5rem; min-width: 140px; }
@@ -488,6 +487,7 @@ def write_week1_module():
 
             <p>Mathematics constructs its universe of numbers step by step, algebraically expanding systems to solve equations and geometric problems that previous systems could not express. Each expansion resolves an <strong>algebraic closure failure</strong> of the previous system.</p>
 
+            <!-- FULL-WIDTH SCALED UP NESTED HIERARCHY -->
             <div class="diagram-card" style="margin: 1.5rem 0; width: 100%; box-sizing: border-box;">
                 <h5>Nested Set Containment Hierarchy ($\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$)</h5>
                 <svg viewBox="0 0 740 220">
@@ -552,7 +552,7 @@ def write_week1_module():
             <h3>Real Numbers ($\mathbb{R}$): Filling the Geometric Gaps</h3>
             <p>Despite being dense (meaning between any two rational numbers, another rational always exists), $\mathbb{Q}$ contains massive structural "holes." For instance, applying the Pythagorean theorem to a right triangle with side lengths of 1 gives a hypotenuse of $\sqrt{2}$. Yet, <strong>Theorem:</strong> There is no rational number $p/q$ such that $(p/q)^2 = 2$.</p>
 
-            <!-- SCALED UP GEOMETRIC GAP DIAGRAM -->
+            <!-- FULL-WIDTH SCALED UP GEOMETRIC GAP DIAGRAM -->
             <div class="diagram-card" style="margin: 1.5rem 0; width: 100%; box-sizing: border-box;">
                 <h5>The Geometric Gap: Constructing $\sqrt{2}$ on the Number Line</h5>
                 <svg viewBox="0 0 740 200">
@@ -1062,7 +1062,7 @@ def write_week1_module():
                 advScope: "Free Choice (Arbitrary Error Budget)",
                 advSummary: "<strong>Step 1: The Skeptic issues an error challenge.</strong> The universal quantifier $\\forall \\epsilon > 0$ asserts that no matter how tiny or stringent a positive tolerance budget is chosen, the sequence must be prepared to satisfy it.",
                 advWhat: "<p>The Skeptic picks any positive number $\\epsilon > 0$, no matter how tiny (e.g., $0.1, 0.001, 10^{-6}$). This forms a physical target band $(L - \\epsilon, L + \\epsilon)$ on the vertical axis.</p>",
-                advWhy: "<p>If the definition only required passing for <em>some</em> tolerances (like $\\epsilon = 0.5$), a broken sequence bouncing between $0$ and $0.4$ could falsely claim convergence. Testing <em>all</em> positive $\\epsilon$ guarantees the skeptic cannot catch the sequence out.</p>",
+                advWhy: "<p>If the definition only required passing for <em>some</em> tolerances (like $\\epsilon = 0.5$), a sequence oscillating between $0$ and $0.4$ could falsely pass. Testing <em>all</em> positive $\\epsilon$ guarantees the skeptic cannot catch the sequence out.</p>",
                 verRole: "Test Input Generator (Fuzzer)",
                 verScope: "Unconstrained Input Parameter (ϵ ∈ ℝ⁺)",
                 verSummary: "<strong>Step 1: Setting test harness tolerance.</strong> An automated verification harness injects an arbitrary, strictly positive bound constraint $\\epsilon \\in (0, \\infty)$ into the system contract.",
@@ -1524,7 +1524,7 @@ def write_week1_module():
 </body>
 </html>
 """
-    with open('week1.html', 'w') as f:
+    with open('week1.html', 'w' ) as f:
         f.write(html_content)
 
 def update_curriculum_index():
@@ -1545,9 +1545,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Scale up Geometric Gap diagram for sqrt(2) on the number line\n\n"
-        "Expanded viewBox dimensions to 740x180 with larger fonts, proportional "
-        "right triangle geometry, and clear callout annotations in week1.html."
+        "Remove width constraints and enlarge physical SVG display size in week1.html\n\n"
+        "Removed max-width caps on SVG elements and increased container padding to ensure "
+        "diagrams render large and prominent across all viewports."
     )
 
     commands = [
@@ -1561,7 +1561,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with scaled up Geometric Gap diagram...")
+    print("Writing Week 1 module with fully expanded, prominent diagrams...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
