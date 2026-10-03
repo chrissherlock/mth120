@@ -2,7 +2,7 @@
 import os
 import subprocess
 
-def add_mct_worked_example():
+def reposition_mct_example():
     filepath = 'week2.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
@@ -11,9 +11,7 @@ def add_mct_worked_example():
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # The MCT Worked Example markup block
-    mct_example = r'''
-            <div class="aside-box" style="margin-top: 1.5rem;">
+    mct_example = r'''            <div class="aside-box" style="margin-top: 1.5rem;">
                 <h4>🎯 Worked Example: Applying the Monotone Convergence Theorem</h4>
                 <p>Consider the sequence defined recursively by $x_1 = 1$ and $x_{n+1} = \frac{1}{3}x_n + 1$ for $n \ge 1$. Let's prove its convergence using the Monotone Convergence Theorem:</p>
                 <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
@@ -40,22 +38,35 @@ def add_mct_worked_example():
                 </ol>
             </div>'''
 
-    # Anchor target in Section 3 just before Section 4
-    anchor_target = '<!-- SECTION 4 -->'
+    # Cleanly remove the block from wherever it currently is
+    content = content.replace(mct_example, '')
 
-    if anchor_target in content and 'Worked Example: Applying the Monotone Convergence Theorem' not in content:
-        content = content.replace(anchor_target, mct_example + '\n\n            <!-- SECTION 4 -->')
+    # Target anchor: right after the first example "Example: Evaluating a Bounded Monotone Limit"
+    target = r'''            <div class="aside-box" style="margin-top: 1.5rem;">
+                <h4>🎯 Example: Evaluating a Bounded Monotone Limit</h4>
+                <p>Consider the sequence $a_n = 1 - \frac{1}{n}$ for $n \ge 1$. Let's check its properties:</p>
+                <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
+                    <li style="margin-bottom: 0.4rem;"><strong>Monotonicity:</strong> $a_{n+1} - a_n = \left(1 - \frac{1}{n+1}\right) - \left(1 - \frac{1}{n}\right) = \frac{1}{n} - \frac{1}{n+1} > 0$, so the sequence is strictly increasing.</li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Boundedness:</strong> Every term satisfies $0 \le a_n < 1$, so it is bounded above by $M = 1$.</li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Conclusion:</strong> By the Monotone Convergence Theorem, the limit exists and equals its supremum: $\lim_{n\to\infty} \left(1 - \frac{1}{n}\right) = \sup\left\{1 - \frac{1}{n}\right\} = 1$.</li>
+                </ol>
+            </div>'''
+
+    replacement = target + '\n\n' + mct_example
+
+    if target in content:
+        content = content.replace(target, replacement, 1)
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
-        print("Successfully added MCT worked example to week2.html.")
+        print("Successfully repositioned MCT worked example in week2.html.")
     else:
-        print("Anchor target not found or example already present.")
+        print("Target example block not found.")
 
 def execute_git_sync():
     commit_message = (
-        "Add Monotone Convergence Theorem worked example to week2.html\n\n"
-        "Inserted a step-by-step worked example demonstrating boundedness, monotonicity,\n"
-        "and limit evaluation for a recursive sequence in week2.html."
+        "Reposition Monotone Convergence Theorem worked example in week2.html\n\n"
+        "Moved the MCT worked example block to sit directly beneath the bounded\n"
+        "monotone limit example in Section 3 of week2.html."
     )
     commands = [
         ['git', 'add', 'week2.html', 'update.py'],
@@ -67,5 +78,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    add_mct_worked_example()
+    reposition_mct_example()
     execute_git_sync()
