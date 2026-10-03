@@ -19,54 +19,56 @@ def write_week1_module():
             onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
     <style>
         :root {
-            --bg: #f8fafc; --text: #1e293b; --card: #ffffff; --border: #e2e8f0;
-            --accent: #0ea5e9; --telemetry-bg: #1e293b; --telemetry-text: #38bdf8;
-            --track1-bg: #f0f9ff; --track2-bg: #fdf4ff;
+            --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
+            --accent: #6366f1; --accent-hover: #4f46e5;
+            --telemetry-bg: #0f172a; --telemetry-text: #38bdf8;
+            --track1-bg: #eef2ff; --track2-bg: #fdf4ff;
         }
         body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
         .container { max-width: 1200px; margin: 0 auto; }
         .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; }
-        .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+        .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
 
-        .intro-lead { font-size: 1.1rem; color: #334155; line-height: 1.7; margin-bottom: 1.5rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); }
-        .intro-graphic { background: #0f172a; border-radius: 8px; padding: 1.5rem; display: flex; justify-content: center; margin-bottom: 2.5rem; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); }
+        .intro-lead { font-size: 1.1rem; color: #1e293b; line-height: 1.7; margin-bottom: 1.5rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .intro-graphic { background: #090d16; border-radius: 8px; padding: 1.5rem; display: flex; justify-content: center; margin-bottom: 2.5rem; box-shadow: inset 0 2px 4px rgba(0,0,0,0.4); border: 1px solid #334155; }
 
         h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; }
-        h3 { color: #334155; margin-top: 1.5rem; }
+        h3 { color: #1e293b; margin-top: 1.5rem; }
 
         /* Dual-Track Layout */
         .dual-track-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; margin-bottom: 2rem; }
         .track-card { padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border); }
-        .track-formal { background: var(--track1-bg); border-color: #bae6fd; }
+        .track-formal { background: var(--track1-bg); border-color: #c7d2fe; }
         .track-applied { background: var(--track2-bg); border-color: #f5d0fe; }
-        .track-card h4 { margin-top: 0; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; color: #0369a1; }
+        .track-card h4 { margin-top: 0; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; color: #4338ca; }
 
         /* Interactive Simulator & Game Styles */
-        .simulator, .game-box { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 2rem; background: var(--card); }
+        .simulator, .game-box { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 2rem; background: var(--card); box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .game-header { background: #0f172a; color: #38bdf8; padding: 1rem 1.5rem; font-family: monospace; font-size: 0.95rem; display: flex; justify-content: space-between; align-items: center; }
         .game-body { padding: 1.5rem; background: #f8fafc; display: flex; flex-direction: column; gap: 1rem; border-bottom: 1px solid var(--border); }
-        .game-explainer { background: #e0f2fe; border: 1px solid #bae6fd; padding: 1.25rem; border-radius: 6px; font-size: 0.95rem; color: #0369a1; margin-bottom: 0.5rem; line-height: 1.7; }
+        .game-explainer { background: #e0f2fe; border: 1px solid #7dd3fc; padding: 1.25rem; border-radius: 6px; font-size: 0.95rem; color: #0369a1; margin-bottom: 0.5rem; line-height: 1.7; }
         .game-controls { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
-        .game-btn { background: #0ea5e9; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold; }
-        .game-btn:hover { background: #0284c7; }
-        .game-btn:disabled { background: var(--border); cursor: not-allowed; }
+        .game-btn { background: var(--accent); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold; transition: background 0.2s; }
+        .game-btn:hover { background: var(--accent-hover); }
+        .game-btn:disabled { background: #94a3b8; cursor: not-allowed; }
         .game-canvas-wrap { background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; display: flex; justify-content: center; }
 
         .telemetry { background: var(--telemetry-bg); color: var(--telemetry-text); padding: 0.75rem 1.5rem; font-family: monospace; display: flex; gap: 2rem; font-size: 0.9rem; align-items: center;}
         .canvas-container { padding: 2rem; background: #f1f5f9; display: flex; justify-content: center; border-bottom: 1px solid var(--border); }
         .controls-pane { display: flex; gap: 2rem; padding: 1.5rem; background: var(--card); border-bottom: 1px solid var(--border); align-items: flex-start; }
         .nav-buttons { display: flex; flex-direction: column; gap: 0.5rem; min-width: 120px; }
-        button { background: var(--accent); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; }
-        button:disabled { background: var(--border); cursor: not-allowed; }
-        .step-summary { flex-grow: 1; font-size: 0.95rem; color: #475569; line-height: 1.5; }
+        button { background: var(--accent); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; transition: background 0.2s; }
+        button:hover { background: var(--accent-hover); }
+        button:disabled { background: #94a3b8; cursor: not-allowed; }
+        .step-summary { flex-grow: 1; font-size: 0.95rem; color: #334155; line-height: 1.5; }
         .pane { background: var(--card); padding: 1.5rem; }
         .pane h4 { margin-top: 0; color: var(--accent); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
         .pane p { margin: 0 0 0.75rem 0; }
         .pane p:last-child { margin-bottom: 0; }
         .toggle-group { min-width: 220px; }
-        select { width: 100%; padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border); font-family: system-ui, sans-serif; }
+        select { width: 100%; padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border); font-family: system-ui, sans-serif; background: #fff; color: var(--text); }
 
-        .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+        .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
         .example-list li { margin-bottom: 0.75rem; }
     </style>
 </head>
@@ -74,7 +76,7 @@ def write_week1_module():
     <div class="container">
         <div class="header">
             <h1>Week 1: Sets, Numbers, and Sequences</h1>
-            <a href="index.html" style="color: var(--accent); text-decoration: none;">&larr; Back to Curriculum Index</a>
+            <a href="index.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">&larr; Back to Curriculum Index</a>
         </div>
 
         <div class="module-content">
@@ -87,9 +89,9 @@ def write_week1_module():
                 <svg width="700" height="140" viewBox="0 0 700 140">
                     <!-- Panel 1: Set Theory (Venn Diagram) -->
                     <g transform="translate(30, 10)">
-                        <rect x="0" y="0" width="180" height="120" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
-                        <circle cx="70" cy="60" r="35" fill="#0ea5e9" opacity="0.3"/>
-                        <circle cx="110" cy="60" r="35" fill="#38bdf8" opacity="0.3"/>
+                        <rect x="0" y="0" width="180" height="120" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+                        <circle cx="70" cy="60" r="35" fill="#6366f1" opacity="0.35"/>
+                        <circle cx="110" cy="60" r="35" fill="#38bdf8" opacity="0.35"/>
                         <text x="50" y="65" font-family="sans-serif" font-size="11" fill="#ffffff" font-weight="bold">A</text>
                         <text x="120" y="65" font-family="sans-serif" font-size="11" fill="#ffffff" font-weight="bold">B</text>
                         <text x="90" y="105" font-family="sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Set Theory (A ∪ B)</text>
@@ -97,25 +99,25 @@ def write_week1_module():
 
                     <!-- Panel 2: Number Systems Hierarchy -->
                     <g transform="translate(240, 10)">
-                        <rect x="0" y="0" width="200" height="120" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+                        <rect x="0" y="0" width="200" height="120" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
                         <rect x="15" y="15" width="170" height="90" rx="6" fill="none" stroke="#38bdf8" stroke-dasharray="3"/>
                         <text x="25" y="30" font-family="sans-serif" font-size="10" fill="#38bdf8">ℝ (Real)</text>
-                        <rect x="35" y="38" width="130" height="60" rx="4" fill="none" stroke="#0ea5e9"/>
-                        <text x="45" y="52" font-family="sans-serif" font-size="10" fill="#0ea5e9">ℚ ⊃ ℤ ⊃ ℕ</text>
-                        <circle cx="100" cy="78" r="14" fill="#0ea5e9" opacity="0.4"/>
+                        <rect x="35" y="38" width="130" height="60" rx="4" fill="none" stroke="#6366f1"/>
+                        <text x="45" y="52" font-family="sans-serif" font-size="10" fill="#6366f1">ℚ ⊃ ℤ ⊃ ℕ</text>
+                        <circle cx="100" cy="78" r="14" fill="#6366f1" opacity="0.45"/>
                         <text x="100" y="82" font-family="sans-serif" font-size="10" fill="#ffffff" font-weight="bold" text-anchor="middle">ℕ</text>
                         <text x="100" y="112" font-family="sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Number Systems</text>
                     </g>
 
                     <!-- Panel 3: Sequence Convergence -->
                     <g transform="translate(470, 10)">
-                        <rect x="0" y="0" width="200" height="120" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+                        <rect x="0" y="0" width="200" height="120" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
                         <line x1="20" y1="90" x2="180" y2="90" stroke="#64748b" stroke-width="1" stroke-dasharray="2"/>
                         <text x="175" y="86" font-family="sans-serif" font-size="9" fill="#38bdf8">L=0</text>
                         <!-- Sequence dots converging -->
-                        <circle cx="40" cy="40" r="4" fill="#0ea5e9"/><line x1="40" y1="40" x2="70" y2="60" stroke="#0ea5e9" stroke-width="1.5"/>
-                        <circle cx="70" cy="60" r="4" fill="#0ea5e9"/><line x1="70" y1="60" x2="100" y2="75" stroke="#0ea5e9" stroke-width="1.5"/>
-                        <circle cx="100" cy="75" r="4" fill="#0ea5e9"/><line x1="100" y1="75" x2="130" y2="83" stroke="#0ea5e9" stroke-width="1.5"/>
+                        <circle cx="40" cy="40" r="4" fill="#6366f1"/><line x1="40" y1="40" x2="70" y2="60" stroke="#6366f1" stroke-width="1.5"/>
+                        <circle cx="70" cy="60" r="4" fill="#6366f1"/><line x1="70" y1="60" x2="100" y2="75" stroke="#6366f1" stroke-width="1.5"/>
+                        <circle cx="100" cy="75" r="4" fill="#6366f1"/><line x1="100" y1="75" x2="130" y2="83" stroke="#6366f1" stroke-width="1.5"/>
                         <circle cx="130" cy="83" r="4" fill="#10b981"/><line x1="130" y1="83" x2="160" y2="87" stroke="#10b981" stroke-width="1.5"/>
                         <circle cx="160" cy="87" r="5" fill="#10b981"/>
                         <text x="100" y="112" font-family="sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Sequence Limits (aₙ → L)</text>
@@ -326,11 +328,11 @@ def write_week1_module():
                     <div class="nav-buttons">
                         <button id="btn-prev" onclick="step(-1)" disabled>Prev Step</button>
                         <button id="btn-next" onclick="step(1)">Next Step</button>
-                        <button id="btn-reset" onclick="reset()" style="background-color: var(--text-muted);">Reset</button>
+                        <button id="btn-reset" onclick="reset()" style="background-color: #64748b;">Reset</button>
                     </div>
                     <div class="step-summary" id="step-summary"></div>
                     <div class="toggle-group">
-                        <label for="seq-toggle" style="font-size: 0.85rem; font-weight: bold; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">COMPARE ARCHITECTURE:</label>
+                        <label for="seq-toggle" style="font-size: 0.85rem; font-weight: bold; color: #475569; display: block; margin-bottom: 0.5rem;">COMPARE ARCHITECTURE:</label>
                         <select id="seq-toggle" onchange="changeSeq()">
                             <option value="reciprocal">Linear Attenuator (a_n = 1/n)</option>
                             <option value="geometric">Exponential Decay (a_n = 2^-n)</option>
@@ -416,10 +418,10 @@ def write_week1_module():
             const bandY = originY - (eps * maxYScale) - (bandHeight / 2);
 
             let svgContent = `
-                <rect x="${originX}" y="${bandY}" width="${maxXScale}" height="${bandHeight}" fill="#bae6fd" opacity="0.5"/>
-                <line x1="${originX}" y1="${originY}" x2="${originX + maxXScale}" y2="${originY}" stroke="#94a3b8" stroke-width="2"/>
-                <line x1="${originX}" y1="20" x2="${originX}" y2="${originY}" stroke="#94a3b8" stroke-width="2"/>
-                <text x="${originX - 30}" y="${originY + 5}" font-family="sans-serif" font-size="10" fill="#64748b">0</text>
+                <rect x="${originX}" y="${bandY}" width="${maxXScale}" height="${bandHeight}" fill="#e0f2fe" opacity="0.6"/>
+                <line x1="${originX}" y1="${originY}" x2="${originX + maxXScale}" y2="${originY}" stroke="#64748b" stroke-width="2"/>
+                <line x1="${originX}" y1="20" x2="${originX}" y2="${originY}" stroke="#64748b" stroke-width="2"/>
+                <text x="${originX - 30}" y="${originY + 5}" font-family="sans-serif" font-size="10" fill="#475569">0</text>
                 <text x="${originX - 35}" y="${originY - (eps * maxYScale) + 4}" font-family="sans-serif" font-size="9" fill="#0284c7">+&epsilon;</text>
                 <text x="${originX - 35}" y="${originY + (eps * maxYScale) + 4}" font-family="sans-serif" font-size="9" fill="#0284c7">-&epsilon;</text>
             `;
@@ -429,11 +431,11 @@ def write_week1_module():
                 const cx = originX + (n * (maxXScale / maxN));
                 const cy = originY - (val * maxYScale);
 
-                svgContent += `<line x1="${cx}" y1="${originY}" x2="${cx}" y2="${originY + 4}" stroke="#94a3b8"/>`;
-                svgContent += `<text x="${cx - 4}" y="${originY + 15}" font-family="sans-serif" font-size="9" fill="#64748b">${n}</text>`;
+                svgContent += `<line x1="${cx}" y1="${originY}" x2="${cx}" y2="${originY + 4}" stroke="#64748b"/>`;
+                svgContent += `<text x="${cx - 4}" y="${originY + 15}" font-family="sans-serif" font-size="9" fill="#475569">${n}</text>`;
 
                 const inside = n > reqN;
-                const fillColor = inside ? '#10b981' : '#0ea5e9';
+                const fillColor = inside ? '#10b981' : '#6366f1';
                 const r = inside ? 6 : 4;
 
                 svgContent += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fillColor}" />`;
@@ -441,8 +443,8 @@ def write_week1_module():
 
             const thresholdX = originX + (reqN * (maxXScale / maxN));
             svgContent += `
-                <line x1="${thresholdX}" y1="15" x2="${thresholdX}" y2="${originY + 10}" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"/>
-                <text x="${thresholdX + 5}" y="25" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ef4444">N = ${reqN} (Cutoff)</text>
+                <line x1="${thresholdX}" y1="15" x2="${thresholdX}" y2="${originY + 10}" stroke="#f43f5e" stroke-width="2" stroke-dasharray="4"/>
+                <text x="${thresholdX + 5}" y="25" font-family="sans-serif" font-size="11" font-weight="bold" fill="#f43f5e">N = ${reqN} (Cutoff)</text>
             `;
 
             svg.innerHTML = svgContent;
@@ -531,12 +533,12 @@ def write_week1_module():
             pointsToDraw.forEach((val, idx) => {
                 const cx = 80 + (idx * 60);
                 const cy = 160 - (val * 140);
-                group.innerHTML += `<circle cx="${cx}" cy="${cy}" r="5" fill="#0ea5e9" />`;
+                group.innerHTML += `<circle cx="${cx}" cy="${cy}" r="5" fill="#6366f1" />`;
                 if(idx > 0) {
                     const prevVal = data[state.seq][idx - 1];
                     const px = 80 + ((idx - 1) * 60);
                     const py = 160 - (prevVal * 140);
-                    group.innerHTML += `<line x1="${px}" y1="${py}" x2="${cx}" y2="${cy}" stroke="#0ea5e9" stroke-width="2" opacity="0.5"/>`;
+                    group.innerHTML += `<line x1="${px}" y1="${py}" x2="${cx}" y2="${cy}" stroke="#6366f1" stroke-width="2" opacity="0.5"/>`;
                 }
             });
 
@@ -575,9 +577,10 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Fix raw LaTeX leakage in introduction SVG graphic\n\n"
-        "Replaced raw LaTeX entity codes and formatting inside the SVG text elements \n"
-        "with clean native Unicode math characters (U, R, Q, Z, N, ->) for correct rendering."
+        "Refine color palette for balanced vibrancy and contrast\n\n"
+        "Upgraded CSS variables to feature crisp slate neutrals, deeper header/telemetry \n"
+        "contrasts, and professional indigo/violet accents that eliminate the dull look \n"
+        "without becoming overly saturated."
     )
 
     commands = [
