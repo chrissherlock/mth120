@@ -319,7 +319,7 @@ def write_week1_module():
                         <text x="195" y="90" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#d97706" font-weight="bold">L=0</text>
                         <circle cx="45" cy="40" r="5" fill="#d97706"/><line x1="45" y1="40" x2="80" y2="62" stroke="#d97706" stroke-width="1.5"/>
                         <circle cx="80" cy="62" r="5" fill="#d97706"/><line x1="80" y1="62" x2="115" y2="78" stroke="#d97706" stroke-width="1.5"/>
-                        <circle cx="115" cy="78" r="5" fill="#d97706"/><line x1="115" y1="78" x2="150" y2="87" stroke="#d97706" stroke-width="1.5"/>
+                        <circle cx="115" cy="78" r="5" fill="#10b981"/><line x1="115" y1="78" x2="150" y2="87" stroke="#10b981" stroke-width="1.5"/>
                         <circle cx="150" cy="87" r="5" fill="#10b981"/><line x1="150" y1="87" x2="185" y2="91" stroke="#10b981" stroke-width="1.5"/>
                         <circle cx="185" cy="91" r="6" fill="#10b981"/>
                         <text x="110" y="122" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b" text-anchor="middle" font-weight="600">Sequence Limits (aₙ → L)</text>
@@ -375,20 +375,20 @@ def write_week1_module():
                 <div class="diagram-card">
                     <h5>Subset Inclusion ($A \subseteq B$)</h5>
                     <svg viewBox="0 0 360 170">
-                        <rect x="10" y="10" width="340" height="150" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+                        <rect x="10" y="10" width="340" height="150" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.2"/>
                         <text x="25" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#64748b" font-weight="600">Universal Set U</text>
-                        <ellipse cx="180" cy="95" rx="140" ry="55" fill="#fed7aa" opacity="0.45" stroke="#d97706" stroke-width="1.8"/>
+                        <ellipse cx="180" cy="95" rx="140" ry="55" fill="#fed7aa" opacity="0.45" stroke="#d97706" stroke-width="1.2"/>
                         <text x="280" y="105" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#b45309" font-weight="bold">B</text>
-                        <ellipse cx="140" cy="95" rx="75" ry="38" fill="#fde68a" opacity="0.65" stroke="#d97706" stroke-width="1.8"/>
+                        <ellipse cx="140" cy="95" rx="75" ry="38" fill="#fde68a" opacity="0.65" stroke="#d97706" stroke-width="1.2"/>
                         <text x="135" y="100" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#b45309" font-weight="bold">A</text>
                     </svg>
                 </div>
                 <div class="diagram-card">
                     <h5>Complement ($A^c = U \setminus A$)</h5>
                     <svg viewBox="0 0 360 170">
-                        <rect x="10" y="10" width="340" height="150" rx="8" fill="#fef3c7" opacity="0.6" stroke="#cbd5e1" stroke-width="1.5"/>
+                        <rect x="10" y="10" width="340" height="150" rx="8" fill="#fef3c7" opacity="0.6" stroke="#cbd5e1" stroke-width="1.2"/>
                         <text x="25" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#92400e" font-weight="600">Aᶜ (Complement Region)</text>
-                        <circle cx="180" cy="95" r="48" fill="#ffffff" stroke="#d97706" stroke-width="2"/>
+                        <circle cx="180" cy="95" r="48" fill="#ffffff" stroke="#d97706" stroke-width="1.2"/>
                         <text x="175" y="101" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#b45309" font-weight="bold">A</text>
                     </svg>
                 </div>
@@ -401,10 +401,10 @@ def write_week1_module():
                 <div class="diagram-card">
                     <h5>Union ($A \cup B$) &mdash; "Or"</h5>
                     <svg viewBox="0 0 360 170">
-                        <rect x="10" y="10" width="340" height="150" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+                        <rect x="10" y="10" width="340" height="150" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.2"/>
                         <text x="25" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#64748b" font-weight="600">Combined Elements (A ∪ B)</text>
-                        <circle cx="145" cy="95" r="52" fill="#fed7aa" opacity="0.65" stroke="#d97706" stroke-width="2"/>
-                        <circle cx="215" cy="95" r="52" fill="#fed7aa" opacity="0.65" stroke="#d97706" stroke-width="2"/>
+                        <circle cx="145" cy="95" r="52" fill="#fed7aa" opacity="0.65" stroke="#d97706" stroke-width="1.2"/>
+                        <circle cx="215" cy="95" r="52" fill="#fed7aa" opacity="0.65" stroke="#d97706" stroke-width="1.2"/>
                         <text x="130" y="100" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#b45309" font-weight="bold">A</text>
                         <text x="225" y="100" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#b45309" font-weight="bold">B</text>
                     </svg>
@@ -412,10 +412,10 @@ def write_week1_module():
                 <div class="diagram-card">
                     <h5>Intersection ($A \cap B$) &mdash; "And"</h5>
                     <svg viewBox="0 0 360 170">
-                        <rect x="10" y="10" width="340" height="150" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+                        <rect x="10" y="10" width="340" height="150" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.2"/>
                         <text x="25" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#64748b" font-weight="600">Shared Overlap (A ∩ B)</text>
-                        <circle cx="145" cy="95" r="52" fill="#ffffff" stroke="#d97706" stroke-width="1.8"/>
-                        <circle cx="215" cy="95" r="52" fill="#ffffff" stroke="#d97706" stroke-width="1.8"/>
+                        <circle cx="145" cy="95" r="52" fill="#ffffff" stroke="#d97706" stroke-width="1.2"/>
+                        <circle cx="215" cy="95" r="52" fill="#ffffff" stroke="#d97706" stroke-width="1.2"/>
                         <path d="M 180 57 A 52 52 0 0 1 180 133 A 52 52 0 0 1 180 57 Z" fill="#d97706" opacity="0.75"/>
                         <text x="125" y="100" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#b45309" font-weight="bold">A</text>
                         <text x="230" y="100" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#b45309" font-weight="bold">B</text>
@@ -431,18 +431,23 @@ def write_week1_module():
             <div class="diagram-card" style="margin: 1.5rem 0; width: 100%; box-sizing: border-box;">
                 <h5>Discrete Cartesian Grid ($A = \{1,2,3\} \times B = \{1,2\}$)</h5>
                 <svg viewBox="0 0 520 180">
-                    <line x1="70" y1="140" x2="480" y2="140" stroke="#64748b" stroke-width="2"/>
-                    <line x1="90" y1="155" x2="90" y2="25" stroke="#64748b" stroke-width="2"/>
-                    <text x="490" y="145" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#64748b" font-weight="bold">A</text>
-                    <text x="85" y="18" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#64748b" font-weight="bold">B</text>
+                    <defs>
+                        <marker id="cart-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+                        </marker>
+                    </defs>
+                    <line x1="70" y1="140" x2="495" y2="140" stroke="#64748b" stroke-width="1.2" marker-end="url(#cart-arrow)"/>
+                    <line x1="90" y1="155" x2="90" y2="20" stroke="#64748b" stroke-width="1.2" marker-end="url(#cart-arrow)"/>
+                    <text x="502" y="144" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#64748b" font-weight="bold">A</text>
+                    <text x="90" y="12" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#64748b" font-weight="bold" text-anchor="middle">B</text>
 
-                    <circle cx="170" cy="110" r="7" fill="#d97706"/><text x="182" y="115" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#0f172a" font-weight="500">(1,1)</text>
-                    <circle cx="270" cy="110" r="7" fill="#d97706"/><text x="282" y="115" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#0f172a" font-weight="500">(2,1)</text>
-                    <circle cx="370" cy="110" r="7" fill="#d97706"/><text x="382" y="115" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#0f172a" font-weight="500">(3,1)</text>
+                    <circle cx="170" cy="110" r="5" fill="#d97706"/><text x="182" y="114" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#0f172a" font-weight="500">(1,1)</text>
+                    <circle cx="270" cy="110" r="5" fill="#d97706"/><text x="282" y="114" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#0f172a" font-weight="500">(2,1)</text>
+                    <circle cx="370" cy="110" r="5" fill="#d97706"/><text x="382" y="114" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#0f172a" font-weight="500">(3,1)</text>
 
-                    <circle cx="170" cy="60" r="7" fill="#d97706"/><text x="182" y="65" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#0f172a" font-weight="500">(1,2)</text>
-                    <circle cx="270" cy="60" r="7" fill="#d97706"/><text x="282" y="65" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#0f172a" font-weight="500">(2,2)</text>
-                    <circle cx="370" cy="60" r="7" fill="#d97706"/><text x="382" y="65" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#0f172a" font-weight="500">(3,2)</text>
+                    <circle cx="170" cy="60" r="5" fill="#d97706"/><text x="182" y="64" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#0f172a" font-weight="500">(1,2)</text>
+                    <circle cx="270" cy="60" r="5" fill="#d97706"/><text x="282" y="64" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#0f172a" font-weight="500">(2,2)</text>
+                    <circle cx="370" cy="60" r="5" fill="#d97706"/><text x="382" y="64" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#0f172a" font-weight="500">(3,2)</text>
                 </svg>
             </div>
 
@@ -501,16 +506,16 @@ def write_week1_module():
             <div class="diagram-card" style="margin: 1.5rem 0; width: 100%; box-sizing: border-box;">
                 <h5>Nested Set Containment Hierarchy ($\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$)</h5>
                 <svg viewBox="0 0 740 220">
-                    <rect x="15" y="12" width="710" height="196" rx="10" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2"/>
+                    <rect x="15" y="12" width="710" height="196" rx="10" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
                     <text x="35" y="38" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">ℝ (Real Numbers: All terminating, repeating & non-repeating decimals)</text>
 
-                    <rect x="45" y="52" width="650" height="142" rx="8" fill="#fffbeb" stroke="#fde68a" stroke-width="2"/>
+                    <rect x="45" y="52" width="650" height="142" rx="8" fill="#fffbeb" stroke="#fde68a" stroke-width="1.5"/>
                     <text x="65" y="76" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#92400e" font-weight="bold">ℚ (Rational Numbers: Fractions p/q)</text>
 
-                    <rect x="85" y="90" width="570" height="92" rx="8" fill="#fef3c7" stroke="#fbbf24" stroke-width="2"/>
+                    <rect x="85" y="90" width="570" height="92" rx="8" fill="#fef3c7" stroke="#fbbf24" stroke-width="1.5"/>
                     <text x="105" y="114" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold">ℤ (Integers: Negatives, 0, Positives)</text>
 
-                    <ellipse cx="370" cy="150" rx="210" ry="24" fill="#fed7aa" stroke="#d97706" stroke-width="2"/>
+                    <ellipse cx="370" cy="150" rx="210" ry="24" fill="#fed7aa" stroke="#d97706" stroke-width="1.5"/>
                     <text x="370" y="156" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold" text-anchor="middle">ℕ (Natural Numbers: 1, 2, 3...)</text>
                 </svg>
             </div>
@@ -537,7 +542,7 @@ def write_week1_module():
                 <div class="diagram-card">
                     <h5>Algebraic Failure: Subtraction in $\mathbb{N}$</h5>
                     <svg viewBox="0 0 360 170">
-                        <rect x="10" y="10" width="340" height="150" rx="8" fill="#fffbeb" stroke="#fde68a" stroke-width="1.8"/>
+                        <rect x="10" y="10" width="340" height="150" rx="8" fill="#fffbeb" stroke="#fde68a" stroke-width="1.2"/>
                         <text x="30" y="42" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#0f172a" font-weight="bold">1. Equation: x + 5 = 2</text>
                         <text x="30" y="74" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#0f172a">2. Isolate x: x = 2 - 5</text>
                         <text x="30" y="106" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#ef4444" font-weight="bold">3. Result: x = -3 ∉ ℕ</text>
@@ -547,7 +552,7 @@ def write_week1_module():
                 <div class="diagram-card">
                     <h5>Algebraic Failure: Division in $\mathbb{Z}$</h5>
                     <svg viewBox="0 0 360 170">
-                        <rect x="10" y="10" width="340" height="150" rx="8" fill="#fffbeb" stroke="#fde68a" stroke-width="1.8"/>
+                        <rect x="10" y="10" width="340" height="150" rx="8" fill="#fffbeb" stroke="#fde68a" stroke-width="1.2"/>
                         <text x="30" y="42" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#0f172a" font-weight="bold">1. Equation: 2x = 3</text>
                         <text x="30" y="74" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#0f172a">2. Isolate x: x = 3 / 2</text>
                         <text x="30" y="106" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#ef4444" font-weight="bold">3. Result: x = 1.5 ∉ ℤ</text>
@@ -565,20 +570,25 @@ def write_week1_module():
             <div class="diagram-card" style="margin: 1.5rem 0; width: 100%; box-sizing: border-box;">
                 <h5>The Geometric Gap: Constructing $\sqrt{2}$ on the Number Line</h5>
                 <svg viewBox="0 0 740 200">
-                    <line x1="50" y1="145" x2="690" y2="145" stroke="#64748b" stroke-width="2.5"/>
-                    <circle cx="130" cy="145" r="6" fill="#64748b"/><text x="125" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">0</text>
-                    <circle cx="370" cy="145" r="6" fill="#64748b"/><text x="365" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">1</text>
-                    <circle cx="610" cy="145" r="6" fill="#64748b"/><text x="605" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">2</text>
+                    <defs>
+                        <marker id="num-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+                        </marker>
+                    </defs>
+                    <line x1="40" y1="145" x2="710" y2="145" stroke="#64748b" stroke-width="1.2" marker-end="url(#num-arrow)"/>
+                    <circle cx="130" cy="145" r="4.5" fill="#64748b"/><text x="125" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">0</text>
+                    <circle cx="370" cy="145" r="4.5" fill="#64748b"/><text x="365" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">1</text>
+                    <circle cx="610" cy="145" r="4.5" fill="#64748b"/><text x="605" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">2</text>
 
-                    <polygon points="130,145 370,145 370,65" fill="#fef3c7" opacity="0.65" stroke="#d97706" stroke-width="2"/>
+                    <polygon points="130,145 370,145 370,65" fill="#fef3c7" opacity="0.65" stroke="#d97706" stroke-width="1.2"/>
                     <text x="245" y="135" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#d97706" font-weight="bold">1</text>
                     <text x="382" y="108" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#d97706" font-weight="bold">1</text>
 
-                    <line x1="130" y1="145" x2="370" y2="65" stroke="#ef4444" stroke-width="3"/>
+                    <line x1="130" y1="145" x2="370" y2="65" stroke="#ef4444" stroke-width="1.8"/>
                     <text x="220" y="92" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#ef4444" font-weight="bold">&radic;2 (&notin; ℚ)</text>
 
-                    <path d="M 370 65 A 240 240 0 0 1 470 145" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="5"/>
-                    <circle cx="470" cy="145" r="7" fill="#ef4444"/>
+                    <path d="M 370 65 A 240 240 0 0 1 470 145" fill="none" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="4"/>
+                    <circle cx="470" cy="145" r="5.5" fill="#ef4444"/>
                     <text x="450" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#ef4444" font-weight="bold">&radic;2 ≈ 1.414</text>
                 </svg>
             </div>
@@ -849,7 +859,7 @@ def write_week1_module():
                     </tbody>
                 </table>
 
-                <h5 style="margin: 1.25rem 0 0.5rem 0; color: #92400e; font-size: 0.98rem;">⚠️️ The Quantifier Swap Trap (Why Order Matters)</h5>
+                <h5 style="margin: 1.25rem 0 0.5rem 0; color: #92400e; font-size: 0.98rem;">⚠️ The Quantifier Swap Trap (Why Order Matters)</h5>
                 <p>Reversing the order of quantifiers completely breaks the meaning of the statement:</p>
                 <div class="swap-card-grid">
                     <div class="swap-card" style="border-left: 4px solid #10b981;">
@@ -958,7 +968,7 @@ def write_week1_module():
                 <p><strong>What is this?</strong> The simulator below bridges pure mathematical theory (Track 1) with practical numerical engineering (Track 2). It lets you step through how sequence convergence operates under the hood, showing both the logical proof requirements and the real-world error-correction mechanics side by side.</p>
                 <p><strong>How to use it:</strong></p>
                 <ol>
-                    <li><strong>Compare Architectures:</strong> Use the dropdown in the bottom right to switch between a <em>Linear Attenuator ($a_n = 1/n$)</em> and an <i>Exponential Decay ($a_n = 2^{-n}$)</i> stream.</li>
+                    <li><strong>Compare Architectures:</strong> Use the dropdown in the bottom right to switch between a <em>Linear Attenuator ($a_n = 1/n$)</em> and an <em>Exponential Decay ($a_n = 2^{-n}$)</em> stream.</li>
                     <li><strong>Step Through Phases:</strong> Click <strong>Next Step</strong> to advance from Initialization through Threshold Discovery to final Convergence Verification.</li>
                     <li><strong>Analyze Telemetry:</strong> Track the structured telemetry cards at the top for current position indices ($n$), active values ($a_n$), and error tolerances ($\epsilon$).</li>
                     <li><strong>Read Paired Panes:</strong> Examine the lower explanation panels to understand both *what* mechanical operations are occurring and *why* real analysis axioms require them.</li>
@@ -1283,7 +1293,7 @@ def write_week1_module():
         }
 
         /* ==========================================================================
-           EPSILON CHALLENGE GAME (CLEAN INITIAL STATE WITH THIN AXIS LINES)
+           EPSILON CHALLENGE GAME (CLEAN INITIAL STATE WITH THIN LINES)
            ========================================================================== */
         const challengeState = { active: false, eps: 0.2, reqN: 5, currentDisplayN: 5 };
 
@@ -1360,10 +1370,10 @@ def write_week1_module():
 
             let svgContent = `
                 <defs>
-                    <marker id="game-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <marker id="game-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
                         <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
                     </marker>
-                    <marker id="eps-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <marker id="eps-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
                         <path d="M 0 0 L 10 5 L 0 10 z" fill="#d97706"/>
                     </marker>
                 </defs>
@@ -1380,7 +1390,6 @@ def write_week1_module():
                 <text x="722" y="134" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="13" fill="#64748b" font-weight="600">n</text>
             `;
 
-            // If user has not picked an epsilon yet (initial state or reset), show clean graph grid
             if (eps === null) {
                 for (let n = 1; n <= 10; n++) {
                     const cx = originX + (n * (maxXScale / 14));
@@ -1597,9 +1606,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Make graph lines thinner in Epsilon Challenge Game\n\n"
-        "Reduced stroke widths for axes, target lines, and ticks in week1.html "
-        "to match the refined styling of other module diagrams."
+        "Thin out stroke widths across Cartesian, sqrt(2), and Challenge diagrams\n\n"
+        "Adjusted line widths to 1.0-1.2 across all diagrams in week1.html for a "
+        "clean, uniform mathematical illustration style."
     )
 
     commands = [
@@ -1613,7 +1622,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with thinner challenge game graph lines...")
+    print("Writing Week 1 module with thinned lines across all diagrams...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
