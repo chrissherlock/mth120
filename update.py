@@ -47,7 +47,7 @@ def write_week1_module():
         .track-applied { background: var(--track2-bg); border-color: #fed7aa; }
         .track-card h4 { margin-top: 0; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; color: #b45309; }
 
-        .simulator-guide { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .simulator-guide { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; margin-top: 1.5rem; }
         .simulator-guide h4 { margin-top: 0; color: #b45309; font-size: 1.05rem; }
         .simulator-guide ol { margin: 0.5rem 0 0 1.25rem; padding: 0; }
         .simulator-guide li { margin-bottom: 0.5rem; }
@@ -484,6 +484,22 @@ def write_week1_module():
                 </div>
             </div>
 
+            <p style="margin-top: 2rem;">To explore these mechanics further across multiple architectures, review the formal convergence definition below and use the <strong>Dual-Track Simulator</strong>:</p>
+
+            <div class="dual-track-grid">
+                <div class="track-card track-formal">
+                    <h3>📐 Track 1: Abstract Formalism (Pure Theory)</h3>
+                    <p>We say $\lim_{n\to\infty} a_n = L$ if:</p>
+                    <p>$$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad \forall n > N, \quad |a_n - L| < \epsilon$$</p>
+                    <p>This universal-existential quantifier structure proves that points permanently enter and remain within an arbitrary neighborhood around $L$.</p>
+                </div>
+                <div class="track-card track-applied">
+                    <h3>🎛 Track 2: Applied Mechanics (Numerical Analog)</h3>
+                    <p>Imagine tracking a numerical error-correction stream where successive approximation residuals represent our sequence ($a_n$).</p>
+                    <p>We want total error eradication ($L=0$), but operational performance requires proving the recurrence relation reliably drops residuals beneath an acceptable tolerance threshold ($\epsilon = 0.2$) past a specific execution index ($N$).</p>
+                </div>
+            </div>
+
             <!-- DUAL-TRACK SIMULATOR GUIDE AND PURPOSE -->
             <div class="simulator-guide">
                 <h4>🎛 Purpose &amp; Instructions for the Dual-Track Simulator</h4>
@@ -711,7 +727,7 @@ def write_week1_module():
                 phase: "Convergence Verification", n: 8, indexVal: 8,
                 summary: "<strong>Goal:</strong> Fulfill the universal quantifier condition to formally certify the limit.",
                 what: "<p><strong>Abstract Formalism:</strong> For all subsequent indices $n > N$, terms remain strictly trapped within the $\\epsilon$ neighborhood.</p><p><strong>Applied Mechanics:</strong> The residual error remains flat and negligible across all further computation steps.</p>",
-                why: "<p><strong>Formal Rationale:</strong> This satisfies $\\forall n > N$. Because this inequality holds for <em>any</em> arbitrary $\\epsilon > 0$, the limit $\\lim_{n\\to\\infty} a_n = L$ is verified.</p><p><strong>System Constraint:</strong> Guarantees long-term numerical stability against unexpected divergence.</p>"
+                why: "<p><strong>Formal Rationale:</strong> This satisfies $\\forall n > N$. Because this inequality holds for <em>any</i> arbitrary $\\epsilon > 0$, the limit $\\lim_{n\\to\\infty} a_n = L$ is verified.</p><p><strong>System Constraint:</strong> Guarantees long-term numerical stability against unexpected divergence.</p>"
             }
         ];
 
@@ -810,9 +826,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Add explanatory guide and usage instructions for Dual-Track Simulator\n\n"
-        "Inserted a dedicated guide box above the simulator in week1.html explaining its "
-        "pedagogical purpose and providing clear step-by-step instructions."
+        "Move Formal Definition of Convergence above simulator instructions in week1.html\n\n"
+        "Reordered elements so that the mathematical definition of convergence precedes "
+        "the simulator purpose and instructions guide."
     )
 
     commands = [
@@ -826,7 +842,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with simulator guide...")
+    print("Writing Week 1 module with reordered convergence definition...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
