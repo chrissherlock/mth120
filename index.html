@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MTHS120 | Calculus and Linear Algebra 1</title>
-        <!-- KaTeX Integration -->
+    <title>MTHS120: Discrete Mathematics | UNE Curriculum Index</title>
+    <!-- KaTeX Integration -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
@@ -14,96 +14,117 @@
             --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
             --accent: #d97706; --accent-hover: #b45309;
             --telemetry-bg: #f8fafc; --telemetry-text: #334155;
-            --track1-bg: #fffbeb; --track2-bg: #fff7ed;
             --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
-        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
-        .container { max-width: 1200px; margin: 0 auto; }
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+        /* Unified Header/Header-Wrapper styling */
         .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; }
+        .header h1 { color: #0f172a; font-family: var(--font-ui); margin-top: 0; }
+        .header a { color: var(--accent); text-decoration: none; font-weight: 500; }
+        .header a:hover { color: var(--accent-hover); text-decoration: underline; }
+
+        /* Unified Card Styling */
         .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
-        h1, h2, h3 { color: #0f172a; font-family: var(--font-ui); }
-        a { color: var(--accent); text-decoration: none; font-weight: 500; }
-        a:hover { color: var(--accent-hover); text-decoration: underline; }
-    </style>
+        .week-card { background: var(--card); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 1rem; }
 
-</head>
-<body>
+        /* Welcoming Intro Lead (from week1.html) */
+        .intro-lead { font-size: 1.1rem; color: #1e293b; line-height: 1.7; margin-bottom: 2rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 
-    <header>
-        <h1>MTHS120</h1>
-        <p>Calculus and Linear Algebra 1 • Curriculum Index</p>
-    </header>
-
-    <main class="container">
-        <div class="grid-container" id="curriculum-grid">
-            <!-- Cards will be injected here -->
-        </div>
-    </main>
-
-    <script>
-        const courseData = [
-            { week: 1, topic: "Topic 1: Sets and Numbers", readings: ["Sections 1, 2, 3"], assessment: null },
-            { week: 2, topic: "Topic 2: Limits of sequences", readings: ["Sections 4, 5, 6"], assessment: null },
-            { week: 3, topic: "Topic 3: Functions", readings: ["Sections 7, 8, 9"], assessment: "Assignment 1" },
-            { week: 4, topic: "Topic 4: Continuity and limits of functions", readings: ["Sections 10, 11, 12"], assessment: "Assignment 2 (Möbius)" },
-            { week: 5, topic: "Topic 5: Derivatives", readings: ["Sections 13, 14, 15"], assessment: "Assignment 3" },
-            { week: 6, topic: "Topic 6: Integration", readings: ["Sections 16, 17, 18"], assessment: "Assignment 4" },
-            { week: 7, topic: "Assessment and Intensive Period 1", readings: [], intensive: true },
-            { week: 8, topic: "Assessment and Intensive Period 1", readings: [], intensive: true },
-            { week: 9, topic: "Topic 6: Integrals (contd.)", readings: ["Sections 19, 20, 21"], assessment: "Assignment 5 (Möbius)" },
-            { week: 10, topic: "Topic 7: Systems of linear equations", readings: ["Sections 22, 23, 24"], assessment: "Assignment 6 (Möbius)" },
-            { week: 11, topic: "Topic 8: Applications of linear algebra and complex numbers", readings: ["Sections 25, 26, 27"], assessment: "Assignment 7 (Möbius)" },
-            { week: 12, topic: "Topic 9: Dot and cross products", readings: ["Sections 28, 29"], assessment: "Assignment 8" },
-            { week: 13, topic: "Revision", readings: ["Core Concept Review"], assessment: "Assignment 9 (Möbius)" },
-            { week: 14, topic: "Assessment and Intensive Period 2", readings: [], intensive: true }
-        ];
-
-        function buildCurriculumGrid(data) {
-            const grid = document.getElementById('curriculum-grid');
-
-            data.forEach(item => {
-                const card = document.createElement('div');
-                card.className = item.intensive ? 'card intensive-card' : 'card';
-
-                let cardContent = `
-                    <div class="card-header">
-                        <span class="week-label">Week ${item.week}</span>
-                        <h2 class="topic-title">${item.topic}</h2>
-                    </div>
-                    <div class="card-body">
-                `;
-
-                if (item.readings.length > 0) {
-                    cardContent += `<ul class="reading-list">`;
-                    item.readings.forEach(reading => {
-                        cardContent += `<li>${reading}</li>`;
-                    });
-                    cardContent += `</ul>`;
-                }
-
-                if (item.assessment) {
-                    cardContent += `<span class="assessment-badge">${item.assessment}</span>`;
-                }
-
-                cardContent += `</div>`;
-
-                if (!item.intensive) {
-                    cardContent += `
-                        <div class="card-footer">
-                            <a href="${item.week === 1 ? 'week1.html' : '#'}" class="module-link">View Module</a>
-                            <a href="#" class="module-link" style="background-color: var(--text-muted);">Simulators</a>
-                        </div>
-                    `;
-                }
-
-                card.innerHTML = cardContent;
-                grid.appendChild(card);
-            });
+        /* Welcoming Feature Styling */
+        .welcoming-feature {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-left: 5px solid var(--accent);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            align-items: center;
+        }
+        .welcoming-feature h2 { color: #92400e; margin-top: 0; font-size: 1.75rem; }
+        .welcoming-feature p { color: #b45309; margin-bottom: 0; }
+        .welcome-image-wrapper {
+            border: 1px solid #fed7aa;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        .welcome-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            buildCurriculumGrid(courseData);
-        });
-    </script>
+        /* Unified link styling */
+        .module-link {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-top: 1rem;
+            text-decoration: none;
+        }
+        .module-link:hover {
+            background: var(--accent-hover);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .welcoming-feature { grid-template-columns: 1fr; gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Unified Top Header (back navigation for index) -->
+        <div class="header">
+            <h1>MTHS120 Curriculum Index</h1>
+            <a href="https://une.edu.au" style="font-weight: 400;">&larr; Return to UNE Portal</a>
+        </div>
+
+        <div class="module-content">
+            <!-- Welcoming Intro Lead -->
+            <div class="intro-lead">
+                Welcome to the official curriculum index for UNE MTHS120. This course bridges mathematical formalism with discrete computation, exploring the language, tools, and structures used to build our digital world. Navigate through our weekly modules using the links below.
+            </div>
+
+            <!-- New Welcoming Hero Feature (using welcome-mth120.jpeg) -->
+            <div class="welcoming-feature">
+                <div class="welcome-image-wrapper">
+                    <img src="images/welcome-mth120.jpeg" alt="MTHS120 Welcoming Illustration" class="welcome-image">
+                </div>
+                <div>
+                    <h2>Hello, Mathematicians!</h2>
+                    <p>Mathematics isn't just about formulas; it's about seeing the fundamental structures that connect everything. In MTHS120, we learn to stare infinity in the eye, tame complexity, and map relationships across the algebraic plane.</p>
+                </div>
+            </div>
+
+            <h3>Weekly Modules</h3>
+
+            <!-- Week 1 (Active) -->
+            <div class="week-card">
+                <h4>Week 1: Sets, Numbers, and Sequences</h4>
+                <p>Master the grammar of logic, explore algebraic closure, and construct the real line.</p>
+                <a href="week1.html" class="module-link">View Module</a>
+            </div>
+
+            <!-- Week 2 (Placeholder) -->
+            <div class="week-card" style="opacity: 0.65;">
+                <h4>Week 2: Algebraic Structures</h4>
+                <p>Dive deep into Groups, Rings, and Fields—the foundational building blocks of algebra.</p>
+                <a href="#" class="module-link">Coming Soon...</a>
+            </div>
+
+            <!-- More weeks added as needed... -->
+
+        </div>
+    </div>
 </body>
 </html>
