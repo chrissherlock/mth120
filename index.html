@@ -21,14 +21,12 @@
         .container { max-width: 1200px; margin: 0 auto; }
 
         .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; }
-        .header h1 { color: #0f172a; margin-top: 0; font-size: 2rem; }
-        .header p { color: #64748b; margin-bottom: 0; }
+        .header h1 { color: #0f172a; margin-top: 0; font-size: 2.1rem; }
+        .header p { color: #64748b; margin-bottom: 0; font-size: 1.05rem; }
 
-        .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
+        .module-content { background: var(--card); padding: 2.25rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
 
-        .intro-lead { font-size: 1.05rem; color: #1e293b; line-height: 1.7; margin-bottom: 2rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-
-        /* Welcoming Overview Feature Component */
+        /* Welcoming Overview Card */
         .welcome-card {
             background: #fffbeb;
             border: 1px solid #fde68a;
@@ -36,10 +34,8 @@
             border-radius: 8px;
             padding: 1.75rem;
             margin-bottom: 2.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
         }
+        .welcome-header { margin-bottom: 1.5rem; }
         .welcome-header h2 {
             margin: 0 0 0.5rem 0;
             color: #92400e;
@@ -51,48 +47,56 @@
             font-size: 1.02rem;
             line-height: 1.6;
         }
-        .welcome-body-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.75rem;
-            align-items: start;
-        }
+
+        /* Full-width image banner showcase */
         .welcome-image-wrapper {
             border: 1px solid #fed7aa;
-            border-radius: 6px;
+            border-radius: 8px;
             overflow: hidden;
             background: #ffffff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            box-shadow: 0 4px 6px -1px rgba(217, 119, 6, 0.1);
+            margin-bottom: 1.5rem;
         }
         .welcome-image {
             width: 100%;
             height: auto;
             display: block;
         }
-        .welcome-pillars {
-            display: flex;
-            flex-direction: column;
+
+        /* 4-Column Balanced Pillar Grid */
+        .welcome-pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 1rem;
         }
         .pillar-item {
             background: #ffffff;
             border: 1px solid #fed7aa;
             border-radius: 6px;
-            padding: 0.85rem 1rem;
+            padding: 1rem 1.15rem;
+            display: flex;
+            flex-direction: column;
         }
         .pillar-item h5 {
-            margin: 0 0 0.35rem 0;
+            margin: 0 0 0.4rem 0;
             color: #92400e;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            font-size: 0.96rem;
+            line-height: 1.4;
         }
         .pillar-item p {
             margin: 0;
             font-size: 0.88rem;
             color: #475569;
-            line-height: 1.5;
+            line-height: 1.55;
+        }
+
+        h3.section-heading {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1.25rem;
+            color: #0f172a;
+            font-size: 1.35rem;
         }
 
         /* Modules Grid */
@@ -100,7 +104,6 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 1.25rem;
-            margin-top: 1.5rem;
         }
         .week-card {
             background: var(--card);
@@ -140,7 +143,7 @@
         .week-card p {
             color: #475569;
             font-size: 0.95rem;
-            line-height: 1.5;
+            line-height: 1.55;
             margin: 0.5rem 0 1.25rem 0;
             flex-grow: 1;
         }
@@ -165,12 +168,6 @@
             cursor: default;
             pointer-events: none;
         }
-
-        @media (max-width: 860px) {
-            .welcome-body-grid {
-                grid-template-columns: 1fr;
-            }
-        }
     </style>
 </head>
 <body>
@@ -181,44 +178,40 @@
         </div>
 
         <div class="module-content">
-            <div class="intro-lead">
-                Welcome to this self-paced reference companion for MTHS120. These notes are structured to bridge formal mathematical definitions with intuitive visual models, worked examples, and interactive simulators across the core curriculum.
-            </div>
-
             <!-- Welcoming Overview Feature Card -->
             <div class="welcome-card">
                 <div class="welcome-header">
                     <h2>Welcome to the Journey! 📐</h2>
-                    <p>Mathematics is not a collection of disconnected recipes—it is a continuous landscape of ideas connecting the discrete to the smooth, the static to the dynamic, and individual equations to multidimensional spaces. Here is an overview of what we explore across this curriculum:</p>
+                    <p>Mathematics is not a collection of disconnected recipes—it is a continuous landscape of ideas connecting the discrete to the smooth, the static to the dynamic, and individual equations to multidimensional spaces.</p>
                 </div>
 
-                <div class="welcome-body-grid">
-                    <div class="welcome-image-wrapper">
-                        <img src="images/welcome-mth120.jpeg" alt="Overview Map of Course Mathematics" class="welcome-image">
-                    </div>
+                <!-- Full-Width Illustration Showcase -->
+                <div class="welcome-image-wrapper">
+                    <img src="images/welcome-mth120.jpeg" alt="Overview Map of Course Mathematics" class="welcome-image">
+                </div>
 
-                    <div class="welcome-pillars">
-                        <div class="pillar-item">
-                            <h5>🎯 1. Limits, Sequences &amp; Continuity</h5>
-                            <p>We begin by taming infinity: tracking how infinite sequences behave as $n \to \infty$, formalizing the rigorous $\epsilon-N$ limit criteria, and discovering how local stability gives rise to continuous functions.</p>
-                        </div>
-                        <div class="pillar-item">
-                            <h5>⚡ 2. Rates of Change &amp; Optimization</h5>
-                            <p>Moving from average changes to instantaneous derivatives ($dy/dx$), we model physical rates of variation in natural systems, classify extrema (peaks and valleys), and solve real-world single-variable optimization problems.</p>
-                        </div>
-                        <div class="pillar-item">
-                            <h5>📊 3. Accumulation &amp; Definite Integrals</h5>
-                            <p>We invert differentiation to measure total accumulation: computing areas, physical volumes, and mass from varying densities via Riemann sums, elementary anti-derivatives, and substitution techniques.</p>
-                        </div>
-                        <div class="pillar-item">
-                            <h5>🧩 4. Systems of Linear Equations</h5>
-                            <p>Stepping into linear algebra, we solve simultaneous systems using row reduction and classify solution geometries—distinguishing uniquely determined, underdetermined (infinite solutions), and overdetermined (inconsistent) systems.</p>
-                        </div>
+                <!-- 4 Distinct Pillars Beneath -->
+                <div class="welcome-pillars-grid">
+                    <div class="pillar-item">
+                        <h5>🎯 1. Limits, Sequences &amp; Continuity</h5>
+                        <p>Taming infinity: evaluating terms as $n \to \infty$, testing formal $\epsilon-N$ criteria, and establishing local continuity.</p>
+                    </div>
+                    <div class="pillar-item">
+                        <h5>⚡ 2. Rates of Change &amp; Optimization</h5>
+                        <p>Moving to derivatives ($dy/dx$): modeling instantaneous natural rates, locating extrema, and solving one-variable optimization.</p>
+                    </div>
+                    <div class="pillar-item">
+                        <h5>📊 3. Accumulation &amp; Definite Integrals</h5>
+                        <p>Reversing rates to find total accumulated quantities: calculating area, volume, and mass from varying densities.</p>
+                    </div>
+                    <div class="pillar-item">
+                        <h5>🧩 4. Systems of Linear Equations</h5>
+                        <p>Entering matrix algebra: solving multi-variable systems with row reduction and classifying solution spaces.</p>
                     </div>
                 </div>
             </div>
 
-            <h3 style="margin-top: 1rem;">Course Roadmap</h3>
+            <h3 class="section-heading">Course Roadmap</h3>
 
             <div class="modules-grid">
                 <!-- Week 1 -->
