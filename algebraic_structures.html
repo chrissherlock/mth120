@@ -13,18 +13,27 @@
         :root {
             --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
             --accent: #d97706; --accent-hover: #b45309;
+            --telemetry-bg: #0f172a; --telemetry-text: #fbbf24;
+            --track1-bg: #fffbeb; --track2-bg: #fff7ed;
         }
         body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
-        .container { max-width: 950px; margin: 0 auto; }
+        .container { max-width: 1200px; margin: 0 auto; }
         .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; }
-        .content-box { background: var(--card); padding: 2.5rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid var(--border); margin-bottom: 2rem; }
-        h2 { color: #0f172a; border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2rem; }
-        .definition-box { background: #fffbeb; border-left: 4px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; border-top: 1px solid #fde68a; border-right: 1px solid #fde68a; border-bottom: 1px solid #fde68a; }
+        .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
+
+        .intro-lead { font-size: 1.1rem; color: #1e293b; line-height: 1.7; margin-bottom: 1.5rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; }
+        h3 { color: #1e293b; margin-top: 1.5rem; }
+
+        .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
         .interactive-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; }
         .btn-group { display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap; }
-        button { background: var(--accent); color: white; border: none; padding: 0.5rem 1.25rem; border-radius: 4px; cursor: pointer; font-weight: bold; transition: background 0.2s; }
+        button { background: var(--accent); color: white; border: none; padding: 0.5rem 1.25rem; border-radius: 4px; cursor: pointer; font-weight: bold; width: auto; transition: background 0.2s; }
         button:hover { background: var(--accent-hover); }
         .output-display { font-family: monospace; background: #ffffff; padding: 1rem; border: 1px solid var(--border); border-radius: 4px; margin-top: 1rem; color: #0f172a; }
+
         table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.95rem; }
         th, td { border: 1px solid var(--border); padding: 0.75rem; text-align: left; }
         th { background: #f1f5f9; color: #0f172a; }
@@ -37,21 +46,22 @@
             <a href="week1.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">&larr; Back to Week 1 Module</a>
         </div>
 
-        <div class="content-box">
-            <h2>1. What is an Algebraic Structure?</h2>
-            <p>In abstract algebra, we do not just look at individual numbers; we study sets equipped with one or more operations and ask what structural rules (axioms) they satisfy. By organizing number systems into <strong>Groups</strong>, <strong>Rings</strong>, and <strong>Fields</strong>, mathematicians can prove universal theorems that apply across wildly different branches of mathematics.</p>
+        <div class="module-content">
+            <div class="intro-lead">
+                In abstract algebra, we study sets equipped with operations and analyze the structural rules (axioms) they satisfy. By organizing number systems into <strong>Groups</strong>, <strong>Rings</strong>, and <strong>Fields</strong>, mathematicians establish universal theorems that apply across wildly different branches of mathematics.
+            </div>
 
-            <h2>2. The Building Blocks: Axioms</h2>
-            <p>To understand the hierarchy, we build up from simple rules:</p>
+            <h2>1. The Building Blocks: Axioms</h2>
+            <p>To understand the algebraic hierarchy, we build up from fundamental operational rules:</p>
             <ul>
-                <li><strong>Closure:</strong> Combining any two elements in the set using the operation produces another element within the set.</li>
+                <li><strong>Closure:</strong> Combining any two elements in the set using the operation produces another element within the set ($\forall a, b \in S, a \circ b \in S$).</li>
                 <li><strong>Associativity:</strong> Grouping does not matter: $(a \circ b) \circ c = a \circ (b \circ c)$.</li>
                 <li><strong>Identity Element:</strong> An element $e$ leaves others unchanged: $a \circ e = a$.</li>
-                <li><strong>Inverses:</strong> Every element has an opposite/reciprocal that undoes it, yielding the identity: $a \circ a^{-1} = e$.</li>
+                <li><strong>Inverses:</strong> Every element has an opposite or reciprocal that undoes it, yielding the identity: $a \circ a^{-1} = e$.</li>
                 <li><strong>Commutativity:</strong> Order does not matter: $a \circ b = b \circ a$.</li>
             </ul>
 
-            <h2>3. Hierarchy Comparison Table</h2>
+            <h2>2. Hierarchy Comparison Table</h2>
             <table>
                 <thead>
                     <tr>
@@ -64,19 +74,19 @@
                 <tbody>
                     <tr>
                         <td><strong>Group</strong></td>
-                        <td>1 Operation (+)</td>
+                        <td>1 Operation ($+$)</td>
                         <td>Closure, Associativity, Identity, Inverses</td>
                         <td>$(\mathbb{Z}, +), (\mathbb{R}, +)$</td>
                     </tr>
                     <tr>
                         <td><strong>Commutative Ring</strong></td>
-                        <td>2 Operations (+, &times;)</td>
+                        <td>2 Operations ($+, \times$)</td>
                         <td>Additive group, Multiplicative associativity & commutativity, Distributivity</td>
                         <td>$(\mathbb{Z}, +, \times)$</td>
                     </tr>
                     <tr>
                         <td><strong>Field</strong></td>
-                        <td>2 Operations (+, &times;)</td>
+                        <td>2 Operations ($+, \times$)</td>
                         <td>Ring + every non-zero element has a multiplicative inverse (division)</td>
                         <td>$(\mathbb{Q}, +, \times), (\mathbb{R}, +, \times)$</td>
                     </tr>
