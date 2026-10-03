@@ -51,7 +51,7 @@ def write_week1_module():
             <p>We begin by formalizing collections of objects as <strong>sets</strong> ($A = \{1, 2, 3\}$) and mapping relationships via <strong>functions</strong> ($f: X \rightarrow Y$). This extends to the rigorous definition of <strong>sequences</strong>: functions mapping from $\mathbb{N}$ to $\mathbb{R}$, denoted $(a_n)_{n=0}^\infty$.</p>
 
             <h3>The $\epsilon-N$ Convergence Definition</h3>
-            <p>A sequence $(a_n)$ converges to a limit $L$ if, for any error margin $\epsilon > 0$, there exists a threshold index $N$ such that for all $n > N$, the distance $|a_n - L| < \epsilon$.</p>
+            <p>A sequence $(a_n)$ converges to a limit $L$ if, for any error margin $\epsilon > 0$, there exists a threshold index $N$ such that for all $n > N$, the distance $\vert{}a_n - L\vert{} < \epsilon$.</p>
 
             <div class="simulator">
                 <div class="telemetry">
@@ -64,18 +64,13 @@ def write_week1_module():
 
                 <div class="canvas-container">
                     <svg id="plot" width="600" height="200" viewBox="0 0 600 200">
-                        <!-- Epsilon Band (True height of 28px mapping to epsilon 0.2) -->
                         <rect id="eps-band" x="40" y="132" width="540" height="28" fill="#bae6fd" opacity="0.5"/>
-
-                        <!-- Axes -->
                         <line x1="40" y1="160" x2="580" y2="160" stroke="#94a3b8" stroke-width="2"/>
                         <line x1="40" y1="20" x2="40" y2="160" stroke="#94a3b8" stroke-width="2"/>
 
-                        <!-- Axis Titles -->
                         <text x="585" y="155" font-family="serif" font-style="italic" font-size="14" fill="#64748b">n</text>
                         <text x="15" y="12" font-family="serif" font-style="italic" font-size="14" fill="#64748b">a<tspan dy="4" font-size="10">n</tspan></text>
 
-                        <!-- X-Axis Ticks & Labels -->
                         <path d="M80 160 v5 M140 160 v5 M200 160 v5 M260 160 v5 M320 160 v5 M380 160 v5 M440 160 v5 M500 160 v5" stroke="#94a3b8" fill="none"/>
                         <text x="76" y="180" font-family="sans-serif" font-size="10" fill="#64748b">1</text>
                         <text x="136" y="180" font-family="sans-serif" font-size="10" fill="#64748b">2</text>
@@ -86,20 +81,15 @@ def write_week1_module():
                         <text x="436" y="180" font-family="sans-serif" font-size="10" fill="#64748b">7</text>
                         <text x="496" y="180" font-family="sans-serif" font-size="10" fill="#64748b">8</text>
 
-                        <!-- Y-Axis Ticks & Labels -->
                         <path d="M40 20 h-5 M40 90 h-5" stroke="#94a3b8" fill="none"/>
                         <text x="25" y="165" font-family="sans-serif" font-size="10" fill="#64748b">0</text>
                         <text x="15" y="94" font-family="sans-serif" font-size="10" fill="#64748b">0.5</text>
                         <text x="15" y="24" font-family="sans-serif" font-size="10" fill="#64748b">1.0</text>
 
-                        <!-- Epsilon Line Indicator -->
                         <path d="M40 132 h-5" stroke="#0284c7" fill="none"/>
                         <text x="12" y="136" font-family="sans-serif" font-size="10" fill="#0284c7">&epsilon;=0.2</text>
 
-                        <!-- Threshold Line (Dynamic) -->
                         <line id="n-threshold" x1="200" y1="20" x2="200" y2="160" stroke="#ef4444" stroke-width="2" stroke-dasharray="4" opacity="0"/>
-
-                        <!-- Points will be injected here -->
                         <g id="points-group"></g>
                     </svg>
                 </div>
@@ -146,26 +136,26 @@ def write_week1_module():
             {
                 phase: "Initialization", n: 1,
                 summary: "Setting the boundary constraint.",
-                what: "The sequence initializes. We establish an arbitrary error band $\epsilon = 0.2$ (the blue zone).",
+                what: "The sequence initializes. We establish an arbitrary error band $\\epsilon = 0.2$ (the blue zone).",
                 why: "We must demonstrate that the sequence can permanently enter and remain within *any* arbitrary boundary we set around $L=0$."
             },
             {
                 phase: "Iteration", n: 3,
                 summary: "Terms approach but remain outside the boundary.",
-                what: "We calculate $a_2$ and $a_3$. The values are decreasing but still strictly greater than $\epsilon$.",
-                why: "The sequence is monotonic decreasing, but we have not yet found the index $N$ where the constraint $\vert{}a_n - 0\vert{} < \epsilon$ is satisfied."
+                what: "We calculate $a_2$ and $a_3$. The values are decreasing but still strictly greater than $\\epsilon$.",
+                why: "The sequence is monotonic decreasing, but we have not yet found the index $N$ where the constraint $\vert{}a_n - 0\vert{} < \\epsilon$ is satisfied."
             },
             {
                 phase: "Threshold Discovery", n: 5,
                 summary: "Calculating the critical index N.",
                 what: "We set $1/n < 0.2$, algebraically rearranging to $n > 1/0.2$, meaning $n > 5$. We mark $N=5$ with the red threshold line.",
-                why: "We are reverse-engineering the required index based on the chosen $\epsilon$. If $\epsilon$ changes, $N$ must adapt mathematically."
+                why: "We are reverse-engineering the required index based on the chosen $\\epsilon$. If $\\epsilon$ changes, $N$ must adapt mathematically."
             },
             {
                 phase: "Convergence Verification", n: 8,
                 summary: "All subsequent terms remain trapped within epsilon.",
-                what: "For all $n > 5$ (e.g., $n=6, 7, 8$), the points fall strictly inside the blue $\epsilon$ band.",
-                why: "This fulfills the universal quantifier $\forall n > N$. Because we can perform this algebraic mapping for *any* $\epsilon > 0$, the limit is proven."
+                what: "For all $n > 5$ (e.g., $n=6, 7, 8$), the points fall strictly inside the blue $\\epsilon$ band.",
+                why: "This fulfills the universal quantifier $\\forall n > N$. Because we can perform this algebraic mapping for *any* $\\epsilon > 0$, the limit is proven."
             }
         ];
 
@@ -186,7 +176,6 @@ def write_week1_module():
         function updateUI() {
             const current = narratives[state.step];
 
-            // Dynamic KaTeX injection for the telemetry values
             const seqMath = state.seq === 'reciprocal' ? '$a_n = \\frac{1}{n}$' : '$a_n = 2^{-n}$';
             document.getElementById('tel-seq').innerHTML = seqMath;
             document.getElementById('tel-val').innerHTML = '$' + data[state.seq][current.n - 1].toFixed(3) + '$';
@@ -248,11 +237,11 @@ def write_week1_module():
 
 def execute_git_sync():
     commit_message = (
-        "Enhance simulator SVG with axis labels and accurate epsilon bounds\n\n"
-        "Replaced the raw 'a_n' SVG text with a proper <tspan> subscript formulation. \n"
-        "Added tick marks and numerical labels to both the x (n) and y (a_n) axes \n"
-        "for precise scale context. Recalculated the blue epsilon band's dimensions \n"
-        "to mathematically align perfectly with the epsilon=0.2 threshold."
+        "Fix JavaScript string escaping for KaTeX telemetry\n\n"
+        "Double-escaped LaTeX commands (\\\\epsilon, \\\\forall, \\\\frac) inside \n"
+        "the JavaScript narratives array and updateUI function. This prevents \n"
+        "the browser's JS parser from converting single backslashes into \n"
+        "control characters before KaTeX can render them."
     )
 
     commands = [
