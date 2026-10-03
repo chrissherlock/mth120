@@ -14,7 +14,6 @@
             --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
             --accent: #d97706; --accent-hover: #b45309;
             --telemetry-bg: #f8fafc; --telemetry-text: #334155;
-            --track1-bg: #fffbeb; --track2-bg: #fff7ed;
             --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
         body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
@@ -52,6 +51,8 @@
             border-bottom: 1px solid #e2e8f0;
         }
         .infobox-intro strong { color: #92400e; }
+        .infobox-intro ul { margin: 0.4rem 0 0 1.25rem; padding: 0; }
+        .infobox-intro li { margin-bottom: 0.25rem; }
 
         .scoping-box {
             background: #fffbeb;
@@ -115,14 +116,14 @@
             border: 1px solid var(--border);
             border-radius: 8px;
             overflow: hidden;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
             background: var(--card);
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
 
         .telemetry-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
             gap: 0.75rem;
             padding: 0.85rem 1.25rem;
             background: #f8fafc;
@@ -294,7 +295,7 @@
                     <div class="notation-item"><span class="notation-sym">$A \cup B$</span><span class="notation-desc">Union: elements in $A$, $B$, or both</span></div>
                     <div class="notation-item"><span class="notation-sym">$A \cap B$</span><span class="notation-desc">Intersection: elements in both $A$ and $B$</span></div>
                     <div class="notation-item"><span class="notation-sym">$A \setminus B$</span><span class="notation-desc">Relative complement: elements in $A$ but not in $B$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$A \times B$</span><span class="notation-desc">Cartesian product: set of ordered pairs $(a, b)$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \times B$</span><span class="notation-desc">Cartesian product: set of ordered pairs $(a, b)$ with $a \in A, b \in B$</span></div>
                     <div class="notation-item"><span class="notation-sym">$\mid$ &nbsp; or &nbsp; $:$</span><span class="notation-desc">"Such that" (used as a filter condition)</span></div>
                 </div>
             </div>
@@ -304,8 +305,8 @@
             <div class="definition-box">
                 <p><strong>Specifying Sets:</strong></p>
                 <ul>
-                    <li><strong>Roster Notation:</strong> Explicitly listing members within braces, e.g., $A = \{2, 3, 5, 7\}$.</li>
-                    <li><strong>Set-Builder Notation:</strong> Specifying members by a property: $B = \{ x \in \mathbb{N} \mid x \text{ is prime and } x < 10 \}$.</li>
+                    <li><strong>Roster Notation:</strong> Explicitly listing members within braces, e.g., $A = \{2, 3, 5, 7\}$ (the set of the first four prime numbers).</li>
+                    <li><strong>Set-Builder Notation:</strong> Defining members by a logical predicate rule: $B = \{ x \in \mathbb{N} \mid x \text{ is prime and } x < 10 \}$.</li>
                 </ul>
             </div>
 
@@ -315,32 +316,49 @@
             <div class="definition-box">
                 <p>$$A = \{ x \in S \mid P(x) \}$$</p>
                 <ul>
-                    <li><strong>$x$:</strong> The candidate variable.</li>
-                    <li><strong>$\in S$:</strong> The universe or domain where candidates are chosen from (e.g., $x \in \mathbb{R}$).</li>
-                    <li><strong>$\mid$ or $:$:</strong> Read as <strong>"such that"</strong>.</li>
-                    <li><strong>$P(x)$:</strong> The predicate or condition candidates must satisfy.</li>
+                    <li><strong>$x$ (The Variable):</strong> Represents an arbitrary candidate element.</li>
+                    <li><strong>$\in S$ (The Domain):</strong> The universe or domain where candidates are chosen from (e.g., $x \in \mathbb{R}$).</li>
+                    <li><strong>$\mid$ or $:$ (The Separator):</strong> Read aloud as <strong>"such that"</strong>. It acts as a strict logical filter.</li>
+                    <li><strong>$P(x)$ (The Predicate):</strong> The condition or formula candidates must satisfy to gain membership.</li>
+                </ul>
+            </div>
+
+            <h3>Step-by-Step Translation Examples</h3>
+            <ul class="example-list">
+                <li><strong>Finite Set (Even Numbers):</strong> <br>
+                    $A = \{ n \in \mathbb{N} \mid n \text{ is even and } n < 10 \}$ <br>
+                    <em>Translation:</em> "The set of all natural numbers $n$ such that $n$ is even and strictly less than 10" $\rightarrow \{2, 4, 6, 8\}$.</li>
+                <li><strong>Continuous Interval (Inequalities):</strong> <br>
+                    $B = \{ x \in \mathbb{R} \mid 1 \le x < 5 \}$ <br>
+                    <em>Translation:</em> "The set of all real numbers $x$ such that $x$ is greater than or equal to 1 and strictly less than 5" $\rightarrow [1, 5)$.</li>
+                <li><strong>Transformed Elements:</strong> <br>
+                    $C = \{ y \in \mathbb{R} \mid y = x^2 \text{ for some } x \in \mathbb{Z} \}$ <br>
+                    <em>Translation:</em> "The set of all real numbers $y$ such that $y$ equals the square of some integer $x$" $\rightarrow \{0, 1, 4, 9, 16, \dots\}$.</li>
+            </ul>
+
+            <div class="aside-box">
+                <h4>⚠️ Common Beginner Pitfalls</h4>
+                <ul>
+                    <li><strong>Domain vs. Condition:</strong> The expression <em>before</em> the vertical bar specifies the pool of candidates; the expression <em>after</em> tells you who qualifies.</li>
+                    <li><strong>Redundant Restrictions:</strong> Writing $\{x \mid x \in \mathbb{R}\}$ simply denotes the entire set of real numbers $\mathbb{R}$.</li>
                 </ul>
             </div>
 
             <h3>Subsets and the Power Set</h3>
+            <p>To understand subsets, think of a club. Suppose club $B$ consists of all students in your course. Now suppose club $A$ consists only of students in that same course who also play chess. Because every single member of $A$ is also a member of $B$, we say $A$ is a <strong>subset</strong> of $B$, written as $A \subseteq B$.</p>
+
             <div class="definition-box">
                 <p><strong>Subsets and Proper Subsets:</strong></p>
                 <ul>
-                    <li>
-                        <strong>Subset ($A \subseteq B$):</strong> Every element of $A$ belongs to $B$. Formally, if $x \in A$, then $x \in B$.
-                    </li>
-                    <li>
-                        <strong>Proper Subset ($A \subset B$):</strong> $A \subseteq B$ and $A \neq B$. In other words, every element of $A$ is in $B$, but $B$ contains at least one element not in $A$.
-                    </li>
-                    <li>
-                        <strong>The Empty Set ($\emptyset \subseteq A$):</strong> The empty set contains no elements, so the conditional requirement for subset inclusion is never broken. Thus, $\emptyset \subseteq A$ holds for every set $A$.
-                    </li>
+                    <li><strong>Subset ($A \subseteq B$):</strong> Every element of $A$ belongs to $B$. Formally, if $x \in A$, then $x \in B$. (Every set is a subset of itself: $A \subseteq A$).</li>
+                    <li><strong>Proper Subset ($A \subset B$):</strong> $A \subseteq B$ and $A \neq B$. Every element of $A$ is in $B$, but $B$ contains at least one element not in $A$.</li>
+                    <li><strong>The Empty Set ($\emptyset \subseteq A$):</strong> The empty set contains no elements, so the conditional requirement for subset inclusion is never broken (it is vacuously true). Thus, $\emptyset \subseteq A$ holds for every set $A$.</li>
                 </ul>
             </div>
 
             <div class="definition-box">
                 <p><strong>The Power Set $\mathcal{P}(A)$:</strong></p>
-                <p>The <strong>power set</strong> of a set $A$, denoted $\mathcal{P}(A)$, is the set of all subsets of $A$.</p>
+                <p>The <strong>power set</strong> of a set $A$, denoted $\mathcal{P}(A)$, is the master collection of all subsets of $A$.</p>
                 <p>If $A$ is a finite set with $n$ elements, then its power set has exactly $2^n$ elements:</p>
                 <p>$$|\mathcal{P}(A)| = 2^n$$</p>
             </div>
@@ -476,24 +494,48 @@
                 </div>
             </div>
 
-            <h2 id="section-numbers">2. The Hierarchy of Number Systems</h2>
-
-            <h3>The Cartesian Product ($A \times B$)</h3>
-            <p>Named in honour of René Descartes, the <strong>Cartesian product</strong> constructs a new set of <em>ordered pairs</em> from two constituent sets.</p>
+            <h3>Cartesian Products ($A \times B$): Ordered Pairs and the Plane</h3>
+            <p>Up until now, set operations (like union and intersection) lump elements together without caring about order or pairing. But what if we want to pair every item in set $A$ with every item in set $B$? That is where the <strong>Cartesian Product</strong> comes in.</p>
 
             <div class="definition-box">
-                <p><strong>Formal Definition:</strong></p>
-                <p>$$A \times B = \{ (a, b) \mid a \in A \text{ and } b \in B \}$$</p>
+                <p><strong>What is an Ordered Pair? ($a, b$)</strong></p>
+                <p>In standard set theory, order does not matter: $\{1, 2\}$ is the exact same set as $\{2, 1\}$. However, when constructing coordinates and relations, <strong>order is everything</strong>. An <em>ordered pair</em> $(a, b)$ pairs a first element $a \in A$ with a second element $b \in B$.</p>
                 <ul>
-                    <li><strong>Ordered Pairs:</strong> In a pair $(a, b)$, order matters: $(a, b) = (c, d)$ if and only if $a = c$ and $b = d$. Unless $A = B$ or one set is empty, $A \times B \neq B \times A$.</li>
-                    <li><strong>Product Cardinality:</strong> If $A$ and $B$ are finite sets with $|A| = m$ and $|B| = n$, the total number of ordered pairs is the product of their sizes:
-                    $$|A \times B| = |A| \cdot |B| = mn$$</li>
+                    <li><strong>Order Matters:</strong> The pair $(1, 2)$ represents a completely different point than $(2, 1)$. Unless $A = B$ or one set is empty, $A \times B \neq B \times A$.</li>
+                    <li><strong>Product Cardinality:</strong> If $A$ and $B$ are finite sets with $|A| = m$ and $|B| = n$, the total number of ordered pairs is $|A \times B| = mn$.</li>
+                    <li><strong>Repetition is Allowed:</strong> Unlike standard sets where elements must be unique, an ordered pair can feature identical coordinates, such as $(2, 2)$.</li>
                 </ul>
             </div>
 
-            <p>For example, if $A = \{1, 2, 3\}$ and $B = \{x, y\}$, then:</p>
-            <p>$$A \times B = \{ (1, x), (1, y), (2, x), (2, y), (3, x), (3, y) \}$$</p>
-            <p>Here $|A| = 3$ and $|B| = 2$, yielding $|A \times B| = 3 \times 2 = 6$ ordered pairs. This operation forms the foundation of coordinate geometry: the 2D Cartesian plane is simply the self-product of the real line, $\mathbb{R}^2 = \mathbb{R} \times \mathbb{R}$.</p>
+            <p><strong>How to Build One:</strong> Suppose set $A = \{1, 2, 3\}$ represents three columns, and set $B = \{1, 2\}$ represents two rows. Pairing every element of $A$ with every element of $B$ generates $3 \times 2 = 6$ unique ordered pairs:</p>
+            <p>$$A \times B = \{ (1,1), (1,2), (2,1), (2,2), (3,1), (3,2) \}$$</p>
+
+            <div class="diagram-card" style="margin: 1.5rem 0; width: 100%; box-sizing: border-box;">
+                <h5>Discrete Cartesian Grid ($A = \{1,2,3\} \times B = \{1,2\}$)</h5>
+                <svg viewBox="0 0 520 180">
+                    <defs>
+                        <marker id="cart-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+                        </marker>
+                    </defs>
+                    <line x1="70" y1="140" x2="495" y2="140" stroke="#64748b" stroke-width="1.2" marker-end="url(#cart-arrow)"/>
+                    <line x1="90" y1="155" x2="90" y2="20" stroke="#64748b" stroke-width="1.2" marker-end="url(#cart-arrow)"/>
+                    <text x="502" y="144" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#64748b" font-weight="bold">A</text>
+                    <text x="90" y="12" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#64748b" font-weight="bold" text-anchor="middle">B</text>
+
+                    <circle cx="170" cy="110" r="5" fill="#d97706"/><text x="182" y="114" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#0f172a" font-weight="500">(1,1)</text>
+                    <circle cx="270" cy="110" r="5" fill="#d97706"/><text x="282" y="114" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#0f172a" font-weight="500">(2,1)</text>
+                    <circle cx="370" cy="110" r="5" fill="#d97706"/><text x="382" y="114" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#0f172a" font-weight="500">(3,1)</text>
+
+                    <circle cx="170" cy="60" r="5" fill="#d97706"/><text x="182" y="64" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#0f172a" font-weight="500">(1,2)</text>
+                    <circle cx="270" cy="60" r="5" fill="#d97706"/><text x="282" y="64" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#0f172a" font-weight="500">(2,2)</text>
+                    <circle cx="370" cy="60" r="5" fill="#d97706"/><text x="382" y="64" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#0f172a" font-weight="500">(3,2)</text>
+                </svg>
+            </div>
+
+            <p><strong>Connection to the Cartesian Plane ($\mathbb{R}^2$):</strong> Taking the product of the continuous real line with itself gives $\mathbb{R} \times \mathbb{R} = \mathbb{R}^2 = \{ (x, y) \mid x, y \in \mathbb{R} \}$. This continuous pairing fills every point on the 2D coordinate plane, establishing the geometric space for curves, functions, and calculus.</p>
+
+            <h2 id="section-numbers">2. The Hierarchy of Number Systems</h2>
 
             <!-- SECTION 2 NOTATION INFOBOX -->
             <div class="infobox">
@@ -502,14 +544,14 @@
                     <strong>Navigating the expanding universe of numbers?</strong> If moving from counting numbers ($\mathbb{N}$) all the way to reals ($\mathbb{R}$) feels like a whirlwind of blackboard letters, do not worry! Each letter simply represents a tool invented to solve a specific algebraic puzzle that the previous system could not handle.
                 </div>
                 <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$\mathbb{N}$</span><span class="notation-desc">Natural numbers: $\{0, 1, 2, \dots\}$ (in MTHS120, $0 \in \mathbb{N}$)</span></div>\n                    <div class="notation-item"><span class="notation-sym">$\mathbb{Z}_+$</span><span class="notation-desc">Positive integers: $\{1, 2, 3, \dots\}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{N}$</span><span class="notation-desc">Natural numbers: $\{0, 1, 2, \dots\}$ (in MTHS120, $0 \in \mathbb{N}$)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{Z}_+$</span><span class="notation-desc">Positive integers: $\{1, 2, 3, \dots\}$</span></div>
                     <div class="notation-item"><span class="notation-sym">$\mathbb{Z}$</span><span class="notation-desc">Integers: $\{\dots, -2, -1, 0, 1, 2, \dots\}$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\mathbb{Q}$</span><span class="notation-desc">Rational numbers: quotients $\{p/q \mid p, q \in \mathbb{Z}, q \neq 0\}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{Q}$</span><span class="notation-desc">Rational numbers: quotients $\{p/q \mid p \in \mathbb{Z}, q \in \mathbb{Z}_+\}$</span></div>
                     <div class="notation-item"><span class="notation-sym">$\mathbb{R}$</span><span class="notation-desc">Real numbers: rational and irrational numbers</span></div>
                     <div class="notation-item"><span class="notation-sym">$\subset$</span><span class="notation-desc">Strict set containment: $\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$</span></div>
                     <div class="notation-item"><span class="notation-sym">$[a, b]$</span><span class="notation-desc">Closed interval: $\{x \in \mathbb{R} \mid a \le x \le b\}$</span></div>
                     <div class="notation-item"><span class="notation-sym">$(a, b)$</span><span class="notation-desc">Open interval: $\{x \in \mathbb{R} \mid a < x < b\}$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$(S, \circ)$</span><span class="notation-desc">Algebraic structure: set $S$ equipped with binary operation $\circ$</span></div>
                 </div>
             </div>
 
@@ -526,7 +568,7 @@
                     <text x="105" y="114" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold">ℤ (Integers: Negatives, 0, Positives)</text>
 
                     <ellipse cx="370" cy="150" rx="210" ry="24" fill="#fed7aa" stroke="#d97706" stroke-width="1.5"/>
-                    <text x="370" y="156" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold" text-anchor="middle">ℕ (Natural Numbers: 1, 2, 3...)</text>
+                    <text x="370" y="156" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold" text-anchor="middle">ℕ (Natural Numbers: 0, 1, 2, 3...)</text>
                 </svg>
             </div>
 
@@ -554,10 +596,179 @@
                 <p style="margin-top: 1rem;"><a href="algebraic_structures.html" style="color: var(--accent); font-weight: bold; text-decoration: none;">&rarr; Explore our Interactive Deep Dive on Groups, Rings, and Fields</a></p>
             </div>
 
-            <p>Formally, a sequence of real numbers is a function $f: \mathbb{N} \to \mathbb{R}$. We denote the output $f(n)$ as $a_n$, expressing the sequence as $(a_n)_{n=1}^\infty$.</p>
+            <h3>Natural Numbers ($\mathbb{N}$): The Counting Foundation</h3>
+            <p>We begin with $\mathbb{N} = \{0, 1, 2, 3, \dots\}$. <strong>Algebraic Property:</strong> Closed under addition and multiplication. <strong>Limitation:</strong> Not closed under subtraction. Attempting to solve $x + 5 = 2$ forces us outside $\mathbb{N}$ because negative numbers do not exist here.</p>
 
-            <h3>The Formal Definition of Convergence</h3>
+            <h3>Integers ($\mathbb{Z}$): Adding Inverses</h3>
+            <p>To resolve subtraction failures, we adjoin additive inverses, forming $\mathbb{Z} = \{\dots, -2, -1, 0, 1, 2, \dots\}$. <strong>Algebraic Property:</strong> Forms an additive group and a commutative ring. <strong>Limitation:</strong> Not closed under division. Attempting to solve $2x = 3$ yields $x = \frac{3}{2}$, which has no solution inside $\mathbb{Z}$.</p>
+
+            <div class="diagram-grid">
+                <div class="diagram-card">
+                    <h5>Algebraic Failure: Subtraction in $\mathbb{N}$</h5>
+                    <svg viewBox="0 0 360 170">
+                        <rect x="10" y="10" width="340" height="150" rx="8" fill="#fffbeb" stroke="#fde68a" stroke-width="1.2"/>
+                        <text x="30" y="42" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#0f172a" font-weight="bold">1. Equation: x + 5 = 2</text>
+                        <text x="30" y="74" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#0f172a">2. Isolate x: x = 2 - 5</text>
+                        <text x="30" y="106" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#ef4444" font-weight="bold">3. Result: x = -3 ∉ ℕ</text>
+                        <text x="30" y="138" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold">→ Resolution: Expand to ℤ</text>
+                    </svg>
+                </div>
+                <div class="diagram-card">
+                    <h5>Algebraic Failure: Division in $\mathbb{Z}$</h5>
+                    <svg viewBox="0 0 360 170">
+                        <rect x="10" y="10" width="340" height="150" rx="8" fill="#fffbeb" stroke="#fde68a" stroke-width="1.2"/>
+                        <text x="30" y="42" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#0f172a" font-weight="bold">1. Equation: 2x = 3</text>
+                        <text x="30" y="74" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#0f172a">2. Isolate x: x = 3 / 2</text>
+                        <text x="30" y="106" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#ef4444" font-weight="bold">3. Result: x = 1.5 ∉ ℤ</text>
+                        <text x="30" y="138" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold">→ Resolution: Expand to ℚ</text>
+                    </svg>
+                </div>
+            </div>
+
+            <h3>Rational Numbers ($\mathbb{Q}$): The Field of Ratios</h3>
+            <p>We expand our universe to quotients of integers: $\mathbb{Q} = \{ \frac{p}{q} \mid p \in \mathbb{Z}, q \in \mathbb{Z}_+ \}$. <strong>Algebraic Property:</strong> Forms a field—fully closed under addition, subtraction, multiplication, and non-zero division.</p>
+
+            <h3>Real Numbers and Completeness</h3>
+            <p>Between any two rational numbers, another rational number exists (the rationals are <em>dense</em>). However, $\mathbb{Q}$ still contains "holes" geometrically: the diagonal of a unit square has length $\sqrt{2}$, yet no rational number satisfies $(p/q)^2 = 2$.</p>
+
+            <div class="diagram-card" style="margin: 1.5rem 0; width: 100%; box-sizing: border-box;">
+                <h5>The Geometric Gap: Constructing &radic;2 on the Number Line</h5>
+                <svg viewBox="0 0 740 200">
+                    <defs>
+                        <marker id="num-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+                        </marker>
+                    </defs>
+                    <line x1="40" y1="145" x2="710" y2="145" stroke="#64748b" stroke-width="1.2" marker-end="url(#num-arrow)"/>
+                    <circle cx="130" cy="145" r="4.5" fill="#64748b"/><text x="125" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">0</text>
+                    <circle cx="370" cy="145" r="4.5" fill="#64748b"/><text x="365" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">1</text>
+                    <circle cx="610" cy="145" r="4.5" fill="#64748b"/><text x="605" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">2</text>
+
+                    <polygon points="130,145 370,145 370,65" fill="#fef3c7" opacity="0.65" stroke="#d97706" stroke-width="1.2"/>
+                    <text x="245" y="135" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#d97706" font-weight="bold">1</text>
+                    <text x="382" y="108" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#d97706" font-weight="bold">1</text>
+
+                    <line x1="130" y1="145" x2="370" y2="65" stroke="#ef4444" stroke-width="1.2"/>
+                    <text x="220" y="92" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" fill="#ef4444">&radic;2 (&notin; ℚ)</text>
+
+                    <path d="M 370 65 A 240 240 0 0 1 470 145" fill="none" stroke="#ef4444" stroke-width="1.0" stroke-dasharray="4"/>
+                    <circle cx="470" cy="145" r="5" fill="#ef4444"/>
+                    <text x="445" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#ef4444">&radic;2 ≈ 1.414</text>
+                </svg>
+            </div>
+
             <div class="definition-box">
+                <p><strong>Completeness of $\mathbb{R}$:</strong></p>
+                <ul>
+                    <li><strong>Intuition:</strong> Completeness ensures that the real number line has no "gaps" or missing points.</li>
+                    <li><strong>Formal Property (Least Upper Bound Axiom):</strong> Every non-empty subset of $\mathbb{R}$ that is bounded above has a least upper bound (supremum) in $\mathbb{R}$.</li>
+                </ul>
+            </div>
+
+            <h2 id="section-sequences">3. Sequences and the Limit Concept</h2>
+
+            <!-- SECTION 3 NOTATION INFOBOX -->
+            <div class="infobox">
+                <h4>📖 Notation Reference: Sequences, Limits &amp; Quantifiers</h4>
+
+                <div class="infobox-intro">
+                    <strong>Don't be intimidated by the symbols!</strong> If upside-down A's ($\forall$), backward E's ($\exists$), or little ceiling brackets ($\lceil \dots \rceil$) look unfamiliar, that is completely normal. They are simply mathematicians' shorthand for everyday concepts:
+                    <ul>
+                        <li><strong>$\forall$ (For all):</strong> Read as <em>"No matter how tiny an error budget you pick..."</em></li>
+                        <li><strong>$\exists$ (There exists):</strong> Read as <em>"We can always point to a specific cutoff position..."</em></li>
+                        <li><strong>$\lceil x \rceil$ (Ceiling):</strong> Means <em>"round up to the next integer"</em> (e.g., $\lceil 4.2 \rceil = 5$), because position indices must be whole counting numbers!</li>
+                    </ul>
+                </div>
+
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym">$\forall$</span><span class="notation-desc">Universal quantifier: "for all" or "for every"</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\exists$</span><span class="notation-desc">Existential quantifier: "there exists"</span></div>
+                    <div class="notation-item"><span class="notation-sym">$(a_n)$</span><span class="notation-desc">Sequence: an ordered list $(a_1, a_2, a_3, \dots)$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$a_n$</span><span class="notation-desc">General term of the sequence at index $n \in \mathbb{N}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\lim_{n\to\infty} a_n = L$</span><span class="notation-desc">The sequence $a_n$ converges to limit $L$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\epsilon > 0$</span><span class="notation-desc">Arbitrary positive distance tolerance</span></div>
+                    <div class="notation-item"><span class="notation-sym">$N \in \mathbb{N}$</span><span class="notation-desc">Cutoff index past which terms satisfy $|a_n - L| < \epsilon$</span></div>
+                </div>
+            </div>
+
+            <p>With sets and real numbers established, we explore <strong>sequences</strong>—the fundamental bridge from discrete math to continuous calculus.</p>
+
+            <h3>What Is a Sequence?</h3>
+            <p><strong>In plain English:</strong> A sequence is an ordered list of numbers. Think of it like a playlist or numbered parking spots stretching off forever. Position is everything: there is a first term, a second term, and so on. Unlike sets, order matters and numbers can repeat.</p>
+
+            <p>Formally, a sequence of real numbers is a function $f: \mathbb{N} \to \mathbb{R}$. We denote the output $f(n)$ as $a_n$, expressing the sequence as $(a_n)_{n=1}^\infty = (a_1, a_2, a_3, \dots)$.</p>
+
+            <div class="diagram-card" style="margin: 1.5rem 0; width: 100%; box-sizing: border-box;">
+                <h5>Sequence Mapping: Domain ($\mathbb{N}$) to Codomain ($\mathbb{R}$)</h5>
+                <svg viewBox="0 0 680 180">
+                    <rect x="25" y="20" width="180" height="140" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.8"/>
+                    <text x="115" y="44" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#475569" font-weight="bold" text-anchor="middle">Domain (ℕ)</text>
+                    <circle cx="115" cy="68" r="15" fill="#fed7aa" stroke="#d97706"/><text x="115" y="73" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#92400e" font-weight="bold" text-anchor="middle">1</text>
+                    <circle cx="115" cy="102" r="15" fill="#fed7aa" stroke="#d97706"/><text x="115" y="107" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#92400e" font-weight="bold" text-anchor="middle">2</text>
+                    <circle cx="115" cy="136" r="15" fill="#fed7aa" stroke="#d97706"/><text x="115" y="141" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#92400e" font-weight="bold" text-anchor="middle">3</text>
+
+                    <path d="M 220 90 Q 305 50 390 90" fill="none" stroke="#d97706" stroke-width="2.5"/>
+                    <polygon points="390,90 380,84 382,92" fill="#d97706"/>
+                    <text x="305" y="58" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold" text-anchor="middle">f(n) = aₙ</text>
+
+                    <rect x="405" y="20" width="245" height="140" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.8"/>
+                    <text x="527" y="44" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#475569" font-weight="bold" text-anchor="middle">Codomain (ℝ)</text>
+                    <circle cx="470" cy="72" r="15" fill="#fde68a" stroke="#d97706"/><text x="470" y="77" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#b45309" font-weight="bold" text-anchor="middle">a₁</text>
+                    <circle cx="545" cy="98" r="15" fill="#fde68a" stroke="#d97706"/><text x="545" y="103" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#b45309" font-weight="bold" text-anchor="middle">a₂</text>
+                    <circle cx="500" cy="134" r="15" fill="#fde68a" stroke="#d97706"/><text x="500" y="139" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#b45309" font-weight="bold" text-anchor="middle">a₃</text>
+                </svg>
+            </div>
+
+            <div class="definition-box">
+                <p><strong>Explicit vs. Recursive Formulations:</strong></p>
+                <ul>
+                    <li><strong>Explicit (Closed-Form) Formula:</strong> Direct rule to compute the $n^{\text{th}}$ term instantly: $a_n = \frac{n}{n+1} \implies a_{100} = \frac{100}{101}$.</li>
+                    <li><strong>Recursive Definition:</strong> Defines terms relative to preceding terms with initial base cases: e.g., Fibonacci: $a_1=1, a_2=1, a_n = a_{n-1} + a_{n-2}$.</li>
+                </ul>
+            </div>
+
+            <h3>Core Behavioral Anatomy: Boundedness and Monotonicity</h3>
+            <ul>
+                <li><strong>Monotonicity:</strong> A sequence is <em>monotonically increasing</em> if $a_n \le a_{n+1}$ for all $n$, and <em>monotonically decreasing</em> if $a_n \ge a_{n+1}$.</li>
+                <li><strong>Boundedness:</strong> Bounded above if $a_n \le M$ for all $n$, and bounded below if $a_n \ge m$ for all $n$.</li>
+            </ul>
+
+            <div class="diagram-grid">
+                <div class="diagram-card">
+                    <h5>Boundedness (Upper &amp; Lower Bounds)</h5>
+                    <svg viewBox="0 0 360 170">
+                        <line x1="25" y1="35" x2="335" y2="35" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4"/>
+                        <text x="35" y="28" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#ef4444" font-weight="bold">Upper Bound M</text>
+                        <line x1="25" y1="135" x2="335" y2="135" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4"/>
+                        <text x="35" y="152" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#3b82f6" font-weight="bold">Lower Bound m</text>
+                        <circle cx="55" cy="115" r="5" fill="#d97706"/>
+                        <circle cx="115" cy="95" r="5" fill="#d97706"/>
+                        <circle cx="175" cy="75" r="5" fill="#d97706"/>
+                        <circle cx="235" cy="65" r="5" fill="#d97706"/>
+                        <circle cx="295" cy="60" r="5" fill="#d97706"/>
+                        <path d="M 55 115 L 115 95 L 175 75 L 235 65 L 295 60" fill="none" stroke="#d97706" stroke-width="1.5"/>
+                    </svg>
+                </div>
+                <div class="diagram-card">
+                    <h5>Monotonicity (Increasing Trend)</h5>
+                    <svg viewBox="0 0 360 170">
+                        <line x1="30" y1="140" x2="330" y2="140" stroke="#94a3b8" stroke-width="1.2"/>
+                        <line x1="30" y1="140" x2="30" y2="20" stroke="#94a3b8" stroke-width="1.2"/>
+                        <circle cx="70" cy="120" r="5" fill="#10b981"/>
+                        <circle cx="130" cy="92" r="5" fill="#10b981"/>
+                        <circle cx="190" cy="64" r="5" fill="#10b981"/>
+                        <circle cx="250" cy="42" r="5" fill="#10b981"/>
+                        <path d="M 70 120 L 130 92 L 190 64 L 250 42" fill="none" stroke="#10b981" stroke-width="1.5"/>
+                        <text x="140" y="158" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#475569" font-weight="600">aₙ ≤ aₙ₊₁ (Increasing)</text>
+                    </svg>
+                </div>
+            </div>
+
+            <h3>The Informal Idea of a Limit</h3>
+            <p>Consider the sequence rule $a_n = \frac{1}{n}$. Evaluating successive terms: $a_1 = 1.0, a_2 = 0.5, a_3 \approx 0.333, a_{10} = 0.1$. As $n$ grows, the numbers crowd closer to $0$. We write $\lim_{n\to\infty} \frac{1}{n} = 0$.</p>
+
+            <div class="definition-box">
+                <p><strong>The Formal Definition of Convergence:</strong></p>
                 <p>A sequence $(a_n)$ converges to a limit $L$, written $\lim_{n\to\infty} a_n = L$, if:</p>
                 <p>$$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad \forall n > N, \quad |a_n - L| < \epsilon$$</p>
             </div>
@@ -753,6 +964,10 @@
                         <span class="telemetry-label">Term Displayed</span>
                         <span class="telemetry-badge" id="cg-tel-val" style="color: #334155;">—</span>
                     </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Tolerance Status</span>
+                        <span class="telemetry-badge" id="cg-tel-status" style="color: #64748b;">Standby</span>
+                    </div>
                 </div>
 
                 <div class="game-body">
@@ -770,7 +985,7 @@
 
                     <div class="game-controls" id="step-controls" style="display: none;">
                         <button class="game-btn" id="btn-challenge-next" onclick="advanceChallengeStep()">Step Forward ($n = N + 1$)</button>
-                        <button class="game-btn" style="background-color: #64748b;" onclick="resetChallenge()">Reset</button>
+                        <button class="game-btn" style="background-color: #64748b;" onclick="resetChallenge()">Reset Challenge</button>
                     </div>
                 </div>
             </div>
@@ -985,6 +1200,8 @@
             document.getElementById('cg-tel-eps').innerText = 'Select below';
             document.getElementById('cg-tel-reqn').innerText = '—';
             document.getElementById('cg-tel-val').innerText = '—';
+            document.getElementById('cg-tel-status').innerText = 'Standby';
+            document.getElementById('cg-tel-status').style.color = '#64748b';
 
             renderGameSVG(null, 0, 0);
         }
@@ -994,10 +1211,21 @@
             const reqN = challengeState.reqN;
             const curN = challengeState.currentDisplayN;
             const atTerm = (1 / curN);
+            const clearance = (eps - atTerm).toFixed(4);
+            const isInside = curN > reqN;
 
             document.getElementById('cg-tel-eps').innerHTML = `$${eps}$`;
             document.getElementById('cg-tel-reqn').innerHTML = `$N = ${reqN}$`;
             document.getElementById('cg-tel-val').innerHTML = `$a_{${curN}} = ${atTerm.toFixed(3)}$`;
+
+            const statusEl = document.getElementById('cg-tel-status');
+            if (isInside) {
+                statusEl.innerHTML = `Inside (+${clearance})`;
+                statusEl.style.color = '#059669';
+            } else {
+                statusEl.innerHTML = `On/Outside Line`;
+                statusEl.style.color = '#d97706';
+            }
 
             if(window.renderMathInElement) {
                 renderMathInElement(document.getElementById('game-telemetry'), {
@@ -1031,7 +1259,7 @@
                 <line x1="${originX}" y1="240" x2="${originX}" y2="25" stroke="#64748b" stroke-width="1.0" marker-end="url(#game-arrow)"/>
                 <text x="${originX}" y="18" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="13" fill="#64748b" font-weight="600">a<tspan dy="3" font-size="10">n</tspan></text>
 
-                <line x1="${originX}" y1="${originY}" x2="715" y2="${originY}" stroke="#64748b" stroke-width="1.0" marker-end="url(#game-arrow)"/>
+                <line x1="${originX}" y1="715" x2="${originX}" y2="${originY}" stroke="#64748b" stroke-width="1.0" marker-end="url(#game-arrow)"/>
                 <text x="722" y="134" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="13" fill="#64748b" font-weight="600">n</text>
             `;
 
@@ -1092,6 +1320,14 @@
                 }
 
                 svgContent += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fillColor}" ${strokeAttr}/>`;
+
+                if (n === curN && inside) {
+                    svgContent += `
+                        <line x1="${cx}" y1="${topY}" x2="${cx}" y2="${cy}" stroke="#10b981" stroke-width="1.2" stroke-dasharray="3"/>
+                        <circle cx="${cx}" cy="${topY}" r="3" fill="#ef4444"/>
+                        <text x="${cx + 8}" y="${(topY + cy) / 2 + 4}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#059669" font-weight="bold">inside corridor</text>
+                    `;
+                }
             }
 
             const thresholdX = originX + (reqN * (maxXScale / maxN));
