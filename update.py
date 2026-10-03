@@ -419,7 +419,7 @@ def write_week1_module():
 
             <h3>Common Beginner Pitfalls</h3>
             <ul>
-                <li><strong>Domain vs. Condition Confusion:</strong> The expression <em>before</em> the vertical bar tells you where you are looking (the pool of candidates); the expression <em>after</em> tells you who qualifies (the filter).</li>
+                <li><strong>Domain vs. Condition Confusion:</strong> The expression <em>before</em> the vertical bar tells you where you are looking (the pool of candidates); the expression _{after_} tells you who qualifies (the filter).</li>
                 <li><strong>Redundant Restrictions:</strong> Writing $\{x \mid x \in \mathbb{R}\}$ is simply shorthand for the entire set of real numbers $\mathbb{R}$.</li>
             </ul>
 
@@ -1704,9 +1704,41 @@ def update_curriculum_index():
     with open('index.html', 'r') as f:
         content = f.read()
 
-    target = '<a href="#" class="module-link">View Module</a>'
-    replacement = '<a href="${item.week === 1 ? \'week1.html\' : \'#\'}" class="module-link">View Module</a>'
+    # Update index.html styling to match week1.html
+    # We replace its <head> contents with week1.html's styling system
+    head_end = content.find('</head>')
+    if head_end != -1:
+        new_head = """    <!-- KaTeX Integration -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+    <style>
+        :root {
+            --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
+            --accent: #d97706; --accent-hover: #b45309;
+            --telemetry-bg: #f8fafc; --telemetry-text: #334155;
+            --track1-bg: #fffbeb; --track2-bg: #fff7ed;
+            --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; }
+        .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
+        h1, h2, h3 { color: #0f172a; font-family: var(--font-ui); }
+        a { color: var(--accent); text-decoration: none; font-weight: 500; }
+        a:hover { color: var(--accent-hover); text-decoration: underline; }
+    </style>
+"""
+        # Extract everything before <style> or replace style block
+        style_start = content.find('<style>')
+        if style_start != -1:
+            content = content[:style_start] + new_head + content[content.find('</style>')+8:]
+        else:
+            content = content[:head_end] + new_head + content[head_end:]
 
+    target = '<a href="#" class="module-link">View Module</a>'
+    replacement = '<a href="week1.html" class="module-link">View Module</a>'
     updated_content = content.replace(target, replacement)
 
     with open('index.html', 'w') as f:
@@ -1714,9 +1746,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Add table of contents to week1.html\n\n"
-        "Inserted a structured module Table of Contents navigation card with anchor "
-        "links to all major sections."
+        "Update index.html styling to match week1.html design system\n\n"
+        "Unified CSS variables, font stack, card container styling, and accent colors "
+        "across index.html and week1.html."
     )
 
     commands = [
@@ -1730,9 +1762,9 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with Table of Contents...")
+    print("Writing Week 1 module...")
     write_week1_module()
-    print("Updating index.html routing...")
+    print("Updating index.html styling and routing...")
     update_curriculum_index()
     print("Committing and pushing to GitHub...")
     execute_git_sync()
