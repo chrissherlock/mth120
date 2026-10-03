@@ -302,7 +302,7 @@ def write_week1_module():
                     <div class="notation-item"><span class="notation-sym">$\subset$</span><span class="notation-desc">Strict set containment: $\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$</span></div>
                     <div class="notation-item"><span class="notation-sym">$[a, b]$</span><span class="notation-desc">Closed interval: $\{x \in \mathbb{R} \mid a \le x \le b\}$ (endpoints included)</span></div>
                     <div class="notation-item"><span class="notation-sym">$(a, b)$</span><span class="notation-desc">Open interval: $\{x \in \mathbb{R} \mid a < x < b\}$ (endpoints excluded)</span></div>
-                    <div class="notation-item"><span class="notation-sym">$(S, \circ)$</span><span class="notation-desc">Algebraic structure: set $S$ equipped with binary operation $\circ$</span></div>
+                    <div class="notation-item"><span class="notation-sym">(S, \circ)</span><span class="notation-desc">Algebraic structure: set $S$ equipped with binary operation $\circ$</span></div>
                 </div>
             </div>
 
@@ -404,7 +404,7 @@ def write_week1_module():
                     <div class="notation-item"><span class="notation-sym">$a_n$</span><span class="notation-desc">General term of sequence at position/index $n \in \mathbb{N}$</span></div>
                     <div class="notation-item"><span class="notation-sym">$n \to \infty$</span><span class="notation-desc">Index $n$ grows arbitrarily large without bound toward infinity</span></div>
                     <div class="notation-item"><span class="notation-sym">$\lim_{n\to\infty} a_n = L$</span><span class="notation-desc">The sequence $a_n$ converges to target limit value $L$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\epsilon$ (epsilon)</span><span class="notation-desc">Positive error tolerance budget; defines a neighborhood $(L-\epsilon, L+\epsilon)$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\epsilon$ (epsilon)</span><span class="notation-desc">Positive error tolerance budget; defines a neighborhood <span style="white-space: nowrap;">$(L-\epsilon, L+\epsilon)$</span></span></div>
                     <div class="notation-item"><span class="notation-sym">$N$</span><span class="notation-desc">Threshold cutoff index beyond which all terms must stay strictly inside $\epsilon$</span></div>
                     <div class="notation-item"><span class="notation-sym">$|a_n - L| < \epsilon$</span><span class="notation-desc">The distance between term $a_n$ and limit $L$ is strictly less than $\epsilon$</span></div>
                     <div class="notation-item"><span class="notation-sym">$\lceil x \rceil$</span><span class="notation-desc">Ceiling function: smallest integer greater than or equal to $x$</span></div>
@@ -913,9 +913,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Center notation symbols horizontally and vertically in Section 3 infobox\n\n"
-        "Added a scoped .infobox-section3 class in week1.html to center symbols both "
-        "horizontally and vertically within their column exclusively for Section 3."
+        "Prevent line-wrapping of (L-eps, L+eps) interval in Section 3 infobox\n\n"
+        "Wrapped the interval expression in a nowrap span within week1.html to ensure "
+        "the error neighborhood stays intact on a single line."
     )
 
     commands = [
@@ -929,7 +929,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with centered notation keys in Section 3...")
+    print("Writing Week 1 module with nowrap on interval...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
