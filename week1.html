@@ -27,6 +27,13 @@
         h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; }
         h3 { color: #1e293b; margin-top: 1.5rem; }
 
+        /* Infobox Styles */
+        .infobox { background: #f1f5f9; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.25rem 0 1.75rem 0; }
+        .infobox h4 { margin: 0 0 0.75rem 0; color: #0f172a; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .notation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.75rem 1.5rem; font-size: 0.95rem; }
+        .notation-item { display: flex; align-items: baseline; gap: 0.75rem; }
+        .notation-sym { font-family: monospace; font-weight: bold; color: var(--accent); min-width: 65px; }
+
         /* Diagram Container Styles */
         .diagram-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
         .diagram-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; align-items: center; min-width: 0; }
@@ -124,6 +131,25 @@
             </div>
 
             <h2>1. Set Theory Foundations</h2>
+
+            <!-- SECTION 1 NOTATION INFOBOX -->
+            <div class="infobox">
+                <h4>📖 Notation Reference: Set Theory</h4>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym">$x \in A$</span><span>$x$ is an element of set $A$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$x \notin A$</span><span>$x$ is not an element of set $A$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \subseteq B$</span><span>$A$ is a subset of $B$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \subset B$</span><span>$A$ is a proper subset of $B$ ($A \neq B$)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\emptyset$</span><span>The empty set (contains no elements)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathcal{P}(A)$</span><span>Power set: collection of all subsets of $A$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \cup B$</span><span>Union: elements in $A$, $B$, or both</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \cap B$</span><span>Intersection: elements in both $A$ and $B$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \setminus B$</span><span>Relative complement / difference: in $A$ but not $B$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \times B$</span><span>Cartesian product: set of ordered pairs $(a, b)$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mid$ or $:$</span><span>"Such that" (used as a filter in set-builder forms)</span></div>
+                </div>
+            </div>
+
             <p>Before we can do calculus, we need a precise, unambiguous language to talk about collections of mathematical objects. A <strong>set</strong> is any well-defined collection of objects, called <em>elements</em> or <em>members</em>. If $x$ is an element of set $A$, we write $x \in A$; otherwise, $x \notin A$.</p>
 
             <div class="definition-box">
@@ -244,6 +270,22 @@
             </ul>
 
             <h2>2. The Hierarchy of Number Systems</h2>
+
+            <!-- SECTION 2 NOTATION INFOBOX -->
+            <div class="infobox">
+                <h4>📖 Notation Reference: Number Systems</h4>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{N}$</span><span>Natural numbers: counting numbers $\{1, 2, 3, \dots\}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{Z}$</span><span>Integers: $\{\dots, -2, -1, 0, 1, 2, \dots\}$ (from German <em>Zahlen</em>)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{Q}$</span><span>Rational numbers: ratios/quotients $\{p/q \mid p, q \in \mathbb{Z}, q \neq 0\}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{R}$</span><span>Real numbers: continuous line of all rational and irrational numbers</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\subset$</span><span>Strict set containment: $\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$[a, b]$</span><span>Closed interval: $\{x \in \mathbb{R} \mid a \le x \le b\}$ (endpoints included)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$(a, b)$</span><span>Open interval: $\{x \in \mathbb{R} \mid a < x < b\}$ (endpoints excluded)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$(S, \circ)$</span><span>Algebraic structure: set $S$ equipped with binary operation $\circ$</span></div>
+                </div>
+            </div>
+
             <p>Mathematics constructs its universe of numbers step by step, algebraically expanding systems to solve equations and geometric problems that previous systems could not express. Each expansion resolves an <strong>algebraic closure failure</strong> of the previous system.</p>
 
             <div class="diagram-card" style="margin: 1.5rem 0; width: 100%; box-sizing: border-box;">
@@ -331,6 +373,24 @@
             </div>
 
             <h2>3. Sequences and the Limit Concept</h2>
+
+            <!-- SECTION 3 NOTATION INFOBOX (INCL. QUANTIFIERS) -->
+            <div class="infobox">
+                <h4>📖 Notation Reference: Sequences, Limits &amp; Quantifiers</h4>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym">$\forall$</span><span><strong>Universal Quantifier:</strong> "for all" or "for every" ($\forall \epsilon > 0$)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\exists$</span><span><strong>Existential Quantifier:</strong> "there exists" or "we can find" ($\exists N \in \mathbb{N}$)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$(a_n)$</span><span>Sequence: an ordered list $(a_1, a_2, a_3, \dots, a_n, \dots)$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$a_n$</span><span>General term of sequence at position/index $n \in \mathbb{N}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$n \to \infty$</span><span>Index $n$ grows arbitrarily large without bound toward infinity</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\lim_{n\to\infty} a_n = L$</span><span>The sequence $a_n$ converges to target limit value $L$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\epsilon$ (epsilon)</span><span>Positive error tolerance budget; defines a neighborhood $(L-\epsilon, L+\epsilon)$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$N$</span><span>Threshold cutoff index beyond which all terms must stay within $\epsilon$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$|a_n - L| < \epsilon$</span><span>The distance between term $a_n$ and limit $L$ is strictly less than $\epsilon$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\lceil x \rceil$</span><span>Ceiling function: smallest integer greater than or equal to $x$</span></div>
+                </div>
+            </div>
+
             <p>With sets and real numbers established, we explore <strong>sequences</strong>—the fundamental bridge from discrete math to continuous calculus.</p>
 
             <h3>What Is a Sequence?</h3>
@@ -712,7 +772,7 @@
             {
                 phase: "Threshold Discovery", n: 5, indexVal: 5,
                 summary: "<strong>Goal:</strong> Algebraically solve for the critical threshold index $N$ dictated by the $\\epsilon-N$ definition.",
-                what: "<p><strong>Abstract Formalism:</strong> We evaluate $\vert{}a_n - 0\vert{} < 0.2$. For linear decay ($1/n$), this yields $n > 5$. For exponential decay ($2^{-n}$), it crosses at $n > 2$.</p><p><strong>Applied Mechanics:</strong> We set the threshold index $N$, rendering the red threshold boundary on our canvas to mark the computation latency required for target precision.</p>",
+                what: "<p><strong>Abstract Formalism:</strong> We evaluate $|a_n - 0| < 0.2$. For linear decay ($1/n$), this yields $n > 5$. For exponential decay ($2^{-n}$), it crosses at $n > 2$.</p><p><strong>Applied Mechanics:</strong> We set the threshold index $N$, rendering the red threshold boundary on our canvas to mark the computation latency required for target precision.</p>",
                 why: "<p><strong>Formal Rationale:</strong> This operationalizes the existential quantifier $\\exists N$ in the formal definition.</p><p><strong>System Constraint:</strong> Establishes the exact execution latency required before the system certifies output stability.</p>"
             },
             {
