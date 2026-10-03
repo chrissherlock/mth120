@@ -2,7 +2,7 @@
 import os
 import subprocess
 
-def add_svg_to_squeeze_example():
+def force_add_svg_to_squeeze_example():
     filepath = 'week2.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
@@ -11,12 +11,19 @@ def add_svg_to_squeeze_example():
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # Old block containing the reciprocal comparison without SVG
-    old_block = '''                <p><strong>Cautionary Contrast: What about the reciprocal $\frac{n}{\sin(n)}$?</strong></p>
-                <p>It is easy to confuse $\frac{\sin(n)}{n}$ with its reciprocal $\frac{n}{\sin(n)}$. However, as $n$ grows while $\sin(n)$ periodically approaches $0$ near integer multiples of $\pi$, the ratio $\frac{n}{\sin(n)}$ shoots off toward $\pm\infty$ with wild, unbounded oscillations. Therefore, <strong>$\lim_{n\to\infty} \frac{n}{\sin(n)}$ diverges</strong> and the Squeeze Theorem cannot be applied here.</p>'''
+    # Anchor target: the classic example box header
+    anchor = '<h4>🎯 Classic Example: Applying the Squeeze Theorem</h4>'
 
-    # New block embedding the SVG graph directly
-    new_block = '''                <p><strong>Cautionary Contrast: What about the reciprocal $\frac{n}{\sin(n)}$?</strong></p>
+    # The complete enhanced box content including SVG
+    enhanced_box = '''<h4>🎯 Classic Example: Applying the Squeeze Theorem</h4>
+                <p>Consider evaluating $\lim_{n\to\infty} \frac{\sin(n)}{n}$. Because sine oscillates between $-1$ and $1$, we know:</p>
+                <p style="text-align: center; margin: 0.75rem 0;">$$-\frac{1}{n} \le \frac{\sin(n)}{n} \le \frac{1}{n}$$</p>
+                <p>Since $\lim_{n\to\infty} \left(-\frac{1}{n}\right) = 0$ and $\lim_{n\to\infty} \left(\frac{1}{n}\right) = 0$, the Squeeze Theorem forces our middle sequence to also converge:</p>
+                <p style="text-align: center; margin-top: 0.75rem;">$$\lim_{n\to\infty} \frac{\sin(n)}{n} = 0$$</p>
+
+                <hr style="border: none; border-top: 1px solid #fde68a; margin: 1.25rem 0;">
+
+                <p><strong>Cautionary Contrast: What about the reciprocal $\frac{n}{\sin(n)}$?</strong></p>
                 <p>It is easy to confuse $\frac{\sin(n)}{n}$ with its reciprocal $\frac{n}{\sin(n)}$. However, as $n$ grows while $\sin(n)$ periodically approaches $0$ near integer multiples of $\pi$, the ratio $\frac{n}{\sin(n)}$ shoots off toward $\pm\infty$ with wild, unbounded oscillations. Therefore, <strong>$\lim_{n\to\infty} \frac{n}{\sin(n)}$ diverges</strong> and the Squeeze Theorem cannot be applied here.</p>
 
                 <!-- Embedded SVG Graph of n / sin(n) divergence -->
@@ -36,19 +43,25 @@ def add_svg_to_squeeze_example():
                     </svg>
                 </div>'''
 
-    if old_block in content:
-        content = content.replace(old_block, new_block)
+    if anchor in content:
+        # If already partially added, let's clean up and replace from anchor to closing div
+        parts = content.split(anchor)
+        # Find the next major section or end of aside box
+        sub_parts = parts[1].split('</div>\n            </div>')
+        rest_of_page = sub_parts[1] if len(sub_parts) > 1 else parts[1]
+
+        new_content = parts[0] + enhanced_box + '\n            </div>\n' + rest_of_page
         with open(filepath, 'w', encoding='utf-8') as f:
-            f.write(content)
-        print("Successfully embedded SVG graph into Squeeze Theorem example in week2.html.")
+            f.write(new_content)
+        print("Successfully injected SVG graph into Squeeze Theorem example in week2.html.")
     else:
-        print("Reciprocal comparison block not found in week2.html.")
+        print("Error: Anchor header not found in week2.html.")
 
 def execute_git_sync():
     commit_message = (
-        "Embed n / sin(n) divergence SVG graph into Squeeze Theorem classic example\n\n"
-        "Added an embedded SVG visualization contrasting the convergent sin(n)/n\n"
-        "with the wildly oscillating, divergent n / sin(n) sequence in week2.html."
+        "Inject n / sin(n) divergence SVG graph into Squeeze Theorem example\n\n"
+        "Used robust anchor replacement in update.py to guarantee insertion of the\n"
+        "n / sin(n) divergence SVG visualization into week2.html."
     )
     commands = [
         ['git', 'add', 'week2.html', 'update.py'],
@@ -60,5 +73,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    add_svg_to_squeeze_example()
+    force_add_svg_to_squeeze_example()
     execute_git_sync()
