@@ -488,6 +488,33 @@
                 </ol>
             </div>
 
+                        <h3 style="margin-top: 2rem;">Evaluating Recursively Defined Sequences</h3>
+            <p>When a sequence is given by a recurrence relation (e.g., $x_{n+1} = f(x_n)$) rather than an explicit formula, we cannot calculate its limit directly at first glance. Instead, we use a powerful <strong>4-step strategy</strong> combining induction and the Monotone Convergence Theorem:</p>
+
+            <div class="infobox">
+                <h4>🛠️ The 4-Step Strategy for Recursive Sequences</h4>
+                <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
+                    <li style="margin-bottom: 0.5rem;"><strong>Step 1: Prove Boundedness.</strong> Use mathematical induction to show that all terms remain bounded above or below by a constant $M$.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Step 2: Prove Monotonicity.</strong> Show that $x_{n+1} \ge x_n$ (increasing) or $x_{n+1} \le x_n$ (decreasing), often via induction or direct algebraic comparison.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Step 3: Invoke the MCT.</strong> Since the sequence is monotonic and bounded, conclude that $\lim_{n\to\infty} x_n = L$ exists.</li>
+                    <li><div><strong>Step 4: Solve Algebraically.</strong> Take the limit $\lim_{n\to\infty}$ on both sides of the recurrence relation (substituting $L$ for both $x_{n+1}$ and $x_n$) and solve for $L$.</div></li>
+                </ol>
+            </div>
+
+            <div class="aside-box" style="margin-top: 1.5rem;">
+                <h4>🎯 Worked Example: The Nested Radical Sequence</h4>
+                <p>Consider the recursively defined sequence given by $x_1 = \sqrt{2}$ and $x_{n+1} = \sqrt{2 + x_n}$ for $n \ge 1$. Let's evaluate its limit:</p>
+                <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
+                    <li style="margin-bottom: 0.4rem;"><strong>Boundedness:</strong> We show by induction that $x_n < 2$ for all $n$. Base case ($n=1$): $x_1 = \sqrt{2} < 2$ (true). Assuming $x_k < 2$, then $x_{k+1} = \sqrt{2 + x_k} < \sqrt{2 + 2} = 2$. Thus, the sequence is bounded above by $2$.</li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Monotonicity:</strong> We show $x_{n+1} > x_n$. Base case: $x_2 = \sqrt{2 + \sqrt{2}} > \sqrt{2} = x_1$. By induction, if $x_k > x_{k-1}$, then $\sqrt{2 + x_k} > \sqrt{2 + x_{k-1}}$, so $x_{n+1}$ is strictly increasing.</li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Existence:</strong> By the Monotone Convergence Theorem, $\lim_{n\to\infty} x_n = L$ exists.</li>
+                    <li><strong>Algebraic Evaluation:</strong> Taking the limit on both sides of $x_{n+1} = \sqrt{2 + x_n}$:
+                        <p style="text-align: center; margin: 0.5rem 0;">$$L = \sqrt{2 + L} \implies L^2 = 2 + L \implies L^2 - L - 2 = 0$$</p>
+                        Factoring yields $(L - 2)(L + 1) = 0$. Since all terms $x_n > 0$, the limit must be positive, giving <strong>$L = 2$</strong>.
+                    </li>
+                </ol>
+            </div>
+
             <!-- SECTION 4 -->
             <h2 id="section-infinity">4. Infinity as a Limit</h2>
             <p>A sequence tends to infinity ($\lim a_n = \infty$) if for any large $M$, all terms past some index $N$ satisfy $a_n > M$. Unbounded increasing sequences diverge to infinity (Proposition 7).</p>
