@@ -658,15 +658,15 @@ def write_week1_module():
                         <strong>How This Game Works:</strong><br>
                         • <strong>The Sequence:</strong> We are testing $a_n = \frac{1}{n}$, which produces the shrinking list: $1, 0.5, 0.33, 0.25, 0.2, 0.16, \dots$ heading toward $0$.<br>
                         • <strong>Your Challenge:</strong> Click a tolerance button below to pick your error budget ($\epsilon$). You demand that sequence terms fall <em>strictly inside</em> the $\pm \epsilon$ band ($\vert{}a_n - 0\vert{} < \epsilon$).<br>
-                        • <strong>Boundary Condition ($a_N$ on the edge):</strong> Notice that at cutoff $N$, the term $a_N$ sits directly on the boundary line ($1/5 = 0.2$). Because $0.2 < 0.2$ is false, it hasn't entered tolerance yet! The definition requires $n > N$, meaning terms only enter and remain strictly inside starting at $n = N+1$.<br>
-                        • <strong>Step Forward:</strong> Click "Step Forward" to advance past $N$ and watch the terms safely enter the shaded interior forever!
+                        • <strong>Dynamic Visual Zoom:</strong> For tighter tolerances ($\epsilon = 0.1$ and $0.05$), the vertical scale zooms in automatically around $0$ so you can clearly see the corridor interior and confirm that points past $N$ drop below the ceiling!<br>
+                        • <strong>Step Forward:</strong> Click "Step Forward" to advance past $N$ and watch the terms safely enter the shaded interior with visible numerical clearance!
                     </div>
 
                     <p><strong>Choose Your Error Budget ($\epsilon$):</strong></p>
                     <div class="game-controls">
                         <button class="game-btn" onclick="startChallenge(0.2)">Test $\epsilon = 0.2$ (Wide)</button>
-                        <button class="game-btn" onclick="startChallenge(0.1)">Test $\epsilon = 0.1$ (Medium)</button>
-                        <button class="game-btn" onclick="startChallenge(0.05)">Test $\epsilon = 0.05$ (Tight)</button>
+                        <button class="game-btn" onclick="startChallenge(0.1)">Test $\epsilon = 0.1$ (Medium - Zoomed)</button>
+                        <button class="game-btn" onclick="startChallenge(0.05)">Test $\epsilon = 0.05$ (Tight - Zoomed)</button>
                     </div>
 
                     <div class="game-canvas-wrap">
@@ -760,14 +760,14 @@ def write_week1_module():
 
                 <div class="controls-pane">
                     <div class="nav-buttons">
-                        <button id="btn-prev" onclick="step(-1)" disabled>Prev Step</button>
-                        <button id="btn-next" onclick="step(1)">Next Step</button>
-                        <button id="btn-reset" onclick="reset()" style="background-color: #64748b;">Reset</button>
+                        <button id="btn-prev" onclick="stepDualTrack(-1)" disabled>Prev Step</button>
+                        <button id="btn-next" onclick="stepDualTrack(1)">Next Step</button>
+                        <button id="btn-reset" onclick="resetDualTrack()" style="background-color: #64748b;">Reset</button>
                     </div>
                     <div class="step-summary" id="step-summary"></div>
                     <div class="toggle-group">
                         <label for="seq-toggle" style="font-size: 0.85rem; font-weight: bold; color: #475569; display: block; margin-bottom: 0.5rem;">COMPARE ARCHITECTURE:</label>
-                        <select id="seq-toggle" onchange="changeSeq()">
+                        <select id="seq-toggle" onchange="changeDualTrackSeq()">
                             <option value="reciprocal">Linear Attenuator (a_n = 1/n)</option>
                             <option value="geometric">Exponential Decay (a_n = 2^-n)</option>
                         </select>
@@ -871,7 +871,6 @@ def write_week1_module():
             const current = formulaClauses[idx];
             const isAdversarial = formulaState.perspective === 'adversarial';
 
-            // Update formula chunks
             for (let i = 0; i < 4; i++) {
                 const el = document.getElementById(`chunk-${i}`);
                 el.classList.remove('active', 'completed');
@@ -882,22 +881,18 @@ def write_week1_module():
                 }
             }
 
-            // Update Telemetry
             document.getElementById('fw-tel-clause').innerText = current.clauseTitle;
             document.getElementById('fw-tel-quant').innerText = current.quantifier;
             document.getElementById('fw-tel-role').innerText = current.role;
             document.getElementById('fw-tel-scope').innerText = current.scope;
 
-            // Update Navigation Button States
             document.getElementById('btn-fw-prev').disabled = (idx === 0);
             document.getElementById('btn-fw-next').disabled = (idx === 3);
 
-            // Update Summary & Panes
             document.getElementById('fw-step-summary').innerHTML = current.summary;
             document.getElementById('fw-pane-what').innerHTML = isAdversarial ? current.adversarialWhat : current.verificationWhat;
             document.getElementById('fw-pane-why').innerHTML = isAdversarial ? current.adversarialWhy : current.verificationWhy;
 
-            // Render Math inside updated text
             if (window.renderMathInElement) {
                 renderMathInElement(document.getElementById('definition-walkthrough'), {
                     delimiters: [
@@ -907,7 +902,6 @@ def write_week1_module():
                 });
             }
 
-            // Synchronize Visual Canvas
             updateFormulaCanvas(idx);
         }
 
@@ -923,7 +917,6 @@ def write_week1_module():
             const trapped3 = document.getElementById('pt-trapped-3');
             const trapped4 = document.getElementById('pt-trapped-4');
 
-            // Default canvas resets
             epsBand.setAttribute('opacity', '0.2');
             epsBand.setAttribute('stroke', '#cbd5e1');
             epsLbl1.setAttribute('fill', '#94a3b8');
@@ -938,20 +931,17 @@ def write_week1_module():
             });
 
             if (step === 0) {
-                // Emphasize Epsilon Band
                 epsBand.setAttribute('opacity', '0.6');
                 epsBand.setAttribute('stroke', '#f59e0b');
                 epsBand.setAttribute('stroke-width', '2.5');
                 epsLbl1.setAttribute('fill', '#d97706');
                 epsLbl2.setAttribute('fill', '#d97706');
             } else if (step === 1) {
-                // Emphasize N Cutoff Line
                 epsBand.setAttribute('opacity', '0.35');
                 nLine.setAttribute('opacity', '1');
                 nLine.setAttribute('stroke', '#ef4444');
                 nLbl.setAttribute('opacity', '1');
             } else if (step === 2) {
-                // Emphasize Tail Selection past N
                 epsBand.setAttribute('opacity', '0.35');
                 nLine.setAttribute('opacity', '0.8');
                 nLbl.setAttribute('opacity', '0.8');
@@ -960,7 +950,6 @@ def write_week1_module():
                     pt.setAttribute('r', '6');
                 });
             } else if (step === 3) {
-                // Emphasize Permanent Containment (< eps)
                 epsBand.setAttribute('opacity', '0.7');
                 epsBand.setAttribute('stroke', '#10b981');
                 nLine.setAttribute('opacity', '0.8');
@@ -973,7 +962,7 @@ def write_week1_module():
         }
 
         /* ==========================================================================
-           EPSILON CHALLENGE GAME
+           EPSILON CHALLENGE GAME (WITH DYNAMIC TARGET ZOOMING)
            ========================================================================== */
         const challengeState = { active: false, eps: 0.2, reqN: 5, currentDisplayN: 5 };
 
@@ -1019,11 +1008,18 @@ def write_week1_module():
             const curN = challengeState.currentDisplayN;
 
             const output = document.getElementById('game-output');
+            const atTerm = (1 / curN);
+            const clearance = (eps - atTerm).toFixed(4);
+            const isInside = curN > reqN;
+
             output.innerHTML = `<strong>Challenge Active ($\\epsilon = ${eps}$):</strong><br>` +
-                `• System calculated required threshold: $N = \\lceil 1/${eps} \\rceil = ${reqN}$<br>` +
-                `• At cutoff index $n = ${reqN}$, term $a_{${reqN}} = ${ (1/reqN).toFixed(3) }$ sits directly on the boundary ($|a_n - L| = \\epsilon$).<br>` +
-                `• Currently viewing up to position index $n = ${curN}$.<br>` +
-                `• <strong>Status:</strong> All terms for $n > ${reqN}$ are strictly trapped inside the $\\pm ${eps}$ error zone!`;
+                `• Required cutoff index: $N = \\lceil 1/${eps} \\rceil = ${reqN}$<br>` +
+                `• At cutoff index $n = ${reqN}$, term $a_{${reqN}} = ${(1/reqN).toFixed(3)}$ sits directly on the boundary ($|a_n - L| = \\epsilon$).<br>` +
+                `• Currently inspecting term $a_{${curN}} = ${atTerm.toFixed(4)}$: ` +
+                (isInside
+                    ? `<span style="color: #059669; font-weight: bold;">STRONGLY INSIDE</span> (Clearance beneath ceiling: $\\delta = +${clearance}$)</span>`
+                    : `<span style="color: #d97706; font-weight: bold;">ON/OUTSIDE BOUNDARY</span>`) +
+                `<br>• <strong>Status:</strong> All terms for $n > ${reqN}$ are strictly trapped inside the $\\pm ${eps}$ error zone!`;
 
             if(window.renderMathInElement) {
                 renderMathInElement(output, {
@@ -1041,10 +1037,21 @@ def write_week1_module():
             const maxN = Math.max(14, reqN + 4);
             const width = 560;
             const height = 210;
-            const originX = 50;
+            const originX = 55;
             const originY = 175;
-            const maxXScale = 480;
-            const maxYScale = 150;
+            const maxXScale = 475;
+
+            // DYNAMIC VERTICAL ZOOM:
+            // For smaller epsilons, we scale the Y-axis so the band remains at least 50px high
+            // rather than shrinking to an unreadable 5-pixel slit.
+            let maxYScale;
+            if (eps <= 0.05) {
+                maxYScale = 850; // Magnifies epsilon=0.05 up to 42.5px height
+            } else if (eps <= 0.1) {
+                maxYScale = 450; // Magnifies epsilon=0.1 up to 45px height
+            } else {
+                maxYScale = 160; // Standard proportion
+            }
 
             const topY = originY - (eps * maxYScale);
             const bottomY = originY + (eps * maxYScale);
@@ -1052,26 +1059,44 @@ def write_week1_module():
             const bandY = topY;
 
             let svgContent = `
-                <rect x="${originX}" y="${bandY}" width="${maxXScale}" height="${bandHeight}" fill="#fef3c7" opacity="0.7"/>
-                <line x1="${originX}" y1="${topY}" x2="${originX + maxXScale}" y2="${topY}" stroke="#d97706" stroke-width="1.2" stroke-dasharray="3"/>
-                <line x1="${originX}" y1="${bottomY}" x2="${originX + maxXScale}" y2="${bottomY}" stroke="#d97706" stroke-width="1.2" stroke-dasharray="3"/>
+                <!-- Tolerance corridor -->
+                <rect x="${originX}" y="${bandY}" width="${maxXScale}" height="${bandHeight}" fill="#fef3c7" opacity="0.75"/>
+                <line x1="${originX}" y1="${topY}" x2="${originX + maxXScale}" y2="${topY}" stroke="#d97706" stroke-width="1.5" stroke-dasharray="3"/>
+                <line x1="${originX}" y1="${bottomY}" x2="${originX + maxXScale}" y2="${bottomY}" stroke="#d97706" stroke-width="1.5" stroke-dasharray="3"/>
+
+                <!-- Zero Target Line -->
                 <line x1="${originX}" y1="${originY}" x2="${originX + maxXScale}" y2="${originY}" stroke="#64748b" stroke-width="2"/>
-                <line x1="${originX}" y1="15" x2="${originX}" y2="${originY}" stroke="#64748b" stroke-width="2"/>
-                <text x="5" y="${topY + 4}" font-family="sans-serif" font-size="9" fill="#d97706">+&epsilon;</text>
-                <polyline points="37,${topY - 3} ${originX},${topY} 37,${topY + 3}" fill="none" stroke="#d97706" stroke-width="1.2"/>
-                <line x1="27" y1="${topY}" x2="${originX}" y2="${topY}" stroke="#d97706" stroke-width="0.8" stroke-dasharray="2"/>
-                <text x="5" y="${bottomY + 4}" font-family="sans-serif" font-size="9" fill="#d97706">-&epsilon;</text>
-                <polyline points="37,${bottomY - 3} ${originX},${bottomY} 37,${bottomY + 3}" fill="none" stroke="#d97706" stroke-width="1.2"/>
-                <line x1="27" y1="${bottomY}" x2="${originX}" y2="${bottomY}" stroke="#d97706" stroke-width="0.8" stroke-dasharray="2"/>
+                <text x="${originX - 25}" y="${originY + 4}" font-family="sans-serif" font-size="10" fill="#64748b">L=0</text>
+
+                <!-- Axis Line -->
+                <line x1="${originX}" y1="15" x2="${originX}" y2="${originY + 15}" stroke="#64748b" stroke-width="2"/>
+
+                <!-- Epsilon labels with pointer arrows -->
+                <text x="5" y="${topY + 4}" font-family="sans-serif" font-size="9" font-weight="bold" fill="#d97706">+&epsilon; (${eps})</text>
+                <polyline points="40,${topY - 3} ${originX},${topY} 40,${topY + 3}" fill="none" stroke="#d97706" stroke-width="1.5"/>
+                <line x1="30" y1="${topY}" x2="${originX}" y2="${topY}" stroke="#d97706" stroke-width="0.8" stroke-dasharray="2"/>
+
+                <text x="5" y="${bottomY + 4}" font-family="sans-serif" font-size="9" font-weight="bold" fill="#d97706">-&epsilon;</text>
+                <polyline points="40,${bottomY - 3} ${originX},${bottomY} 40,${bottomY + 3}" fill="none" stroke="#d97706" stroke-width="1.5"/>
+                <line x1="30" y1="${bottomY}" x2="${originX}" y2="${bottomY}" stroke="#d97706" stroke-width="0.8" stroke-dasharray="2"/>
             `;
 
+            // Draw points
             for (let n = 1; n <= curN; n++) {
                 const val = 1 / n;
                 const cx = originX + (n * (maxXScale / maxN));
                 const cy = originY - (val * maxYScale);
 
-                svgContent += `<line x1="${cx}" y1="${originY}" x2="${cx}" y2="${originY + 4}" stroke="#64748b"/>`;
-                svgContent += `<text x="${cx - 4}" y="${originY + 16}" font-family="sans-serif" font-size="9" fill="#475569">${n}</text>`;
+                // Tick marks on axis
+                if (n % 2 === 0 || n === 1 || n === reqN || n === curN) {
+                    svgContent += `<line x1="${cx}" y1="${originY}" x2="${cx}" y2="${originY + 4}" stroke="#94a3b8"/>`;
+                    svgContent += `<text x="${cx - 4}" y="${originY + 16}" font-family="sans-serif" font-size="9" fill="#475569">${n}</text>`;
+                }
+
+                // If point is off-canvas above, clamp drawing so it doesn't break header
+                if (cy < 15) {
+                    continue;
+                }
 
                 const inside = n > reqN;
                 const onBoundary = n === reqN;
@@ -1089,8 +1114,18 @@ def write_week1_module():
                 }
 
                 svgContent += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fillColor}" ${strokeAttr}/>`;
+
+                // For the currently active inspected tail term, draw a vertical clearance guide
+                if (n === curN && inside) {
+                    svgContent += `
+                        <line x1="${cx}" y1="${topY}" x2="${cx}" y2="${cy}" stroke="#10b981" stroke-width="2" stroke-dasharray="2"/>
+                        <circle cx="${cx}" cy="${topY}" r="3" fill="#ef4444"/>
+                        <text x="${cx + 6}" y="${(topY + cy) / 2 + 3}" font-family="sans-serif" font-size="9" fill="#059669" font-weight="bold">inside corridor</text>
+                    `;
+                }
             }
 
+            // Cutoff milestone line
             const thresholdX = originX + (reqN * (maxXScale / maxN));
             svgContent += `
                 <line x1="${thresholdX}" y1="15" x2="${thresholdX}" y2="${originY + 10}" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"/>
@@ -1103,13 +1138,13 @@ def write_week1_module():
         /* ==========================================================================
            DUAL-TRACK SIMULATOR MODULE
            ========================================================================== */
-        const state = { step: 0, seq: 'reciprocal', eps: 0.2 };
-        const data = {
+        const dualTrackState = { step: 0, seq: 'reciprocal', eps: 0.2 };
+        const dualTrackData = {
             reciprocal: [1.0, 0.5, 0.333, 0.25, 0.2, 0.166, 0.142, 0.125],
             geometric: [1.0, 0.5, 0.25, 0.125, 0.0625, 0.03125, 0.0156, 0.0078]
         };
 
-        const narratives = [
+        const dualTrackNarratives = [
             {
                 phase: "Initialization", n: 1, indexVal: 1,
                 summary: "<strong>Goal:</strong> Initialize the sequence mapping $f: \\mathbb{N} \\rightarrow \\mathbb{R}$ and establish error bound constraints for our numerical iteration stream.",
@@ -1136,26 +1171,31 @@ def write_week1_module():
             }
         ];
 
-        function changeSeq() {
-            state.seq = document.getElementById('seq-toggle').value;
-            updateUI();
+        function changeDualTrackSeq() {
+            dualTrackState.seq = document.getElementById('seq-toggle').value;
+            updateDualTrackUI();
         }
 
-        function step(dir) {
-            state.step += dir;
-            document.getElementById('btn-prev').disabled = state.step === 0;
-            document.getElementById('btn-next').disabled = state.step === 3;
-            updateUI();
+        function stepDualTrack(dir) {
+            dualTrackState.step += dir;
+            if (dualTrackState.step < 0) dualTrackState.step = 0;
+            if (dualTrackState.step > 3) dualTrackState.step = 3;
+            document.getElementById('btn-prev').disabled = dualTrackState.step === 0;
+            document.getElementById('btn-next').disabled = dualTrackState.step === 3;
+            updateDualTrackUI();
         }
 
-        function reset() { state.step = 0; step(0); }
+        function resetDualTrack() {
+            dualTrackState.step = 0;
+            stepDualTrack(0);
+        }
 
-        function updateUI() {
-            const current = narratives[state.step];
+        function updateDualTrackUI() {
+            const current = dualTrackNarratives[dualTrackState.step];
 
-            const seqMath = state.seq === 'reciprocal' ? '$a_n = \\frac{1}{n}$' : '$a_n = 2^{-n}$';
+            const seqMath = dualTrackState.seq === 'reciprocal' ? '$a_n = \\frac{1}{n}$' : '$a_n = 2^{-n}$';
             document.getElementById('tel-seq').innerHTML = seqMath;
-            document.getElementById('tel-val').innerHTML = '$' + data[state.seq][current.indexVal - 1].toFixed(3) + '$';
+            document.getElementById('tel-val').innerHTML = '$' + dualTrackData[dualTrackState.seq][current.indexVal - 1].toFixed(3) + '$';
 
             document.getElementById('tel-phase').innerText = current.phase;
             document.getElementById('tel-n').innerText = current.indexVal;
@@ -1172,31 +1212,31 @@ def write_week1_module():
                     ]
                 });
             }
-            renderCanvas();
+            renderDualTrackCanvas();
         }
 
-        function renderCanvas() {
+        function renderDualTrackCanvas() {
             const group = document.getElementById('points-group');
             const threshold = document.getElementById('n-threshold');
             group.innerHTML = '';
 
-            const current = narratives[state.step];
-            const pointsToDraw = data[state.seq].slice(0, current.indexVal);
+            const current = dualTrackNarratives[dualTrackState.step];
+            const pointsToDraw = dualTrackData[dualTrackState.seq].slice(0, current.indexVal);
 
             pointsToDraw.forEach((val, idx) => {
                 const cx = 80 + (idx * 60);
                 const cy = 160 - (val * 140);
                 group.innerHTML += `<circle cx="${cx}" cy="${cy}" r="5" fill="#d97706" />`;
                 if(idx > 0) {
-                    const prevVal = data[state.seq][idx - 1];
+                    const prevVal = dualTrackData[dualTrackState.seq][idx - 1];
                     const px = 80 + ((idx - 1) * 60);
-                    py = 160 - (prevVal * 140);
+                    const py = 160 - (prevVal * 140);
                     group.innerHTML += `<line x1="${px}" y1="${py}" x2="${cx}" y2="${cy}" stroke="#d97706" stroke-width="2" opacity="0.5"/>`;
                 }
             });
 
-            if (state.step >= 2) {
-                const nIndex = state.seq === 'reciprocal' ? 5 : 3;
+            if (dualTrackState.step >= 2) {
+                const nIndex = dualTrackState.seq === 'reciprocal' ? 5 : 3;
                 threshold.setAttribute('x1', 80 + (nIndex-1)*60);
                 threshold.setAttribute('x2', 80 + (nIndex-1)*60);
                 threshold.setAttribute('opacity', '1');
@@ -1206,7 +1246,7 @@ def write_week1_module():
         }
 
         // Initializations on load
-        reset();
+        resetDualTrack();
         resetFormula();
     </script>
 </body>
@@ -1233,10 +1273,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Add animated clause-by-clause stepper for convergence definition\n\n"
-        "Implemented a Directed Narrative Stepper under the Formal Definition of Convergence "
-        "in week1.html featuring animated clause illumination, paired analytical panes, "
-        "live telemetry, and comparative dimension toggles."
+        "Add dynamic vertical scaling and clearance zoom for tight epsilon bands\n\n"
+        "Updated renderGameSVG in week1.html to scale vertical bounds dynamically when "
+        "epsilon <= 0.1, ensuring tight error corridors remain clearly visible and distinguishable."
     )
 
     commands = [
@@ -1250,7 +1289,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with clause-by-clause convergence stepper...")
+    print("Writing Week 1 module with dynamic epsilon zoom...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
