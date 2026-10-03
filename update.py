@@ -43,7 +43,7 @@ def write_structures_subpage():
         .output-display { font-family: monospace; background: #ffffff; padding: 1rem; border: 1px solid var(--border); border-radius: 4px; margin-top: 1rem; color: #0f172a; }
 
         table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.95rem; table-layout: fixed; }
-        th, td { border: 1px solid var(--border); padding: 0.75rem; text-align: left; vertical-align: top; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        th, td { border: 1px solid var(--border); padding: 0.75rem; text-align: left; vertical-align: top; word-wrap: break-word; overflow-wrap: break-word; }
         th { background: #f1f5f9; color: #0f172a; }
 
         .example-card { background: #fffbeb; border: 1px solid #fde68a; border-radius: 6px; padding: 1rem 1.25rem; margin: 1rem 0; }
@@ -111,8 +111,8 @@ def write_structures_subpage():
                     <tr>
                         <th style="width: 15%;">Structure</th>
                         <th style="width: 18%;">Operations</th>
-                        <th style="width: 32%;">Key Properties Required</th>
-                        <th style="width: 35%;">Concrete Example</th>
+                        <th style="width: 35%;">Key Properties Required</th>
+                        <th style="width: 32%;">Concrete Example</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -209,9 +209,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Prevent formula wrapping in algebraic structures table cells\n\n"
-        "Added white-space: nowrap styling to table data cells in algebraic_structures.html \n"
-        "to ensure mathematical formulas and bullet points display cleanly on a single line."
+        "Allow natural wrapping in Key Properties table column\n\n"
+        "Removed global nowrap table cell constraints in algebraic_structures.html \n"
+        "so that descriptive text in the Key Properties column wraps naturally."
     )
 
     commands = [
