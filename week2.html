@@ -838,13 +838,28 @@
             const originX = 90, originY = 130, maxXScale = 610;
             let svgContent = `<line x1="${originX}" y1="${originY}" x2="${originX + maxXScale}" y2="${originY}" stroke="#64748b" stroke-width="1.0"/><text x="${originX - 35}" y="${originY + 5}" font-family="sans-serif" font-size="12" font-weight="700" fill="#64748b">L=0</text><line x1="${originX}" y1="240" x2="${originX}" y2="25" stroke="#64748b" stroke-width="1.0"/><line x1="${originX}" y1="${originY}" x2="715" y2="${originY}" stroke="#64748b" stroke-width="1.0"/>`;
             if (eps === null) {
-                svg.innerHTML = svgContent + `<text x="260" y="130" font-family="sans-serif" font-size="14" fill="#64748b">Select an &epsilon; budget above.</text>`;
+                svg.innerHTML = svgContent + `<text x="260" y="130" font-family="sans-serif" font-size="14" fill="#64748b">Select an &epsilon; budget above to illustrate the sample.</text>`;
                 return;
             }
             const maxN = Math.max(14, reqN + 4);
             const scaleFactor = eps <= 0.05 ? 900 : (eps <= 0.1 ? 550 : 220);
             const topY = originY - (eps * scaleFactor), bottomY = originY + (eps * scaleFactor);
             svgContent += `<rect x="${originX}" y="${topY}" width="${maxXScale}" height="${bottomY - topY}" fill="#fef3c7" opacity="0.8"/><line x1="${originX}" y1="${topY}" x2="${originX + maxXScale}" y2="${topY}" stroke="#d97706" stroke-dasharray="4"/><line x1="${originX}" y1="${bottomY}" x2="${originX + maxXScale}" y2="${bottomY}" stroke="#d97706" stroke-dasharray="4"/>`;
+
+            // --- NEW: L+eps and L-eps Labels with Arrows ---
+            svgContent += `
+                <!-- Top Arrow and Label -->
+                <line x1="${originX - 15}" y1="${originY}" x2="${originX - 15}" y2="${topY + 2}" stroke="#d97706" stroke-width="1.5"/>
+                <polygon points="${originX - 15},${topY} ${originX - 19},${topY + 6} ${originX - 11},${topY + 6}" fill="#d97706"/>
+                <text x="${originX - 52}" y="${topY + 4}" font-family="sans-serif" font-size="11" font-weight="bold" fill="#d97706">L+&epsilon;</text>
+
+                <!-- Bottom Arrow and Label -->
+                <line x1="${originX - 15}" y1="${originY}" x2="${originX - 15}" y2="${bottomY - 2}" stroke="#d97706" stroke-width="1.5"/>
+                <polygon points="${originX - 15},${bottomY} ${originX - 19},${bottomY - 6} ${originX - 11},${bottomY - 6}" fill="#d97706"/>
+                <text x="${originX - 48}" y="${bottomY + 4}" font-family="sans-serif" font-size="11" font-weight="bold" fill="#d97706">L-&epsilon;</text>
+            `;
+            // -----------------------------------------------
+
             for (let n = 1; n <= curN; n++) {
                 const val = 1 / n, cx = originX + (n * (maxXScale / maxN)), cy = originY - (val * scaleFactor);
                 const inside = n > reqN;
