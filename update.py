@@ -1007,13 +1007,17 @@ def write_week1_module():
                         <polygon points="90,30 86,38 94,38" fill="#64748b"/>
 
                         <!-- Axis Labels with clean vertical separation -->
+                        <text x="52" y="28" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="13" fill="#64748b" font-weight="600">a<tspan dy="3" font-size="10">n</tspan></text>
                         <text x="712" y="134" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="13" fill="#64748b" font-weight="600">n</text>
-                        <text x="35" y="28" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="13" fill="#64748b" font-weight="600">a<tspan dy="3" font-size="10">n</tspan></text>
 
-                        <!-- Vertical Tick Values & Epsilon Indicator -->
+                        <!-- Vertical Tick Values & Epsilon Indicators with Leader Arrows -->
                         <text x="58" y="134" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b" font-weight="600">0</text>
-                        <text x="35" y="86" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#d97706" font-weight="600">L + ϵ</text>
-                        <text x="35" y="182" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#d97706" font-weight="600">L - ϵ</text>
+
+                        <text x="25" y="78" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#d97706" font-weight="600">L + ϵ</text>
+                        <line x1="60" y1="82" x2="88" y2="82" stroke="#d97706" stroke-width="1" marker-end="url(#arrow)"/>
+
+                        <text x="25" y="186" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#d97706" font-weight="600">L - ϵ</text>
+                        <line x1="60" y1="178" x2="88" y2="178" stroke="#d97706" stroke-width="1"/>
 
                         <text x="42" y="48" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b">1.0</text>
                         <text x="42" y="234" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b">-0.2</text>
@@ -1565,9 +1569,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Refine simulator SVG line weights, add axis arrowheads, and fix label overlap\n\n"
-        "Thinned simulator axis and border lines, added vector arrowheads to axes, "
-        "and repositioned the a_n label above 1.0 in week1.html."
+        "Add leader arrows to epsilon bounds and adjust axis label spacing\n\n"
+        "Repositioned a_n axis label closer to y-axis and added leader pointer lines "
+        "from L + ε and L - ε to their respective dashed threshold lines in week1.html."
     )
 
     commands = [
@@ -1581,7 +1585,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with refined simulator SVG lines and arrowheads...")
+    print("Writing Week 1 module with refined label spacing and leader arrows...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
