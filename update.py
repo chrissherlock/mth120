@@ -72,8 +72,8 @@ def write_week1_module():
                 </div>
                 <div class="track-card track-applied">
                     <h3>🎛️ Track 2: Applied Mechanics (Real-World Analog)</h3>
-                    <p>Imagine tuning an AV hall control box to suppress audio line interference. The noise level across processing cycles represents our sequence ($a_n$).</p>
-                    <p>We want total signal elimination ($L=0$), but hardware performance requires proving the attenuation filter reliably drops noise beneath an audible threshold ($\epsilon = 0.2$) past a specific latency cycle ($N$).</p>
+                    <p>Imagine tuning a digital signal processing (DSP) stream to eliminate network transmission error residuals. The residual error across cycles represents our sequence ($a_n$).</p>
+                    <p>We want total error eradication ($L=0$), but operational performance requires proving the algorithmic filter reliably drops residuals beneath an acceptable threshold ($\epsilon = 0.2$) past a specific latency cycle ($N$).</p>
                 </div>
             </div>
 
@@ -160,27 +160,27 @@ def write_week1_module():
         const narratives = [
             {
                 phase: "Initialization", n: 1, indexVal: 1,
-                summary: "<strong>Goal:</strong> Initialize the sequence mapping $f: \\mathbb{N} \\rightarrow \\mathbb{R}$ and establish the error bound constraints for our AV suppression filter.",
-                what: "<p><strong>Abstract Formalism:</strong> The sequence initializes at index $n=1$, yielding $a_1 = 1.0$ under the selected mapping rule.</p><p><strong>Applied Mechanics:</strong> Our AV control box boots up, defining a target noise floor $L=0$ and an audible error tolerance $\\epsilon = 0.2$ (the blue band).</p>",
-                why: "<p><strong>Formal Rationale:</strong> Under real analysis axioms, we cannot rely on loose intuition. We must establish that the sequence domain maps to a bounded codomain where arbitrary $\\epsilon$-neighborhoods can be applied.</p><p><strong>System Constraint:</strong> Defining $\\epsilon$ upfront ensures hardware compliance before audio channels are unmuted.</p>"
+                summary: "<strong>Goal:</strong> Initialize the sequence mapping $f: \\mathbb{N} \\rightarrow \\mathbb{R}$ and establish the error bound constraints for our digital signal processing filter.",
+                what: "<p><strong>Abstract Formalism:</strong> The sequence initializes at index $n=1$, yielding $a_1 = 1.0$ under the selected mapping rule.</p><p><strong>Applied Mechanics:</strong> Our DSP stream boots up, defining a target error floor $L=0$ and an acceptable residual tolerance $\\epsilon = 0.2$ (the blue band).</p>",
+                why: "<p><strong>Formal Rationale:</strong> Under real analysis axioms, we cannot rely on loose intuition. We must establish that the sequence domain maps to a bounded codomain where arbitrary $\\epsilon$-neighborhoods can be applied.</p><p><strong>System Constraint:</strong> Defining $\\epsilon$ upfront ensures performance verification before data streams are committed.</p>"
             },
             {
                 phase: "Iteration", n: 3, indexVal: 3,
                 summary: "<strong>Goal:</strong> Evaluate intermediate terms as the sequence progresses through preliminary index steps.",
-                what: "<p><strong>Abstract Formalism:</strong> The system computes $a_2$ and $a_3$. The terms decrease monotonically.</p><p><strong>Applied Mechanics:</strong> The filter actively attenuates line noise across cycles $n=2$ and $n=3$, bringing the interference down toward the threshold.</p>",
+                what: "<p><strong>Abstract Formalism:</strong> The system computes $a_2$ and $a_3$. The terms decrease monotonically.</p><p><strong>Applied Mechanics:</strong> The algorithmic filter actively dampens transmission errors across cycles $n=2$ and $n=3$, bringing the residual down toward the threshold.</p>",
                 why: "<p><strong>Formal Rationale:</strong> Monotonic decrease guarantees downward motion, but does not yet satisfy convergence bounds.</p><p><strong>System Constraint:</strong> Lowering the value is insufficient; we must locate the exact index where terms permanently cross into tolerance.</p>"
             },
             {
                 phase: "Threshold Discovery", n: 5, indexVal: 5,
                 summary: "<strong>Goal:</strong> Algebraically solve for the critical threshold index $N$ dictated by the $\\epsilon-N$ definition.",
-                what: "<p><strong>Abstract Formalism:</strong> We evaluate $|a_n - 0| < 0.2$. For linear attenuation ($1/n$), this yields $n > 5$. For exponential filtering ($2^{-n}$), it crosses at $n > 2$.</p><p><strong>Applied Mechanics:</strong> We set the threshold index $N$, rendering the red threshold boundary on our canvas to mark the latency required for clean audio.</p>",
+                what: "<p><strong>Abstract Formalism:</strong> We evaluate $|a_n - 0| < 0.2$. For linear attenuation ($1/n$), this yields $n > 5$. For exponential filtering ($2^{-n}$), it crosses at $n > 2$.</p><p><strong>Applied Mechanics:</strong> We set the threshold index $N$, rendering the red threshold boundary on our canvas to mark the latency required for clean transmission.</p>",
                 why: "<p><strong>Formal Rationale:</strong> This operationalizes the existential quantifier $\\exists N$ in the formal definition.</p><p><strong>System Constraint:</strong> Establishes the exact processing latency required before the system certifies signal stability.</p>"
             },
             {
                 phase: "Convergence Verification", n: 8, indexVal: 8,
                 summary: "<strong>Goal:</strong> Fulfill the universal quantifier condition to formally certify the limit.",
-                what: "<p><strong>Abstract Formalism:</strong> For all subsequent indices $n > N$, terms remain strictly trapped within the $\\epsilon$ neighborhood.</p><p><strong>Applied Mechanics:</strong> The noise output remains flat and imperceptible across all further processing cycles.</p>",
-                why: "<p><strong>Formal Rationale:</strong> This satisfies $\\forall n > N$. Because this inequality holds for <em>any</em> arbitrary $\\epsilon > 0$, the limit $\\lim_{n\\to\\infty} a_n = L$ is verified.</p><p><strong>System Constraint:</strong> Guarantees long-term stability against unexpected signal spikes.</p>"
+                what: "<p><strong>Abstract Formalism:</strong> For all subsequent indices $n > N$, terms remain strictly trapped within the $\\epsilon$ neighborhood.</p><p><strong>Applied Mechanics:</strong> The residual error remains flat and negligible across all further processing cycles.</p>",
+                why: "<p><strong>Formal Rationale:</strong> This satisfies $\\forall n > N$. Because this inequality holds for <em>any</em> arbitrary $\\epsilon > 0$, the limit $\\lim_{n\\to\\infty} a_n = L$ is verified.</p><p><strong>System Constraint:</strong> Guarantees long-term stability against unexpected signal distortion.</p>"
             }
         ];
 
@@ -262,10 +262,10 @@ def write_week1_module():
 
 def execute_git_sync():
     commit_message = (
-        "Fix exponential filter initialization value in simulator script\n\n"
-        "Updated the exponential filter sequence data array to include n=0 (2^0 = 1.0),\n"
-        "ensuring both the linear attenuator and exponential filter correctly \n"
-        "initialize at 1.0 on the first step."
+        "Broaden applied scenario context from AV filter to general DSP processing\n\n"
+        "Refactored Track 2 and step narratives to refer to a digital signal processing (DSP)\n"
+        "stream rather than a rigid AV suppression filter, ensuring the applied analog \n"
+        "accurately reflects both linear and exponential algorithmic behaviors."
     )
 
     commands = [
