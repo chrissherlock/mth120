@@ -23,8 +23,9 @@ def write_week1_module():
             --accent: #d97706; --accent-hover: #b45309;
             --telemetry-bg: #0f172a; --telemetry-text: #fbbf24;
             --track1-bg: #fffbeb; --track2-bg: #fff7ed;
+            --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
-        body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
         .container { max-width: 1200px; margin: 0 auto; }
         .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; }
         .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
@@ -32,16 +33,16 @@ def write_week1_module():
         .intro-lead { font-size: 1.1rem; color: #1e293b; line-height: 1.7; margin-bottom: 1.5rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
         .intro-graphic { background: #090d16; border-radius: 8px; padding: 1.5rem; display: flex; justify-content: center; margin-bottom: 2.5rem; box-shadow: inset 0 2px 4px rgba(0,0,0,0.4); border: 1px solid #334155; }
 
-        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; }
-        h3 { color: #1e293b; margin-top: 1.5rem; }
+        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; font-family: var(--font-ui); }
+        h3 { color: #1e293b; margin-top: 1.5rem; font-family: var(--font-ui); }
 
         /* Infobox Styles: Clean Typography */
         .infobox { background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.25rem 0 1.75rem 0; }
-        .infobox h4 { margin: 0 0 0.85rem 0; color: #0f172a; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .infobox h4 { margin: 0 0 0.85rem 0; color: #0f172a; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-ui); }
         .notation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 0.85rem 1.75rem; font-size: 0.95rem; }
         .notation-item { display: grid; grid-template-columns: minmax(130px, max-content) 1fr; gap: 0.75rem; align-items: baseline; }
-        .notation-sym { font-weight: 600; color: var(--accent); white-space: nowrap; }
-        .notation-desc { min-width: 0; word-break: break-word; line-height: 1.5; color: #334155; }
+        .notation-sym { font-weight: 600; color: var(--accent); white-space: nowrap; font-family: var(--font-ui); }
+        .notation-desc { min-width: 0; word-break: break-word; line-height: 1.5; color: #334155; font-family: var(--font-ui); }
 
         /* Scoped Centering Exclusively for Section 3 */
         .infobox-section3 .notation-item {
@@ -61,6 +62,7 @@ def write_week1_module():
             margin: 0 0 1.25rem 0;
             padding-bottom: 0.85rem;
             border-bottom: 1px solid #e2e8f0;
+            font-family: var(--font-ui);
         }
         .infobox-intro strong {
             color: #92400e;
@@ -76,59 +78,70 @@ def write_week1_module():
         /* Diagram Container Styles */
         .diagram-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
         .diagram-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; align-items: center; min-width: 0; }
-        .diagram-card h5 { margin: 0 0 0.75rem 0; color: #b45309; font-size: 0.95rem; text-align: center; white-space: nowrap; }
+        .diagram-card h5 { margin: 0 0 0.75rem 0; color: #b45309; font-size: 0.95rem; text-align: center; white-space: nowrap; font-family: var(--font-ui); }
 
         /* Dual-Track Layout */
         .dual-track-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; margin-bottom: 1.5rem; }
         .track-card { padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border); }
         .track-formal { background: var(--track1-bg); border-color: #fde68a; }
         .track-applied { background: var(--track2-bg); border-color: #fed7aa; }
-        .track-card h4 { margin-top: 0; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; color: #b45309; }
+        .track-card h4 { margin-top: 0; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; color: #b45309; font-family: var(--font-ui); }
 
         .simulator-guide { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; margin-top: 1.5rem; }
-        .simulator-guide h4 { margin-top: 0; color: #b45309; font-size: 1.05rem; }
+        .simulator-guide h4 { margin-top: 0; color: #b45309; font-size: 1.05rem; font-family: var(--font-ui); }
         .simulator-guide ol { margin: 0.5rem 0 0 1.25rem; padding: 0; }
         .simulator-guide li { margin-bottom: 0.5rem; }
 
         /* Interactive Simulator & Walkthrough Styles */
         .simulator, .game-box, .stepper-walkthrough { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 1.5rem; background: var(--card); box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-        .game-header { background: #0f172a; color: #fbbf24; padding: 1rem 1.5rem; font-family: monospace; font-size: 0.95rem; display: flex; justify-content: space-between; align-items: center; }
-        .game-body { padding: 1.5rem; background: #f8fafc; display: flex; flex-direction: column; gap: 1rem; border-bottom: 1px solid var(--border); }
-        .game-explainer { background: #fef3c7; border: 1px solid #fde68a; padding: 1.25rem; border-radius: 6px; font-size: 0.95rem; color: #92400e; margin-bottom: 0.5rem; line-height: 1.7; }
+        .game-header { background: #0f172a; color: #fbbf24; padding: 1rem 1.5rem; font-family: var(--font-ui); font-size: 0.92rem; font-weight: 600; display: flex; justify-content: space-between; align-items: center; letter-spacing: 0.02em; }
+        .game-body { padding: 1.5rem; background: #f8fafc; display: flex; flex-direction: column; gap: 1rem; border-bottom: 1px solid var(--border); font-family: var(--font-ui); }
+        .game-explainer { background: #fef3c7; border: 1px solid #fde68a; padding: 1.25rem; border-radius: 6px; font-size: 0.95rem; color: #92400e; margin-bottom: 0.5rem; line-height: 1.7; font-family: var(--font-ui); }
         .game-controls { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
-        .game-btn { background: var(--accent); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold; transition: background 0.2s; }
+        .game-btn { background: var(--accent); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: 600; font-family: var(--font-ui); font-size: 0.9rem; transition: background 0.2s; }
         .game-btn:hover { background: var(--accent-hover); }
         .game-btn:disabled { background: #94a3b8; cursor: not-allowed; }
         .game-canvas-wrap { background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; display: flex; justify-content: center; }
 
-        .telemetry { background: var(--telemetry-bg); color: var(--telemetry-text); padding: 0.75rem 1.5rem; font-family: monospace; display: flex; gap: 2rem; font-size: 0.88rem; align-items: center; flex-wrap: wrap; }
+        .telemetry { background: var(--telemetry-bg); color: #e2e8f0; padding: 0.75rem 1.5rem; font-family: var(--font-ui); font-size: 0.88rem; font-weight: 500; font-variant-numeric: tabular-nums; display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; border-bottom: 1px solid #334155; }
         .canvas-container { padding: 1.5rem; background: #f1f5f9; display: flex; justify-content: center; border-bottom: 1px solid var(--border); }
         .controls-pane { display: flex; gap: 2rem; padding: 1.5rem; background: var(--card); border-bottom: 1px solid var(--border); align-items: flex-start; }
         .nav-buttons { display: flex; flex-direction: column; gap: 0.5rem; min-width: 130px; }
-        button { background: var(--accent); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; transition: background 0.2s; font-size: 0.9rem; }
+        button { background: var(--accent); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: 600; font-family: var(--font-ui); width: 100%; transition: background 0.2s; font-size: 0.9rem; }
         button:hover { background: var(--accent-hover); }
         button:disabled { background: #94a3b8; cursor: not-allowed; }
-        .step-summary { flex-grow: 1; font-size: 0.95rem; color: #334155; line-height: 1.6; }
+        .step-summary { flex-grow: 1; font-size: 0.95rem; color: #334155; line-height: 1.6; font-family: var(--font-ui); }
         .analysis-panes { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
-        .pane { background: var(--card); padding: 1.5rem; }
-        .pane h4 { margin-top: 0; color: var(--accent); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
-        .pane p { margin: 0 0 0.75rem 0; }
+        .pane { background: var(--card); padding: 1.5rem; font-family: var(--font-ui); }
+        .pane h4 { margin-top: 0; color: var(--accent); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; font-family: var(--font-ui); font-weight: 700; }
+        .pane p { margin: 0 0 0.75rem 0; line-height: 1.6; font-size: 0.95rem; }
         .pane p:last-child { margin-bottom: 0; }
         .toggle-group { min-width: 240px; }
-        select { width: 100%; padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border); font-family: system-ui, sans-serif; background: #fff; color: var(--text); font-size: 0.9rem; }
+        select { width: 100%; padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border); font-family: var(--font-ui); background: #fff; color: var(--text); font-size: 0.9rem; }
 
         .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
         .aside-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #b45309; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
-        .aside-box h4 { margin-top: 0; color: #b45309; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .aside-box h4 { margin-top: 0; color: #b45309; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-ui); }
         .example-list li { margin-bottom: 0.75rem; }
 
         /* Formula Breakdown Stage Styles */
         .formula-stage-wrap { background: #0f172a; padding: 1.5rem; border-bottom: 1px solid #334155; display: flex; justify-content: center; }
-        .formula-display { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; justify-content: center; font-size: 1.25rem; font-weight: 500; }
+        .formula-display { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; justify-content: center; font-size: 1.25rem; font-weight: 500; font-family: var(--font-ui); }
         .formula-chunk { padding: 0.45rem 0.8rem; border-radius: 6px; border: 2px solid transparent; color: #94a3b8; transition: all 0.35s ease; cursor: pointer; user-select: none; }
         .formula-chunk.active { border-color: #fbbf24; background: rgba(251, 191, 36, 0.15); color: #ffffff; box-shadow: 0 0 16px rgba(251, 191, 36, 0.35); transform: translateY(-2px); }
         .formula-chunk.completed { border-color: #059669; color: #a7f3d0; background: rgba(16, 185, 129, 0.1); }
         .formula-sep { color: #475569; font-weight: 300; }
+
+        #game-output {
+            background: #ffffff;
+            padding: 1.1rem 1.25rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: #1e293b;
+            font-family: var(--font-ui);
+            font-size: 0.95rem;
+            line-height: 1.65;
+        }
     </style>
 </head>
 <body>
@@ -150,30 +163,30 @@ def write_week1_module():
                         <rect x="0" y="0" width="180" height="120" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
                         <circle cx="70" cy="60" r="35" fill="#d97706" opacity="0.35"/>
                         <circle cx="110" cy="60" r="35" fill="#fbbf24" opacity="0.35"/>
-                        <text x="50" y="65" font-family="sans-serif" font-size="11" fill="#ffffff" font-weight="bold">A</text>
-                        <text x="120" y="65" font-family="sans-serif" font-size="11" fill="#ffffff" font-weight="bold">B</text>
-                        <text x="90" y="105" font-family="sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Set Theory (A ∪ B)</text>
+                        <text x="50" y="65" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#ffffff" font-weight="bold">A</text>
+                        <text x="120" y="65" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#ffffff" font-weight="bold">B</text>
+                        <text x="90" y="105" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Set Theory (A ∪ B)</text>
                     </g>
                     <g transform="translate(240, 10)">
                         <rect x="0" y="0" width="200" height="120" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
                         <rect x="15" y="15" width="170" height="90" rx="6" fill="none" stroke="#fbbf24" stroke-dasharray="3"/>
-                        <text x="25" y="30" font-family="sans-serif" font-size="10" fill="#fbbf24">ℝ (Real)</text>
+                        <text x="25" y="30" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#fbbf24">ℝ (Real)</text>
                         <rect x="35" y="38" width="130" height="60" rx="4" fill="none" stroke="#d97706"/>
-                        <text x="45" y="52" font-family="sans-serif" font-size="10" fill="#d97706">ℚ ⊃ ℤ ⊃ ℕ</text>
+                        <text x="45" y="52" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#d97706">ℚ ⊃ ℤ ⊃ ℕ</text>
                         <circle cx="100" cy="78" r="14" fill="#d97706" opacity="0.45"/>
-                        <text x="100" y="82" font-family="sans-serif" font-size="10" fill="#ffffff" font-weight="bold" text-anchor="middle">ℕ</text>
-                        <text x="100" y="112" font-family="sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Number Systems</text>
+                        <text x="100" y="82" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#ffffff" font-weight="bold" text-anchor="middle">ℕ</text>
+                        <text x="100" y="112" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Number Systems</text>
                     </g>
                     <g transform="translate(470, 10)">
                         <rect x="0" y="0" width="200" height="120" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
                         <line x1="20" y1="90" x2="180" y2="90" stroke="#64748b" stroke-width="1" stroke-dasharray="2"/>
-                        <text x="175" y="86" font-family="sans-serif" font-size="9" fill="#fbbf24">L=0</text>
+                        <text x="175" y="86" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9" fill="#fbbf24">L=0</text>
                         <circle cx="40" cy="40" r="4" fill="#d97706"/><line x1="40" y1="40" x2="70" y2="60" stroke="#d97706" stroke-width="1.5"/>
                         <circle cx="70" cy="60" r="4" fill="#d97706"/><line x1="70" y1="60" x2="100" y2="75" stroke="#d97706" stroke-width="1.5"/>
                         <circle cx="100" cy="75" r="4" fill="#d97706"/><line x1="100" y1="75" x2="130" y2="83" stroke="#d97706" stroke-width="1.5"/>
                         <circle cx="130" cy="83" r="4" fill="#10b981"/><line x1="130" y1="83" x2="160" y2="87" stroke="#10b981" stroke-width="1.5"/>
                         <circle cx="160" cy="87" r="5" fill="#10b981"/>
-                        <text x="100" y="112" font-family="sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Sequence Limits (aₙ → L)</text>
+                        <text x="100" y="112" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Sequence Limits (aₙ → L)</text>
                     </g>
                 </svg>
             </div>
@@ -216,20 +229,20 @@ def write_week1_module():
                     <h5>Subset Inclusion ($A \subseteq B$)</h5>
                     <svg width="240" height="110" viewBox="0 0 240 110">
                         <rect x="10" y="10" width="220" height="90" rx="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
-                        <text x="20" y="25" font-family="sans-serif" font-size="10" fill="#64748b">Universal Set U</text>
+                        <text x="20" y="25" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#64748b">Universal Set U</text>
                         <ellipse cx="120" cy="60" rx="90" ry="35" fill="#fed7aa" opacity="0.4" stroke="#d97706" stroke-width="1.5"/>
-                        <text x="185" y="70" font-family="sans-serif" font-size="11" fill="#b45309" font-weight="bold">B</text>
+                        <text x="185" y="70" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#b45309" font-weight="bold">B</text>
                         <ellipse cx="90" cy="60" rx="45" ry="25" fill="#fde68a" opacity="0.6" stroke="#d97706" stroke-width="1.5"/>
-                        <text x="85" y="64" font-family="sans-serif" font-size="11" fill="#b45309" font-weight="bold">A</text>
+                        <text x="85" y="64" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#b45309" font-weight="bold">A</text>
                     </svg>
                 </div>
                 <div class="diagram-card">
                     <h5>Complement ($A^c = U \setminus A$)</h5>
                     <svg width="240" height="110" viewBox="0 0 240 110">
                         <rect x="10" y="10" width="220" height="90" rx="6" fill="#fef3c7" opacity="0.5" stroke="#cbd5e1" stroke-width="1.5"/>
-                        <text x="20" y="25" font-family="sans-serif" font-size="10" fill="#92400e">Aᶜ (Complement Region)</text>
+                        <text x="20" y="25" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#92400e">Aᶜ (Complement Region)</text>
                         <circle cx="120" cy="60" r="32" fill="#ffffff" stroke="#d97706" stroke-width="1.5"/>
-                        <text x="115" y="64" font-family="sans-serif" font-size="11" fill="#b45309" font-weight="bold">A</text>
+                        <text x="115" y="64" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#b45309" font-weight="bold">A</text>
                     </svg>
                 </div>
             </div>
@@ -242,23 +255,23 @@ def write_week1_module():
                     <h5>Union ($A \cup B$) &mdash; "Or"</h5>
                     <svg width="240" height="110" viewBox="0 0 240 110">
                         <rect x="10" y="10" width="220" height="90" rx="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
-                        <text x="20" y="25" font-family="sans-serif" font-size="10" fill="#64748b">Combined Elements</text>
+                        <text x="20" y="25" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#64748b">Combined Elements</text>
                         <circle cx="95" cy="60" r="35" fill="#fed7aa" opacity="0.6" stroke="#d97706" stroke-width="1.5"/>
                         <circle cx="145" cy="60" r="35" fill="#fed7aa" opacity="0.6" stroke="#d97706" stroke-width="1.5"/>
-                        <text x="85" y="64" font-family="sans-serif" font-size="11" fill="#b45309" font-weight="bold">A</text>
-                        <text x="150" y="64" font-family="sans-serif" font-size="11" fill="#b45309" font-weight="bold">B</text>
+                        <text x="85" y="64" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#b45309" font-weight="bold">A</text>
+                        <text x="150" y="64" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#b45309" font-weight="bold">B</text>
                     </svg>
                 </div>
                 <div class="diagram-card">
                     <h5>Intersection ($A \cap B$) &mdash; "And"</h5>
                     <svg width="240" height="110" viewBox="0 0 240 110">
                         <rect x="10" y="10" width="220" height="90" rx="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
-                        <text x="20" y="25" font-family="sans-serif" font-size="10" fill="#64748b">Shared Overlap</text>
+                        <text x="20" y="25" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#64748b">Shared Overlap</text>
                         <circle cx="95" cy="60" r="35" fill="#ffffff" stroke="#d97706" stroke-width="1.5"/>
                         <circle cx="145" cy="60" r="35" fill="#ffffff" stroke="#d97706" stroke-width="1.5"/>
                         <path d="M 120 35 A 35 35 0 0 1 120 85 A 35 35 0 0 1 120 35 Z" fill="#d97706" opacity="0.6"/>
-                        <text x="85" y="64" font-family="sans-serif" font-size="11" fill="#b45309" font-weight="bold">A</text>
-                        <text x="150" y="64" font-family="sans-serif" font-size="11" fill="#b45309" font-weight="bold">B</text>
+                        <text x="85" y="64" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#b45309" font-weight="bold">A</text>
+                        <text x="150" y="64" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#b45309" font-weight="bold">B</text>
                     </svg>
                 </div>
             </div>
@@ -273,14 +286,14 @@ def write_week1_module():
                 <svg width="300" height="130" viewBox="0 0 300 130">
                     <line x1="50" y1="100" x2="270" y2="100" stroke="#64748b" stroke-width="1.5"/>
                     <line x1="70" y1="110" x2="70" y2="20" stroke="#64748b" stroke-width="1.5"/>
-                    <text x="275" y="104" font-family="sans-serif" font-size="10" fill="#64748b">A</text>
-                    <text x="65" y="15" font-family="sans-serif" font-size="10" fill="#64748b">B</text>
-                    <circle cx="110" cy="80" r="5" fill="#d97706"/><text x="118" y="83" font-family="sans-serif" font-size="9" fill="#0f172a">(1,1)</text>
-                    <circle cx="160" cy="80" r="5" fill="#d97706"/><text x="168" y="83" font-family="sans-serif" font-size="9" fill="#0f172a">(2,1)</text>
-                    <circle cx="210" cy="80" r="5" fill="#d97706"/><text x="218" y="83" font-family="sans-serif" font-size="9" fill="#0f172a">(3,1)</text>
-                    <circle cx="110" cy="45" r="5" fill="#d97706"/><text x="118" y="48" font-family="sans-serif" font-size="9" fill="#0f172a">(1,2)</text>
-                    <circle cx="160" cy="45" r="5" fill="#d97706"/><text x="168" y="48" font-family="sans-serif" font-size="9" fill="#0f172a">(2,2)</text>
-                    <circle cx="210" cy="45" r="5" fill="#d97706"/><text x="218" y="48" font-family="sans-serif" font-size="9" fill="#0f172a">(3,2)</text>
+                    <text x="275" y="104" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#64748b">A</text>
+                    <text x="65" y="15" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#64748b">B</text>
+                    <circle cx="110" cy="80" r="5" fill="#d97706"/><text x="118" y="83" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9" fill="#0f172a">(1,1)</text>
+                    <circle cx="160" cy="80" r="5" fill="#d97706"/><text x="168" y="83" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9" fill="#0f172a">(2,1)</text>
+                    <circle cx="210" cy="80" r="5" fill="#d97706"/><text x="218" y="83" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9" fill="#0f172a">(3,1)</text>
+                    <circle cx="110" cy="45" r="5" fill="#d97706"/><text x="118" y="48" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9" fill="#0f172a">(1,2)</text>
+                    <circle cx="160" cy="45" r="5" fill="#d97706"/><text x="168" y="48" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9" fill="#0f172a">(2,2)</text>
+                    <circle cx="210" cy="45" r="5" fill="#d97706"/><text x="218" y="48" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9" fill="#0f172a">(3,2)</text>
                 </svg>
             </div>
 
@@ -340,16 +353,16 @@ def write_week1_module():
                 <h5>Nested Set Containment Hierarchy ($\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$ )</h5>
                 <svg width="520" height="150" viewBox="0 0 520 150">
                     <rect x="10" y="10" width="500" height="130" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
-                    <text x="20" y="28" font-family="sans-serif" font-size="11" fill="#64748b" font-weight="bold">ℝ (Real Numbers: All terminating, repeating & non-repeating decimals)</text>
+                    <text x="20" y="28" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b" font-weight="bold">ℝ (Real Numbers: All terminating, repeating & non-repeating decimals)</text>
 
                     <rect x="35" y="38" width="450" height="92" rx="6" fill="#fffbeb" stroke="#fde68a" stroke-width="1.5"/>
-                    <text x="45" y="54" font-family="sans-serif" font-size="10" fill="#92400e" font-weight="bold">ℚ (Rational Numbers: Fractions p/q)</text>
+                    <text x="45" y="54" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#92400e" font-weight="bold">ℚ (Rational Numbers: Fractions p/q)</text>
 
                     <rect x="65" y="62" width="390" height="60" rx="6" fill="#fef3c7" stroke="#fbbf24" stroke-width="1.5"/>
-                    <text x="75" y="78" font-family="sans-serif" font-size="10" fill="#b45309" font-weight="bold">ℤ (Integers: Negatives, 0, Positives)</text>
+                    <text x="75" y="78" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#b45309" font-weight="bold">ℤ (Integers: Negatives, 0, Positives)</text>
 
                     <ellipse cx="260" cy="100" rx="140" ry="18" fill="#fed7aa" stroke="#d97706" stroke-width="1.5"/>
-                    <text x="260" y="104" font-family="sans-serif" font-size="10" fill="#b45309" font-weight="bold" text-anchor="middle">ℕ (Natural Numbers: 1, 2, 3...)</text>
+                    <text x="260" y="104" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#b45309" font-weight="bold" text-anchor="middle">ℕ (Natural Numbers: 1, 2, 3...)</text>
                 </svg>
             </div>
 
@@ -376,20 +389,20 @@ def write_week1_module():
                     <h5>Algebraic Failure: Subtraction in $\mathbb{N}$</h5>
                     <svg width="240" height="120" viewBox="0 0 240 120">
                         <rect x="10" y="10" width="220" height="100" rx="6" fill="#fffbeb" stroke="#fde68a" stroke-width="1.5"/>
-                        <text x="20" y="32" font-family="sans-serif" font-size="11" fill="#0f172a" font-weight="bold">1. Equation: x + 5 = 2</text>
-                        <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#0f172a">2. Isolate x: x = 2 - 5</text>
-                        <text x="20" y="78" font-family="sans-serif" font-size="11" fill="#ef4444" font-weight="bold">3. Result: x = -3 ∉ ℕ</text>
-                        <text x="20" y="100" font-family="sans-serif" font-size="10" fill="#b45309" font-weight="bold">→ Solution: Expand to ℤ</text>
+                        <text x="20" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#0f172a" font-weight="bold">1. Equation: x + 5 = 2</text>
+                        <text x="20" y="55" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#0f172a">2. Isolate x: x = 2 - 5</text>
+                        <text x="20" y="78" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#ef4444" font-weight="bold">3. Result: x = -3 ∉ ℕ</text>
+                        <text x="20" y="100" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#b45309" font-weight="bold">→ Solution: Expand to ℤ</text>
                     </svg>
                 </div>
                 <div class="diagram-card">
                     <h5>Algebraic Failure: Division in $\mathbb{Z}$</h5>
                     <svg width="240" height="120" viewBox="0 0 240 120">
                         <rect x="10" y="10" width="220" height="100" rx="6" fill="#fffbeb" stroke="#fde68a" stroke-width="1.5"/>
-                        <text x="20" y="32" font-family="sans-serif" font-size="11" fill="#0f172a" font-weight="bold">1. Equation: 2x = 3</text>
-                        <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#0f172a">2. Isolate x: x = 3 / 2</text>
-                        <text x="20" y="78" font-family="sans-serif" font-size="11" fill="#ef4444" font-weight="bold">3. Result: x = 1.5 ∉ ℤ</text>
-                        <text x="20" y="100" font-family="sans-serif" font-size="10" fill="#b45309" font-weight="bold">→ Solution: Expand to ℚ</text>
+                        <text x="20" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#0f172a" font-weight="bold">1. Equation: 2x = 3</text>
+                        <text x="20" y="55" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#0f172a">2. Isolate x: x = 3 / 2</text>
+                        <text x="20" y="78" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#ef4444" font-weight="bold">3. Result: x = 1.5 ∉ ℤ</text>
+                        <text x="20" y="100" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#b45309" font-weight="bold">→ Solution: Expand to ℚ</text>
                     </svg>
                 </div>
             </div>
@@ -404,14 +417,14 @@ def write_week1_module():
                 <h5>The Geometric Gap: Constructing $\sqrt{2}$ on the Number Line</h5>
                 <svg width="460" height="110" viewBox="0 0 460 110">
                     <line x1="30" y1="80" x2="430" y2="80" stroke="#64748b" stroke-width="2"/>
-                    <circle cx="100" cy="80" r="4" fill="#64748b"/><text x="97" y="98" font-family="sans-serif" font-size="10" fill="#64748b">0</text>
-                    <circle cx="240" cy="80" r="4" fill="#64748b"/><text x="235" y="98" font-family="sans-serif" font-size="10" fill="#64748b">1</text>
-                    <circle cx="380" cy="80" r="4" fill="#64748b"/><text x="375" y="98" font-family="sans-serif" font-size="10" fill="#64748b">2</text>
+                    <circle cx="100" cy="80" r="4" fill="#64748b"/><text x="97" y="98" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#64748b">0</text>
+                    <circle cx="240" cy="80" r="4" fill="#64748b"/><text x="235" y="98" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#64748b">1</text>
+                    <circle cx="380" cy="80" r="4" fill="#64748b"/><text x="375" y="98" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#64748b">2</text>
                     <polygon points="100,80 240,80 240,40" fill="none" stroke="#d97706" stroke-width="1.5"/>
-                    <text x="170" y="75" font-family="sans-serif" font-size="9" fill="#d97706">1</text>
-                    <text x="245" y="62" font-family="sans-serif" font-size="9" fill="#d97706">1</text>
+                    <text x="170" y="75" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9" fill="#d97706">1</text>
+                    <text x="245" y="62" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9" fill="#d97706">1</text>
                     <path d="M 100 80 L 240 40" stroke="#ef4444" stroke-width="2"/>
-                    <text x="155" y="50" font-family="sans-serif" font-size="10" fill="#ef4444" font-weight="bold">&radic;2 (&notin; &Qopf;)</text>
+                    <text x="155" y="50" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#ef4444" font-weight="bold">&radic;2 (&notin; &Qopf;)</text>
                     <path d="M 240 40 A 140 140 0 0 1 298 80" fill="none" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3"/>
                 </svg>
             </div>
@@ -465,22 +478,22 @@ def write_week1_module():
                 <svg width="520" height="150" viewBox="0 0 520 150">
                     <!-- Domain Box -->
                     <rect x="20" y="20" width="140" height="110" rx="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
-                    <text x="90" y="38" font-family="sans-serif" font-size="11" fill="#475569" font-weight="bold" text-anchor="middle">Domain (ℕ)</text>
-                    <circle cx="90" cy="55" r="12" fill="#fed7aa" stroke="#d97706"/><text x="90" y="59" font-family="sans-serif" font-size="10" fill="#92400e" font-weight="bold" text-anchor="middle">1</text>
-                    <circle cx="90" cy="80" r="12" fill="#fed7aa" stroke="#d97706"/><text x="90" y="84" font-family="sans-serif" font-size="10" fill="#92400e" font-weight="bold" text-anchor="middle">2</text>
-                    <circle cx="90" cy="105" r="12" fill="#fed7aa" stroke="#d97706"/><text x="90" y="109" font-family="sans-serif" font-size="10" fill="#92400e" font-weight="bold" text-anchor="middle">3</text>
-                    <text x="90" y="125" font-family="sans-serif" font-size="10" fill="#64748b" text-anchor="middle">...</text>
+                    <text x="90" y="38" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#475569" font-weight="bold" text-anchor="middle">Domain (ℕ)</text>
+                    <circle cx="90" cy="55" r="12" fill="#fed7aa" stroke="#d97706"/><text x="90" y="59" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#92400e" font-weight="bold" text-anchor="middle">1</text>
+                    <circle cx="90" cy="80" r="12" fill="#fed7aa" stroke="#d97706"/><text x="90" y="84" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#92400e" font-weight="bold" text-anchor="middle">2</text>
+                    <circle cx="90" cy="105" r="12" fill="#fed7aa" stroke="#d97706"/><text x="90" y="109" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#92400e" font-weight="bold" text-anchor="middle">3</text>
+                    <text x="90" y="125" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#64748b" text-anchor="middle">...</text>
 
                     <!-- Arrow Mapping -->
                     <path d="M 170 75 Q 235 45 300 75" fill="none" stroke="#d97706" stroke-width="2" marker-end="url(#arrow)"/>
-                    <text x="235" y="50" font-family="sans-serif" font-size="11" fill="#b45309" font-weight="bold" text-anchor="middle">f(n) = aₙ</text>
+                    <text x="235" y="50" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#b45309" font-weight="bold" text-anchor="middle">f(n) = aₙ</text>
 
                     <!-- Codomain Box -->
                     <rect x="310" y="20" width="190" height="110" rx="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
-                    <text x="405" y="38" font-family="sans-serif" font-size="11" fill="#475569" font-weight="bold" text-anchor="middle">Codomain (ℝ)</text>
-                    <circle cx="360" cy="55" r="12" fill="#fde68a" stroke="#d97706"/><text x="360" y="59" font-family="sans-serif" font-size="10" fill="#b45309" font-weight="bold" text-anchor="middle">a₁</text>
-                    <circle cx="415" cy="80" r="12" fill="#fde68a" stroke="#d97706"/><text x="415" y="84" font-family="sans-serif" font-size="10" fill="#b45309" font-weight="bold" text-anchor="middle">a₂</text>
-                    <circle cx="380" cy="110" r="12" fill="#fde68a" stroke="#d97706"/><text x="380" y="114" font-family="sans-serif" font-size="10" fill="#b45309" font-weight="bold" text-anchor="middle">a₃</text>
+                    <text x="405" y="38" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#475569" font-weight="bold" text-anchor="middle">Codomain (ℝ)</text>
+                    <circle cx="360" cy="55" r="12" fill="#fde68a" stroke="#d97706"/><text x="360" y="59" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#b45309" font-weight="bold" text-anchor="middle">a₁</text>
+                    <circle cx="415" cy="80" r="12" fill="#fde68a" stroke="#d97706"/><text x="415" y="84" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#b45309" font-weight="bold" text-anchor="middle">a₂</text>
+                    <circle cx="380" cy="110" r="12" fill="#fde68a" stroke="#d97706"/><text x="380" y="114" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#b45309" font-weight="bold" text-anchor="middle">a₃</text>
                 </svg>
             </div>
 
@@ -505,10 +518,10 @@ def write_week1_module():
                     <svg width="240" height="120" viewBox="0 0 240 120">
                         <!-- Upper Bound M -->
                         <line x1="20" y1="25" x2="220" y2="25" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3"/>
-                        <text x="25" y="20" font-family="sans-serif" font-size="9" fill="#ef4444">Upper Bound M</text>
+                        <text x="25" y="20" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9" fill="#ef4444">Upper Bound M</text>
                         <!-- Lower Bound m -->
                         <line x1="20" y1="95" x2="220" y2="95" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="3"/>
-                        <text x="25" y="110" font-family="sans-serif" font-size="9" fill="#3b82f6">Lower Bound m</text>
+                        <text x="25" y="110" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9" fill="#3b82f6">Lower Bound m</text>
                         <!-- Sequence points trapped inside -->
                         <circle cx="40" cy="80" r="4" fill="#d97706"/>
                         <circle cx="80" cy="65" r="4" fill="#d97706"/>
@@ -529,7 +542,7 @@ def write_week1_module():
                         <circle cx="130" cy="45" r="4" fill="#10b981"/>
                         <circle cx="170" cy="30" r="4" fill="#10b981"/>
                         <path d="M 50 85 L 90 65 L 130 45 L 170 30" fill="none" stroke="#10b981" stroke-width="1.5"/>
-                        <text x="110" y="115" font-family="sans-serif" font-size="9" fill="#475569">aₙ ≤ aₙ₊₁ (Increasing)</text>
+                        <text x="110" y="115" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9" fill="#475569">aₙ ≤ aₙ₊₁ (Increasing)</text>
                     </svg>
                 </div>
             </div>
@@ -552,10 +565,10 @@ def write_week1_module():
             <!-- INTERACTIVE CLAUSE-BY-CLAUSE DEFINITION STEPPER -->
             <div class="stepper-walkthrough" id="definition-walkthrough">
                 <div class="telemetry">
-                    <span>CLAUSE FOCUS: <span id="fw-tel-clause" style="color: #fbbf24;">1. The Challenge (∀ϵ > 0)</span></span>
-                    <span>QUANTIFIER: <span id="fw-tel-quant" style="color: #38bdf8;">Universal (∀)</span></span>
-                    <span>ACTIVE ROLE: <span id="fw-tel-role" style="color: #f472b6;">The Skeptic</span></span>
-                    <span>VARIABLE SCOPING: <span id="fw-tel-scope" style="color: #a7f3d0;">Independent (ϵ arbitrary)</span></span>
+                    <span>CLAUSE FOCUS: <span id="fw-tel-clause" style="color: #fbbf24; font-weight: 600;">1. The Challenge (∀ϵ > 0)</span></span>
+                    <span>QUANTIFIER: <span id="fw-tel-quant" style="color: #38bdf8; font-weight: 600;">Universal (∀)</span></span>
+                    <span>ACTIVE ROLE: <span id="fw-tel-role" style="color: #f472b6; font-weight: 600;">The Skeptic</span></span>
+                    <span>VARIABLE SCOPING: <span id="fw-tel-scope" style="color: #a7f3d0; font-weight: 600;">Independent (ϵ arbitrary)</span></span>
                 </div>
 
                 <!-- Animated Illuminated Expression Bar -->
@@ -568,7 +581,7 @@ def write_week1_module():
                         <div class="formula-chunk" id="chunk-1" onclick="setFormulaStep(1)">
                             $\exists N \in \mathbb{N}$
                         </div>
-                        <span class="formula-sep" style="font-size: 0.95rem; font-family: sans-serif; margin: 0 0.2rem;">such that</span>
+                        <span class="formula-sep" style="font-size: 0.95rem; font-family: var(--font-ui); margin: 0 0.2rem;">such that</span>
                         <div class="formula-chunk" id="chunk-2" onclick="setFormulaStep(2)">
                             $\forall n > N$
                         </div>
@@ -584,16 +597,16 @@ def write_week1_module():
                     <svg id="fw-canvas" width="620" height="150" viewBox="0 0 620 150">
                         <!-- Background baseline target -->
                         <line x1="40" y1="75" x2="580" y2="75" stroke="#94a3b8" stroke-dasharray="3" stroke-width="1.5"/>
-                        <text x="585" y="79" font-family="sans-serif" font-size="11" fill="#64748b">L</text>
+                        <text x="585" y="79" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b" font-weight="600">L</text>
 
                         <!-- Zone 1: Epsilon Band highlight -->
                         <rect id="fw-svg-epsband" x="40" y="45" width="540" height="60" fill="#fde68a" opacity="0.3" stroke="#f59e0b" stroke-dasharray="4" stroke-width="1.5"/>
-                        <text id="fw-svg-epslbl1" x="50" y="40" font-family="sans-serif" font-size="10" fill="#d97706" font-weight="bold">+ϵ</text>
-                        <text id="fw-svg-epslbl2" x="50" y="118" font-family="sans-serif" font-size="10" fill="#d97706" font-weight="bold">-ϵ</text>
+                        <text id="fw-svg-epslbl1" x="50" y="40" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#d97706" font-weight="bold">+ϵ</text>
+                        <text id="fw-svg-epslbl2" x="50" y="118" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#d97706" font-weight="bold">-ϵ</text>
 
                         <!-- Zone 2: N Threshold line -->
                         <line id="fw-svg-nline" x1="280" y1="15" x2="280" y2="135" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="4" opacity="0.2"/>
-                        <text id="fw-svg-nlbl" x="285" y="28" font-family="sans-serif" font-size="11" fill="#ef4444" font-weight="bold" opacity="0.2">Threshold N</text>
+                        <text id="fw-svg-nlbl" x="285" y="28" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#ef4444" font-weight="bold" opacity="0.2">Threshold N</text>
 
                         <!-- Zone 3: Tail Points (n <= N vs n > N) -->
                         <g id="fw-svg-pts">
@@ -619,7 +632,7 @@ def write_week1_module():
                     </div>
                     <div class="step-summary" id="fw-step-summary"></div>
                     <div class="toggle-group">
-                        <label for="fw-dimension-toggle" style="font-size: 0.85rem; font-weight: bold; color: #475569; display: block; margin-bottom: 0.5rem;">PERSPECTIVE DIMENSION:</label>
+                        <label for="fw-dimension-toggle" style="font-size: 0.85rem; font-weight: 700; color: #475569; display: block; margin-bottom: 0.5rem; letter-spacing: 0.02em;">PERSPECTIVE DIMENSION:</label>
                         <select id="fw-dimension-toggle" onchange="changeFormulaPerspective()">
                             <option value="adversarial">Adversarial Game (Skeptic vs. System)</option>
                             <option value="verification">Verification Engine (Test Spec vs. Cert)</option>
@@ -671,7 +684,7 @@ def write_week1_module():
 
                     <div class="game-canvas-wrap">
                         <svg id="game-plot" width="560" height="210" viewBox="0 0 560 210">
-                            <text x="180" y="110" font-family="sans-serif" font-size="13" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>
+                            <text x="180" y="110" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>
                         </svg>
                     </div>
 
@@ -680,7 +693,7 @@ def write_week1_module():
                         <button class="game-btn" style="background-color: #64748b;" onclick="resetChallenge()">Reset Challenge</button>
                     </div>
 
-                    <div id="game-output" style="font-family: monospace; background: #ffffff; padding: 1rem; border: 1px solid var(--border); border-radius: 4px; color: #0f172a;">
+                    <div id="game-output">
                         <em>Awaiting your $\epsilon$ selection above...</em>
                     </div>
                 </div>
@@ -717,11 +730,11 @@ def write_week1_module():
 
             <div class="simulator">
                 <div class="telemetry">
-                    <span>PHASE: <span id="tel-phase">Initialization</span></span>
-                    <span>ARCHITECTURE: <span id="tel-seq">$a_n = \frac{1}{n}$</span></span>
-                    <span>INDEX ($n$) = <span id="tel-n">1</span></span>
-                    <span>VALUE ($a_n$) = <span id="tel-val">$1.000$</span></span>
-                    <span>TOLERANCE ($\epsilon$) = <span id="tel-eps">$0.2$</span></span>
+                    <span>PHASE: <span id="tel-phase" style="color: #fbbf24; font-weight: 600;">Initialization</span></span>
+                    <span>ARCHITECTURE: <span id="tel-seq" style="color: #38bdf8; font-weight: 600;">$a_n = \frac{1}{n}$</span></span>
+                    <span>INDEX ($n$) = <span id="tel-n" style="color: #fde68a; font-weight: 600;">1</span></span>
+                    <span>VALUE ($a_n$) = <span id="tel-val" style="color: #a7f3d0; font-weight: 600;">$1.000$</span></span>
+                    <span>TOLERANCE ($\epsilon$) = <span id="tel-eps" style="color: #f472b6; font-weight: 600;">$0.2$</span></span>
                 </div>
 
                 <div class="canvas-container">
@@ -731,26 +744,26 @@ def write_week1_module():
                         <line x1="40" y1="160" x2="580" y2="160" stroke="#94a3b8" stroke-width="2"/>
                         <line x1="40" y1="20" x2="40" y2="160" stroke="#94a3b8" stroke-width="2"/>
 
-                        <text x="585" y="155" font-family="serif" font-style="italic" font-size="14" fill="#64748b">n</text>
-                        <text x="15" y="12" font-family="serif" font-style="italic" font-size="14" fill="#64748b">a<tspan dy="4" font-size="10">n</tspan></text>
+                        <text x="585" y="155" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="14" fill="#64748b" font-weight="600">n</text>
+                        <text x="15" y="14" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="14" fill="#64748b" font-weight="600">a<tspan dy="4" font-size="10">n</tspan></text>
 
                         <path d="M80 160 v5 M140 160 v5 M200 160 v5 M260 160 v5 M320 160 v5 M380 160 v5 M440 160 v5 M500 160 v5" stroke="#94a3b8" fill="none"/>
-                        <text x="76" y="180" font-family="sans-serif" font-size="10" fill="#64748b">1</text>
-                        <text x="136" y="180" font-family="sans-serif" font-size="10" fill="#64748b">2</text>
-                        <text x="196" y="180" font-family="sans-serif" font-size="10" fill="#64748b">3</text>
-                        <text x="256" y="180" font-family="sans-serif" font-size="10" fill="#64748b">4</text>
-                        <text x="316" y="180" font-family="sans-serif" font-size="10" fill="#64748b">5</text>
-                        <text x="376" y="180" font-family="sans-serif" font-size="10" fill="#64748b">6</text>
-                        <text x="436" y="180" font-family="sans-serif" font-size="10" fill="#64748b">7</text>
-                        <text x="496" y="180" font-family="sans-serif" font-size="10" fill="#64748b">8</text>
+                        <text x="76" y="180" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#64748b">1</text>
+                        <text x="136" y="180" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#64748b">2</text>
+                        <text x="196" y="180" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#64748b">3</text>
+                        <text x="256" y="180" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#64748b">4</text>
+                        <text x="316" y="180" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#64748b">5</text>
+                        <text x="376" y="180" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#64748b">6</text>
+                        <text x="436" y="180" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#64748b">7</text>
+                        <text x="496" y="180" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#64748b">8</text>
 
                         <path d="M40 20 h-5 M40 90 h-5" stroke="#94a3b8" fill="none"/>
-                        <text x="25" y="165" font-family="sans-serif" font-size="10" fill="#64748b">0</text>
-                        <text x="15" y="94" font-family="sans-serif" font-size="10" fill="#64748b">0.5</text>
-                        <text x="15" y="24" font-family="sans-serif" font-size="10" fill="#64748b">1.0</text>
+                        <text x="25" y="165" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#64748b">0</text>
+                        <text x="15" y="94" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#64748b">0.5</text>
+                        <text x="15" y="24" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#64748b">1.0</text>
 
                         <path d="M40 132 h-5" stroke="#d97706" fill="none"/>
-                        <text x="12" y="136" font-family="sans-serif" font-size="10" fill="#d97706">&epsilon;=0.2</text>
+                        <text x="12" y="136" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" fill="#d97706" font-weight="600">&epsilon;=0.2</text>
 
                         <line id="n-threshold" x1="200" y1="20" x2="200" y2="160" stroke="#ef4444" stroke-width="2" stroke-dasharray="4" opacity="0"/>
 
@@ -766,7 +779,7 @@ def write_week1_module():
                     </div>
                     <div class="step-summary" id="step-summary"></div>
                     <div class="toggle-group">
-                        <label for="seq-toggle" style="font-size: 0.85rem; font-weight: bold; color: #475569; display: block; margin-bottom: 0.5rem;">COMPARE ARCHITECTURE:</label>
+                        <label for="seq-toggle" style="font-size: 0.85rem; font-weight: 700; color: #475569; display: block; margin-bottom: 0.5rem; letter-spacing: 0.02em;">COMPARE ARCHITECTURE:</label>
                         <select id="seq-toggle" onchange="changeDualTrackSeq()">
                             <option value="reciprocal">Linear Attenuator (a_n = 1/n)</option>
                             <option value="geometric">Exponential Decay (a_n = 2^-n)</option>
@@ -990,7 +1003,7 @@ def write_week1_module():
             document.getElementById('step-controls').style.display = 'none';
             const output = document.getElementById('game-output');
             output.innerHTML = '<em>Challenge reset. Select an $\\epsilon$ budget above to start.</em>';
-            document.getElementById('game-plot').innerHTML = '<text x="180" y="110" font-family="sans-serif" font-size="13" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>';
+            document.getElementById('game-plot').innerHTML = '<text x="180" y="110" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>';
 
             if(window.renderMathInElement) {
                 renderMathInElement(output, {
@@ -1017,8 +1030,8 @@ def write_week1_module():
                 `• At cutoff index $n = ${reqN}$, term $a_{${reqN}} = ${(1/reqN).toFixed(3)}$ sits directly on the boundary ($|a_n - L| = \\epsilon$).<br>` +
                 `• Currently inspecting term $a_{${curN}} = ${atTerm.toFixed(4)}$: ` +
                 (isInside
-                    ? `<span style="color: #059669; font-weight: bold;">STRONGLY INSIDE</span> (Clearance beneath ceiling: $\\delta = +${clearance}$)</span>`
-                    : `<span style="color: #d97706; font-weight: bold;">ON/OUTSIDE BOUNDARY</span>`) +
+                    ? `<span style="color: #059669; font-weight: 600;">STRONGLY INSIDE</span> (Clearance beneath ceiling: $\\delta = +${clearance}$)</span>`
+                    : `<span style="color: #d97706; font-weight: 600;">ON/OUTSIDE BOUNDARY</span>`) +
                 `<br>• <strong>Status:</strong> All terms for $n > ${reqN}$ are strictly trapped inside the $\\pm ${eps}$ error zone!`;
 
             if(window.renderMathInElement) {
@@ -1041,16 +1054,13 @@ def write_week1_module():
             const originY = 175;
             const maxXScale = 475;
 
-            // DYNAMIC VERTICAL ZOOM:
-            // For smaller epsilons, we scale the Y-axis so the band remains at least 50px high
-            // rather than shrinking to an unreadable 5-pixel slit.
             let maxYScale;
             if (eps <= 0.05) {
-                maxYScale = 850; // Magnifies epsilon=0.05 up to 42.5px height
+                maxYScale = 850;
             } else if (eps <= 0.1) {
-                maxYScale = 450; // Magnifies epsilon=0.1 up to 45px height
+                maxYScale = 450;
             } else {
-                maxYScale = 160; // Standard proportion
+                maxYScale = 160;
             }
 
             const topY = originY - (eps * maxYScale);
@@ -1066,34 +1076,31 @@ def write_week1_module():
 
                 <!-- Zero Target Line -->
                 <line x1="${originX}" y1="${originY}" x2="${originX + maxXScale}" y2="${originY}" stroke="#64748b" stroke-width="2"/>
-                <text x="${originX - 25}" y="${originY + 4}" font-family="sans-serif" font-size="10" fill="#64748b">L=0</text>
+                <text x="${originX - 28}" y="${originY + 4}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" font-weight="600" fill="#64748b">L=0</text>
 
                 <!-- Axis Line -->
                 <line x1="${originX}" y1="15" x2="${originX}" y2="${originY + 15}" stroke="#64748b" stroke-width="2"/>
 
                 <!-- Epsilon labels with pointer arrows -->
-                <text x="5" y="${topY + 4}" font-family="sans-serif" font-size="9" font-weight="bold" fill="#d97706">+&epsilon; (${eps})</text>
+                <text x="5" y="${topY + 4}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9" font-weight="bold" fill="#d97706">+&epsilon; (${eps})</text>
                 <polyline points="40,${topY - 3} ${originX},${topY} 40,${topY + 3}" fill="none" stroke="#d97706" stroke-width="1.5"/>
                 <line x1="30" y1="${topY}" x2="${originX}" y2="${topY}" stroke="#d97706" stroke-width="0.8" stroke-dasharray="2"/>
 
-                <text x="5" y="${bottomY + 4}" font-family="sans-serif" font-size="9" font-weight="bold" fill="#d97706">-&epsilon;</text>
+                <text x="5" y="${bottomY + 4}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9" font-weight="bold" fill="#d97706">-&epsilon;</text>
                 <polyline points="40,${bottomY - 3} ${originX},${bottomY} 40,${bottomY + 3}" fill="none" stroke="#d97706" stroke-width="1.5"/>
                 <line x1="30" y1="${bottomY}" x2="${originX}" y2="${bottomY}" stroke="#d97706" stroke-width="0.8" stroke-dasharray="2"/>
             `;
 
-            // Draw points
             for (let n = 1; n <= curN; n++) {
                 const val = 1 / n;
                 const cx = originX + (n * (maxXScale / maxN));
                 const cy = originY - (val * maxYScale);
 
-                // Tick marks on axis
                 if (n % 2 === 0 || n === 1 || n === reqN || n === curN) {
                     svgContent += `<line x1="${cx}" y1="${originY}" x2="${cx}" y2="${originY + 4}" stroke="#94a3b8"/>`;
-                    svgContent += `<text x="${cx - 4}" y="${originY + 16}" font-family="sans-serif" font-size="9" fill="#475569">${n}</text>`;
+                    svgContent += `<text x="${cx - 4}" y="${originY + 16}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9" fill="#475569" font-weight="500">${n}</text>`;
                 }
 
-                // If point is off-canvas above, clamp drawing so it doesn't break header
                 if (cy < 15) {
                     continue;
                 }
@@ -1115,21 +1122,19 @@ def write_week1_module():
 
                 svgContent += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fillColor}" ${strokeAttr}/>`;
 
-                // For the currently active inspected tail term, draw a vertical clearance guide
                 if (n === curN && inside) {
                     svgContent += `
                         <line x1="${cx}" y1="${topY}" x2="${cx}" y2="${cy}" stroke="#10b981" stroke-width="2" stroke-dasharray="2"/>
                         <circle cx="${cx}" cy="${topY}" r="3" fill="#ef4444"/>
-                        <text x="${cx + 6}" y="${(topY + cy) / 2 + 3}" font-family="sans-serif" font-size="9" fill="#059669" font-weight="bold">inside corridor</text>
+                        <text x="${cx + 6}" y="${(topY + cy) / 2 + 3}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9" fill="#059669" font-weight="bold">inside corridor</text>
                     `;
                 }
             }
 
-            // Cutoff milestone line
             const thresholdX = originX + (reqN * (maxXScale / maxN));
             svgContent += `
                 <line x1="${thresholdX}" y1="15" x2="${thresholdX}" y2="${originY + 10}" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"/>
-                <text x="${thresholdX + 5}" y="25" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ef4444">N = ${reqN} (Cutoff)</text>
+                <text x="${thresholdX + 5}" y="25" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="bold" fill="#ef4444">N = ${reqN} (Cutoff)</text>
             `;
 
             svg.innerHTML = svgContent;
@@ -1273,9 +1278,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Add dynamic vertical scaling and clearance zoom for tight epsilon bands\n\n"
-        "Updated renderGameSVG in week1.html to scale vertical bounds dynamically when "
-        "epsilon <= 0.1, ensuring tight error corridors remain clearly visible and distinguishable."
+        "Unify font stack and replace jarring monospace fonts in interactive tools\n\n"
+        "Replaced raw monospace fonts with a clean tabular UI font stack in the telemetry, "
+        "game headers, and SVG labels within week1.html for visual harmony with KaTeX."
     )
 
     commands = [
@@ -1289,7 +1294,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with dynamic epsilon zoom...")
+    print("Writing Week 1 module with modernized typography...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
