@@ -28,7 +28,8 @@ def write_week1_module():
         .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; }
         .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 2rem; }
 
-        .intro-lead { font-size: 1.1rem; color: #334155; line-height: 1.7; margin-bottom: 2rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); }
+        .intro-lead { font-size: 1.1rem; color: #334155; line-height: 1.7; margin-bottom: 1.5rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); }
+        .intro-graphic { background: #0f172a; border-radius: 8px; padding: 1.5rem; display: flex; justify-content: center; margin-bottom: 2.5rem; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); }
 
         h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; }
         h3 { color: #334155; margin-top: 1.5rem; }
@@ -79,6 +80,47 @@ def write_week1_module():
         <div class="module-content">
             <div class="intro-lead">
                 Welcome to Week 1 of MTHS120. Before we can analyze continuous change, accumulation, and rates of variation, we must first master the language used to construct the mathematical universe. This module bridges discrete foundational concepts—starting with set theory notation and the hierarchical expansion of our number systems—into the rigorous study of sequences and limits. By examining both abstract formal definitions and their practical numerical behaviors side by side, you will build the analytical intuition necessary to navigate real analysis with confidence.
+            </div>
+
+            <!-- DECORATIVE TOPIC ILLUSTRATION SVG -->
+            <div class="intro-graphic">
+                <svg width="700" height="140" viewBox="0 0 700 140">
+                    <!-- Panel 1: Set Theory (Venn Diagram) -->
+                    <g transform="translate(30, 10)">
+                        <rect x="0" y="0" width="180" height="120" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+                        <circle cx="70" cy="60" r="35" fill="#0ea5e9" opacity="0.3"/>
+                        <circle cx="110" cy="60" r="35" fill="#38bdf8" opacity="0.3"/>
+                        <text x="50" y="65" font-family="sans-serif" font-size="11" fill="#ffffff" font-weight="bold">A</text>
+                        <text x="120" y="65" font-family="sans-serif" font-size="11" fill="#ffffff" font-weight="bold">B</text>
+                        <text x="90" y="105" font-family="sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Set Theory (A &cup; B)</text>
+                    </g>
+
+                    <!-- Panel 2: Number Systems Hierarchy -->
+                    <g transform="translate(240, 10)">
+                        <rect x="0" y="0" width="200" height="120" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+                        <rect x="15" y="15" width="170" height="90" rx="6" fill="none" stroke="#38bdf8" stroke-dasharray="3"/>
+                        <text x="25" y="30" font-family="sans-serif" font-size="10" fill="#38bdf8">&real; (Real)</text>
+                        <rect x="35" y="38" width="130" height="60" rx="4" fill="none" stroke="#0ea5e9"/>
+                        <text x="45" y="52" font-family="sans-serif" font-size="10" fill="#0ea5e9">&mathbb{Q} &cup; &mathbb{Z} &cup; &mathbb{N}</text>
+                        <circle cx="100" cy="78" r="14" fill="#0ea5e9" opacity="0.4"/>
+                        <text x="100" y="82" font-family="sans-serif" font-size="10" fill="#ffffff" font-weight="bold" text-anchor="middle">&mathbb{N}</text>
+                        <text x="100" y="112" font-family="sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Number Systems</text>
+                    </g>
+
+                    <!-- Panel 3: Sequence Convergence -->
+                    <g transform="translate(470, 10)">
+                        <rect x="0" y="0" width="200" height="120" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+                        <line x1="20" y1="90" x2="180" y2="90" stroke="#64748b" stroke-width="1" stroke-dasharray="2"/>
+                        <text x="175" y="86" font-family="sans-serif" font-size="9" fill="#38bdf8">L=0</text>
+                        <!-- Sequence dots converging -->
+                        <circle cx="40" cy="40" r="4" fill="#0ea5e9"/><line x1="40" y1="40" x2="70" y2="60" stroke="#0ea5e9" stroke-width="1.5"/>
+                        <circle cx="70" cy="60" r="4" fill="#0ea5e9"/><line x1="70" y1="60" x2="100" y2="75" stroke="#0ea5e9" stroke-width="1.5"/>
+                        <circle cx="100" cy="75" r="4" fill="#0ea5e9"/><line x1="100" y1="75" x2="130" y2="83" stroke="#0ea5e9" stroke-width="1.5"/>
+                        <circle cx="130" cy="83" r="4" fill="#10b981"/><line x1="130" y1="83" x2="160" y2="87" stroke="#10b981" stroke-width="1.5"/>
+                        <circle cx="160" cy="87" r="5" fill="#10b981"/>
+                        <text x="100" y="112" font-family="sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Sequence Limits (a<tspan dy="3" font-size="8">n</tspan><tspan dy="-3">&rarr;L</tspan>)</text>
+                    </g>
+                </svg>
             </div>
 
             <h2>1. Set Theory Foundations</h2>
@@ -533,10 +575,10 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Remove artificial step labels from Epsilon Challenge Game UI\n\n"
-        "Cleaned up the challenge widget controls by removing redundant 'Step 1' \n"
-        "and step-number headers, letting the natural flow of selecting a tolerance \n"
-        "and stepping forward guide the interaction."
+        "Add decorative architectural SVG illustration to Week 1 introduction\n\n"
+        "Inserted an inline SVG graphic immediately below the introductory lead text\n"
+        "to visually synthesize set theory, number system hierarchies, and sequence \n"
+        "convergence."
     )
 
     commands = [
