@@ -44,7 +44,7 @@ def write_week1_module():
         .simulator, .game-box { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 2rem; background: var(--card); }
         .game-header { background: #0f172a; color: #38bdf8; padding: 1rem 1.5rem; font-family: monospace; font-size: 0.95rem; display: flex; justify-content: space-between; align-items: center; }
         .game-body { padding: 1.5rem; background: #f8fafc; display: flex; flex-direction: column; gap: 1rem; border-bottom: 1px solid var(--border); }
-        .game-explainer { background: #e0f2fe; border: 1px solid #bae6fd; padding: 1rem; border-radius: 6px; font-size: 0.95rem; color: #0369a1; margin-bottom: 0.5rem; line-height: 1.5; }
+        .game-explainer { background: #e0f2fe; border: 1px solid #bae6fd; padding: 1rem; border-radius: 6px; font-size: 0.95rem; color: #0369a1; margin-bottom: 0.5rem; line-height: 1.6; }
         .game-controls { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
         .game-btn { background: #0ea5e9; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold; }
         .game-btn:hover { background: #0284c7; }
@@ -186,7 +186,10 @@ def write_week1_module():
                 </div>
                 <div class="game-body">
                     <div class="game-explainer">
-                        <strong>How to Play:</strong> You are the Skeptic challenging the sequence. Click a tolerance button below to pick an error budget ($\epsilon$). The system will calculate the required cutoff index ($N$) to prove that all terms beyond $N$ stay within your budget. Notice how making $\epsilon$ smaller forces the system to pick a larger $N$!
+                        <strong>Understanding the Sequence ($a_n = \frac{1}{n}$) &amp; How to Play:</strong><br>
+                        • <strong>The Sequence:</strong> The rule $a_n = \frac{1}{n}$ generates the infinite list: $1, 0.5, 0.333, 0.25, 0.2, \dots$ As index $n$ increases, the terms shrink toward our target limit $L = 0$.<br>
+                        • <strong>Your Role (The Skeptic):</strong> You act as $\epsilon$, picking an error budget (e.g., $\epsilon = 0.2$). You demand that the system prove the sequence values stay within $\pm 0.2$ of zero.<br>
+                        • <strong>The System's Goal:</strong> The system must find a cutoff index $N$ where all terms past $N$ fit inside your budget. Click a tolerance below to test it!
                     </div>
                     <p><strong>Step 1:</strong> Select a challenge tolerance ($\epsilon$) for the Skeptic:</p>
                     <div class="game-controls">
@@ -195,7 +198,7 @@ def write_week1_module():
                         <button class="game-btn" onclick="runChallenge(0.05)">Set $\epsilon = 0.05$</button>
                     </div>
                     <div id="game-output" style="font-family: monospace; background: #ffffff; padding: 1rem; border: 1px solid var(--border); border-radius: 4px; color: #0f172a;">
-                        <em>Select an $\epsilon$ above to challenge the system and calculate required threshold index $N$.</em>
+                        <em>Select an $\epsilon$ above to challenge the sequence and calculate required threshold index $N$.</em>
                     </div>
                 </div>
             </div>
@@ -435,10 +438,10 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Add explanatory guide inside Epsilon Challenge Game widget\n\n"
-        "Embedded a clear 'How to Play' instruction panel directly into the interactive \n"
-        "game box to clarify the roles of epsilon and N for beginners before they \n"
-        "test the tolerances."
+        "Expand Epsilon Challenge explainer to explicitly define sequence behavior\n\n"
+        "Updated the game's instruction panel to break down how the sequence \n"
+        "a_n = 1/n generates numbers, why the target limit is 0, and how the \n"
+        "epsilon budget forces the system to find the winning threshold N."
     )
 
     commands = [
