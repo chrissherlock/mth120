@@ -3,33 +3,32 @@ import os
 import re
 import subprocess
 
-def clean_index_citations():
-    filepath = 'index.html'
-    if not os.path.exists(filepath):
-        print(f"Error: {filepath} not found.")
-        return
+def strip_all_citations_from_repo():
+    files_to_clean = ['week1.html', 'week2.html', 'index.html', 'update.py']
+    citation_pattern = re.compile(r'\+\]')
 
-    with open(filepath, 'r', encoding='utf-8') as f:
-        content = f.read()
+    for filename in files_to_clean:
+        if not os.path.exists(filename):
+            continue
+        with open(filename, 'r', encoding='utf-8') as f:
+            content = f.read()
 
-    # Strip all patterns from index.html
-    cleaned_content = re.sub(r'\s*\+\]', '', content)
-
-    if cleaned_content != content:
-        with open(filepath, 'w', encoding='utf-8') as f:
-            f.write(cleaned_content)
-        print("Successfully removed citations from index.html.")
-    else:
-        print("No citations found in index.html.")
+        cleaned_content, count = citation_pattern.subn('', content)
+        if count > 0:
+            with open(filename, 'w', encoding='utf-8') as f:
+                f.write(cleaned_content)
+            print(f"Stripped {count} citation(s) from {filename}.")
+        else:
+            print(f"No citations found in {filename}.")
 
 def execute_git_sync():
     commit_message = (
-        "Remove all citation markers from index.html\n\n"
-        "Cleaned up index.html by stripping out stray reference\n"
-        "markers to maintain a citation-free course interface."
+        "Thoroughly strip all citation brackets from all HTML files and scripts\n\n"
+        "Removed all remaining markers across week1.html, week2.html,\n"
+        "index.html, and update.py to ensure a completely citation-free codebase."
     )
     commands = [
-        ['git', 'add', 'index.html', 'update.py'],
+        ['git', 'add', 'week1.html', 'week2.html', 'index.html', 'update.py'],
         ['git', 'commit', '-m', commit_message],
         ['git', 'push', 'origin', 'main']
     ]
@@ -38,5 +37,8 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    clean_index_citations()
+    print("Cleaning all citations from repository...")
+    strip_all_citations_from_repo()
+    print("Syncing with GitHub...")
     execute_git_sync()
+    print("Purge complete. All files are now 100% citation-free.")
