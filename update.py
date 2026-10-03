@@ -628,16 +628,21 @@ def write_week1_module():
             const maxXScale = 500;
             const maxYScale = 110;
 
-            const bandHeight = eps * maxYScale * 2;
-            const bandY = originY - (eps * maxYScale) - (bandHeight / 2);
+            const topY = originY - (eps * maxYScale);
+            const bottomY = originY + (eps * maxYScale);
+            const bandHeight = bottomY - topY;
+            const bandY = topY;
 
             let svgContent = `
                 <rect x="${originX}" y="${bandY}" width="${maxXScale}" height="${bandHeight}" fill="#fef3c7" opacity="0.7"/>
                 <line x1="${originX}" y1="${originY}" x2="${originX + maxXScale}" y2="${originY}" stroke="#64748b" stroke-width="2"/>
                 <line x1="${originX}" y1="20" x2="${originX}" y2="${originY}" stroke="#64748b" stroke-width="2"/>
-                <text x="${originX - 30}" y="${originY + 5}" font-family="sans-serif" font-size="10" fill="#475569">0</text>
-                <text x="${originX - 35}" y="${originY - (eps * maxYScale) + 4}" font-family="sans-serif" font-size="9" fill="#d97706">+&epsilon;</text>
-                <text x="${originX - 35}" y="${originY + (eps * maxYScale) + 4}" font-family="sans-serif" font-size="9" fill="#d97706">-&epsilon;</text>
+                <text x="5" y="${topY + 4}" font-family="sans-serif" font-size="9" fill="#d97706">+&epsilon;</text>
+                <polyline points="32,${topY - 3} ${originX},${topY} 32,${topY + 3}" fill="none" stroke="#d97706" stroke-width="1.2"/>
+                <line x1="22" y1="${topY}" x2="${originX}" y2="${topY}" stroke="#d97706" stroke-width="0.8" stroke-dasharray="2"/>
+                <text x="5" y="${bottomY + 4}" font-family="sans-serif" font-size="9" fill="#d97706">-&epsilon;</text>
+                <polyline points="32,${bottomY - 3} ${originX},${bottomY} 32,${bottomY + 3}" fill="none" stroke="#d97706" stroke-width="1.2"/>
+                <line x1="22" y1="${bottomY}" x2="${originX}" y2="${bottomY}" stroke="#d97706" stroke-width="0.8" stroke-dasharray="2"/>
             `;
 
             for (let n = 1; n <= curN; n++) {
@@ -792,9 +797,10 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Add learner-friendly plain-English intro to What Is a Sequence?\n\n"
-        "Inserted an intuitive explanation and analogy before the rigorous function-theoretic "
-        "definition in week1.html."
+        "Add pointer lines and arrows from epsilon labels to error band edges\n\n"
+        "Updated renderGameSVG in week1.html to draw dynamic pointer lines and arrow "
+        "chevrons connecting the +epsilon and -epsilon labels directly to the top and bottom "
+        "boundaries of the tolerance band."
     )
 
     commands = [
@@ -808,7 +814,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with learner-friendly intro...")
+    print("Writing Week 1 module with epsilon label pointer lines...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
