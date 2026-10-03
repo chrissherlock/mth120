@@ -36,24 +36,13 @@ def write_week1_module():
         h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; font-family: var(--font-ui); }
         h3 { color: #1e293b; margin-top: 1.5rem; font-family: var(--font-ui); }
 
-        /* Infobox Styles: Clean Typography */
+        /* Infobox Styles: Clean Typography with Centered Symbols */
         .infobox { background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.25rem 0 1.75rem 0; }
         .infobox h4 { margin: 0 0 0.85rem 0; color: #0f172a; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-ui); }
         .notation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 0.85rem 1.75rem; font-size: 0.95rem; }
-        .notation-item { display: grid; grid-template-columns: minmax(130px, max-content) 1fr; gap: 0.75rem; align-items: baseline; }
-        .notation-sym { font-weight: 600; color: var(--accent); white-space: nowrap; font-family: var(--font-ui); }
+        .notation-item { display: grid; grid-template-columns: minmax(130px, max-content) 1fr; gap: 0.75rem; align-items: center; }
+        .notation-sym { font-weight: 600; color: var(--accent); white-space: nowrap; font-family: var(--font-ui); display: flex; justify-content: center; align-items: center; text-align: center; }
         .notation-desc { min-width: 0; word-break: break-word; line-height: 1.5; color: #334155; font-family: var(--font-ui); }
-
-        /* Scoped Centering Exclusively for Section 3 */
-        .infobox-section3 .notation-item {
-            align-items: center;
-        }
-        .infobox-section3 .notation-sym {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
 
         .infobox-intro {
             font-size: 0.93rem;
@@ -156,7 +145,7 @@ def write_week1_module():
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
 
-        /* REFINED TELEMETRY CHIP GRID (GLOBAL FOR ALL WALKTHROUGHS) */
+        /* REFINED TELEMETRY CHIP GRID */
         .telemetry-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -577,8 +566,8 @@ def write_week1_module():
 
             <h2>3. Sequences and the Limit Concept</h2>
 
-            <!-- SECTION 3 NOTATION INFOBOX (INCL. QUANTIFIERS, SCOPED WITH .infobox-section3) -->
-            <div class="infobox infobox-section3">
+            <!-- SECTION 3 NOTATION INFOBOX -->
+            <div class="infobox">
                 <h4>📖 Notation Reference: Sequences, Limits &amp; Quantifiers</h4>
 
                 <div class="infobox-intro">
@@ -1224,7 +1213,7 @@ def write_week1_module():
         }
 
         /* ==========================================================================
-           EPSILON CHALLENGE GAME (WITH STRUCTURED TELEMETRY CARDS)
+           EPSILON CHALLENGE GAME
            ========================================================================== */
         const challengeState = { active: false, eps: 0.2, reqN: 5, currentDisplayN: 5 };
 
@@ -1269,7 +1258,6 @@ def write_week1_module():
             const clearance = (eps - atTerm).toFixed(4);
             const isInside = curN > reqN;
 
-            // Update telemetry cards
             document.getElementById('cg-tel-eps').innerHTML = `$${eps}$`;
             document.getElementById('cg-tel-reqn').innerHTML = `$N = ${reqN}$`;
             document.getElementById('cg-tel-val').innerHTML = `$a_{${curN}} = ${atTerm.toFixed(3)}$`;
@@ -1543,7 +1531,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with unified telemetry card grids...")
+    print("Writing Week 1 module with unified telemetry card grids across all modules...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
