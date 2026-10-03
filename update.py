@@ -568,7 +568,7 @@ def write_week1_module():
                     <line x1="50" y1="145" x2="690" y2="145" stroke="#64748b" stroke-width="2.5"/>
                     <circle cx="130" cy="145" r="6" fill="#64748b"/><text x="125" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">0</text>
                     <circle cx="370" cy="145" r="6" fill="#64748b"/><text x="365" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">1</text>
-                    <circle cx="610" cy="145" r="6" fill="#64748b"/><text x="605" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">2</text>
+                    <circle cx="610" cy="145" r="6" fill="#64748b"/><text x="605" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="bold">2</text>
 
                     <polygon points="130,145 370,145 370,65" fill="#fef3c7" opacity="0.65" stroke="#d97706" stroke-width="2"/>
                     <text x="245" y="135" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#d97706" font-weight="bold">1</text>
@@ -1012,8 +1012,8 @@ def write_week1_module():
                         <line x1="90" y1="240" x2="90" y2="35" stroke="#64748b" stroke-width="1.5"/>
                         <polygon points="90,30 86,38 94,38" fill="#64748b"/>
 
-                        <!-- Axis Labels with clean vertical separation -->
-                        <text x="52" y="28" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="13" fill="#64748b" font-weight="600">a<tspan dy="3" font-size="10">n</tspan></text>
+                        <!-- Axis Labels: centered over the y-axis arrowhead -->
+                        <text x="90" y="22" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="13" fill="#64748b" font-weight="600">a<tspan dy="3" font-size="10">n</tspan></text>
                         <text x="712" y="134" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="13" fill="#64748b" font-weight="600">n</text>
 
                         <!-- Vertical Tick Values & Epsilon Indicators with Leader Arrows -->
@@ -1108,7 +1108,7 @@ def write_week1_module():
                 advRole: "The Prover (Defender)",
                 advScope: "Dependent Response (N = N(ϵ))",
                 advSummary: "<strong>Step 2: The Prover announces a cutoff milestone.</strong> Having seen the Skeptic's $\\epsilon$, the Prover inspects the sequence and declares an index $N$ where terms will permanently enter tolerance.",
-                advWhat: "<p>The Prover solves the inequality $|a_n - L| < \\epsilon$ to find the integer milestone $N = \lceil 1/\\epsilon \\rceil$. This erects a cutoff fence line at index position $N$.</p>",
+                advWhat: "<p>The Prover solves the inequality $|a_n - L| < \\epsilon$ to find the integer milestone $N = \\lceil 1/\\epsilon \\rceil$. This erects a cutoff fence line at index position $N$.</p>",
                 advWhy: "<p><strong>Order is vital:</strong> The Prover picks $N$ <i>after</i> seeing the Skeptic's $\\epsilon$. Tighter challenges demand larger milestones. If the Prover had to lock in $N$ first, no sequence could survive arbitrary $\\epsilon$ challenges.</p>",
                 verRole: "Solver / Certificate Generator",
                 verScope: "Witness Assignment (Latency Bound)",
@@ -1575,9 +1575,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Add arrow markers to simulator epsilon boundary leader lines\n\n"
-        "Defined SVG arrowhead marker and applied marker-end to L + ε and L - ε indicator "
-        "lines in week1.html."
+        "Center a_n label over vertical axis and add arrowhead leader lines\n\n"
+        "Repositioned a_n axis label to x=90 with text-anchor='middle' and added "
+        "arrowhead markers to L + ε and L - ε indicator lines in week1.html."
     )
 
     commands = [
@@ -1591,7 +1591,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with arrowhead marker lines...")
+    print("Writing Week 1 module with centered axis label...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
