@@ -44,6 +44,7 @@ def write_week1_module():
         .simulator, .game-box { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 2rem; background: var(--card); }
         .game-header { background: #0f172a; color: #38bdf8; padding: 1rem 1.5rem; font-family: monospace; font-size: 0.95rem; display: flex; justify-content: space-between; align-items: center; }
         .game-body { padding: 1.5rem; background: #f8fafc; display: flex; flex-direction: column; gap: 1rem; border-bottom: 1px solid var(--border); }
+        .game-explainer { background: #e0f2fe; border: 1px solid #bae6fd; padding: 1rem; border-radius: 6px; font-size: 0.95rem; color: #0369a1; margin-bottom: 0.5rem; line-height: 1.5; }
         .game-controls { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
         .game-btn { background: #0ea5e9; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold; }
         .game-btn:hover { background: #0284c7; }
@@ -99,7 +100,7 @@ def write_week1_module():
                     <li><strong>$x$ (The Variable):</strong> Represents an arbitrary candidate element.</li>
                     <li><strong>$\in S$ (The Domain):</strong> The universal number system or set where candidates are drawn from (e.g., $x \in \mathbb{R}$).</li>
                     <li><strong>$\mid$ or $:$ (The Separator):</strong> Read aloud as <strong>"such that"</strong>. It acts as a strict logical filter.</li>
-                    <li><strong>$P(x)$ (The Predicate):</strong> The rule, equation, or inequality that $x$ must satisfy to gain membership.</li>
+                    <li><strong>$P$ (The Predicate):</strong> The rule, equation, or inequality that $x$ must satisfy to gain membership.</li>
                 </ul>
             </div>
 
@@ -184,6 +185,9 @@ def write_week1_module():
                     <span>Sequence: $a_n = \frac{1}{n}$ (Target $L = 0$)</span>
                 </div>
                 <div class="game-body">
+                    <div class="game-explainer">
+                        <strong>How to Play:</strong> You are the Skeptic challenging the sequence. Click a tolerance button below to pick an error budget ($\epsilon$). The system will calculate the required cutoff index ($N$) to prove that all terms beyond $N$ stay within your budget. Notice how making $\epsilon$ smaller forces the system to pick a larger $N$!
+                    </div>
                     <p><strong>Step 1:</strong> Select a challenge tolerance ($\epsilon$) for the Skeptic:</p>
                     <div class="game-controls">
                         <button class="game-btn" onclick="runChallenge(0.2)">Set $\epsilon = 0.2$</button>
@@ -431,10 +435,10 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Fix raw LaTeX leakage in Epsilon Challenge Game output\n\n"
-        "Called KaTeX renderMathInElement on the challenge game output container \n"
-        "immediately after updating its HTML content, ensuring mathematical symbols \n"
-        "render properly instead of displaying raw LaTeX strings."
+        "Add explanatory guide inside Epsilon Challenge Game widget\n\n"
+        "Embedded a clear 'How to Play' instruction panel directly into the interactive \n"
+        "game box to clarify the roles of epsilon and N for beginners before they \n"
+        "test the tolerances."
     )
 
     commands = [
