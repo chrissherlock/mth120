@@ -146,8 +146,9 @@
             </div>
             <div class="aside-box" style="margin-top: 1.5rem;">
                 <h4>💡 Plain-English Breakdown: What is this formula actually saying?</h4>
-                <div style="margin-top: 0.75rem; display: flex; align-items: center; gap: 1.75rem; flex-wrap: wrap;">
-                    <div style="flex-shrink: 0; width: 180px; background: #ffffff; border: 1px solid #fde68a; border-radius: 8px; padding: 0.75rem; box-sizing: border-box; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                <div style="margin-top: 0.75rem; display: flex; align-items: center; gap: 1.75rem; flex-wrap: nowrap;">
+                    <!-- LEFT COLUMN: SVG Graphic -->
+                    <div style="flex: 0 0 170px; background: #ffffff; border: 1px solid #fde68a; border-radius: 8px; padding: 0.75rem; box-sizing: border-box; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
                         <svg viewBox="0 0 220 140" style="width: 100%; height: auto; display: block;">
                             <!-- Target Board Outer Ring -->
                             <circle cx="110" cy="70" r="55" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="2"/>
@@ -167,7 +168,8 @@
                             <line x1="35" y1="25" x2="27" y2="20" stroke="#b45309" stroke-width="2"/>
                         </svg>
                     </div>
-                    <div style="flex-grow: 1; min-width: 260px;">
+                    <!-- RIGHT COLUMN: Explanation Text -->
+                    <div style="flex: 1; min-width: 0;">
                         <p style="margin-top: 0;">If looking at $\forall \epsilon > 0, \ \exists N \in \mathbb{N} \ \text{such that} \ \forall n > N, \ |a_n - L| < \epsilon$ makes your head spin, think of it as an <strong>archery challenge</strong> or a <strong>game between two players</strong>:</p>
                         <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
                             <li style="margin-bottom: 0.4rem;"><strong>1. The Challenger sets tolerance ($\epsilon$):</strong> Your opponent hands you a tiny positive distance $\epsilon$, drawing a narrow target band around $L$.</li>
@@ -176,6 +178,7 @@
                         </ol>
                         <p style="margin-top: 0.5rem; margin-bottom: 0;">If you win no matter how small your opponent makes $\epsilon$, the sequence converges to $L$!</p>
                     </div>
+                </div></div>
                 </div></div>
                     </div>
                     <p style="margin-top: 0;">If looking at $\forall \epsilon > 0, \ \exists N \in \mathbb{N} \ \text{such that} \ \forall n > N, \ |a_n - L| < \epsilon$ makes your head spin, think of it as an <strong>archery challenge</strong> or a <strong>game between two players</strong>:</p>

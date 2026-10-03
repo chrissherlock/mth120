@@ -3,7 +3,7 @@ import os
 import re
 import subprocess
 
-def left_and_vertically_center_archery_svg():
+def enforce_svg_left_text_right():
     filepath = 'week2.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
@@ -14,9 +14,10 @@ def left_and_vertically_center_archery_svg():
 
     pattern = r'(<div class="aside-box"[^>]*>\s*<h4>\s*💡 Plain-English Breakdown: What is this formula actually saying\?</h4>)([\s\S]*?)(</div>\s*</div>)'
 
-    left_centered_content = r'''
-                <div style="margin-top: 0.75rem; display: flex; align-items: center; gap: 1.75rem; flex-wrap: wrap;">
-                    <div style="flex-shrink: 0; width: 180px; background: #ffffff; border: 1px solid #fde68a; border-radius: 8px; padding: 0.75rem; box-sizing: border-box; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+    exact_side_by_side = r'''
+                <div style="margin-top: 0.75rem; display: flex; align-items: center; gap: 1.75rem; flex-wrap: nowrap;">
+                    <!-- LEFT COLUMN: SVG Graphic -->
+                    <div style="flex: 0 0 170px; background: #ffffff; border: 1px solid #fde68a; border-radius: 8px; padding: 0.75rem; box-sizing: border-box; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
                         <svg viewBox="0 0 220 140" style="width: 100%; height: auto; display: block;">
                             <!-- Target Board Outer Ring -->
                             <circle cx="110" cy="70" r="55" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="2"/>
@@ -36,7 +37,8 @@ def left_and_vertically_center_archery_svg():
                             <line x1="35" y1="25" x2="27" y2="20" stroke="#b45309" stroke-width="2"/>
                         </svg>
                     </div>
-                    <div style="flex-grow: 1; min-width: 260px;">
+                    <!-- RIGHT COLUMN: Explanation Text -->
+                    <div style="flex: 1; min-width: 0;">
                         <p style="margin-top: 0;">If looking at $\forall \epsilon > 0, \ \exists N \in \mathbb{N} \ \text{such that} \ \forall n > N, \ |a_n - L| < \epsilon$ makes your head spin, think of it as an <strong>archery challenge</strong> or a <strong>game between two players</strong>:</p>
                         <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
                             <li style="margin-bottom: 0.4rem;"><strong>1. The Challenger sets tolerance ($\epsilon$):</strong> Your opponent hands you a tiny positive distance $\epsilon$, drawing a narrow target band around $L$.</li>
@@ -48,22 +50,22 @@ def left_and_vertically_center_archery_svg():
                 </div>'''
 
     def replacer(match):
-        return match.group(1) + left_centered_content + match.group(3)
+        return match.group(1) + exact_side_by_side + match.group(3)
 
     new_content, count = re.subn(pattern, replacer, content)
 
     if count > 0:
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(new_content)
-        print("Successfully left-aligned and vertically centered archery SVG in week2.html.")
+        print("Successfully locked in SVG-left / text-right layout in week2.html.")
     else:
         print("Error: Plain-English Breakdown section pattern not matched.")
 
 def execute_git_sync():
     commit_message = (
-        "Left-align and vertically center archery SVG with explanation text\n\n"
-        "Updated week2.html using flexbox alignment to position the archery target\n"
-        "on the left side, vertically centered alongside the plain-English text block."
+        "Ensure SVG is left-aligned with text explicitly to its right in week2.html\n\n"
+        "Verified and locked in the flexbox layout order placing the archery SVG\n"
+        "on the left side and the explanation text directly to its right."
     )
     commands = [
         ['git', 'add', 'week2.html', 'update.py'],
@@ -75,5 +77,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    left_and_vertically_center_archery_svg()
+    enforce_svg_left_text_right()
     execute_git_sync()
