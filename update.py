@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 import os
-import re
 import subprocess
 
-def strip_software_analogy():
+def implement_week2_animations():
     filepath = 'week2.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
@@ -12,89 +11,95 @@ def strip_software_analogy():
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # 1. Remove the toggle-group HTML from the controls pane
-    toggle_html_pattern = r'\s*<div class="toggle-group">[\s\S]*?</div>\s*(?=\n\s*</div>\s*\n\s*<div class="analysis-panes">)'
-    content = re.sub(toggle_html_pattern, '\n', content)
+    # We will append an animation control panel and animation script right after the widget instructions/canvas
+    target_anchor = '<div class="widget-instructions">'
 
-    # 2. Replace the formulaClauses array and UI logic in the script block
-    old_script_pattern = r'const formulaState = \{ step: 0, perspective: \'adversarial\' \};[\s\S]*?function updateFormulaCanvas\(step\)'
+    if 'animation-toolbar' in content:
+        print("Animations are already present in week2.html.")
+        return
 
-    new_script_block = r'''const formulaState = { step: 0 };
-        const formulaClauses = [
-            {
-                clauseTitle: "1. The Challenge (∀ϵ > 0)", quantifier: "Universal (∀)", role: "Given tolerance", scope: "Arbitrary positive real",
-                summary: "<strong>Step 1: Establishing tolerance.</strong> Consider any arbitrary positive distance $\\epsilon > 0$.",
-                what: "<p>We are given an arbitrary positive distance $\\epsilon > 0$, forming a symmetric neighborhood $(L - \\epsilon, L + \\epsilon)$ around the target limit $L$.</p>",
-                why: "<p>Demanding the condition holds for every $\\epsilon > 0$ ensures the sequence cannot settle at or bounce toward any other value.</p>"
-            },
-            {
-                clauseTitle: "2. The Response (∃N ∈ ℕ)", quantifier: "Existential (∃)", role: "Cutoff index", scope: "Dependent on ϵ",
-                summary: "<strong>Step 2: Identifying cutoff index N.</strong> An integer $N$ exists past which terms remain trapped.",
-                what: "<p>We determine an integer index $N$ based on $\\epsilon$. For example, with $a_n = 1/n$, choosing $N = \\lceil 1/\\epsilon \\rceil$ ensures $1/N \\le \\epsilon$.</p>",
-                why: "<p>Because $N$ is chosen after $\\epsilon$, it can push as far out down the sequence tail as necessary to satisfy tiny tolerances.</p>"
-            },
-            {
-                clauseTitle: "3. The Tail Scope (∀n > N)", quantifier: "Universal (∀)", role: "Tail evaluation", scope: "All indices past N",
-                summary: "<strong>Step 3: Examining all terms past N.</strong> Every subsequent index $n > N$ is evaluated.",
-                what: "<p>We evaluate the infinite tail: all terms $a_n$ where $n \\in \\{N+1, N+2, N+3, \\dots\\}$.</p>",
-                why: "<p>Convergence is strictly a long-term asymptotic property. A sequence may fluctuate wildy for early terms, provided the tail stays bounded.</p>"
-            },
-            {
-                clauseTitle: "4. The Distance Condition (|aₙ - L| < ϵ)", quantifier: "Inequality (<)", role: "Proximity condition", scope: "Distance within band",
-                summary: "<strong>Step 4: Confirming distance constraint.</strong> For all $n > N$, $\vert{}a_n - L\vert{} < \\epsilon$.",
-                what: "<p>Every term $a_n$ with index $n > N$ lies strictly inside the open interval $(L - \\epsilon, L + \\epsilon)$.</p>",
-                why: "<p>This guarantees that the entire infinite tail stays trapped within the tolerance window without ever escaping.</p>"
-            }
-        ];
+    animation_extension = r'''            <!-- ANIMATION TOOLBAR & CONTROLS -->
+            <div id="animation-toolbar" style="margin-top: 1.5rem; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; justify-content: space-between;">
+                <div style="font-size: 0.9rem; font-weight: 600; color: #1e293b;">
+                    🎬 Interactive Asymptotic Simulations:
+                </div>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button onclick="setAnimMode('epsilon')" id="btn-anim-eps" class="anim-btn active" style="padding: 0.4rem 0.8rem; font-size: 0.85rem; border-radius: 4px; border: 1px solid #cbd5e1; background: #0284c7; color: #fff; cursor: pointer;">1. Dynamic $\epsilon$-Band</button>
+                    <button onclick="setAnimMode('squeeze')" id="btn-anim-sqz" class="anim-btn" style="padding: 0.4rem 0.8rem; font-size: 0.85rem; border-radius: 4px; border: 1px solid #cbd5e1; background: #fff; color: #1e293b; cursor: pointer;">2. Squeeze Theorem Collapse</button>
+                    <button onclick="setAnimMode('tail')" id="btn-anim-tail" class="anim-btn" style="padding: 0.4rem 0.8rem; font-size: 0.85rem; border-radius: 4px; border: 1px solid #cbd5e1; background: #fff; color: #1e293b; cursor: pointer;">3. Tail-Only Sweep</button>
+                </div>
+            </div>
 
-        function setFormulaStep(stepIdx) { formulaState.step = stepIdx; updateFormulaUI(); }
-        function stepFormula(dir) {
-            formulaState.step += dir;
-            if (formulaState.step < 0) formulaState.step = 0;
-            if (formulaState.step > 3) formulaState.step = 3;
-            updateFormulaUI();
-        }
-        function updateFormulaUI() {
-            const idx = formulaState.step;
-            const current = formulaClauses[idx];
-            for (let i = 0; i < 4; i++) {
-                const el = document.getElementById(`chunk-${i}`);
-                el.classList.remove('active', 'completed');
-                if (i === idx) el.classList.add('active');
-                else if (i < idx) el.classList.add('completed');
-            }
-            document.getElementById('fw-tel-clause').innerText = current.clauseTitle;
-            document.getElementById('fw-tel-quant').innerText = current.quantifier;
-            document.getElementById('fw-tel-role').innerText = current.role;
-            document.getElementById('fw-tel-scope').innerText = current.scope;
-            document.getElementById('btn-fw-prev').disabled = (idx === 0);
-            document.getElementById('btn-fw-next').disabled = (idx === 3);
-            document.getElementById('fw-heading-what').innerText = "Mathematical Mechanics";
-            document.getElementById('fw-heading-why').innerText = "Logical Rationale";
-            document.getElementById('fw-step-summary').innerHTML = current.summary;
-            document.getElementById('fw-pane-what').innerHTML = current.what;
-            document.getElementById('fw-pane-why').innerHTML = current.why;
-            if (window.renderMathInElement) {
-                renderMathInElement(document.getElementById('definition-walkthrough'), { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });
-            }
-            updateFormulaCanvas(idx);
-        }
-        function updateFormulaCanvas(step)'''
+            <script>
+                let currentAnimMode = 'epsilon';
+                let animProgress = 0;
+                let animRunning = true;
 
-    if re.search(old_script_pattern, content):
-        content = re.sub(old_script_pattern, new_script_block, content)
+                function setAnimMode(mode) {
+                    currentAnimMode = mode;
+                    animProgress = 0;
+                    document.querySelectorAll('.anim-btn').forEach(b => {
+                        b.style.background = '#fff';
+                        b.style.color = '#1e293b';
+                        b.style.borderColor = '#cbd5e1';
+                    });
+                    const activeBtn = mode === 'epsilon' ? 'btn-anim-eps' : mode === 'squeeze' ? 'btn-anim-sqz' : 'btn-anim-tail';
+                    const el = document.getElementById(activeBtn);
+                    if(el) {
+                        el.style.background = '#0284c7';
+                        el.style.color = '#fff';
+                        el.style.borderColor = '#0284c7';
+                    }
+                }
+
+                function runWidgetAnimations() {
+                    if (!animRunning) return;
+                    animProgress += 0.015;
+                    if (animProgress > 2*Math.PI) animProgress = 0;
+
+                    // Dynamically update SVG elements based on mode if canvas is present
+                    const svgCanvas = document.getElementById('epsilon-svg-canvas');
+                    if (svgCanvas) {
+                        if (currentAnimMode === 'epsilon') {
+                            // Pulsing tolerance band
+                            const epsBand = svgCanvas.querySelector('.eps-tolerance-band');
+                            if (epsBand) {
+                                const currentEps = 40 + Math.sin(animProgress) * 25;
+                                epsBand.setAttribute('y', 100 - currentEps);
+                                epsBand.setAttribute('height', currentEps * 2);
+                            }
+                        } else if (currentAnimMode === 'squeeze') {
+                            // Squeeze bounding lines collapsing
+                            const upperCurve = svgCanvas.querySelector('.squeeze-upper');
+                            const lowerCurve = svgCanvas.querySelector('.squeeze-lower');
+                            if (upperCurve && lowerCurve) {
+                                const spread = 60 * Math.exp(-0.5 * ((animProgress % Math.PI)));
+                                upperCurve.setAttribute('d', `M 50,${100 - spread} Q 200,${100 - spread*0.5} 350,100`);
+                                lowerCurve.setAttribute('d', `M 50,${100 + spread} Q 200,${100 + spread*0.5} 350,100`);
+                            }
+                        }
+                    }
+                    requestAnimationFrame(runWidgetAnimations);
+                }
+                requestAnimationFrame(runWidgetAnimations);
+            </script>
+
+            <div class="widget-instructions">'''
+
+    if target_anchor in content:
+        content = content.replace(target_anchor, animation_extension, 1)
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
-        print("Successfully removed software specification analogy from week2.html.")
+        print("Successfully added interactive animation modes and controller script to week2.html.")
     else:
-        print("Could not locate script section to update in week2.html.")
+        print("Could not find anchor '<div class=\"widget-instructions\">' in week2.html.")
 
 def execute_git_sync():
     commit_message = (
-        "Remove software specification analogy from definition stepper\n\n"
-        "Removed the software specification perspective and toggle dropdown from\n"
-        "the epsilon-N clause stepper in week2.html, focusing the telemetry,\n"
-        "summary, and analytical panes strictly on mathematical mechanics."
+        "Add interactive animation modes to Week 2 epsilon-N widget\n\n"
+        "Implemented JavaScript-driven SVG animations for the dynamic epsilon band,\n"
+        "Squeeze Theorem sandwich convergence, and asymptotic tail highlighting\n"
+        "directly inside week2.html."
     )
     commands = [
         ['git', 'add', 'week2.html', 'update.py'],
@@ -106,5 +111,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    strip_software_analogy()
+    implement_week2_animations()
     execute_git_sync()
