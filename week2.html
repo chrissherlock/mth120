@@ -377,21 +377,21 @@
 
             <div class="aside-box" style="margin-top: 1.5rem;">
                 <h4>🎯 Classic Example: Applying the Squeeze Theorem</h4>
-                <p>Consider evaluating $\lim_{n	o\infty} rac{\sin(n)}{n}$. Because sine oscillates between $-1$ and $1$, we know:</p>
-                <p style="text-align: center; margin: 0.75rem 0;">$$-rac{1}{n} \le rac{\sin(n)}{n} \le rac{1}{n}$$</p>
-                <p>Since $\lim_{n	o\infty} \left(-rac{1}{n}
-ight) = 0$ and $\lim_{n	o\infty} \left(rac{1}{n}
+                <p>Consider evaluating $\\lim_{n\to\infty} \frac{\sin(n)}{n}$. Because sine oscillates between $-1$ and $1$, we know:</p>
+                <p style="text-align: center; margin: 0.75rem 0;">$$-\frac{1}{n} \le \frac{\sin(n)}{n} \le \frac{1}{n}$$</p>
+                <p>Since $\\lim_{n\to\infty} \left(-\frac{1}{n}
+ight) = 0$ and $\\lim_{n\to\infty} \left(\frac{1}{n}
 ight) = 0$, the Squeeze Theorem forces our middle sequence to also converge:</p>
-                <p style="text-align: center; margin-top: 0.75rem;">$$\lim_{n	o\infty} rac{\sin(n)}{n} = 0$$</p>
+                <p style="text-align: center; margin-top: 0.75rem;">$$\\lim_{n\to\infty} \frac{\sin(n)}{n} = 0$$</p>
 
                 <hr style="border: none; border-top: 1px solid #fde68a; margin: 1.25rem 0;">
 
-                <p><strong>Cautionary Contrast: What about the reciprocal $rac{n}{\sin(n)}$?</strong></p>
-                <p>It is easy to confuse $rac{\sin(n)}{n}$ with its reciprocal $rac{n}{\sin(n)}$. However, as $n$ grows while $\sin(n)$ periodically approaches $0$ near integer multiples of $\pi$, the ratio $rac{n}{\sin(n)}$ shoots off toward $\pm\infty$ with wild, unbounded oscillations. Therefore, <strong>$\lim_{n	o\infty} rac{n}{\sin(n)}$ diverges</strong> and the Squeeze Theorem cannot be applied here.</p>
+                <p><strong>Cautionary Contrast: What about the reciprocal $\frac{n}{\sin(n)}$?</strong></p>
+                <p>It is easy to confuse $\frac{\sin(n)}{n}$ with its reciprocal $\frac{n}{\sin(n)}$. However, as $n$ grows while $\sin(n)$ periodically approaches $0$ near integer multiples of $\pi$, the ratio $\frac{n}{\sin(n)}$ shoots off toward $\pm\infty$ with wild, unbounded oscillations. Therefore, <strong>$\\lim_{n\to\infty} \frac{n}{\sin(n)}$ diverges</strong> and the Squeeze Theorem cannot be applied here.</p>
 
                 <!-- Embedded SVG Graph of n / sin(n) divergence -->
                 <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1rem; margin-top: 1rem;">
-                    <p style="font-size: 0.85rem; font-weight: 700; color: #64748b; margin-top: 0; margin-bottom: 0.5rem; text-align: center;">VISUALIZATION: Wild Divergence of $rac{n}{\sin(n)}$ for $n = 1 \dots 50$</p>
+                    <p style="font-size: 0.85rem; font-weight: 700; color: #64748b; margin-top: 0; margin-bottom: 0.5rem; text-align: center;">VISUALIZATION: Wild Divergence of $\frac{n}{\sin(n)}$ for $n = 1 \dots 50$</p>
                     <svg viewBox="0 0 800 340" style="width: 100%; height: auto; display: block;">
                         <!-- Axes -->
                         <line x1="60" y1="170" x2="760" y2="170" stroke="#cbd5e1" stroke-width="2"/>
