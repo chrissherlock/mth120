@@ -48,6 +48,7 @@ def write_week1_module():
         .game-controls { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
         .game-btn { background: #0ea5e9; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold; }
         .game-btn:hover { background: #0284c7; }
+        .game-btn:disabled { background: var(--border); cursor: not-allowed; }
         .game-canvas-wrap { background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; display: flex; justify-content: center; }
 
         .telemetry { background: var(--telemetry-bg); color: var(--telemetry-text); padding: 0.75rem 1.5rem; font-family: monospace; display: flex; gap: 2rem; font-size: 0.9rem; align-items: center;}
@@ -191,26 +192,31 @@ def write_week1_module():
                 <div class="game-body">
                     <div class="game-explainer">
                         <strong>How This Game Works:</strong><br>
-                        1. <strong>The Sequence:</strong> We are testing $a_n = \frac{1}{n}$, which produces the shrinking list: $1, 0.5, 0.33, 0.25, 0.2, 0.16, \dots$ heading toward $0$.<br>
-                        2. <strong>Your Challenge:</strong> Click a tolerance button below ($\epsilon$). You are telling the system: <em>"Trap this sequence within $\pm \epsilon$ of zero!"</em><br>
-                        3. <strong>The System's Answer:</strong> The computer calculates the exact cutoff position index ($N$) and displays it on the live diagram below. Notice how a <em>tighter</em> error budget forces the system to look further down the list, picking a <em>larger</em> $N$!
+                        1. <strong>Step 1:</strong> Pick your error budget ($\epsilon$) below to challenge the sequence.<br>
+                        2. <strong>Step 2:</strong> The system calculates the winning cutoff index ($N$) and renders the error zone on the diagram.<br>
+                        3. <strong>Step 3:</strong> Use the "Step Forward ($n > N$)" button to manually verify that every subsequent term stays trapped inside the blue zone forever!
                     </div>
-                    <p><strong>Step 1:</strong> Select a challenge tolerance ($\epsilon$) for your error budget:</p>
+
+                    <p><strong>Step 1: Choose Your Skeptic Budget ($\epsilon$):</strong></p>
                     <div class="game-controls">
-                        <button class="game-btn" onclick="runChallenge(0.2)">Test $\epsilon = 0.2$ (Wide Zone)</button>
-                        <button class="game-btn" onclick="runChallenge(0.1)">Test $\epsilon = 0.1$ (Medium Zone)</button>
-                        <button class="game-btn" onclick="runChallenge(0.05)">Test $\epsilon = 0.05$ (Tight Zone)</button>
+                        <button class="game-btn" onclick="startChallenge(0.2)">Test $\epsilon = 0.2$ (Wide)</button>
+                        <button class="game-btn" onclick="startChallenge(0.1)">Test $\epsilon = 0.1$ (Medium)</button>
+                        <button class="game-btn" onclick="startChallenge(0.05)">Test $\epsilon = 0.05$ (Tight)</button>
                     </div>
 
                     <div class="game-canvas-wrap">
                         <svg id="game-plot" width="560" height="160" viewBox="0 0 560 160">
-                            <!-- Dynamic SVG drawn via JS -->
-                            <text x="200" y="85" font-family="sans-serif" font-size="13" fill="#64748b">Select an &epsilon; above to render challenge diagram.</text>
+                            <text x="180" y="85" font-family="sans-serif" font-size="13" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>
                         </svg>
                     </div>
 
+                    <div class="game-controls" id="step-controls" style="display: none;">
+                        <button class="game-btn" id="btn-challenge-next" onclick="advanceChallengeStep()">Step Forward ($n = N + 1$)</button>
+                        <button class="game-btn" style="background-color: #64748b;" onclick="resetChallenge()">Reset Challenge</button>
+                    </div>
+
                     <div id="game-output" style="font-family: monospace; background: #ffffff; padding: 1rem; border: 1px solid var(--border); border-radius: 4px; color: #0f172a;">
-                        <em>Select an $\epsilon$ tolerance above to test the sequence and see the required winning index $N$.</em>
+                        <em>Awaiting your $\epsilon$ selection above...</em>
                     </div>
                 </div>
             </div>
@@ -305,13 +311,43 @@ def write_week1_module():
     </div>
 
     <script>
-        function runChallenge(eps) {
-            const requiredN = Math.ceil(1 / eps);
+        const challengeState = { active: false, eps: 0.2, reqN: 5, currentDisplayN: 5 };
+
+        function startChallenge(eps) {
+            challengeState.active = true;
+            challengeState.eps = eps;
+            challengeState.reqN = Math.ceil(1 / eps);
+            challengeState.currentDisplayN = challengeState.reqN;
+
+            document.getElementById('step-controls').style.display = 'flex';
+            updateChallengeUI();
+        }
+
+        function advanceChallengeStep() {
+            challengeState.currentDisplayN++;
+            if (challengeState.currentDisplayN > 14) {
+                challengeState.currentDisplayN = 14;
+            }
+            updateChallengeUI();
+        }
+
+        function resetChallenge() {
+            challengeState.active = false;
+            document.getElementById('step-controls').style.display = 'none';
+            document.getElementById('game-output').innerHTML = '<em>Challenge reset. Select an $\\epsilon$ budget above to start.</em>';
+            document.getElementById('game-plot').innerHTML = '<text x="180" y="85" font-family="sans-serif" font-size="13" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>';
+        }
+
+        function updateChallengeUI() {
+            const eps = challengeState.eps;
+            const reqN = challengeState.reqN;
+            const curN = challengeState.currentDisplayN;
+
             const output = document.getElementById('game-output');
-            output.innerHTML = `<strong>Challenge Accepted!</strong><br>` +
-                `• Your Error Budget: $\\epsilon = ${eps}$ (Acceptable zone: $\\pm ${eps}$ around $0$)<br>` +
-                `• System Calculation: Solve $\\frac{1}{n} < ${eps} \\implies n > \\frac{1}{${eps}} = ${1/eps}$<br>` +
-                `• <strong>Winning Threshold:</strong> $N = ${requiredN}$. Every single term past position $n = ${requiredN}$ stays permanently inside your error zone!`;
+            output.innerHTML = `<strong>Challenge Active ($\\epsilon = ${eps}$):</strong><br>` +
+                `• System calculated required threshold: $N = \\lceil 1/${eps} \\rceil = ${reqN}$<br>` +
+                `• Currently viewing up to position index $n = ${curN}$.<br>` +
+                `• <strong>Status:</strong> All terms for $n > ${reqN}$ are safely trapped inside the $\\pm ${eps}$ error zone!`;
 
             if(window.renderMathInElement) {
                 renderMathInElement(output, {
@@ -321,18 +357,18 @@ def write_week1_module():
                     ]
                 });
             }
-            renderGameSVG(eps, requiredN);
+            renderGameSVG(eps, reqN, curN);
         }
 
-        function renderGameSVG(eps, reqN) {
+        function renderGameSVG(eps, reqN, curN) {
             const svg = document.getElementById('game-plot');
-            const maxN = 12;
+            const maxN = 14;
             const width = 560;
             const height = 160;
             const originX = 40;
             const originY = 130;
             const maxXScale = 500;
-            const maxYScale = 110; // maps value 1.0 to 110px height
+            const maxYScale = 110;
 
             const bandHeight = eps * maxYScale * 2;
             const bandY = originY - (eps * maxYScale) - (bandHeight / 2);
@@ -346,17 +382,14 @@ def write_week1_module():
                 <text x="${originX - 35}" y="${originY + (eps * maxYScale) + 4}" font-family="sans-serif" font-size="9" fill="#0284c7">-&epsilon;</text>
             `;
 
-            // Draw axis markers and points
-            for (let n = 1; n <= maxN; n++) {
+            for (let n = 1; n <= curN; n++) {
                 const val = 1 / n;
                 const cx = originX + (n * (maxXScale / maxN));
                 const cy = originY - (val * maxYScale);
 
-                // Tick
                 svgContent += `<line x1="${cx}" y1="${originY}" x2="${cx}" y2="${originY + 4}" stroke="#94a3b8"/>`;
                 svgContent += `<text x="${cx - 4}" y="${originY + 15}" font-family="sans-serif" font-size="9" fill="#64748b">${n}</text>`;
 
-                // Color points inside/outside zone
                 const inside = n > reqN;
                 const fillColor = inside ? '#10b981' : '#0ea5e9';
                 const r = inside ? 6 : 4;
@@ -364,7 +397,6 @@ def write_week1_module():
                 svgContent += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fillColor}" />`;
             }
 
-            // Draw threshold line N
             const thresholdX = originX + (reqN * (maxXScale / maxN));
             svgContent += `
                 <line x1="${thresholdX}" y1="15" x2="${thresholdX}" y2="${originY + 10}" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"/>
@@ -501,10 +533,10 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Embed dynamic interactive SVG diagram inside Epsilon Challenge Game\n\n"
-        "Added a real-time SVG visualizer to the challenge widget that dynamically \n"
-        "renders the epsilon error band, plots sequence points, and illuminates \n"
-        "the calculated threshold index N whenever a tolerance is tested."
+        "Complete multi-phase interaction loop in Epsilon Challenge Game\n\n"
+        "Added Step 2 and Step 3 controls to the challenge widget, enabling users \n"
+        "to step forward past the threshold index N and verify that subsequent \n"
+        "sequence points remain permanently trapped within the epsilon error band."
     )
 
     commands = [
