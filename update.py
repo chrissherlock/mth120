@@ -2,8 +2,8 @@
 import os
 import subprocess
 
-def add_nbsp_around_or():
-    filepath = 'week1.html'
+def add_intro_explanation_before_definition():
+    filepath = 'week2.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
         return
@@ -11,45 +11,29 @@ def add_nbsp_around_or():
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # Replace any cramped variations around 'or' with non-breaking spaces
-    targets = [
-        'or',
-        'or',
-        'or',
-        'or',
-        'or',
-        'or'
-    ]
+    # The explanatory bridge text to insert right before the formal definition paragraph
+    intro_bridge = r'''
+            <p>Before looking at the formal symbols, let's build the intuition: Saying a sequence converges to $L$ means that if you look far enough down the list, every subsequent term gets arbitrarily close to $L$ and stays there. We want a mathematical way to guarantee this "trapping" behavior.</p>
+            <p>A sequence $(a_n)$ converges to a limit $L$, written $\lim_{n\to\infty} a_n = L$, if:</p>'''
 
-    updated = content
-    # Look for patterns where 'or' is preceded or followed by digits/variables without proper spaces
-    # and explicitly insert &nbsp;
-    import re
+    old_target = r'''<p>A sequence $(a_n)$ converges to a limit $L$, written $\lim_{n\to\infty} a_n = L$, if:</p>'''
 
-    # Replace instances like "0 or 1", "0or1", "1or0" etc. in summation contexts with explicit &nbsp;or&nbsp;
-    updated = re.sub(r'(\d)\s*or\s*(\d)', r'\1&nbsp;or&nbsp;\2', updated)
-    updated = re.sub(r'(\d)\s*or\s*(\d)', r'\1&nbsp;or&nbsp;\2', updated)
-
-    # Also catch any literal "or" sitting between numbers or math symbols and wrap with &nbsp;
-    updated = updated.replace(' 0 or 1 ', ' 0&nbsp;or&nbsp;1 ')
-    updated = updated.replace(' 1 or 0 ', ' 1&nbsp;or&nbsp;0 ')
-    updated = updated.replace('v = 0 or 1', 'ν&nbsp;=&nbsp;0&nbsp;or&nbsp;1')
-
-    if updated != content:
+    if old_target in content and 'Before looking at the formal symbols' not in content:
+        content = content.replace(old_target, intro_bridge, 1)
         with open(filepath, 'w', encoding='utf-8') as f:
-            f.write(updated)
-        print("Successfully added non-breaking spaces around 'or' in week1.html.")
+            f.write(content)
+        print("Successfully added introductory explanation before formal definition in week2.html.")
     else:
-        print("No matching text found for replacement.")
+        print("Target not found or introductory text already present.")
 
 def execute_git_sync():
     commit_message = (
-        "Add non-breaking spaces around 'or' in summation notation in week1.html\n\n"
-        "Replaced instances of 'or' in week1.html with &nbsp;or&nbsp; to guarantee\n"
-        "proper visual spacing."
+        "Add intuitive preparatory conceptual bridge before formal epsilon-N definition\n\n"
+        "Expanded week2.html with an explanatory introductory paragraph right before\n"
+        "the formal limit definition to clarify what convergence means intuitively."
     )
     commands = [
-        ['git', 'add', 'week1.html', 'update.py'],
+        ['git', 'add', 'week2.html', 'update.py'],
         ['git', 'commit', '-m', commit_message],
         ['git', 'push', 'origin', 'main']
     ]
@@ -58,5 +42,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    add_nbsp_around_or()
+    add_intro_explanation_before_definition()
     execute_git_sync()
