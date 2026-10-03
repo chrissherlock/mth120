@@ -3,6 +3,10 @@ import os
 import subprocess
 
 def write_week1_module():
+    # Force deletion of the old file to prevent caching or write-lock issues
+    if os.path.exists('week1.html'):
+        os.remove('week1.html')
+
     html_content = r"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,7 +55,7 @@ def write_week1_module():
             <p>We begin by formalizing collections of objects as <strong>sets</strong> ($A = \{1, 2, 3\}$) and mapping relationships via <strong>functions</strong> ($f: X \rightarrow Y$). This extends to the rigorous definition of <strong>sequences</strong>: functions mapping from $\mathbb{N}$ to $\mathbb{R}$, denoted $(a_n)_{n=0}^\infty$.</p>
 
             <h3>The $\epsilon-N$ Convergence Definition</h3>
-            <p>A sequence $(a_n)$ converges to a limit $L$ if, for any error margin $\epsilon > 0$, there exists a threshold index $N$ such that for all $n > N$, the distance $\vert{}a_n - L\vert{} < \epsilon$.</p>
+            <p>A sequence $(a_n)$ converges to a limit $L$ if, for any error margin $\epsilon > 0$, there exists a threshold index $N$ such that for all $n > N$, the distance $|a_n - L| < \epsilon$.</p>
 
             <div class="simulator">
                 <div class="telemetry">
@@ -64,13 +68,18 @@ def write_week1_module():
 
                 <div class="canvas-container">
                     <svg id="plot" width="600" height="200" viewBox="0 0 600 200">
+                        <!-- Epsilon Band (True height of 28px mapping to epsilon 0.2) -->
                         <rect id="eps-band" x="40" y="132" width="540" height="28" fill="#bae6fd" opacity="0.5"/>
+
+                        <!-- Axes -->
                         <line x1="40" y1="160" x2="580" y2="160" stroke="#94a3b8" stroke-width="2"/>
                         <line x1="40" y1="20" x2="40" y2="160" stroke="#94a3b8" stroke-width="2"/>
 
+                        <!-- Axis Titles -->
                         <text x="585" y="155" font-family="serif" font-style="italic" font-size="14" fill="#64748b">n</text>
                         <text x="15" y="12" font-family="serif" font-style="italic" font-size="14" fill="#64748b">a<tspan dy="4" font-size="10">n</tspan></text>
 
+                        <!-- X-Axis Ticks & Labels -->
                         <path d="M80 160 v5 M140 160 v5 M200 160 v5 M260 160 v5 M320 160 v5 M380 160 v5 M440 160 v5 M500 160 v5" stroke="#94a3b8" fill="none"/>
                         <text x="76" y="180" font-family="sans-serif" font-size="10" fill="#64748b">1</text>
                         <text x="136" y="180" font-family="sans-serif" font-size="10" fill="#64748b">2</text>
@@ -81,15 +90,20 @@ def write_week1_module():
                         <text x="436" y="180" font-family="sans-serif" font-size="10" fill="#64748b">7</text>
                         <text x="496" y="180" font-family="sans-serif" font-size="10" fill="#64748b">8</text>
 
+                        <!-- Y-Axis Ticks & Labels -->
                         <path d="M40 20 h-5 M40 90 h-5" stroke="#94a3b8" fill="none"/>
                         <text x="25" y="165" font-family="sans-serif" font-size="10" fill="#64748b">0</text>
                         <text x="15" y="94" font-family="sans-serif" font-size="10" fill="#64748b">0.5</text>
                         <text x="15" y="24" font-family="sans-serif" font-size="10" fill="#64748b">1.0</text>
 
+                        <!-- Epsilon Line Indicator -->
                         <path d="M40 132 h-5" stroke="#0284c7" fill="none"/>
                         <text x="12" y="136" font-family="sans-serif" font-size="10" fill="#0284c7">&epsilon;=0.2</text>
 
+                        <!-- Threshold Line (Dynamic) -->
                         <line id="n-threshold" x1="200" y1="20" x2="200" y2="160" stroke="#ef4444" stroke-width="2" stroke-dasharray="4" opacity="0"/>
+
+                        <!-- Points will be injected here -->
                         <g id="points-group"></g>
                     </svg>
                 </div>
@@ -235,13 +249,29 @@ def write_week1_module():
     with open('week1.html', 'w') as f:
         f.write(html_content)
 
+def update_curriculum_index():
+    if not os.path.exists('index.html'):
+        print("index.html not found in current directory. Please run in root.")
+        return
+
+    with open('index.html', 'r') as f:
+        content = f.read()
+
+    target = '<a href="#" class="module-link">View Module</a>'
+    replacement = '<a href="${item.week === 1 ? \'week1.html\' : \'#\'}" class="module-link">View Module</a>'
+
+    updated_content = content.replace(target, replacement)
+
+    with open('index.html', 'w') as f:
+        f.write(updated_content)
+
 def execute_git_sync():
     commit_message = (
-        "Fix JavaScript string escaping for KaTeX telemetry\n\n"
-        "Double-escaped LaTeX commands (\\\\epsilon, \\\\forall, \\\\frac) inside \n"
-        "the JavaScript narratives array and updateUI function. This prevents \n"
-        "the browser's JS parser from converting single backslashes into \n"
-        "control characters before KaTeX can render them."
+        "Force clean build of Week 1 module to clear KaTeX cache artifacts\n\n"
+        "Implemented file removal before writing week1.html to ensure clean \n"
+        "overwrites. Hardcoded standard pipes (|) for absolute values and \n"
+        "verified double-escaped LaTeX macros (\\\\epsilon, \\\\forall) inside \n"
+        "the JavaScript configuration."
     )
 
     commands = [
@@ -257,6 +287,8 @@ def execute_git_sync():
 if __name__ == "__main__":
     print("Writing Week 1 module...")
     write_week1_module()
+    print("Updating index.html routing...")
+    update_curriculum_index()
     print("Committing and pushing to GitHub...")
     execute_git_sync()
     print("Deployment complete.")
