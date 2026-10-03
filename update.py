@@ -337,6 +337,8 @@ def write_week1_module():
             <p>With sets and real numbers established, we explore <strong>sequences</strong>—the fundamental bridge from discrete math to continuous calculus.</p>
 
             <h3>What Is a Sequence?</h3>
+            <p><strong>In plain English:</strong> At its core, a sequence is simply an endless, ordered list of numbers. Think of it like a song playlist or a row of numbered parking spots stretching off forever toward infinity. Position is everything: there is a first term, a second term, a third term, and so on. Unlike a standard set (where order doesn't matter and items can't repeat), in a sequence you always know exactly which number comes next.</p>
+
             <p>Formally, a sequence is not merely a random string of numbers; it is a precisely defined mathematical function. Its domain is the set of natural numbers $\mathbb{N} = \{1, 2, 3, \dots\}$, and its codomain lies within the real numbers $\mathbb{R}$ (or any arbitrary set $S$). We write this mapping as:</p>
             <p>$$f: \mathbb{N} \rightarrow \mathbb{R}$$</p>
             <p>Instead of using standard function notation $f(n)$, mathematicians use subscript notation to denote the output at position index $n$:
@@ -790,9 +792,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Add explanatory SVG diagrams for sequence mapping and behaviors\n\n"
-        "Inserted visual SVG diagrams illustrating the function-theoretic mapping of "
-        "sequences and their core behavioral properties (boundedness and monotonicity) in week1.html."
+        "Add learner-friendly plain-English intro to What Is a Sequence?\n\n"
+        "Inserted an intuitive explanation and analogy before the rigorous function-theoretic "
+        "definition in week1.html."
     )
 
     commands = [
@@ -806,7 +808,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with sequence diagrams...")
+    print("Writing Week 1 module with learner-friendly intro...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
