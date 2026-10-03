@@ -28,12 +28,15 @@ def write_week1_module():
         .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; }
         .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 2rem; }
 
+        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; }
+        h3 { color: #334155; margin-top: 1.5rem; }
+
         /* Dual-Track Layout */
         .dual-track-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; margin-bottom: 2rem; }
         .track-card { padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border); }
         .track-formal { background: var(--track1-bg); border-color: #bae6fd; }
         .track-applied { background: var(--track2-bg); border-color: #f5d0fe; }
-        .track-card h3 { margin-top: 0; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; }
+        .track-card h4 { margin-top: 0; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; color: #0369a1; }
 
         /* Interactive Simulator Styles */
         .simulator { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 2rem; }
@@ -50,6 +53,8 @@ def write_week1_module():
         .pane p:last-child { margin-bottom: 0; }
         .toggle-group { min-width: 220px; }
         select { width: 100%; padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border); font-family: system-ui, sans-serif; }
+
+        .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
     </style>
 </head>
 <body>
@@ -60,18 +65,59 @@ def write_week1_module():
         </div>
 
         <div class="module-content">
-            <h2>1. Theoretical Foundations &amp; Real-World Context</h2>
-            <p>To master calculus and linear algebra, we evaluate concepts through a <strong>Dual-Track Architecture</strong>: rigorously building abstract formal definitions while mapping them directly to numerical execution models.</p>
+            <h2>1. Set Theory Foundations</h2>
+            <p>Before we can do calculus, we need a precise language to talk about collections of objects. A <strong>set</strong> is any well-defined collection of objects, called <em>elements</em> or <em>members</em>.</p>
+
+            <div class="definition-box">
+                <p><strong>Notation Examples:</strong></p>
+                <ul>
+                    <li><strong>Roster Notation:</strong> Listing elements explicitly, e.g., $A = \{1, 2, 3, 4\}$.</li>
+                    <li><strong>Set-Builder Notation:</strong> Defining elements by a property, e.g., $B = \{x \in \mathbb{R} \mid x^2 > 4\}$. Read: "The set of all $x$ in $\mathbb{R}$ such that $x^2$ is strictly greater than 4."</li>
+                    <li><strong>Membership:</strong> $x \in A$ means "$x$ is an element of $A$". $x \notin A$ means it is not.</li>
+                </ul>
+            </div>
+
+            <h3>Core Set Operations</h3>
+            <p>We combine and manipulate sets using fundamental logic operations:</p>
+            <ul>
+                <li><strong>Union ($A \cup B$):</strong> Elements in $A$, or in $B$, or in both. ($\{1, 2\} \cup \{2, 3\} = \{1, 2, 3\}$)</li>
+                <li><strong>Intersection ($A \cap B$):</strong> Elements belonging to <em>both</em> $A$ and $B$. ($\{1, 2\} \cap \{2, 3\} = \{2\}$)</li>
+                <li><strong>Complement ($A^c$ or $U \setminus A$):</strong> Elements in the universal set $U$ that are <em>not</em> in $A$.</li>
+                <li><strong>Cartesian Product ($A \times B$):</strong> The set of all ordered pairs $(a, b)$ where $a \in A$ and $b \in B$. (This is how we construct the 2D coordinate plane $\mathbb{R} \times \mathbb{R} = \mathbb{R}^2$).</li>
+            </ul>
+
+            <h2>2. The Hierarchy of Number Systems</h2>
+            <p>Mathematics builds its universe of numbers step by step, expanding systems to solve equations that previous systems couldn't handle.</p>
+
+            <ul>
+                <li><strong>Natural Numbers ($\mathbb{N}$):</strong> $\{1, 2, 3, 4, \dots\}$ (sometimes including $0$). Used for counting. <em>Limitation:</em> You cannot subtract larger from smaller without breaking out of the set.</li>
+                <li><strong>Integers ($\mathbb{Z}$):</strong> $\{\dots, -2, -1, 0, 1, 2, \dots\}$. Includes negatives and zero. <em>Limitation:</em> You cannot divide ($3 \div 2$) and stay inside $\mathbb{Z}$.</li>
+                <li><strong>Rational Numbers ($\mathbb{Q}$):</strong> Numbers expressible as a fraction $\frac{p}{q}$ where $p, q \in \mathbb{Z}$ and $q \neq 0$. Includes terminating and repeating decimals.</li>
+                <li><strong>Real Numbers ($\mathbb{R}$):</strong> All rational numbers <em>plus</em> irrational numbers (like $\sqrt{2}$ or $\pi$) whose decimals never terminate or repeat. $\mathbb{R}$ fills all the "gaps" on the number line.</li>
+            </ul>
+
+            <div class="definition-box">
+                <p><strong>Why Real Analysis Matters:</strong> The rational numbers ($\mathbb{Q}$) have "holes" (e.g., no rational number squared equals $2$). Calculus requires the <em>Completeness Property</em> of the Real Numbers ($\mathbb{R}$) to guarantee that limits, suprema, and integrals don't fall into empty space.</p>
+            </div>
+
+            <h2>3. Sequences and the Limit Concept</h2>
+            <p>With sets and real numbers established, we can define <strong>sequences</strong>—the core bridge to calculus.</p>
+            <p>A sequence is formally a function whose domain is the natural numbers $\mathbb{N}$ and whose codomain is the real numbers $\mathbb{R}$:</p>
+            <p>$$f: \mathbb{N} \rightarrow \mathbb{R}, \quad \text{denoted as } (a_n)_{n=1}^\infty \text{ or } a_1, a_2, a_3, \dots, a_n$$</p>
+
+            <p>When studying sequences, our primary question is: <em>As $n$ grows infinitely large ($n \to \infty$), do the terms $a_n$ settle down toward a specific target value $L$?</em></p>
+
+            <p>To explore this rigorously, use the <strong>Dual-Track Simulator</strong> below, which maps the abstract formal definition of a limit against a concrete numerical iteration stream.</p>
 
             <div class="dual-track-grid">
                 <div class="track-card track-formal">
                     <h3>📐 Track 1: Abstract Formalism (Pure Theory)</h3>
-                    <p>A sequence is a function $f: \mathbb{N} \rightarrow \mathbb{R}$. We say that $\lim_{n\to\infty} a_n = L$ if:</p>
+                    <p>We say $\lim_{n\to\infty} a_n = L$ if:</p>
                     <p>$$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad \forall n > N, \quad |a_n - L| < \epsilon$$</p>
-                    <p>This universal-existential quantifier structure forms the bedrock of real analysis, proving that points permanently enter and remain within an arbitrary neighborhood.</p>
+                    <p>This universal-existential quantifier structure proves that points permanently enter and remain within an arbitrary neighborhood around $L$.</p>
                 </div>
                 <div class="track-card track-applied">
-                    <h3>🎛️ Track 2: Applied Mechanics (Real-World Analog)</h3>
+                    <h3>🎛️ Track 2: Applied Mechanics (Numerical Analog)</h3>
                     <p>Imagine tracking a numerical error-correction stream where successive approximation residuals represent our sequence ($a_n$).</p>
                     <p>We want total error eradication ($L=0$), but operational performance requires proving the recurrence relation reliably drops residuals beneath an acceptable tolerance threshold ($\epsilon = 0.2$) past a specific execution index ($N$).</p>
                 </div>
@@ -262,9 +308,10 @@ def write_week1_module():
 
 def execute_git_sync():
     commit_message = (
-        "Refine applied scenario to numerical error stream\n\n"
-        "Replaced hardware filtering references with a clean numerical \n"
-        "error-correction stream analog, aligning the applied track with pure mathematical sequences."
+        "Expand Week 1 module to include Sets and Number Systems theory\n\n"
+        "Added comprehensive foundational sections covering Set Theory notation and \n"
+        "operations, the hierarchy of Number Systems (N, Z, Q, R) and their gaps, \n"
+        "and formal sequence definitions prior to the interactive epsilon-N simulator."
     )
 
     commands = [
