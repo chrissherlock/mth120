@@ -202,8 +202,8 @@ def update_curriculum_index():
             <!-- Welcoming Overview Feature Card -->
             <div class="welcome-card">
                 <div class="welcome-header">
-                    <h2>Welcome to the Curriculum Roadmap 📐</h2>
-                    <p>These study notes follow the week-by-week curriculum structure of MTHS120. Explore the visual summary below and navigate directly into the active weekly modules:</p>
+                    <h2>Welcome to the Journey! 📐</h2>
+                    <p>Mathematics is not a collection of disconnected recipes—it is a continuous landscape of ideas connecting the discrete to the smooth, the static to the dynamic, and individual equations to multidimensional spaces.</p>
                 </div>
 
                 <div class="welcome-image-wrapper">
@@ -363,9 +363,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Align index.html curriculum roadmap with official study schedule\n\n"
-        "Restructured weekly modules across all 14 calendar weeks matching\n"
-        "the course lecture notes and trimester schedule."
+        "Restore friendly welcome greeting in index.html\n\n"
+        "Restored the original 'Welcome to the Journey! 📐' heading and evocative\n"
+        "introductory paragraph within the welcome card in index.html."
     )
     commands = [
         ['git', 'add', 'index.html', 'update.py'],
@@ -377,7 +377,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    print("Writing updated index.html matching Study Schedule...")
+    print("Writing updated index.html with original welcome heading...")
     update_curriculum_index()
     print("Committing and pushing to GitHub...")
     execute_git_sync()
