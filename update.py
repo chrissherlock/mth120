@@ -2,7 +2,7 @@
 import os
 import subprocess
 
-def prevent_cartesian_wrap():
+def update_friendly_reassurance():
     filepath = 'week1.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
@@ -11,20 +11,29 @@ def prevent_cartesian_wrap():
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # Replace instances of ($A \times B$) or (A x B) in key headings/prose with nowrap spans
-    content = content.replace('Cartesian Product ($A \\times B$)', 'Cartesian Product <span style="white-space: nowrap;">($A \\times B$)</span>')
-    content = content.replace('Cartesian Products ($A \\times B$)', 'Cartesian Products <span style="white-space: nowrap;">($A \\times B$)</span>')
-    content = content.replace('($A \\times B$)', '<span style="white-space: nowrap;">($A \\times B$)</span>')
+    old_intro = (
+        '<strong>The language of science:</strong> Set theory provides the foundational '
+        'grammar for modern mathematics. Functions map inputs from a domain to outputs in a codomain.'
+    )
+    new_intro = (
+        '<strong>Don\'t worry if this feels abstract at first:</strong> '
+        'Set theory is simply the friendly art of grouping things together, '
+        'and functions are just reliable rules that match an input to an output.'
+    )
 
-    with open(filepath, 'w', encoding='utf-8') as f:
-        f.write(content)
-    print("Successfully added nowrap styling to Cartesian product notation.")
+    if old_intro in content:
+        content = content.replace(old_intro, new_intro)
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write(content)
+        print("Successfully updated set theory intro with friendly reassurance.")
+    else:
+        print("Warning: Target text not found.")
 
 def execute_git_sync():
     commit_message = (
-        "Prevent line-wrapping for Cartesian product notation in week1.html\n\n"
-        "Wrapped instances of (A x B) in nowrap spans to ensure clean inline\n"
-        "rendering across responsive viewports."
+        "Warm up set theory and function intro with friendly reassurance\n\n"
+        "Replaced clinical introductory text in week1.html with a comforting,\n"
+        "accessible explanation for beginners."
     )
     commands = [
         ['git', 'add', 'week1.html', 'update.py'],
@@ -36,5 +45,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    prevent_cartesian_wrap()
+    update_friendly_reassurance()
     execute_git_sync()
