@@ -219,14 +219,13 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Add note on division in rings versus fields below comparison table\n\n"
-        "Inserted a clarifying note beneath the hierarchy comparison table in \n"
-        "algebraic_structures.html explaining the distinction between restricted \n"
-        "division in commutative rings and universal division in fields."
+        "Add division note and verify shebang in automation script\n\n"
+        "Updated update.py with correct shebang /usr/bin/env python3 and ensured \n"
+        "algebraic_structures.html includes the division note below the table."
     )
 
     commands = [
-        ['git', 'add', 'update.py', 'week1.html', 'algebraic_structures.html', 'index.html'],
+        ['git', 'add', 'update.py', 'algebraic_structures.html', 'index.html'],
         ['git', 'commit', '-m', commit_message],
         ['git', 'push', 'origin', 'main']
     ]
