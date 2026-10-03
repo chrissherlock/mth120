@@ -2,9 +2,11 @@
 import os
 import subprocess
 
-def restore_simple_progressive_diagram():
-    filepath = 'week1.html'
+def restore_and_fix_original():
+    filepath = 'week2.html'
 
+    # This is EXACTLY the code you pasted, with the non-breaking spaces normalized
+    # and the JS/Button fix applied to the Epsilon Challenge Widget.
     html_content = r"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,10 +48,60 @@ def restore_simple_progressive_diagram():
         .notation-desc { min-width: 0; word-break: break-word; line-height: 1.5; color: #334155; }
         .infobox-intro { font-size: 0.93rem; color: #475569; line-height: 1.6; margin: 0 0 1.25rem 0; padding-bottom: 0.85rem; border-bottom: 1px solid #e2e8f0; }
 
+        .scoping-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.5rem; margin: 1.75rem 0; }
+        .scoping-box h4 { margin-top: 0; color: #92400e; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; }
+        .scoping-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.92rem; }
+        .scoping-table th, .scoping-table td { border: 1px solid #fed7aa; padding: 0.6rem 0.85rem; text-align: left; }
+        .scoping-table th { background: #fef3c7; color: #92400e; font-weight: 600; }
+        .scoping-table td { background: #ffffff; color: #1e293b; }
+
+        .widget-instructions { background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 2rem 0 1rem 0; }
+        .widget-instructions h4 { margin: 0 0 0.65rem 0; color: #0f172a; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; }
+        .widget-instructions ol { margin: 0.5rem 0 0.85rem 1.25rem; padding: 0; }
+        .widget-instructions li { margin-bottom: 0.45rem; font-size: 0.95rem; color: #334155; }
+
+        .game-box, .stepper-walkthrough { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 1.5rem; background: var(--card); box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .telemetry-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0.75rem; padding: 0.85rem 1.25rem; background: #f8fafc; border-bottom: 1px solid var(--border); }
+        .telemetry-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 0.55rem 0.85rem; display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
+        .telemetry-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #64748b; }
+        .telemetry-badge { font-size: 0.92rem; font-weight: 600; line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+        .game-header { background: #f8fafc; color: #b45309; padding: 1rem 1.5rem; font-size: 0.92rem; font-weight: 700; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
+        .game-body { padding: 1.5rem; background: #ffffff; display: flex; flex-direction: column; gap: 1rem; border-bottom: 1px solid var(--border); }
+        .game-controls { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+        .game-btn { background: var(--accent); color: white; border: none; padding: 0.55rem 1.1rem; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.92rem; transition: background 0.2s; }
+        .game-btn:hover { background: var(--accent-hover); }
+        .game-canvas-wrap { background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1.75rem; display: flex; justify-content: center; }
+        .game-canvas-wrap svg { width: 100%; height: auto; display: block; }
+
+        .formula-stage-wrap { background: #f8fafc; padding: 1.25rem; border-bottom: 1px solid var(--border); display: flex; justify-content: center; }
+        .formula-display { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; justify-content: center; font-size: 1.25rem; font-weight: 500; }
+        .formula-chunk { padding: 0.45rem 0.85rem; border-radius: 6px; border: 2px solid #e2e8f0; color: #475569; background: #ffffff; transition: all 0.3s ease; cursor: pointer; user-select: none; white-space: nowrap; }
+        .formula-chunk.active { border-color: #d97706; background: #fef3c7; color: #92400e; transform: translateY(-2px); }
+        .formula-chunk.completed { border-color: #059669; color: #065f46; background: #ecfdf5; }
+        .formula-sep { color: #64748b; font-weight: 400; white-space: nowrap; }
+
+        .canvas-container { padding: 2rem; background: #f1f5f9; display: flex; justify-content: center; border-bottom: 1px solid var(--border); }
+        .canvas-container svg { width: 100%; height: auto; display: block; }
+
+        .controls-pane { display: flex; gap: 2rem; padding: 1.5rem; background: var(--card); border-bottom: 1px solid var(--border); align-items: flex-start; }
+        .nav-buttons { display: flex; flex-direction: column; gap: 0.5rem; min-width: 140px; }
+        button { background: var(--accent); color: white; border: none; padding: 0.55rem 1rem; border-radius: 4px; cursor: pointer; font-weight: 600; width: 100%; transition: background 0.2s; font-size: 0.92rem; }
+        button:hover { background: var(--accent-hover); }
+        button:disabled { background: #94a3b8; cursor: not-allowed; }
+        .step-summary { flex-grow: 1; font-size: 0.97rem; color: #334155; line-height: 1.6; }
+        .analysis-panes { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
+        .pane { background: var(--card); padding: 1.5rem; }
+        .pane h4 { margin-top: 0; color: var(--accent); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; font-weight: 700; }
+        .pane p { margin: 0 0 0.75rem 0; line-height: 1.6; font-size: 0.95rem; }
+        .pane p:last-child { margin-bottom: 0; }
+        .toggle-group { min-width: 250px; }
+        select { width: 100%; padding: 0.55rem; border-radius: 4px; border: 1px solid var(--border); background: #fff; color: var(--text); font-size: 0.92rem; }
+
         .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
         .aside-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #b45309; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
         .aside-box h4 { margin-top: 0; color: #b45309; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
-
+        .aside-box p, .aside-box li, .infobox p, .infobox li { color: #0f172a !important; }
         .worked-example-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
         .worked-example-box h4 { margin-top: 0; color: #047857; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
         .worked-example-box p, .worked-example-box li { color: #0f172a !important; }
@@ -60,349 +112,778 @@ def restore_simple_progressive_diagram():
         <!-- TOP NAVIGATION HEADER -->
         <div class="header">
             <div>
-                <h1>Week 1: Sets, Numbers, and Sequences</h1>
+                <h1>Week 2: Limits of Sequences</h1>
                 <a href="index.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">&larr; Back to Curriculum Index</a>
             </div>
             <div>
-                <a href="week2.html" style="background: var(--accent); color: white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">Next: Week 2 &rarr;</a>
+                <a href="week1.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">&larr; Prev: Week 1</a>
             </div>
         </div>
 
         <div class="module-content">
             <div class="intro-lead">
-                Welcome to Week 1 of MTHS120. This module establishes set theory foundations, functions, Peano's axioms for natural numbers, real number completeness, sequence behavior, sums, and derived sequences.
+                Welcome to Week 2 of MTHS120. This module formalizes infinity and sequence convergence via the rigorous $\epsilon\text{-}N$ definition, limit arithmetic, the Squeeze Theorem, monotonic convergence to the supremum, and infinite limits.
             </div>
 
             <!-- TABLE OF CONTENTS -->
             <div class="toc-box">
                 <h4>📌 Module Table of Contents</h4>
                 <ul class="toc-grid">
-                    <li><a href="#section-sets">1. Sets and Functions</a></li>
-                    <li><a href="#section-numbers">2. Number Systems and Completeness</a></li>
-                    <li><a href="#section-sequences">3. Sequences</a></li>
-                    <li><a href="#section-sums">4. Sums and Partial Sums</a></li>
-                    <li><a href="#section-derived">5. Derived Sequences</a></li>
+                    <li><a href="#section-limits">1. Formal $\epsilon\text{-}N$ Convergence</a></li>
+                    <li><a href="#section-theorems">2. Limit Theorems &amp; Arithmetic</a></li>
+                    <li><a href="#section-supremum">3. Limits and Supremum</a></li>
+                    <li><a href="#section-infinity">4. Infinity as a Limit</a></li>
                 </ul>
             </div>
 
             <!-- ORIENTATION & ROADMAP -->
             <div style="margin: 2.25rem 0 2rem 0;">
-                <h3 style="margin-top: 0; color: #0f172a;">Finding Your Footing in Pure Mathematics</h3>
-                <p>If you are transitioning from high school calculus or introductory algebra, Week 1 can feel like stepping into unfamiliar territory. Up until now, mathematics has mostly focused on <em>calculating answers</em>—finding $x$, evaluating integrals, or graphing functions. Here, we step behind the scenes to examine <strong>the structural machinery itself</strong>.</p>
-                <p>Think of this module as building the foundation across three main pillars:</p>
+                <h3 style="margin-top: 0; color: #0f172a;">Bridging the Gap: From Intuition to Epsilon-N Rigor</h3>
+                <p>In introductory calculus, we are often told that a limit is a value that a sequence "approaches" or "gets closer and closer to" as $n$ marches toward infinity. While that intuition helps picture motion, pure mathematics demands precision: exactly how close is "close," and after what point is that proximity permanently guaranteed?</p>
+                <p>This week transitions from intuitive hand-waving to rigorous analytical thinking across four foundational themes:</p>
                 <ul style="margin: 0.5rem 0 1rem 1.5rem; padding: 0;">
-                    <li style="margin-bottom: 0.5rem;"><strong>Sets and Functions:</strong> The fundamental grammar of modern mathematics. Before analyzing numerical behavior, we need precise ways to gather objects together and establish mappings between them.</li>
-                    <li style="margin-bottom: 0.5rem;"><strong>Numbers and Completeness:</strong> Why fractions ($\mathbb{Q}$) leave tiny gaps on the number line, and how the real numbers ($\mathbb{R}$) form an unbroken continuum.</li>
-                    <li><strong>Sequences and Sums:</strong> Your entry point into infinity. A sequence is an endless list progressing step by step, creating the bridge to limits and continuous analysis.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>The $\epsilon\text{-}N$ Definition:</strong> Turning limits into an exact challenge. You name any tiny tolerance $\epsilon > 0$, and the sequence produces a cutoff index $N$ beyond which every term stays trapped within that narrow window forever.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Limit Laws &amp; Squeeze Theorem:</strong> Building an algebraic toolkit that allows us to evaluate composite limits without having to build an $\epsilon\text{-}N$ scratchpad proof from scratch each time.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Monotone Convergence &amp; Recursion:</strong> Proving that a sequence must settle down simply because it is trapped and moving in a single direction—giving us the legal right to solve recursive limits algebraically.</li>
+                    <li><strong>Divergence to Infinity:</strong> Distinguishing chaotic oscillation from systematic, unbounded growth using the $M\text{-}N$ towering floor test.</li>
                 </ul>
-                <p>Don't be intimidated by the formal symbols. Mathematical notation is simply concise shorthand for clear, intuitive concepts. Take each idea one step at a time.</p>
+                <p>Take your time with the scratchpad method. Working backwards to discover $N$ before writing out the formal proof forwards is a core skill in real analysis, and it becomes second nature with practice.</p>
             </div>
 
             <!-- SECTION 1 -->
-            <h2 id="section-sets">1. Sets and Functions</h2>
+            <h2 id="section-limits">1. Formal $\epsilon\text{-}N$ Convergence</h2>
             <div class="infobox">
-                <h4>📖 Notation Reference: Sets &amp; Functions</h4>
+                <h4>📖 Notation Reference: Sequences &amp; Limits</h4>
                 <div class="infobox-intro">
-                    <strong>Don't worry if this feels abstract at first:</strong> Set theory is simply the friendly art of grouping things together, and functions are just reliable rules that match an input to an output.
+                    <strong>Don't be intimidated by the symbols!</strong> If upside-down A's ($\forall$), backward E's ($\exists$), or little ceiling brackets ($\lceil \dots \rceil$) look unfamiliar, that is completely normal. They are simply mathematicians' shorthand for everyday concepts.
                 </div>
                 <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$x \in A$</span><span class="notation-desc">$x$ is an element of set $A$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$A \subseteq B$</span><span class="notation-desc">$A$ is a subset of $B$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$A \cup B$</span><span class="notation-desc">Union of sets $A$ and $B$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$A \cap B$</span><span class="notation-desc">Intersection of sets $A$ and $B$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$A \setminus B$</span><span class="notation-desc">Set difference (relative complement)</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span style="white-space: nowrap;">($A \times B$)</span></span><span class="notation-desc">Cartesian product of sets</span></div>
-                    <div class="notation-item"><span class="notation-sym">$f: X \to Y$</span><span class="notation-desc">Function $f$ with domain $X$ and codomain $Y$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$f^{-1}(y)$</span><span class="notation-desc">Preimage of element $y$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$g \circ f$</span><span class="notation-desc">Function composition ("f followed by g")</span></div>
-                    <div class="notation-item"><span class="notation-sym">$f^{-1}$</span><span class="notation-desc">Inverse function (exists iff $f$ is bijective)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\forall$</span><span class="notation-desc">Universal quantifier: "for all" or "for every"</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\exists$</span><span class="notation-desc">Existential quantifier: "there exists"</span></div>
+                    <div class="notation-item"><span class="notation-sym">$(a_n)$</span><span class="notation-desc">Sequence: an ordered list $(a_1, a_2, a_3, \dots)$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\lim_{n\to\infty} a_n = L$</span><span class="notation-desc">The sequence $a_n$ converges to limit $L$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\epsilon > 0$</span><span class="notation-desc">Arbitrary positive distance tolerance</span></div>
+                    <div class="notation-item"><span class="notation-sym">$N \in \mathbb{N}$</span><span class="notation-desc">Cutoff index past which $|a_n - L| < \epsilon$</span></div>
                 </div>
             </div>
 
-            <p>A <strong>set</strong> is a collection of distinct elements. New sets are formed via union ($A \cup B$), intersection ($A \cap B$), difference ($A \setminus B$), and Cartesian product <span style="white-space: nowrap;">($A \times B$)</span>.</p>
+            <p>Before looking at the formal symbols, let's build the intuition: Saying a sequence converges to $L$ means that if you look far enough down the list, every subsequent term gets arbitrarily close to $L$ and stays there. We want a mathematical way to guarantee this "trapping" behavior.</p>
+            <p>A sequence $(a_n)$ converges to a limit $L$, written $\lim_{n\to\infty} a_n = L$, if:</p>
+            <div class="definition-box">
+                <p>$$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad \forall n > N, \quad |a_n - L| < \epsilon$$</p>
+            </div>
 
-            <h3>Functions and Mappings</h3>
-            <p>A <strong>function</strong> $f: X \to Y$ assigns to each element $x \in X$ (domain) one and only one value $y = f(x) \in Y$ (codomain).</p>
-            <ul>
-                <li><strong>Range:</strong> The subset of the codomain consisting of actual output values $R = \{f(x) \mid x \in X\}$.</li>
-                <li><strong>Surjective (Onto):</strong> Range equals codomain ($R = Y$), meaning every element in $Y$ has at least one preimage.</li>
-                <li><strong>Injective (1-to-1):</strong> Distinct inputs produce distinct outputs: $a \neq b \implies f(a) \neq f(b)$.</li>
-                <li><strong>Bijective:</strong> Both injective and surjective, which is the exact necessary and sufficient condition for an <strong>inverse function</strong> $f^{-1}: Y \to X$ to exist.</li>
-                <li><strong>Composition:</strong> For $f: X \to Y$ and $g: Y \to Z$, the composition $g \circ f: X \to Z$ maps $x \mapsto g(f(x))$.</li>
-            </ul>
+            <!-- PLAIN-ENGLISH BREAKDOWN WITH LARGER SIDE-BY-SIDE SVG -->
+            <div class="aside-box" style="margin-top: 1.5rem;">
+                <h4>💡 Plain-English Breakdown: What is this formula actually saying?</h4>
+                <div style="margin-top: 0.75rem; display: flex; align-items: center; gap: 2rem; flex-wrap: nowrap;">
+                    <!-- LEFT COLUMN: Larger SVG Graphic -->
+                    <div style="flex: 0 0 290px; background: #ffffff; border: 1px solid #fde68a; border-radius: 8px; padding: 1.25rem; box-sizing: border-box; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                        <svg viewBox="0 0 260 160" style="width: 100%; height: auto; display: block;">
+                            <!-- Target Board Outer Ring -->
+                            <circle cx="130" cy="80" r="68" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="2.5"/>
+                            <!-- Epsilon Tolerance Band -->
+                            <circle cx="130" cy="80" r="48" fill="#fef3c7" stroke="#f59e0b" stroke-width="2.5"/>
+                            <text x="130" y="47" font-family="sans-serif" font-size="10" font-weight="bold" fill="#78350f" text-anchor="middle">±ε Tolerance</text>
+                            <!-- Bullseye (Limit L) -->
+                            <circle cx="130" cy="80" r="22" fill="#fee2e2" stroke="#ef4444" stroke-width="2.5"/>
+                            <circle cx="130" cy="80" r="7" fill="#ef4444"/>
+                            <text x="130" y="84" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">L</text>
+
+                            <!-- Arrow Shaft & Feathers (Diagonal Accent) -->
+                            <line x1="35" y1="22" x2="123" y2="74" stroke="#0f172a" stroke-width="3.5" stroke-linecap="round"/>
+                            <polygon points="123,74 111,68 116,61" fill="#0f172a"/>
+                            <!-- Feather tail -->
+                            <line x1="35" y1="22" x2="25" y2="16" stroke="#b45309" stroke-width="2.5"/>
+                            <line x1="41" y1="28" x2="31" y2="22" stroke="#b45309" stroke-width="2.5"/>
+                        </svg>
+                    </div>
+                    <!-- RIGHT COLUMN: Explanation Text -->
+                    <div style="flex: 1; min-width: 0;">
+                        <p style="margin-top: 0;">If looking at $\forall \epsilon > 0, \ \exists N \in \mathbb{N} \ \text{such that} \ \forall n > N, \ |a_n - L| < \epsilon$ makes your head spin, think of it as an <strong>archery challenge</strong> or a <strong>game between two players</strong>:</p>
+                        <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
+                            <li style="margin-bottom: 0.4rem;"><strong>1. The Challenger sets tolerance ($\epsilon$):</strong> Your opponent hands you a tiny positive distance $\epsilon$, drawing a narrow target band around $L$.</li>
+                            <li style="margin-bottom: 0.4rem;"><strong>2. You find a cutoff step ($N$):</strong> You determine how far down the list to walk—past index $N$—so everything settles inside the band.</li>
+                            <li style="margin-bottom: 0.4rem;"><strong>3. The Tail Test ($\vert{}a_n - L\vert{} < \epsilon$):</strong> The absolute distance between $a_n$ and $L$ stays smaller than $\epsilon$ for <em>every step</em> past $N$.</li>
+                        </ol>
+                        <p style="margin-top: 0.5rem; margin-bottom: 0;">If you win no matter how small your opponent makes $\epsilon$, the sequence converges to $L$!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CLAUSE STEPPER -->
+            <div class="stepper-walkthrough" id="definition-walkthrough">
+                <div class="telemetry-grid">
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Active Clause</span>
+                        <span class="telemetry-badge" id="fw-tel-clause" style="color: #b45309;">1. The Challenge (∀ϵ > 0)</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Quantifier</span>
+                        <span class="telemetry-badge" id="fw-tel-quant" style="color: #0369a1;">Universal (∀)</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Logical Role</span>
+                        <span class="telemetry-badge" id="fw-tel-role" style="color: #be185d;">Given tolerance</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Scope</span>
+                        <span class="telemetry-badge" id="fw-tel-scope" style="color: #047857;">Arbitrary positive real</span>
+                    </div>
+                </div>
+
+                <div class="formula-stage-wrap">
+                    <div class="formula-display">
+                        <div class="formula-chunk active" id="chunk-0" onclick="setFormulaStep(0)">$\forall \epsilon > 0$</div>
+                        <span class="formula-sep">,</span>
+                        <div class="formula-chunk" id="chunk-1" onclick="setFormulaStep(1)">$\exists N \in \mathbb{N}$</div>
+                        <span class="formula-sep" style="font-size: 0.95rem; margin: 0 0.2rem;">such that</span>
+                        <div class="formula-chunk" id="chunk-2" onclick="setFormulaStep(2)">$\forall n > N$</div>
+                        <span class="formula-sep">,</span>
+                        <div class="formula-chunk" id="chunk-3" onclick="setFormulaStep(3)">$|a_n - L| < \epsilon$</div>
+                    </div>
+                </div>
+
+                <div class="canvas-container">
+                    <svg id="fw-canvas" viewBox="0 0 740 180">
+                        <line x1="50" y1="90" x2="690" y2="90" stroke="#94a3b8" stroke-dasharray="3" stroke-width="1.2"/>
+                        <text x="700" y="94" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#64748b" font-weight="700">L</text>
+
+                        <rect id="fw-svg-epsband" x="50" y="55" width="640" height="70" fill="#fde68a" opacity="0.3" stroke="#f59e0b" stroke-dasharray="4" stroke-width="1.2"/>
+                        <text id="fw-svg-epslbl1" x="65" y="48" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#d97706" font-weight="bold">+ϵ</text>
+                        <text id="fw-svg-epslbl2" x="65" y="142" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#d97706" font-weight="bold">-ϵ</text>
+
+                        <line id="fw-svg-nline" x1="330" y1="20" x2="330" y2="160" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="5" opacity="0.2"/>
+                        <text id="fw-svg-nlbl" x="338" y="34" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#ef4444" font-weight="bold" opacity="0.2">Cutoff N</text>
+
+                        <g id="fw-svg-pts">
+                            <circle cx="120" cy="25" r="5" fill="#94a3b8" opacity="0.5"/>
+                            <circle cx="190" cy="42" r="5" fill="#94a3b8" opacity="0.5"/>
+                            <circle cx="260" cy="55" r="5" fill="#94a3b8" opacity="0.5"/>
+                            <circle cx="330" cy="55" r="5" fill="#fbbf24" stroke="#d97706" stroke-width="1.5"/>
+                            <circle cx="400" cy="74" r="6" fill="#10b981" id="pt-trapped-1"/>
+                            <circle cx="470" cy="84" r="6" fill="#10b981" id="pt-trapped-2"/>
+                            <circle cx="540" cy="88" r="6" fill="#10b981" id="pt-trapped-3"/>
+                            <circle cx="610" cy="89" r="6" fill="#10b981" id="pt-trapped-4"/>
+                        </g>
+                    </svg>
+                </div>
+
+                <div class="controls-pane">
+                    <div class="nav-buttons">
+                        <button id="btn-fw-prev" onclick="stepFormula(-1)" disabled>Prev Clause</button>
+                        <button id="btn-fw-next" onclick="stepFormula(1)">Next Clause</button>
+                    </div>
+                    <div class="step-summary" id="fw-step-summary"></div>
+                    <div class="toggle-group">
+                        <label for="fw-dimension-toggle" style="font-size: 0.85rem; font-weight: 700; color: #475569; display: block; margin-bottom: 0.5rem;">FRAMEWORK VIEW:</label>
+                        <select id="fw-dimension-toggle" onchange="changeFormulaPerspective()">
+                            <option value="adversarial">Adversarial Game (Skeptic vs. Prover)</option>
+                            <option value="verification">Analogy: Software Specification</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="analysis-panes">
+                    <div class="pane">
+                        <h4 id="fw-heading-what">Mathematical Mechanics</h4>
+                        <div id="fw-pane-what"></div>
+                    </div>
+                    <div class="pane">
+                        <h4 id="fw-heading-why">Logical Rationale</h4>
+                        <div id="fw-pane-why"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUANTIFIER ORDER & SCOPING -->
+            <div class="scoping-box">
+                <h4>💡 Quantifier Order and Dependency</h4>
+                <p>Quantifiers are read from left to right, creating a clear dependency chain:</p>
+                <table class="scoping-table">
+                    <thead>
+                        <tr><th>Variable</th><th>Scope</th><th>Dependency Rule</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>$\epsilon$</strong></td><td>$\forall \epsilon > 0$</td><td>Arbitrary positive tolerance, chosen independently of $N$.</td></tr>
+                        <tr><td><strong>$N$</strong></td><td>$\exists N \in \mathbb{N}$</td><td>Chosen <em>after</em> inspecting $\epsilon$ ($N = N(\epsilon)$).</td></tr>
+                        <tr><td><strong>$n$</strong></td><td>$\forall n > N$</td><td>Runs over all indices strictly past cutoff $N$.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="widget-instructions">
+                <h4>📖 Guide: Exploring the &epsilon;–N Definition with $a_n = \frac{1}{n}$</h4>
+                <p>This widget illustrates convergence for $\lim_{n\to\infty} \frac{1}{n} = 0$:</p>
+                <ol>
+                    <li><strong>Choose Tolerance ($\epsilon$):</strong> $\epsilon = 0.2$ ($N=5$), $\epsilon = 0.1$ ($N=10$), or $\epsilon = 0.05$ ($N=20$).</li>
+                    <li><strong>Observe Cutoff ($N$):</strong> Marked by the red dashed line ($N = \lceil 1/\epsilon \rceil$).</li>
+                    <li><strong>Step Forward:</strong> Trace terms entering the green interior past $N$.</li>
+                </ol>
+            </div>
+
+            <!-- EPSILON CHALLENGE WIDGET -->
+            <div class="game-box">
+                <div class="game-header">
+                    <span>Illustrating the Definition: $a_n = \frac{1}{n}$ ($L = 0$)</span>
+                    <span>Finite Sample Visualization</span>
+                </div>
+                <div class="telemetry-grid" id="game-telemetry">
+                    <div class="telemetry-card"><span class="telemetry-label">Sequence</span><span class="telemetry-badge" style="color: #0369a1;">$a_n = 1/n$ ($L = 0$)</span></div>
+                    <div class="telemetry-card"><span class="telemetry-label">Tolerance (ϵ)</span><span class="telemetry-badge" id="cg-tel-eps" style="color: #b45309;">Select below</span></div>
+                    <div class="telemetry-card"><span class="telemetry-label">Suitable Cutoff (N)</span><span class="telemetry-badge" id="cg-tel-reqn" style="color: #be185d;">—</span></div>
+                    <div class="telemetry-card"><span class="telemetry-label">Term Displayed</span><span class="telemetry-badge" id="cg-tel-val" style="color: #334155;">—</span></div>
+                    <div class="telemetry-card"><span class="telemetry-label">Status</span><span class="telemetry-badge" id="cg-tel-status" style="color: #64748b;">Standby</span></div>
+                </div>
+                <div class="game-body">
+                    <div class="game-controls">
+                        <button class="game-btn" onclick="startChallenge(0.2)">Test $\epsilon = 0.2$</button>
+                        <button class="game-btn" onclick="startChallenge(0.1)">Test $\epsilon = 0.1$</button>
+                        <button class="game-btn" onclick="startChallenge(0.05)">Test $\epsilon = 0.05$</button>
+                    </div>
+                    <div class="game-canvas-wrap">
+                        <svg id="game-plot" viewBox="0 0 740 260">
+                            <text x="260" y="130" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b">Select an &epsilon; budget above to illustrate the sample.</text>
+                        </svg>
+                    </div>
+                    <div class="game-controls" id="step-controls" style="display: none;">
+                        <button class="game-btn" style="background-color: #64748b;" onclick="resetChallenge()">Reset</button>
+                    </div>
+                </div>
+            </div>
 
             <!-- SECTION 2 -->
-            <h2 id="section-numbers">2. Number Systems and Completeness</h2>
-            <div class="infobox">
-                <h4>📖 Notation Reference: Numbers &amp; Bounds</h4>
-                <div class="infobox-intro">
-                    <strong>Taking it one step at a time:</strong> Every time numbers felt complete, mathematics found a new gap—from counting on our fingers to fractions, and finally to the seamless real number line.
-                </div>
-                <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$\mathbb{N}$</span><span class="notation-desc">Natural numbers $\{0, 1, 2, \dots\}$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\mathbb{Z}$</span><span class="notation-desc">Integers $\{\dots, -1, 0, 1, \dots\}$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\mathbb{Q}$</span><span class="notation-desc">Rational numbers $\{p/q \mid p \in \mathbb{Z}, q \in \mathbb{Z}_+\}$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\mathbb{R}$</span><span class="notation-desc">Real numbers (complete ordered field)</span></div>
-                    <div class="notation-item"><span class="notation-sym">$|x|$</span><span class="notation-desc">Absolute value (distance to origin)</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\sup S$</span><span class="notation-desc">Supremum (least upper bound) of set $S$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\inf S$</span><span class="notation-desc">Infimum (greatest lower bound) of set $S$</span></div>
-                </div>
-            </div>
 
-            <h3>Peano's Axioms for $\mathbb{N}$</h3>
-            <p>Natural numbers are defined by Peano's axioms: $0 \in \mathbb{N}$, each number has a unique successor, $0$ is not a successor of any number (no loops, no branching, connected graph rooted at 0), and mathematical induction holds.</p>
-
-            <h3>Completeness and the Least Upper Bound Property</h3>
-            <p>While rationals $\mathbb{Q}$ are dense, they contain gaps (e.g., $x^2 = 2$ has no rational solution). The real numbers $\mathbb{R}$ extend $\mathbb{Q}$ and satisfy the <strong>Axiom of Completeness</strong>: Any non-empty subset $S \subseteq \mathbb{R}$ that is bounded above has a supremum ($\sup S$) in $\mathbb{R}$. The <strong>Archimedean Axiom</strong> ensures that for any positive real numbers $x, y$, there is an $n \in \mathbb{N}$ such that $nx > y$.</p>
-
-            <!-- SECTION 3 -->
-            <h2 id="section-sequences">3. Sequences</h2>
-            <div class="infobox">
-                <h4>📖 Notation Reference: Sequence Mechanics</h4>
-                <div class="infobox-intro">
-                    <strong>Think of a sequence simply as an endless ordered list</strong> —like a musical playlist or numbered parking spots—where every step has its own designated number.
-                </div>
-                <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$(a_n)$</span><span class="notation-desc">Sequence $(a_0, a_1, a_2, \dots)$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$an + b$</span><span class="notation-desc">Arithmetic progression</span></div>
-                    <div class="notation-item"><span class="notation-sym">$aq^n$</span><span class="notation-desc">Geometric progression</span></div>
-                </div>
-            </div>
-
-            <p>To truly grasp what a sequence is, it helps to look at it through two complementary lenses—one intuitive and one rigorous:</p>
-            <ul style="margin: 0.5rem 0 1rem 1.25rem; padding: 0;">
-                <li style="margin-bottom: 0.6rem;"><strong>1. The List View (Intuitive):</strong> An endless, ordered string of numbers written as $(a_n) = (a_1, a_2, a_3, a_4, \dots)$. Order matters deeply here: the sequence $(1, 2, 3, \dots)$ is entirely different from $(3, 2, 1, \dots)$. Every number has a definite position.</li>
-                <li style="margin-bottom: 0.6rem;"><strong>2. The Function View (Rigorous):</strong> Formally, a sequence is a function whose domain is the natural numbers $\mathbb{N}$ (or $\mathbb{Z}_+$) and whose codomain is the real numbers $\mathbb{R}$. Instead of writing $f(n)$, mathematicians use subscript notation $a_n$:
-                    <ul style="margin: 0.3rem 0 0.3rem 1.25rem; padding: 0;">
-                        <li><strong>Input ($n$):</strong> The position or index (e.g., $1, 2, 3, \dots$).</li>
-                        <li><strong>Output ($a_n$):</strong> The actual real number sitting at that position.</li>
-                    </ul>
-                </li>
-            </ul>
-            <p>We can define these mappings either explicitly with a closed-form rule or recursively relative to previous terms.</p>
-            <div class="aside-box">
-                <h4>💡 Recipe Analogy: Explicit vs. Recursive Formulas</h4>
-                <ul>
-                    <li><strong>Explicit Formula (Instant Recipe):</strong> Tells you exactly how to bake the 100th cake right now without baking the first 99 (e.g., $a_n = 3n + 2$).</li>
-                    <li><strong>Recursive Formula (Step-by-Step Recipe):</strong> Tells you, <em>"Take yesterday's cake and add two extra strawberries to it."</em> You must know the previous term to find the next one (e.g., $a_1 = 5, a_n = a_{n-1} + 2$).</li>
-                </ul>
-            </div>
-
-            <!-- FINITE SAMPLE VISUALIZATION -->
-            <div id="finite-sample-container" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1.25rem; margin-top: 1.5rem; margin-bottom: 1.5rem;">
-                <p style="font-size: 0.85rem; font-weight: 700; color: #64748b; margin-top: 0; margin-bottom: 0.75rem; text-align: center;">VISUALIZATION: Finite Sample vs. The Infinite Sequence</p>
-                <svg viewBox="0 0 800 290" style="width: 100%; height: auto; display: block;">
-                    <!-- Background Grid -->
-                    <line x1="80" y1="230" x2="760" y2="230" stroke="#f1f5f9" stroke-width="1"/>
-                    <line x1="80" y1="170" x2="760" y2="170" stroke="#f1f5f9" stroke-width="1" stroke-dasharray="3"/>
-                    <line x1="80" y1="110" x2="760" y2="110" stroke="#f1f5f9" stroke-width="1" stroke-dasharray="3"/>
-                    <line x1="80" y1="50" x2="760" y2="50" stroke="#f1f5f9" stroke-width="1" stroke-dasharray="3"/>
-
-                    <!-- Axes -->
-                    <line x1="80" y1="230" x2="760" y2="230" stroke="#0f172a" stroke-width="2"/>
-                    <line x1="80" y1="25" x2="80" y2="245" stroke="#0f172a" stroke-width="2"/>
-                    <text x="725" y="250" font-size="11" font-weight="bold" fill="#64748b">Index n</text>
-                    <text x="35" y="35" font-size="11" font-weight="bold" fill="#64748b">Value a_n</text>
-
-                    <!-- Finite Sample Shading (Left Side) -->
-                    <rect x="85" y="40" width="375" height="185" fill="#f0f9ff" opacity="0.6" rx="4"/>
-                    <text x="210" y="58" font-size="11" font-weight="bold" fill="#0284c7">Observed Finite Sample (n = 1 to 6)</text>
-
-                    <!-- Infinite Tail Shading (Right Side) -->
-                    <rect x="470" y="40" width="280" height="185" fill="#f0fdf4" opacity="0.6" rx="4"/>
-                    <text x="535" y="58" font-size="11" font-weight="bold" fill="#047857">Infinite Continuation Tail</text>
-
-                    <!-- Vertical Projection Guidelines -->
-                    <line x1="125" y1="230" x2="125" y2="200" stroke="#cbd5e1" stroke-dasharray="2"/>
-                    <line x1="180" y1="230" x2="180" y2="170" stroke="#cbd5e1" stroke-dasharray="2"/>
-                    <line x1="235" y1="230" x2="235" y2="148" stroke="#cbd5e1" stroke-dasharray="2"/>
-                    <line x1="290" y1="230" x2="290" y2="132" stroke="#cbd5e1" stroke-dasharray="2"/>
-                    <line x1="345" y1="230" x2="345" y2="120" stroke="#cbd5e1" stroke-dasharray="2"/>
-                    <line x1="400" y1="230" x2="400" y2="110" stroke="#cbd5e1" stroke-dasharray="2"/>
-
-                    <!-- Finite Sample Points (Sky Blue) -->
-                    <circle class="fs-pt" cx="125" cy="200" r="5" fill="#0284c7" opacity="0" style="transition: opacity 0.3s ease;"/>
-                    <circle class="fs-pt" cx="180" cy="170" r="5" fill="#0284c7" opacity="0" style="transition: opacity 0.3s ease;"/>
-                    <circle class="fs-pt" cx="235" cy="148" r="5" fill="#0284c7" opacity="0" style="transition: opacity 0.3s ease;"/>
-                    <circle class="fs-pt" cx="290" cy="132" r="5" fill="#0284c7" opacity="0" style="transition: opacity 0.3s ease;"/>
-                    <circle class="fs-pt" cx="345" cy="120" r="5" fill="#0284c7" opacity="0" style="transition: opacity 0.3s ease;"/>
-                    <circle class="fs-pt" cx="400" cy="110" r="5" fill="#0284c7" opacity="0" style="transition: opacity 0.3s ease;"/>
-
-                    <!-- Index Numbers on X Axis -->
-                    <text x="121" y="248" font-size="10" fill="#64748b">1</text>
-                    <text x="176" y="248" font-size="10" fill="#64748b">2</text>
-                    <text x="231" y="248" font-size="10" fill="#64748b">3</text>
-                    <text x="286" y="248" font-size="10" fill="#64748b">4</text>
-                    <text x="341" y="248" font-size="10" fill="#64748b">5</text>
-                    <text x="396" y="248" font-size="10" fill="#64748b">6</text>
-
-                    <!-- SEPARATOR LINE -->
-                    <line x1="465" y1="35" x2="465" y2="235" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4"/>
-
-                    <!-- GREEN CONTINUATION DOTS (THE INFINITE TAIL) -->
-                    <g id="green-tail-dots">
-                        <circle class="fs-pt" cx="490" cy="102" r="5.5" fill="#10b981" opacity="0" style="transition: opacity 0.3s ease;"/>
-                        <circle class="fs-pt" cx="535" cy="95" r="5.5" fill="#10b981" opacity="0" style="transition: opacity 0.3s ease;"/>
-                        <circle class="fs-pt" cx="580" cy="89" r="5.5" fill="#10b981" opacity="0" style="transition: opacity 0.3s ease;"/>
-                        <circle class="fs-pt" cx="625" cy="84" r="5.5" fill="#10b981" opacity="0" style="transition: opacity 0.3s ease;"/>
-                        <circle class="fs-pt" cx="670" cy="80" r="5.5" fill="#10b981" opacity="0" style="transition: opacity 0.3s ease;"/>
-                        <circle class="fs-pt" cx="715" cy="77" r="5.5" fill="#10b981" opacity="0" style="transition: opacity 0.3s ease;"/>
-                        <text class="fs-pt" x="735" y="80" font-size="16" font-weight="bold" fill="#10b981" opacity="0" style="transition: opacity 0.3s ease;">...</text>
-                    </g>
-                    <text x="486" y="248" font-size="10" font-weight="bold" fill="#047857">7</text>
-                    <text x="531" y="248" font-size="10" font-weight="bold" fill="#047857">8</text>
-                    <text x="576" y="248" font-size="10" font-weight="bold" fill="#047857">9</text>
-                    <text x="621" y="248" font-size="10" font-weight="bold" fill="#047857">10</text>
-                    <text x="662" y="248" font-size="10" font-weight="bold" fill="#047857">n &rarr; &infin;</text>
-                </svg>
-                <div style="margin-top: 0.85rem; padding: 0.75rem 1rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid #10b981; border-radius: 4px; font-size: 0.9rem; color: #065f46;">
-                    <strong>The Infinite Reality:</strong> Any computational plot only ever reveals a <em>finite sample</em> (the blue terms $a_1, \dots, a_6$). The <strong style="color: #047857;">emerald green dots</strong> represent the infinite tail ($a_7, a_8, a_9, \dots$) which continues without end for every $n \in \mathbb{N}$.
-                </div>
-
-                <!-- Progressive Animation Script -->
-                <script>
-                    window.addEventListener('DOMContentLoaded', () => {
-                        const points = document.querySelectorAll('.fs-pt');
-                        points.forEach((pt, index) => {
-                            setTimeout(() => {
-                                pt.style.opacity = '1';
-                            }, 300 + (index * 200)); // Fades each point in progressively every 200ms
-                        });
-                    });
-                </script>
-            </div>
-
-            <!-- SECTION 4 -->
-            <h2 id="section-sums">4. Sums and Partial Sums</h2>
-            <div class="infobox">
-                <h4>📖 Notation Reference: Summation Mechanics</h4>
-                <div class="infobox-intro">
-                    <strong>Meet the sigma machine:</strong> The Greek letter sigma ($\sum$) is simply shorthand for adding up a string of numbers without having to write out endless plus signs.
-                </div>
-                <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$\sum$</span><span class="notation-desc">Sigma operator: shorthand instruction to add numbers together</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\nu = 0$ or $1$</span><span class="notation-desc">Lower limit: the starting index value</span></div>
-                    <div class="notation-item"><span class="notation-sym">$n$</span><span class="notation-desc">Upper limit: the final index value where the sum stops</span></div>
-                    <div class="notation-item"><span class="notation-sym">$b_\nu$</span><span class="notation-desc">General term being added at each step</span></div>
-                    <div class="notation-item"><span class="notation-sym">$s_n$</span><span class="notation-desc">Partial sum: the running total up to index $n$</span></div>
-                </div>
-            </div>
-
-            <p>When studying sequences, we often want to know what happens when we add their terms together. Writing out $b_0 + b_1 + b_2 + \dots + b_n$ gets messy very quickly, so we use <strong>summation notation</strong>:</p>
-
-            <div class="definition-box">
-                <p>$$\sum_{\nu=0}^{n} b_\nu = b_0 + b_1 + b_2 + \dots + b_n$$</p>
-            </div>
-
-            <h3>Anatomy of a Summation</h3>
-            <p>Think of $\sum$ as a loop in computer programming or an assembly line:</p>
-            <ul>
-                <li><strong>The Index ($\nu$):</strong> The counter variable that ticks upward by whole numbers.</li>
-                <li><strong>The Starting Point (Lower Limit):</strong> Where the counter begins (e.g., $\nu = 0$ or $\nu = 1$).</li>
-                <li><strong>The Stopping Point (Upper Limit):</strong> The final number $n$ where the counting finishes.</li>
-                <li><strong>The Formula ($b_\nu$):</strong> The rule evaluated at each step of the counter.</li>
-            </ul>
-
-            <h3>Partial Sums: The Running Total</h3>
-            <p>Imagine collecting coins in a video game. Level 0 gives 2 coins, Level 1 gives 3, Level 2 gives 5. Your <strong>partial sum</strong> ($s_n$) is your running total score up to that exact moment:</p>
-
-            <div class="definition-box">
-                <p>$$s_n = \sum_{\nu=0}^{n} b_\nu$$</p>
-            </div>
-
-            <p>Two famous summation formulas appear frequently in your coursework:</p>
-            <ul class="example-list">
-                <li><strong>Sum of the First $n$ Integers (Triangular Numbers):</strong><br>
-                $$\sum_{\nu=1}^{n} \nu = 1 + 2 + 3 + \dots + n = \frac{n(n+1)}{2}$$</li>
-                <li><strong>Geometric Series Partial Sum:</strong><br>
-                $$\sum_{\nu=0}^{n-1} q^\nu = 1 + q + q^2 + \dots + q^{n-1} = \frac{1 - q^n}{1 - q} \quad (\text{for } q \neq 1)$$</li>
-            </ul>
-
-            <div class="worked-example-box">
-                <h4>🎯 Worked Example: Telescoping Sums &amp; Index Shifting</h4>
-                <p>Evaluate the sum $\sum_{k=1}^{n} \left(\frac{1}{k} - \frac{1}{k+1}\right)$ by writing out terms and identifying cancellations:</p>
+            <div class="worked-example-box"><h4>🎯 Worked Example 1: The $\epsilon\text{-}N$ Scratchpad Method</h4>
+                <p>Prove formally that $\lim_{n\to\infty} \frac{2n+1}{n} = 2$:</p>
                 <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
-                    <li style="margin-bottom: 0.4rem;"><strong>Step 1: Write out the first few terms.</strong>
-                        $$\left(1 - \frac{1}{2}\right) + \left(\frac{1}{2} - \frac{1}{3}\right) + \left(\frac{1}{3} - \frac{1}{4}\right) + \dots + \left(\frac{1}{n} - \frac{1}{n+1}\right)$$
+                    <li style="margin-bottom: 0.4rem;"><strong>Step 1: The Scratchpad Analysis.</strong> Start with $|a_n - L| < \epsilon$:
+                        $$\left|\frac{2n+1}{n} - 2\right| = \left|2 + \frac{1}{n} - 2\right| = \left|\frac{1}{n}\right| = \frac{1}{n} < \epsilon$$
                     </li>
-                    <li style="margin-bottom: 0.4rem;"><strong>Step 2: Observe interior cancellations.</strong> Notice how $-\frac{1}{2}$ cancels with $+\frac{1}{2}$, $-\frac{1}{3}$ cancels with $+\frac{1}{3}$, and so on.</li>
-                    <li><strong>Step 3: Evaluate the finite sum.</strong> Only the very first term and the very last term survive:
-                        $$\sum_{k=1}^{n} \left(\frac{1}{k} - \frac{1}{k+1}\right) = 1 - \frac{1}{n+1} = \frac{n}{n+1}$$
+                    <li style="margin-bottom: 0.4rem;"><strong>Step 2: Solving for $n$.</strong> Rearranging gives $n > \frac{1}{\epsilon}$.</li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Step 3: Choosing $N$.</strong> Choose an integer $N \ge \frac{1}{\epsilon}$ (formally $N = \lceil 1/\epsilon \rceil$).</li>
+                    <li><strong>Step 4: Formal Proof Write-Up.</strong> Given $\epsilon > 0$, let $N = \lceil 1/\epsilon \rceil$. For any $n > N$, we have $n > \frac{1}{\epsilon}$, which implies $\frac{1}{n} < \epsilon$, proving $\left|\frac{2n+1}{n} - 2\right| < \epsilon$. Q.E.D.</li>
+                </ol>
+            </div>
+
+            <div class="worked-example-box"><h4>🎯 Worked Example 2: Applying Algebraic Limit Laws</h4>
+                <p>Evaluate $\lim_{n\to\infty} \frac{3n^2 - 1}{2n^2 + 5}$ using the Limit Laws:</p>
+                <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
+                    <li style="margin-bottom: 0.4rem;"><strong>Step 1: Divide by highest power.</strong> Divide both numerator and denominator by $n^2$:
+                        $$\lim_{n\to\infty} \frac{3 - \frac{1}{n^2}}{2 + \frac{5}{n^2}}$$
+                    </li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Step 2: Apply Quotient &amp; Sum Laws.</strong> Because $\lim \frac{1}{n^2} = 0$, we apply the arithmetic laws:
+                        $$\frac{\lim(3) - \lim\left(\frac{1}{n^2}\right)}{\lim(2) + \lim\left(\frac{5}{n^2}\right)}$$
+                    </li>
+                    <li><strong>Step 3: Final Calculation.</strong> Substituting standard limits gives:
+                        $$\frac{3 - 0}{2 + 0} = \frac{3}{2}$$
                     </li>
                 </ol>
             </div>
 
-            <!-- SECTION 5 -->
-            <div class="aside-box" style="background: #f1f5f9; border-left: 4px solid #0284c7; border-color: #cbd5e1; margin-top: 2rem;">
-                <h4 style="color: #0369a1;">⚖️ Side-by-Side Comparison: Derived Sequences vs. Partial Sums</h4>
-                <p>It is very common to mix these two up because both involve mathematical operations on sequences. Here is how to keep them straight:</p>
-                <ul>
-                    <li><strong>Derived Sequences ($a_n'$):</strong> Look <em>locally</em> at immediate neighbors to measure <strong>change / speed / slope</strong> ($a_{n+1} - a_n$).</li>
-                    <li><strong>Partial Sums ($s_n$):</strong> Look <em>cumulatively</em> backward at everything that came before to measure <strong>total accumulation / area</strong> ($\sum b_\nu$).</li>
-                </ul>
-            </div>
+            <h2 id="section-theorems">2. Limit Theorems &amp; Arithmetic</h2>
+            <p>Computing limits directly from the formal $\epsilon\text{-}N$ definition for every new sequence can quickly become cumbersome. Instead, mathematicians build a toolkit of <strong>Limit Theorems</strong>—fundamental arithmetic rules and bounding principles that let us combine known limits to evaluate complex new ones instantly.</p>
 
-            <h2 id="section-derived">5. Derived Sequences</h2>
             <div class="infobox">
-                <h4>📖 Notation Reference: Derived Sequences</h4>
+                <h4>📐 Algebraic Limit Laws (Theorem 1)</h4>
                 <div class="infobox-intro">
-                    <strong>The Speedometer Analogy:</strong> While a regular sequence tells you your position (like a car odometer), a derived sequence tells you how fast you are jumping from step to step (like a speedometer).
+                    Suppose $(a_n)$ and $(b_n)$ are convergent sequences such that $\lim_{n\to\infty} a_n = K$ and $\lim_{n\to\infty} b_n = L$, and let $c \in \mathbb{R}$ be a constant. Then:
                 </div>
-                <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$a_n'$</span><span class="notation-desc">Derived sequence: consecutive differences $a_{n+1} - a_n$</span></div>
+                <div style="display: flex; flex-direction: column; gap: 0.75s; font-size: 0.95rem;">
+                    <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">
+                        <strong>1. Constant Rule:</strong> <span>If $a_n = c$ for all $n$, then $\lim_{n\to\infty} c = c$.</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">
+                        <strong>2. Scalar Multiple:</strong> <span>$\lim_{n\to\infty} (c \cdot a_n) = c \cdot K$</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">
+                        <strong>3. Sum / Difference:</strong> <span>$\lim_{n\to\infty} (a_n \pm b_n) = K \pm L$</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">
+                        <strong>4. Product Rule:</strong> <span>$\lim_{n\to\infty} (a_n \cdot b_n) = K \cdot L$</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">
+                        <strong>5. Quotient Rule:</strong> <span>$\lim_{n\to\infty} \left(\frac{a_n}{b_n}\right) = \frac{K}{L}$, provided that $L \neq 0$ and $b_n \neq 0$ for all $n$.</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1rem;">
+                        <strong>6. Power Rule:</strong> <span>$\lim_{n\to\infty} (a_n)^p = K^p$ (for real powers where terms remain defined).</span>
+                    </div>
                 </div>
             </div>
 
-            <p>When you look at a regular sequence, you see its position at each step. A <strong>derived sequence</strong> ($a_n' = a_{n+1} - a_n$) answers a single question: <strong>"How much did the sequence jump from one step to the next?"</strong></p>
+            <div class="aside-box" style="margin-top: 1.5rem;">
+                <h4>💡 Intuition: Why Arithmetic Laws Work</h4>
+                <p>These laws reflect a powerful principle: <strong>limits respect basic arithmetic operations</strong>. If sequence $A$ is zooming in on $K$ and sequence $B$ is zooming in on $L$, their sum, product, or ratio must naturally zoom in on $K+L$, $K \cdot L$, or $K/L$. The only exception is division by zero, which destroys the neighborhood structure around $L$.</p>
+            </div>
+
+            <h3 style="margin-top: 2rem;">The Squeeze Theorem (Sandwich Theorem)</h3>
+            <p>Sometimes a sequence is too wild, complex, or oscillatory to evaluate directly using standard arithmetic laws. However, if we can bound it—trapping it from above by a larger sequence and from below by a smaller sequence that both converge to the <em>exact same limit</em>—the middle sequence has nowhere else to go. This powerful principle is formalized as the <strong>Squeeze Theorem</strong> (also known as the Sandwich Theorem):</p>
+            <p><strong>Geometric Intuition:</strong> Imagine two tracker curves or enclosing walls closing in symmetrically from the ceiling and floor toward a common target $L$. As $n$ approaches infinity, the gap between the upper and lower bounds vanishes to zero. Any sequence forced to live inside that narrowing gap is mathematically compressed into sharing that exact same limit.</p>
 
             <div class="definition-box">
-                <p>$$a_n' = a_{n+1} - a_n$$</p>
+                <p>Let $(a_n)$, $(b_n)$, and $(c_n)$ be sequences such that $a_n \le b_n \le c_n$ for all $n \ge N_0$. If</p>
+                <p style="text-align: center; margin: 0.75rem 0;">$$\lim_{n\to\infty} a_n = L \quad \text{and} \quad \lim_{n\to\infty} c_n = L$$</p>
+                <p>then the middle sequence $(b_n)$ is forced to converge to the same limit:</p>
+                <p style="text-align: center; margin-top: 0.75rem;">$$\lim_{n\to\infty} b_n = L$$</p>
             </div>
 
-            <div class="worked-example-box">
-                <h4>🎯 Worked Example: Squares and Differences</h4>
-                <p>Consider the sequence of squares $(a_n) = (1, 4, 9, 16, 25, \dots)$, where $a_n = n^2$. Let's calculate its derived sequence step by step:</p>
+            <div class="aside-box" style="margin-top: 1.5rem;">
+                <h4>🎯 Classic Example: Applying the Squeeze Theorem</h4>
+                <p>Consider evaluating $\lim_{n\to\infty} \frac{\sin(n)}{n}$. Because sine oscillates between $-1$ and $1$, we know:</p>
+                <p style="text-align: center; margin: 0.75rem 0;">$$-\frac{1}{n} \le \frac{\sin(n)}{n} \le \frac{1}{n}$$</p>
+                <p>Since $\lim_{n\to\infty} \left(-\frac{1}{n}\right) = 0$ and $\lim_{n\to\infty} \left(\frac{1}{n}\right) = 0$, the Squeeze Theorem forces our middle sequence to also converge:</p>
+                <p style="text-align: center; margin-top: 0.75rem;">$$\lim_{n\to\infty} \frac{\sin(n)}{n} = 0$$</p>
+
+                <!-- Embedded SVG Graph of sin(n) / n convergence -->
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1rem; margin-top: 1rem; margin-bottom: 1.25rem;">
+                    <p style="font-size: 0.85rem; font-weight: 700; color: #64748b; margin-top: 0; margin-bottom: 0.5rem; text-align: center;">VISUALIZATION: Squeezing $\frac{\sin(n)}{n}$ between $-\frac{1}{n}$ and $\frac{1}{n}$ ($n = 1 \dots 30$)</p>
+                    <svg viewBox="0 0 800 280" style="width: 100%; height: auto; display: block;">
+                        <!-- Center Axis (L = 0) -->
+                        <line x1="50" y1="140" x2="760" y2="140" stroke="#94a3b8" stroke-width="1.5"/>
+                        <text x="710" y="130" font-size="11" font-weight="bold" fill="#64748b">L = 0</text>
+
+                        <!-- Upper Bound Curve (1/n) -->
+                        <path d="M 70,20 Q 200,90 350,120 T 730,136" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4"/>
+                        <text x="600" y="105" font-size="10" font-weight="bold" fill="#d97706">Upper Bound: +1/n</text>
+
+                        <!-- Lower Bound Curve (-1/n) -->
+                        <path d="M 70,260 Q 200,190 350,160 T 730,144" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4"/>
+                        <text x="600" y="175" font-size="10" font-weight="bold" fill="#d97706">Lower Bound: -1/n</text>
+
+                        <!-- Oscillating Points for sin(n)/n (n = 1 to 30 mapped to x: 70 to 730) -->
+                        <g>
+                            <circle cx="92" cy="70" r="4.5" fill="#059669"/><circle cx="114" cy="185" r="4.5" fill="#059669"/>
+                            <circle cx="136" cy="172" r="4.5" fill="#059669"/><circle cx="158" cy="115" r="4.5" fill="#059669"/>
+                            <circle cx="180" cy="120" r="4.5" fill="#059669"/><circle cx="202" cy="160" r="4.5" fill="#059669"/>
+                            <circle cx="224" cy="155" r="4.5" fill="#059669"/><circle cx="246" cy="130" r="4.5" fill="#059669"/>
+                            <circle cx="268" cy="133" r="4.5" fill="#059669"/><circle cx="290" cy="148" r="4.5" fill="#059669"/>
+                            <circle cx="312" cy="146" r="4.5" fill="#059669"/><circle cx="334" cy="138" r="4.5" fill="#059669"/>
+                            <circle cx="356" cy="139" r="4.5" fill="#059669"/><circle cx="378" cy="143" r="4.5" fill="#059669"/>
+                            <circle cx="400" cy="142" r="4.5" fill="#059669"/><circle cx="422" cy="139" r="4.5" fill="#059669"/>
+                            <circle cx="444" cy="140" r="4.5" fill="#059669"/><circle cx="466" cy="141" r="4.5" fill="#059669"/>
+                            <circle cx="488" cy="141" r="4.5" fill="#059669"/><circle cx="510" cy="140" r="4.5" fill="#059669"/>
+                            <circle cx="532" cy="140" r="4.5" fill="#059669"/><circle cx="554" cy="140" r="4.5" fill="#059669"/>
+                            <circle cx="576" cy="140" r="4.5" fill="#059669"/><circle cx="598" cy="140" r="4.5" fill="#059669"/>
+                            <circle cx="620" cy="140" r="4.5" fill="#059669"/><circle cx="642" cy="140" r="4.5" fill="#059669"/>
+                            <circle cx="664" cy="140" r="4.5" fill="#059669"/><circle cx="686" cy="140" r="4.5" fill="#059669"/>
+                            <circle cx="708" cy="140" r="4.5" fill="#059669"/><circle cx="730" cy="140" r="4.5" fill="#059669"/>
+                        </g>
+                        <text x="70" y="275" font-size="10" fill="#64748b">n=1</text>
+                        <text x="715" y="275" font-size="10" fill="#64748b">n=30</text>
+                    </svg>
+                </div>
+
+                <hr style="border: none; border-top: 1px solid #fde68a; margin: 1.25rem 0;">
+
+                <p><strong>Cautionary Contrast: What about the reciprocal $\frac{n}{\sin(n)}$?</strong></p>
+                <p>It is easy to confuse $\frac{\sin(n)}{n}$ with its reciprocal $\frac{n}{\sin(n)}$. However, as $n$ grows while $\sin(n)$ periodically approaches $0$ near integer multiples of $\pi$, the ratio $\frac{n}{\sin(n)}$ shoots off toward $\pm\infty$ with wild, unbounded oscillations. Therefore, <strong>$\lim_{n\to\infty} \frac{n}{\sin(n)}$ diverges</strong> and the Squeeze Theorem cannot be applied here.</p>
+
+                <!-- Embedded SVG Graph of n / sin(n) divergence -->
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1rem; margin-top: 1rem;">
+                    <p style="font-size: 0.85rem; font-weight: 700; color: #64748b; margin-top: 0; margin-bottom: 0.5rem; text-align: center;">VISUALIZATION: Wild Divergence of $\frac{n}{\sin(n)}$ for $n = 1 \dots 50$</p>
+                    <svg viewBox="0 0 800 340" style="width: 100%; height: auto; display: block;">
+                        <!-- Axes -->
+                        <line x1="60" y1="170" x2="760" y2="170" stroke="#cbd5e1" stroke-width="2"/>
+                        <line x1="60" y1="30" x2="60" y2="310" stroke="#cbd5e1" stroke-width="2"/>
+                        <text x="710" y="155" font-size="11" font-weight="bold" fill="#64748b">n (index)</text>
+                        <text x="70" y="45" font-size="11" font-weight="bold" fill="#ef4444">Wild Vertical Spikes (Divergence)</text>
+
+                        <!-- Data Points for n / sin(n) -->
+                        <g>
+                            <circle cx="74" cy="165" r="4" fill="#d97706"/><circle cx="88" cy="180" r="4" fill="#d97706"/><circle cx="102" cy="150" r="4" fill="#d97706"/><circle cx="116" cy="120" r="4" fill="#ef4444"/><circle cx="130" cy="200" r="4" fill="#d97706"/><circle cx="144" cy="230" r="4" fill="#d97706"/><circle cx="158" cy="110" r="4" fill="#ef4444"/><circle cx="172" cy="240" r="4" fill="#ef4444"/><circle cx="186" cy="190" r="4" fill="#d97706"/><circle cx="200" cy="130" r="4" fill="#d97706"/><circle cx="214" cy="290" r="4" fill="#ef4444"/><circle cx="228" cy="80" r="4" fill="#ef4444"/><circle cx="242" cy="185" r="4" fill="#d97706"/><circle cx="256" cy="155" r="4" fill="#d97706"/><circle cx="270" cy="60" r="4" fill="#ef4444"/><circle cx="284" cy="300" r="4" fill="#ef4444"/><circle cx="298" cy="210" r="4" fill="#d97706"/><circle cx="312" cy="140" r="4" fill="#d97706"/><circle cx="326" cy="45" r="4" fill="#ef4444"/><circle cx="340" cy="310" r="4" fill="#ef4444"/><circle cx="354" cy="220" r="4" fill="#d97706"/><circle cx="368" cy="150" r="4" fill="#d97706"/><circle cx="382" cy="30" r="4" fill="#ef4444"/><circle cx="396" cy="310" r="4" fill="#ef4444"/><circle cx="410" cy="205" r="4" fill="#d97706"/><circle cx="424" cy="135" r="4" fill="#d97706"/><circle cx="438" cy="35" r="4" fill="#ef4444"/><circle cx="452" cy="310" r="4" fill="#ef4444"/><circle cx="466" cy="195" r="4" fill="#d97706"/><circle cx="480" cy="125" r="4" fill="#d97706"/><circle cx="494" cy="50" r="4" fill="#ef4444"/><circle cx="508" cy="310" r="4" fill="#ef4444"/><circle cx="522" cy="215" r="4" fill="#d97706"/><circle cx="536" cy="145" r="4" fill="#d97706"/><circle cx="550" cy="40" r="4" fill="#ef4444"/><circle cx="564" cy="310" r="4" fill="#ef4444"/><circle cx="578" cy="200" r="4" fill="#d97706"/><circle cx="592" cy="130" r="4" fill="#d97706"/><circle cx="606" cy="55" r="4" fill="#ef4444"/><circle cx="620" cy="310" r="4" fill="#ef4444"/><circle cx="634" cy="210" r="4" fill="#d97706"/><circle cx="648" cy="140" r="4" fill="#d97706"/><circle cx="662" cy="45" r="4" fill="#ef4444"/><circle cx="676" cy="310" r="4" fill="#ef4444"/><circle cx="690" cy="205" r="4" fill="#d97706"/><circle cx="704" cy="135" r="4" fill="#d97706"/><circle cx="718" cy="35" r="4" fill="#ef4444"/><circle cx="732" cy="310" r="4" fill="#ef4444"/><circle cx="746" cy="195" r="4" fill="#d97706"/>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- SECTION 3 -->
+            <h2 id="section-supremum">3. Limits and Supremum (Monotone Convergence)</h2>
+            <p>While the formal $\epsilon\text{-}N$ definition lets us <em>verify</em> a limit when we already know it, how do we prove a limit exists for a sequence defined recursively or implicitly where the exact value is unknown? The answer lies in the profound link between sequence order and the <strong>Completeness Axiom</strong> of the real numbers.</p>
+
+            <div class="definition-box">
+                <p><strong>Definition: Monotonicity</strong></p>
                 <ul style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
-                    <li style="margin-bottom: 0.3rem;">$a_1' = a_2 - a_1 = 4 - 1 = 3$</li>
-                    <li style="margin-bottom: 0.3rem;">$a_2' = a_3 - a_2 = 9 - 4 = 5$</li>
-                    <li style="margin-bottom: 0.3rem;">$a_3' = a_4 - a_3 = 16 - 9 = 7$</li>
-                    <li style="margin-bottom: 0.3rem;">$a_4' = a_5 - a_4 = 25 - 16 = 9$</li>
+                    <li style="margin-bottom: 0.3rem;">A sequence $(a_n)$ is <strong>non-decreasing</strong> (increasing) if $a_n \le a_{n+1}$ for all $n \ge 1$.</li>
+                    <li style="margin-bottom: 0.3rem;">A sequence $(a_n)$ is <strong>non-increasing</strong> (decreasing) if $a_n \ge a_{n+1}$ for all $n \ge 1$.</li>
+                    <li>A sequence is <strong>monotonic</strong> if it is either non-decreasing or non-increasing.</li>
                 </ul>
-                <p style="margin-top: 0.5rem; margin-bottom: 0;">The resulting derived sequence is $(3, 5, 7, 9, \dots)$, which follows the explicit formula $a_n' = 2n + 1$.</p>
             </div>
 
-            <h3>Connecting Derived Sequences to Behavior</h3>
-            <p>Derived sequences give us an instant test for monotonicity:</p>
-            <ul>
-                <li><strong>Increasing:</strong> If $a_n' \ge 0$ for all $n$, the sequence never steps backward, so it is monotonically increasing.</li>
-                <li><strong>Decreasing:</strong> If $a_n' \le 0$ for all $n$, the sequence is monotonically decreasing.</li>
-                <li><strong>Constant:</strong> If $a_n' = 0$ for all $n$, every term is identical.</li>
-            </ul>
+            <div class="infobox" style="margin-top: 1.5rem;">
+                <h4>📈 Theorem 2: The Monotone Convergence Theorem (MCT)</h4>
+                <div class="infobox-intro">
+                    One of the foundational pillars of real analysis: Every bounded monotonic sequence converges.
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.95rem;">
+                    <div style="padding-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0;">
+                        <strong>1. Non-Decreasing Case:</strong> If $(a_n)$ is non-decreasing and <em>bounded above</em> (i.e., $a_n \le M$ for some real number $M$), then $(a_n)$ converges, and:
+                        <p style="text-align: center; margin: 0.5rem 0;">$$\lim_{n\to\infty} a_n = \sup \{a_n : n \in \mathbb{N}\}$$</p>
+                    </div>
+                    <div>
+                        <strong>2. Non-Increasing Case:</strong> If $(a_n)$ is non-increasing and <em>bounded below</em> (i.e., $a_n \ge m$ for some real number $m$), then $(a_n)$ converges, and:
+                        <p style="text-align: center; margin: 0.5rem 0;">$$\lim_{n\to\infty} a_n = \inf \{a_n : n \in \mathbb{N}\}$$</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="aside-box" style="margin-top: 1.5rem;">
+                <h4>💡 Why Does This Matter? (The Completeness of $\mathbb{R}$)</h4>
+                <p>The Monotone Convergence Theorem is not true in the rational numbers ($\mathbb{Q}$). For example, consider the sequence of rational decimal approximations for $\sqrt{2}$ ($1, 1.4, 1.41, 1.414, \dots$). This sequence is non-decreasing and bounded above by $2$, but it <strong>does not converge within $\mathbb{Q}$</strong> because its limit ($\sqrt{2}$) is irrational. The MCT relies entirely on the fact that $\mathbb{R}$ has no "gaps" (satisfying the Least Upper Bound Property).</p>
+            </div>
+
+            <div class="aside-box" style="margin-top: 1.5rem;">
+                <h4>🎯 Example: Evaluating a Bounded Monotone Limit</h4>
+                <p>Consider the sequence $a_n = 1 - \frac{1}{n}$ for $n \ge 1$. Let's check its properties:</p>
+                <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
+                    <li style="margin-bottom: 0.4rem;"><strong>Monotonicity:</strong> $a_{n+1} - a_n = \left(1 - \frac{1}{n+1}\right) - \left(1 - \frac{1}{n}\right) = \frac{1}{n} - \frac{1}{n+1} > 0$, so the sequence is strictly increasing.</li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Boundedness:</strong> Every term satisfies $0 \le a_n < 1$, so it is bounded above by $M = 1$.</li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Conclusion:</strong> By the Monotone Convergence Theorem, the limit exists and equals its supremum: $\lim_{n\to\infty} \left(1 - \frac{1}{n}\right) = \sup\left\{1 - \frac{1}{n}\right\} = 1$.</li>
+                </ol>
+            </div>
+
+            <div class="worked-example-box"><h4>🎯 Worked Example: Applying the Monotone Convergence Theorem</h4>
+                <p>Consider the sequence defined recursively by $x_1 = 1$ and $x_{n+1} = \frac{1}{3}x_n + 1$ for $n \ge 1$. Let's prove its convergence using the Monotone Convergence Theorem:</p>
+                <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
+                    <li style="margin-bottom: 0.5rem;"><strong>Step 1: Prove Boundedness Above.</strong>
+                        We show by induction that $x_n < \frac{3}{2}$ for all $n$.<br>
+                        <em>Base Case ($n=1$):</em> $x_1 = 1 < \frac{3}{2}$ (true).<br>
+                        <em>Inductive Step:</em> Assume $x_k < \frac{3}{2}$. Then:
+                        $$x_{k+1} = \frac{1}{3}x_k + 1 < \frac{1}{3}\left(\frac{3}{2}\right) + 1 = \frac{1}{2} + 1 = \frac{3}{2}$$
+                        Thus, the sequence is bounded above by $M = \frac{3}{2}$.
+                    </li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Step 2: Prove Monotonicity (Increasing).</strong>
+                        We show that $x_{n+1} \ge x_n$. Let's examine $x_{n+1} - x_n$:
+                        $$x_{n+1} - x_n = \left(\frac{1}{3}x_n + 1\right) - x_n = 1 - \frac{2}{3}x_n = \frac{2}{3}\left(\frac{3}{2} - x_n\right)$$
+                        Since we proved in Step 1 that $x_n < \frac{3}{2}$, the term $\left(\frac{3}{2} - x_n\right)$ is always positive. Therefore, $x_{n+1} - x_n > 0$, confirming the sequence is strictly increasing.
+                    </li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Step 3: Invoke the MCT.</strong>
+                        Because $(x_n)$ is non-decreasing (increasing) and bounded above, the <strong>Monotone Convergence Theorem</strong> guarantees that $\lim_{n\to\infty} x_n = L$ exists as a finite real number.
+                    </li>
+                    <li><strong>Step 4: Evaluate the Limit Algebraically.</strong>
+                        Now that existence is guaranteed, we take the limit on both sides of $x_{n+1} = \frac{1}{3}x_n + 1$:
+                        $$L = \frac{1}{3}L + 1 \implies \frac{2}{3}L = 1 \implies L = \frac{3}{2}$$
+                        Thus, the exact limit is <strong>$L = \frac{3}{2}$</strong> (which matches our least upper bound / supremum).
+                    </li>
+                </ol>
+            </div>
+
+            <h3 style="margin-top: 2rem;">Evaluating Recursively Defined Sequences</h3>
+            <p>When a sequence is given by a recurrence relation (e.g., $x_{n+1} = f(x_n)$) rather than an explicit formula, we cannot calculate its limit directly at first glance. But <em>why</em> can't we just take the limit algebraically right away? Understanding this reveals why a rigorous strategy is essential.</p>
+
+            <div class="aside-box" style="margin-top: 1.5rem;">
+                <h4>⚠️ The Core Dilemma: Explicit vs. Recurrence &amp; The Trap of Blind Algebra</h4>
+                <ul style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
+                    <li style="margin-bottom: 0.5rem;"><strong>Explicit Formulas ($x_n = f(n)$):</strong> You have a direct formula where $n$ is isolated. You can take $\lim_{n\to\infty}$ instantly because you see the long-term behavior directly.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Recurrence Relations ($x_{n+1} = f(x_n)$):</strong> You are climbing a ladder one rung at a time. Each term depends entirely on the previous one, so $n$ does not appear as an independent variable.</li>
+                    <li><strong>The Logical Trap:</strong> If you try to take a shortcut by blindly assuming a limit $L$ exists and writing $L = f(L)$ (e.g., $L = \sqrt{2 + L}$), you are <strong>putting the cart before the horse</strong>. If a sequence diverges (like $x_{n+1} = x_n + 1$), a limit does not exist, and treating $L$ as a normal algebra variable leads to nonsense ($0 = 1$). Algebraic substitution <em>assumes</em> existence before proving it.</li>
+                </ul>
+            </div>
+
+            <p>To make our algebraic calculation legally sound, we must split the problem into two distinct phases: <strong>proving the limit exists</strong> using the Monotone Convergence Theorem first, and <strong>calculating what it is</strong> second.</p>
+
+            <div class="infobox">
+                <h4>🛠️ The 4-Step Strategy for Recursive Sequences</h4>
+                <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
+                    <li style="margin-bottom: 0.5rem;"><strong>Step 1: Prove Boundedness.</strong> Use mathematical induction to show that all terms remain bounded above or below by a constant $M$. (This ensures the sequence doesn't run off to infinity).</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Step 2: Prove Monotonicity.</strong> Show that $x_{n+1} \ge x_n$ (increasing) or $x_{n+1} \le x_n$ (decreasing). (This ensures the sequence moves in a single direction without chaotic oscillation).</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Step 3: Invoke the MCT.</strong> Because the sequence is bounded and monotonic, the Monotone Convergence Theorem steps in as an absolute legal guarantee that $\lim_{n\to\infty} x_n = L$ exists.</li>
+                    <li><strong>Step 4: Solve Algebraically.</strong> Now—and <em>only</em> now that existence is guaranteed—take the limit on both sides of the recurrence relation ($L = f(L)$) and solve for $L$.</li>
+                </ol>
+            </div>
+
+            <div class="worked-example-box"><h4>🎯 Worked Example: The Nested Radical Sequence</h4>
+                <p>Consider the recursively defined sequence given by $x_1 = \sqrt{2}$ and $x_{n+1} = \sqrt{2 + x_n}$ for $n \ge 1$. Let's evaluate its limit using our 4-step strategy:</p>
+                <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
+                    <li style="margin-bottom: 0.4rem;"><strong>Step 1 (Boundedness):</strong> We show by induction that $x_n < 2$ for all $n$. Base case ($n=1$): $x_1 = \sqrt{2} < 2$ (true). Assuming $x_k < 2$, then $x_{k+1} = \sqrt{2 + x_k} < \sqrt{2 + 2} = 2$. Thus, bounded above by $2$.</li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Step 2 (Monotonicity):</strong> We show $x_{n+1} > x_n$. Base case: $x_2 = \sqrt{2 + \sqrt{2}} > \sqrt{2} = x_1$. By induction, if $x_k > x_{k-1}$, then $\sqrt{2 + x_k} > \sqrt{2 + x_{k-1}}$, so the sequence is strictly increasing.</li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Step 3 (Existence):</strong> By the Monotone Convergence Theorem, $\lim_{n\to\infty} x_n = L$ exists.</li>
+                    <li><strong>Step 4 (Algebraic Evaluation):</strong> Taking the limit on both sides of $x_{n+1} = \sqrt{2 + x_n}$:
+                        <p style="text-align: center; margin: 0.5rem 0;">$$L = \sqrt{2 + L} \implies L^2 = 2 + L \implies L^2 - L - 2 = 0$$</p>
+                        Factoring yields $(L - 2)(L + 1) = 0$. Since all terms $x_n > 0$, the limit must be positive, giving <strong>$L = 2$</strong>.
+                    </li>
+                </ol>
+            </div>
+
+            <!-- SECTION 4 -->
+            <h2 id="section-infinity">4. Infinity as a Limit (Divergence to Infinity)</h2>
+            <p>Not all divergent sequences bounce around chaotically like $\frac{n}{\sin(n)}$ or alternate forever like $(-1)^n$. Many sequences grow steadily larger and larger, marching off toward infinity. While these sequences do not converge to a finite number $L$ (and thus technically <em>diverge</em>), we assign a special classification: they <strong>diverge to infinity</strong>.</p>
+
+            <div class="definition-box">
+                <p><strong>Formal Definition: Divergence to Infinity ($M\text{-}N$ Definition)</strong></p>
+                <p>A sequence $(a_n)$ tends to infinity, written $\lim_{n\to\infty} a_n = \infty$, if:</p>
+                <p style="text-align: center; margin: 0.75rem 0;">$$\forall M > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad \forall n > N, \quad a_n > M$$</p>
+                <p>Similarly, a sequence tends to negative infinity ($\lim_{n\to\infty} a_n = -\infty$) if for every negative threshold $M < 0$, there exists an index $N$ such that $a_n < M$ for all $n > N$.</p>
+            </div>
+
+            <div class="aside-box" style="margin-top: 1.5rem;">
+                <h4>💡 Intuition: The Towering Floor Game ($M\text{-}N$ Game)</h4>
+                <p>Compare this to our $\epsilon\text{-}N$ archery game for finite limits:</p>
+                <ul style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
+                    <li style="margin-bottom: 0.4rem;"><strong>Finite Limit ($\lim a_n = L$):</strong> Your opponent gives you a tiny tolerance $\epsilon > 0$ to trap the sequence in a narrow neighborhood.</li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Infinite Limit ($\lim a_n = \infty$):</strong> Your opponent hands you an astronomically high threshold $M$ (e.g., $M = 1,000,000$).</li>
+                    <li><strong>Your Goal ($N$):</strong> You must find a cutoff index $N$ such that every term past $N$ towers <em>above</em> $M$ and never drops back down. If you can always find such an $N$ no matter how absurdly large your opponent makes $M$, the sequence diverges to infinity.</li>
+                </ul>
+            </div>
+
+            <!-- EMBEDDED SVG DIAGRAM FOR INFINITY LIMIT -->
+            <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1.25rem; margin-top: 1.5rem; margin-bottom: 1.5rem;">
+                <p style="font-size: 0.85rem; font-weight: 700; color: #64748b; margin-top: 0; margin-bottom: 0.75rem; text-align: center;">VISUALIZATION: The $M\text{-}N$ Threshold Test for $\lim_{n\to\infty} \sqrt{n} = \infty$</p>
+                <svg viewBox="0 0 800 300" style="width: 100%; height: auto; display: block;">
+                    <!-- Grid Lines -->
+                    <line x1="80" y1="240" x2="760" y2="240" stroke="#e2e8f0" stroke-width="1"/>
+                    <line x1="80" y1="180" x2="760" y2="180" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3"/>
+                    <line x1="80" y1="120" x2="760" y2="120" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3"/>
+                    <line x1="80" y1="60" x2="760" y2="60" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3"/>
+
+                    <!-- Axes -->
+                    <line x1="80" y1="240" x2="760" y2="240" stroke="#0f172a" stroke-width="2"/>
+                    <line x1="80" y1="20" x2="80" y2="260" stroke="#0f172a" stroke-width="2"/>
+                    <text x="710" y="260" font-size="11" font-weight="bold" fill="#64748b">Index n</text>
+                    <text x="40" y="30" font-size="11" font-weight="bold" fill="#64748b">a_n</text>
+
+                    <!-- Massive Threshold Line M -->
+                    <line x1="80" y1="120" x2="760" y2="120" stroke="#ef4444" stroke-width="2" stroke-dasharray="6"/>
+                    <text x="95" y="112" font-size="12" font-weight="bold" fill="#ef4444">Threshold Level M</text>
+
+                    <!-- Cutoff Line N -->
+                    <line x1="500" y1="30" x2="500" y2="260" stroke="#d97706" stroke-width="2.5" stroke-dasharray="4"/>
+                    <text x="510" y="48" font-size="12" font-weight="bold" fill="#b45309">Cutoff Index N</text>
+
+                    <!-- Shaded Region Above Threshold Past N -->
+                    <rect x="500" y="35" width="240" height="85" fill="#fef3c7" opacity="0.5" rx="4"/>
+                    <text x="525" y="75" font-size="11" font-weight="bold" fill="#92400e">Region where $a_n > M$</text>
+                    <text x="525" y="92" font-size="10" font-weight="600" fill="#b45309">Guaranteed for all $n > N$</text>
+
+                    <!-- Sequence Data Points (Discrete Dots for sqrt(n)) -->
+                    <g>
+                        <circle cx="100" cy="225" r="4" fill="#0284c7"/><circle cx="125" cy="215" r="4" fill="#0284c7"/>
+                        <circle cx="150" cy="207" r="4" fill="#0284c7"/><circle cx="175" cy="200" r="4" fill="#0284c7"/>
+                        <circle cx="200" cy="193" r="4" fill="#0284c7"/><circle cx="225" cy="186" r="4" fill="#0284c7"/>
+                        <circle cx="250" cy="180" r="4" fill="#0284c7"/><circle cx="275" cy="174" r="4" fill="#0284c7"/>
+                        <circle cx="300" cy="168" r="4" fill="#0284c7"/><circle cx="325" cy="162" r="4" fill="#0284c7"/>
+                        <circle cx="350" cy="157" r="4" fill="#0284c7"/><circle cx="375" cy="151" r="4" fill="#0284c7"/>
+                        <circle cx="400" cy="146" r="4" fill="#0284c7"/><circle cx="425" cy="141" r="4" fill="#0284c7"/>
+                        <circle cx="450" cy="136" r="4" fill="#0284c7"/><circle cx="475" cy="131" r="4" fill="#0284c7"/>
+                        <!-- Past Cutoff N (Highlighted Green/Teal) -->
+                        <circle cx="500" cy="126" r="5.5" fill="#10b981"/><circle cx="525" cy="116" r="5.5" fill="#10b981"/>
+                        <circle cx="550" cy="107" r="5.5" fill="#10b981"/><circle cx="575" cy="98" r="5.5" fill="#10b981"/>
+                        <circle cx="600" cy="89" r="5.5" fill="#10b981"/><circle cx="625" cy="80" r="5.5" fill="#10b981"/>
+                        <circle cx="650" cy="71" r="5.5" fill="#10b981"/><circle cx="675" cy="62" r="5.5" fill="#10b981"/>
+                        <circle cx="700" cy="53" r="5.5" fill="#10b981"/>
+                    </g>
+                    <text x="95" y="258" font-size="10" fill="#64748b">n=1</text>
+                    <text x="492" y="275" font-size="10" font-weight="bold" fill="#d97706">N</text>
+                    <text x="690" y="258" font-size="10" fill="#64748b">n increases</text>
+                </svg>
+            </div>
+
+            <!-- EXPLANATION CAPTION UNDERNEATH VISUALIZATION -->
+            <div class="aside-box" style="margin-top: 1rem; margin-bottom: 1.5rem;">
+                <h4>📖 How to Read This Diagram</h4>
+                <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
+                    <li style="margin-bottom: 0.3rem;"><strong>The Threshold Level ($M$):</strong> The dashed red line represents your opponent's arbitrary high demand $M$.</li>
+                    <li style="margin-bottom: 0.3rem;"><strong>The Cutoff Index ($N$):</strong> The orange dashed line marks the boundary $N$. Everything to the left is initial transient behavior; everything to the right is the long-term tail.</li>
+                    <li><strong>The Green Points ($a_n > M$):</strong> Notice how every single blue point eventually crosses above the red threshold at index $N$, turning green and staying safely in the yellow shaded zone forever.</li>
+                </ol>
+            </div>
+
+            <div class="worked-example-box"><h4>🎯 Worked Example: Proving $\lim_{n\to\infty} \sqrt{n} = \infty$</h4>
+                <p>Let's use the formal $M\text{-}N$ definition to prove that the sequence $a_n = \sqrt{n}$ diverges to infinity:</p>
+                <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
+                    <li style="margin-bottom: 0.4rem;"><strong>The Challenge:</strong> Given any arbitrary real number $M > 0$ (assume $M$ is large), we want to find an integer $N$ such that if $n > N$, then $\sqrt{n} > M$.</li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Working Backwards:</strong> Solve the inequality $\sqrt{n} > M$ for $n$. Squaring both sides gives $n > M^2$.</li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Choosing $N$:</strong> Choose any integer $N$ such that $N \ge M^2$ (or explicitly $N = \lceil M^2 \rceil$).</li>
+                    <li><strong>Conclusion:</strong> For any $n > N$, we have $n > M^2$, which implies $\sqrt{n} > \sqrt{M^2} = M$. Thus, by definition, $\lim_{n\to\infty} \sqrt{n} = \infty$.</li>
+                </ol>
+            </div>
 
             <!-- BOTTOM NAVIGATION FOOTER -->
             <div style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-                <a href="index.html" style="color: var(--accent); text-decoration: none; font-weight: 600;">&larr; Back to Index</a>
-                <a href="week2.html" style="background: var(--accent); color: white; padding: 0.6rem 1.2rem; border-radius: 6px; text-decoration: none; font-weight: 600; transition: background 0.2s;">Next: Week 2 Module &rarr;</a>
+                <a href="week1.html" style="background: var(--accent); color: white; padding: 0.6rem 1.2rem; border-radius: 6px; text-decoration: none; font-weight: 600; transition: background 0.2s;">&larr; Previous: Week 1 Module</a>
+                <a href="index.html" style="color: var(--accent); text-decoration: none; font-weight: 600;">Back to Index &rarr;</a>
             </div>
         </div>
     </div>
+
+    <script>
+        const formulaState = { step: 0, perspective: 'adversarial' };
+        const formulaClauses = [
+            {
+                clauseTitle: "1. The Challenge (∀ϵ > 0)", quantifier: "Universal (∀)", advRole: "Given tolerance", advScope: "Arbitrary positive real",
+                advSummary: "<strong>Step 1: Establishing tolerance.</strong> Consider any arbitrary positive distance $\\epsilon > 0$.",
+                advWhat: "<p>We are given an arbitrary number $\\epsilon > 0$, forming a neighborhood $(L - \\epsilon, L + \\epsilon)$ around the limit.</p>",
+                advWhy: "<p>Requiring the condition to hold for all positive $\\epsilon$ prevents oscillations away from $L$.</p>",
+                verRole: "Test constraint", verScope: "Parameter specification", verSummary: "Analogy parameter.",
+                verWhat: "<p>Input accuracy specification.</p>", verWhy: "<p>Stable systems satisfy arbitrary tolerances.</p>"
+            },
+            {
+                clauseTitle: "2. The Response (∃N ∈ ℕ)", quantifier: "Existential (∃)", advRole: "Finding a witness index", advScope: "Dependent on ϵ",
+                advSummary: "<strong>Step 2: Identifying cutoff index N.</strong> An integer $N$ exists past which terms stay within tolerance.",
+                advWhat: "<p>For $a_n = 1/n$, one convenient choice is $N = \\lceil 1/\\epsilon \\rceil$.</p>",
+                advWhy: "<p>Allows $N$ to depend directly on $\\epsilon$.</p>",
+                verRole: "Bound synthesis", verScope: "Latency cutoff", verSummary: "Analogy cutoff.",
+                verWhat: "<p>Execution cycle cutoff.</p>", verWhy: "<p>Ensures compliance.</p>"
+            },
+            {
+                clauseTitle: "3. The Tail Scope (∀n > N)", quantifier: "Universal (∀)", advRole: "Evaluation of the tail", advScope: "All subsequent indices",
+                advSummary: "<strong>Step 3: Examining all terms past N.</strong> Every term with index $n > N$ satisfies the distance condition.",
+                advWhat: "<p>We evaluate all indices strictly past $N$ ($n = N+1, N+2, \dots$).</p>",
+                advWhy: "<p>Convergence is a property of the long-term tail.</p>",
+                verRole: "Suffix invariant", verScope: "Steady-state", verSummary: "Analogy tail check.",
+                verWhat: "<p>Checking steady-state execution.</p>", verWhy: "<p>Initial transients do not affect convergence.</p>"
+            },
+            {
+                clauseTitle: "4. The Distance Condition (|aₙ - L| < ϵ)", quantifier: "Inequality (<)", advRole: "Proximity condition", advScope: "Distance inside band",
+                advSummary: "<strong>Step 4: Confirming distance constraint.</strong> For all $n > N$, $|a_n - L| < \\epsilon$.",
+                advWhat: "<p>Each term $a_n$ with $n > N$ sits strictly within $(L - \\epsilon, L + \\epsilon)$.</p>",
+                advWhy: "<p>Proves mathematically that $\\lim a_n = L$.</p>",
+                verRole: "Invariant assertion", verScope: "Safety check", verSummary: "Analogy assertion.",
+                verWhat: "<p>Assertion check evaluated on outputs.</p>", verWhy: "<p>Metric distance provides proximity.</p>"
+            }
+        ];
+
+        function setFormulaStep(stepIdx) { formulaState.step = stepIdx; updateFormulaUI(); }
+        function stepFormula(dir) {
+            formulaState.step += dir;
+            if (formulaState.step < 0) formulaState.step = 0;
+            if (formulaState.step > 3) formulaState.step = 3;
+            updateFormulaUI();
+        }
+        function changeFormulaPerspective() {
+            formulaState.perspective = document.getElementById('fw-dimension-toggle').value;
+            updateFormulaUI();
+        }
+        function updateFormulaUI() {
+            const idx = formulaState.step;
+            const current = formulaClauses[idx];
+            const isAdv = (formulaState.perspective === 'adversarial');
+            for (let i = 0; i < 4; i++) {
+                const el = document.getElementById(`chunk-${i}`);
+                el.classList.remove('active', 'completed');
+                if (i === idx) el.classList.add('active');
+                else if (i < idx) el.classList.add('completed');
+            }
+            document.getElementById('fw-tel-clause').innerText = current.clauseTitle;
+            document.getElementById('fw-tel-quant').innerText = current.quantifier;
+            document.getElementById('fw-tel-role').innerText = isAdv ? current.advRole : current.verRole;
+            document.getElementById('fw-tel-scope').innerText = isAdv ? current.advScope : current.verScope;
+            document.getElementById('btn-fw-prev').disabled = (idx === 0);
+            document.getElementById('btn-fw-next').disabled = (idx === 3);
+            document.getElementById('fw-heading-what').innerText = isAdv ? "Mathematical Mechanics" : "Software Analogy Mechanics";
+            document.getElementById('fw-heading-why').innerText = isAdv ? "Logical Rationale" : "Analogy Context";
+            document.getElementById('fw-step-summary').innerHTML = isAdv ? current.advSummary : current.verSummary;
+            document.getElementById('fw-pane-what').innerHTML = isAdv ? current.advWhat : current.verWhat;
+            document.getElementById('fw-pane-why').innerHTML = isAdv ? current.advWhy : current.verWhy;
+            if (window.renderMathInElement) {
+                renderMathInElement(document.getElementById('definition-walkthrough'), { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });
+            }
+            updateFormulaCanvas(idx);
+        }
+        function updateFormulaCanvas(step) {
+            const epsBand = document.getElementById('fw-svg-epsband');
+            const nLine = document.getElementById('fw-svg-nline');
+            const nLbl = document.getElementById('fw-svg-nlbl');
+            epsBand.setAttribute('opacity', step === 0 ? '0.6' : '0.35');
+            nLine.setAttribute('opacity', step >= 1 ? '1' : '0.2');
+            nLbl.setAttribute('opacity', step >= 1 ? '1' : '0.2');
+        }
+
+        const challengeState = { active: false, eps: 0.2, reqN: 5, currentDisplayN: 5 };
+        let challengeTimer = null;
+
+        function startChallenge(eps) {
+            if (challengeTimer) clearInterval(challengeTimer);
+            challengeState.active = true;
+            challengeState.eps = eps;
+            challengeState.reqN = Math.ceil(1 / eps);
+            challengeState.currentDisplayN = challengeState.reqN;
+            document.getElementById('step-controls').style.display = 'flex';
+            updateChallengeUI();
+
+            // Auto-progress the green dots every 250ms
+            challengeTimer = setInterval(() => {
+                if (challengeState.currentDisplayN < 30) {
+                    advanceChallengeStep();
+                } else {
+                    clearInterval(challengeTimer);
+                }
+            }, 250);
+        }
+
+        function advanceChallengeStep() {
+            challengeState.currentDisplayN++;
+            if (challengeState.currentDisplayN > 30) challengeState.currentDisplayN = 30;
+            updateChallengeUI();
+        }
+
+        function resetChallenge() {
+            if (challengeTimer) clearInterval(challengeTimer);
+            challengeState.active = false;
+            document.getElementById('step-controls').style.display = 'none';
+            document.getElementById('cg-tel-eps').innerText = 'Select below';
+            document.getElementById('cg-tel-reqn').innerText = '—';
+            document.getElementById('cg-tel-val').innerText = '—';
+            document.getElementById('cg-tel-status').innerText = 'Standby';
+            renderGameSVG(null, 0, 0);
+        }
+
+        function updateChallengeUI() {
+            const eps = challengeState.eps;
+            const reqN = challengeState.reqN;
+            const curN = challengeState.currentDisplayN;
+            const atTerm = (1 / curN);
+            document.getElementById('cg-tel-eps').innerHTML = `$${eps}$`;
+            document.getElementById('cg-tel-reqn').innerHTML = `$N = ${reqN}$`;
+            document.getElementById('cg-tel-val').innerHTML = `$a_{${curN}} = ${atTerm.toFixed(3)}$`;
+            document.getElementById('cg-tel-status').innerHTML = curN > reqN ? `Inside (+${(eps - atTerm).toFixed(3)})` : `Boundary/Outside`;
+            if(window.renderMathInElement) {
+                renderMathInElement(document.getElementById('game-telemetry'), { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });
+            }
+            renderGameSVG(eps, reqN, curN);
+        }
+
+        function renderGameSVG(eps, reqN, curN) {
+            const svg = document.getElementById('game-plot');
+            const originX = 90, originY = 130, maxXScale = 610;
+            let svgContent = `<line x1="${originX}" y1="${originY}" x2="${originX + maxXScale}" y2="${originY}" stroke="#64748b" stroke-width="1.0"/><text x="${originX - 35}" y="${originY + 5}" font-family="sans-serif" font-size="12" font-weight="700" fill="#64748b">L=0</text><line x1="${originX}" y1="240" x2="${originX}" y2="25" stroke="#64748b" stroke-width="1.0"/><line x1="${originX}" y1="${originY}" x2="715" y2="${originY}" stroke="#64748b" stroke-width="1.0"/>`;
+            if (eps === null) {
+                svg.innerHTML = svgContent + `<text x="260" y="130" font-family="sans-serif" font-size="14" fill="#64748b">Select an &epsilon; budget above.</text>`;
+                return;
+            }
+            const maxN = Math.max(14, reqN + 4);
+            const scaleFactor = eps <= 0.05 ? 900 : (eps <= 0.1 ? 550 : 220);
+            const topY = originY - (eps * scaleFactor), bottomY = originY + (eps * scaleFactor);
+            svgContent += `<rect x="${originX}" y="${topY}" width="${maxXScale}" height="${bottomY - topY}" fill="#fef3c7" opacity="0.8"/><line x1="${originX}" y1="${topY}" x2="${originX + maxXScale}" y2="${topY}" stroke="#d97706" stroke-dasharray="4"/><line x1="${originX}" y1="${bottomY}" x2="${originX + maxXScale}" y2="${bottomY}" stroke="#d97706" stroke-dasharray="4"/>`;
+            for (let n = 1; n <= curN; n++) {
+                const val = 1 / n, cx = originX + (n * (maxXScale / maxN)), cy = originY - (val * scaleFactor);
+                const inside = n > reqN;
+                svgContent += `<circle cx="${cx}" cy="${cy}" r="${inside ? 7 : 5}" fill="${inside ? '#10b981' : '#d97706'}"/>`;
+            }
+            const thresholdX = originX + (reqN * (maxXScale / maxN));
+            svgContent += `<line x1="${thresholdX}" y1="20" x2="${thresholdX}" y2="240" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="4"/><text x="${thresholdX + 6}" y="32" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ef4444">N = ${reqN}</text>`;
+            svg.innerHTML = svgContent;
+        }
+
+        setFormulaStep(0);
+        renderGameSVG(null, 0, 0);
+    </script>
 </body>
-</html>
-"""
+</html>"""
 
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(html_content)
-    print("Successfully generated week1.html with the original diagram and simple progressive animation.")
+    print("Successfully restored week2.html directly from the original pasted source with the automated progression fix.")
 
 def execute_git_sync():
     commit_message = (
-        "Restore original Finite Sample diagram with simple progressive animation\n\n"
-        "Reverted week1.html to the clean, original visualization. Removed the heavy\n"
-        "simulator framework and added a lightweight script to automatically fade in\n"
-        "the blue sequence points and green infinite tail points progressively on load."
+        "Restore exact Epsilon Challenge Widget with auto-playing dots\n\n"
+        "Restored week2.html entirely from the user's base code. Removed the manual\n"
+        "Step Forward button inside the Epsilon Challenge Widget and added a timer\n"
+        "to automatically and progressively render the sequence dots (turning green\n"
+        "when past N) as requested."
     )
     commands = [
-        ['git', 'add', 'week1.html', 'update.py'],
+        ['git', 'add', 'week2.html', 'update.py'],
         ['git', 'commit', '-m', commit_message],
         ['git', 'push', 'origin', 'main']
     ]
@@ -411,5 +892,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    restore_simple_progressive_diagram()
+    restore_and_fix_original()
     execute_git_sync()

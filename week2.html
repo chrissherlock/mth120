@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Week 2: Limits of Sequences | MTHS120</title>
+    <title>Week 1: Sets, Numbers, and Sequences | MTHS120</title>
     <!-- KaTeX Integration -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
@@ -93,7 +93,7 @@
         .aside-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #b45309; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
         .aside-box h4 { margin-top: 0; color: #b45309; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
         .aside-box p, .aside-box li, .infobox p, .infobox li { color: #0f172a !important; }
-            .worked-example-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .worked-example-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
         .worked-example-box h4 { margin-top: 0; color: #047857; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
         .worked-example-box p, .worked-example-box li { color: #0f172a !important; }
     </style>
@@ -127,7 +127,7 @@
                 </ul>
             </div>
 
-                        <!-- ORIENTATION & ROADMAP -->
+            <!-- ORIENTATION & ROADMAP -->
             <div style="margin: 2.25rem 0 2rem 0;">
                 <h3 style="margin-top: 0; color: #0f172a;">Bridging the Gap: From Intuition to Epsilon-N Rigor</h3>
                 <p>In introductory calculus, we are often told that a limit is a value that a sequence "approaches" or "gets closer and closer to" as $n$ marches toward infinity. While that intuition helps picture motion, pure mathematics demands precision: exactly how close is "close," and after what point is that proximity permanently guaranteed?</p>
@@ -338,14 +338,13 @@
                         </svg>
                     </div>
                     <div class="game-controls" id="step-controls" style="display: none;">
-                        <button class="game-btn" id="btn-challenge-next" onclick="advanceChallengeStep()">Step Forward ($n = N + 1$)</button>
                         <button class="game-btn" style="background-color: #64748b;" onclick="resetChallenge()">Reset</button>
                     </div>
                 </div>
             </div>
 
             <!-- SECTION 2 -->
-            
+
             <div class="worked-example-box"><h4>🎯 Worked Example 1: The $\epsilon\text{-}N$ Scratchpad Method</h4>
                 <p>Prove formally that $\lim_{n\to\infty} \frac{2n+1}{n} = 2$:</p>
                 <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
@@ -488,7 +487,7 @@
                 </div>
             </div>
 
-                        <!-- SECTION 3 -->
+            <!-- SECTION 3 -->
             <h2 id="section-supremum">3. Limits and Supremum (Monotone Convergence)</h2>
             <p>While the formal $\epsilon\text{-}N$ definition lets us <em>verify</em> a limit when we already know it, how do we prove a limit exists for a sequence defined recursively or implicitly where the exact value is unknown? The answer lies in the profound link between sequence order and the <strong>Completeness Axiom</strong> of the real numbers.</p>
 
@@ -559,7 +558,7 @@
                 </ol>
             </div>
 
-                        <h3 style="margin-top: 2rem;">Evaluating Recursively Defined Sequences</h3>
+            <h3 style="margin-top: 2rem;">Evaluating Recursively Defined Sequences</h3>
             <p>When a sequence is given by a recurrence relation (e.g., $x_{n+1} = f(x_n)$) rather than an explicit formula, we cannot calculate its limit directly at first glance. But <em>why</em> can't we just take the limit algebraically right away? Understanding this reveals why a rigorous strategy is essential.</p>
 
             <div class="aside-box" style="margin-top: 1.5rem;">
@@ -595,9 +594,6 @@
                     </li>
                 </ol>
             </div>
-
-                        
-
 
             <!-- SECTION 4 -->
             <h2 id="section-infinity">4. Infinity as a Limit (Divergence to Infinity)</h2>
@@ -784,20 +780,35 @@
         }
 
         const challengeState = { active: false, eps: 0.2, reqN: 5, currentDisplayN: 5 };
+        let challengeTimer = null;
+
         function startChallenge(eps) {
+            if (challengeTimer) clearInterval(challengeTimer);
             challengeState.active = true;
             challengeState.eps = eps;
             challengeState.reqN = Math.ceil(1 / eps);
             challengeState.currentDisplayN = challengeState.reqN;
             document.getElementById('step-controls').style.display = 'flex';
             updateChallengeUI();
+
+            // Auto-progress the green dots every 250ms
+            challengeTimer = setInterval(() => {
+                if (challengeState.currentDisplayN < 30) {
+                    advanceChallengeStep();
+                } else {
+                    clearInterval(challengeTimer);
+                }
+            }, 250);
         }
+
         function advanceChallengeStep() {
             challengeState.currentDisplayN++;
             if (challengeState.currentDisplayN > 30) challengeState.currentDisplayN = 30;
             updateChallengeUI();
         }
+
         function resetChallenge() {
+            if (challengeTimer) clearInterval(challengeTimer);
             challengeState.active = false;
             document.getElementById('step-controls').style.display = 'none';
             document.getElementById('cg-tel-eps').innerText = 'Select below';
@@ -806,6 +817,7 @@
             document.getElementById('cg-tel-status').innerText = 'Standby';
             renderGameSVG(null, 0, 0);
         }
+
         function updateChallengeUI() {
             const eps = challengeState.eps;
             const reqN = challengeState.reqN;
@@ -820,6 +832,7 @@
             }
             renderGameSVG(eps, reqN, curN);
         }
+
         function renderGameSVG(eps, reqN, curN) {
             const svg = document.getElementById('game-plot');
             const originX = 90, originY = 130, maxXScale = 610;
