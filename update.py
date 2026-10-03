@@ -2,6 +2,140 @@
 import os
 import subprocess
 
+def write_structures_subpage():
+    if os.path.exists('algebraic_structures.html'):
+        os.remove('algebraic_structures.html')
+
+    subpage_content = r"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Dive: Groups, Rings, and Fields | MTHS120</title>
+    <!-- KaTeX Integration -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+    <style>
+        :root {
+            --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
+            --accent: #d97706; --accent-hover: #b45309;
+        }
+        body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
+        .container { max-width: 950px; margin: 0 auto; }
+        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; }
+        .content-box { background: var(--card); padding: 2.5rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid var(--border); margin-bottom: 2rem; }
+        h2 { color: #0f172a; border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2rem; }
+        .definition-box { background: #fffbeb; border-left: 4px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; border-top: 1px solid #fde68a; border-right: 1px solid #fde68a; border-bottom: 1px solid #fde68a; }
+        .interactive-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; }
+        .btn-group { display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap; }
+        button { background: var(--accent); color: white; border: none; padding: 0.5rem 1.25rem; border-radius: 4px; cursor: pointer; font-weight: bold; transition: background 0.2s; }
+        button:hover { background: var(--accent-hover); }
+        .output-display { font-family: monospace; background: #ffffff; padding: 1rem; border: 1px solid var(--border); border-radius: 4px; margin-top: 1rem; color: #0f172a; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.95rem; }
+        th, td { border: 1px solid var(--border); padding: 0.75rem; text-align: left; }
+        th { background: #f1f5f9; color: #0f172a; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Deep Dive: Algebraic Structures (Groups, Rings, Fields)</h1>
+            <a href="week1.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">&larr; Back to Week 1 Module</a>
+        </div>
+
+        <div class="content-box">
+            <h2>1. What is an Algebraic Structure?</h2>
+            <p>In abstract algebra, we do not just look at individual numbers; we study sets equipped with one or more operations and ask what structural rules (axioms) they satisfy. By organizing number systems into <strong>Groups</strong>, <strong>Rings</strong>, and <strong>Fields</strong>, mathematicians can prove universal theorems that apply across wildly different branches of mathematics.</p>
+
+            <h2>2. The Building Blocks: Axioms</h2>
+            <p>To understand the hierarchy, we build up from simple rules:</p>
+            <ul>
+                <li><strong>Closure:</strong> Combining any two elements in the set using the operation produces another element within the set.</li>
+                <li><strong>Associativity:</strong> Grouping does not matter: $(a \circ b) \circ c = a \circ (b \circ c)$.</li>
+                <li><strong>Identity Element:</strong> An element $e$ leaves others unchanged: $a \circ e = a$.</li>
+                <li><strong>Inverses:</strong> Every element has an opposite/reciprocal that undoes it, yielding the identity: $a \circ a^{-1} = e$.</li>
+                <li><strong>Commutativity:</strong> Order does not matter: $a \circ b = b \circ a$.</li>
+            </ul>
+
+            <h2>3. Hierarchy Comparison Table</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Structure</th>
+                        <th>Operations</th>
+                        <th>Key Properties Required</th>
+                        <th>Examples</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Group</strong></td>
+                        <td>1 Operation (+)</td>
+                        <td>Closure, Associativity, Identity, Inverses</td>
+                        <td>$(\mathbb{Z}, +), (\mathbb{R}, +)$</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Commutative Ring</strong></td>
+                        <td>2 Operations (+, &times;)</td>
+                        <td>Additive group, Multiplicative associativity & commutativity, Distributivity</td>
+                        <td>$(\mathbb{Z}, +, \times)$</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Field</strong></td>
+                        <td>2 Operations (+, &times;)</td>
+                        <td>Ring + every non-zero element has a multiplicative inverse (division)</td>
+                        <td>$(\mathbb{Q}, +, \times), (\mathbb{R}, +, \times)$</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="interactive-box">
+                <h3>🧪 Interactive Algebraic Structure Inspector</h3>
+                <p>Select a number system to inspect which algebraic structures it satisfies:</p>
+                <div class="btn-group">
+                    <button onclick="inspectSystem('N')">Natural Numbers ($\mathbb{N}$)</button>
+                    <button onclick="inspectSystem('Z')">Integers ($\mathbb{Z}$)</button>
+                    <button onclick="inspectSystem('Q')">Rationals ($\mathbb{Q}$)</button>
+                </div>
+                <div id="inspector-output" class="output-display">
+                    <em>Select a number system above to inspect its algebraic classification.</em>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function inspectSystem(sys) {
+            const output = document.getElementById('inspector-output');
+            if (sys === 'N') {
+                output.innerHTML = `<strong>System: Natural Numbers (ℕ)</strong><br>` +
+                    `• Addition Group? <span style="color: #ef4444; font-weight: bold;">NO</span> (Lacks identity 0 and additive inverses like -1).<br>` +
+                    `• Ring? <span style="color: #ef4444; font-weight: bold;">NO</span> (Fails group axioms under addition).<br>` +
+                    `• Field? <span style="color: #ef4444; font-weight: bold;">NO</span>.<br>` +
+                    `<em>Summary:</em> ℕ is a commutative monoid under addition and multiplication, but lacks the structural symmetry of groups or rings.`;
+            } else if (sys === 'Z') {
+                output.innerHTML = `<strong>System: Integers (ℤ)</strong><br>` +
+                    `• Addition Group? <span style="color: #10b981; font-weight: bold;">YES</span> (Closed, associative, identity 0, inverses like -5 exist).<br>` +
+                    `• Commutative Ring? <span style="color: #10b981; font-weight: bold;">YES</span> (Addition forms a group, multiplication is associative/commutative, and distributes over addition).<br>` +
+                    `• Field? <span style="color: #ef4444; font-weight: bold;">NO</span> (Fails multiplicative inverses; e.g., $3x = 1$ has no integer solution).<br>` +
+                    `<em>Summary:</em> ℤ is a classic commutative ring with unity, but division is not closed.`;
+            } else if (sys === 'Q') {
+                output.innerHTML = `<strong>System: Rational Numbers (ℚ)</strong><br>` +
+                    `• Addition Group? <span style="color: #10b981; font-weight: bold;">YES</span>.<br>` +
+                    `• Commutative Ring? <span style="color: #10b981; font-weight: bold;">YES</span>.<br>` +
+                    `• Field? <span style="color: #10b981; font-weight: bold;">YES</span> (Every non-zero fraction $p/q$ has a reciprocal $q/p$ within ℚ).<br>` +
+                    `<em>Summary:</em> ℚ is a fully fledged field, allowing unlimited addition, subtraction, multiplication, and non-zero division!`;
+            }
+        }
+    </script>
+</body>
+</html>
+"""
+    with open('algebraic_structures.html', 'w') as f:
+        f.write(subpage_content)
+
 def write_week1_module():
     if os.path.exists('week1.html'):
         os.remove('week1.html')
@@ -275,6 +409,7 @@ def write_week1_module():
                     <li><strong>Commutative Ring ($\mathbb{Z}$):</strong> A system equipped with <em>two</em> operations (addition and multiplication). Addition forms a group, multiplication is associative and commutative ($a \times b = b \times a$), and multiplication distributes over addition ($a(b+c) = ab + ac$). However, multiplicative inverses (reciprocals) are not guaranteed (e.g., $3 \times x = 1$ has no integer solution).</li>
                     <li><strong>Field ($\mathbb{Q}, \mathbb{R}$):</strong> A ring where <em>every</em> non-zero element also possesses a multiplicative inverse (reciprocal), meaning you can freely divide by any non-zero number without escaping the system.</li>
                 </ul>
+                <p style="margin-top: 1rem;"><a href="algebraic_structures.html" style="color: var(--accent); font-weight: bold; text-decoration: none;">&rarr; Explore our Interactive Deep Dive on Groups, Rings, and Fields</a></p>
             </div>
 
             <h3>Natural Numbers ($\mathbb{N}$): The Counting Foundation</h3>
@@ -712,14 +847,13 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Upgrade closure failure SVG diagrams for visual clarity\n\n"
-        "Replaced text-heavy cards with structured SVG diagrams that visually map \n"
-        "out the equation, step-by-step arithmetic, invalid set membership, and the \n"
-        "bridge to the expanded number system."
+        "Create deep dive subpage for algebraic structures (Groups, Rings, Fields)\n\n"
+        "Added algebraic_structures.html with axiom definitions and an interactive \n"
+        "number system inspector, and updated week1.html to link to it."
     )
 
     commands = [
-        ['git', 'add', 'update.py', 'week1.html', 'index.html'],
+        ['git', 'add', 'update.py', 'week1.html', 'algebraic_structures.html', 'index.html'],
         ['git', 'commit', '-m', commit_message],
         ['git', 'push', 'origin', 'main']
     ]
@@ -729,6 +863,8 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
+    print("Writing algebraic structures subpage...")
+    write_structures_subpage()
     print("Writing Week 1 module...")
     write_week1_module()
     print("Updating index.html routing...")
