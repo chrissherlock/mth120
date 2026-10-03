@@ -185,7 +185,7 @@ def write_week1_module():
                         <text x="20" y="25" font-family="sans-serif" font-size="10" fill="#64748b">Shared Overlap</text>
                         <circle cx="95" cy="60" r="35" fill="#ffffff" stroke="#d97706" stroke-width="1.5"/>
                         <circle cx="145" cy="60" r="35" fill="#ffffff" stroke="#d97706" stroke-width="1.5"/>
-                        <path d="M 120 25 A 35 35 0 0 0 120 95 A 35 35 0 0 0 120 25 Z" fill="#d97706" opacity="0.6"/>
+                        <path d="M 120 35 A 35 35 0 0 1 120 85 A 35 35 0 0 1 120 35 Z" fill="#d97706" opacity="0.6"/>
                         <text x="85" y="64" font-family="sans-serif" font-size="11" fill="#b45309" font-weight="bold">A</text>
                         <text x="150" y="64" font-family="sans-serif" font-size="11" fill="#b45309" font-weight="bold">B</text>
                     </svg>
@@ -615,7 +615,7 @@ def write_week1_module():
                 phase: "Convergence Verification", n: 8, indexVal: 8,
                 summary: "<strong>Goal:</strong> Fulfill the universal quantifier condition to formally certify the limit.",
                 what: "<p><strong>Abstract Formalism:</strong> For all subsequent indices $n > N$, terms remain strictly trapped within the $\\epsilon$ neighborhood.</p><p><strong>Applied Mechanics:</strong> The residual error remains flat and negligible across all further computation steps.</p>",
-                why: "<p><strong>Formal Rationale:</strong> This satisfies $\\forall n > N$. Because this inequality holds for <em>any</i> arbitrary $\\epsilon > 0$, the limit $\\lim_{n\\to\\infty} a_n = L$ is verified.</p><p><strong>System Constraint:</strong> Guarantees long-term numerical stability against unexpected divergence.</p>"
+                why: "<p><strong>Formal Rationale:</strong> This satisfies $\\forall n > N$. Because this inequality holds for <em>any</em> arbitrary $\\epsilon > 0$, the limit $\\lim_{n\\to\\infty} a_n = L$ is verified.</p><p><strong>System Constraint:</strong> Guarantees long-term numerical stability against unexpected divergence.</p>"
             }
         ];
 
@@ -691,7 +691,8 @@ def write_week1_module():
         reset();
     </script>
 </body>
-</html>"""
+</html>
+"""
     with open('week1.html', 'w') as f:
         f.write(html_content)
 
@@ -713,9 +714,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Fix malformed SVG path for Intersection Venn diagram in week1.html\n\n"
-        "Corrected the SVG arc coordinates and sweep flags for the A ∩ B intersection \n"
-        "diagram to properly render the overlapping lens region."
+        "Fix SVG intersection path in week1.html\n\n"
+        "Corrected the arc path in the A intersection B Venn diagram to properly "
+        "render the overlapping lens."
     )
 
     commands = [
@@ -729,7 +730,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with fixed intersection SVG...")
+    print("Writing Week 1 module...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
