@@ -568,7 +568,7 @@ def write_week1_module():
                     <line x1="50" y1="145" x2="690" y2="145" stroke="#64748b" stroke-width="2.5"/>
                     <circle cx="130" cy="145" r="6" fill="#64748b"/><text x="125" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">0</text>
                     <circle cx="370" cy="145" r="6" fill="#64748b"/><text x="365" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">1</text>
-                    <circle cx="610" cy="145" r="6" fill="#64748b"/><text x="605" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">2</text>
+                    <circle cx="610" cy="145" r="6" fill="#64748b"/><text x="605" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="bold">2</text>
 
                     <polygon points="130,145 370,145 370,65" fill="#fef3c7" opacity="0.65" stroke="#d97706" stroke-width="2"/>
                     <text x="245" y="135" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#d97706" font-weight="bold">1</text>
@@ -1503,12 +1503,12 @@ def write_week1_module():
 
             pointsToDraw.forEach((val, idx) => {
                 const cx = 100 + (idx * 80);
-                const cy = 190 - (val * 170);
+                const cy = 130 - (val * 90); // Center anchored L=0 at y=130
                 group.innerHTML += `<circle cx="${cx}" cy="${cy}" r="6.5" fill="#d97706" />`;
                 if(idx > 0) {
                     const prevVal = dualTrackData[dualTrackState.seq][idx - 1];
                     const px = 100 + ((idx - 1) * 80);
-                    py = 190 - (prevVal * 170);
+                    py = 130 - (prevVal * 90);
                     group.innerHTML += `<line x1="${px}" y1="${py}" x2="${cx}" y2="${cy}" stroke="#d97706" stroke-width="2.5" opacity="0.6"/>`;
                 }
             });
