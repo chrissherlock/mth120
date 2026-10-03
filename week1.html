@@ -385,7 +385,7 @@
                     <div class="notation-item"><span class="notation-sym">$n \to \infty$</span><span>Index $n$ grows arbitrarily large without bound toward infinity</span></div>
                     <div class="notation-item"><span class="notation-sym">$\lim_{n\to\infty} a_n = L$</span><span>The sequence $a_n$ converges to target limit value $L$</span></div>
                     <div class="notation-item"><span class="notation-sym">$\epsilon$ (epsilon)</span><span>Positive error tolerance budget; defines a neighborhood $(L-\epsilon, L+\epsilon)$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$N$</span><span>Threshold cutoff index beyond which all terms must stay within $\epsilon$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$N$</span><span>Threshold cutoff index beyond which all terms must stay strictly inside $\epsilon$</span></div>
                     <div class="notation-item"><span class="notation-sym">$|a_n - L| < \epsilon$</span><span>The distance between term $a_n$ and limit $L$ is strictly less than $\epsilon$</span></div>
                     <div class="notation-item"><span class="notation-sym">$\lceil x \rceil$</span><span>Ceiling function: smallest integer greater than or equal to $x$</span></div>
                 </div>
@@ -494,8 +494,8 @@
             <h3>The $\epsilon-N$ Definition Decoded (The Challenge Game)</h3>
             <p>The formal definition of a limit above is essentially an interactive challenge game between two players:</p>
             <ul>
-                <li><strong>Your Role (The Skeptic / $\epsilon$):</strong> You pick an error tolerance budget ($\epsilon$). For example, you demand that all numbers in the sequence eventually land and stay within a narrow zone of $\pm 0.1$ around zero.</li>
-                <li><strong>The System's Role ($N$):</strong> The system must find a specific cutoff position index ($N$). It wins the challenge if it can prove that *every single term* past that index ($n > N$) stays safely inside your error zone forever.</li>
+                <li><strong>Your Role (The Skeptic / $\epsilon$):</strong> You pick an error tolerance budget ($\epsilon$). For example, you demand that all numbers in the sequence eventually land and stay <strong>strictly within</strong> a narrow zone of $\pm \epsilon$ around zero (satisfying $|a_n - 0| < \epsilon$).</li>
+                <li><strong>The System's Role ($N$):</strong> The system must find a specific cutoff position index ($N$). It wins the challenge if it can prove that *every single term* past that index ($n > N$) stays strictly inside your error zone forever. Note that sitting directly on the boundary ($a_N = \epsilon$) does not count as being strictly inside; terms must satisfy $n > N$ to enter tolerance!</li>
             </ul>
 
             <!-- INTERACTIVE EPSILON CHALLENGE GAME -->
@@ -508,8 +508,9 @@
                     <div class="game-explainer">
                         <strong>How This Game Works:</strong><br>
                         • <strong>The Sequence:</strong> We are testing $a_n = \frac{1}{n}$, which produces the shrinking list: $1, 0.5, 0.33, 0.25, 0.2, 0.16, \dots$ heading toward $0$.<br>
-                        • <strong>Your Challenge:</strong> Click a tolerance button below to pick your error budget ($\epsilon$). You are demanding that the sequence be trapped within $\pm \epsilon$ of zero.<br>
-                        • <strong>The System's Answer:</strong> The computer calculates the winning cutoff index ($N$) and renders the error zone on the diagram. Use the "Step Forward" button to manually verify that subsequent terms stay trapped inside the zone forever!
+                        • <strong>Your Challenge:</strong> Click a tolerance button below to pick your error budget ($\epsilon$). You demand that sequence terms fall <em>strictly inside</em> the $\pm \epsilon$ band ($\vert{}a_n - 0\vert{} < \epsilon$).<br>
+                        • <strong>Boundary Condition ($a_N$ on the edge):</strong> Notice that at cutoff $N$, the term $a_N$ sits directly on the boundary line ($1/5 = 0.2$). Because $0.2 < 0.2$ is false, it hasn't entered tolerance yet! The definition requires $n > N$, meaning terms only enter and remain strictly inside starting at $n = N+1$.<br>
+                        • <strong>Step Forward:</strong> Click "Step Forward" to advance past $N$ and watch the terms safely enter the shaded interior forever!
                     </div>
 
                     <p><strong>Choose Your Error Budget ($\epsilon$):</strong></p>
@@ -685,8 +686,9 @@
             const output = document.getElementById('game-output');
             output.innerHTML = `<strong>Challenge Active ($\\epsilon = ${eps}$):</strong><br>` +
                 `• System calculated required threshold: $N = \\lceil 1/${eps} \\rceil = ${reqN}$<br>` +
+                `• At cutoff index $n = ${reqN}$, term $a_{${reqN}} = ${ (1/reqN).toFixed(3) }$ sits directly on the boundary ($|a_n - L| = \\epsilon$).<br>` +
                 `• Currently viewing up to position index $n = ${curN}$.<br>` +
-                `• <strong>Status:</strong> All terms for $n > ${reqN}$ are safely trapped inside the $\\pm ${eps}$ error zone!`;
+                `• <strong>Status:</strong> All terms for $n > ${reqN}$ are strictly trapped inside the $\\pm ${eps}$ error zone!`;
 
             if(window.renderMathInElement) {
                 renderMathInElement(output, {
@@ -716,6 +718,8 @@
 
             let svgContent = `
                 <rect x="${originX}" y="${bandY}" width="${maxXScale}" height="${bandHeight}" fill="#fef3c7" opacity="0.7"/>
+                <line x1="${originX}" y1="${topY}" x2="${originX + maxXScale}" y2="${topY}" stroke="#d97706" stroke-width="1.2" stroke-dasharray="3"/>
+                <line x1="${originX}" y1="${bottomY}" x2="${originX + maxXScale}" y2="${bottomY}" stroke="#d97706" stroke-width="1.2" stroke-dasharray="3"/>
                 <line x1="${originX}" y1="${originY}" x2="${originX + maxXScale}" y2="${originY}" stroke="#64748b" stroke-width="2"/>
                 <line x1="${originX}" y1="15" x2="${originX}" y2="${originY}" stroke="#64748b" stroke-width="2"/>
                 <text x="5" y="${topY + 4}" font-family="sans-serif" font-size="9" fill="#d97706">+&epsilon;</text>
@@ -735,10 +739,21 @@
                 svgContent += `<text x="${cx - 4}" y="${originY + 16}" font-family="sans-serif" font-size="9" fill="#475569">${n}</text>`;
 
                 const inside = n > reqN;
-                const fillColor = inside ? '#10b981' : '#d97706';
-                const r = inside ? 6 : 4;
+                const onBoundary = n === reqN;
+                let fillColor = '#d97706';
+                let strokeAttr = '';
+                let r = 4;
 
-                svgContent += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fillColor}" />`;
+                if (inside) {
+                    fillColor = '#10b981';
+                    r = 6;
+                } else if (onBoundary) {
+                    fillColor = '#fbbf24';
+                    strokeAttr = 'stroke="#d97706" stroke-width="2"';
+                    r = 5;
+                }
+
+                svgContent += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fillColor}" ${strokeAttr}/>`;
             }
 
             const thresholdX = originX + (reqN * (maxXScale / maxN));
