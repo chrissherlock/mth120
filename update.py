@@ -2,7 +2,7 @@
 import os
 import subprocess
 
-def expand_recursive_section_in_html():
+def expand_section_4_infinity():
     filepath = 'week2.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
@@ -11,96 +11,87 @@ def expand_recursive_section_in_html():
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # Old concise recursive subsection block to replace
-    old_recursion_block = r'''            <h3 style="margin-top: 2rem;">Evaluating Recursively Defined Sequences</h3>
-            <p>When a sequence is given by a recurrence relation (e.g., $x_{n+1} = f(x_n)$) rather than an explicit formula, we cannot calculate its limit directly at first glance. Instead, we use a powerful <strong>4-step strategy</strong> combining induction and the Monotone Convergence Theorem:</p>
+    # New expanded Section 4 block
+    new_section_4 = r'''            <!-- SECTION 4 -->
+            <h2 id="section-infinity">4. Infinity as a Limit (Divergence to Infinity)</h2>
+            <p>Not all divergent sequences bounce around chaotically like $\frac{n}{\sin(n)}$ or alternate forever like $(-1)^n$. Many sequences grow steadily larger and larger, marching off toward infinity. While these sequences do not converge to a finite number $L$ (and thus technically <em>diverge</em>), we assign a special classification: they <strong>diverge to infinity</strong>.</p>
 
-            <div class="infobox">
-                <h4>🛠️ The 4-Step Strategy for Recursive Sequences</h4>
-                <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
-                    <li style="margin-bottom: 0.5rem;"><strong>Step 1: Prove Boundedness.</strong> Use mathematical induction to show that all terms remain bounded above or below by a constant $M$.</li>
-                    <li style="margin-bottom: 0.5rem;"><strong>Step 2: Prove Monotonicity.</strong> Show that $x_{n+1} \ge x_n$ (increasing) or $x_{n+1} \le x_n$ (decreasing), often via induction or direct algebraic comparison.</li>
-                    <li style="margin-bottom: 0.5rem;"><strong>Step 3: Invoke the MCT.</strong> Since the sequence is monotonic and bounded, conclude that $\lim_{n\to\infty} x_n = L$ exists.</li>
-                    <li><div><strong>Step 4: Solve Algebraically.</strong> Take the limit $\lim_{n\to\infty}$ on both sides of the recurrence relation (substituting $L$ for both $x_{n+1}$ and $x_n$) and solve for $L$.</div></li>
-                </ol>
+            <div class="definition-box">
+                <p><strong>Formal Definition: Divergence to Infinity ($M\text{-}N$ Definition)</strong></p>
+                <p>A sequence $(a_n)$ tends to infinity, written $\lim_{n\to\infty} a_n = \infty$, if:</p>
+                <p style="text-align: center; margin: 0.75rem 0;">$$\forall M > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad \forall n > N, \quad a_n > M$$</p>
+                <p>Similarly, a sequence tends to negative infinity ($\lim_{n\to\infty} a_n = -\infty$) if for every negative threshold $M < 0$, there exists an index $N$ such that $a_n < M$ for all $n > N$.</p>
             </div>
 
             <div class="aside-box" style="margin-top: 1.5rem;">
-                <h4>🎯 Worked Example: The Nested Radical Sequence</h4>
-                <p>Consider the recursively defined sequence given by $x_1 = \sqrt{2}$ and $x_{n+1} = \sqrt{2 + x_n}$ for $n \ge 1$. Let's evaluate its limit:</p>
-                <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
-                    <li style="margin-bottom: 0.4rem;"><strong>Boundedness:</strong> We show by induction that $x_n < 2$ for all $n$. Base case ($n=1$): $x_1 = \sqrt{2} < 2$ (true). Assuming $x_k < 2$, then $x_{k+1} = \sqrt{2 + x_k} < \sqrt{2 + 2} = 2$. Thus, the sequence is bounded above by $2$.</li>
-                    <li style="margin-bottom: 0.4rem;"><strong>Monotonicity:</strong> We show $x_{n+1} > x_n$. Base case: $x_2 = \sqrt{2 + \sqrt{2}} > \sqrt{2} = x_1$. By induction, if $x_k > x_{k-1}$, then $\sqrt{2 + x_k} > \sqrt{2 + x_{k-1}}$, so $x_{n+1}$ is strictly increasing.</li>
-                    <li style="margin-bottom: 0.4rem;"><strong>Existence:</strong> By the Monotone Convergence Theorem, $\lim_{n\to\infty} x_n = L$ exists.</li>
-                    <li><strong>Algebraic Evaluation:</strong> Taking the limit on both sides of $x_{n+1} = \sqrt{2 + x_n}$:
-                        <p style="text-align: center; margin: 0.5rem 0;">$$L = \sqrt{2 + L} \implies L^2 = 2 + L \implies L^2 - L - 2 = 0$$</p>
-                        Factoring yields $(L - 2)(L + 1) = 0$. Since all terms $x_n > 0$, the limit must be positive, giving <strong>$L = 2$</strong>.
-                    </li>
-                </ol>
-            </div>'''
-
-    # Fully expanded replacement block with deep conceptual explanations
-    new_recursion_block = r'''            <h3 style="margin-top: 2rem;">Evaluating Recursively Defined Sequences</h3>
-            <p>When a sequence is given by a recurrence relation (e.g., $x_{n+1} = f(x_n)$) rather than an explicit formula, we cannot calculate its limit directly at first glance. But <em>why</em> can't we just take the limit algebraically right away? Understanding this reveals why a rigorous strategy is essential.</p>
-
-            <div class="aside-box" style="margin-top: 1.5rem;">
-                <h4>⚠️ The Core Dilemma: Explicit vs. Recurrence &amp; The Trap of Blind Algebra</h4>
+                <h4>💡 Intuition: The Towering Floor Game ($M\text{-}N$ Game)</h4>
+                <p>Compare this to our $\epsilon\text{-}N$ archery game for finite limits:</p>
                 <ul style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
-                    <li style="margin-bottom: 0.5rem;"><strong>Explicit Formulas ($x_n = f(n)$):</strong> You have a direct formula where $n$ is isolated. You can take $\lim_{n\to\infty}$ instantly because you see the long-term behavior directly.</li>
-                    <li style="margin-bottom: 0.5rem;"><strong>Recurrence Relations ($x_{n+1} = f(x_n)$):</strong> You are climbing a ladder one rung at a time. Each term depends entirely on the previous one, so $n$ does not appear as an independent variable.</li>
-                    <li><strong>The Logical Trap:</strong> If you try to take a shortcut by blindly assuming a limit $L$ exists and writing $L = f(L)$ (e.g., $L = \sqrt{2 + L}$), you are <strong>putting the cart before the horse</strong>. If a sequence diverges (like $x_{n+1} = x_n + 1$), a limit does not exist, and treating $L$ as a normal algebra variable leads to nonsense ($0 = 1$). Algebraic substitution <em>assumes</em> existence before proving it.</li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Finite Limit ($\lim a_n = L$):</strong> Your opponent gives you a tiny tolerance $\epsilon > 0$ to trap the sequence in a narrow neighborhood.</li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Infinite Limit ($\lim a_n = \infty$):</strong> Your opponent hands you an astronomically high threshold $M$ (e.g., $M = 1,000,000$).</li>
+                    <li><strong>Your Goal ($N$):</strong> You must find a cutoff index $N$ such that every term past $N$ towers <em>above</em> $M$ and never drops back down. If you can always find such an $N$ no matter how absurdly large your opponent makes $M$, the sequence diverges to infinity.</li>
                 </ul>
             </div>
 
-            <p>To make our algebraic calculation legally sound, we must split the problem into two distinct phases: <strong>proving the limit exists</strong> using the Monotone Convergence Theorem first, and <strong>calculating what it is</strong> second.</p>
+            <!-- EMBEDDED SVG DIAGRAM FOR INFINITY LIMIT -->
+            <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1.25rem; margin-top: 1.5rem; margin-bottom: 1.5rem;">
+                <p style="font-size: 0.85rem; font-weight: 700; color: #64748b; margin-top: 0; margin-bottom: 0.75rem; text-align: center;">VISUALIZATION: The $M\text{-}N$ Threshold Test for $\lim_{n\to\infty} \sqrt{n} = \infty$</p>
+                <svg viewBox="0 0 800 280" style="width: 100%; height: auto; display: block;">
+                    <!-- Axes -->
+                    <line x1="60" y1="220" x2="760" y2="220" stroke="#cbd5e1" stroke-width="2"/>
+                    <line x1="60" y1="20" x2="60" y2="240" stroke="#cbd5e1" stroke-width="2"/>
+                    <text x="710" y="235" font-size="11" font-weight="bold" fill="#64748b">n (index)</text>
+                    <text x="20" y="35" font-size="11" font-weight="bold" fill="#64748b">Value</text>
 
-            <div class="infobox">
-                <h4>🛠️ The 4-Step Strategy for Recursive Sequences</h4>
-                <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
-                    <li style="margin-bottom: 0.5rem;"><strong>Step 1: Prove Boundedness.</strong> Use mathematical induction to show that all terms remain bounded above or below by a constant $M$. (This ensures the sequence doesn't run off to infinity).</li>
-                    <li style="margin-bottom: 0.5rem;"><strong>Step 2: Prove Monotonicity.</strong> Show that $x_{n+1} \ge x_n$ (increasing) or $x_{n+1} \le x_n$ (decreasing). (This ensures the sequence moves in a single direction without chaotic oscillation).</li>
-                    <li style="margin-bottom: 0.5rem;"><strong>Step 3: Invoke the MCT.</strong> Because the sequence is bounded and monotonic, the Monotone Convergence Theorem steps in as an absolute legal guarantee that $\lim_{n\to\infty} x_n = L$ exists.</li>
-                    <li><strong>Step 4: Solve Algebraically.</strong> Now—and <em>only</em> now that existence is guaranteed—take the limit on both sides of the recurrence relation ($L = f(L)$) and solve for $L$.</li>
-                </ol>
+                    <!-- Massive Threshold Line M -->
+                    <line x1="60" y1="90" x2="760" y2="90" stroke="#ef4444" stroke-width="2" stroke-dasharray="6"/>
+                    <text x="70" y="82" font-size="12" font-weight="bold" fill="#ef4444">Threshold M (e.g., 100)</text>
+
+                    <!-- Cutoff Line N -->
+                    <line x1="520" y1="20" x2="520" y2="240" stroke="#d97706" stroke-width="2" stroke-dasharray="4"/>
+                    <text x="528" y="45" font-size="12" font-weight="bold" fill="#b45309">Cutoff Index N</text>
+
+                    <!-- Sequence Curve an = sqrt(n) (scaled for view) -->
+                    <path d="M 70,215 Q 200,180 350,140 T 520,95 T 750,50" fill="none" stroke="#0284c7" stroke-width="3"/>
+
+                    <!-- Highlight Region Above Threshold Past N -->
+                    <rect x="520" y="20" width="240" height="70" fill="#fef3c7" opacity="0.4"/>
+                    <text x="580" y="60" font-size="11" font-weight="bold" fill="#92400e">All terms $a_n > M$ for $n > N$</text>
+                </svg>
             </div>
 
             <div class="aside-box" style="margin-top: 1.5rem;">
-                <h4>🎯 Worked Example: The Nested Radical Sequence</h4>
-                <p>Consider the recursively defined sequence given by $x_1 = \sqrt{2}$ and $x_{n+1} = \sqrt{2 + x_n}$ for $n \ge 1$. Let's evaluate its limit using our 4-step strategy:</p>
+                <h4>🎯 Worked Example: Proving $\lim_{n\to\infty} \sqrt{n} = \infty$</h4>
+                <p>Let's use the formal $M\text{-}N$ definition to prove that the sequence $a_n = \sqrt{n}$ diverges to infinity:</p>
                 <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
-                    <li style="margin-bottom: 0.4rem;"><strong>Step 1 (Boundedness):</strong> We show by induction that $x_n < 2$ for all $n$. Base case ($n=1$): $x_1 = \sqrt{2} < 2$ (true). Assuming $x_k < 2$, then $x_{k+1} = \sqrt{2 + x_k} < \sqrt{2 + 2} = 2$. Thus, bounded above by $2$.</li>
-                    <li style="margin-bottom: 0.4rem;"><strong>Step 2 (Monotonicity):</strong> We show $x_{n+1} > x_n$. Base case: $x_2 = \sqrt{2 + \sqrt{2}} > \sqrt{2} = x_1$. By induction, if $x_k > x_{k-1}$, then $\sqrt{2 + x_k} > \sqrt{2 + x_{k-1}}$, so the sequence is strictly increasing.</li>
-                    <li style="margin-bottom: 0.4rem;"><strong>Step 3 (Existence):</strong> By the Monotone Convergence Theorem, $\lim_{n\to\infty} x_n = L$ exists.</li>
-                    <li><strong>Step 4 (Algebraic Evaluation):</strong> Taking the limit on both sides of $x_{n+1} = \sqrt{2 + x_n}$:
-                        <p style="text-align: center; margin: 0.5rem 0;">$$L = \sqrt{2 + L} \implies L^2 = 2 + L \implies L^2 - L - 2 = 0$$</p>
-                        Factoring yields $(L - 2)(L + 1) = 0$. Since all terms $x_n > 0$, the limit must be positive, giving <strong>$L = 2$</strong>.
-                    </li>
+                    <li style="margin-bottom: 0.4rem;"><strong>The Challenge:</strong> Given any arbitrary real number $M > 0$ (assume $M$ is large), we want to find an integer $N$ such that if $n > N$, then $\sqrt{n} > M$.</li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Working Backwards:</strong> Solve the inequality $\sqrt{n} > M$ for $n$. Squaring both sides gives $n > M^2$.</li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Choosing $N$:</strong> Choose any integer $N$ such that $N \ge M^2$ (or explicitly $N = \lceil M^2 \rceil$).</li>
+                    <li><strong>Conclusion:</strong> For any $n > N$, we have $n > M^2$, which implies $\sqrt{n} > \sqrt{M^2} = M$. Thus, by definition, $\lim_{n\to\infty} \sqrt{n} = \infty$.</li>
                 </ol>
             </div>'''
 
-    if old_recursion_block in content:
-        content = content.replace(old_recursion_block, new_recursion_block)
+    # Anchor markers to replace Section 4
+    old_sec_4_marker = '<!-- SECTION 4 -->'
+    footer_marker = '<!-- BOTTOM NAVIGATION FOOTER -->'
+
+    if old_sec_4_marker in content and footer_marker in content:
+        parts = content.split('<!-- SECTION 4 -->')
+        header_part = parts[0]
+        rest_part = parts[1].split('<!-- BOTTOM NAVIGATION FOOTER -->')[1]
+
+        updated_content = header_part + new_section_4 + '\n\n            <!-- BOTTOM NAVIGATION FOOTER -->' + rest_part
         with open(filepath, 'w', encoding='utf-8') as f:
-            f.write(content)
-        print("Successfully updated recursive sequences section in week2.html.")
+            f.write(updated_content)
+        print("Successfully expanded Section 4 in week2.html.")
     else:
-        print("Old recursion block not found exactly; performing fallback anchor replacement.")
-        # Fallback anchor replacement if needed
-        if 'Evaluating Recursively Defined Sequences' in content:
-            parts = content.split('Evaluating Recursively Defined Sequences')
-            # Find next section or end
-            rest = parts[1].split('<!-- SECTION 4 -->')[1]
-            updated_content = parts[0] + 'Evaluating Recursively Defined Sequences' + new_recursion_block.split('Evaluating Recursively Defined Sequences')[1] + '\n\n            <!-- SECTION 4 -->' + rest
-            with open(filepath, 'w', encoding='utf-8') as f:
-                f.write(updated_content)
-            print("Successfully updated via fallback anchor.")
+        print("Section 4 anchors not found in week2.html.")
 
 def execute_git_sync():
     commit_message = (
-        "Fully expand recursive sequence explanation in week2.html\n\n"
-        "Added comprehensive conceptual breakdown contrasting explicit vs recurrence\n"
-        "formulas, explaining the logical trap of blind algebra, and detailing\n"
-        "the two-phase guarantee in week2.html."
+        "Expand and update Section 4: Infinity as a Limit in week2.html\n\n"
+        "Added formal M-N definition, towering floor intuition, an SVG threshold\n"
+        "diagram, and a formal worked proof for week2.html."
     )
     commands = [
         ['git', 'add', 'week2.html', 'update.py'],
@@ -112,5 +103,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    expand_recursive_section_in_html()
+    expand_section_4_infinity()
     execute_git_sync()
