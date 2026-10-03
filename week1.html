@@ -53,9 +53,10 @@
 
         <div class="module-content">
             <div class="intro-lead">
-                Welcome to Week 1 of MTHS120. In accordance with Topic 1 of the official lecture notes (Sections 1, 2, and 3), this module establishes set theory foundations, functions, Peano's axioms for natural numbers, real number completeness, and sequence mechanics including derived sequences and partial sums.
+                Welcome to Week 1 of MTHS120. This module establishes set theory foundations, functions, Peano's axioms for natural numbers, real number completeness, sequence behavior, sums, and derived sequences.
             </div>
 
+            <!-- TABLE OF CONTENTS -->
             <div class="toc-box">
                 <h4>📌 Module Table of Contents</h4>
                 <ul class="toc-grid">
@@ -63,9 +64,11 @@
                     <li><a href="#section-numbers">2. Number Systems and Completeness</a></li>
                     <li><a href="#section-sequences">3. Sequences</a></li>
                     <li><a href="#section-sums">4. Sums and Partial Sums</a></li>
+                    <li><a href="#section-derived">5. Derived Sequences</a></li>
                 </ul>
             </div>
 
+            <!-- SECTION 1 -->
             <h2 id="section-sets">1. Sets and Functions</h2>
             <div class="infobox">
                 <h4>📖 Notation Reference: Sets &amp; Functions</h4>
@@ -78,7 +81,7 @@
                     <div class="notation-item"><span class="notation-sym">$A \cup B$</span><span class="notation-desc">Union of sets $A$ and $B$</span></div>
                     <div class="notation-item"><span class="notation-sym">$A \cap B$</span><span class="notation-desc">Intersection of sets $A$ and $B$</span></div>
                     <div class="notation-item"><span class="notation-sym">$A \setminus B$</span><span class="notation-desc">Set difference (relative complement)</span></div>
-                    <div class="notation-item"><span class="notation-sym">$A \times B$</span><span class="notation-desc">Cartesian product of sets</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span style="white-space: nowrap;">($A \times B$)</span></span><span class="notation-desc">Cartesian product of sets</span></div>
                     <div class="notation-item"><span class="notation-sym">$f: X \to Y$</span><span class="notation-desc">Function $f$ with domain $X$ and codomain $Y$</span></div>
                     <div class="notation-item"><span class="notation-sym">$f^{-1}(y)$</span><span class="notation-desc">Preimage of element $y$</span></div>
                     <div class="notation-item"><span class="notation-sym">$g \circ f$</span><span class="notation-desc">Function composition ("f followed by g")</span></div>
@@ -98,6 +101,7 @@
                 <li><strong>Composition:</strong> For $f: X \to Y$ and $g: Y \to Z$, the composition $g \circ f: X \to Z$ maps $x \mapsto g(f(x))$.</li>
             </ul>
 
+            <!-- SECTION 2 -->
             <h2 id="section-numbers">2. Number Systems and Completeness</h2>
             <div class="infobox">
                 <h4>📖 Notation Reference: Numbers &amp; Bounds</h4>
@@ -121,43 +125,23 @@
             <h3>Completeness and the Least Upper Bound Property</h3>
             <p>While rationals $\mathbb{Q}$ are dense, they contain gaps (e.g., $x^2 = 2$ has no rational solution). The real numbers $\mathbb{R}$ extend $\mathbb{Q}$ and satisfy the <strong>Axiom of Completeness</strong>: Any non-empty subset $S \subseteq \mathbb{R}$ that is bounded above has a supremum ($\sup S$) in $\mathbb{R}$. The <strong>Archimedean Axiom</strong> ensures that for any positive real numbers $x, y$, there is an $n \in \mathbb{N}$ such that $nx > y$.</p>
 
-            <h2 id="section-sequences">3. Sequences, Derived Sequences, and Partial Sums</h2>
+            <!-- SECTION 3 -->
+            <h2 id="section-sequences">3. Sequences</h2>
             <div class="infobox">
                 <h4>📖 Notation Reference: Sequence Mechanics</h4>
                 <div class="infobox-intro">
                     <strong>Think of a sequence simply as an endless ordered list</strong> —like a musical playlist or numbered parking spots—where every step has its own designated number.
                 </div>
-                <div class="notation-grid">                    <div class="notation-item"><span class="notation-sym">$\sum_{\nu=0}^n$</span><span class="notation-desc">Summation operator: adding indexed terms cumulatively</span></div>
-
+                <div class="notation-grid">
                     <div class="notation-item"><span class="notation-sym">$(a_n)$</span><span class="notation-desc">Sequence $(a_0, a_1, a_2, \dots)$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$a_n'$</span><span class="notation-desc">Derived sequence $a_{n+1} - a_n$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$s_n$</span><span class="notation-desc">Partial sum $\sum_{\nu=0}^n b_\nu$</span></div>
                     <div class="notation-item"><span class="notation-sym">$an + b$</span><span class="notation-desc">Arithmetic progression</span></div>
                     <div class="notation-item"><span class="notation-sym">$aq^n$</span><span class="notation-desc">Geometric progression</span></div>
                 </div>
             </div>
 
-            
-            <div class="aside-box" style="margin-top: 1.75rem;">
-                <h4>💡 Intuitive Guide: Making Sense of Derived Sequences and Partial Sums</h4>
-                <p>These two concepts can feel tricky because they require a shift in perspective. Instead of just looking at where a sequence sits at a given moment, <strong>derived sequences</strong> look at how fast it is <em>changing</em>, while <strong>partial sums</strong> look at how much it has <em>accumulated</em>.</p>
+            <p>A sequence is an ordered list of numbers mapping indices from $\mathbb{N}$ to $\mathbb{R}$. We can define them explicitly with a closed-form rule or recursively relative to previous terms.</p>
 
-                <h5 style="color: #92400e; margin: 1rem 0 0.4rem 0;">1. Derived Sequences: The Speedometer</h5>
-                <p>When you look at a regular sequence like $(a_n) = (1, 4, 9, 16, 25)$, you see its positions at each step ($1^2, 2^2, 3^2$, etc.). A derived sequence ($a_n' = a_{n+1} - a_n$) asks: <strong>"How much did the sequence jump from one step to the next?"</strong></p>
-                <ul>
-                    <li><strong>The Analogy:</strong> Think of the original sequence as an odometer (total distance traveled), and the derived sequence as the speedometer (how fast you are moving right now).</li>
-                    <li><strong>Example ($a_n = n^2$):</strong> The terms are $1, 4, 9, 16$. The gaps are $4-1=3$, then $9-4=5$, then $16-9=7$. The derived sequence is $(3, 5, 7, \dots)$. If the derived sequence is always positive ($a_n' > 0$), the original sequence is always climbing.</li>
-                </ul>
-
-                <h5 style="color: #92400e; margin: 1rem 0 0.4rem 0;">2. Partial Sums: The Running Tally</h5>
-                <p>If derived sequences are about <em>stepping forward</em>, <strong>partial sums</strong> ($s_n = \sum_{\nu=0}^n b_\nu$) keep a <strong>running total</strong>.</p>
-                <ul>
-                    <li><strong>The Analogy:</strong> Imagine collecting coins in each video game level. Level 0 gives 2 coins, Level 1 gives 3, Level 2 gives 5. Your partial sum is your total score up to that exact moment.</li>
-                    <li><strong>Process:</strong> Add terms cumulatively. Given terms $(2, 3, 5, 1)$, the partial sums are $s_0 = 2$, $s_1 = 2+3 = 5$, $s_2 = 2+3+5 = 10$, resulting in $(2, 5, 10, 11)$. In calculus, this is how we build infinite series.</li>
-                </ul>
-            </div>
-
-            
+            <!-- SECTION 4 -->
             <h2 id="section-sums">4. Sums and Partial Sums</h2>
             <div class="infobox">
                 <h4>📖 Notation Reference: Summation Mechanics</h4>
@@ -182,21 +166,20 @@
             <h3>Anatomy of a Summation</h3>
             <p>Think of $\sum$ as a loop in computer programming or an assembly line:</p>
             <ul>
-                <li><strong>The Index ($\nu$):</strong> The counter variable (sometimes written as $i$ or $k$) that ticks upward by whole numbers.</li>
+                <li><strong>The Index ($\nu$):</strong> The counter variable that ticks upward by whole numbers.</li>
                 <li><strong>The Starting Point (Lower Limit):</strong> Where the counter begins (e.g., $\nu = 0$ or $\nu = 1$).</li>
                 <li><strong>The Stopping Point (Upper Limit):</strong> The final number $n$ where the counting finishes.</li>
                 <li><strong>The Formula ($b_\nu$):</strong> The rule evaluated at each step of the counter.</li>
             </ul>
 
             <h3>Partial Sums: The Running Total</h3>
-            <p>As we saw with our coin-collection analogy, a <strong>partial sum</strong> ($s_n$) is simply a running total of a sequence up to step $n$:</p>
+            <p>Imagine collecting coins in a video game. Level 0 gives 2 coins, Level 1 gives 3, Level 2 gives 5. Your <strong>partial sum</strong> ($s_n$) is your running total score up to that exact moment:</p>
 
             <div class="definition-box">
                 <p>$$s_n = \sum_{\nu=0}^{n} b_\nu$$</p>
             </div>
 
-            <p>Instead of just looking at individual terms, partial sums allow us to watch how an accumulation grows. Two famous summation formulas appear frequently in your coursework:</p>
-
+            <p>Two famous summation formulas appear frequently in your coursework:</p>
             <ul class="example-list">
                 <li><strong>Sum of the First $n$ Integers (Triangular Numbers):</strong><br>
                 $$\sum_{\nu=1}^{n} \nu = 1 + 2 + 3 + \dots + n = \frac{n(n+1)}{2}$$</li>
@@ -204,58 +187,25 @@
                 $$\sum_{\nu=0}^{n-1} q^\nu = 1 + q + q^2 + \dots + q^{n-1} = \frac{1 - q^n}{1 - q} \quad (\text{for } q \neq 1)$$</li>
             </ul>
 
+            <!-- SECTION 5 -->
             <h2 id="section-derived">5. Derived Sequences</h2>
-            <h3>Derived Sequences and Partial Sums</h3>
-            <p>The <strong>derived sequence</strong> of $(a_n)$ is defined by consecutive differences $a_n' = a_{n+1} - a_n$. A sequence is constant, increasing, or decreasing if and only if its derived sequence is identically zero, non-negative, or non-positive. Conversely, summing terms yields <strong>partial sums</strong> $s_n = \sum_{\nu=0}^n b_\nu$. For example, the partial sums of the geometric progression $q^n$ give the closed-form sum:</p>
-            <p>$$\sum_{\nu=0}^{n-1} q^\nu = \frac{1 - q^n}{1 - q}$$</p>
-        </div>
-    </div>
-
-            <h2 id="section-sums">4. Sums and Partial Sums</h2>
             <div class="infobox">
-                <h4>📖 Notation Reference: Summation Mechanics</h4>
+                <h4>📖 Notation Reference: Derived Sequences</h4>
                 <div class="infobox-intro">
-                    <strong>Meet the sigma machine:</strong> The Greek letter sigma ($\sum$) is simply shorthand for adding up a string of numbers without having to write out endless plus signs.
+                    <strong>The Speedometer Analogy:</strong> While a regular sequence tells you your position (like a car odometer), a derived sequence tells you how fast you are jumping from step to step (like a speedometer).
                 </div>
                 <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$\sum$</span><span class="notation-desc">Sigma operator: shorthand instruction to add numbers together</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\nu = 0$ or $1$</span><span class="notation-desc">Lower limit: the starting index value</span></div>
-                    <div class="notation-item"><span class="notation-sym">$n$</span><span class="notation-desc">Upper limit: the final index value where the sum stops</span></div>
-                    <div class="notation-item"><span class="notation-sym">$b_\nu$</span><span class="notation-desc">General term being added at each step</span></div>
-                    <div class="notation-item"><span class="notation-sym">$s_n$</span><span class="notation-desc">Partial sum: the running total up to index $n$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$a_n'$</span><span class="notation-desc">Derived sequence: consecutive differences $a_{n+1} - a_n$</span></div>
                 </div>
             </div>
 
-            <p>When studying sequences, we often want to know what happens when we add their terms together. Writing out $b_0 + b_1 + b_2 + \dots + b_n$ gets messy very quickly, so we use <strong>summation notation</strong>:</p>
+            <p>The <strong>derived sequence</strong> of $(a_n)$ is defined by consecutive differences $a_n' = a_{n+1} - a_n$. A sequence is constant, increasing, or decreasing if and only if its derived sequence is identically zero, non-negative, or non-positive.</p>
 
-            <div class="definition-box">
-                <p>$$\sum_{\nu=0}^{n} b_\nu = b_0 + b_1 + b_2 + \dots + b_n$$</p>
+            <div class="aside-box">
+                <h4>💡 Intuitive Guide: Making Sense of Derived Sequences and Partial Sums</h4>
+                <p><strong>Derived sequences</strong> look at how fast a sequence is <em>changing</em> (the speedometer), while <strong>partial sums</strong> look at how much it has <em>accumulated</em> (the running total).</p>
             </div>
-
-            <h3>Anatomy of a Summation</h3>
-            <p>Think of $\sum$ as a loop in computer programming or an assembly line:</p>
-            <ul>
-                <li><strong>The Index ($\nu$):</strong> The counter variable (sometimes written as $i$ or $k$) that ticks upward by whole numbers.</li>
-                <li><strong>The Starting Point (Lower Limit):</strong> Where the counter begins (e.g., $\nu = 0$ or $\nu = 1$).</li>
-                <li><strong>The Stopping Point (Upper Limit):</strong> The final number $n$ where the counting finishes.</li>
-                <li><strong>The Formula ($b_\v$):</strong> The rule evaluated at each step of the counter.</li>
-            </ul>
-
-            <h3>Partial Sums: The Running Total</h3>
-            <p>As we saw with our coin-collection analogy, a <strong>partial sum</strong> ($s_n$) is simply a running total of a sequence up to step $n$:</p>
-
-            <div class="definition-box">
-                <p>$$s_n = \sum_{\nu=0}^{n} b_\nu$$</p>
-            </div>
-
-            <p>Instead of just looking at individual terms, partial sums allow us to watch how an accumulation grows. Two famous summation formulas appear frequently in your coursework:</p>
-
-            <ul class="example-list">
-                <li><strong>Sum of the First $n$ Integers (Triangular Numbers):</strong><br>
-                $$\sum_{\nu=1}^{n} \nu = 1 + 2 + 3 + \dots + n = \frac{n(n+1)}{2}$$</li>
-                <li><strong>Geometric Series Partial Sum:</strong><br>
-                $$\sum_{\nu=0}^{n-1} q^\nu = 1 + q + q^2 + \dots + q^{n-1} = \frac{1 - q^n}{1 - q} \quad (\text{for } q \neq 1)$$</li>
-            </ul>
-</div>
+        </div>
+    </div>
 </body>
 </html>
