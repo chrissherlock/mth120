@@ -398,7 +398,7 @@ def write_week1_module():
             <div class="diagram-card" style="margin: 1.5rem 0; width: 100%; box-sizing: border-box;">
                 <h5>Visualizing the Power Set $\mathcal{P}(A)$ for $A = \{1, 2\}$</h5>
                 <svg viewBox="0 0 740 180">
-                    <rect x="15" y="10" width="710" height="160" rx="10" fill="#fffbeb" stroke="#fde68a" stroke-width="1.8"/>
+                    <rect x="15" y="10" width="710" height="160" rx="10" fill="#fffbeb" stroke="#fde68a" stroke-width="1.5"/>
                     <text x="35" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#92400e" font-weight="bold">Master Collection: Power Set 𝒫(A) = 2ᴬ (Contains 4 Subsets)</text>
 
                     <!-- Subset 1: Empty Set -->
@@ -433,6 +433,9 @@ def write_week1_module():
                 <p>If a finite set $A$ contains $n$ elements, its power set $\mathcal{P}(A)$ will always contain exactly $2^n$ elements. For example, if $A$ has 3 elements, its power set has $2^3 = 8$ subsets. This exponential growth is why power sets are denoted with exponent notation ($2^A$).</p>
             </div>
 
+            <h3>Core Set Operations Visualized</h3>
+            <p>Sets interact through algebra-like operations governed by rigorous logical connectives:</p>
+
             <div class="diagram-grid">
                 <div class="diagram-card">
                     <h5>Subset Inclusion ($A \subseteq B$)</h5>
@@ -446,21 +449,6 @@ def write_week1_module():
                     </svg>
                 </div>
                 <div class="diagram-card">
-                    <h5>Complement ($A^c = U \setminus A$)</h5>
-                    <svg viewBox="0 0 360 170">
-                        <rect x="10" y="10" width="340" height="150" rx="8" fill="#fef3c7" opacity="0.6" stroke="#cbd5e1" stroke-width="1.2"/>
-                        <text x="25" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#92400e" font-weight="600">Aᶜ (Complement Region)</text>
-                        <circle cx="180" cy="95" r="48" fill="#ffffff" stroke="#d97706" stroke-width="1.2"/>
-                        <text x="175" y="101" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#b45309" font-weight="bold">A</text>
-                    </svg>
-                </div>
-            </div>
-
-            <h3>Core Set Operations Visualized</h3>
-            <p>Sets interact through algebra-like operations governed by rigorous logical connectives:</p>
-
-            <div class="diagram-grid">
-                <div class="diagram-card">
                     <h5>Union ($A \cup B$) &mdash; "Or"</h5>
                     <svg viewBox="0 0 360 170">
                         <rect x="10" y="10" width="340" height="150" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.2"/>
@@ -471,6 +459,9 @@ def write_week1_module():
                         <text x="225" y="100" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#b45309" font-weight="bold">B</text>
                     </svg>
                 </div>
+            </div>
+
+            <div class="diagram-grid">
                 <div class="diagram-card">
                     <h5>Intersection ($A \cap B$) &mdash; "And"</h5>
                     <svg viewBox="0 0 360 170">
@@ -481,6 +472,15 @@ def write_week1_module():
                         <path d="M 180 57 A 52 52 0 0 1 180 133 A 52 52 0 0 1 180 57 Z" fill="#d97706" opacity="0.75"/>
                         <text x="125" y="100" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#b45309" font-weight="bold">A</text>
                         <text x="230" y="100" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#b45309" font-weight="bold">B</text>
+                    </svg>
+                </div>
+                <div class="diagram-card">
+                    <h5>Complement ($A^c = U \setminus A$)</h5>
+                    <svg viewBox="0 0 360 170">
+                        <rect x="10" y="10" width="340" height="150" rx="8" fill="#fef3c7" opacity="0.6" stroke="#cbd5e1" stroke-width="1.2"/>
+                        <text x="25" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#92400e" font-weight="600">Aᶜ (Complement Region)</text>
+                        <circle cx="180" cy="95" r="48" fill="#ffffff" stroke="#d97706" stroke-width="1.2"/>
+                        <text x="175" y="101" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#b45309" font-weight="bold">A</text>
                     </svg>
                 </div>
             </div>
@@ -640,7 +640,7 @@ def write_week1_module():
                     <line x1="40" y1="145" x2="710" y2="145" stroke="#64748b" stroke-width="1.2" marker-end="url(#num-arrow)"/>
                     <circle cx="130" cy="145" r="4.5" fill="#64748b"/><text x="125" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">0</text>
                     <circle cx="370" cy="145" r="4.5" fill="#64748b"/><text x="365" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">1</text>
-                    <circle cx="610" cy="145" r="4.5" fill="#64748b"/><text x="605" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">2</text>
+                    <circle cx="610" cy="145" r="4.5" fill="#64748b"/><text x="605" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="bold">2</text>
 
                     <polygon points="130,145 370,145 370,65" fill="#fef3c7" opacity="0.65" stroke="#d97706" stroke-width="1.2"/>
                     <text x="245" y="135" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#d97706" font-weight="bold">1</text>
@@ -1663,14 +1663,14 @@ def update_curriculum_index():
 
     updated_content = content.replace(target, replacement)
 
-    with open('index.html', 'w' ) as f:
+    with open('index.html', 'w') as f:
         f.write(updated_content)
 
 def execute_git_sync():
     commit_message = (
-        "Thin out stroke widths across Cartesian, sqrt(2), and Challenge diagrams\n\n"
-        "Adjusted line widths to 1.0-1.2 across all diagrams in week1.html for a "
-        "clean, uniform mathematical illustration style."
+        "Reorder Section 1 subsections and thin diagram lines\n\n"
+        "Restored logical section ordering for subsets and core operations in week1.html, "
+        "and thinned out strokes across Cartesian, sqrt(2), and Challenge diagrams."
     )
 
     commands = [
@@ -1684,7 +1684,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with thinned lines across all diagrams...")
+    print("Writing Week 1 module with corrected section ordering and thinned lines...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
