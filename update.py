@@ -145,13 +145,38 @@ def write_week1_module():
             </div>
 
             <h2>3. Sequences and the Limit Concept</h2>
-            <p>With sets and real numbers established, we can define <strong>sequences</strong>—the core bridge to calculus.</p>
-            <p>A sequence is formally a function whose domain is the natural numbers $\mathbb{N}$ and whose codomain is the real numbers $\mathbb{R}$:</p>
-            <p>$$f: \mathbb{N} \rightarrow \mathbb{R}, \quad \text{denoted as } (a_n)_{n=1}^\infty \text{ or } a_1, a_2, a_3, \dots, a_n$$</p>
+            <p>With sets and real numbers established, we explore <strong>sequences</strong>—the fundamental bridge from discrete math to continuous calculus.</p>
 
-            <p>When studying sequences, our primary question is: <em>As $n$ grows infinitely large ($n \to \infty$), do the terms $a_n$ settle down toward a specific target value $L$?</em></p>
+            <h3>What Is a Sequence?</h3>
+            <p>Formally, a sequence is a function whose domain is the natural numbers $\mathbb{N}$ and whose codomain is the real numbers $\mathbb{R}$:</p>
+            <p>$$f: \mathbb{N} \rightarrow \mathbb{R}, \quad \text{expressed as } (a_n)_{n=1}^\infty = (a_1, a_2, a_3, \dots, a_n, \dots)$$</p>
+            <p>Instead of an independent variable $x$ sliding smoothly along a continuous line, a sequence is an ordered, infinite list of discrete numbers indexed by position $n$.</p>
 
-            <p>To explore this rigorously, use the <strong>Dual-Track Simulator</strong> below, which maps the abstract formal definition of a limit against a concrete numerical iteration stream.</p>
+            <h3>The Informal Idea of a Limit</h3>
+            <p>When studying a sequence, our primary question is: <em>What happens to the terms $a_n$ as our index $n$ marches off toward infinity ($n \to \infty$)?</em></p>
+            <p>Consider the classic sequence $a_n = \frac{1}{n}$. Writing out its first few terms:
+            $$1, \quad 0.5, \quad 0.333\dots, \quad 0.25, \quad 0.2, \quad \dots$$
+            As $n$ gets larger and larger, the denominator grows, and the fraction shrinks toward $0$. Informally, we say "the limit of $1/n$ as $n$ approaches infinity is $0$," written as $\lim_{n\to\infty} \frac{1}{n} = 0$.</p>
+
+            <h3>Why "Getting Closer" Isn't Enough</h3>
+            <p>In calculus, phrases like "gets closer and closer" or "approaches arbitrarily close" are dangerously vague. For instance, does $a_n = \frac{1}{\sqrt{n}}$ get close to 0? Yes. But how fast? Can we guarantee it stays within a strict margin of error forever?</p>
+            <p>To do real analysis, we need a bulletproof, mathematically rigorous definition that eliminates ambiguity.</p>
+
+            <h3>The $\epsilon-N$ Definition Decoded (The Challenge Game)</h3>
+            <p>The formal definition of a limit is best understood as a <strong>game between two players</strong>:</p>
+            <ul>
+                <li><strong>Player 1 (The Skeptic / $\epsilon$):</strong> Picks an arbitrarily small error tolerance $\epsilon > 0$ (e.g., $\epsilon = 0.2$). They challenge you to trap the sequence within $L - \epsilon$ and $L + \epsilon$.</li>
+                <li><strong>Player 2 (You / $N$):</strong> Must find a cutoff index $N \in \mathbb{N}$ such that <em>every single term</em> from that point onward ($n > N$) stays safely inside the target zone.</li>
+            </ul>
+
+            <div class="definition-box">
+                <p><strong>Formal Definition of Convergence:</strong></p>
+                <p>We say $\lim_{n\to\infty} a_n = L$ if:</p>
+                <p>$$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad \forall n > N, \quad |a_n - L| < \epsilon$$</p>
+                <p>If you can successfully find such an $N$ no matter how maliciously small Player 1 makes $\epsilon$, the limit is formally proven.</p>
+            </div>
+
+            <p>To experience this game hands-on, use the <strong>Dual-Track Simulator</strong> below, which maps the abstract formal definition of a limit against a concrete numerical iteration stream.</p>
 
             <div class="dual-track-grid">
                 <div class="track-card track-formal">
@@ -368,10 +393,11 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Expand Number Systems section with algebraic closure and completeness theory\n\n"
-        "Added detailed subsections for Natural Numbers, Integers, Rationals, \n"
-        "and Reals, explicitly detailing algebraic closure properties, division \n"
-        "limitations, geometric gaps (like sqrt(2)), and the Completeness Axiom."
+        "Rewrite Section 3 with step-by-step limit intuition and challenge game analogy\n\n"
+        "Replaced the abrupt jump into epsilon-N definitions with an intuitive buildup:\n"
+        "defining sequences as ordered lists, exploring informal limits via term \n"
+        "expansions, explaining the necessity of mathematical rigor, and framing \n"
+        "the formal definition as an interactive challenge game between epsilon and N."
     )
 
     commands = [
