@@ -319,7 +319,7 @@ def write_week1_module():
                         <text x="195" y="90" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#d97706" font-weight="bold">L=0</text>
                         <circle cx="45" cy="40" r="5" fill="#d97706"/><line x1="45" y1="40" x2="80" y2="62" stroke="#d97706" stroke-width="1.5"/>
                         <circle cx="80" cy="62" r="5" fill="#d97706"/><line x1="80" y1="62" x2="115" y2="78" stroke="#d97706" stroke-width="1.5"/>
-                        <circle cx="115" cy="78" r="5" fill="#d97706"/><line x1="115" y1="78" x2="150" y2="87" stroke="#d97706" stroke-width="1.5"/>
+                        <circle cx="115" cy="78" r="5" fill="#10b981"/><line x1="115" y1="78" x2="150" y2="87" stroke="#10b981" stroke-width="1.5"/>
                         <circle cx="150" cy="87" r="5" fill="#10b981"/><line x1="150" y1="87" x2="185" y2="91" stroke="#10b981" stroke-width="1.5"/>
                         <circle cx="185" cy="91" r="6" fill="#10b981"/>
                         <text x="110" y="122" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b" text-anchor="middle" font-weight="600">Sequence Limits (aₙ → L)</text>
@@ -1280,7 +1280,7 @@ def write_week1_module():
         }
 
         /* ==========================================================================
-           EPSILON CHALLENGE GAME (CENTER-ANCHORED L=0 & CORRECTED BOUNDARY LABELS)
+           EPSILON CHALLENGE GAME (CLEAN INITIAL STATE WITH NO POINTS OR CORRIDOR)
            ========================================================================== */
         const challengeState = { active: false, eps: 0.2, reqN: 5, currentDisplayN: 5 };
 
@@ -1313,7 +1313,7 @@ def write_week1_module():
             document.getElementById('cg-tel-status').innerText = 'Standby';
             document.getElementById('cg-tel-status').style.color = '#64748b';
 
-            document.getElementById('game-plot').innerHTML = '<text x="260" y="130" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b">Select an &epsilon; budget above to start the challenge.</text>';
+            renderGameSVG(null, 0, 0);
         }
 
         function updateChallengeUI() {
@@ -1351,43 +1351,57 @@ def write_week1_module():
 
         function renderGameSVG(eps, reqN, curN) {
             const svg = document.getElementById('game-plot');
-            const maxN = Math.max(14, reqN + 4);
             const originX = 90;
             const originY = 130; // Center anchored L = 0
             const maxXScale = 610;
 
-            let scaleFactor;
-            if (eps <= 0.05) {
-                scaleFactor = 900;
-            } else if (eps <= 0.1) {
-                scaleFactor = 550;
-            } else {
-                scaleFactor = 220;
+            // Base clean axes and grid (always rendered)
+            let svgContent = `
+                <defs>
+                    <marker id="game-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+                    </marker>
+                </defs>
+                <!-- Zero Target Line -->
+                <line x1="${originX}" y1="${originY}" x2="${originX + maxXScale}" y2="${originY}" stroke="#64748b" stroke-width="2.2"/>
+                <text x="${originX - 35}" y="${originY + 5}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700" fill="#64748b">L=0</text>
+
+                <!-- Vertical Axis with Arrow -->
+                <line x1="${originX}" y1="240" x2="${originX}" y2="25" stroke="#64748b" stroke-width="2.2" marker-end="url(#game-arrow)"/>
+                <text x="${originX}" y="18" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="13" fill="#64748b" font-weight="600">a<tspan dy="3" font-size="10">n</tspan></text>
+
+                <!-- Horizontal Axis with Arrow -->
+                <line x1="${originX}" y1="${originY}" x2="715" y2="${originY}" stroke="#64748b" stroke-width="2.2" marker-end="url(#game-arrow)"/>
+                <text x="722" y="134" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="13" fill="#64748b" font-weight="600">n</text>
+            `;
+
+            // If user has not picked an epsilon yet (initial state or reset), show empty graph grid
+            if (eps === null) {
+                for (let n = 1; n <= 10; n++) {
+                    const cx = originX + (n * (maxXScale / 14));
+                    svgContent += `<line x1="${cx}" y1="${originY}" x2="${cx}" y2="${originY + 6}" stroke="#94a3b8" stroke-width="1.5"/>`;
+                    svgContent += `<text x="${cx - 4}" y="${originY + 20}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#475569" font-weight="600">${n}</text>`;
+                }
+                svg.innerHTML = svgContent;
+                return;
             }
+
+            // Active challenge state rendering below
+            const maxN = Math.max(14, reqN + 4);
+            let scaleFactor = eps <= 0.05 ? 900 : (eps <= 0.1 ? 550 : 220);
 
             const topY = originY - (eps * scaleFactor);
             const bottomY = originY + (eps * scaleFactor);
             const bandHeight = bottomY - topY;
 
-            let svgContent = `
+            svgContent += `
                 <!-- Symmetric tolerance corridor spanning symmetrically around center -->
                 <rect x="${originX}" y="${topY}" width="${maxXScale}" height="${bandHeight}" fill="#fef3c7" opacity="0.8"/>
                 <line x1="${originX}" y1="${topY}" x2="${originX + maxXScale}" y2="${topY}" stroke="#d97706" stroke-width="1.8" stroke-dasharray="4"/>
                 <line x1="${originX}" y1="${bottomY}" x2="${originX + maxXScale}" y2="${bottomY}" stroke="#d97706" stroke-width="1.8" stroke-dasharray="4"/>
 
-                <!-- Zero Target Line -->
-                <line x1="${originX}" y1="${originY}" x2="${originX + maxXScale}" y2="${originY}" stroke="#64748b" stroke-width="2.2"/>
-                <text x="${originX - 35}" y="${originY + 5}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700" fill="#64748b">L=0</text>
-
-                <!-- Vertical Axis -->
-                <line x1="${originX}" y1="20" x2="${originX}" y2="240" stroke="#64748b" stroke-width="2.2"/>
-
-                <!-- Corrected boundary labels: L + ε (upper) and L - ε (lower) -->
                 <text x="12" y="${topY + 4}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="bold" fill="#d97706">L + &epsilon; (${eps})</text>
-                <line x1="75" y1="${topY}" x2="${originX}" y2="${topY}" stroke="#d97706" stroke-width="1.5" stroke-dasharray="2"/>
-
                 <text x="12" y="${bottomY + 4}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="bold" fill="#d97706">L - &epsilon; (${eps})</text>
-                <line x1="75" y1="${bottomY}" x2="${originX}" y2="${bottomY}" stroke="#d97706" stroke-width="1.5" stroke-dasharray="2"/>
             `;
 
             for (let n = 1; n <= curN; n++) {
@@ -1550,6 +1564,9 @@ def write_week1_module():
         // Initializations on load
         resetDualTrack();
         resetFormula();
+
+        // Initial render for challenge game (blank grid state)
+        renderGameSVG(null, 0, 0);
     </script>
 </body>
 </html>
@@ -1575,9 +1592,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Center a_n label over vertical axis and add arrowhead leader lines\n\n"
-        "Repositioned a_n axis label to x=90 with text-anchor='middle' and added "
-        "arrowhead markers to L + ε and L - ε indicator lines in week1.html."
+        "Render clean blank graph on Epsilon Challenge Game initial/reset state\n\n"
+        "Updated renderGameSVG in week1.html to display coordinate axes and tick "
+        "numbers without data points or epsilon bands when uninitialized or reset."
     )
 
     commands = [
@@ -1591,7 +1608,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with centered axis label...")
+    print("Writing Week 1 module with clean initial graph state...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
