@@ -92,18 +92,18 @@ def write_week1_module():
                         <circle cx="110" cy="60" r="35" fill="#38bdf8" opacity="0.3"/>
                         <text x="50" y="65" font-family="sans-serif" font-size="11" fill="#ffffff" font-weight="bold">A</text>
                         <text x="120" y="65" font-family="sans-serif" font-size="11" fill="#ffffff" font-weight="bold">B</text>
-                        <text x="90" y="105" font-family="sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Set Theory (A &cup; B)</text>
+                        <text x="90" y="105" font-family="sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Set Theory (A ∪ B)</text>
                     </g>
 
                     <!-- Panel 2: Number Systems Hierarchy -->
                     <g transform="translate(240, 10)">
                         <rect x="0" y="0" width="200" height="120" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
                         <rect x="15" y="15" width="170" height="90" rx="6" fill="none" stroke="#38bdf8" stroke-dasharray="3"/>
-                        <text x="25" y="30" font-family="sans-serif" font-size="10" fill="#38bdf8">&real; (Real)</text>
+                        <text x="25" y="30" font-family="sans-serif" font-size="10" fill="#38bdf8">ℝ (Real)</text>
                         <rect x="35" y="38" width="130" height="60" rx="4" fill="none" stroke="#0ea5e9"/>
-                        <text x="45" y="52" font-family="sans-serif" font-size="10" fill="#0ea5e9">&mathbb{Q} &cup; &mathbb{Z} &cup; &mathbb{N}</text>
+                        <text x="45" y="52" font-family="sans-serif" font-size="10" fill="#0ea5e9">ℚ ⊃ ℤ ⊃ ℕ</text>
                         <circle cx="100" cy="78" r="14" fill="#0ea5e9" opacity="0.4"/>
-                        <text x="100" y="82" font-family="sans-serif" font-size="10" fill="#ffffff" font-weight="bold" text-anchor="middle">&mathbb{N}</text>
+                        <text x="100" y="82" font-family="sans-serif" font-size="10" fill="#ffffff" font-weight="bold" text-anchor="middle">ℕ</text>
                         <text x="100" y="112" font-family="sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Number Systems</text>
                     </g>
 
@@ -118,7 +118,7 @@ def write_week1_module():
                         <circle cx="100" cy="75" r="4" fill="#0ea5e9"/><line x1="100" y1="75" x2="130" y2="83" stroke="#0ea5e9" stroke-width="1.5"/>
                         <circle cx="130" cy="83" r="4" fill="#10b981"/><line x1="130" y1="83" x2="160" y2="87" stroke="#10b981" stroke-width="1.5"/>
                         <circle cx="160" cy="87" r="5" fill="#10b981"/>
-                        <text x="100" y="112" font-family="sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Sequence Limits (a<tspan dy="3" font-size="8">n</tspan><tspan dy="-3">&rarr;L</tspan>)</text>
+                        <text x="100" y="112" font-family="sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Sequence Limits (aₙ → L)</text>
                     </g>
                 </svg>
             </div>
@@ -575,10 +575,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Add decorative architectural SVG illustration to Week 1 introduction\n\n"
-        "Inserted an inline SVG graphic immediately below the introductory lead text\n"
-        "to visually synthesize set theory, number system hierarchies, and sequence \n"
-        "convergence."
+        "Fix raw LaTeX leakage in introduction SVG graphic\n\n"
+        "Replaced raw LaTeX entity codes and formatting inside the SVG text elements \n"
+        "with clean native Unicode math characters (U, R, Q, Z, N, ->) for correct rendering."
     )
 
     commands = [
