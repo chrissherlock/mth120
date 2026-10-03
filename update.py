@@ -2,7 +2,7 @@
 import os
 import subprocess
 
-def add_sums_section():
+def reorder_sums_section():
     filepath = 'week1.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
@@ -11,24 +11,7 @@ def add_sums_section():
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # 1. Update Table of Contents
-    old_toc = """                <ul class="toc-grid">
-                    <li><a href="#section-sets">1. Sets and Functions</a></li>
-                    <li><a href="#section-numbers">2. Number Systems and Completeness</a></li>
-                    <li><a href="#section-sequences">3. Sequences and Derived Sequences</a></li>
-                </ul>"""
-
-    new_toc = """                <ul class="toc-grid">
-                    <li><a href="#section-sets">1. Sets and Functions</a></li>
-                    <li><a href="#section-numbers">2. Number Systems and Completeness</a></li>
-                    <li><a href="#section-sequences">3. Sequences and Derived Sequences</a></li>
-                    <li><a href="#section-sums">4. Sums and Partial Sums</a></li>
-                </ul>"""
-
-    if old_toc in content:
-        content = content.replace(old_toc, new_toc)
-
-    # 2. Insert Section 4 before closing div of module-content or body
+    # Clean up any previously misplaced Section 4 at the very end
     section_4_html = r"""
             <h2 id="section-sums">4. Sums and Partial Sums</h2>
             <div class="infobox">
@@ -57,7 +40,7 @@ def add_sums_section():
                 <li><strong>The Index ($\nu$):</strong> The counter variable (sometimes written as $i$ or $k$) that ticks upward by whole numbers.</li>
                 <li><strong>The Starting Point (Lower Limit):</strong> Where the counter begins (e.g., $\nu = 0$ or $\nu = 1$).</li>
                 <li><strong>The Stopping Point (Upper Limit):</strong> The final number $n$ where the counting finishes.</li>
-                <li><strong>The Formula ($b_\v$):</strong> The rule evaluated at each step of the counter.</li>
+                <li><strong>The Formula ($b_\nu$):</strong> The rule evaluated at each step of the counter.</li>
             </ul>
 
             <h3>Partial Sums: The Running Total</h3>
@@ -74,25 +57,45 @@ def add_sums_section():
                 $$\sum_{\nu=1}^{n} \nu = 1 + 2 + 3 + \dots + n = \frac{n(n+1)}{2}$$</li>
                 <li><strong>Geometric Series Partial Sum:</strong><br>
                 $$\sum_{\nu=0}^{n-1} q^\nu = 1 + q + q^2 + \dots + q^{n-1} = \frac{1 - q^n}{1 - q} \quad (\text{for } q \neq 1)$$</li>
-            </ul>
-</div>"""
+            </ul>"""
 
-    # Replace before the end of module-content
-    if '<div class="module-content">' in content and section_4_html not in content:
-        # Insert before the last closing div inside module-content or at the end of module-content
-        # Let's find the closing tag of the last div or just before </body>
-        content = content.replace('</body>', section_4_html + '\n</body>')
+    # Remove any existing Section 4 block if it was appended at the bottom
+    if section_4_html in content:
+        content = content.replace(section_4_html, '')
+
+    # Update TOC to include Section 4 before derived sequences
+    old_toc = """                <ul class="toc-grid">
+                    <li><a href="#section-sets">1. Sets and Functions</a></li>
+                    <li><a href="#section-numbers">2. Number Systems and Completeness</a></li>
+                    <li><a href="#section-sequences">3. Sequences, Derived Sequences, and Partial Sums</a></li>
+                </ul>"""
+
+    new_toc = """                <ul class="toc-grid">
+                    <li><a href="#section-sets">1. Sets and Functions</a></li>
+                    <li><a href="#section-numbers">2. Number Systems and Completeness</a></li>
+                    <li><a href="#section-sequences">3. Sequences</a></li>
+                    <li><a href="#section-sums">4. Sums and Partial Sums</a></li>
+                </ul>"""
+
+    if old_toc in content:
+        content = content.replace(old_toc, new_toc)
+
+    # Insert Section 4 right before Section 3's derived sequences discussion
+    target_anchor = '<h3>Derived Sequences and Partial Sums</h3>'
+
+    if target_anchor in content and section_4_html not in content:
+        content = content.replace(target_anchor, section_4_html + '\n\n            <h2 id="section-derived">5. Derived Sequences</h2>\n            <h3>Derived Sequences and Partial Sums</h3>')
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
-        print("Successfully added Section 4: Sums and Partial Sums to week1.html.")
+        print("Successfully reordered Sums and Partial Sums above Derived Sequences.")
     else:
-        print("Module content container or section already present.")
+        print("Target anchor not found.")
 
 def execute_git_sync():
     commit_message = (
-        "Create dedicated standalone section for Sums and Partial Sums\n\n"
-        "Added a new Section 4 in week1.html breaking down sigma notation,\n"
-        "summation anatomy, partial sums, and standard formulas."
+        "Reorder sections to place Sums and Partial Sums above Derived Sequences\n\n"
+        "Moved Section 4 (Sums and Partial Sums) to appear right before derived\n"
+        "sequences in week1.html for a more logical learning progression."
     )
     commands = [
         ['git', 'add', 'week1.html', 'update.py'],
@@ -104,5 +107,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    add_sums_section()
+    reorder_sums_section()
     execute_git_sync()
