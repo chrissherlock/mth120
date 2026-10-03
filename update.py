@@ -319,7 +319,7 @@ def write_week1_module():
                         <text x="195" y="90" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#d97706" font-weight="bold">L=0</text>
                         <circle cx="45" cy="40" r="5" fill="#d97706"/><line x1="45" y1="40" x2="80" y2="62" stroke="#d97706" stroke-width="1.5"/>
                         <circle cx="80" cy="62" r="5" fill="#d97706"/><line x1="80" y1="62" x2="115" y2="78" stroke="#d97706" stroke-width="1.5"/>
-                        <circle cx="115" cy="78" r="5" fill="#10b981"/><line x1="115" y1="78" x2="150" y2="87" stroke="#10b981" stroke-width="1.5"/>
+                        <circle cx="115" cy="78" r="5" fill="#d97706"/><line x1="115" y1="78" x2="150" y2="87" stroke="#d97706" stroke-width="1.5"/>
                         <circle cx="150" cy="87" r="5" fill="#10b981"/><line x1="150" y1="87" x2="185" y2="91" stroke="#10b981" stroke-width="1.5"/>
                         <circle cx="185" cy="91" r="6" fill="#10b981"/>
                         <text x="110" y="122" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b" text-anchor="middle" font-weight="600">Sequence Limits (aₙ → L)</text>
@@ -343,6 +343,9 @@ def write_week1_module():
             <!-- SECTION 1 NOTATION INFOBOX -->
             <div class="infobox">
                 <h4>📖 Notation Reference: Set Theory</h4>
+                <div class="infobox-intro">
+                    <strong>Taking your first steps into set theory notation?</strong> It is completely normal if curly braces, union symbols ($\cup$), and intersections ($\cap$) look like a secret code at first. Think of them simply as the grammar and punctuation of logic—shorthand ways of talking about collections, memberships, and groupings.
+                </div>
                 <div class="notation-grid">
                     <div class="notation-item"><span class="notation-sym">$x \in A$</span><span class="notation-desc">$x$ is an element of set $A$</span></div>
                     <div class="notation-item"><span class="notation-sym">$x \notin A$</span><span class="notation-desc">$x$ is not an element of set $A$</span></div>
@@ -570,6 +573,9 @@ def write_week1_module():
             <!-- SECTION 2 NOTATION INFOBOX -->
             <div class="infobox">
                 <h4>📖 Notation Reference: Number Systems</h4>
+                <div class="infobox-intro">
+                    <strong>Navigating the expanding universe of numbers?</strong> If moving from counting numbers ($\mathbb{N}$) all the way to reals ($\mathbb{R}$) feels like a whirlwind of blackboard letters, do not worry! Each letter simply represents a tool invented to solve a specific algebraic puzzle that the previous system could not handle.
+                </div>
                 <div class="notation-grid">
                     <div class="notation-item"><span class="notation-sym">$\mathbb{N}$</span><span class="notation-desc">Natural numbers: counting numbers $\{1, 2, 3, \dots\}$</span></div>
                     <div class="notation-item"><span class="notation-sym">$\mathbb{Z}$</span><span class="notation-desc">Integers: $\{\dots, -2, -1, 0, 1, 2, \dots\}$ (from German <em>Zahlen</em>)</span></div>
@@ -1237,7 +1243,7 @@ def write_week1_module():
                 verRole: "Assertion Oracle (Assert Check)",
                 verScope: "Certified Safety Invariant",
                 verSummary: "<strong>Step 4: Executing invariant assertion.</strong> The test harness evaluates the Boolean assertion $\\text{abs}(a_n - L) < \\epsilon$. If this assertion passes for all tail terms, the convergence contract is verified.",
-                verWhat: "<p>The verification oracle evaluates the invariant condition $\\text{abs}(a_n - L) < \\epsilon$ across all cycles $n > N$. If true, limit certification is approved.</p>",
+                advWhat: "<p>The verification oracle evaluates the invariant condition $\\text{abs}(a_n - L) < \\epsilon$ across all cycles $n > N$. If true, limit certification is approved.</p>",
                 verWhy: "<p>Metric distance provides an algebraic test condition that can be evaluated mechanically without geometric ambiguity.</p>"
             }
         ];
@@ -1689,9 +1695,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Fix geometric gap card title to use sqrt(2)\n\n"
-        "Updated diagram card header in week1.html from 'Constructing 2' to "
-        "'Constructing $\\sqrt{2}$ on the Number Line'."
+        "Add friendly intros to notation boxes and fix sqrt(2) card title\n\n"
+        "Inserted welcoming introductory text into set and number systems infoboxes "
+        "and corrected the geometric gap diagram heading in week1.html."
     )
 
     commands = [
@@ -1705,7 +1711,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with correct sqrt(2) card header...")
+    print("Writing Week 1 module with friendly notation intros and corrected sqrt(2) header...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
