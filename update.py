@@ -1,64 +1,374 @@
 #!/usr/bin/env python3
-import re
+import os
 import subprocess
-import sys
 
-def patch_algebraic_structures():
-    filepath = 'week1.html'
-    try:
-        with open(filepath, 'r', encoding='utf-8') as f:
-            content = f.read()
-    except FileNotFoundError:
-        print(f"Error: {filepath} not found.")
-        sys.exit(1)
+def update_curriculum_index():
+    if not os.path.exists('index.html'):
+        print("index.html not found in current directory.")
+        return
 
-    replacement = r'''<!-- ALGEBRAIC STRUCTURES & EQUATIONS ASIDE -->
-            <div class="aside-box">
-                <h4>💡 Algebraic Structures: How Groups, Rings, and Fields Anchor the Course</h4>
-                <p>Throughout MTHS120, number systems and vector spaces are defined by the algebraic axioms their operations satisfy:</p>
-                <ul>
-                    <li>
-                        <strong>Additive Group $(\mathbb{Z}, +)$:</strong> A set with an associative operation, an identity ($0$), and inverses ($-a$).
-                        <em>Course connection:</em> Resolves subtraction. Equations of the form $x + 5 = 2$ fail in $\mathbb{N}$ but have solution $x = -3$ in the group $\mathbb{Z}$.
-                    </li>
-                    <li>
-                        <strong>Commutative Ring $(\mathbb{Z}, +, \times)$:</strong> A set where addition is an abelian group, and multiplication is associative, commutative, and distributive over addition.
-                        <em>Course connection:</em> Lacks multiplicative inverses. Equations like $2x = 3$ have no solution in the ring $\mathbb{Z}$, motivating expansion. (In linear algebra, $n \times n$ matrices $M_n(\mathbb{R})$ form a non-commutative ring where matrix multiplication is associative and distributive, <span style="white-space: nowrap;">but $AB \neq BA$)</span>.
-                    </li>
-                    <li>
-                        <strong>Field $(\mathbb{Q}, +, \times)$ &amp; $(\mathbb{R}, +, \times)$:</strong> A commutative ring where every non-zero element has a multiplicative inverse ($a^{-1} = 1/a$).
-                        <em>Course connection:</em> Guarantees non-zero division, solving linear systems $ax = b$. In linear algebra, vector spaces $\mathbb{R}^n$ require scalars to come from a field so that Gaussian row reduction and pivot division are valid.
-                    </li>
-                    <li>
-                        <strong>Algebraic Closure &amp; The Field $(\mathbb{C}, +, \cdot)$:</strong> Real completeness fills geometric gaps like $\sqrt{2}$, but $\mathbb{R}$ cannot solve $x^2 + 1 = 0$. In linear algebra and complex numbers, $\mathbb{C}$ forms an algebraically closed field where every polynomial of degree $n \ge 1$ has roots (Fundamental Theorem of Algebra).
-                    </li>
-                </ul>
-                <p style="margin-top: 1rem;"><a href="algebraic_structures.html" style="color: var(--accent); font-weight: bold; text-decoration: none;">&rarr; Explore our Interactive Deep Dive on Groups, Rings, and Fields</a></p>
-            </div>'''
+    updated_content = r"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTHS120: Calculus and Linear Algebra Notes</title>
+    <!-- KaTeX Integration -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+    <style>
+        :root {
+            --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
+            --accent: #d97706; --accent-hover: #b45309;
+            --telemetry-bg: #f8fafc; --telemetry-text: #334155;
+            --track1-bg: #fffbeb; --track2-bg: #fff7ed;
+            --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
 
-    target_pattern = r'<!-- (?:ALGEBRAIC STRUCTURES & EQUATIONS ASIDE|ASIDE:\s*SOLVING EQUATIONS) -->[\s\S]*?</div>\s*</div>'
+        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; }
+        .header h1 { color: #0f172a; margin-top: 0; font-size: 2.1rem; }
+        .header p { color: #64748b; margin-bottom: 0; font-size: 1.05rem; }
 
-    new_content, count = re.subn(target_pattern, lambda _: replacement, content)
+        .module-content { background: var(--card); padding: 2.25rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
 
-    if count == 0:
-        fallback_pattern = r'<div class="aside-box">[\s\S]*?<h4>💡 (?:Algebraic Structures|Aside: Groups, Rings, Fields, and Solvability|Aside: Context: Expanding Systems to Solve Equations)[\s\S]*?</h4>[\s\S]*?</div>'
-        new_content, count = re.subn(fallback_pattern, lambda _: replacement, content)
+        /* Welcoming Overview Card */
+        .welcome-card {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-left: 5px solid var(--accent);
+            border-radius: 8px;
+            padding: 1.75rem;
+            margin-bottom: 2.5rem;
+        }
+        .welcome-header { margin-bottom: 1.5rem; }
+        .welcome-header h2 {
+            margin: 0 0 0.5rem 0;
+            color: #92400e;
+            font-size: 1.5rem;
+        }
+        .welcome-header p {
+            margin: 0;
+            color: #b45309;
+            font-size: 1.02rem;
+            line-height: 1.6;
+        }
 
-    if count > 0:
-        with open(filepath, 'w', encoding='utf-8') as f:
-            f.write(new_content)
-        print(f"Successfully updated algebraic structures aside in {filepath}.")
-    else:
-        print("Warning: Target aside box not found. No modifications made.")
+        .welcome-image-wrapper {
+            border: 1px solid #fed7aa;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(217, 119, 6, 0.1);
+            margin-bottom: 1.5rem;
+        }
+        .welcome-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .welcome-pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+        }
+        .pillar-item {
+            background: #ffffff;
+            border: 1px solid #fed7aa;
+            border-radius: 6px;
+            padding: 1rem 1.15rem;
+            display: flex;
+            flex-direction: column;
+        }
+        .pillar-item h5 {
+            margin: 0 0 0.4rem 0;
+            color: #92400e;
+            font-size: 0.96rem;
+            line-height: 1.4;
+        }
+        .pillar-item p {
+            margin: 0;
+            font-size: 0.88rem;
+            color: #475569;
+            line-height: 1.55;
+        }
+
+        h3.section-heading {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1.25rem;
+            color: #0f172a;
+            font-size: 1.35rem;
+        }
+
+        /* Modules Grid */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.25rem;
+        }
+        .week-card {
+            background: var(--card);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .week-card:hover {
+            border-color: #94a3b8;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+        }
+        .week-card.break-card {
+            background: #f8fafc;
+            border-style: dashed;
+        }
+        .week-card h4 {
+            margin-top: 0;
+            color: #0f172a;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+        .week-meta {
+            font-size: 0.82rem;
+            color: #64748b;
+            margin: -0.25rem 0 0.5rem 0;
+            font-weight: 600;
+        }
+        .week-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            background: #f1f5f9;
+            color: #475569;
+        }
+        .week-badge.active {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .week-badge.break {
+            background: #e2e8f0;
+            color: #475569;
+        }
+        .week-card p {
+            color: #475569;
+            font-size: 0.93rem;
+            line-height: 1.55;
+            margin: 0.5rem 0 1.25rem 0;
+            flex-grow: 1;
+        }
+        .module-link {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.55rem 1rem;
+            border-radius: 4px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-align: center;
+            transition: background 0.2s;
+        }
+        .module-link:hover {
+            background: var(--accent-hover);
+        }
+        .module-link.disabled {
+            background: #e2e8f0;
+            color: #94a3b8;
+            cursor: default;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>MTHS120: Study Notes &amp; Interactive Modules</h1>
+            <p>Personal reference companion, interactive pedagogical tools, and derivations aligned with the unit schedule.</p>
+        </div>
+
+        <div class="module-content">
+            <!-- Welcoming Overview Feature Card -->
+            <div class="welcome-card">
+                <div class="welcome-header">
+                    <h2>Welcome to the Curriculum Roadmap 📐</h2>
+                    <p>These study notes follow the week-by-week curriculum structure of MTHS120. Explore the visual summary below and navigate directly into the active weekly modules:</p>
+                </div>
+
+                <div class="welcome-image-wrapper">
+                    <img src="images/welcome-mth120.jpeg" alt="Overview Map of Course Mathematics" class="welcome-image">
+                </div>
+
+                <div class="welcome-pillars-grid">
+                    <div class="pillar-item">
+                        <h5>🎯 1. Sets, Sequences &amp; Limits</h5>
+                        <p>Foundations of mathematical logic, number closures ($\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$), and formal $\epsilon\text{–}N$ limit definitions.</p>
+                    </div>
+                    <div class="pillar-item">
+                        <h5>⚡ 2. Functions, Continuity &amp; Derivatives</h5>
+                        <p>Mapping behavior, $\epsilon\text{–}\delta$ continuity, rates of change, optimization, and concavity.</p>
+                    </div>
+                    <div class="pillar-item">
+                        <h5>📊 3. Accumulation &amp; Integration</h5>
+                        <p>Riemann sums, the Fundamental Theorem of Calculus, areas between curves, and volumes of revolution.</p>
+                    </div>
+                    <div class="pillar-item">
+                        <h5>🧩 4. Linear Algebra &amp; Vectors</h5>
+                        <p>Systems of linear equations, Gaussian elimination, determinants, vector spaces, and complex numbers ($\mathbb{C}$).</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="section-heading">Trimester Study Schedule</h3>
+
+            <div class="modules-grid">
+                <!-- Week 1 -->
+                <div class="week-card">
+                    <div>
+                        <h4>Week 1 <span class="week-badge active">Available</span></h4>
+                        <div class="week-meta">Topic 1 &bull; Sections 1, 2, 3</div>
+                        <p><strong>Sets and Numbers:</strong> Set operations, subsets, power sets, Cartesian products, number system hierarchy ($\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$), density, geometric gaps, completeness, and introductory sequences.</p>
+                    </div>
+                    <a href="week1.html" class="module-link">Open Module 1 &rarr;</a>
+                </div>
+
+                <!-- Week 2 -->
+                <div class="week-card">
+                    <div>
+                        <h4>Week 2 <span class="week-badge">Planned</span></h4>
+                        <div class="week-meta">Topic 2 &bull; Sections 4, 5, 6</div>
+                        <p><strong>Limits of Sequences:</strong> The formal $\epsilon\text{–}N$ definition of sequence limits, limit arithmetic, the Squeeze Theorem, convergence to the supremum, and infinite limits ($n \to \infty$).</p>
+                    </div>
+                    <a href="#" class="module-link disabled">Drafting</a>
+                </div>
+
+                <!-- Week 3 -->
+                <div class="week-card">
+                    <div>
+                        <h4>Week 3 <span class="week-badge">Planned</span></h4>
+                        <div class="week-meta">Topic 3 &bull; Sections 7, 8, 9</div>
+                        <p><strong>Functions &amp; Transcendental Functions:</strong> Domain and codomain, injectivity/surjectivity, inverse functions, power functions, polynomials, exponential, logarithmic, and trigonometric functions.</p>
+                    </div>
+                    <a href="#" class="module-link disabled">Drafting</a>
+                </div>
+
+                <!-- Week 4 -->
+                <div class="week-card">
+                    <div>
+                        <h4>Week 4 <span class="week-badge">Planned</span></h4>
+                        <div class="week-meta">Topic 4 &bull; Sections 10, 11, 12</div>
+                        <p><strong>Continuity &amp; Limits of Functions:</strong> $\epsilon\text{–}\delta$ definitions of continuity, one-sided limits, continuity of compositions and inverses, the Intermediate Value Theorem (IVT), and instantaneous rates of change.</p>
+                    </div>
+                    <a href="#" class="module-link disabled">Drafting</a>
+                </div>
+
+                <!-- Week 5 -->
+                <div class="week-card">
+                    <div>
+                        <h4>Week 5 <span class="week-badge">Planned</span></h4>
+                        <div class="week-meta">Topic 5 &bull; Sections 13, 14, 15</div>
+                        <p><strong>Derivatives &amp; Optimization:</strong> Differentiation rules (product, quotient, chain), Mean Value Theorem, concavity, points of inflection, stationary points, and single-variable optimization.</p>
+                    </div>
+                    <a href="#" class="module-link disabled">Drafting</a>
+                </div>
+
+                <!-- Week 6 -->
+                <div class="week-card">
+                    <div>
+                        <h4>Week 6 <span class="week-badge">Planned</span></h4>
+                        <div class="week-meta">Topic 6 &bull; Sections 16, 17, 18</div>
+                        <p><strong>Integration Foundations:</strong> Lower and upper Darboux sums, Riemann integration, linearity, comparison properties, and the Fundamental Theorem of Calculus (FTC).</p>
+                    </div>
+                    <a href="#" class="module-link disabled">Drafting</a>
+                </div>
+
+                <!-- Weeks 7 & 8: Break -->
+                <div class="week-card break-card">
+                    <div>
+                        <h4>Weeks 7 &amp; 8 <span class="week-badge break">Recess</span></h4>
+                        <div class="week-meta">Intensive Period 1 &bull; Easter Break</div>
+                        <p><strong>Mid-Trimester Recess:</strong> Consolidation and review period across Differential and Integral Calculus.</p>
+                    </div>
+                    <a href="#" class="module-link disabled">Mid-Trimester Recess</a>
+                </div>
+
+                <!-- Week 9 -->
+                <div class="week-card">
+                    <div>
+                        <h4>Week 9 <span class="week-badge">Planned</span></h4>
+                        <div class="week-meta">Topic 6 (cont.) &bull; Sections 19, 20, 21</div>
+                        <p><strong>Integrals &amp; Applications:</strong> Anti-derivatives, substitution methods, plane areas between curves, volumes of revolution (discs and shells), Cavalieri's principle, and the natural logarithm.</p>
+                    </div>
+                    <a href="#" class="module-link disabled">Drafting</a>
+                </div>
+
+                <!-- Week 10 -->
+                <div class="week-card">
+                    <div>
+                        <h4>Week 10 <span class="week-badge">Planned</span></h4>
+                        <div class="week-meta">Topic 7 &bull; Sections 22, 23, 24</div>
+                        <p><strong>Systems of Linear Equations:</strong> Matrix algebra, Gaussian and Gauss-Jordan elimination, row-echelon forms, square systems, determinants, and matrix inverses.</p>
+                    </div>
+                    <a href="#" class="module-link disabled">Drafting</a>
+                </div>
+
+                <!-- Week 11 -->
+                <div class="week-card">
+                    <div>
+                        <h4>Week 11 <span class="week-badge">Planned</span></h4>
+                        <div class="week-meta">Topic 8 &bull; Sections 25, 26, 27</div>
+                        <p><strong>Vector Geometry &amp; Complex Numbers:</strong> Geometric vector representations, lines and planes in $\mathbb{R}^3$, linear independence, subspaces, bases, and complex numbers $\mathbb{C}$ (polar form, de Moivre, roots).</p>
+                    </div>
+                    <a href="#" class="module-link disabled">Drafting</a>
+                </div>
+
+                <!-- Week 12 -->
+                <div class="week-card">
+                    <div>
+                        <h4>Week 12 <span class="week-badge">Planned</span></h4>
+                        <div class="week-meta">Topic 9 &bull; Sections 28, 29</div>
+                        <p><strong>Dot and Cross Products:</strong> Inner products, orthogonal projections, Cauchy-Schwarz inequality, 3D cross products, oriented areas, and the scalar triple product.</p>
+                    </div>
+                    <a href="#" class="module-link disabled">Drafting</a>
+                </div>
+
+                <!-- Week 13 -->
+                <div class="week-card break-card">
+                    <div>
+                        <h4>Week 13 <span class="week-badge break">Review</span></h4>
+                        <div class="week-meta">Unit Revision</div>
+                        <p><strong>Curriculum Synthesis:</strong> Comprehensive problem solving and consolidation across single-variable calculus and linear algebra.</p>
+                    </div>
+                    <a href="#" class="module-link disabled">Revision</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+"""
+    with open('index.html', 'w') as f:
+        f.write(updated_content)
 
 def execute_git_sync():
     commit_message = (
-        "Prevent line-wrapping for matrix non-commutativity note in week1.html\n\n"
-        "Wrapped the AB != BA expression in a nowrap span to ensure clean inline\n"
-        "rendering across responsive viewports."
+        "Align index.html curriculum roadmap with official study schedule\n\n"
+        "Restructured weekly modules across all 14 calendar weeks matching\n"
+        "the course lecture notes and trimester schedule."
     )
     commands = [
-        ['git', 'add', 'week1.html', 'update.py'],
+        ['git', 'add', 'index.html', 'update.py'],
         ['git', 'commit', '-m', commit_message],
         ['git', 'push', 'origin', 'main']
     ]
@@ -67,5 +377,8 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    patch_algebraic_structures()
+    print("Writing updated index.html matching Study Schedule...")
+    update_curriculum_index()
+    print("Committing and pushing to GitHub...")
     execute_git_sync()
+    print("Deployment complete.")

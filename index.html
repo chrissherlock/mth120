@@ -48,7 +48,6 @@
             line-height: 1.6;
         }
 
-        /* Full-width image banner showcase */
         .welcome-image-wrapper {
             border: 1px solid #fed7aa;
             border-radius: 8px;
@@ -63,7 +62,6 @@
             display: block;
         }
 
-        /* 4-Column Balanced Pillar Grid */
         .welcome-pillars-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -119,6 +117,10 @@
             border-color: #94a3b8;
             box-shadow: 0 2px 4px rgba(0,0,0,0.04);
         }
+        .week-card.break-card {
+            background: #f8fafc;
+            border-style: dashed;
+        }
         .week-card h4 {
             margin-top: 0;
             color: #0f172a;
@@ -126,6 +128,12 @@
             display: flex;
             justify-content: space-between;
             align-items: baseline;
+        }
+        .week-meta {
+            font-size: 0.82rem;
+            color: #64748b;
+            margin: -0.25rem 0 0.5rem 0;
+            font-weight: 600;
         }
         .week-badge {
             font-size: 0.75rem;
@@ -140,9 +148,13 @@
             background: #fef3c7;
             color: #92400e;
         }
+        .week-badge.break {
+            background: #e2e8f0;
+            color: #475569;
+        }
         .week-card p {
             color: #475569;
-            font-size: 0.95rem;
+            font-size: 0.93rem;
             line-height: 1.55;
             margin: 0.5rem 0 1.25rem 0;
             flex-grow: 1;
@@ -174,51 +186,50 @@
     <div class="container">
         <div class="header">
             <h1>MTHS120: Study Notes &amp; Interactive Modules</h1>
-            <p>Personal reference notes, visual walkthroughs, and worked derivations for single-variable calculus and linear algebra.</p>
+            <p>Personal reference companion, interactive pedagogical tools, and derivations aligned with the unit schedule.</p>
         </div>
 
         <div class="module-content">
             <!-- Welcoming Overview Feature Card -->
             <div class="welcome-card">
                 <div class="welcome-header">
-                    <h2>Welcome to the Journey! 📐</h2>
-                    <p>Mathematics is not a collection of disconnected recipes—it is a continuous landscape of ideas connecting the discrete to the smooth, the static to the dynamic, and individual equations to multidimensional spaces.</p>
+                    <h2>Welcome to the Curriculum Roadmap 📐</h2>
+                    <p>These study notes follow the week-by-week curriculum structure of MTHS120. Explore the visual summary below and navigate directly into the active weekly modules:</p>
                 </div>
 
-                <!-- Full-Width Illustration Showcase -->
                 <div class="welcome-image-wrapper">
                     <img src="images/welcome-mth120.jpeg" alt="Overview Map of Course Mathematics" class="welcome-image">
                 </div>
 
-                <!-- 4 Distinct Pillars Beneath -->
                 <div class="welcome-pillars-grid">
                     <div class="pillar-item">
-                        <h5>🎯 1. Limits, Sequences &amp; Continuity</h5>
-                        <p>Taming infinity: evaluating terms as $n \to \infty$, testing formal $\epsilon-N$ criteria, and establishing local continuity.</p>
+                        <h5>🎯 1. Sets, Sequences &amp; Limits</h5>
+                        <p>Foundations of mathematical logic, number closures ($\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$), and formal $\epsilon\text{–}N$ limit definitions.</p>
                     </div>
                     <div class="pillar-item">
-                        <h5>⚡ 2. Rates of Change &amp; Optimization</h5>
-                        <p>Moving to derivatives ($dy/dx$): modeling instantaneous natural rates, locating extrema, and solving one-variable optimization.</p>
+                        <h5>⚡ 2. Functions, Continuity &amp; Derivatives</h5>
+                        <p>Mapping behavior, $\epsilon\text{–}\delta$ continuity, rates of change, optimization, and concavity.</p>
                     </div>
                     <div class="pillar-item">
-                        <h5>📊 3. Accumulation &amp; Definite Integrals</h5>
-                        <p>Reversing rates to find total accumulated quantities: calculating area, volume, and mass from varying densities.</p>
+                        <h5>📊 3. Accumulation &amp; Integration</h5>
+                        <p>Riemann sums, the Fundamental Theorem of Calculus, areas between curves, and volumes of revolution.</p>
                     </div>
                     <div class="pillar-item">
-                        <h5>🧩 4. Systems of Linear Equations</h5>
-                        <p>Entering matrix algebra: solving multi-variable systems with row reduction and classifying solution spaces.</p>
+                        <h5>🧩 4. Linear Algebra &amp; Vectors</h5>
+                        <p>Systems of linear equations, Gaussian elimination, determinants, vector spaces, and complex numbers ($\mathbb{C}$).</p>
                     </div>
                 </div>
             </div>
 
-            <h3 class="section-heading">Course Roadmap</h3>
+            <h3 class="section-heading">Trimester Study Schedule</h3>
 
             <div class="modules-grid">
                 <!-- Week 1 -->
                 <div class="week-card">
                     <div>
                         <h4>Week 1 <span class="week-badge active">Available</span></h4>
-                        <p><strong>Sets, Numbers, and Sequences:</strong> Set-builder notation, algebraic closures ($\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$), monotonicity, boundedness, and the formal $\epsilon-N$ sequence limit definition.</p>
+                        <div class="week-meta">Topic 1 &bull; Sections 1, 2, 3</div>
+                        <p><strong>Sets and Numbers:</strong> Set operations, subsets, power sets, Cartesian products, number system hierarchy ($\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$), density, geometric gaps, completeness, and introductory sequences.</p>
                     </div>
                     <a href="week1.html" class="module-link">Open Module 1 &rarr;</a>
                 </div>
@@ -227,7 +238,8 @@
                 <div class="week-card">
                     <div>
                         <h4>Week 2 <span class="week-badge">Planned</span></h4>
-                        <p><strong>Functions and Continuity:</strong> Domain, codomain, function composition, $\epsilon-\delta$ definitions of continuity, and the Intermediate Value Theorem.</p>
+                        <div class="week-meta">Topic 2 &bull; Sections 4, 5, 6</div>
+                        <p><strong>Limits of Sequences:</strong> The formal $\epsilon\text{–}N$ definition of sequence limits, limit arithmetic, the Squeeze Theorem, convergence to the supremum, and infinite limits ($n \to \infty$).</p>
                     </div>
                     <a href="#" class="module-link disabled">Drafting</a>
                 </div>
@@ -236,7 +248,8 @@
                 <div class="week-card">
                     <div>
                         <h4>Week 3 <span class="week-badge">Planned</span></h4>
-                        <p><strong>The Derivative:</strong> Difference quotients, instantaneous rates of change, tangent lines, and fundamental rules of differentiation.</p>
+                        <div class="week-meta">Topic 3 &bull; Sections 7, 8, 9</div>
+                        <p><strong>Functions &amp; Transcendental Functions:</strong> Domain and codomain, injectivity/surjectivity, inverse functions, power functions, polynomials, exponential, logarithmic, and trigonometric functions.</p>
                     </div>
                     <a href="#" class="module-link disabled">Drafting</a>
                 </div>
@@ -245,7 +258,8 @@
                 <div class="week-card">
                     <div>
                         <h4>Week 4 <span class="week-badge">Planned</span></h4>
-                        <p><strong>Techniques of Differentiation:</strong> The Product Rule, Quotient Rule, Chain Rule, implicit differentiation, and higher-order derivatives.</p>
+                        <div class="week-meta">Topic 4 &bull; Sections 10, 11, 12</div>
+                        <p><strong>Continuity &amp; Limits of Functions:</strong> $\epsilon\text{–}\delta$ definitions of continuity, one-sided limits, continuity of compositions and inverses, the Intermediate Value Theorem (IVT), and instantaneous rates of change.</p>
                     </div>
                     <a href="#" class="module-link disabled">Drafting</a>
                 </div>
@@ -254,7 +268,8 @@
                 <div class="week-card">
                     <div>
                         <h4>Week 5 <span class="week-badge">Planned</span></h4>
-                        <p><strong>Curve Sketching &amp; Critical Points:</strong> First and second derivative tests, concavity, points of inflection, and local vs. global extrema.</p>
+                        <div class="week-meta">Topic 5 &bull; Sections 13, 14, 15</div>
+                        <p><strong>Derivatives &amp; Optimization:</strong> Differentiation rules (product, quotient, chain), Mean Value Theorem, concavity, points of inflection, stationary points, and single-variable optimization.</p>
                     </div>
                     <a href="#" class="module-link disabled">Drafting</a>
                 </div>
@@ -263,34 +278,28 @@
                 <div class="week-card">
                     <div>
                         <h4>Week 6 <span class="week-badge">Planned</span></h4>
-                        <p><strong>One-Variable Optimization:</strong> Formulating applied rate models, physical constraints, boundary evaluation, and maximizing/minimizing continuous systems.</p>
+                        <div class="week-meta">Topic 6 &bull; Sections 16, 17, 18</div>
+                        <p><strong>Integration Foundations:</strong> Lower and upper Darboux sums, Riemann integration, linearity, comparison properties, and the Fundamental Theorem of Calculus (FTC).</p>
                     </div>
                     <a href="#" class="module-link disabled">Drafting</a>
                 </div>
 
-                <!-- Week 7 -->
-                <div class="week-card">
+                <!-- Weeks 7 & 8: Break -->
+                <div class="week-card break-card">
                     <div>
-                        <h4>Week 7 <span class="week-badge">Planned</span></h4>
-                        <p><strong>Anti-Derivatives &amp; The Indefinite Integral:</strong> Reversing differentiation, initial value problems, and standard integration rules.</p>
+                        <h4>Weeks 7 &amp; 8 <span class="week-badge break">Recess</span></h4>
+                        <div class="week-meta">Intensive Period 1 &bull; Easter Break</div>
+                        <p><strong>Mid-Trimester Recess:</strong> Consolidation and review period across Differential and Integral Calculus.</p>
                     </div>
-                    <a href="#" class="module-link disabled">Drafting</a>
-                </div>
-
-                <!-- Week 8 -->
-                <div class="week-card">
-                    <div>
-                        <h4>Week 8 <span class="week-badge">Planned</span></h4>
-                        <p><strong>Riemann Sums &amp; The Definite Integral:</strong> Partition limits, signed area, accumulation models, and the Fundamental Theorem of Calculus.</p>
-                    </div>
-                    <a href="#" class="module-link disabled">Drafting</a>
+                    <a href="#" class="module-link disabled">Mid-Trimester Recess</a>
                 </div>
 
                 <!-- Week 9 -->
                 <div class="week-card">
                     <div>
                         <h4>Week 9 <span class="week-badge">Planned</span></h4>
-                        <p><strong>Integration Techniques &amp; Applications:</strong> Change of variables (u-substitution), area between curves, volume by slicing, and accumulation from density functions.</p>
+                        <div class="week-meta">Topic 6 (cont.) &bull; Sections 19, 20, 21</div>
+                        <p><strong>Integrals &amp; Applications:</strong> Anti-derivatives, substitution methods, plane areas between curves, volumes of revolution (discs and shells), Cavalieri's principle, and the natural logarithm.</p>
                     </div>
                     <a href="#" class="module-link disabled">Drafting</a>
                 </div>
@@ -299,7 +308,8 @@
                 <div class="week-card">
                     <div>
                         <h4>Week 10 <span class="week-badge">Planned</span></h4>
-                        <p><strong>Systems of Linear Equations:</strong> Linear combinations, augmented matrices, elementary row operations, and Gaussian elimination.</p>
+                        <div class="week-meta">Topic 7 &bull; Sections 22, 23, 24</div>
+                        <p><strong>Systems of Linear Equations:</strong> Matrix algebra, Gaussian and Gauss-Jordan elimination, row-echelon forms, square systems, determinants, and matrix inverses.</p>
                     </div>
                     <a href="#" class="module-link disabled">Drafting</a>
                 </div>
@@ -308,7 +318,8 @@
                 <div class="week-card">
                     <div>
                         <h4>Week 11 <span class="week-badge">Planned</span></h4>
-                        <p><strong>Row Echelon Form &amp; Solution Spaces:</strong> Reduced row echelon form (RREF), rank, pivot columns, and parameterizing free variables.</p>
+                        <div class="week-meta">Topic 8 &bull; Sections 25, 26, 27</div>
+                        <p><strong>Vector Geometry &amp; Complex Numbers:</strong> Geometric vector representations, lines and planes in $\mathbb{R}^3$, linear independence, subspaces, bases, and complex numbers $\mathbb{C}$ (polar form, de Moivre, roots).</p>
                     </div>
                     <a href="#" class="module-link disabled">Drafting</a>
                 </div>
@@ -317,9 +328,20 @@
                 <div class="week-card">
                     <div>
                         <h4>Week 12 <span class="week-badge">Planned</span></h4>
-                        <p><strong>System Classification &amp; Matrix Algebra:</strong> Uniquely determined, underdetermined, and overdetermined systems, homogeneous solutions, and matrix inverses.</p>
+                        <div class="week-meta">Topic 9 &bull; Sections 28, 29</div>
+                        <p><strong>Dot and Cross Products:</strong> Inner products, orthogonal projections, Cauchy-Schwarz inequality, 3D cross products, oriented areas, and the scalar triple product.</p>
                     </div>
                     <a href="#" class="module-link disabled">Drafting</a>
+                </div>
+
+                <!-- Week 13 -->
+                <div class="week-card break-card">
+                    <div>
+                        <h4>Week 13 <span class="week-badge break">Review</span></h4>
+                        <div class="week-meta">Unit Revision</div>
+                        <p><strong>Curriculum Synthesis:</strong> Comprehensive problem solving and consolidation across single-variable calculus and linear algebra.</p>
+                    </div>
+                    <a href="#" class="module-link disabled">Revision</a>
                 </div>
             </div>
         </div>
