@@ -35,6 +35,11 @@ def write_week1_module():
         h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; }
         h3 { color: #1e293b; margin-top: 1.5rem; }
 
+        /* Diagram Container Styles */
+        .diagram-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
+        .diagram-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; align-items: center; }
+        .diagram-card h5 { margin: 0 0 0.5rem 0; color: #b45309; font-size: 0.95rem; text-align: center; }
+
         /* Dual-Track Layout */
         .dual-track-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; margin-bottom: 2rem; }
         .track-card { padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border); }
@@ -87,7 +92,6 @@ def write_week1_module():
             <!-- DECORATIVE TOPIC ILLUSTRATION SVG -->
             <div class="intro-graphic">
                 <svg width="700" height="140" viewBox="0 0 700 140">
-                    <!-- Panel 1: Set Theory (Venn Diagram) -->
                     <g transform="translate(30, 10)">
                         <rect x="0" y="0" width="180" height="120" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
                         <circle cx="70" cy="60" r="35" fill="#d97706" opacity="0.35"/>
@@ -96,8 +100,6 @@ def write_week1_module():
                         <text x="120" y="65" font-family="sans-serif" font-size="11" fill="#ffffff" font-weight="bold">B</text>
                         <text x="90" y="105" font-family="sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Set Theory (A ∪ B)</text>
                     </g>
-
-                    <!-- Panel 2: Number Systems Hierarchy -->
                     <g transform="translate(240, 10)">
                         <rect x="0" y="0" width="200" height="120" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
                         <rect x="15" y="15" width="170" height="90" rx="6" fill="none" stroke="#fbbf24" stroke-dasharray="3"/>
@@ -108,13 +110,10 @@ def write_week1_module():
                         <text x="100" y="82" font-family="sans-serif" font-size="10" fill="#ffffff" font-weight="bold" text-anchor="middle">ℕ</text>
                         <text x="100" y="112" font-family="sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Number Systems</text>
                     </g>
-
-                    <!-- Panel 3: Sequence Convergence -->
                     <g transform="translate(470, 10)">
                         <rect x="0" y="0" width="200" height="120" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
                         <line x1="20" y1="90" x2="180" y2="90" stroke="#64748b" stroke-width="1" stroke-dasharray="2"/>
                         <text x="175" y="86" font-family="sans-serif" font-size="9" fill="#fbbf24">L=0</text>
-                        <!-- Sequence dots converging -->
                         <circle cx="40" cy="40" r="4" fill="#d97706"/><line x1="40" y1="40" x2="70" y2="60" stroke="#d97706" stroke-width="1.5"/>
                         <circle cx="70" cy="60" r="4" fill="#d97706"/><line x1="70" y1="60" x2="100" y2="75" stroke="#d97706" stroke-width="1.5"/>
                         <circle cx="100" cy="75" r="4" fill="#d97706"/><line x1="100" y1="75" x2="130" y2="83" stroke="#d97706" stroke-width="1.5"/>
@@ -126,14 +125,92 @@ def write_week1_module():
             </div>
 
             <h2>1. Set Theory Foundations</h2>
-            <p>Before we can do calculus, we need a precise language to talk about collections of objects. A <strong>set</strong> is any well-defined collection of objects, called <em>elements</em> or <em>members</em>.</p>
+            <p>Before we can do calculus, we need a precise, unambiguous language to talk about collections of mathematical objects. A <strong>set</strong> is any well-defined collection of objects, called <em>elements</em> or <em>members</em>. If $x$ is an element of set $A$, we write $x \in A$; otherwise, $x \notin A$.</p>
 
             <div class="definition-box">
-                <p><strong>Basic Notation:</strong></p>
+                <p><strong>Fundamental Ways to Specify Sets:</strong></p>
                 <ul>
-                    <li><strong>Roster Notation:</strong> Listing elements explicitly, e.g., $A = \{1, 2, 3, 4\}$.</li>
-                    <li><strong>Membership:</strong> $x \in A$ means "$x$ is an element of $A$". $x \notin A$ means it is not.</li>
+                    <li><strong>Roster Notation:</strong> Explicitly listing members within braces, e.g., $A = \{2, 3, 5, 7\}$ (the set of the first four prime numbers).</li>
+                    <li><strong>Set-Builder Notation:</strong> Defining members by a logical predicate rule: $B = \{ x \in \mathbb{N} \mid x \text{ is prime and } x < 10 \}$.</li>
                 </ul>
+            </div>
+
+            <h3>Subsets and Power Sets</h3>
+            <p>Let $A$ and $B$ be sets. If every element of $A$ is also contained within $B$, we say $A$ is a <strong>subset</strong> of $B$, denoted $A \subseteq B$. If $A \subseteq B$ but $A \neq B$, $A$ is a <em>proper subset</em> ($A \subset B$). The <strong>power set</strong> of $A$, denoted $\mathcal{P}(A)$ or $2^A$, is the set of <em>all</em> subsets of $A$ (including the empty set $\emptyset$ and $A$ itself).</p>
+
+            <div class="diagram-grid">
+                <div class="diagram-card">
+                    <h5>Subset Inclusion ($A \subseteq B$)</h5>
+                    <svg width="240" height="110" viewBox="0 0 240 110">
+                        <rect x="10" y="10" width="220" height="90" rx="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+                        <text x="20" y="25" font-family="sans-serif" font-size="10" fill="#64748b">Universal Set U</text>
+                        <ellipse cx="120" cy="60" rx="90" ry="35" fill="#fed7aa" opacity="0.4" stroke="#d97706" stroke-width="1.5"/>
+                        <text x="185" y="70" font-family="sans-serif" font-size="11" fill="#b45309" font-weight="bold">B</text>
+                        <ellipse cx="90" cy="60" rx="45" ry="25" fill="#fde68a" opacity="0.6" stroke="#d97706" stroke-width="1.5"/>
+                        <text x="85" y="64" font-family="sans-serif" font-size="11" fill="#b45309" font-weight="bold">A</text>
+                    </svg>
+                </div>
+                <div class="diagram-card">
+                    <h5>Complement ($A^c = U \setminus A$)</h5>
+                    <svg width="240" height="110" viewBox="0 0 240 110">
+                        <rect x="10" y="10" width="220" height="90" rx="6" fill="#fef3c7" opacity="0.5" stroke="#cbd5e1" stroke-width="1.5"/>
+                        <text x="20" y="25" font-family="sans-serif" font-size="10" fill="#92400e">Aᶜ (Complement Region)</text>
+                        <circle cx="120" cy="60" r="32" fill="#ffffff" stroke="#d97706" stroke-width="1.5"/>
+                        <text x="115" y="64" font-family="sans-serif" font-size="11" fill="#b45309" font-weight="bold">A</text>
+                    </svg>
+                </div>
+            </div>
+
+            <h3>Core Set Operations Visualized</h3>
+            <p>Sets interact through algebra-like operations governed by rigorous logical connectives:</p>
+
+            <div class="diagram-grid">
+                <div class="diagram-card">
+                    <h5>Union ($A \cup B$) &mdash; "Or"</h5>
+                    <svg width="240" height="110" viewBox="0 0 240 110">
+                        <rect x="10" y="10" width="220" height="90" rx="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+                        <text x="20" y="25" font-family="sans-serif" font-size="10" fill="#64748b">Combined Elements</text>
+                        <circle cx="95" cy="60" r="35" fill="#fed7aa" opacity="0.6" stroke="#d97706" stroke-width="1.5"/>
+                        <circle cx="145" cy="60" r="35" fill="#fed7aa" opacity="0.6" stroke="#d97706" stroke-width="1.5"/>
+                        <text x="85" y="64" font-family="sans-serif" font-size="11" fill="#b45309" font-weight="bold">A</text>
+                        <text x="150" y="64" font-family="sans-serif" font-size="11" fill="#b45309" font-weight="bold">B</text>
+                    </svg>
+                </div>
+                <div class="diagram-card">
+                    <h5>Intersection ($A \cap B$) &mdash; "And"</h5>
+                    <svg width="240" height="110" viewBox="0 0 240 110">
+                        <rect x="10" y="10" width="220" height="90" rx="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+                        <text x="20" y="25" font-family="sans-serif" font-size="10" fill="#64748b">Shared Overlap</text>
+                        <circle cx="95" cy="60" r="35" fill="#ffffff" stroke="#d97706" stroke-width="1.5"/>
+                        <circle cx="145" cy="60" r="35" fill="#ffffff" stroke="#d97706" stroke-width="1.5"/>
+                        <!-- Intersection highlight -->
+                        <path d="M 120 30 A 35 35 0 0 1 120 90 A 35 35 0 0 1 120 30 Z" fill="#d97706" opacity="0.6"/>
+                        <text x="85" y="64" font-family="sans-serif" font-size="11" fill="#b45309" font-weight="bold">A</text>
+                        <text x="150" y="64" font-family="sans-serif" font-size="11" fill="#b45309" font-weight="bold">B</text>
+                    </svg>
+                </div>
+            </div>
+
+            <h3>Cartesian Products ($A \times B$)</h3>
+            <p>The Cartesian product pairs elements from two sets into ordered pairs:
+            $$A \times B = \{ (a, b) \mid a \in A \text{ and } b \in B \}$$
+            When $A = \mathbb{R}$ and $B = \mathbb{R}$, this operation constructs the familiar 2D coordinate plane $\mathbb{R}^2$.</p>
+
+            <div class="diagram-card" style="margin: 1.5rem 0;">
+                <h5>Discrete Cartesian Grid ($A = \{1,2,3\} \times B = \{1,2\}$)</h5>
+                <svg width="300" height="130" viewBox="0 0 300 130">
+                    <line x1="50" y1="100" x2="270" y2="100" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+                    <line x1="70" y1="110" x2="70" y2="20" stroke="#64748b" stroke-width="1.5"/>
+                    <text x="275" y="104" font-family="sans-serif" font-size="10" fill="#64748b">A</text>
+                    <text x="65" y="15" font-family="sans-serif" font-size="10" fill="#64748b">B</text>
+                    <!-- Grid points -->
+                    <circle cx="110" cy="80" r="5" fill="#d97706"/><text x="118" y="83" font-family="sans-serif" font-size="9" fill="#0f172a">(1,1)</text>
+                    <circle cx="160" cy="80" r="5" fill="#d97706"/><text x="168" y="83" font-family="sans-serif" font-size="9" fill="#0f172a">(2,1)</text>
+                    <circle cx="210" cy="80" r="5" fill="#d97706"/><text x="218" y="83" font-family="sans-serif" font-size="9" fill="#0f172a">(3,1)</text>
+                    <circle cx="110" cy="45" r="5" fill="#d97706"/><text x="118" y="48" font-family="sans-serif" font-size="9" fill="#0f172a">(1,2)</text>
+                    <circle cx="160" cy="45" r="5" fill="#d97706"/><text x="168" y="48" font-family="sans-serif" font-size="9" fill="#0f172a">(2,2)</text>
+                    <circle cx="210" cy="45" r="5" fill="#d97706"/><text x="218" y="48" font-family="sans-serif" font-size="9" fill="#0f172a">(3,2)</text>
+                </svg>
             </div>
 
             <h3>Anatomy of Set-Builder Notation</h3>
@@ -167,15 +244,6 @@ def write_week1_module():
             <ul>
                 <li><strong>Domain vs. Condition Confusion:</strong> The expression <em>before</em> the vertical bar tells you where you are looking (the pool of candidates); the expression <em>after</em> tells you who qualifies (the filter).</li>
                 <li><strong>Redundant Restrictions:</strong> Writing $\{x \mid x \in \mathbb{R}\}$ is simply shorthand for the entire set of real numbers $\mathbb{R}$.</li>
-            </ul>
-
-            <h3>Core Set Operations</h3>
-            <p>We combine and manipulate sets using fundamental logic operations:</p>
-            <ul>
-                <li><strong>Union ($A \cup B$):</strong> Elements in $A$, or in $B$, or in both. ($\{1, 2\} \cup \{2, 3\} = \{1, 2, 3\}$)</li>
-                <li><strong>Intersection ($A \cap B$):</strong> Elements belonging to <em>both</em> $A$ and $B$. ($\{1, 2\} \cap \{2, 3\} = \{2\}$)</li>
-                <li><strong>Complement ($A^c$ or $U \setminus A$):</strong> Elements in the universal set $U$ that are <em>not</em> in $A$.</li>
-                <li><strong>Cartesian Product ($A \times B$):</strong> The set of all ordered pairs $(a, b)$ where $a \in A$ and $b \in B$. (This is how we construct the 2D coordinate plane $\mathbb{R} \times \mathbb{R} = \mathbb{R}^2$).</li>
             </ul>
 
             <h2>2. The Hierarchy of Number Systems</h2>
@@ -577,9 +645,10 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Shift accent palette from purple to warm amber/orange\n\n"
-        "Updated CSS accent variables and track highlights to a professional warm \n"
-        "amber and orange tone, delivering a scholarly academic aesthetic."
+        "Expand Set Theory Foundations with detailed explanations and SVG diagrams\n\n"
+        "Added comprehensive subsections for subsets, power sets, and rigorous set \n"
+        "operations accompanied by four custom, responsive inline SVG visualizers \n"
+        "(Venn diagrams, complement sets, Cartesian grids, and subset hierarchies)."
     )
 
     commands = [
