@@ -659,7 +659,7 @@ def write_week1_module():
                     <line x1="40" y1="145" x2="710" y2="145" stroke="#64748b" stroke-width="1.2" marker-end="url(#num-arrow)"/>
                     <circle cx="130" cy="145" r="4.5" fill="#64748b"/><text x="125" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">0</text>
                     <circle cx="370" cy="145" r="4.5" fill="#64748b"/><text x="365" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">1</text>
-                    <circle cx="610" cy="145" r="4.5" fill="#64748b"/><text x="605" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b" font-weight="bold">2</text>
+                    <circle cx="610" cy="145" r="4.5" fill="#64748b"/><text x="605" y="172" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="bold">2</text>
 
                     <polygon points="130,145 370,145 370,65" fill="#fef3c7" opacity="0.65" stroke="#d97706" stroke-width="1.2"/>
                     <text x="245" y="135" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#d97706" font-weight="bold">1</text>
@@ -1207,7 +1207,7 @@ def write_week1_module():
                 verRole: "Solver / Certificate Generator",
                 verScope: "Witness Assignment (Latency Bound)",
                 verSummary: "<strong>Step 2: Synthesizing the compliance milestone.</strong> The engine computes an execution cycle witness $N \\in \\mathbb{N}$ proving the point beyond which the system enters its invariant state.",
-                verWhat: "<p>The solver generates a concrete certificate $N = g(\\epsilon)$, establishing a finite latency bound after which execution compliance is guaranteed.</p>",
+                advWhat: "<p>The solver generates a concrete certificate $N = g(\\epsilon)$, establishing a finite latency bound after which execution compliance is guaranteed.</p>",
                 verWhy: "<p>Existential quantification produces a concrete proof witness. It does not need to be unique; finding any valid integer $N$ proves the system eventually settles.</p>"
             },
             {
@@ -1454,7 +1454,7 @@ def write_week1_module():
                     <marker id="game-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
                         <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
                     </marker>
-                    <marker id="eps-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                    <marker id="eps-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
                         <path d="M 0 0 L 10 5 L 0 10 z" fill="#d97706"/>
                     </marker>
                 </defs>
@@ -1687,8 +1687,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Unbold sqrt(2) diagram labels in week1.html\n\n"
-        "Removed font-weight bold styling from root 2 text elements in the geometric gap diagram."
+        "Unbold sqrt(2) diagram text and fix title header\n\n"
+        "Removed bold weight from root 2 SVG labels and cleaned up the card title "
+        "in week1.html."
     )
 
     commands = [
@@ -1702,7 +1703,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with unbolded sqrt(2) diagram labels...")
+    print("Writing Week 1 module with unbolded sqrt(2) labels...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
