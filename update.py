@@ -44,9 +44,6 @@ def write_week1_module():
         button { background: var(--accent); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; }
         button:disabled { background: var(--border); cursor: not-allowed; }
         .step-summary { flex-grow: 1; font-size: 0.95rem; color: #475569; line-height: 1.5; }
-        .analysis-panes { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
-        .pane { background: var(--card); padding: 1.5rem; }
-        .pane h4 { margin-top: 0; color: var(--accent); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
         .toggle-group { min-width: 220px; }
         select { width: 100%; padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border); font-family: system-ui, sans-serif; }
     </style>
@@ -66,7 +63,7 @@ def write_week1_module():
                 <div class="track-card track-formal">
                     <h3>📐 Track 1: Abstract Formalism (Pure Theory)</h3>
                     <p>A sequence is a function $f: \mathbb{N} \rightarrow \mathbb{R}$[cite: 24]. We say that $\lim_{n\to\infty} a_n = L$ if:</p>
-                    <p>$$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad \forall n > N, \quad |a_n - L| < \epsilon$$</p>
+                    <p>$$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad \forall n > N, \quad \vert{}a_n - L\vert{} < \epsilon$$</p>
                     <p>This universal-existential quantifier structure forms the bedrock of real analysis, proving that points permanently enter and remain within an arbitrary neighborhood[cite: 13, 24].</p>
                 </div>
                 <div class="track-card track-applied">
@@ -129,8 +126,8 @@ def write_week1_module():
                     <div class="toggle-group">
                         <label for="seq-toggle" style="font-size: 0.85rem; font-weight: bold; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">COMPARE ARCHITECTURE:</label>
                         <select id="seq-toggle" onchange="changeSeq()">
-                            <option value="reciprocal">Linear Attenuator ($a_n = \frac{1}{n}$)</option>
-                            <option value="geometric">Exponential Filter ($a_n = 2^{-n}$)</option>
+                            <option value="reciprocal">Linear Attenuator (a_n = 1/n)</option>
+                            <option value="geometric">Exponential Filter (a_n = 2^-n)</option>
                         </select>
                     </div>
                 </div>
@@ -179,7 +176,7 @@ def write_week1_module():
                 phase: "Convergence Verification", n: 8,
                 summary: "<strong>Goal:</strong> Fulfill the universal quantifier condition to formally certify the limit.",
                 what: "For all subsequent indices $n > 5$ (such as $n=6, 7, 8$), terms remain strictly trapped within the $\\epsilon$ neighborhood.",
-                why: "This satisfies $\\forall n > N$. Because this inequality holds true for <em>any</em> arbitrary $\\epsilon > 0$ we choose, the limit $\\lim_{n\\to\\infty} a_n = L$ is formally verified."
+                why: "This satisfies $\\forall n > N$. Because this inequality holds true for <em>any</em> arbitrary $\\epsilon > 0$, the limit $\\lim_{n\\to\\infty} a_n = L$ is formally verified."
             }
         ];
 
@@ -261,11 +258,10 @@ def write_week1_module():
 
 def execute_git_sync():
     commit_message = (
-        "Implement Dual-Track Pedagogical Architecture in Week 1 module\n\n"
-        "Added a formal Abstract Formalism track alongside the Applied Mechanics \n"
-        "scenario. This ensures the simulator presents rigorous definitions, axioms, \n"
-        "and epsilon-N proofs directly from the course notes, while mapping them \n"
-        "in lockstep to the real-world AV signal processing application."
+        "Fix raw LaTeX leakage in architecture dropdown menu\n\n"
+        "Replaced KaTeX math delimiters inside HTML <option> elements with clean \n"
+        "plain-text representations, as dropdown menus do not support dynamic \n"
+        "mathematical rendering."
     )
 
     commands = [
