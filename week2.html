@@ -108,38 +108,38 @@
 
         <div class="module-content">
             <div class="intro-lead">
-                Welcome to Week 2 of MTHS120. In accordance with Topic 2 of the official lecture notes (Sections 4, 5, and 6)[cite: 2], this module formalizes infinity and sequence convergence via the rigorous $\epsilon\text{-}N$ definition, limit arithmetic, the Squeeze Theorem, monotonic convergence to the supremum, and infinite limits[cite: 24, 28, 31, 37].
+                Welcome to Week 2 of MTHS120. In accordance with Topic 2 of the official lecture notes (Sections 4, 5, and 6), this module formalizes infinity and sequence convergence via the rigorous $\epsilon\text{-}N$ definition, limit arithmetic, the Squeeze Theorem, monotonic convergence to the supremum, and infinite limits.
             </div>
 
             <div class="toc-box">
                 <h4>📌 Module Table of Contents</h4>
                 <ul class="toc-grid">
-                    <li><a href="#section-limits">1. Formal $\epsilon\text{–}N$ Convergence (§4)</a>[cite: 24, 28]</li>
-                    <li><a href="#section-theorems">2. Limit Theorems &amp; Arithmetic (§4)</a>[cite: 27]</li>
-                    <li><a href="#section-supremum">3. Limits and Supremum (§5)</a>[cite: 31]</li>
-                    <li><a href="#section-infinity">4. Infinity as a Limit (§6)</a>[cite: 37]</li>
+                    <li><a href="#section-limits">1. Formal $\epsilon\text{–}N$ Convergence (§4)</a></li>
+                    <li><a href="#section-theorems">2. Limit Theorems &amp; Arithmetic (§4)</a></li>
+                    <li><a href="#section-supremum">3. Limits and Supremum (§5)</a></li>
+                    <li><a href="#section-infinity">4. Infinity as a Limit (§6)</a></li>
                 </ul>
             </div>
 
-            <h2 id="section-limits">1. Formal $\epsilon\text{–}N$ Convergence (§4)</h2>[cite: 24, 28]
+            <h2 id="section-limits">1. Formal $\epsilon\text{–}N$ Convergence (§4)</h2>
             <div class="infobox">
                 <h4>📖 Notation Reference: Sequences &amp; Limits</h4>
                 <div class="infobox-intro">
                     <strong>Don't be intimidated by the symbols!</strong> If upside-down A's ($\forall$), backward E's ($\exists$), or little ceiling brackets ($\lceil \dots \rceil$) look unfamiliar, that is completely normal. They are simply mathematicians' shorthand for everyday concepts.
                 </div>
                 <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$\forall$</span><span class="notation-desc">Universal quantifier: "for all" or "for every"</span>[cite: 24]</div>
-                    <div class="notation-item"><span class="notation-sym">$\exists$</span><span class="notation-desc">Existential quantifier: "there exists"</span>[cite: 24]</div>
-                    <div class="notation-item"><span class="notation-sym">$(a_n)$</span><span class="notation-desc">Sequence: an ordered list $(a_1, a_2, a_3, \dots)$</span>[cite: 23]</div>
-                    <div class="notation-item"><span class="notation-sym">$\lim_{n\to\infty} a_n = L$</span><span class="notation-desc">The sequence $a_n$ converges to limit $L$</span>[cite: 24]</div>
-                    <div class="notation-item"><span class="notation-sym">$\epsilon > 0$</span><span class="notation-desc">Arbitrary positive distance tolerance</span>[cite: 24]</div>
-                    <div class="notation-item"><span class="notation-sym">$N \in \mathbb{N}$</span><span class="notation-desc">Cutoff index past which $|a_n - L| < \epsilon$</span>[cite: 24]</div>
+                    <div class="notation-item"><span class="notation-sym">$\forall$</span><span class="notation-desc">Universal quantifier: "for all" or "for every"</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\exists$</span><span class="notation-desc">Existential quantifier: "there exists"</span></div>
+                    <div class="notation-item"><span class="notation-sym">$(a_n)$</span><span class="notation-desc">Sequence: an ordered list $(a_1, a_2, a_3, \dots)$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\lim_{n\to\infty} a_n = L$</span><span class="notation-desc">The sequence $a_n$ converges to limit $L$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\epsilon > 0$</span><span class="notation-desc">Arbitrary positive distance tolerance</span></div>
+                    <div class="notation-item"><span class="notation-sym">$N \in \mathbb{N}$</span><span class="notation-desc">Cutoff index past which $|a_n - L| < \epsilon$</span></div>
                 </div>
             </div>
 
-            <p>A sequence $(a_n)$ converges to a limit $L$, written $\lim_{n\to\infty} a_n = L$, if[cite: 24]:</p>
+            <p>A sequence $(a_n)$ converges to a limit $L$, written $\lim_{n\to\infty} a_n = L$, if:</p>
             <div class="definition-box">
-                <p>$$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad \forall n > N, \quad |a_n - L| < \epsilon$$</p>[cite: 24]
+                <p>$$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad \forall n > N, \quad |a_n - L| < \epsilon$$</p>
             </div>
 
             <!-- CLAUSE STEPPER -->
@@ -165,13 +165,13 @@
 
                 <div class="formula-stage-wrap">
                     <div class="formula-display">
-                        <div class="formula-chunk active" id="chunk-0" onclick="setFormulaStep(0)">$\forall \epsilon > 0$</div>[cite: 24]
+                        <div class="formula-chunk active" id="chunk-0" onclick="setFormulaStep(0)">$\forall \epsilon > 0$</div>
                         <span class="formula-sep">,</span>
-                        <div class="formula-chunk" id="chunk-1" onclick="setFormulaStep(1)">$\exists N \in \mathbb{N}$</div>[cite: 24]
+                        <div class="formula-chunk" id="chunk-1" onclick="setFormulaStep(1)">$\exists N \in \mathbb{N}$</div>
                         <span class="formula-sep" style="font-size: 0.95rem; margin: 0 0.2rem;">such that</span>
-                        <div class="formula-chunk" id="chunk-2" onclick="setFormulaStep(2)">$\forall n > N$</div>[cite: 24]
+                        <div class="formula-chunk" id="chunk-2" onclick="setFormulaStep(2)">$\forall n > N$</div>
                         <span class="formula-sep">,</span>
-                        <div class="formula-chunk" id="chunk-3" onclick="setFormulaStep(3)">$|a_n - L| < \epsilon$</div>[cite: 24]
+                        <div class="formula-chunk" id="chunk-3" onclick="setFormulaStep(3)">$|a_n - L| < \epsilon$</div>
                     </div>
                 </div>
 
@@ -236,19 +236,19 @@
                         <tr><th>Variable</th><th>Scope</th><th>Dependency Rule</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td><strong>$\epsilon$</strong></td><td>$\forall \epsilon > 0$</td><td>Arbitrary positive tolerance, chosen independently of $N$.</td></tr>[cite: 24]
-                        <tr><td><strong>$N$</strong></td><td>$\exists N \in \mathbb{N}$</td><td>Chosen <em>after</em> inspecting $\epsilon$ ($N = N(\epsilon)$).</td></tr>[cite: 24]
-                        <tr><td><strong>$n$</strong></td><td>$\forall n > N$</td><td>Runs over all indices strictly past cutoff $N$.</td></tr>[cite: 24]
+                        <tr><td><strong>$\epsilon$</strong></td><td>$\forall \epsilon > 0$</td><td>Arbitrary positive tolerance, chosen independently of $N$.</td></tr>
+                        <tr><td><strong>$N$</strong></td><td>$\exists N \in \mathbb{N}$</td><td>Chosen <em>after</em> inspecting $\epsilon$ ($N = N(\epsilon)$).</td></tr>
+                        <tr><td><strong>$n$</strong></td><td>$\forall n > N$</td><td>Runs over all indices strictly past cutoff $N$.</td></tr>
                     </tbody>
                 </table>
             </div>
 
             <div class="widget-instructions">
-                <h4>📖 Guide: Exploring the &epsilon;–N Definition with $a_n = \frac{1}{n}$</h4>[cite: 25]
-                <p>This widget illustrates convergence for $\lim_{n\to\infty} \frac{1}{n} = 0$[cite: 25]:</p>
+                <h4>📖 Guide: Exploring the &epsilon;–N Definition with $a_n = \frac{1}{n}$</h4>
+                <p>This widget illustrates convergence for $\lim_{n\to\infty} \frac{1}{n} = 0$:</p>
                 <ol>
                     <li><strong>Choose Tolerance ($\epsilon$):</strong> $\epsilon = 0.2$ ($N=5$), $\epsilon = 0.1$ ($N=10$), or $\epsilon = 0.05$ ($N=20$).</li>
-                    <li><strong>Observe Cutoff ($N$):</strong> Marked by the red dashed line ($N = \lceil 1/\epsilon \rceil$)[cite: 25, 26].</li>
+                    <li><strong>Observe Cutoff ($N$):</strong> Marked by the red dashed line ($N = \lceil 1/\epsilon \rceil$).</li>
                     <li><strong>Step Forward:</strong> Trace terms entering the green interior past $N$.</li>
                 </ol>
             </div>
@@ -256,11 +256,11 @@
             <!-- EPSILON CHALLENGE WIDGET -->
             <div class="game-box">
                 <div class="game-header">
-                    <span>Illustrating the Definition: $a_n = \frac{1}{n}$ ($L = 0$)</span>[cite: 25]
+                    <span>Illustrating the Definition: $a_n = \frac{1}{n}$ ($L = 0$)</span>
                     <span>Finite Sample Visualization</span>
                 </div>
                 <div class="telemetry-grid" id="game-telemetry">
-                    <div class="telemetry-card"><span class="telemetry-label">Sequence</span><span class="telemetry-badge" style="color: #0369a1;">$a_n = 1/n$ ($L = 0$)</span>[cite: 25]</div>
+                    <div class="telemetry-card"><span class="telemetry-label">Sequence</span><span class="telemetry-badge" style="color: #0369a1;">$a_n = 1/n$ ($L = 0$)</span></div>
                     <div class="telemetry-card"><span class="telemetry-label">Tolerance (ϵ)</span><span class="telemetry-badge" id="cg-tel-eps" style="color: #b45309;">Select below</span></div>
                     <div class="telemetry-card"><span class="telemetry-label">Suitable Cutoff (N)</span><span class="telemetry-badge" id="cg-tel-reqn" style="color: #be185d;">—</span></div>
                     <div class="telemetry-card"><span class="telemetry-label">Term Displayed</span><span class="telemetry-badge" id="cg-tel-val" style="color: #334155;">—</span></div>
@@ -284,14 +284,14 @@
                 </div>
             </div>
 
-            <h2 id="section-theorems">2. Limit Theorems &amp; Arithmetic (§4)</h2>[cite: 27]
-            <p>Theorem 1 establishes that if $(a_n) \to K$ and $(b_n) \to L$, then sums ($K \pm L$), scalar multiples ($cK$), products ($KL$), and quotients ($K/L$ for $L \neq 0$) converge accordingly[cite: 27, 28]. The <strong>Squeeze Theorem</strong> (Theorem 4) proves that if $a_n \le b_n \le c_n$ and $\lim a_n = \lim c_n = L$, then $\lim b_n = L$[cite: 33].</p>
+            <h2 id="section-theorems">2. Limit Theorems &amp; Arithmetic (§4)</h2>
+            <p>Theorem 1 establishes that if $(a_n) \to K$ and $(b_n) \to L$, then sums ($K \pm L$), scalar multiples ($cK$), products ($KL$), and quotients ($K/L$ for $L \neq 0$) converge accordingly. The <strong>Squeeze Theorem</strong> (Theorem 4) proves that if $a_n \le b_n \le c_n$ and $\lim a_n = \lim c_n = L$, then $\lim b_n = L$.</p>
 
-            <h2 id="section-supremum">3. Limits and Supremum (§5)</h2>[cite: 31]
-            <p>Theorem 2 establishes the Monotone Convergence Theorem: Any increasing sequence that is bounded above converges, and its limit equals its supremum ($\lim a_n = \sup\{a_n\}$)[cite: 31, 32]. This connects set completeness directly to analysis.</p>
+            <h2 id="section-supremum">3. Limits and Supremum (§5)</h2>
+            <p>Theorem 2 establishes the Monotone Convergence Theorem: Any increasing sequence that is bounded above converges, and its limit equals its supremum ($\lim a_n = \sup\{a_n\}$). This connects set completeness directly to analysis.</p>
 
-            <h2 id="section-infinity">4. Infinity as a Limit (§6)</h2>[cite: 37]
-            <p>A sequence tends to infinity ($\lim a_n = \infty$) if for any large $M$, all terms past some index $N$ satisfy $a_n > M$[cite: 37]. Unbounded increasing sequences diverge to infinity (Proposition 7)[cite: 37, 38].</p>
+            <h2 id="section-infinity">4. Infinity as a Limit (§6)</h2>
+            <p>A sequence tends to infinity ($\lim a_n = \infty$) if for any large $M$, all terms past some index $N$ satisfy $a_n > M$. Unbounded increasing sequences diverge to infinity (Proposition 7).</p>
         </div>
     </div>
 
@@ -300,7 +300,7 @@
         const formulaClauses = [
             {
                 clauseTitle: "1. The Challenge (∀ϵ > 0)", quantifier: "Universal (∀)", advRole: "Given tolerance", advScope: "Arbitrary positive real",
-                advSummary: "<strong>Step 1: Establishing tolerance.</strong> Consider any arbitrary positive distance $\\epsilon > 0$[cite: 24].",
+                advSummary: "<strong>Step 1: Establishing tolerance.</strong> Consider any arbitrary positive distance $\\epsilon > 0$.",
                 advWhat: "<p>We are given an arbitrary number $\\epsilon > 0$, forming a neighborhood $(L - \\epsilon, L + \\epsilon)$ around the limit.</p>",
                 advWhy: "<p>Requiring the condition to hold for all positive $\\epsilon$ prevents oscillations away from $L$.</p>",
                 verRole: "Test constraint", verScope: "Parameter specification", verSummary: "Analogy parameter.",
@@ -308,15 +308,15 @@
             },
             {
                 clauseTitle: "2. The Response (∃N ∈ ℕ)", quantifier: "Existential (∃)", advRole: "Finding a witness index", advScope: "Dependent on ϵ",
-                advSummary: "<strong>Step 2: Identifying cutoff index N.</strong> An integer $N$ exists past which terms stay within tolerance[cite: 24].",
-                advWhat: "<p>For $a_n = 1/n$, one convenient choice is $N = \\lceil 1/\\epsilon \\rceil$[cite: 25].</p>",
-                advWhy: "<p>Allows $N$ to depend directly on $\\epsilon$[cite: 26].</p>",
+                advSummary: "<strong>Step 2: Identifying cutoff index N.</strong> An integer $N$ exists past which terms stay within tolerance.",
+                advWhat: "<p>For $a_n = 1/n$, one convenient choice is $N = \\lceil 1/\\epsilon \\rceil$.</p>",
+                advWhy: "<p>Allows $N$ to depend directly on $\\epsilon$.</p>",
                 verRole: "Bound synthesis", verScope: "Latency cutoff", verSummary: "Analogy cutoff.",
                 verWhat: "<p>Execution cycle cutoff.</p>", verWhy: "<p>Ensures compliance.</p>"
             },
             {
                 clauseTitle: "3. The Tail Scope (∀n > N)", quantifier: "Universal (∀)", advRole: "Evaluation of the tail", advScope: "All subsequent indices",
-                advSummary: "<strong>Step 3: Examining all terms past N.</strong> Every term with index $n > N$ satisfies the distance condition[cite: 24].",
+                advSummary: "<strong>Step 3: Examining all terms past N.</strong> Every term with index $n > N$ satisfies the distance condition.",
                 advWhat: "<p>We evaluate all indices strictly past $N$ ($n = N+1, N+2, \dots$).</p>",
                 advWhy: "<p>Convergence is a property of the long-term tail.</p>",
                 verRole: "Suffix invariant", verScope: "Steady-state", verSummary: "Analogy tail check.",
@@ -324,9 +324,9 @@
             },
             {
                 clauseTitle: "4. The Distance Condition (|aₙ - L| < ϵ)", quantifier: "Inequality (<)", advRole: "Proximity condition", advScope: "Distance inside band",
-                advSummary: "<strong>Step 4: Confirming distance constraint.</strong> For all $n > N$, $|a_n - L| < \\epsilon$[cite: 24].",
+                advSummary: "<strong>Step 4: Confirming distance constraint.</strong> For all $n > N$, $|a_n - L| < \\epsilon$.",
                 advWhat: "<p>Each term $a_n$ with $n > N$ sits strictly within $(L - \\epsilon, L + \\epsilon)$.</p>",
-                advWhy: "<p>Proves mathematically that $\\lim a_n = L$[cite: 24].</p>",
+                advWhy: "<p>Proves mathematically that $\\lim a_n = L$.</p>",
                 verRole: "Invariant assertion", verScope: "Safety check", verSummary: "Analogy assertion.",
                 verWhat: "<p>Assertion check evaluated on outputs.</p>", verWhy: "<p>Metric distance provides proximity.</p>"
             }

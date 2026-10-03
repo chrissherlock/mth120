@@ -2,8 +2,9 @@
 import os
 import subprocess
 
-def write_week1_module():
-    html_content = r"""<!DOCTYPE html>
+def write_clean_modules():
+    # Write Week 1 Module (Sections 1-3, strictly citation-free)
+    week1_content = r"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -47,10 +48,6 @@ def write_week1_module():
         .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
         .aside-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #b45309; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
         .aside-box h4 { margin-top: 0; color: #b45309; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
-        .diagram-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.75rem 0; }
-        .diagram-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.75rem; display: flex; flex-direction: column; align-items: center; min-width: 0; }
-        .diagram-card h5 { margin: 0 0 1.15rem 0; color: #b45309; font-size: 1.05rem; text-align: center; font-weight: 700; }
-        .diagram-card svg { width: 100%; height: auto; display: block; }
     </style>
 </head>
 <body>
@@ -62,90 +59,90 @@ def write_week1_module():
 
         <div class="module-content">
             <div class="intro-lead">
-                Welcome to Week 1 of MTHS120. In accordance with Topic 1 of the official lecture notes (Sections 1, 2, and 3)[cite: 2], this module establishes set theory foundations, functions, Peano's axioms for natural numbers, real number completeness, and sequence mechanics including derived sequences and partial sums[cite: 5, 8, 12, 21, 24].
+                Welcome to Week 1 of MTHS120. In accordance with Topic 1 of the official lecture notes (Sections 1, 2, and 3), this module establishes set theory foundations, functions, Peano's axioms for natural numbers, real number completeness, and sequence mechanics including derived sequences and partial sums.
             </div>
 
             <div class="toc-box">
                 <h4>📌 Module Table of Contents</h4>
                 <ul class="toc-grid">
-                    <li><a href="#section-sets">1. Sets and Functions (§1)</a>[cite: 5]</li>
-                    <li><a href="#section-numbers">2. Number Systems and Completeness (§2)</a>[cite: 12]</li>
-                    <li><a href="#section-sequences">3. Sequences, Derived Sequences, and Partial Sums (§3)</a>[cite: 23]</li>
+                    <li><a href="#section-sets">1. Sets and Functions (§1)</a></li>
+                    <li><a href="#section-numbers">2. Number Systems and Completeness (§2)</a></li>
+                    <li><a href="#section-sequences">3. Sequences, Derived Sequences, and Partial Sums (§3)</a></li>
                 </ul>
             </div>
 
-            <h2 id="section-sets">1. Sets and Functions (§1)</h2>[cite: 5]
+            <h2 id="section-sets">1. Sets and Functions (§1)</h2>
             <div class="infobox">
                 <h4>📖 Notation Reference: Sets &amp; Functions</h4>
                 <div class="infobox-intro">
-                    <strong>The language of science:</strong> Set theory provides the foundational grammar for modern mathematics[cite: 5]. Functions map inputs from a domain to outputs in a codomain[cite: 8].
+                    <strong>The language of science:</strong> Set theory provides the foundational grammar for modern mathematics. Functions map inputs from a domain to outputs in a codomain.
                 </div>
                 <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$x \in A$</span><span class="notation-desc">$x$ is an element of set $A$</span>[cite: 5]</div>
-                    <div class="notation-item"><span class="notation-sym">$A \subseteq B$</span><span class="notation-desc">$A$ is a subset of $B$</span>[cite: 6]</div>
-                    <div class="notation-item"><span class="notation-sym">$A \cup B$</span><span class="notation-desc">Union of sets $A$ and $B$</span>[cite: 6]</div>
-                    <div class="notation-item"><span class="notation-sym">$A \cap B$</span><span class="notation-desc">Intersection of sets $A$ and $B$</span>[cite: 7]</div>
-                    <div class="notation-item"><span class="notation-sym">$A \setminus B$</span><span class="notation-desc">Set difference (relative complement)</span>[cite: 7]</div>
-                    <div class="notation-item"><span class="notation-sym">$A \times B$</span><span class="notation-desc">Cartesian product of sets</span>[cite: 7]</div>
-                    <div class="notation-item"><span class="notation-sym">$f: X \to Y$</span><span class="notation-desc">Function $f$ with domain $X$ and codomain $Y$</span>[cite: 8]</div>
-                    <div class="notation-item"><span class="notation-sym">$f^{-1}(y)$</span><span class="notation-desc">Preimage of element $y$</span>[cite: 8]</div>
-                    <div class="notation-item"><span class="notation-sym">$g \circ f$</span><span class="notation-desc">Function composition ("f followed by g")</span>[cite: 10]</div>
-                    <div class="notation-item"><span class="notation-sym">$f^{-1}$</span><span class="notation-desc">Inverse function (exists iff $f$ is bijective)</span>[cite: 11]</div>
+                    <div class="notation-item"><span class="notation-sym">$x \in A$</span><span class="notation-desc">$x$ is an element of set $A$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \subseteq B$</span><span class="notation-desc">$A$ is a subset of $B$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \cup B$</span><span class="notation-desc">Union of sets $A$ and $B$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \cap B$</span><span class="notation-desc">Intersection of sets $A$ and $B$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \setminus B$</span><span class="notation-desc">Set difference (relative complement)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \times B$</span><span class="notation-desc">Cartesian product of sets</span></div>
+                    <div class="notation-item"><span class="notation-sym">$f: X \to Y$</span><span class="notation-desc">Function $f$ with domain $X$ and codomain $Y$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$f^{-1}(y)$</span><span class="notation-desc">Preimage of element $y$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$g \circ f$</span><span class="notation-desc">Function composition ("f followed by g")</span></div>
+                    <div class="notation-item"><span class="notation-sym">$f^{-1}$</span><span class="notation-desc">Inverse function (exists iff $f$ is bijective)</span></div>
                 </div>
             </div>
 
-            <p>A <strong>set</strong> is a collection of distinct elements[cite: 5]. New sets are formed via union ($A \cup B$), intersection ($A \cap B$), difference ($A \setminus B$), and Cartesian product ($A \times B$)[cite: 6, 7].</p>
+            <p>A <strong>set</strong> is a collection of distinct elements. New sets are formed via union ($A \cup B$), intersection ($A \cap B$), difference ($A \setminus B$), and Cartesian product ($A \times B$).</p>
 
             <h3>Functions and Mappings</h3>
-            <p>A <strong>function</strong> $f: X \to Y$ assigns to each element $x \in X$ (domain) one and only one value $y = f(x) \in Y$ (codomain)[cite: 8].</p>
+            <p>A <strong>function</strong> $f: X \to Y$ assigns to each element $x \in X$ (domain) one and only one value $y = f(x) \in Y$ (codomain).</p>
             <ul>
-                <li><strong>Range:</strong> The subset of the codomain consisting of actual output values $R = \{f(x) \mid x \in X\}$[cite: 8].</li>
-                <li><strong>Surjective (Onto):</strong> Range equals codomain ($R = Y$), meaning every element in $Y$ has at least one preimage[cite: 9, 11].</li>
-                <li><strong>Injective (1-to-1):</strong> Distinct inputs produce distinct outputs: $a \neq b \implies f(a) \neq f(b)$[cite: 10, 11].</li>
-                <li><strong>Bijective:</strong> Both injective and surjective, which is the exact necessary and sufficient condition for an <strong>inverse function</strong> $f^{-1}: Y \to X$ to exist[cite: 10, 11].</li>
-                <li><strong>Composition:</strong> For $f: X \to Y$ and $g: Y \to Z$, the composition $g \circ f: X \to Z$ maps $x \mapsto g(f(x))$[cite: 10].</li>
+                <li><strong>Range:</strong> The subset of the codomain consisting of actual output values $R = \{f(x) \mid x \in X\}$.</li>
+                <li><strong>Surjective (Onto):</strong> Range equals codomain ($R = Y$), meaning every element in $Y$ has at least one preimage.</li>
+                <li><strong>Injective (1-to-1):</strong> Distinct inputs produce distinct outputs: $a \neq b \implies f(a) \neq f(b)$.</li>
+                <li><strong>Bijective:</strong> Both injective and surjective, which is the exact necessary and sufficient condition for an <strong>inverse function</strong> $f^{-1}: Y \to X$ to exist.</li>
+                <li><strong>Composition:</strong> For $f: X \to Y$ and $g: Y \to Z$, the composition $g \circ f: X \to Z$ maps $x \mapsto g(f(x))$.</li>
             </ul>
 
-            <h2 id="section-numbers">2. Number Systems and Completeness (§2)</h2>[cite: 12]
+            <h2 id="section-numbers">2. Number Systems and Completeness (§2)</h2>
             <div class="infobox">
                 <h4>📖 Notation Reference: Numbers &amp; Bounds</h4>
                 <div class="infobox-intro">
-                    <strong>Number systems and real analysis:</strong> Building from Peano's axioms for $\mathbb{N}$ to the completeness of $\mathbb{R}$[cite: 12, 21].
+                    <strong>Number systems and real analysis:</strong> Building from Peano's axioms for $\mathbb{N}$ to the completeness of $\mathbb{R}$.
                 </div>
                 <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$\mathbb{N}$</span><span class="notation-desc">Natural numbers $\{0, 1, 2, \dots\}$</span>[cite: 5]</div>
-                    <div class="notation-item"><span class="notation-sym">$\mathbb{Z}$</span><span class="notation-desc">Integers $\{\dots, -1, 0, 1, \dots\}$</span>[cite: 5]</div>
-                    <div class="notation-item"><span class="notation-sym">$\mathbb{Q}$</span><span class="notation-desc">Rational numbers $\{p/q \mid p \in \mathbb{Z}, q \in \mathbb{Z}_+\}$</span>[cite: 5]</div>
-                    <div class="notation-item"><span class="notation-sym">$\mathbb{R}$</span><span class="notation-desc">Real numbers (complete ordered field)</span>[cite: 16, 21]</div>
-                    <div class="notation-item"><span class="notation-sym">$|x|$</span><span class="notation-desc">Absolute value (distance to origin)</span>[cite: 17]</div>
-                    <div class="notation-item"><span class="notation-sym">$\sup S$</span><span class="notation-desc">Supremum (least upper bound) of set $S$</span>[cite: 20]</div>
-                    <div class="notation-item"><span class="notation-sym">$\inf S$</span><span class="notation-desc">Infimum (greatest lower bound) of set $S$</span>[cite: 20, 21]</div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{N}$</span><span class="notation-desc">Natural numbers $\{0, 1, 2, \dots\}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{Z}$</span><span class="notation-desc">Integers $\{\dots, -1, 0, 1, \dots\}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{Q}$</span><span class="notation-desc">Rational numbers $\{p/q \mid p \in \mathbb{Z}, q \in \mathbb{Z}_+\}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{R}$</span><span class="notation-desc">Real numbers (complete ordered field)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$|x|$</span><span class="notation-desc">Absolute value (distance to origin)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\sup S$</span><span class="notation-desc">Supremum (least upper bound) of set $S$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\inf S$</span><span class="notation-desc">Infimum (greatest lower bound) of set $S$</span></div>
                 </div>
             </div>
 
             <h3>Peano's Axioms for $\mathbb{N}$</h3>
-            <p>Natural numbers are defined by Peano's axioms: $0 \in \mathbb{N}$, each number has a unique successor, $0$ is not a successor of any number (no loops, no branching, connected graph rooted at 0), and mathematical induction holds[cite: 12, 13].</p>
+            <p>Natural numbers are defined by Peano's axioms: $0 \in \mathbb{N}$, each number has a unique successor, $0$ is not a successor of any number (no loops, no branching, connected graph rooted at 0), and mathematical induction holds.</p>
 
             <h3>Completeness and the Least Upper Bound Property</h3>
-            <p>While rationals $\mathbb{Q}$ are dense, they contain gaps (e.g., $x^2 = 2$ has no rational solution)[cite: 15, 21]. The real numbers $\mathbb{R}$ extend $\mathbb{Q}$ and satisfy the <strong>Axiom of Completeness</strong>: Any non-empty subset $S \subseteq \mathbb{R}$ that is bounded above has a supremum ($\sup S$) in $\mathbb{R}$[cite: 16, 21]. The <strong>Archimedean Axiom</strong> ensures that for any positive real numbers $x, y$, there is an $n \in \mathbb{N}$ such that $nx > y$[cite: 21, 22].</p>
+            <p>While rationals $\mathbb{Q}$ are dense, they contain gaps (e.g., $x^2 = 2$ has no rational solution). The real numbers $\mathbb{R}$ extend $\mathbb{Q}$ and satisfy the <strong>Axiom of Completeness</strong>: Any non-empty subset $S \subseteq \mathbb{R}$ that is bounded above has a supremum ($\sup S$) in $\mathbb{R}$. The <strong>Archimedean Axiom</strong> ensures that for any positive real numbers $x, y$, there is an $n \in \mathbb{N}$ such that $nx > y$.</p>
 
-            <h2 id="section-sequences">3. Sequences, Derived Sequences, and Partial Sums (§3)</h2>[cite: 23]
+            <h2 id="section-sequences">3. Sequences, Derived Sequences, and Partial Sums (§3)</h2>
             <div class="infobox">
                 <h4>📖 Notation Reference: Sequence Mechanics</h4>
                 <div class="infobox-intro">
-                    <strong>Discrete modeling:</strong> Sequences are functions $f: \mathbb{N} \to \mathbb{R}$ mapping indices to real values[cite: 23].
+                    <strong>Discrete modeling:</strong> Sequences are functions $f: \mathbb{N} \to \mathbb{R}$ mapping indices to real values.
                 </div>
                 <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$(a_n)$</span><span class="notation-desc">Sequence $(a_0, a_1, a_2, \dots)$</span>[cite: 23]</div>
-                    <div class="notation-item"><span class="notation-sym">$a_n'$</span><span class="notation-desc">Derived sequence $a_{n+1} - a_n$</span>[cite: 24]</div>
-                    <div class="notation-item"><span class="notation-sym">$s_n$</span><span class="notation-desc">Partial sum $\sum_{\nu=0}^n b_\nu$</span>[cite: 26]</div>
-                    <div class="notation-item"><span class="notation-sym">$an + b$</span><span class="notation-desc">Arithmetic progression</span>[cite: 23, 25]</div>
-                    <div class="notation-item"><span class="notation-sym">$aq^n$</span><span class="notation-desc">Geometric progression</span>[cite: 23, 25]</div>
+                    <div class="notation-item"><span class="notation-sym">$(a_n)$</span><span class="notation-desc">Sequence $(a_0, a_1, a_2, \dots)$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$a_n'$</span><span class="notation-desc">Derived sequence $a_{n+1} - a_n$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$s_n$</span><span class="notation-desc">Partial sum $\sum_{\nu=0}^n b_\nu$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$an + b$</span><span class="notation-desc">Arithmetic progression</span></div>
+                    <div class="notation-item"><span class="notation-sym">$aq^n$</span><span class="notation-desc">Geometric progression</span></div>
                 </div>
             </div>
 
             <h3>Derived Sequences and Partial Sums</h3>
-            <p>The <strong>derived sequence</strong> of $(a_n)$ is defined by consecutive differences $a_n' = a_{n+1} - a_n$[cite: 24]. A sequence is constant, increasing, or decreasing if and only if its derived sequence is identically zero, non-negative, or non-positive[cite: 24]. Conversely, summing terms yields <strong>partial sums</strong> $s_n = \sum_{\nu=0}^n b_\nu$[cite: 26]. For example, the partial sums of the geometric progression $q^n$ give the closed-form sum[cite: 27]:</p>
+            <p>The <strong>derived sequence</strong> of $(a_n)$ is defined by consecutive differences $a_n' = a_{n+1} - a_n$. A sequence is constant, increasing, or decreasing if and only if its derived sequence is identically zero, non-negative, or non-positive. Conversely, summing terms yields <strong>partial sums</strong> $s_n = \sum_{\nu=0}^n b_\nu$. For example, the partial sums of the geometric progression $q^n$ give the closed-form sum:</p>
             <p>$$\sum_{\nu=0}^{n-1} q^\nu = \frac{1 - q^n}{1 - q}$$</p>
         </div>
     </div>
@@ -153,11 +150,10 @@ def write_week1_module():
 </html>
 """
     with open('week1.html', 'w') as f:
-        f.write(html_content)
-    print("Successfully wrote updated week1.html matching Sections 1-3.")
+        f.write(week1_content)
 
-def write_week2_module():
-    html_content = r"""<!DOCTYPE html>
+    # Write Week 2 Module (Sections 4-6, strictly citation-free)
+    week2_content = r"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -267,38 +263,38 @@ def write_week2_module():
 
         <div class="module-content">
             <div class="intro-lead">
-                Welcome to Week 2 of MTHS120. In accordance with Topic 2 of the official lecture notes (Sections 4, 5, and 6)[cite: 2], this module formalizes infinity and sequence convergence via the rigorous $\epsilon\text{-}N$ definition, limit arithmetic, the Squeeze Theorem, monotonic convergence to the supremum, and infinite limits[cite: 24, 28, 31, 37].
+                Welcome to Week 2 of MTHS120. In accordance with Topic 2 of the official lecture notes (Sections 4, 5, and 6), this module formalizes infinity and sequence convergence via the rigorous $\epsilon\text{-}N$ definition, limit arithmetic, the Squeeze Theorem, monotonic convergence to the supremum, and infinite limits.
             </div>
 
             <div class="toc-box">
                 <h4>📌 Module Table of Contents</h4>
                 <ul class="toc-grid">
-                    <li><a href="#section-limits">1. Formal $\epsilon\text{–}N$ Convergence (§4)</a>[cite: 24, 28]</li>
-                    <li><a href="#section-theorems">2. Limit Theorems &amp; Arithmetic (§4)</a>[cite: 27]</li>
-                    <li><a href="#section-supremum">3. Limits and Supremum (§5)</a>[cite: 31]</li>
-                    <li><a href="#section-infinity">4. Infinity as a Limit (§6)</a>[cite: 37]</li>
+                    <li><a href="#section-limits">1. Formal $\epsilon\text{–}N$ Convergence (§4)</a></li>
+                    <li><a href="#section-theorems">2. Limit Theorems &amp; Arithmetic (§4)</a></li>
+                    <li><a href="#section-supremum">3. Limits and Supremum (§5)</a></li>
+                    <li><a href="#section-infinity">4. Infinity as a Limit (§6)</a></li>
                 </ul>
             </div>
 
-            <h2 id="section-limits">1. Formal $\epsilon\text{–}N$ Convergence (§4)</h2>[cite: 24, 28]
+            <h2 id="section-limits">1. Formal $\epsilon\text{–}N$ Convergence (§4)</h2>
             <div class="infobox">
                 <h4>📖 Notation Reference: Sequences &amp; Limits</h4>
                 <div class="infobox-intro">
                     <strong>Don't be intimidated by the symbols!</strong> If upside-down A's ($\forall$), backward E's ($\exists$), or little ceiling brackets ($\lceil \dots \rceil$) look unfamiliar, that is completely normal. They are simply mathematicians' shorthand for everyday concepts.
                 </div>
                 <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$\forall$</span><span class="notation-desc">Universal quantifier: "for all" or "for every"</span>[cite: 24]</div>
-                    <div class="notation-item"><span class="notation-sym">$\exists$</span><span class="notation-desc">Existential quantifier: "there exists"</span>[cite: 24]</div>
-                    <div class="notation-item"><span class="notation-sym">$(a_n)$</span><span class="notation-desc">Sequence: an ordered list $(a_1, a_2, a_3, \dots)$</span>[cite: 23]</div>
-                    <div class="notation-item"><span class="notation-sym">$\lim_{n\to\infty} a_n = L$</span><span class="notation-desc">The sequence $a_n$ converges to limit $L$</span>[cite: 24]</div>
-                    <div class="notation-item"><span class="notation-sym">$\epsilon > 0$</span><span class="notation-desc">Arbitrary positive distance tolerance</span>[cite: 24]</div>
-                    <div class="notation-item"><span class="notation-sym">$N \in \mathbb{N}$</span><span class="notation-desc">Cutoff index past which $|a_n - L| < \epsilon$</span>[cite: 24]</div>
+                    <div class="notation-item"><span class="notation-sym">$\forall$</span><span class="notation-desc">Universal quantifier: "for all" or "for every"</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\exists$</span><span class="notation-desc">Existential quantifier: "there exists"</span></div>
+                    <div class="notation-item"><span class="notation-sym">$(a_n)$</span><span class="notation-desc">Sequence: an ordered list $(a_1, a_2, a_3, \dots)$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\lim_{n\to\infty} a_n = L$</span><span class="notation-desc">The sequence $a_n$ converges to limit $L$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\epsilon > 0$</span><span class="notation-desc">Arbitrary positive distance tolerance</span></div>
+                    <div class="notation-item"><span class="notation-sym">$N \in \mathbb{N}$</span><span class="notation-desc">Cutoff index past which $|a_n - L| < \epsilon$</span></div>
                 </div>
             </div>
 
-            <p>A sequence $(a_n)$ converges to a limit $L$, written $\lim_{n\to\infty} a_n = L$, if[cite: 24]:</p>
+            <p>A sequence $(a_n)$ converges to a limit $L$, written $\lim_{n\to\infty} a_n = L$, if:</p>
             <div class="definition-box">
-                <p>$$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad \forall n > N, \quad |a_n - L| < \epsilon$$</p>[cite: 24]
+                <p>$$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad \forall n > N, \quad |a_n - L| < \epsilon$$</p>
             </div>
 
             <!-- CLAUSE STEPPER -->
@@ -324,13 +320,13 @@ def write_week2_module():
 
                 <div class="formula-stage-wrap">
                     <div class="formula-display">
-                        <div class="formula-chunk active" id="chunk-0" onclick="setFormulaStep(0)">$\forall \epsilon > 0$</div>[cite: 24]
+                        <div class="formula-chunk active" id="chunk-0" onclick="setFormulaStep(0)">$\forall \epsilon > 0$</div>
                         <span class="formula-sep">,</span>
-                        <div class="formula-chunk" id="chunk-1" onclick="setFormulaStep(1)">$\exists N \in \mathbb{N}$</div>[cite: 24]
+                        <div class="formula-chunk" id="chunk-1" onclick="setFormulaStep(1)">$\exists N \in \mathbb{N}$</div>
                         <span class="formula-sep" style="font-size: 0.95rem; margin: 0 0.2rem;">such that</span>
-                        <div class="formula-chunk" id="chunk-2" onclick="setFormulaStep(2)">$\forall n > N$</div>[cite: 24]
+                        <div class="formula-chunk" id="chunk-2" onclick="setFormulaStep(2)">$\forall n > N$</div>
                         <span class="formula-sep">,</span>
-                        <div class="formula-chunk" id="chunk-3" onclick="setFormulaStep(3)">$|a_n - L| < \epsilon$</div>[cite: 24]
+                        <div class="formula-chunk" id="chunk-3" onclick="setFormulaStep(3)">$|a_n - L| < \epsilon$</div>
                     </div>
                 </div>
 
@@ -395,19 +391,19 @@ def write_week2_module():
                         <tr><th>Variable</th><th>Scope</th><th>Dependency Rule</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td><strong>$\epsilon$</strong></td><td>$\forall \epsilon > 0$</td><td>Arbitrary positive tolerance, chosen independently of $N$.</td></tr>[cite: 24]
-                        <tr><td><strong>$N$</strong></td><td>$\exists N \in \mathbb{N}$</td><td>Chosen <em>after</em> inspecting $\epsilon$ ($N = N(\epsilon)$).</td></tr>[cite: 24]
-                        <tr><td><strong>$n$</strong></td><td>$\forall n > N$</td><td>Runs over all indices strictly past cutoff $N$.</td></tr>[cite: 24]
+                        <tr><td><strong>$\epsilon$</strong></td><td>$\forall \epsilon > 0$</td><td>Arbitrary positive tolerance, chosen independently of $N$.</td></tr>
+                        <tr><td><strong>$N$</strong></td><td>$\exists N \in \mathbb{N}$</td><td>Chosen <em>after</em> inspecting $\epsilon$ ($N = N(\epsilon)$).</td></tr>
+                        <tr><td><strong>$n$</strong></td><td>$\forall n > N$</td><td>Runs over all indices strictly past cutoff $N$.</td></tr>
                     </tbody>
                 </table>
             </div>
 
             <div class="widget-instructions">
-                <h4>📖 Guide: Exploring the &epsilon;–N Definition with $a_n = \frac{1}{n}$</h4>[cite: 25]
-                <p>This widget illustrates convergence for $\lim_{n\to\infty} \frac{1}{n} = 0$[cite: 25]:</p>
+                <h4>📖 Guide: Exploring the &epsilon;–N Definition with $a_n = \frac{1}{n}$</h4>
+                <p>This widget illustrates convergence for $\lim_{n\to\infty} \frac{1}{n} = 0$:</p>
                 <ol>
                     <li><strong>Choose Tolerance ($\epsilon$):</strong> $\epsilon = 0.2$ ($N=5$), $\epsilon = 0.1$ ($N=10$), or $\epsilon = 0.05$ ($N=20$).</li>
-                    <li><strong>Observe Cutoff ($N$):</strong> Marked by the red dashed line ($N = \lceil 1/\epsilon \rceil$)[cite: 25, 26].</li>
+                    <li><strong>Observe Cutoff ($N$):</strong> Marked by the red dashed line ($N = \lceil 1/\epsilon \rceil$).</li>
                     <li><strong>Step Forward:</strong> Trace terms entering the green interior past $N$.</li>
                 </ol>
             </div>
@@ -415,11 +411,11 @@ def write_week2_module():
             <!-- EPSILON CHALLENGE WIDGET -->
             <div class="game-box">
                 <div class="game-header">
-                    <span>Illustrating the Definition: $a_n = \frac{1}{n}$ ($L = 0$)</span>[cite: 25]
+                    <span>Illustrating the Definition: $a_n = \frac{1}{n}$ ($L = 0$)</span>
                     <span>Finite Sample Visualization</span>
                 </div>
                 <div class="telemetry-grid" id="game-telemetry">
-                    <div class="telemetry-card"><span class="telemetry-label">Sequence</span><span class="telemetry-badge" style="color: #0369a1;">$a_n = 1/n$ ($L = 0$)</span>[cite: 25]</div>
+                    <div class="telemetry-card"><span class="telemetry-label">Sequence</span><span class="telemetry-badge" style="color: #0369a1;">$a_n = 1/n$ ($L = 0$)</span></div>
                     <div class="telemetry-card"><span class="telemetry-label">Tolerance (ϵ)</span><span class="telemetry-badge" id="cg-tel-eps" style="color: #b45309;">Select below</span></div>
                     <div class="telemetry-card"><span class="telemetry-label">Suitable Cutoff (N)</span><span class="telemetry-badge" id="cg-tel-reqn" style="color: #be185d;">—</span></div>
                     <div class="telemetry-card"><span class="telemetry-label">Term Displayed</span><span class="telemetry-badge" id="cg-tel-val" style="color: #334155;">—</span></div>
@@ -443,14 +439,14 @@ def write_week2_module():
                 </div>
             </div>
 
-            <h2 id="section-theorems">2. Limit Theorems &amp; Arithmetic (§4)</h2>[cite: 27]
-            <p>Theorem 1 establishes that if $(a_n) \to K$ and $(b_n) \to L$, then sums ($K \pm L$), scalar multiples ($cK$), products ($KL$), and quotients ($K/L$ for $L \neq 0$) converge accordingly[cite: 27, 28]. The <strong>Squeeze Theorem</strong> (Theorem 4) proves that if $a_n \le b_n \le c_n$ and $\lim a_n = \lim c_n = L$, then $\lim b_n = L$[cite: 33].</p>
+            <h2 id="section-theorems">2. Limit Theorems &amp; Arithmetic (§4)</h2>
+            <p>Theorem 1 establishes that if $(a_n) \to K$ and $(b_n) \to L$, then sums ($K \pm L$), scalar multiples ($cK$), products ($KL$), and quotients ($K/L$ for $L \neq 0$) converge accordingly. The <strong>Squeeze Theorem</strong> (Theorem 4) proves that if $a_n \le b_n \le c_n$ and $\lim a_n = \lim c_n = L$, then $\lim b_n = L$.</p>
 
-            <h2 id="section-supremum">3. Limits and Supremum (§5)</h2>[cite: 31]
-            <p>Theorem 2 establishes the Monotone Convergence Theorem: Any increasing sequence that is bounded above converges, and its limit equals its supremum ($\lim a_n = \sup\{a_n\}$)[cite: 31, 32]. This connects set completeness directly to analysis.</p>
+            <h2 id="section-supremum">3. Limits and Supremum (§5)</h2>
+            <p>Theorem 2 establishes the Monotone Convergence Theorem: Any increasing sequence that is bounded above converges, and its limit equals its supremum ($\lim a_n = \sup\{a_n\}$). This connects set completeness directly to analysis.</p>
 
-            <h2 id="section-infinity">4. Infinity as a Limit (§6)</h2>[cite: 37]
-            <p>A sequence tends to infinity ($\lim a_n = \infty$) if for any large $M$, all terms past some index $N$ satisfy $a_n > M$[cite: 37]. Unbounded increasing sequences diverge to infinity (Proposition 7)[cite: 37, 38].</p>
+            <h2 id="section-infinity">4. Infinity as a Limit (§6)</h2>
+            <p>A sequence tends to infinity ($\lim a_n = \infty$) if for any large $M$, all terms past some index $N$ satisfy $a_n > M$. Unbounded increasing sequences diverge to infinity (Proposition 7).</p>
         </div>
     </div>
 
@@ -459,7 +455,7 @@ def write_week2_module():
         const formulaClauses = [
             {
                 clauseTitle: "1. The Challenge (∀ϵ > 0)", quantifier: "Universal (∀)", advRole: "Given tolerance", advScope: "Arbitrary positive real",
-                advSummary: "<strong>Step 1: Establishing tolerance.</strong> Consider any arbitrary positive distance $\\epsilon > 0$[cite: 24].",
+                advSummary: "<strong>Step 1: Establishing tolerance.</strong> Consider any arbitrary positive distance $\\epsilon > 0$.",
                 advWhat: "<p>We are given an arbitrary number $\\epsilon > 0$, forming a neighborhood $(L - \\epsilon, L + \\epsilon)$ around the limit.</p>",
                 advWhy: "<p>Requiring the condition to hold for all positive $\\epsilon$ prevents oscillations away from $L$.</p>",
                 verRole: "Test constraint", verScope: "Parameter specification", verSummary: "Analogy parameter.",
@@ -467,15 +463,15 @@ def write_week2_module():
             },
             {
                 clauseTitle: "2. The Response (∃N ∈ ℕ)", quantifier: "Existential (∃)", advRole: "Finding a witness index", advScope: "Dependent on ϵ",
-                advSummary: "<strong>Step 2: Identifying cutoff index N.</strong> An integer $N$ exists past which terms stay within tolerance[cite: 24].",
-                advWhat: "<p>For $a_n = 1/n$, one convenient choice is $N = \\lceil 1/\\epsilon \\rceil$[cite: 25].</p>",
-                advWhy: "<p>Allows $N$ to depend directly on $\\epsilon$[cite: 26].</p>",
+                advSummary: "<strong>Step 2: Identifying cutoff index N.</strong> An integer $N$ exists past which terms stay within tolerance.",
+                advWhat: "<p>For $a_n = 1/n$, one convenient choice is $N = \\lceil 1/\\epsilon \\rceil$.</p>",
+                advWhy: "<p>Allows $N$ to depend directly on $\\epsilon$.</p>",
                 verRole: "Bound synthesis", verScope: "Latency cutoff", verSummary: "Analogy cutoff.",
                 verWhat: "<p>Execution cycle cutoff.</p>", verWhy: "<p>Ensures compliance.</p>"
             },
             {
                 clauseTitle: "3. The Tail Scope (∀n > N)", quantifier: "Universal (∀)", advRole: "Evaluation of the tail", advScope: "All subsequent indices",
-                advSummary: "<strong>Step 3: Examining all terms past N.</strong> Every term with index $n > N$ satisfies the distance condition[cite: 24].",
+                advSummary: "<strong>Step 3: Examining all terms past N.</strong> Every term with index $n > N$ satisfies the distance condition.",
                 advWhat: "<p>We evaluate all indices strictly past $N$ ($n = N+1, N+2, \dots$).</p>",
                 advWhy: "<p>Convergence is a property of the long-term tail.</p>",
                 verRole: "Suffix invariant", verScope: "Steady-state", verSummary: "Analogy tail check.",
@@ -483,9 +479,9 @@ def write_week2_module():
             },
             {
                 clauseTitle: "4. The Distance Condition (|aₙ - L| < ϵ)", quantifier: "Inequality (<)", advRole: "Proximity condition", advScope: "Distance inside band",
-                advSummary: "<strong>Step 4: Confirming distance constraint.</strong> For all $n > N$, $|a_n - L| < \\epsilon$[cite: 24].",
+                advSummary: "<strong>Step 4: Confirming distance constraint.</strong> For all $n > N$, $|a_n - L| < \\epsilon$.",
                 advWhat: "<p>Each term $a_n$ with $n > N$ sits strictly within $(L - \\epsilon, L + \\epsilon)$.</p>",
-                advWhy: "<p>Proves mathematically that $\\lim a_n = L$[cite: 24].</p>",
+                advWhy: "<p>Proves mathematically that $\\lim a_n = L$.</p>",
                 verRole: "Invariant assertion", verScope: "Safety check", verSummary: "Analogy assertion.",
                 verWhat: "<p>Assertion check evaluated on outputs.</p>", verWhy: "<p>Metric distance provides proximity.</p>"
             }
@@ -603,8 +599,7 @@ def write_week2_module():
 </html>
 """
     with open('week2.html', 'w') as f:
-        f.write(html_content)
-    print("Successfully wrote week2.html.")
+        f.write(week2_content)
 
 def update_index():
     if not os.path.exists('index.html'):
@@ -626,8 +621,8 @@ def update_index():
                 <div class="week-card">
                     <div>
                         <h4>Week 2 <span class="week-badge active">Available</span></h4>
-                        <div class="week-meta">Topic 2 &bull; Sections 4, 5, 6</div>[cite: 2, 28]
-                        <p><strong>Limits of Sequences:</strong> The formal $\\epsilon\\text{–}N$ definition of sequence limits, limit arithmetic, the Squeeze Theorem, convergence to the supremum, and infinite limits ($n \\to \\infty$)[cite: 24, 28, 31, 37].</p>
+                        <div class="week-meta">Topic 2 &bull; Sections 4, 5, 6</div>
+                        <p><strong>Limits of Sequences:</strong> The formal $\\epsilon\\text{–}N$ definition of sequence limits, limit arithmetic, the Squeeze Theorem, convergence to the supremum, and infinite limits ($n \\to \\infty$).</p>
                     </div>
                     <a href="week2.html" class="module-link">Open Module 2 &rarr;</a>
                 </div>"""
@@ -636,13 +631,12 @@ def update_index():
         content = content.replace(old_week2, new_week2)
         with open('index.html', 'w', encoding='utf-8') as f:
             f.write(content)
-        print("Updated index.html to link Week 2.")
 
 def execute_git_sync():
     commit_message = (
-        "Refactor week1 to syllabus and create interactive week2.html\n\n"
-        "Restored missing sections 1-3 to week1.html, migrated limit widgets\n"
-        "to week2.html matching lecture notes sections 4-6, and updated index."
+        "Remove citation markers from course web pages and scripts\n\n"
+        "Stripped out all reference tags from week1.html, week2.html,\n"
+        "and update.py to maintain clean coursework material formatting."
     )
     commands = [
         ['git', 'add', 'week1.html', 'week2.html', 'index.html', 'update.py'],
@@ -654,7 +648,6 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    write_week1_module()
-    write_week2_module()
+    write_clean_modules()
     update_index()
     execute_git_sync()
