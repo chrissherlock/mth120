@@ -141,7 +141,6 @@
                 </div>
             </div>
 
-            
             <p>Before looking at the formal symbols, let's build the intuition: Saying a sequence converges to $L$ means that if you look far enough down the list, every subsequent term gets arbitrarily close to $L$ and stays there. We want a mathematical way to guarantee this "trapping" behavior.</p>
             <p>A sequence $(a_n)$ converges to a limit $L$, written $\lim_{n\to\infty} a_n = L$, if:</p>
             <div class="definition-box">
@@ -328,7 +327,7 @@
                 </div>
             </div>
 
-                        <!-- SECTION 2 -->
+            <!-- SECTION 2 -->
             <h2 id="section-theorems">2. Limit Theorems &amp; Arithmetic</h2>
             <p>Computing limits directly from the formal $\epsilon\text{-}N$ definition for every new sequence can quickly become cumbersome. Instead, mathematicians build a toolkit of <strong>Limit Theorems</strong>—fundamental arithmetic rules and bounding principles that let us combine known limits to evaluate complex new ones instantly.</p>
 
@@ -351,7 +350,7 @@
                         <strong>4. Product Rule:</strong> <span>$\lim_{n\to\infty} (a_n \cdot b_n) = K \cdot L$</span>
                     </div>
                     <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">
-                        <strong>5. Quotient Rule:</strong> <span>$\lim_{n\to\infty} \left(\frac{a_n}{b_n}\r\r\right) = \frac{K}{L}$, provided that $L \neq 0$ and $b_n \neq 0$ for all $n$.</span>
+                        <strong>5. Quotient Rule:</strong> <span>$\lim_{n\to\infty} \left(\frac{a_n}{b_n}\right) = \frac{K}{L}$, provided that $L \neq 0$ and $b_n \neq 0$ for all $n$.</span>
                     </div>
                     <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1rem;">
                         <strong>6. Power Rule:</strong> <span>$\lim_{n\to\infty} (a_n)^p = K^p$ (for real powers where terms remain defined).</span>
@@ -377,17 +376,15 @@
 
             <div class="aside-box" style="margin-top: 1.5rem;">
                 <h4>🎯 Classic Example: Applying the Squeeze Theorem</h4>
-                <p>Consider evaluating $\\lim_{n\to\infty} \frac{\sin(n)}{n}$. Because sine oscillates between $-1$ and $1$, we know:</p>
+                <p>Consider evaluating $\lim_{n\to\infty} \frac{\sin(n)}{n}$. Because sine oscillates between $-1$ and $1$, we know:</p>
                 <p style="text-align: center; margin: 0.75rem 0;">$$-\frac{1}{n} \le \frac{\sin(n)}{n} \le \frac{1}{n}$$</p>
-                <p>Since $\\lim_{n\to\infty} \left(-\frac{1}{n}
-\r\right) = 0$ and $\\lim_{n\to\infty} \left(\frac{1}{n}
-\r\right) = 0$, the Squeeze Theorem forces our middle sequence to also converge:</p>
-                <p style="text-align: center; margin-top: 0.75rem;">$$\\lim_{n\to\infty} \frac{\sin(n)}{n} = 0$$</p>
+                <p>Since $\lim_{n\to\infty} \left(-\frac{1}{n}\right) = 0$ and $\lim_{n\to\infty} \left(\frac{1}{n}\right) = 0$, the Squeeze Theorem forces our middle sequence to also converge:</p>
+                <p style="text-align: center; margin-top: 0.75rem;">$$\lim_{n\to\infty} \frac{\sin(n)}{n} = 0$$</p>
 
                 <hr style="border: none; border-top: 1px solid #fde68a; margin: 1.25rem 0;">
 
                 <p><strong>Cautionary Contrast: What about the reciprocal $\frac{n}{\sin(n)}$?</strong></p>
-                <p>It is easy to confuse $\frac{\sin(n)}{n}$ with its reciprocal $\frac{n}{\sin(n)}$. However, as $n$ grows while $\sin(n)$ periodically approaches $0$ near integer multiples of $\pi$, the ratio $\frac{n}{\sin(n)}$ shoots off toward $\pm\infty$ with wild, unbounded oscillations. Therefore, <strong>$\\lim_{n\to\infty} \frac{n}{\sin(n)}$ diverges</strong> and the Squeeze Theorem cannot be applied here.</p>
+                <p>It is easy to confuse $\frac{\sin(n)}{n}$ with its reciprocal $\frac{n}{\sin(n)}$. However, as $n$ grows while $\sin(n)$ periodically approaches $0$ near integer multiples of $\pi$, the ratio $\frac{n}{\sin(n)}$ shoots off toward $\pm\infty$ with wild, unbounded oscillations. Therefore, <strong>$\lim_{n\to\infty} \frac{n}{\sin(n)}$ diverges</strong> and the Squeeze Theorem cannot be applied here.</p>
 
                 <!-- Embedded SVG Graph of n / sin(n) divergence -->
                 <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1rem; margin-top: 1rem;">
@@ -405,12 +402,6 @@
                         </g>
                     </svg>
                 </div>
-            </div>
-
-                <p>Consider evaluating $\lim_{n\to\infty} \frac{\sin(n)}{n}$. Because sine oscillates between $-1$ and $1$, we know:</p>
-                <p style="text-align: center; margin: 0.75rem 0;">$$-\frac{1}{n} \le \frac{\sin(n)}{n} \le \frac{1}{n}$$</p>
-                <p>Since $\lim_{n\to\infty} \left(-\frac{1}{n}\r\r\right) = 0$ and $\lim_{n\to\infty} \left(\frac{1}{n}\r\r\right) = 0$, the Squeeze Theorem forces our middle sequence to also converge:</p>
-                <p style="text-align: center; margin-top: 0.75rem;">$$\lim_{n\to\infty} \frac{\sin(n)}{n} = 0$$</p>
             </div>
 
             <!-- SECTION 3 -->
