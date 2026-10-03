@@ -42,8 +42,8 @@ def write_structures_subpage():
         button:hover { background: var(--accent-hover); }
         .output-display { font-family: monospace; background: #ffffff; padding: 1rem; border: 1px solid var(--border); border-radius: 4px; margin-top: 1rem; color: #0f172a; }
 
-        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.95rem; }
-        th, td { border: 1px solid var(--border); padding: 0.75rem; text-align: left; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.95rem; table-layout: fixed; }
+        th, td { border: 1px solid var(--border); padding: 0.75rem; text-align: left; vertical-align: top; word-wrap: break-word; }
         th { background: #f1f5f9; color: #0f172a; }
 
         .example-card { background: #fffbeb; border: 1px solid #fde68a; border-radius: 6px; padding: 1rem 1.25rem; margin: 1rem 0; }
@@ -101,10 +101,10 @@ def write_structures_subpage():
             <table>
                 <thead>
                     <tr>
-                        <th>Structure</th>
-                        <th>Operations</th>
-                        <th>Key Properties Required</th>
-                        <th>Concrete Example</th>
+                        <th style="width: 18%;">Structure</th>
+                        <th style="width: 22%;">Operations</th>
+                        <th style="width: 32%;">Key Properties Required</th>
+                        <th style="width: 28%;">Concrete Example</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -201,9 +201,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Fix broken LaTeX string escaping in algebraic structures inspector\n\n"
-        "Corrected unescaped backslashes in JavaScript template literals within \n"
-        "algebraic_structures.html to ensure KaTeX successfully parses math symbols."
+        "Widen Operations column in algebraic structures table\n\n"
+        "Set explicit column width percentages on the hierarchy comparison table in \n"
+        "algebraic_structures.html to give the Operations column more breathing room."
     )
 
     commands = [
@@ -217,7 +217,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing fixed algebraic structures subpage...")
+    print("Writing updated algebraic structures subpage...")
     write_structures_subpage()
     print("Updating index.html routing...")
     update_curriculum_index()
