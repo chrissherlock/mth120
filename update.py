@@ -3,9 +3,9 @@ import os
 import re
 import subprocess
 
-def strip_all_citations_from_repo():
+def remove_section_symbols():
     files_to_clean = ['week1.html', 'week2.html', 'index.html', 'update.py']
-    citation_pattern = re.compile(r'\+\]')
+    section_pattern = re.compile(r'\s*\(§[0-9]+\)')
 
     for filename in files_to_clean:
         if not os.path.exists(filename):
@@ -13,19 +13,19 @@ def strip_all_citations_from_repo():
         with open(filename, 'r', encoding='utf-8') as f:
             content = f.read()
 
-        cleaned_content, count = citation_pattern.subn('', content)
+        cleaned_content, count = section_pattern.subn('', content)
         if count > 0:
             with open(filename, 'w', encoding='utf-8') as f:
                 f.write(cleaned_content)
-            print(f"Stripped {count} citation(s) from {filename}.")
+            print(f"Successfully removed {count} section reference(s) from {filename}.")
         else:
-            print(f"No citations found in {filename}.")
+            print(f"No section references found in {filename}.")
 
 def execute_git_sync():
     commit_message = (
-        "Thoroughly strip all citation brackets from all HTML files and scripts\n\n"
-        "Removed all remaining markers across week1.html, week2.html,\n"
-        "index.html, and update.py to ensure a completely citation-free codebase."
+        "Remove textbook section references like from headings and TOC\n\n"
+        "Stripped out all section number markers across week1.html, week2.html,\n"
+        "and index.html for a cleaner, more approachable course layout."
     )
     commands = [
         ['git', 'add', 'week1.html', 'week2.html', 'index.html', 'update.py'],
@@ -37,8 +37,8 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    print("Cleaning all citations from repository...")
-    strip_all_citations_from_repo()
+    print("Removing section symbols (§N)...")
+    remove_section_symbols()
     print("Syncing with GitHub...")
     execute_git_sync()
-    print("Purge complete. All files are now 100% citation-free.")
+    print("Update complete.")
