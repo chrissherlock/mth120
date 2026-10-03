@@ -368,8 +368,70 @@ def write_week1_module():
                 </ul>
             </div>
 
-            <h3>Subsets and Power Sets</h3>
-            <p>Let $A$ and $B$ be sets. If every element of $A$ is also contained within $B$, we say $A$ is a <strong>subset</strong> of $B$, denoted $A \subseteq B$. If $A \subseteq B$ but $A \neq B$, $A$ is a <em>proper subset</em> ($A \subset B$). The <strong>power set</strong> of $A$, denoted $\mathcal{P}(A)$ or $2^A$, is the set of <em>all</em> subsets of $A$ (including the empty set $\emptyset$ and $A$ itself).</p>
+            <h3>Subsets and Power Sets Explained for Beginners</h3>
+            <p>To understand subsets, think of a club. Suppose you have a main club $B$ consisting of all students in your university studying computer science. Now, suppose club $A$ consists only of students in that same university studying computer science who also play chess. Because every single member of chess-playing computer science students ($A$) is also a computer science student ($B$), we say $A$ is a <strong>subset</strong> of $B$, written as:</p>
+            <p>$$A \subseteq B$$</p>
+
+            <div class="definition-box">
+                <p><strong>Key Rules About Subsets:</strong></p>
+                <ul>
+                    <li><strong>Every set is a subset of itself:</strong> $A \subseteq A$ (Every computer science student is a computer science student).</li>
+                    <li><strong>The Empty Set is a Subset of Everything:</strong> $\emptyset \subseteq A$ for any set $A$. Why? Because a subset claim asserts that *if* someone is in the empty set, they must be in $A$. Since the empty set has no members, this conditional statement is never violated! (A concept known as vacuously true).</li>
+                    <li><strong>Proper Subsets ($\subset$):</strong> If $A$ is a subset of $B$ but $A$ is strictly smaller than $B$ (meaning $B$ has at least one element that $A$ does not), we call $A$ a <em>proper subset</em>, denoted $A \subset B$.</li>
+                </ul>
+            </div>
+
+            <h3>Power Sets: The Collection of All Sub-Clubs</h3>
+            <p>If subsets are individual sub-clubs you can form, a <strong>power set</strong> is the ultimate master list containing <em>every single possible subset</em> you could ever make from a set. The power set of $A$ is denoted by $\mathcal{P}(A)$ or $2^A$.</p>
+
+            <p><strong>Let's walk through a concrete example:</strong><br>
+            Suppose your set is $A = \{1, 2\}$. What are all the possible subsets you can form by picking items from $A$?</p>
+            <ol>
+                <li>Take <strong>zero items</strong>: $\emptyset$ (the empty set).</li>
+                <li>Take <strong>one item</strong>: $\{1\}$ and $\{2\}$.</li>
+                <li>Take <strong>two items</strong>: $\{1, 2\}$.</li>
+            </ol>
+            <p>Bundling all these possible subsets into one master collection gives us the <strong>Power Set</strong> of $A$:</p>
+            <p>$$\mathcal{P}(A) = \{ \emptyset, \{1\}, \{2\}, \{1, 2\} \}$$</p>
+
+            <!-- POWER SET VISUALIZATION DIAGRAM -->
+            <div class="diagram-card" style="margin: 1.5rem 0; width: 100%; box-sizing: border-box;">
+                <h5>Visualizing the Power Set $\mathcal{P}(A)$ for $A = \{1, 2\}$</h5>
+                <svg viewBox="0 0 740 180">
+                    <rect x="15" y="10" width="710" height="160" rx="10" fill="#fffbeb" stroke="#fde68a" stroke-width="1.8"/>
+                    <text x="35" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#92400e" font-weight="bold">Master Collection: Power Set 𝒫(A) = 2ᴬ (Contains 4 Subsets)</text>
+
+                    <!-- Subset 1: Empty Set -->
+                    <g transform="translate(45, 50)">
+                        <rect x="0" y="0" width="135" height="95" rx="6" fill="#ffffff" stroke="#d97706" stroke-width="1.2"/>
+                        <text x="67.5" y="35" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold">∅</text>
+                        <text x="67.5" y="70" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b" text-anchor="middle">Zero elements</text>
+                    </g>
+                    <!-- Subset 2: {1} -->
+                    <g transform="translate(200, 50)">
+                        <rect x="0" y="0" width="135" height="95" rx="6" fill="#ffffff" stroke="#d97706" stroke-width="1.2"/>
+                        <text x="67.5" y="35" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold">{1}</text>
+                        <text x="67.5" y="70" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b" text-anchor="middle">One element</text>
+                    </g>
+                    <!-- Subset 3: {2} -->
+                    <g transform="translate(355, 50)">
+                        <rect x="0" y="0" width="135" height="95" rx="6" fill="#ffffff" stroke="#d97706" stroke-width="1.2"/>
+                        <text x="67.5" y="35" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold">{2}</text>
+                        <text x="67.5" y="70" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b" text-anchor="middle">One element</text>
+                    </g>
+                    <!-- Subset 4: {1, 2} -->
+                    <g transform="translate(510, 50)">
+                        <rect x="0" y="0" width="185" height="95" rx="6" fill="#ffffff" stroke="#d97706" stroke-width="1.2"/>
+                        <text x="92.5" y="35" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#b45309" font-weight="bold">{1, 2}</text>
+                        <text x="92.5" y="70" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#64748b" text-anchor="middle">All elements (A itself)</text>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="definition-box">
+                <p><strong>The Golden Rule of Power Set Sizes:</strong></p>
+                <p>If a finite set $A$ contains $n$ elements, its power set $\mathcal{P}(A)$ will always contain exactly $2^n$ elements. For example, if $A$ has 3 elements, its power set has $2^3 = 8$ subsets. This exponential growth is why power sets are denoted with exponent notation ($2^A$).</p>
+            </div>
 
             <div class="diagram-grid">
                 <div class="diagram-card">
@@ -681,30 +743,30 @@ def write_week1_module():
                     <h5>Boundedness (Upper & Lower Limits)</h5>
                     <svg viewBox="0 0 360 170">
                         <!-- Upper Bound M -->
-                        <line x1="25" y1="35" x2="335" y2="35" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"/>
+                        <line x1="25" y1="35" x2="335" y2="35" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4"/>
                         <text x="35" y="28" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#ef4444" font-weight="bold">Upper Bound M</text>
                         <!-- Lower Bound m -->
-                        <line x1="25" y1="135" x2="335" y2="135" stroke="#3b82f6" stroke-width="2" stroke-dasharray="4"/>
+                        <line x1="25" y1="135" x2="335" y2="135" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4"/>
                         <text x="35" y="152" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#3b82f6" font-weight="bold">Lower Bound m</text>
                         <!-- Points trapped inside -->
-                        <circle cx="55" cy="115" r="6" fill="#d97706"/>
-                        <circle cx="115" cy="95" r="6" fill="#d97706"/>
-                        <circle cx="175" cy="75" r="6" fill="#d97706"/>
-                        <circle cx="235" cy="65" r="6" fill="#d97706"/>
-                        <circle cx="295" cy="60" r="6" fill="#d97706"/>
-                        <path d="M 55 115 L 115 95 L 175 75 L 235 65 L 295 60" fill="none" stroke="#d97706" stroke-width="2"/>
+                        <circle cx="55" cy="115" r="5" fill="#d97706"/>
+                        <circle cx="115" cy="95" r="5" fill="#d97706"/>
+                        <circle cx="175" cy="75" r="5" fill="#d97706"/>
+                        <circle cx="235" cy="65" r="5" fill="#d97706"/>
+                        <circle cx="295" cy="60" r="5" fill="#d97706"/>
+                        <path d="M 55 115 L 115 95 L 175 75 L 235 65 L 295 60" fill="none" stroke="#d97706" stroke-width="1.5"/>
                     </svg>
                 </div>
                 <div class="diagram-card">
                     <h5>Monotonicity (Increasing Trend)</h5>
                     <svg viewBox="0 0 360 170">
-                        <line x1="30" y1="140" x2="330" y2="140" stroke="#94a3b8" stroke-width="1.8"/>
-                        <line x1="30" y1="140" x2="30" y2="20" stroke="#94a3b8" stroke-width="1.8"/>
-                        <circle cx="70" cy="120" r="6" fill="#10b981"/>
-                        <circle cx="130" cy="92" r="6" fill="#10b981"/>
-                        <circle cx="190" cy="64" r="6" fill="#10b981"/>
-                        <circle cx="250" cy="42" r="6" fill="#10b981"/>
-                        <path d="M 70 120 L 130 92 L 190 64 L 250 42" fill="none" stroke="#10b981" stroke-width="2"/>
+                        <line x1="30" y1="140" x2="330" y2="140" stroke="#94a3b8" stroke-width="1.2"/>
+                        <line x1="30" y1="140" x2="30" y2="20" stroke="#94a3b8" stroke-width="1.2"/>
+                        <circle cx="70" cy="120" r="5" fill="#10b981"/>
+                        <circle cx="130" cy="92" r="5" fill="#10b981"/>
+                        <circle cx="190" cy="64" r="5" fill="#10b981"/>
+                        <circle cx="250" cy="42" r="5" fill="#10b981"/>
+                        <path d="M 70 120 L 130 92 L 190 64 L 250 42" fill="none" stroke="#10b981" stroke-width="1.5"/>
                         <text x="140" y="158" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#475569" font-weight="600">aₙ ≤ aₙ₊₁ (Increasing)</text>
                     </svg>
                 </div>
@@ -770,29 +832,29 @@ def write_week1_module():
                 <!-- Synchronized Scaled Visual Canvas -->
                 <div class="canvas-container">
                     <svg id="fw-canvas" viewBox="0 0 740 180">
-                        <line x1="50" y1="90" x2="690" y2="90" stroke="#94a3b8" stroke-dasharray="3" stroke-width="1.8"/>
+                        <line x1="50" y1="90" x2="690" y2="90" stroke="#94a3b8" stroke-dasharray="3" stroke-width="1.2"/>
                         <text x="700" y="94" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#64748b" font-weight="700">L</text>
 
                         <!-- Epsilon Band highlight -->
-                        <rect id="fw-svg-epsband" x="50" y="55" width="640" height="70" fill="#fde68a" opacity="0.3" stroke="#f59e0b" stroke-dasharray="4" stroke-width="1.8"/>
+                        <rect id="fw-svg-epsband" x="50" y="55" width="640" height="70" fill="#fde68a" opacity="0.3" stroke="#f59e0b" stroke-dasharray="4" stroke-width="1.2"/>
                         <text id="fw-svg-epslbl1" x="65" y="48" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#d97706" font-weight="bold">+ϵ</text>
                         <text id="fw-svg-epslbl2" x="65" y="142" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#d97706" font-weight="bold">-ϵ</text>
 
                         <!-- N Threshold line -->
-                        <line id="fw-svg-nline" x1="330" y1="20" x2="330" y2="160" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="5" opacity="0.2"/>
+                        <line id="fw-svg-nline" x1="330" y1="20" x2="330" y2="160" stroke="#ef4444" stroke-width="1.8" stroke-dasharray="5" opacity="0.2"/>
                         <text id="fw-svg-nlbl" x="338" y="34" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#ef4444" font-weight="bold" opacity="0.2">Threshold N</text>
 
                         <!-- Tail Points -->
                         <g id="fw-svg-pts">
-                            <circle cx="120" cy="25" r="6" fill="#94a3b8" opacity="0.5"/>
-                            <circle cx="190" cy="42" r="6" fill="#94a3b8" opacity="0.5"/>
-                            <circle cx="260" cy="55" r="6" fill="#94a3b8" opacity="0.5"/>
-                            <circle cx="330" cy="55" r="6" fill="#fbbf24" stroke="#d97706" stroke-width="2"/>
+                            <circle cx="120" cy="25" r="5" fill="#94a3b8" opacity="0.5"/>
+                            <circle cx="190" cy="42" r="5" fill="#94a3b8" opacity="0.5"/>
+                            <circle cx="260" cy="55" r="5" fill="#94a3b8" opacity="0.5"/>
+                            <circle cx="330" cy="55" r="5" fill="#fbbf24" stroke="#d97706" stroke-width="1.5"/>
 
-                            <circle cx="400" cy="74" r="7" fill="#10b981" id="pt-trapped-1"/>
-                            <circle cx="470" cy="84" r="7" fill="#10b981" id="pt-trapped-2"/>
-                            <circle cx="540" cy="88" r="7" fill="#10b981" id="pt-trapped-3"/>
-                            <circle cx="610" cy="89" r="7" fill="#10b981" id="pt-trapped-4"/>
+                            <circle cx="400" cy="74" r="6" fill="#10b981" id="pt-trapped-1"/>
+                            <circle cx="470" cy="84" r="6" fill="#10b981" id="pt-trapped-2"/>
+                            <circle cx="540" cy="88" r="6" fill="#10b981" id="pt-trapped-3"/>
+                            <circle cx="610" cy="89" r="6" fill="#10b981" id="pt-trapped-4"/>
                         </g>
                     </svg>
                 </div>
@@ -1601,7 +1663,7 @@ def update_curriculum_index():
 
     updated_content = content.replace(target, replacement)
 
-    with open('index.html', 'w') as f:
+    with open('index.html', 'w' ) as f:
         f.write(updated_content)
 
 def execute_git_sync():
