@@ -26,7 +26,7 @@ def write_week1_module():
 
         /* Interactive Simulator Styles */
         .simulator { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 2rem; }
-        .telemetry { background: var(--telemetry-bg); color: var(--telemetry-text); padding: 0.75rem 1.5rem; font-family: monospace; display: flex; gap: 2rem; font-size: 0.9rem; }
+        .telemetry { background: var(--telemetry-bg); color: var(--telemetry-text); padding: 0.75rem 1.5rem; font-family: monospace; display: flex; gap: 2rem; font-size: 0.9rem; align-items: center;}
         .canvas-container { padding: 2rem; background: #f1f5f9; display: flex; justify-content: center; border-bottom: 1px solid var(--border); }
         .controls-pane { display: flex; gap: 2rem; padding: 1.5rem; background: var(--card); border-bottom: 1px solid var(--border); align-items: center; }
         .nav-buttons { display: flex; gap: 0.5rem; }
@@ -56,18 +56,28 @@ def write_week1_module():
             <div class="simulator">
                 <div class="telemetry">
                     <span>PHASE: <span id="tel-phase">Initialization</span></span>
-                    <span>SEQ: <span id="tel-seq">a_n = 1/n</span></span>
-                    <span>n = <span id="tel-n">1</span></span>
-                    <span>a_n = <span id="tel-val">1.000</span></span>
-                    <span>&epsilon; = <span id="tel-eps">0.2</span></span>
+                    <span>SEQ: <span id="tel-seq">$a_n = \frac{1}{n}$</span></span>
+                    <span>$n =$ <span id="tel-n">1</span></span>
+                    <span>$a_n =$ <span id="tel-val">$1.000$</span></span>
+                    <span>$\epsilon =$ <span id="tel-eps">$0.2$</span></span>
                 </div>
 
                 <div class="canvas-container">
                     <svg id="plot" width="600" height="200" viewBox="0 0 600 200">
+                        <!-- Axes -->
                         <line x1="40" y1="160" x2="580" y2="160" stroke="#94a3b8" stroke-width="2"/>
                         <line x1="40" y1="20" x2="40" y2="160" stroke="#94a3b8" stroke-width="2"/>
+
+                        <!-- Axis Labels -->
+                        <text x="585" y="155" font-family="serif" font-style="italic" font-size="14" fill="#64748b">n</text>
+                        <text x="15" y="15" font-family="serif" font-style="italic" font-size="14" fill="#64748b">a_n</text>
+                        <text x="25" y="165" font-family="sans-serif" font-size="12" fill="#64748b">0</text>
+
+                        <!-- Epsilon Band (Dynamic) -->
                         <rect id="eps-band" x="40" y="100" width="540" height="60" fill="#bae6fd" opacity="0.5"/>
+                        <!-- Threshold Line (Dynamic) -->
                         <line id="n-threshold" x1="200" y1="20" x2="200" y2="160" stroke="#ef4444" stroke-width="2" stroke-dasharray="4" opacity="0"/>
+                        <!-- Points will be injected here -->
                         <g id="points-group"></g>
                     </svg>
                 </div>
@@ -114,33 +124,32 @@ def write_week1_module():
             {
                 phase: "Initialization", n: 1,
                 summary: "Setting the boundary constraint.",
-                what: "The sequence initializes. We establish an arbitrary error band $\\epsilon = 0.2$ (the blue zone).",
+                what: "The sequence initializes. We establish an arbitrary error band $\epsilon = 0.2$ (the blue zone).",
                 why: "We must demonstrate that the sequence can permanently enter and remain within *any* arbitrary boundary we set around $L=0$."
             },
             {
                 phase: "Iteration", n: 3,
                 summary: "Terms approach but remain outside the boundary.",
-                what: "We calculate $a_2$ and $a_3$. The values are decreasing but still strictly greater than $\\epsilon$.",
-                why: "The sequence is monotonic decreasing, but we have not yet found the index $N$ where the constraint $\vert{}a_n - 0\vert{} < \\epsilon$ is satisfied."
+                what: "We calculate $a_2$ and $a_3$. The values are decreasing but still strictly greater than $\epsilon$.",
+                why: "The sequence is monotonic decreasing, but we have not yet found the index $N$ where the constraint $\vert{}a_n - 0\vert{} < \epsilon$ is satisfied."
             },
             {
                 phase: "Threshold Discovery", n: 5,
                 summary: "Calculating the critical index N.",
                 what: "We set $1/n < 0.2$, algebraically rearranging to $n > 1/0.2$, meaning $n > 5$. We mark $N=5$ with the red threshold line.",
-                why: "We are reverse-engineering the required index based on the chosen $\\epsilon$. If $\\epsilon$ changes, $N$ must adapt mathematically."
+                why: "We are reverse-engineering the required index based on the chosen $\epsilon$. If $\epsilon$ changes, $N$ must adapt mathematically."
             },
             {
                 phase: "Convergence Verification", n: 8,
                 summary: "All subsequent terms remain trapped within epsilon.",
-                what: "For all $n > 5$ (e.g., $n=6, 7, 8$), the points fall strictly inside the blue $\\epsilon$ band.",
-                why: "This fulfills the universal quantifier $\\forall n > N$. Because we can perform this algebraic mapping for *any* $\\epsilon > 0$, the limit is proven."
+                what: "For all $n > 5$ (e.g., $n=6, 7, 8$), the points fall strictly inside the blue $\epsilon$ band.",
+                why: "This fulfills the universal quantifier $\forall n > N$. Because we can perform this algebraic mapping for *any* $\epsilon > 0$, the limit is proven."
             }
         ];
 
         function changeSeq() {
             state.seq = document.getElementById('seq-toggle').value;
-            document.getElementById('tel-seq').innerText = state.seq === 'reciprocal' ? 'a_n = 1/n' : 'a_n = 2^(-n)';
-            renderCanvas();
+            updateUI();
         }
 
         function step(dir) {
@@ -154,15 +163,19 @@ def write_week1_module():
 
         function updateUI() {
             const current = narratives[state.step];
+
+            // Dynamic KaTeX injection for the telemetry values
+            const seqMath = state.seq === 'reciprocal' ? '$a_n = \\frac{1}{n}$' : '$a_n = 2^{-n}$';
+            document.getElementById('tel-seq').innerHTML = seqMath;
+            document.getElementById('tel-val').innerHTML = '$' + data[state.seq][current.n - 1].toFixed(3) + '$';
+
             document.getElementById('tel-phase').innerText = current.phase;
             document.getElementById('tel-n').innerText = current.n;
-            document.getElementById('tel-val').innerText = data[state.seq][current.n - 1].toFixed(3);
 
             document.getElementById('step-summary').innerHTML = `<strong>Scenario:</strong> ${current.summary}`;
             document.getElementById('pane-what').innerHTML = current.what;
             document.getElementById('pane-why').innerHTML = current.why;
 
-            // Re-render math with the correct delimiters config
             if(window.renderMathInElement) {
                 renderMathInElement(document.body, {
                     delimiters: [
@@ -211,30 +224,12 @@ def write_week1_module():
     with open('week1.html', 'w') as f:
         f.write(html_content)
 
-def update_curriculum_index():
-    if not os.path.exists('index.html'):
-        print("index.html not found in current directory. Please run in root.")
-        return
-
-    with open('index.html', 'r') as f:
-        content = f.read()
-
-    target = '<a href="#" class="module-link">View Module</a>'
-    replacement = '<a href="${item.week === 1 ? \'week1.html\' : \'#\'}" class="module-link">View Module</a>'
-
-    updated_content = content.replace(target, replacement)
-
-    with open('index.html', 'w') as f:
-        f.write(updated_content)
-
 def execute_git_sync():
     commit_message = (
-        "Fix KaTeX dynamic rendering and JS LaTeX escaping\n\n"
-        "Corrected JavaScript string escaping by doubling backslashes for LaTeX \n"
-        "commands inside the narratives array to prevent JS parser consumption. \n"
-        "Updated the renderMathInElement call in updateUI() to include the explicit \n"
-        "delimiter configuration, ensuring inline math ($) renders correctly when \n"
-        "navigating simulator steps."
+        "Add mathematical notation and axis labels to simulator\n\n"
+        "Injected KaTeX delimiters directly into the JavaScript telemetry updates\n"
+        "to ensure sequences and values render properly as equations. Added SVG \n"
+        "text nodes to the canvas to label the x (n) and y (a_n) axes."
     )
 
     commands = [
@@ -250,8 +245,6 @@ def execute_git_sync():
 if __name__ == "__main__":
     print("Writing Week 1 module...")
     write_week1_module()
-    print("Updating index.html routing...")
-    update_curriculum_index()
     print("Committing and pushing to GitHub...")
     execute_git_sync()
     print("Deployment complete.")
