@@ -114,24 +114,10 @@ def write_week1_module():
             align-items: center;
             gap: 0.5rem;
         }
-        .widget-instructions ol {
-            margin: 0.5rem 0 0.85rem 1.25rem;
-            padding: 0;
-        }
-        .widget-instructions li {
-            margin-bottom: 0.45rem;
-            font-size: 0.95rem;
-            color: #334155;
-        }
-        .widget-instructions ul {
-            margin: 0.35rem 0 0.5rem 1.25rem;
-            padding: 0;
-        }
-        .widget-instructions ul li {
-            margin-bottom: 0.3rem;
-            font-size: 0.92rem;
-            color: #475569;
-        }
+        .widget-instructions ol { margin: 0.5rem 0 0.85rem 1.25rem; padding: 0; }
+        .widget-instructions li { margin-bottom: 0.45rem; font-size: 0.95rem; color: #334155; }
+        .widget-instructions ul { margin: 0.35rem 0 0.5rem 1.25rem; padding: 0; }
+        .widget-instructions ul li { margin-bottom: 0.3rem; font-size: 0.92rem; color: #475569; }
 
         .game-box, .stepper-walkthrough {
             border: 1px solid var(--border);
@@ -465,6 +451,7 @@ def write_week1_module():
                     <div class="notation-item"><span class="notation-sym">$\subset$</span><span class="notation-desc">Strict set containment: $\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$</span></div>
                     <div class="notation-item"><span class="notation-sym">$[a, b]$</span><span class="notation-desc">Closed interval: $\{x \in \mathbb{R} \mid a \le x \le b\}$</span></div>
                     <div class="notation-item"><span class="notation-sym">$(a, b)$</span><span class="notation-desc">Open interval: $\{x \in \mathbb{R} \mid a < x < b\}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$(S, \circ)$</span><span class="notation-desc">Algebraic structure: set $S$ equipped with binary operation $\circ$</span></div>
                 </div>
             </div>
 
@@ -485,15 +472,16 @@ def write_week1_module():
                 </svg>
             </div>
 
-            <!-- ASIDE: SOLVING EQUATIONS -->
+            <!-- ALGEBRAIC STRUCTURES & EQUATIONS ASIDE -->
             <div class="aside-box">
-                <h4>💡 Context: Expanding Systems to Solve Equations</h4>
-                <p>Examining equations that fail to have solutions in smaller systems illustrates why larger systems are constructed:</p>
+                <h4>💡 Aside: Groups, Rings, Fields, and Solvability</h4>
+                <p>In abstract algebra, mathematicians classify number systems by the algebraic properties their operations obey:</p>
                 <ul>
-                    <li>In $\mathbb{N}$, the equation $x + 5 = 2$ has no solution. Adjoining additive inverses forms $\mathbb{Z}$.</li>
-                    <li>In $\mathbb{Z}$, the equation $2x = 3$ has no solution. Adjoining multiplicative inverses forms the field of rationals $\mathbb{Q}$.</li>
-                    <li>In $\mathbb{Q}$, the equation $x^2 = 2$ has no solution. Adjoining irrational limits forms the real numbers $\mathbb{R}$.</li>
+                    <li><strong>Additive Group ($\mathbb{Z}$):</strong> A set with an associative addition operation, an identity element ($0$), and additive inverses ($a + (-a) = 0$). Subtraction is solvable: solving $x + 5 = 2$ requires additive inverses, giving $x = -3 \in \mathbb{Z}$.</li>
+                    <li><strong>Commutative Ring ($\mathbb{Z}$):</strong> A system with two operations where addition forms an abelian group and multiplication is associative, commutative, and distributive over addition ($a(b+c) = ab + ac$). However, multiplicative inverses are not guaranteed: solving $2x = 3$ fails inside $\mathbb{Z}$.</li>
+                    <li><strong>Field ($\mathbb{Q}, \mathbb{R}$):</strong> A commutative ring where every non-zero element possesses a multiplicative inverse ($a \cdot a^{-1} = 1$), permitting division by any non-zero element. Solving $2x = 3$ yields $x = 3/2 \in \mathbb{Q}$.</li>
                 </ul>
+                <p style="margin-top: 1rem;"><a href="algebraic_structures.html" style="color: var(--accent); font-weight: bold; text-decoration: none;">&rarr; Explore our Interactive Deep Dive on Groups, Rings, and Fields</a></p>
             </div>
 
             <h3>Real Numbers and Completeness</h3>
@@ -1026,7 +1014,7 @@ def write_week1_module():
                 <line x1="${originX}" y1="240" x2="${originX}" y2="25" stroke="#64748b" stroke-width="1.0" marker-end="url(#game-arrow)"/>
                 <text x="${originX}" y="18" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="13" fill="#64748b" font-weight="600">a<tspan dy="3" font-size="10">n</tspan></text>
 
-                <line x1="${originX}" y1="715" x2="${originX}" y2="${originY}" stroke="#64748b" stroke-width="1.0" marker-end="url(#game-arrow)"/>
+                <line x1="${originX}" y1="${originY}" x2="715" y2="${originY}" stroke="#64748b" stroke-width="1.0" marker-end="url(#game-arrow)"/>
                 <text x="722" y="134" font-family="ui-sans-serif, system-ui, sans-serif" font-style="italic" font-size="13" fill="#64748b" font-weight="600">n</text>
             `;
 
@@ -1041,7 +1029,7 @@ def write_week1_module():
             }
 
             const maxN = Math.max(14, reqN + 4);
-            let scaleFactor = eps <= 0.05 ? 900 : (eps <= 0.1 ? 550 : 220);
+            const scaleFactor = eps <= 0.05 ? 900 : (eps <= 0.1 ? 550 : 220);
 
             const topY = originY - (eps * scaleFactor);
             const bottomY = originY + (eps * scaleFactor);
@@ -1110,9 +1098,9 @@ def write_week1_module():
 
 def execute_git_sync():
     commit_message = (
-        "Add guided walkthrough instructions to epsilon-N widget in week1.html\n\n"
-        "Inserted student-facing instructions covering controls, milestone cutoff\n"
-        "observation, and conceptual takeaways directly above the widget."
+        "Restore Groups, Rings, and Fields aside in Section 2 of week1.html\n\n"
+        "Re-inserted the abstract algebra structure definitions and interactive\n"
+        "deep-dive link alongside the equation solvability notes."
     )
 
     commands = [
