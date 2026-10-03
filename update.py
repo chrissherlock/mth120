@@ -148,23 +148,23 @@ def write_structures_subpage():
         function inspectSystem(sys) {
             const output = document.getElementById('inspector-output');
             if (sys === 'N') {
-                output.innerHTML = `<strong>System: Natural Numbers ($\mathbb{N}$)</strong><br>` +
+                output.innerHTML = `<strong>System: Natural Numbers ($\\mathbb{N}$)</strong><br>` +
                     `• Addition Group? <span style="color: #ef4444; font-weight: bold;">NO</span> (Lacks identity 0 and additive inverses like -1).<br>` +
                     `• Ring? <span style="color: #ef4444; font-weight: bold;">NO</span> (Fails group axioms under addition).<br>` +
                     `• Field? <span style="color: #ef4444; font-weight: bold;">NO</span>.<br>` +
-                    `<em>Example failure:</em> You cannot solve $x + 5 = 2$ in $\mathbb{N}$ because $x = -3 \notin \mathbb{N}$.`;
+                    `<em>Example failure:</em> You cannot solve $x + 5 = 2$ in $\\mathbb{N}$ because $x = -3 \\notin \\mathbb{N}$.`;
             } else if (sys === 'Z') {
-                output.innerHTML = `<strong>System: Integers ($\mathbb{Z}$)</strong><br>` +
+                output.innerHTML = `<strong>System: Integers ($\\mathbb{Z}$)</strong><br>` +
                     `• Addition Group? <span style="color: #10b981; font-weight: bold;">YES</span> (Closed, associative, identity 0, inverses like -5 exist).<br>` +
                     `• Commutative Ring? <span style="color: #10b981; font-weight: bold;">YES</span> (Addition forms a group, multiplication is associative/commutative, and distributes over addition).<br>` +
                     `• Field? <span style="color: #ef4444; font-weight: bold;">NO</span> (Fails multiplicative inverses).<br>` +
-                    `<em>Example failure:</em> You cannot solve $3x = 1$ in $\mathbb{Z}$ because $x = \\frac{1}{3} \notin \mathbb{Z}$.`;
+                    `<em>Example failure:</em> You cannot solve $3x = 1$ in $\\mathbb{Z}$ because $x = \\frac{1}{3} \\notin \\mathbb{Z}$.`;
             } else if (sys === 'Q') {
-                output.innerHTML = `<strong>System: Rational Numbers ($\mathbb{Q}$)</strong><br>` +
+                output.innerHTML = `<strong>System: Rational Numbers ($\\mathbb{Q}$)</strong><br>` +
                     `• Addition Group? <span style="color: #10b981; font-weight: bold;">YES</span>.<br>` +
                     `• Commutative Ring? <span style="color: #10b981; font-weight: bold;">YES</span>.<br>` +
                     `• Field? <span style="color: #10b981; font-weight: bold;">YES</span>.<br>` +
-                    `<em>Example success:</em> For any non-zero fraction $\\frac{a}{b} \\in \\mathbb{Q}$, its multiplicative reciprocal $\\frac{b}{a}$ also lives inside $\mathbb{Q}$!`;
+                    `<em>Example success:</em> For any non-zero fraction $\\frac{a}{b} \\in \\mathbb{Q}$, its multiplicative reciprocal $\\frac{b}{a}$ also lives inside $\\mathbb{Q}$!`;
             }
 
             if(window.renderMathInElement) {
@@ -201,9 +201,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Fix raw LaTeX leakage in Algebraic Structure Inspector output\n\n"
-        "Wrapped LaTeX strings in proper delimiters and invoked KaTeX rendering on the \n"
-        "inspector output container upon update, ensuring math symbols render cleanly."
+        "Fix broken LaTeX string escaping in algebraic structures inspector\n\n"
+        "Corrected unescaped backslashes in JavaScript template literals within \n"
+        "algebraic_structures.html to ensure KaTeX successfully parses math symbols."
     )
 
     commands = [
