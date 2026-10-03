@@ -285,8 +285,14 @@
                 `• Skeptic's Error Tolerance: $\\epsilon = ${eps}$<br>` +
                 `• System Calculation: Solve $\\frac{1}{n} < ${eps} \\implies n > \\frac{1}{${eps}} = ${1/eps}$<br>` +
                 `• <strong>Winning Threshold:</strong> $N = ${requiredN}$. All terms for $n > ${requiredN}$ are strictly trapped within $\\pm ${eps}$ of $0$!`;
+
             if(window.renderMathInElement) {
-                renderMathInElement(output);
+                renderMathInElement(output, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ]
+                });
             }
         }
 

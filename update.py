@@ -293,8 +293,14 @@ def write_week1_module():
                 `• Skeptic's Error Tolerance: $\\epsilon = ${eps}$<br>` +
                 `• System Calculation: Solve $\\frac{1}{n} < ${eps} \\implies n > \\frac{1}{${eps}} = ${1/eps}$<br>` +
                 `• <strong>Winning Threshold:</strong> $N = ${requiredN}$. All terms for $n > ${requiredN}$ are strictly trapped within $\\pm ${eps}$ of $0$!`;
+
             if(window.renderMathInElement) {
-                renderMathInElement(output);
+                renderMathInElement(output, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ]
+                });
             }
         }
 
@@ -425,10 +431,10 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Embed interactive Epsilon Challenge Game in Week 1 module\n\n"
-        "Added a dedicated interactive widget where users can test different \n"
-        "epsilon tolerances against a sequence, challenging the system to dynamically \n"
-        "calculate and display the required threshold index N."
+        "Fix raw LaTeX leakage in Epsilon Challenge Game output\n\n"
+        "Called KaTeX renderMathInElement on the challenge game output container \n"
+        "immediately after updating its HTML content, ensuring mathematical symbols \n"
+        "render properly instead of displaying raw LaTeX strings."
     )
 
     commands = [
