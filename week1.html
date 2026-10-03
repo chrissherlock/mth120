@@ -33,14 +33,19 @@
         .diagram-card h5 { margin: 0 0 0.75rem 0; color: #b45309; font-size: 0.95rem; text-align: center; white-space: nowrap; }
 
         /* Dual-Track Layout */
-        .dual-track-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; margin-bottom: 2rem; }
+        .dual-track-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; margin-bottom: 1.5rem; }
         .track-card { padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border); }
         .track-formal { background: var(--track1-bg); border-color: #fde68a; }
         .track-applied { background: var(--track2-bg); border-color: #fed7aa; }
         .track-card h4 { margin-top: 0; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; color: #b45309; }
 
+        .simulator-guide { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .simulator-guide h4 { margin-top: 0; color: #b45309; font-size: 1.05rem; }
+        .simulator-guide ol { margin: 0.5rem 0 0 1.25rem; padding: 0; }
+        .simulator-guide li { margin-bottom: 0.5rem; }
+
         /* Interactive Simulator & Game Styles */
-        .simulator, .game-box { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 2rem; background: var(--card); box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .simulator, .game-box { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 1.5rem; background: var(--card); box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .game-header { background: #0f172a; color: #fbbf24; padding: 1rem 1.5rem; font-family: monospace; font-size: 0.95rem; display: flex; justify-content: space-between; align-items: center; }
         .game-body { padding: 1.5rem; background: #f8fafc; display: flex; flex-direction: column; gap: 1rem; border-bottom: 1px solid var(--border); }
         .game-explainer { background: #fef3c7; border: 1px solid #fde68a; padding: 1.25rem; border-radius: 6px; font-size: 0.95rem; color: #92400e; margin-bottom: 0.5rem; line-height: 1.7; }
@@ -471,20 +476,17 @@
                 </div>
             </div>
 
-            <p style="margin-top: 2rem;">To explore these mechanics further across multiple architectures, use the <strong>Dual-Track Simulator</strong> below:</p>
-
-            <div class="dual-track-grid">
-                <div class="track-card track-formal">
-                    <h3>📐 Track 1: Abstract Formalism (Pure Theory)</h3>
-                    <p>We say $\lim_{n\to\infty} a_n = L$ if:</p>
-                    <p>$$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad \forall n > N, \quad |a_n - L| < \epsilon$$</p>
-                    <p>This universal-existential quantifier structure proves that points permanently enter and remain within an arbitrary neighborhood around $L$.</p>
-                </div>
-                <div class="track-card track-applied">
-                    <h3>🎛 Track 2: Applied Mechanics (Numerical Analog)</h3>
-                    <p>Imagine tracking a numerical error-correction stream where successive approximation residuals represent our sequence ($a_n$).</p>
-                    <p>We want total error eradication ($L=0$), but operational performance requires proving the recurrence relation reliably drops residuals beneath an acceptable tolerance threshold ($\epsilon = 0.2$) past a specific execution index ($N$).</p>
-                </div>
+            <!-- DUAL-TRACK SIMULATOR GUIDE AND PURPOSE -->
+            <div class="simulator-guide">
+                <h4>🎛 Purpose &amp; Instructions for the Dual-Track Simulator</h4>
+                <p><strong>What is this?</strong> The simulator below bridges pure mathematical theory (Track 1) with practical numerical engineering (Track 2). It lets you step through how sequence convergence operates under the hood, showing both the logical proof requirements and the real-world error-correction mechanics side by side.</p>
+                <p><strong>How to use it:</strong></p>
+                <ol>
+                    <li><strong>Compare Architectures:</strong> Use the dropdown in the bottom right to switch between a <em>Linear Attenuator ($a_n = 1/n$)</em> and an <em>Exponential Decay ($a_n = 2^{-n}$)</em> stream.</li>
+                    <li><strong>Step Through Phases:</strong> Click <strong>Next Step</strong> to advance from Initialization through Threshold Discovery to final Convergence Verification.</li>
+                    <li><strong>Analyze Telemetry:</strong> Track the live status bar at the top for current position indices ($n$), active values ($a_n$), and error tolerances ($\epsilon$).</li>
+                    <li><strong>Read Paired Panes:</strong> Examine the lower explanation panels to understand both *what* mechanical operations are occurring and *why* real analysis axioms require them.</li>
+                </ol>
             </div>
 
             <div class="simulator">
@@ -701,7 +703,7 @@
                 phase: "Convergence Verification", n: 8, indexVal: 8,
                 summary: "<strong>Goal:</strong> Fulfill the universal quantifier condition to formally certify the limit.",
                 what: "<p><strong>Abstract Formalism:</strong> For all subsequent indices $n > N$, terms remain strictly trapped within the $\\epsilon$ neighborhood.</p><p><strong>Applied Mechanics:</strong> The residual error remains flat and negligible across all further computation steps.</p>",
-                why: "<p><strong>Formal Rationale:</strong> This satisfies $\\forall n > N$. Because this inequality holds for <em>any</i> arbitrary $\\epsilon > 0$, the limit $\\lim_{n\\to\\infty} a_n = L$ is verified.</p><p><strong>System Constraint:</strong> Guarantees long-term numerical stability against unexpected divergence.</p>"
+                why: "<p><strong>Formal Rationale:</strong> This satisfies $\\forall n > N$. Because this inequality holds for <em>any</em> arbitrary $\\epsilon > 0$, the limit $\\lim_{n\\to\\infty} a_n = L$ is verified.</p><p><strong>System Constraint:</strong> Guarantees long-term numerical stability against unexpected divergence.</p>"
             }
         ];
 
