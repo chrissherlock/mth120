@@ -2,197 +2,16 @@
 import os
 import subprocess
 
-def write_complete_week1_from_scratch():
-    html_content = r"""<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Week 1: Sets, Numbers, and Sequences | MTHS120</title>
-    <!-- KaTeX Integration -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
-    <style>
-        :root {
-            --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
-            --accent: #d97706; --accent-hover: #b45309;
-            --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        }
-        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
-        .container { max-width: 1200px; margin: 0 auto; }
-        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; }
-        .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
+def update_derived_sequences_section():
+    filepath = 'week1.html'
+    if not os.path.exists(filepath):
+        print(f"Error: {filepath} not found.")
+        return
 
-        .intro-lead { font-size: 1.1rem; color: #1e293b; line-height: 1.7; margin-bottom: 1.5rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-        .toc-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.75rem; margin: 1.75rem 0 2.5rem 0; }
-        .toc-box h4 { margin: 0 0 0.75rem 0; color: #92400e; font-size: 1.05rem; }
-        .toc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.5rem 1.5rem; margin: 0; padding-left: 1.25rem; }
-        .toc-grid li { margin-bottom: 0.35rem; font-size: 0.95rem; }
-        .toc-grid a { color: #b45309; text-decoration: none; font-weight: 500; }
-        .toc-grid a:hover { text-decoration: underline; color: var(--accent-hover); }
+    with open(filepath, 'r', encoding='utf-8') as f:
+        content = f.read()
 
-        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; font-family: var(--font-ui); scroll-margin-top: 2rem; }
-        h3 { color: #1e293b; margin-top: 1.5rem; font-family: var(--font-ui); scroll-margin-top: 2rem; }
-
-        .infobox { background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.25rem 0 1.75rem 0; }
-        .infobox h4 { margin: 0 0 0.85rem 0; color: #0f172a; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-ui); }
-        .notation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 0.85rem 1.75rem; font-size: 0.95rem; }
-        .notation-item { display: grid; grid-template-columns: minmax(130px, max-content) 1fr; gap: 0.75rem; align-items: center; }
-        .notation-sym { font-weight: 600; color: var(--accent); white-space: nowrap; display: flex; justify-content: center; align-items: center; text-align: center; }
-        .notation-desc { min-width: 0; word-break: break-word; line-height: 1.5; color: #334155; }
-        .infobox-intro { font-size: 0.93rem; color: #475569; line-height: 1.6; margin: 0 0 1.25rem 0; padding-bottom: 0.85rem; border-bottom: 1px solid #e2e8f0; }
-
-        .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-        .aside-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #b45309; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
-        .aside-box h4 { margin-top: 0; color: #b45309; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>Week 1: Sets, Numbers, and Sequences</h1>
-            <a href="index.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">&larr; Back to Curriculum Index</a>
-        </div>
-
-        <div class="module-content">
-            <div class="intro-lead">
-                Welcome to Week 1 of MTHS120. This module establishes set theory foundations, functions, Peano's axioms for natural numbers, real number completeness, sequence behavior, sums, and derived sequences.
-            </div>
-
-            <!-- TABLE OF CONTENTS -->
-            <div class="toc-box">
-                <h4>📌 Module Table of Contents</h4>
-                <ul class="toc-grid">
-                    <li><a href="#section-sets">1. Sets and Functions</a></li>
-                    <li><a href="#section-numbers">2. Number Systems and Completeness</a></li>
-                    <li><a href="#section-sequences">3. Sequences</a></li>
-                    <li><a href="#section-sums">4. Sums and Partial Sums</a></li>
-                    <li><a href="#section-derived">5. Derived Sequences</a></li>
-                </ul>
-            </div>
-
-            <!-- SECTION 1 -->
-            <h2 id="section-sets">1. Sets and Functions</h2>
-            <div class="infobox">
-                <h4>📖 Notation Reference: Sets &amp; Functions</h4>
-                <div class="infobox-intro">
-                    <strong>Don't worry if this feels abstract at first:</strong> Set theory is simply the friendly art of grouping things together, and functions are just reliable rules that match an input to an output.
-                </div>
-                <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$x \in A$</span><span class="notation-desc">$x$ is an element of set $A$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$A \subseteq B$</span><span class="notation-desc">$A$ is a subset of $B$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$A \cup B$</span><span class="notation-desc">Union of sets $A$ and $B$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$A \cap B$</span><span class="notation-desc">Intersection of sets $A$ and $B$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$A \setminus B$</span><span class="notation-desc">Set difference (relative complement)</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span style="white-space: nowrap;">($A \times B$)</span></span><span class="notation-desc">Cartesian product of sets</span></div>
-                    <div class="notation-item"><span class="notation-sym">$f: X \to Y$</span><span class="notation-desc">Function $f$ with domain $X$ and codomain $Y$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$f^{-1}(y)$</span><span class="notation-desc">Preimage of element $y$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$g \circ f$</span><span class="notation-desc">Function composition ("f followed by g")</span></div>
-                    <div class="notation-item"><span class="notation-sym">$f^{-1}$</span><span class="notation-desc">Inverse function (exists iff $f$ is bijective)</span></div>
-                </div>
-            </div>
-
-            <p>A <strong>set</strong> is a collection of distinct elements. New sets are formed via union ($A \cup B$), intersection ($A \cap B$), difference ($A \setminus B$), and Cartesian product <span style="white-space: nowrap;">($A \times B$)</span>.</p>
-
-            <h3>Functions and Mappings</h3>
-            <p>A <strong>function</strong> $f: X \to Y$ assigns to each element $x \in X$ (domain) one and only one value $y = f(x) \in Y$ (codomain).</p>
-            <ul>
-                <li><strong>Range:</strong> The subset of the codomain consisting of actual output values $R = \{f(x) \mid x \in X\}$.</li>
-                <li><strong>Surjective (Onto):</strong> Range equals codomain ($R = Y$), meaning every element in $Y$ has at least one preimage.</li>
-                <li><strong>Injective (1-to-1):</strong> Distinct inputs produce distinct outputs: $a \neq b \implies f(a) \neq f(b)$.</li>
-                <li><strong>Bijective:</strong> Both injective and surjective, which is the exact necessary and sufficient condition for an <strong>inverse function</strong> $f^{-1}: Y \to X$ to exist.</li>
-                <li><strong>Composition:</strong> For $f: X \to Y$ and $g: Y \to Z$, the composition $g \circ f: X \to Z$ maps $x \mapsto g(f(x))$.</li>
-            </ul>
-
-            <!-- SECTION 2 -->
-            <h2 id="section-numbers">2. Number Systems and Completeness</h2>
-            <div class="infobox">
-                <h4>📖 Notation Reference: Numbers &amp; Bounds</h4>
-                <div class="infobox-intro">
-                    <strong>Taking it one step at a time:</strong> Every time numbers felt complete, mathematics found a new gap—from counting on our fingers to fractions, and finally to the seamless real number line.
-                </div>
-                <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$\mathbb{N}$</span><span class="notation-desc">Natural numbers $\{0, 1, 2, \dots\}$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\mathbb{Z}$</span><span class="notation-desc">Integers $\{\dots, -1, 0, 1, \dots\}$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\mathbb{Q}$</span><span class="notation-desc">Rational numbers $\{p/q \mid p \in \mathbb{Z}, q \in \mathbb{Z}_+\}$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\mathbb{R}$</span><span class="notation-desc">Real numbers (complete ordered field)</span></div>
-                    <div class="notation-item"><span class="notation-sym">$|x|$</span><span class="notation-desc">Absolute value (distance to origin)</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\sup S$</span><span class="notation-desc">Supremum (least upper bound) of set $S$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\inf S$</span><span class="notation-desc">Infimum (greatest lower bound) of set $S$</span></div>
-                </div>
-            </div>
-
-            <h3>Peano's Axioms for $\mathbb{N}$</h3>
-            <p>Natural numbers are defined by Peano's axioms: $0 \in \mathbb{N}$, each number has a unique successor, $0$ is not a successor of any number (no loops, no branching, connected graph rooted at 0), and mathematical induction holds.</p>
-
-            <h3>Completeness and the Least Upper Bound Property</h3>
-            <p>While rationals $\mathbb{Q}$ are dense, they contain gaps (e.g., $x^2 = 2$ has no rational solution). The real numbers $\mathbb{R}$ extend $\mathbb{Q}$ and satisfy the <strong>Axiom of Completeness</strong>: Any non-empty subset $S \subseteq \mathbb{R}$ that is bounded above has a supremum ($\sup S$) in $\mathbb{R}$. The <strong>Archimedean Axiom</strong> ensures that for any positive real numbers $x, y$, there is an $n \in \mathbb{N}$ such that $nx > y$.</p>
-
-            <!-- SECTION 3 -->
-            <h2 id="section-sequences">3. Sequences</h2>
-            <div class="infobox">
-                <h4>📖 Notation Reference: Sequence Mechanics</h4>
-                <div class="infobox-intro">
-                    <strong>Think of a sequence simply as an endless ordered list</strong> —like a musical playlist or numbered parking spots—where every step has its own designated number.
-                </div>
-                <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$(a_n)$</span><span class="notation-desc">Sequence $(a_0, a_1, a_2, \dots)$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$an + b$</span><span class="notation-desc">Arithmetic progression</span></div>
-                    <div class="notation-item"><span class="notation-sym">$aq^n$</span><span class="notation-desc">Geometric progression</span></div>
-                </div>
-            </div>
-
-            <p>A sequence is an ordered list of numbers mapping indices from $\mathbb{N}$ to $\mathbb{R}$. We can define them explicitly with a closed-form rule or recursively relative to previous terms.</p>
-
-            <!-- SECTION 4 -->
-            <h2 id="section-sums">4. Sums and Partial Sums</h2>
-            <div class="infobox">
-                <h4>📖 Notation Reference: Summation Mechanics</h4>
-                <div class="infobox-intro">
-                    <strong>Meet the sigma machine:</strong> The Greek letter sigma ($\sum$) is simply shorthand for adding up a string of numbers without having to write out endless plus signs.
-                </div>
-                <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$\sum$</span><span class="notation-desc">Sigma operator: shorthand instruction to add numbers together</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\nu = 0$ or $1$</span><span class="notation-desc">Lower limit: the starting index value</span></div>
-                    <div class="notation-item"><span class="notation-sym">$n$</span><span class="notation-desc">Upper limit: the final index value where the sum stops</span></div>
-                    <div class="notation-item"><span class="notation-sym">$b_\nu$</span><span class="notation-desc">General term being added at each step</span></div>
-                    <div class="notation-item"><span class="notation-sym">$s_n$</span><span class="notation-desc">Partial sum: the running total up to index $n$</span></div>
-                </div>
-            </div>
-
-            <p>When studying sequences, we often want to know what happens when we add their terms together. Writing out $b_0 + b_1 + b_2 + \dots + b_n$ gets messy very quickly, so we use <strong>summation notation</strong>:</p>
-
-            <div class="definition-box">
-                <p>$$\sum_{\nu=0}^{n} b_\nu = b_0 + b_1 + b_2 + \dots + b_n$$</p>
-            </div>
-
-            <h3>Anatomy of a Summation</h3>
-            <p>Think of $\sum$ as a loop in computer programming or an assembly line:</p>
-            <ul>
-                <li><strong>The Index ($\nu$):</strong> The counter variable that ticks upward by whole numbers.</li>
-                <li><strong>The Starting Point (Lower Limit):</strong> Where the counter begins (e.g., $\nu = 0$ or $\nu = 1$).</li>
-                <li><strong>The Stopping Point (Upper Limit):</strong> The final number $n$ where the counting finishes.</li>
-                <li><strong>The Formula ($b_\nu$):</strong> The rule evaluated at each step of the counter.</li>
-            </ul>
-
-            <h3>Partial Sums: The Running Total</h3>
-            <p>Imagine collecting coins in a video game. Level 0 gives 2 coins, Level 1 gives 3, Level 2 gives 5. Your <strong>partial sum</strong> ($s_n$) is your running total score up to that exact moment:</p>
-
-            <div class="definition-box">
-                <p>$$s_n = \sum_{\nu=0}^{n} b_\nu$$</p>
-            </div>
-
-            <p>Two famous summation formulas appear frequently in your coursework:</p>
-            <ul class="example-list">
-                <li><strong>Sum of the First $n$ Integers (Triangular Numbers):</strong><br>
-                $$\sum_{\nu=1}^{n} \nu = 1 + 2 + 3 + \dots + n = \frac{n(n+1)}{2}$$</li>
-                <li><strong>Geometric Series Partial Sum:</strong><br>
-                $$\sum_{\nu=0}^{n-1} q^\nu = 1 + q + q^2 + \dots + q^{n-1} = \frac{1 - q^n}{1 - q} \quad (\text{for } q \neq 1)$$</li>
-            </ul>
-
-            <!-- SECTION 5 -->
+    old_section_5 = r"""            <!-- SECTION 5 -->
             <h2 id="section-derived">5. Derived Sequences</h2>
             <div class="infobox">
                 <h4>📖 Notation Reference: Derived Sequences</h4>
@@ -209,21 +28,57 @@ def write_complete_week1_from_scratch():
             <div class="aside-box">
                 <h4>💡 Intuitive Guide: Making Sense of Derived Sequences and Partial Sums</h4>
                 <p><strong>Derived sequences</strong> look at how fast a sequence is <em>changing</em> (the speedometer), while <strong>partial sums</strong> look at how much it has <em>accumulated</em> (the running total).</p>
+            </div>"""
+
+    new_section_5 = r"""            <!-- SECTION 5 -->
+            <h2 id="section-derived">5. Derived Sequences</h2>
+            <div class="infobox">
+                <h4>📖 Notation Reference: Derived Sequences</h4>
+                <div class="infobox-intro">
+                    <strong>The Speedometer Analogy:</strong> While a regular sequence tells you your position (like a car odometer), a derived sequence tells you how fast you are jumping from step to step (like a speedometer).
+                </div>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym">$a_n'$</span><span class="notation-desc">Derived sequence: consecutive differences $a_{n+1} - a_n$</span></div>
+                </div>
             </div>
-        </div>
-    </div>
-</body>
-</html>
-"""
-    with open('week1.html', 'w', encoding='utf-8') as f:
-        f.write(html_content)
-    print("Successfully rewrote week1.html from scratch.")
+
+            <p>When you look at a regular sequence, you see its position at each step. A <strong>derived sequence</strong> ($a_n' = a_{n+1} - a_n$) answers a single question: <strong>"How much did the sequence jump from one step to the next?"</strong></p>
+
+            <div class="definition-box">
+                <p>$$a_n' = a_{n+1} - a_n$$</p>
+            </div>
+
+            <h3>Worked Example: Squares and Differences</h3>
+            <p>Consider the sequence of squares $(a_n) = (1, 4, 9, 16, 25, \dots)$, where $a_n = n^2$. Let's calculate its derived sequence step by step:</p>
+            <ul>
+                <li>$a_1' = a_2 - a_1 = 4 - 1 = 3$</li>
+                <li>$a_2' = a_3 - a_2 = 9 - 4 = 5$</li>
+                <li>$a_3' = a_4 - a_3 = 16 - 9 = 7$</li>
+                <li>$a_4' = a_5 - a_4 = 25 - 16 = 9$</li>
+            </ul>
+            <p>The resulting derived sequence is $(3, 5, 7, 9, \dots)$, which follows the explicit formula $a_n' = 2n + 1$.</p>
+
+            <h3>Connecting Derived Sequences to Behavior</h3>
+            <p>Derived sequences give us an instant test for monotonicity:</p>
+            <ul>
+                <li><strong>Increasing:</strong> If $a_n' \ge 0$ for all $n$, the sequence never steps backward, so it is monotonically increasing.</li>
+                <li><strong>Decreasing:</strong> If $a_n' \le 0$ for all $n$, the sequence is monotonically decreasing.</li>
+                <li><strong>Constant:</strong> If $a_n' = 0$ for all $n$, every term is identical.</li>
+            </ul>"""
+
+    if old_section_5 in content:
+        content = content.replace(old_section_5, new_section_5)
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write(content)
+        print("Successfully updated Section 5 in week1.html.")
+    else:
+        print("Warning: old Section 5 block not found for replacement.")
 
 def execute_git_sync():
     commit_message = (
-        "Rewrite week1.html from scratch to position Sums above Derived Sequences\n\n"
-        "Rebuilt week1.html completely to establish a clean sequence of sections:\n"
-        "Sets, Numbers, Sequences, Sums and Partial Sums, and Derived Sequences."
+        "Expand Section 5 with worked example and behavioral tests\n\n"
+        "Added a step-by-step walkthrough of squared terms and their derived\n"
+        "differences to make derived sequences easier to understand."
     )
     commands = [
         ['git', 'add', 'week1.html', 'update.py'],
@@ -235,5 +90,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    write_complete_week1_from_scratch()
+    update_derived_sequences_section()
     execute_git_sync()
