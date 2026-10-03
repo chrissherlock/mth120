@@ -337,9 +337,26 @@ def write_week1_module():
             <p>With sets and real numbers established, we explore <strong>sequences</strong>—the fundamental bridge from discrete math to continuous calculus.</p>
 
             <h3>What Is a Sequence?</h3>
-            <p>Formally, a sequence is a function whose domain is the natural numbers $\mathbb{N}$ and whose codomain is our target numbers $\mathbb{R}$:</p>
-            <p>$$f: \mathbb{N} \rightarrow \mathbb{R}, \quad \text{expressed as } (a_n)_{n=1}^\infty = (a_1, a_2, a_3, \dots, a_n, \dots)$$</p>
-            <p>Think of a sequence simply as an <strong>infinite, ordered list of numbers</strong>. Each number in the list has an integer position index $n$ ($1, 2, 3, 4\dots$).</p>
+            <p>Formally, a sequence is not merely a random string of numbers; it is a precisely defined mathematical function. Its domain is the set of natural numbers $\mathbb{N} = \{1, 2, 3, \dots\}$, and its codomain lies within the real numbers $\mathbb{R}$ (or any arbitrary set $S$). We write this mapping as:</p>
+            <p>$$f: \mathbb{N} \rightarrow \mathbb{R}$$</p>
+            <p>Instead of using standard function notation $f(n)$, mathematicians use subscript notation to denote the output at position index $n$:
+            $$a_n = f(n)$$
+            The entire infinite collection is expressed as $(a_n)_{n=1}^\infty = (a_1, a_2, a_3, \dots, a_n, \dots)$.</p>
+
+            <div class="definition-box">
+                <p><strong>Explicit vs. Recursive Formulations:</strong></p>
+                <ul>
+                    <li><strong>Explicit (Closed-Form) Formula:</strong> Provides a direct rule to compute the $n^{\text{th}}$ term instantly without needing prior terms. For example, $a_n = \frac{n}{n+1}$ allows us to jump straight to $a_{100} = \frac{100}{101}$.</li>
+                    <li><strong>Recursive (Inductive) Definition:</strong> Defines terms relative to preceding terms. You must specify starting conditions (base cases) and a recurrence relation. A famous example is the Fibonacci sequence: $a_1 = 1, a_2 = 1$, and $a_n = a_{n-1} + a_{n-2}$ for $n \ge 3$.</li>
+                </ul>
+            </div>
+
+            <h3>Core Behavioral Anatomy: Boundedness and Monotonicity</h3>
+            <p>Before investigating whether a sequence converges to a limit, analysts examine two primary behavioral characteristics:</p>
+            <ul>
+                <li><strong>Monotonicity:</strong> A sequence is <em>monotonically increasing</em> if each term is greater than or equal to the last ($a_n \le a_{n+1}$ for all $n$), and <em>monotonically decreasing</em> if $a_n \ge a_{n+1}$. If it strictly alternates or wanders without a directional trend, it is non-monotonic.</li>
+                <li><strong>Boundedness:</strong> A sequence is <em>bounded above</em> if there exists a real number $M$ such that $a_n \le M$ for all $n$, and <em>bounded below</em> if $a_n \ge m$ for all $n$. A sequence that is both bounded above and below is simply called bounded.</li>
+            </ul>
 
             <h3>The Informal Idea of a Limit</h3>
             <p>When studying a sequence, our primary question is: <em>What value do the terms $a_n$ settle down toward as our index $n$ marches off toward infinity ($n \to \infty$)?</em></p>
@@ -615,7 +632,7 @@ def write_week1_module():
                 phase: "Convergence Verification", n: 8, indexVal: 8,
                 summary: "<strong>Goal:</strong> Fulfill the universal quantifier condition to formally certify the limit.",
                 what: "<p><strong>Abstract Formalism:</strong> For all subsequent indices $n > N$, terms remain strictly trapped within the $\\epsilon$ neighborhood.</p><p><strong>Applied Mechanics:</strong> The residual error remains flat and negligible across all further computation steps.</p>",
-                why: "<p><strong>Formal Rationale:</strong> This satisfies $\\forall n > N$. Because this inequality holds for <em>any</em> arbitrary $\\epsilon > 0$, the limit $\\lim_{n\\to\\infty} a_n = L$ is verified.</p><p><strong>System Constraint:</strong> Guarantees long-term numerical stability against unexpected divergence.</p>"
+                why: "<p><strong>Formal Rationale:</strong> This satisfies $\\forall n > N$. Because this inequality holds for <em>any</i> arbitrary $\\epsilon > 0$, the limit $\\lim_{n\\to\\infty} a_n = L$ is verified.</p><p><strong>System Constraint:</strong> Guarantees long-term numerical stability against unexpected divergence.</p>"
             }
         ];
 
@@ -691,8 +708,7 @@ def write_week1_module():
         reset();
     </script>
 </body>
-</html>
-"""
+</html>"""
     with open('week1.html', 'w') as f:
         f.write(html_content)
 
@@ -714,9 +730,9 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Fix SVG intersection path in week1.html\n\n"
-        "Corrected the arc path in the A intersection B Venn diagram to properly "
-        "render the overlapping lens."
+        "Expand What Is a Sequence section in week1.html\n\n"
+        "Added deep explanations covering function-theoretic definition, explicit "
+        "vs recursive formulations, and core behavioral properties like monotonicity and boundedness."
     )
 
     commands = [
@@ -730,7 +746,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module...")
+    print("Writing Week 1 module with expanded sequence explanation...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
