@@ -2,7 +2,7 @@
 import os
 import subprocess
 
-def update_infinity_svg():
+def add_infinity_diagram_explanation():
     filepath = 'week2.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
@@ -11,34 +11,8 @@ def update_infinity_svg():
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    old_svg_block = r'''            <!-- EMBEDDED SVG DIAGRAM FOR INFINITY LIMIT -->
-            <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1.25rem; margin-top: 1.5rem; margin-bottom: 1.5rem;">
-                <p style="font-size: 0.85rem; font-weight: 700; color: #64748b; margin-top: 0; margin-bottom: 0.75rem; text-align: center;">VISUALIZATION: The $M\text{-}N$ Threshold Test for $\lim_{n\to\infty} \sqrt{n} = \infty$</p>
-                <svg viewBox="0 0 800 280" style="width: 100%; height: auto; display: block;">
-                    <!-- Axes -->
-                    <line x1="60" y1="220" x2="760" y2="220" stroke="#cbd5e1" stroke-width="2"/>
-                    <line x1="60" y1="20" x2="60" y2="240" stroke="#cbd5e1" stroke-width="2"/>
-                    <text x="710" y="235" font-size="11" font-weight="bold" fill="#64748b">n (index)</text>
-                    <text x="20" y="35" font-size="11" font-weight="bold" fill="#64748b">Value</text>
-
-                    <!-- Massive Threshold Line M -->
-                    <line x1="60" y1="90" x2="760" y2="90" stroke="#ef4444" stroke-width="2" stroke-dasharray="6"/>
-                    <text x="70" y="82" font-size="12" font-weight="bold" fill="#ef4444">Threshold M (e.g., 100)</text>
-
-                    <!-- Cutoff Line N -->
-                    <line x1="520" y1="20" x2="520" y2="240" stroke="#d97706" stroke-width="2" stroke-dasharray="4"/>
-                    <text x="528" y="45" font-size="12" font-weight="bold" fill="#b45309">Cutoff Index N</text>
-
-                    <!-- Sequence Curve an = sqrt(n) (scaled for view) -->
-                    <path d="M 70,215 Q 200,180 350,140 T 520,95 T 750,50" fill="none" stroke="#0284c7" stroke-width="3"/>
-
-                    <!-- Highlight Region Above Threshold Past N -->
-                    <rect x="520" y="20" width="240" height="70" fill="#fef3c7" opacity="0.4"/>
-                    <text x="580" y="60" font-size="11" font-weight="bold" fill="#92400e">All terms $a_n > M$ for $n > N$</text>
-                </svg>
-            </div>'''
-
-    new_svg_block = r'''            <!-- EMBEDDED SVG DIAGRAM FOR INFINITY LIMIT -->
+    # The SVG visualization block as it currently exists
+    svg_block = r'''            <!-- EMBEDDED SVG DIAGRAM FOR INFINITY LIMIT -->
             <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1.25rem; margin-top: 1.5rem; margin-bottom: 1.5rem;">
                 <p style="font-size: 0.85rem; font-weight: 700; color: #64748b; margin-top: 0; margin-bottom: 0.75rem; text-align: center;">VISUALIZATION: The $M\text{-}N$ Threshold Test for $\lim_{n\to\infty} \sqrt{n} = \infty$</p>
                 <svg viewBox="0 0 800 300" style="width: 100%; height: auto; display: block;">
@@ -90,19 +64,33 @@ def update_infinity_svg():
                 </svg>
             </div>'''
 
-    if old_svg_block in content:
-        content = content.replace(old_svg_block, new_svg_block)
+    # The explanatory caption block to append right below the SVG
+    caption_block = r'''            <!-- EXPLANATION CAPTION UNDERNEATH VISUALIZATION -->
+            <div class="aside-box" style="margin-top: 1rem; margin-bottom: 1.5rem;">
+                <h4>📖 How to Read This Diagram</h4>
+                <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
+                    <li style="margin-bottom: 0.3rem;"><strong>The Threshold Level ($M$):</strong> The dashed red line represents your opponent's arbitrary high demand $M$.</li>
+                    <li style="margin-bottom: 0.3rem;"><strong>The Cutoff Index ($N$):</strong> The orange dashed line marks the boundary $N$. Everything to the left is initial transient behavior; everything to the right is the long-term tail.</li>
+                    <li><strong>The Green Points ($a_n > M$):</strong> Notice how every single blue point eventually crosses above the red threshold at index $N$, turning green and staying safely in the yellow shaded zone forever.</li>
+                </ol>
+            </div>'''
+
+    target = svg_block
+    replacement = svg_block + '\n\n' + caption_block
+
+    if target in content and 'How to Read This Diagram' not in content:
+        content = content.replace(target, replacement, 1)
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
-        print("Successfully updated M-N threshold SVG visualization in week2.html.")
+        print("Successfully added explanation caption beneath SVG visualization in week2.html.")
     else:
-        print("Old SVG block not found.")
+        print("SVG block not found or caption already present.")
 
 def execute_git_sync():
     commit_message = (
-        "Update M-N threshold SVG visualization in week2.html\n\n"
-        "Refined the SVG diagram for Section 4 with discrete sequence points,\n"
-        "grid lines, and clearer threshold and cutoff index callouts."
+        "Add explanatory caption beneath M-N threshold visualization in week2.html\n\n"
+        "Inserted a scannable breakdown explaining the threshold level M, cutoff index N,\n"
+        "and permanent tail property for Section 4 in week2.html."
     )
     commands = [
         ['git', 'add', 'week2.html', 'update.py'],
@@ -114,5 +102,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    update_infinity_svg()
+    add_infinity_diagram_explanation()
     execute_git_sync()
