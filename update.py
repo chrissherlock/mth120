@@ -415,7 +415,7 @@ def write_week1_module():
             </div>
 
             <h3>Power Sets: The Collection of All Sub-Clubs</h3>
-            <p>If subsets are individual sub-clubs you can form, a <strong>power set</strong> is the ultimate master list containing <em>every single possible subset</em> you could ever make from a set. The power set of $A$ is denoted by $\mathcal{P}(A)$ or $2^A$.</p>
+            <p>If subsets are individual sub-clubs you can form, a <strong>power set</strong> is the ultimate master list containing <em>every single possible subset</em> you could ever make from a set. The power set of $A$ is denoted by $\mathcal{mathcal{P}}(A)$ or $2^A$.</p>
 
             <p><strong>Let's walk through a concrete example:</strong><br>
             Suppose your set is $A = \{1, 2\}$. What are all the possible subsets you can form by picking items from $A$?</p>
@@ -1687,8 +1687,8 @@ def update_curriculum_index():
 
 def execute_git_sync():
     commit_message = (
-        "Add non-breaking spaces around set-builder separator in notation reference table\n\n"
-        "Updated week1.html so the '| or :' symbol in the notation table has adequate spacing."
+        "Fix spacing in Notation Reference set-builder symbol\n\n"
+        "Added non-breaking spaces around the 'or' operator in week1.html notation table."
     )
 
     commands = [
@@ -1702,7 +1702,7 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == "__main__":
-    print("Writing Week 1 module with spaced notation symbol...")
+    print("Writing Week 1 module...")
     write_week1_module()
     print("Updating index.html routing...")
     update_curriculum_index()
