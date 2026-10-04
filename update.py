@@ -2,7 +2,7 @@
 import os
 import subprocess
 
-def retitle_cantor_box():
+def update_roadmap_introduction():
     filepath = 'week1-lecture1.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
@@ -11,26 +11,36 @@ def retitle_cantor_box():
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    old_heading = '<h4>🏛️ Who was Georg Cantor?</h4>'
-    new_heading = '<h4>🏛️ Why Bijections Matter: Measuring the Infinite (Georg Cantor)</h4>'
+    old_intro = (
+        "To make studying manageable and maintain deep conceptual clarity, "
+        "the material is organised into three focused lectures:"
+    )
 
-    if old_heading in content:
-        content = content.replace(old_heading, new_heading, 1)
+    new_intro = (
+        "Transitioning from computational calculus to formal analysis can feel like "
+        "learning a completely new language. In earlier courses, you learned how to "
+        "calculate answers; here, we explore why those calculations hold true and "
+        "how to construct airtight proofs from the ground up.\n\n"
+        "            Because rebuilding your mathematical foundation from first principles "
+        "is conceptually demanding, Week 1 is deliberately broken into three progressive stages. "
+        "Rather than rushing straight into limits, each lecture focuses on mastering one layer "
+        "of the foundation before building the next:"
+    )
+
+    if old_intro in content:
+        content = content.replace(old_intro, new_intro, 1)
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
-        print("Successfully retitled the Cantor biographical infobox.")
-    elif new_heading in content:
-        print("Cantor infobox is already using the updated heading.")
+        print("Successfully updated the roadmap introduction with pedagogical framing.")
     else:
-        print("Could not find the target heading in week1-lecture1.html.")
+        print("Could not find the target roadmap sentence in week1-lecture1.html.")
 
 def synchronize_git_changes():
     commit_message = (
-        "Refactor Cantor infobox title to connect bijections with infinity\n\n"
-        "Retitled the Section 3 biographical card in week1-lecture1.html from\n"
-        "\"Who was Georg Cantor?\" to \"Why Bijections Matter: Measuring the\n"
-        "Infinite (Georg Cantor)\" to contextualize bijective mappings before\n"
-        "introducing his historical contributions to set theory."
+        "Revise Week 1 roadmap with reassuring pedagogical rationale\n\n"
+        "Replaced the terse logistical roadmap sentence in week1-lecture1.html\n"
+        "with a supportive, collegiate introduction explaining the pedagogical\n"
+        "rationale behind dividing Week 1 into three progressive lectures."
     )
     commands = [
         ['git', 'add', 'week1-lecture1.html', 'update.py'],
@@ -42,5 +52,5 @@ def synchronize_git_changes():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    retitle_cantor_box()
+    update_roadmap_introduction()
     synchronize_git_changes()
