@@ -151,6 +151,16 @@
                 </div>
             </div>
 
+            <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym">$0 \in \mathbb{N}$</span><span class="notation-desc">Zero is a natural number (the starting line).</span></div>
+                    <div class="notation-item"><span class="notation-sym">$S(n) \in \mathbb{N}$</span><span class="notation-desc">Every number has a unique successor (the next step).</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span style="white-space: nowrap;">$S(m) = S(n) \implies m = n$</span></span><span class="notation-desc">No merging paths (injectivity).</span></div>
+                    <div class="notation-item"><span class="notation-sym">$S(n) \ne 0$</span><span class="notation-desc">No loops (zero is not a successor).</span></div>
+                    <div class="notation-item"><span class="notation-sym">Induction</span><span class="notation-desc">No ghost chains (minimality condition).</span></div>
+                </div>
+            </div>
+
+            <h3>Building Numbers from Scratch: Peano's Axioms</h3>
             <div class="infobox">
                 <h4>📖 Notation Reference: Peano's Axioms</h4>
                 <div class="infobox-intro">
@@ -164,8 +174,6 @@
                     <div class="notation-item"><span class="notation-sym">Induction</span><span class="notation-desc">No ghost chains (minimality condition).</span></div>
                 </div>
             </div>
-
-            <h3>Building Numbers from Scratch: Peano's Axioms</h3>
             <p>Have you ever wondered what the number "1" actually is? In higher mathematics, we don't take counting for granted. We build the natural numbers ($\mathbb{N}$) using a blueprint called <strong>Peano's Axioms</strong>. Think of this as creating an infinite chain of dominoes using just a starting point and a single rule for taking the "next step" (the successor function, $S(n)$):</p>
             <ol style="margin: 0.5rem 0 1.5rem 1.25rem; padding: 0;">
                 <li style="margin-bottom: 0.5rem;"><strong>The Starting Line:</strong> $0 \in \mathbb{N}$. We have to start somewhere! This gives our number system a root.</li>
