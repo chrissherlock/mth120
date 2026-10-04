@@ -2,561 +2,232 @@
 import os
 import subprocess
 
-def write_complete_week1_html():
+def inject_complete_week1_curriculum():
     filepath = 'week1.html'
+    if not os.path.exists(filepath):
+        print(f"Error: {filepath} not found.")
+        return
 
-    html_content = r'''<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Week 1: Sets, Numbers, and Sequences | Real Analysis</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
-    <style>
-        :root {
-            --primary: #0284c7;
-            --primary-dark: #0369a1;
-            --bg: #f8fafc;
-            --surface: #ffffff;
-            --text: #0f172a;
-            --text-muted: #475569;
-            --border: #e2e8f0;
-            --accent: #f59e0b;
-            --success: #10b981;
-        }
+    with open(filepath, 'r', encoding='utf-8') as f:
+        content = f.read()
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.65;
-            padding: 1.5rem 1rem;
-        }
+    comprehensive_curriculum = r'''            <!-- COMPREHENSIVE LECTURE 1, 2, & 3 CURRICULUM -->
+            <section class="lecture-curriculum" style="margin-top: 2rem; display: flex; flex-direction: column; gap: 2rem;">
 
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            padding: 2.5rem;
-        }
+                <!-- LECTURE 1: SETS AND FUNCTIONS -->
+                <div class="card" style="background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem;">
+                    <div style="font-weight: 700; font-size: 1.25rem; color: #0f172a; margin-bottom: 0.75rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem;">
+                        Lecture 1: Sets, Operations, and Functions
+                    </div>
 
-        .hero-banner {
-            margin-bottom: 2rem;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
-        }
+                    <div style="font-weight: 600; font-size: 1.05rem; color: #1e293b; margin-top: 1rem;">1. Sets and Cardinality</div>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #334155;">
+                        A set is an unordered collection of distinct elements. The number of elements in a set $A$ is its <strong>cardinality</strong>, denoted $|A|$.
+                        The empty set is written $\emptyset = \{\}$, with $|\emptyset| = 0$.
+                    </p>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #334155;">
+                        Sets may have infinite cardinality. The standard number sets satisfy the inclusion chain:
+                    </p>
+                    <div style="text-align: center; margin: 1rem 0; font-size: 1rem;">
+                        $$\mathbb{N} \subseteq \mathbb{Z} \subseteq \mathbb{Q} \subseteq \mathbb{R} \subseteq \mathbb{C}$$
+                    </div>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #334155;">
+                        Comparing infinite cardinalities reveals distinct sizes of infinity:
+                    </p>
+                    <div style="text-align: center; margin: 1rem 0; font-size: 1rem;">
+                        $$\infty = |\mathbb{N}| = |\mathbb{Z}| = |\mathbb{Q}| \le |\mathbb{R}| = |\mathbb{C}|$$
+                    </div>
 
-        .hero-banner img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .intro-lead {
-            border-left: 4px solid var(--primary);
-            padding-left: 1.25rem;
-            margin-bottom: 2.5rem;
-        }
-
-        .intro-lead h1 {
-            font-size: 2rem;
-            color: var(--text);
-            margin-bottom: 0.5rem;
-        }
-
-        .intro-lead p {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-        }
-
-        .topic-section {
-            margin-bottom: 3.5rem;
-        }
-
-        .topic-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 0.75rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .topic-badge {
-            background: var(--primary);
-            color: white;
-            padding: 0.25rem 0.65rem;
-            border-radius: 4px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .topic-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--text);
-        }
-
-        .content-block {
-            margin-bottom: 1.75rem;
-        }
-
-        .content-block h3 {
-            font-size: 1.15rem;
-            color: var(--text);
-            margin-bottom: 0.6rem;
-            font-weight: 600;
-        }
-
-        .content-block p {
-            font-size: 0.98rem;
-            color: var(--text);
-            line-height: 1.7;
-            margin-bottom: 0.75rem;
-        }
-
-        .math-def {
-            background: #f8fafc;
-            border-left: 4px solid var(--primary);
-            border-radius: 0 6px 6px 0;
-            padding: 1rem 1.25rem;
-            margin: 1.25rem 0;
-            font-size: 0.95rem;
-            color: #1e293b;
-        }
-
-        .proof-box {
-            background: #fdfefe;
-            border: 1px solid #cbd5e1;
-            border-left: 4px solid #64748b;
-            border-radius: 4px;
-            padding: 1rem 1.25rem;
-            margin: 1rem 0;
-            font-size: 0.94rem;
-        }
-
-        .proof-box strong.proof-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #334155;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        ol.clean-list, ul.clean-list {
-            margin: 0.75rem 0 1rem 1.5rem;
-            font-size: 0.96rem;
-            color: var(--text);
-            line-height: 1.7;
-        }
-
-        ol.clean-list li, ul.clean-list li {
-            margin-bottom: 0.5rem;
-        }
-
-        .nav-footer {
-            margin-top: 3rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-btn {
-            display: inline-block;
-            text-decoration: none;
-            padding: 0.6rem 1.25rem;
-            border-radius: 6px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #ffffff;
-            background-color: var(--primary);
-            transition: background-color 0.15s ease;
-        }
-
-        .nav-btn:hover {
-            background-color: var(--primary-dark);
-        }
-
-        .nav-btn.secondary {
-            background-color: #f1f5f9;
-            color: #334155;
-            border: 1px solid var(--border);
-        }
-
-        .nav-btn.secondary:hover {
-            background-color: #e2e8f0;
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <!-- HERO BANNER -->
-    <div class="hero-banner">
-        <img src="images/chapter1-hero.jpg" alt="Week 1: Sets, Numbers, and Sequences - UNE Campus Discovery Trail">
-    </div>
-
-    <!-- INTRO LEAD -->
-    <div class="intro-lead">
-        <h1>Week 1: Sets, Numbers, and Sequences</h1>
-        <p>A rigorous introduction to foundational set theory, axiomatic number systems, real completeness, and the calculus of discrete sequences.</p>
-    </div>
-
-    <!-- MODULE 1: SETS AND FUNCTIONS -->
-    <section class="topic-section">
-        <div class="topic-header">
-            <span class="topic-badge">Lecture 1</span>
-            <div class="topic-title">Sets, Operations, and Function Mappings</div>
-        </div>
-
-        <div class="content-block">
-            <h3>Sets and Infinite Cardinality</h3>
-            <p>
-                A set is an unordered collection of distinct elements. The elements can be numbers, functions, geometric vectors, or sets themselves. The fundamental relation is set membership ($x \in A$). The order in which elements are listed does not matter, and duplicate elements are redundant:
-            </p>
-            <div style="text-align: center; margin: 0.75rem 0;">
-                $$\{1, 2, 3\} = \{3, 2, 1\} = \{1, 1, 1, 2, 2, 3\}$$
-            </div>
-            <p>
-                The number of elements in a set $A$ is its <strong>cardinality</strong>, denoted $|A|$. The unique set containing no elements is the <strong>empty set</strong>, written $\emptyset = \{\}$, with $|\emptyset| = 0$.
-            </p>
-            <p>
-                When comparing infinite sets, cardinality provides a rigorous measure of size. The standard mathematical sets satisfy the inclusion chain:
-            </p>
-            <div style="text-align: center; margin: 0.75rem 0;">
-                $$\mathbb{N} \subseteq \mathbb{Z} \subseteq \mathbb{Q} \subseteq \mathbb{R} \subseteq \mathbb{C}$$
-            </div>
-            <p>
-                However, their infinite cardinalities do not strictly increase at each inclusion. Natural numbers, integers, and rational numbers share the same countable infinity, whereas the continuum of real and complex numbers forms a strictly larger tier:
-            </p>
-            <div style="text-align: center; margin: 0.75rem 0;">
-                $$\infty = |\mathbb{N}| = |\mathbb{Z}| = |\mathbb{Q}| \le |\mathbb{R}| = |\mathbb{C}|$$
-            </div>
-        </div>
-
-        <!-- CORE FOUNDATION: PEANO AXIOMS & NATURAL NUMBERS -->
-        <div class="content-block" style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0;">
-            <h3 style="color: #0f172a; margin-bottom: 0.75rem;">Axiomatic Foundations: Peano's Axioms for $\mathbb{N}$</h3>
-            <p style="font-size: 0.98rem; line-height: 1.7; color: #1e293b;">
-                Before constructing algebraic fields or real analysis metrics, the natural numbers $\mathbb{N}$ must be rigorously grounded. Rather than taking the process of counting for granted, the natural numbers are formally characterized by <strong>Peano's axioms</strong>, which specify a base element $0 \in \mathbb{N}$ and a unary successor function $S: \mathbb{N} \to \mathbb{N}$ (intuitively representing $S(n) = n + 1$):
-            </p>
-
-            <ol class="clean-list" style="margin-left: 1.25rem;">
-                <li>
-                    <strong>Existence of Zero (Base Element):</strong> $0 \in \mathbb{N}$. Ensures that the set of natural numbers is non-empty and provides a foundational root.
-                </li>
-                <li>
-                    <strong>Closure Under Successor:</strong> $\forall n \in \mathbb{N}, \; S(n) \in \mathbb{N}$. Every natural number has an unambiguously defined successor in $\mathbb{N}$.
-                </li>
-                <li>
-                    <strong>Injectivity of Successor (No Branching / Merging):</strong> $\forall m, n \in \mathbb{N}, \; S(m) = S(n) \implies m = n$. Distinct numbers cannot have identical successors. In graph-theoretic terms, every node has an in-degree of at most 1, preventing multiple paths from collapsing into one another.
-                </li>
-                <li>
-                    <strong>Non-Surjectivity onto Zero (No Predecessor / No Cycles):</strong> $\forall n \in \mathbb{N}, \; S(n) \ne 0$. Zero is not the successor of any natural number ($0 \notin \text{range}(S)$). This prevents cyclic wrap-around paths (such as finite clock arithmetic $\mathbb{Z}/n\mathbb{Z}$) and establishes $0$ as the strict starting origin.
-                </li>
-                <li>
-                    <strong>Axiom of Induction (Connectedness &amp; Minimality):</strong> Let $K \subseteq \mathbb{N}$. If $0 \in K$ and $[\forall n \in \mathbb{N}, \; (n \in K \implies S(n) \in K)]$, then $K = \mathbb{N}$.<br>
-                    While axioms 1–4 prevent loops and branching, they still permit disconnected "ghost chains" (isolated infinite linear components or cycles unlinked to $0$). The induction axiom serves as a minimality condition, guaranteeing that $\mathbb{N}$ contains <em>only</em> those elements generated by applying $S$ finitely many times starting from $0$.
-                </li>
-            </ol>
-
-            <p style="font-size: 0.98rem; line-height: 1.7; color: #1e293b; margin-top: 1rem;">
-                From this minimalist framework, all arithmetic operations are defined recursively without circularity:
-            </p>
-            <ul class="clean-list" style="margin-left: 1.25rem;">
-                <li><strong>Addition ($+$):</strong> Defined inductively by $n + 0 = n$ and $n + S(m) = S(n + m)$.</li>
-                <li><strong>Multiplication ($\cdot$):</strong> Defined inductively by $n \cdot 0 = 0$ and $n \cdot S(m) = (n \cdot m) + n$.</li>
-            </ul>
-            <p style="font-size: 0.95rem; line-height: 1.7; color: #475569;">
-                The standard algebraic laws—associativity, commutativity, and distributivity—all follow directly as formal theorems proved via mathematical induction.
-            </p>
-        </div>
-
-        <div class="content-block">
-            <h3>Set Operations and Cartesian Products</h3>
-            <p>Given subsets $A$ and $B$ within a universal domain, the standard algebraic operations on sets are defined as:</p>
-            <ul class="clean-list">
-                <li><strong>Union:</strong> $A \cup B = \{x : x \in A \text{ or } x \in B\}$. Note $A \cup \emptyset = A$.</li>
-                <li><strong>Intersection:</strong> $A \cap B = \{x : x \in A \text{ and } x \in B\}$. Note $A \cap \emptyset = \emptyset$.</li>
-                <li><strong>Difference (Relative Complement):</strong> $A \setminus B = \{x : x \in A \text{ and } x \notin B\}$. Note that difference is non-commutative: $A \setminus B \ne B \setminus A$.</li>
-                <li><strong>Cartesian Product:</strong> $A \times B = \{(a, b) : a \in A, b \in B\}$ (the set of ordered pairs). The cardinality of a finite product satisfies $|A \times B| = |A| \times |B|$. When applied to the real numbers, $\mathbb{R} \times \mathbb{R} = \mathbb{R}^2$ forms the two-dimensional Cartesian plane.</li>
-            </ul>
-        </div>
-
-        <div class="content-block">
-            <h3>Function Mappings, Bijectivity, and Inverses</h3>
-            <p>
-                A <strong>function</strong> $f: X \to Y$ is a rule assigning each input $x \in X$ exactly one output $f(x) \in Y$. Here, $X$ is the <strong>domain</strong>, $Y$ is the <strong>codomain</strong>, and the set of actual outputs forms the <strong>range</strong>:
-            </p>
-            <div style="text-align: center; margin: 0.75rem 0;">
-                $$\text{range}(f) = \{f(x) : x \in X\} \subseteq Y$$
-            </div>
-            <p>Functions are classified according to how they cover their codomain and preserve distinctness:</p>
-            <ul class="clean-list">
-                <li><strong>Surjective (Onto):</strong> A function is surjective if its range equals its codomain ($\text{range}(f) = Y$). Every element $y \in Y$ has at least one pre-image $x \in X$ such that $f(x) = y$.</li>
-                <li><strong>Injective (One-to-One):</strong> A function is injective if distinct inputs yield distinct outputs:
-                    $$\forall x_1, x_2 \in X, \quad x_1 \ne x_2 \implies f(x_1) \ne f(x_2) \quad (\text{equivalently, } f(x_1) = f(x_2) \implies x_1 = x_2)$$
-                    <em>Counterexample:</em> $f: \mathbb{Z} \to \mathbb{Z}$ defined by $f(x) = x^2$ is not injective because $f(-1) = 1 = f(1)$.
-                </li>
-                <li><strong>Bijective:</strong> A function that is both injective and surjective.</li>
-                <li><strong>Composition:</strong> Given $f: X \to Y$ and $g: Y \to Z$, the composite function $(g \circ f): X \to Z$ is evaluated by $(g \circ f)(x) = g(f(x))$.</li>
-                <li><strong>Inverse Functions:</strong> A function $f: X \to Y$ has a two-sided inverse $f^{-1}: Y \to X$ if and only if $f$ is bijective. The inverse satisfies:
-                    $$(f^{-1} \circ f)(x) = f^{-1}(f(x)) = x \quad \forall x \in X, \qquad (f \circ f^{-1})(y) = f(f^{-1}(y)) = y \quad \forall y \in Y$$
-                </li>
-            </ul>
-        </div>
-    </section>
-
-    <!-- MODULE 2: NUMBERS AND REAL ANALYSIS -->
-    <section class="topic-section">
-        <div class="topic-header">
-            <span class="topic-badge">Lecture 2</span>
-            <div class="topic-title">Numbers, Metric Properties, and Completeness</div>
-        </div>
-
-        <div class="content-block">
-            <h3>Density of the Rational Numbers</h3>
-            <div class="math-def">
-                <strong>Proposition 1:</strong> For any two distinct rational numbers $a$ and $b$, there exist infinitely many rational numbers strictly between them.
-            </div>
-            <div class="proof-box">
-                <strong class="proof-label">Proof</strong>
-                Without loss of generality, assume $a < b$. Consider the arithmetic mean:
-                $$c_1 = \frac{a + b}{2}$$
-                Since $a, b \in \mathbb{Q}$ and the rationals are closed under addition and non-zero division, $c_1 \in \mathbb{Q}$. Testing bounds:
-                $$c_1 - a = \frac{a + b}{2} - a = \frac{b - a}{2} > 0 \implies a < c_1$$
-                $$b - c_1 = b - \frac{a + b}{2} = \frac{b - a}{2} > 0 \implies c_1 < b$$
-                Hence $a < c_1 < b$. Applying the exact same argument to $a$ and $c_1$ yields $c_2 = \frac{a + c_1}{2} \in \mathbb{Q}$ with $a < c_2 < c_1 < b$. Repeating this process indefinitely constructs an infinite sequence of distinct rational numbers:
-                $$b > c_1 > c_2 > c_3 > \dots > a$$
-            </div>
-        </div>
-
-        <div class="content-block">
-            <h3>Rational Holes and the Irrationality of $\sqrt{2}$</h3>
-            <p>
-                Despite the rational numbers being dense across the line, $\mathbb{Q}$ is full of structural "holes." Consider an isosceles right triangle with unit legs ($1$ and $1$). By Pythagoras' theorem, the hypotenuse $c$ satisfies $c^2 = 1^2 + 1^2 = 2 \implies c = \sqrt{2}$.
-            </p>
-            <div class="proof-box">
-                <strong class="proof-label">Proof of Irrationality via Unique Prime Factorisation</strong>
-                Assume, for contradiction, that $\sqrt{2}$ is rational: $\sqrt{2} = \frac{p}{q}$ for positive integers $p, q$ with $q \ne 0$. Squaring both sides:
-                $$\frac{p^2}{q^2} = 2 \implies p^2 = 2q^2$$
-                By the Fundamental Theorem of Arithmetic, every integer greater than 1 factors uniquely into a product of prime numbers. In the prime factorisation of any perfect square ($n^2$), every distinct prime factor must appear raised to an even power. Therefore:
-                <ul class="clean-list" style="margin-left: 1.25rem;">
-                    <li>The prime factorisation of $p^2$ contains an <strong>even</strong> number of prime factors (counting multiplicities).</li>
-                    <li>The prime factorisation of $q^2$ contains an even number of prime factors. Multiplying by 2 adds exactly one additional prime factor, meaning $2q^2$ contains an <strong>odd</strong> number of prime factors.</li>
-                </ul>
-                Because unique prime factorisation is invariant, an integer with an even number of prime factors cannot equal an integer with an odd number of prime factors ($p^2 \ne 2q^2$). This contradiction proves $\sqrt{2} \notin \mathbb{Q}$.
-            </div>
-        </div>
-
-        <div class="content-block">
-            <h3>Axiomatic Field and Order Properties of $\mathbb{R}$</h3>
-            <p>
-                To resolve the gaps in $\mathbb{Q}$, we construct the set of real numbers $\mathbb{R}$ combining rational and irrational quantities. Formally, $\mathbb{R}$ is an ordered field satisfying:
-            </p>
-            <ul class="clean-list">
-                <li><strong>Field Axioms:</strong> Commutativity and associativity of addition and multiplication; distributivity ($(a+b)c = ac + bc$); additive identity $0$ and multiplicative identity $1 \ne 0$; additive inverses ($-a$) and multiplicative reciprocals ($a^{-1}$ for $a \ne 0$).</li>
-                <li><strong>Trichotomy:</strong> For any $a, b \in \mathbb{R}$, exactly one of the following holds: $a > b$, $a = b$, or $a < b$.</li>
-                <li><strong>Order Transitivity:</strong> $a > b \text{ and } b > c \implies a > c$.</li>
-                <li><strong>Order Preservation:</strong> If $a > b$, then $a + c > b + c$ for all $c \in \mathbb{R}$. If $a > b$ and $c > 0$, then $ac > bc$.</li>
-            </ul>
-        </div>
-
-        <div class="content-block">
-            <h3>Absolute Value, Metric Distance, and the Triangle Inequality</h3>
-            <p>
-                The absolute value function $|\cdot|: \mathbb{R} \to \mathbb{R}$ is defined piecewise:
-            </p>
-            <div style="text-align: center; margin: 0.75rem 0;">
-                $$|x| = \begin{cases} x & \text{if } x \ge 0 \\ -x & \text{if } x < 0 \end{cases}$$
-            </div>
-            <p>It establishes the standard metric distance on the real line: $\text{dist}(a, b) = |a - b|$.</p>
-            <div class="math-def">
-                <strong>Proposition 2 (Properties of Absolute Value):</strong>
-                <ol class="clean-list" style="margin-left: 1.25rem;">
-                    <li>$|a| \ge 0$ for all $a \in \mathbb{R}$, with $|a| = 0 \iff a = 0$.</li>
-                    <li>$|ab| = |a| \cdot |b|$ for all $a, b \in \mathbb{R}$.</li>
-                    <li>$|a|^2 = a^2$ for all $a \in \mathbb{R}$.</li>
-                    <li><strong>Triangle Inequality:</strong> $|a + b| \le |a| + |b|$ for all $a, b \in \mathbb{R}$.</li>
-                    <li><strong>Reverse Triangle Inequality:</strong> $||a| - |b|| \le |a - b|$ for all $a, b \in \mathbb{R}$.</li>
-                </ol>
-            </div>
-            <div class="proof-box">
-                <strong class="proof-label">Proof of the Triangle Inequality</strong>
-                Observe that for any real number $x$, $-|x| \le x \le |x|$. We examine two exhaustive cases for the sum $a+b$:
-                <ul class="clean-list" style="margin-left: 1.25rem;">
-                    <li><strong>Case 1 ($a + b \ge 0$):</strong> By definition, $|a + b| = a + b$. Since $a \le |a|$ and $b \le |b|$, summing inequalities gives $|a + b| = a + b \le |a| + |b|$.</li>
-                    <li><strong>Case 2 ($a + b < 0$):</strong> By definition, $|a + b| = -(a + b) = (-a) + (-b)$. Since $-a \le |a|$ and $-b \le |b|$, summing gives $|a + b| = (-a) + (-b) \le |a| + |b|$.</li>
-                </ul>
-                In both cases, $|a + b| \le |a| + |b|$.
-            </div>
-        </div>
-
-        <div class="content-block">
-            <h3>Bounds, Suprema, and the Completeness of $\mathbb{R}$</h3>
-            <p>
-                Let $S \subseteq \mathbb{R}$ be a non-empty subset:
-            </p>
-            <ul class="clean-list">
-                <li><strong>Upper Bound:</strong> A real number $K$ is an upper bound for $S$ if $x \le K$ for all $x \in S$. If such a $K$ exists, $S$ is <em>bounded above</em>.</li>
-                <li><strong>Lower Bound:</strong> A real number $k$ is a lower bound for $S$ if $k \le x$ for all $x \in S$. If such a $k$ exists, $S$ is <em>bounded below</em>.</li>
-                <li><strong>Bounded Set:</strong> A set that is bounded both above and below. Bounded intervals include closed $[a, b]$, open $(a, b)$, and half-open $(a, b], [a, b)$. Unbounded intervals include $[a, \infty), (-\infty, b)$, and $(-\infty, \infty)$.</li>
-                <li><strong>Supremum ($\sup S$):</strong> The least upper bound of $S$. A number $s = \sup S$ satisfies:
-                    <ol style="margin-left: 1.25rem;">
-                        <li>$s$ is an upper bound: $\forall x \in S, \; x \le s$.</li>
-                        <li>$s$ is the minimal upper bound: If $K$ is any upper bound for $S$, then $s \le K$.</li>
-                    </ol>
-                </li>
-                <li><strong>Infimum ($\inf S$):</strong> The greatest lower bound of $S$.</li>
-            </ul>
-            <div class="math-def">
-                <strong>The Axiom of Completeness:</strong> Every non-empty subset of real numbers that is bounded above has a supremum in $\mathbb{R}$.
-            </div>
-            <p>
-                <strong>The Rational Incompleteness Defect:</strong> The rational numbers do not satisfy completeness. Consider the subset $S = \{x \in \mathbb{Q} : x^2 < 2\} \subseteq \mathbb{Q}$. $S$ is non-empty and bounded above in $\mathbb{Q}$ (for instance, by $2$ or $10$). However, $\sup S = \sqrt{2} \notin \mathbb{Q}$. Within the universe of $\mathbb{Q}$, $S$ has no least upper bound.
-            </p>
-        </div>
-    </section>
-
-    <!-- MODULE 3: SEQUENCES AND DERIVED CALCULUS -->
-    <section class="topic-section">
-        <div class="topic-header">
-            <span class="topic-badge">Lecture 3</span>
-            <div class="topic-title">Sequences, Monotonicity, and Derived Sequences</div>
-        </div>
-
-        <div class="content-block">
-            <h3>Formal Definition of a Sequence</h3>
-            <p>
-                Formally, a <strong>sequence</strong> is a function whose domain is the natural numbers: $f: \mathbb{N} \to \mathbb{R}$. Rather than functional notation $f(n)$, we write $a_n$ and denote the sequence as an infinite, ordered list:
-            </p>
-            <div style="text-align: center; margin: 0.75rem 0;">
-                $$(a_n)_{n=0}^\infty = (a_0, a_1, a_2, a_3, \dots)$$
-            </div>
-            <p>Standard architectural forms include:</p>
-            <ul class="clean-list">
-                <li><strong>Arithmetic Sequences:</strong> $c_n = an + b$, adding a constant difference $a$ at each step.</li>
-                <li><strong>Geometric Sequences:</strong> $c_n = aq^n$ (with $a \ne 0, q \ne 0, 1$), multiplying by a constant factor $q$ at each step.</li>
-                <li><strong>Monotonicity Properties:</strong> A sequence $(a_n)$ is:
-                    <ul style="margin-left: 1.25rem;">
-                        <li><em>Constant</em> if $\exists c \in \mathbb{R}$ such that $\forall n, a_n = c$.</li>
-                        <li><em>Positive</em> (non-negative) if $\forall n, a_n > 0$ ($a_n \ge 0$).</li>
-                        <li><em>Strictly increasing</em> (increasing) if $\forall n, a_{n+1} > a_n$ ($a_{n+1} \ge a_n$).</li>
-                        <li><em>Strictly decreasing</em> (decreasing) if $\forall n, a_{n+1} < a_n$ ($a_{n+1} \le a_n$).</li>
+                    <div style="font-weight: 600; font-size: 1.05rem; color: #1e293b; margin-top: 1.25rem;">2. Set Operations</div>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #334155;">Given sets $A$ and $B$:</p>
+                    <ul style="font-size: 0.95rem; line-height: 1.6; color: #334155; margin-left: 1.5rem;">
+                        <li><strong>Union:</strong> $A \cup B = \{x : x \in A \text{ or } x \in B\}$. Note $A \cup \emptyset = A$.</li>
+                        <li><strong>Intersection:</strong> $A \cap B = \{x : x \in A \text{ and } x \in B\}$. Note $A \cap \emptyset = \emptyset$.</li>
+                        <li><strong>Difference:</strong> $A \setminus B = \{x : x \in A \text{ and } x \notin B\}$. Note that $A \setminus B \ne B \setminus A$.</li>
+                        <li><strong>Cartesian Product:</strong> $A \times B = \{(a, b) : a \in A, b \in B\}$ (consisting of ordered pairs). The cardinality satisfies $|A \times B| = |A| \times |B|$. The Cartesian plane is $\mathbb{R} \times \mathbb{R} = \mathbb{R}^2$.</li>
                     </ul>
-                </li>
-            </ul>
-        </div>
 
-        <div class="content-block">
-            <h3>The Derived Sequence ($a'_n$)</h3>
-            <p>
-                Analogous to the derivative in differential calculus, the <strong>derived sequence</strong> $(a'_n)_{n=0}^\infty$ of a sequence $(a_n)_{n=0}^\infty$ measures discrete consecutive forward differences:
-            </p>
-            <div style="text-align: center; margin: 0.75rem 0;">
-                $$a'_n = a_{n+1} - a_n \implies (a'_n)_{n=0}^\infty = (a_1 - a_0, a_2 - a_1, a_3 - a_2, \dots)$$
-            </div>
-            <div class="math-def">
-                <strong>Proposition 4:</strong> Let $(a_n)_{n=0}^\infty$ be a real sequence with derived sequence $(a'_n)_{n=0}^\infty$:
-                <ol class="clean-list" style="margin-left: 1.25rem;">
-                    <li>$(a_n)$ is constant $\iff a'_n = 0$ for all $n$.</li>
-                    <li>$(a_n)$ is increasing (strictly increasing) $\iff a'_n \ge 0$ ($a'_n > 0$) for all $n$.</li>
-                    <li>$(a_n)$ is decreasing (strictly decreasing) $\iff a'_n \le 0$ ($a'_n < 0$) for all $n$.</li>
-                </ol>
-            </div>
-            <div class="proof-box">
-                <strong class="proof-label">Proof of Constancy via Induction</strong>
-                ($\implies$) Suppose $a_n = c$ for all $n$. Then $a'_n = a_{n+1} - a_n = c - c = 0$.<br>
-                ($\impliedby$) Conversely, suppose $a'_n = 0$ for all $n$. Let $a_0 = c$. We proceed by induction on $n$.<br>
-                <em>Base Case:</em> For $n = 0$, $a_1 = a_0 + (a_1 - a_0) = a_0 + a'_0 = c + 0 = c$.<br>
-                <em>Inductive Step:</em> Assume $a_k = c$ for some $k \ge 0$. Then:
-                $$a_{k+1} = a_k + (a_{k+1} - a_k) = a_k + a'_k = c + 0 = c$$
-                By mathematical induction, $a_n = c$ for all $n \in \mathbb{N}$, proving $(a_n)$ is constant.
-            </div>
-        </div>
+                    <div style="font-weight: 600; font-size: 1.05rem; color: #1e293b; margin-top: 1.25rem;">3. Functions, Mappings, and Inverses</div>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #334155;">
+                        A function $f: X \to Y$ assigns each element $x \in X$ to an element $f(x) \in Y$, where $X$ is the <strong>domain</strong> and $Y$ is the <strong>codomain</strong>. The <strong>range</strong> is $\{f(x) : x \in X\} \subseteq Y$.
+                    </p>
+                    <ul style="font-size: 0.95rem; line-height: 1.6; color: #334155; margin-left: 1.5rem;">
+                        <li><strong>Surjective (Onto):</strong> A function is surjective if its range equals its codomain ($\text{range} = Y$).</li>
+                        <li><strong>Injective (One-to-One):</strong> A function is injective if distinct inputs give distinct outputs: $x \ne y \implies f(x) \ne f(y)$. For instance, $f: \mathbb{Z} \to \mathbb{Z}$ defined by $f(x) = x^2$ is not injective because $f(-1) = 1 = f(1)$.</li>
+                        <li><strong>Bijective:</strong> A function that is both injective and surjective.</li>
+                        <li><strong>Composition:</strong> Given $f: X \to Y$ and $g: Y \to Z$, the composite function is $(g \circ f)(x) = g(f(x))$.</li>
+                        <li><strong>Inverse Function:</strong> If $f: X \to Y$ is bijective, it possesses an inverse $f^{-1}: Y \to X$ satisfying $(f^{-1} \circ f)(x) = x$ and $(f \circ f^{-1})(y) = y$.</li>
+                    </ul>
+                </div>
 
-        <div class="content-block">
-            <h3>Calculus of Standard Derived Sequences</h3>
-            <p>Evaluating derived differences for elementary algebraic sequence types:</p>
-            <ul class="clean-list">
-                <li><strong>Arithmetic ($c_n = an + b$):</strong>
-                    $$c'_n = [a(n+1) + b] - [an + b] = an + a + b - an - b = a$$
-                </li>
-                <li><strong>Geometric ($c_n = aq^n$):</strong>
-                    $$c'_n = aq^{n+1} - aq^n = aq^n(q - 1)$$
-                </li>
-                <li><strong>Quadratic ($c_n = n^2$):</strong>
-                    $$c'_n = (n+1)^2 - n^2 = (n^2 + 2n + 1) - n^2 = 2n + 1$$
-                </li>
-            </ul>
-        </div>
+                <!-- LECTURE 2: NUMBERS AND REAL ANALYSIS -->
+                <div class="card" style="background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem;">
+                    <div style="font-weight: 700; font-size: 1.25rem; color: #0f172a; margin-bottom: 0.75rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem;">
+                        Lecture 2: Numbers, Metric Properties, and Completeness
+                    </div>
 
-        <div class="content-block">
-            <h3>Inversion via Telescoping Sums and Gauss's Formula</h3>
-            <p>
-                Because derived sequences act as discrete differences, the original sequence can be recovered via the discrete analog of integration: telescoping summation. Expanding the sum of consecutive differences:
-            </p>
-            <div style="text-align: center; margin: 0.75rem 0;">
-                $$\sum_{k=0}^{n-1} a'_k = (a_1 - a_0) + (a_2 - a_1) + \dots + (a_n - a_{n-1}) = a_n - a_0$$
-            </div>
-            <p>Rearranging yields the sequence reconstruction formula:</p>
-            <div style="text-align: center; margin: 0.75rem 0;">
-                $$a_n = a_0 + \sum_{k=0}^{n-1} a'_k$$
-            </div>
+                    <div style="font-weight: 600; font-size: 1.05rem; color: #1e293b; margin-top: 1rem;">1. Density of the Rationals</div>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #334155;">
+                        <strong>Proposition 1:</strong> For any two distinct rational numbers $a$ and $b$, there are infinitely many rational numbers between them.
+                    </p>
+                    <div style="background: #f8fafc; border-left: 4px solid #0284c7; padding: 0.75rem 1rem; margin: 0.75rem 0; font-size: 0.92rem; color: #334155;">
+                        <em>Proof:</em> Assume $a < b$. The midpoint $c_1 = \frac{a+b}{2}$ is rational since $\mathbb{Q}$ is closed under addition and division. Evaluating distances:
+                        $$c_1 - a = \frac{a+b}{2} - a = \frac{b-a}{2} > 0 \implies a < c_1$$
+                        $$b - c_1 = b - \frac{a+b}{2} = \frac{b-a}{2} > 0 \implies c_1 < b$$
+                        Repeating this construction yields $c_2 = \frac{a+c_1}{2}$ such that $a < c_2 < c_1$, generating an infinite descending chain of distinct rationals $b > c_1 > c_2 > c_3 > \dots > a$.
+                    </div>
 
-            <div class="math-def">
-                <strong>Discrete Integration Example: Deriving Gauss's Summation Formula</strong><br>
-                Suppose we wish to evaluate $\sum_{k=0}^{n-1} k$, which is equivalent to finding a sequence $a_n$ whose derived sequence is $a'_n = n$ with $a_0 = 0$.<br>
-                From our derived calculus:
-                <ul class="clean-list" style="margin-left: 1.25rem;">
-                    <li>$(n^2)' = 2n + 1$</li>
-                    <li>$(n)' = 1$</li>
-                </ul>
-                By linearity of the difference operator:
-                $$(n^2 - n)' = (2n + 1) - 1 = 2n \implies \left(\frac{n^2 - n}{2}\right)' = n$$
-                Therefore, the anti-difference of $a'_n = n$ is $a_n = \frac{n^2 - n}{2} = \frac{n(n-1)}{2}$. Applying telescoping inversion:
-                $$\sum_{k=0}^{n-1} k = a_n - a_0 = \frac{n(n-1)}{2}$$
-                Shifting indices $k \mapsto k+1$ gives the Gaussian summation formula for the sum of the first $n$ positive integers:
-                $$\sum_{k=1}^n k = \frac{n(n+1)}{2}$$
-            </div>
-        </div>
-    </section>
+                    <div style="font-weight: 600; font-size: 1.05rem; color: #1e293b; margin-top: 1.25rem;">2. Rational Gaps and the Irrationality of $\sqrt{2}$</div>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #334155;">
+                        Despite $\mathbb{Q}$ being dense, it contains structural gaps. Consider the diagonal of a unit square: by Pythagoras' theorem, $c^2 = 1^2 + 1^2 = 2 \implies c = \sqrt{2}$.
+                    </p>
+                    <div style="background: #f8fafc; border-left: 4px solid #0284c7; padding: 0.75rem 1rem; margin: 0.75rem 0; font-size: 0.92rem; color: #334155;">
+                        <em>Proof by Contradiction:</em> Assume $\sqrt{2} = \frac{p}{q}$ for integers $p, q$ with $q \ne 0$. Then $\frac{p^2}{q^2} = 2$, meaning $p^2 = 2q^2$.
+                        By the Fundamental Theorem of Arithmetic, every integer has a unique prime factorisation. In the prime factorisation of any perfect square, each prime factor appears with an even exponent.
+                        Therefore, $p^2$ has an even number of prime factors (counting multiplicities), while $2q^2$ has an odd number of prime factors due to the extra factor of $2$.
+                        An even integer cannot equal an odd integer, creating a contradiction. Hence $\sqrt{2} \notin \mathbb{Q}$.
+                    </div>
 
-    <!-- FOOTER NAV -->
-    <div class="nav-footer">
-        <a href="index.html" class="nav-btn secondary">&larr; Campus Overview</a>
-        <a href="week2.html" class="nav-btn">Week 2: Limits &rarr;</a>
-    </div>
-</div>
+                    <div style="font-weight: 600; font-size: 1.05rem; color: #1e293b; margin-top: 1.25rem;">3. Axiomatic Field &amp; Order Properties of $\mathbb{R}$</div>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #334155;">
+                        The real numbers $\mathbb{R}$ extend $\mathbb{Q}$ by uniting rationals with irrationals. For all $a, b, c \in \mathbb{R}$:
+                    </p>
+                    <ul style="font-size: 0.95rem; line-height: 1.6; color: #334155; margin-left: 1.5rem;">
+                        <li><strong>Identities &amp; Inverses:</strong> Additive identity $0 + a = a$, multiplicative identity $1a = a$. For each $a$, an additive inverse satisfies $a + (-a) = 0$. For $a \ne 0$, a reciprocal satisfies $a \cdot a^{-1} = 1$.</li>
+                        <li><strong>Algebraic Laws:</strong> Commutativity ($a+b=b+a$, $ab=ba$), associativity, and distributivity ($(a+b)c = ac + bc$).</li>
+                        <li><strong>Trichotomy:</strong> Exactly one of $a > b$, $a = b$, or $a < b$ holds.</li>
+                        <li><strong>Order Preservation:</strong> If $a > b$ and $b > c$, then $a > c$. If $a > b$, then $a+c > b+c$. If $a > b$ and $c > 0$, then $ac > bc$.</li>
+                    </ul>
 
-</body>
-</html>
-'''
+                    <div style="font-weight: 600; font-size: 1.05rem; color: #1e293b; margin-top: 1.25rem;">4. Absolute Value and Distance</div>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #334155;">
+                        The absolute value function $|\cdot|: \mathbb{R} \to \mathbb{R}$ defines Euclidean distance: $\text{dist}(a, b) = |a - b|$.
+                    </p>
+                    <div style="background: #f8fafc; border-left: 4px solid #0284c7; padding: 0.75rem 1rem; margin: 0.75rem 0; font-size: 0.92rem; color: #334155;">
+                        <strong>Proposition 2 (Properties of Absolute Value):</strong>
+                        <ol style="margin-left: 1.25rem; margin-top: 0.5rem;">
+                            <li>$|a| \ge 0$, and $|a| = 0 \iff a = 0$.</li>
+                            <li>$|ab| = |a| \cdot |b|$.</li>
+                            <li>$|a|^2 = a^2$.</li>
+                            <li><strong>Triangle Inequality:</strong> $|a + b| \le |a| + |b|$.<br>
+                                <em>Proof:</em> If $a+b \ge 0$, then $|a+b| = a+b \le |a| + |b|$. If $a+b < 0$, then $|a+b| = -(a+b) = (-a) + (-b) \le |a| + |b|$ since both $x, -x \le |x|$.
+                            </li>
+                            <li><strong>Reverse Triangle Inequality:</strong> $||a| - |b|| \le |a - b|$.</li>
+                        </ol>
+                    </div>
 
-    with open(filepath, 'w', encoding='utf-8') as f:
-        f.write(html_content)
-    print(f"Successfully regenerated {filepath} with complete curriculum and core Peano foundations.")
+                    <div style="font-weight: 600; font-size: 1.05rem; color: #1e293b; margin-top: 1.25rem;">5. Bounds, Intervals, and Completeness</div>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #334155;">
+                        A set $S \subseteq \mathbb{R}$ is <strong>bounded above</strong> if there exists $K \in \mathbb{R}$ such that $x \le K$ for all $x \in S$ ($K$ is an upper bound). Similarly, $S$ is <strong>bounded below</strong> if there exists $k \in \mathbb{R}$ such that $k \le x$ for all $x \in S$ ($k$ is a lower bound). A set with both is <strong>bounded</strong>.
+                    </p>
+                    <ul style="font-size: 0.95rem; line-height: 1.6; color: #334155; margin-left: 1.5rem;">
+                        <li><strong>Intervals:</strong> Bounded intervals include closed $[a, b] = \{x : a \le x \le b\}$, open $(a, b) = \{x : a < x < b\}$, and half-open $[a, b), (a, b]$. Unbounded intervals extend to infinity: $[a, \infty), (a, \infty), (-\infty, a]$.</li>
+                        <li><strong>Supremum ($\sup S$):</strong> The least upper bound of $S$. Satisfies: (1) $s$ is an upper bound of $S$; (2) If $K$ is any upper bound of $S$, then $s \le K$.</li>
+                        <li><strong>Infimum ($\inf S$):</strong> The greatest lower bound of $S$.</li>
+                        <li><strong>The Completeness Axiom:</strong> Every non-empty subset of $\mathbb{R}$ that is bounded above has a supremum in $\mathbb{R}$.</li>
+                    </ul>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #334155;">
+                        <strong>The Rational Incompleteness Counterexample:</strong> Consider $S = \{x \in \mathbb{Q} : x^2 < 2\} \subseteq \mathbb{Q}$. $S$ is bounded above in $\mathbb{Q}$ (e.g., by 2 or 10), but has no supremum within $\mathbb{Q}$ because $\sqrt{2} \notin \mathbb{Q}$.
+                    </p>
+                </div>
+
+                <!-- LECTURE 3: SEQUENCES AND DERIVED SEQUENCES -->
+                <div class="card" style="background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem;">
+                    <div style="font-weight: 700; font-size: 1.25rem; color: #0f172a; margin-bottom: 0.75rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem;">
+                        Lecture 3: Sequences, Monotonicity, and Derived Sequences
+                    </div>
+
+                    <div style="font-weight: 600; font-size: 1.05rem; color: #1e293b; margin-top: 1rem;">1. Formal Sequence Definitions</div>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #334155;">
+                        A sequence is a function $f: \mathbb{N} \to \mathbb{R}$, written using indexed notation as an ordered list:
+                    </p>
+                    <div style="text-align: center; margin: 1rem 0; font-size: 1rem;">
+                        $$(a_n)_{n=0}^\infty = (a_0, a_1, a_2, \dots)$$
+                    </div>
+                    <ul style="font-size: 0.95rem; line-height: 1.6; color: #334155; margin-left: 1.5rem;">
+                        <li><strong>Arithmetic Sequence:</strong> $c_n = an + b$, adding fixed difference $a$ at each step.</li>
+                        <li><strong>Geometric Sequence:</strong> $c_n = aq^n$ (with $a \ne 0, q \ne 0, 1$), scaling by ratio $q$ at each step.</li>
+                        <li><strong>Monotonicity Classifications:</strong>
+                            A sequence is <em>constant</em> if $\exists c \in \mathbb{R}$ such that $\forall n, a_n = c$;
+                            <em>positive</em> (non-negative) if $\forall n, a_n > 0$ ($a_n \ge 0$);
+                            <em>strictly increasing</em> (increasing) if $\forall n, a_{n+1} > a_n$ ($a_{n+1} \ge a_n$);
+                            <em>strictly decreasing</em> (decreasing) if $\forall n, a_{n+1} < a_n$ ($a_{n+1} \le a_n$).
+                        </li>
+                    </ul>
+
+                    <div style="font-weight: 600; font-size: 1.05rem; color: #1e293b; margin-top: 1.25rem;">2. The Derived Sequence ($a'_n$)</div>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #334155;">
+                        For any sequence $(a_n)_{n=0}^\infty$, its <strong>derived sequence</strong> $(a'_n)_{n=0}^\infty$ is defined by discrete forward differences:
+                    </p>
+                    <div style="text-align: center; margin: 1rem 0; font-size: 1rem;">
+                        $$a'_n = a_{n+1} - a_n \implies (a'_n)_{n=0}^\infty = (a_1 - a_0, a_2 - a_1, a_3 - a_2, \dots)$$
+                    </div>
+
+                    <div style="background: #f8fafc; border-left: 4px solid #0284c7; padding: 0.75rem 1rem; margin: 0.75rem 0; font-size: 0.92rem; color: #334155;">
+                        <strong>Proposition 4 (Monotonicity &amp; Constancy via Derived Sequences):</strong>
+                        <ul style="margin-left: 1.25rem; margin-top: 0.5rem;">
+                            <li>$(a_n)$ is constant $\iff a'_n = 0$ for all $n$.</li>
+                            <li>$(a_n)$ is (strictly) increasing $\iff a'_n \ge 0$ ($a'_n > 0$) for all $n$.</li>
+                            <li>$(a_n)$ is (strictly) decreasing $\iff a'_n \le 0$ ($a'_n < 0$) for all $n$.</li>
+                        </ul>
+                        <em>Proof of Constancy:</em> If $a_n = c$ for all $n$, then $a'_n = a_{n+1} - a_n = c - c = 0$.
+                        Conversely, suppose $a'_n = 0$ for all $n$. Let $a_0 = c$. By induction, assume $a_k = c$. Then $a_{k+1} = a_k + (a_{k+1} - a_k) = a_k + a'_k = c + 0 = c$. Thus $a_n = c$ for all $n$.
+                    </div>
+
+                    <div style="font-weight: 600; font-size: 1.05rem; color: #1e293b; margin-top: 1.25rem;">3. Derived Sequences of Standard Functions</div>
+                    <ul style="font-size: 0.95rem; line-height: 1.6; color: #334155; margin-left: 1.5rem;">
+                        <li><strong>Arithmetic ($c_n = an + b$):</strong> $c'_n = [a(n+1) + b] - [an + b] = a$.</li>
+                        <li><strong>Geometric ($c_n = aq^n$):</strong> $c'_n = aq^{n+1} - aq^n = aq^n(q - 1)$.</li>
+                        <li><strong>Quadratic ($c_n = n^2$):</strong> $c'_n = (n+1)^2 - n^2 = (n^2 + 2n + 1) - n^2 = 2n + 1$.</li>
+                    </ul>
+
+                    <div style="font-weight: 600; font-size: 1.05rem; color: #1e293b; margin-top: 1.25rem;">4. Inversion via Telescoping Sums and Gauss's Formula</div>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #334155;">
+                        Given a derived sequence $(a'_n)$, the original sequence terms are recovered via telescoping summation:
+                    </p>
+                    <div style="text-align: center; margin: 1rem 0; font-size: 1rem;">
+                        $$a_n = a_0 + \sum_{k=0}^{n-1} a'_k = a_0 + (a'_0 + a'_1 + \dots + a'_{n-1})$$
+                    </div>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #334155;">
+                        <strong>Derivation of Gauss's Summation Formula:</strong> Suppose we seek $a_n$ whose derived sequence is $a'_n = n$.
+                        Since $(n^2)' = 2n + 1$ and $(n)' = 1$, by linearity the derived sequence of $(n^2 - n)$ is $(2n+1) - 1 = 2n$.
+                        Dividing by 2 gives:
+                    </p>
+                    <div style="text-align: center; margin: 1rem 0; font-size: 1rem;">
+                        $$\left(\frac{n^2 - n}{2}\right)' = n \implies \sum_{k=0}^{n-1} k = \frac{n(n-1)}{2}$$
+                    </div>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #334155;">
+                        Shifting the index range gives the standard Gaussian summation formula:
+                    </p>
+                    <div style="text-align: center; margin: 1rem 0; font-size: 1rem;">
+                        $$\sum_{k=1}^n k = \frac{n(n+1)}{2}$$
+                    </div>
+                </div>
+
+            </section>'''
+
+    marker = '</section>'
+    if 'Lecture 1: Sets, Operations, and Functions' in content:
+        print("Comprehensive curriculum is already present in week1.html.")
+        return
+
+    # Find the closing main content or module section
+    last_section_idx = content.rfind(marker)
+    if last_section_idx != -1:
+        content = content[:last_section_idx] + comprehensive_curriculum + '\n\n' + content[last_section_idx:]
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write(content)
+        print("Successfully injected all curriculum topics from Lectures 1, 2, and 3 into week1.html.")
+    else:
+        print("Could not find insertion marker '</section>' in week1.html.")
 
 def execute_git_sync():
     commit_message = (
-        "Regenerate week1.html with complete curriculum and core Peano axioms\n\n"
-        "Completely rebuilt week1.html with all theoretical content from Lectures\n"
-        "1, 2, and 3. Integrated Peano axioms directly as core body content,\n"
-        "added full proofs, and embedded the campus discovery hero image."
+        "Incorporate complete lecture topics into week1.html\n\n"
+        "Injected comprehensive content from Lectures 1, 2, and 3 into week1.html\n"
+        "covering sets, cardinality, function mappings, rational density, sqrt(2)\n"
+        "prime factorisation, field axioms, metric distance, triangle inequality,\n"
+        "bounds, completeness, derived sequences, and Gaussian inversion."
     )
     commands = [
         ['git', 'add', 'week1.html', 'update.py'],
@@ -568,5 +239,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    write_complete_week1_html()
+    inject_complete_week1_curriculum()
     execute_git_sync()
