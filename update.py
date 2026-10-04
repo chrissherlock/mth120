@@ -2,7 +2,7 @@
 import os
 import subprocess
 
-def update_density_section():
+def add_density_stepper_widget():
     filepath = 'week1-lecture2.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
@@ -11,99 +11,130 @@ def update_density_section():
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # Old Section 1 block to replace
-    old_section_1 = (
-        '            <!-- SECTION 1 -->\n'
-        '            <h2 id="density-rationals">1. Density of the Rational Numbers</h2>\n'
-        '            <div class="infobox">\n'
-        '                <h4>📖 Notation Reference: Number Sets &amp; Bounds</h4>\n'
-        '                <div class="infobox-intro">\n'
-        '                    <strong>The numbers we stand on:</strong> From counting numbers up to the unbroken real line, each extension repairs a specific structural limitation.\n'
-        '                </div>\n'
-        '                <div class="notation-grid">\n'
-        '                    <div class="notation-item"><span class="notation-sym">$\\mathbb{N}$</span><span class="notation-desc">Natural numbers $\\{0, 1, 2, \\dots\\}$</span></div>\n'
-        '                    <div class="notation-item"><span class="notation-sym">$\\mathbb{Z}$</span><span class="notation-desc">Integers $\\{\\dots, -1, 0, 1, \\dots\\}$</span></div>\n'
-        '                    <div class="notation-item"><span class="notation-sym">$\\mathbb{Q}$</span><span class="notation-desc">Rational numbers $\\{p/q \\mid p \\in \\mathbb{Z}, q \\in \\mathbb{Z}_+\\}$</span></div>\n'
-        '                    <div class="notation-item"><span class="notation-sym">$\\mathbb{R}$</span><span class="notation-desc">Real numbers (complete ordered field)</span></div>\n'
-        '                    <div class="notation-item"><span class="notation-sym">$|x|$</span><span class="notation-desc">Absolute value (distance to origin)</span></div>\n'
-        '                    <div class="notation-item"><span class="notation-sym">$\\sup S$</span><span class="notation-desc">Supremum (least upper bound) of set $S$</span></div>\n'
-        '                    <div class="notation-item"><span class="notation-sym">$\\inf S$</span><span class="notation-desc">Infimum (greatest lower bound) of set $S$</span></div>\n'
-        '                </div>\n'
-        '            </div>\n\n'
-        '            <p>Fractions (rational numbers, $\\mathbb{Q}$) are packed incredibly tightly along the number line.</p>\n'
-        '            <div class="definition-box">\n'
-        '                <strong>Proposition 1 (Density of $\\mathbb{Q}$):</strong> For any two distinct rational numbers $a$ and $b$ with $a < b$, there exist infinitely many rational numbers strictly between them.\n'
-        '            </div>\n'
-        '            <p>\n'
-        '                <em>Proof Construction:</em> The arithmetic midpoint $c_1 = \\frac{a+b}{2}$ is rational because $\\mathbb{Q}$ is closed under addition and division. Since $a < c_1 < b$, we can repeat this process on $a$ and $c_1$ to find $c_2 = \\frac{a+c_1}{2}$. Repeating this construction generates an infinite descending sequence of distinct rationals between $a$ and $b$:\n'
-        '            </p>\n'
-        '            <div style="text-align: center; margin: 1rem 0;">\n'
-        '                $$b > c_1 > c_2 > c_3 > \\dots > a$$\n'
-        '            </div>'
-    )
-
-    # Enhanced Section 1 block with warm, beginner-friendly explanations
-    new_section_1 = (
-        '            <!-- SECTION 1 -->\n'
-        '            <h2 id="density-rationals">1. Density of the Rational Numbers</h2>\n'
-        '            <div class="infobox">\n'
-        '                <h4>📖 Notation Reference: Number Sets &amp; Bounds</h4>\n'
-        '                <div class="infobox-intro">\n'
-        '                    <strong>The numbers we stand on:</strong> From counting numbers up to the unbroken real line, each extension repairs a specific structural limitation.\n'
-        '                </div>\n'
-        '                <div class="notation-grid">\n'
-        '                    <div class="notation-item"><span class="notation-sym">$\\mathbb{N}$</span><span class="notation-desc">Natural numbers $\\{0, 1, 2, \\dots\\}$</span></div>\n'
-        '                    <div class="notation-item"><span class="notation-sym">$\\mathbb{Z}$</span><span class="notation-desc">Integers $\\{\\dots, -1, 0, 1, \\dots\\}$</span></div>\n'
-        '                    <div class="notation-item"><span class="notation-sym">$\\mathbb{Q}$</span><span class="notation-desc">Rational numbers $\\{p/q \\mid p \\in \\mathbb{Z}, q \\in \\mathbb{Z}_+\\}$</span></div>\n'
-        '                    <div class="notation-item"><span class="notation-sym">$\\mathbb{R}$</span><span class="notation-desc">Real numbers (complete ordered field)</span></div>\n'
-        '                    <div class="notation-item"><span class="notation-sym">$|x|$</span><span class="notation-desc">Absolute value (distance to origin)</span></div>\n'
-        '                    <div class="notation-item"><span class="notation-sym">$\\sup S$</span><span class="notation-desc">Supremum (least upper bound) of set $S$</span></div>\n'
-        '                    <div class="notation-item"><span class="notation-sym">$\\inf S$</span><span class="notation-desc">Infimum (greatest lower bound) of set $S$</span></div>\n'
-        '                </div>\n'
-        '            </div>\n\n'
-        '            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">\n'
-        '                At first glance, fractions (rational numbers, $\\mathbb{Q}$) feel like they fill up the number line entirely. If you pick any two fractions&mdash;say, $\\frac{1}{3}$ and $\\frac{1}{2}$&mdash;you can always find another one right between them (like their average, $\\frac{5}{12}$). In real analysis, this property is known as <strong>density</strong>.\n'
-        '            </p>\n\n'
-        '            <div class="definition-box">\n'
-        '                <strong>Proposition 1 (Density of $\\mathbb{Q}$):</strong> For any two distinct rational numbers $a$ and $b$ with $a < b$, there exist infinitely many rational numbers strictly between them.\n'
-        '            </div>\n\n'
-        '            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;\">\n'
-        '                <em>Building the Intuition:</em> How do we prove this rigorously without getting lost in an infinite loop? We use a constructive argument. If we take our two fractions $a$ and $b$, their arithmetic midpoint is guaranteed to sit safely halfway between them:\n'
-        '            </p>\n\n'
-        '            <div style="text-align: center; margin: 1.25rem 0; font-size: 1.05rem;">\n'
-        '                $$c_1 = \\frac{a+b}{2}$$\n'
-        '            </div>\n\n'
-        '            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">\n'
-        '                Because the rational numbers are closed under addition and division by non-zero integers, $c_1$ is guaranteed to be a rational number itself. Now, imagine zooming in on the left half of our interval, between $a$ and $c_1$. We can take their midpoint $c_2 = \\frac{a+c_1}{2}$. By repeating this zooming process endlessly, we generate an infinite descending sequence of unique rational numbers trapped between $a$ and $b$:\n'
-        '            </p>\n\n'
+    # We will insert the interactive widget right after the midpoint explanation paragraph
+    target_anchor = (
         '            <div style="text-align: center; margin: 1rem 0;">\n'
         '                $$a < c_3 < c_2 < c_1 < b$$\n'
-        '            </div>\n\n'
-        '            <div class="aside-box">\n'
-        '                <h4>💡 A Surprising Takeaway</h4>\n'
-        '                <p style="margin-bottom: 0;">\n'
-        '                    Even though $\\mathbb{Q}$ is packed so tightly that you can never find two fractions "touching" without another fraction between them, <strong>it is still full of invisible gaps</strong>. As we will see in the next section, these microscopic rational gaps are precisely where irrational numbers like $\\sqrt{2}$ live!\n'
-        '                </p>\n'
         '            </div>'
     )
 
-    if old_section_1 in content:
-        content = content.replace(old_section_1, new_section_1, 1)
+    widget_code = (
+        '\n\n            <!-- INTERACTIVE RATIONAL DENSITY STEPPER -->\n'
+        '            <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">\n'
+        '                <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.75rem; margin-bottom: 1rem;">\n'
+        '                    <h3 style="margin: 0; color: #0f172a; font-size: 1.1rem;">Interactive Walkthrough: The Infinite Midpoint Nesting</h3>\n'
+        '                    <span id="density-telemetry" style="font-weight: 600; color: var(--accent); font-size: 0.88rem; background: #fffbeb; padding: 0.2rem 0.6rem; border-radius: 4px; border: 1px solid #fde68a;">Phase: Initial Interval [0.3, 0.4]</span>\n'
+        '                </div>\n\n'
+        '                <!-- SVG VISUAL CANVAS -->\n'
+        '                <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; text-align: center; margin-bottom: 1.25rem;">\n'
+        '                    <svg id="density-svg" viewBox="0 0 700 130" style="width: 100%; max-width: 660px; height: auto; display: inline-block;">\n'
+        '                        <!-- Main Number Line Axis -->\n'
+        '                        <line x1="50" y1="75" x2="650" y2="75" stroke="#0f172a" stroke-width="2.5"/>\n'
+        '                        <!-- Ticks for 0.3 and 0.4 -->\n'
+        '                        <line x1="100" y1="65" x2="100" y2="85" stroke="#0f172a" stroke-width="2"/>\n'
+        '                        <line x1="600" y1="65" x2="600" y2="85" stroke="#0f172a" stroke-width="2"/>\n'
+        '                        <text x="100" y="105" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">a = 0.3</text>\n'
+        '                        <text x="600" y="105" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">b = 0.4</text>\n\n'
+        '                        <!-- Dynamic Midpoint Markers -->\n'
+        '                        <g id="marker-c1" style="display: none;">\n'
+        '                            <line x1="350" y1="50" x2="350" y2="100" stroke="#d97706" stroke-width="2" stroke-dasharray="3"/>\n'
+        '                            <circle cx="350" cy="75" r="6" fill="#d97706"/>\n'
+        '                            <text x="350" y="38" font-family="sans-serif" font-size="11.5" font-weight="bold" fill="#b45309" text-anchor="middle">c₁ = 0.35</text>\n'
+        '                        </g>\n'
+        '                        <g id="marker-c2" style="display: none;">\n'
+        '                            <line x1="225" y1="50" x2="225" y2="100" stroke="#0284c7" stroke-width="2" stroke-dasharray="3"/>\n'
+        '                            <circle cx="225" cy="75" r="6" fill="#0284c7"/>\n'
+        '                            <text x="225" y="38" font-family="sans-serif" font-size="11.5" font-weight="bold" fill="#0369a1" text-anchor="middle">c₂ = 0.325</text>\n'
+        '                        </g>\n'
+        '                        <g id="marker-c3" style="display: none;">\n'
+        '                            <line x1="162.5" y1="50" x2="162.5" y2="100" stroke="#10b981" stroke-width="2" stroke-dasharray="3"/>\n'
+        '                            <circle cx="162.5" cy="75" r="6" fill="#10b981"/>\n'
+        '                            <text x="162.5" y="38" font-family="sans-serif" font-size="11.5" font-weight="bold" fill="#047857" text-anchor="middle">c₃ = 0.3125</text>\n'
+        '                        </g>\n'
+        '                    </svg>\n'
+        '                </div>\n\n'
+        '                <!-- NAVIGATION CONTROLS -->\n'
+        '                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem;">\n'
+        '                    <div style="display: flex; gap: 0.5rem;">\n'
+        '                        <button onclick="densityPrev()" id="density-prev-btn" style="background: #e2e8f0; color: #475569; border: none; padding: 0.45rem 1rem; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 0.9rem;" disabled>&larr; Previous</button>\n'
+        '                        <button onclick="densityNext()" id="density-next-btn" style="background: var(--accent); color: white; border: none; padding: 0.45rem 1rem; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">Next Step &rarr;</button>\n'
+        '                    </div>\n'
+        '                    <button onclick="densityReset()" style="background: transparent; color: #64748b; border: 1px solid var(--border); padding: 0.45rem 0.85rem; border-radius: 4px; font-weight: 500; cursor: pointer; font-size: 0.85rem;">Reset View</button>\n'
+        '                </div>\n\n'
+        '                <!-- PAIRED ANALYTICAL PANES -->\n'
+        '                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">\n'
+        '                    <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; border-left: 3px solid #0284c7;">\n'
+        '                        <h4 style="margin: 0 0 0.4rem 0; color: #0369a1; font-size: 0.95rem;">1. What Is Happening</h4>\n'
+        '                        <p id="pane-what" style="margin: 0; font-size: 0.9rem; color: #334155; line-height: 1.5;">\n'
+        '                            We start with interval $[0.3, 0.4]$. No fractions are plotted yet. The line appears continuous, but infinitely many rational points are waiting between the endpoints.\n'
+        '                        </p>\n'
+        '                    </div>\n'
+        '                    <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; border-left: 3px solid #d97706;">\n'
+        '                        <h4 style="margin: 0 0 0.4rem 0; color: #92400e; font-size: 0.95rem;">2. Why The System Does This</h4>\n'
+        '                        <p id="pane-why" style="margin: 0; font-size: 0.9rem; color: #334155; line-height: 1.5;">\n'
+        '                            Demonstrating closure under division: any arithmetic average of two rationals is strictly guaranteed to generate a brand new, valid rational number.\n'
+        '                        </p>\n'
+        '                    </div>\n'
+        '                </div>\n'
+        '            </div>\n\n'
+        '            <!-- STEPPER JAVASCRIPT -->\n'
+        '            <script>\n'
+        '                let densityStep = 0;\n'
+        '                function updateDensityWidget() {\n'
+        '                    const markerC1 = document.getElementById("marker-c1");\n'
+        '                    const markerC2 = document.getElementById("marker-c2");\n'
+        '                    const markerC3 = document.getElementById("marker-c3");\n'
+        '                    const prevBtn = document.getElementById("density-prev-btn");\n'
+        '                    const nextBtn = document.getElementById("density-next-btn");\n'
+        '                    const telemetry = document.getElementById("density-telemetry");\n'
+        '                    const paneWhat = document.getElementById("pane-what");\n'
+        '                    const paneWhy = document.getElementById("pane-why");\n\n'
+        '                    markerC1.style.display = densityStep >= 1 ? "block" : "none";\n'
+        '                    markerC2.style.display = densityStep >= 2 ? "block" : "none";\n'
+        '                    markerC3.style.display = densityStep >= 3 ? "block" : "none";\n'
+        '                    prevBtn.disabled = densityStep === 0;\n'
+        '                    nextBtn.disabled = densityStep === 3;\n'
+        '                    nextBtn.style.opacity = densityStep === 3 ? "0.5" : "1";\n\n'
+        '                    if (densityStep === 0) {\n'
+        '                        telemetry.innerText = "Phase: Initial Interval [0.3, 0.4]";\n'
+        '                        paneWhat.innerText = "We start with interval [0.3, 0.4]. No fractions are plotted yet. The line appears solid, but infinitely many rational points are waiting between the endpoints.";\n'
+        '                        paneWhy.innerText = "Demonstrating closure under division: any arithmetic average of two rationals is strictly guaranteed to generate a brand new, valid rational number.";\n'
+        '                    } else if (densityStep === 1) {\n'
+        '                        telemetry.innerText = "Phase: Step 1 (First Midpoint)";\n'
+        '                        paneWhat.innerText = "Calculated first midpoint: c₁ = (0.3 + 0.4) / 2 = 0.35. A new rational marker is dropped exactly halfway between a and b.";\n'
+        '                        paneWhy.innerText = "Even though we inserted a point, we haven\'t filled the gap; we now have two smaller sub-intervals, each containing infinitely more fractions.";\n'
+        '                    } else if (densityStep === 2) {\n'
+        '                        telemetry.innerText = "Phase: Step 2 (Zooming In)";\n'
+        '                        paneWhat.innerText = "Calculated second midpoint on the left interval: c₂ = (0.3 + 0.35) / 2 = 0.325. Notice how densely points are beginning to cluster near 0.3.";\n'
+        '                        paneWhy.innerText = "The midpoint construction is recursive. You can repeat this division infinitely without ever running out of fresh rational numbers.";\n'
+        '                    } else if (densityStep === 3) {\n'
+        '                        telemetry.innerText = "Phase: Step 3 (Infinite Nesting)";\n'
+        '                        paneWhat.innerText = "Calculated third midpoint: c₃ = (0.3 + 0.325) / 2 = 0.3125. The sequence accumulates towards 0.3 from the right.";\n'
+        '                        paneWhy.innerText = "This infinite nesting proves density, yet microscopic pinprick holes (like irrational numbers) still remain unplotted between these markers!";\n'
+        '                    }\n'
+        '                }\n'
+        '                function densityNext() { if (densityStep < 3) { densityStep++; updateDensityWidget(); } }\n'
+        '                function densityPrev() { if (densityStep > 0) { densityStep--; updateDensityWidget(); } }\n'
+        '                function densityReset() { densityStep = 0; updateDensityWidget(); }\n'
+        '            </script>'
+    )
+
+    if target_anchor in content:
+        content = content.replace(target_anchor, target_anchor + widget_code, 1)
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
-        print("Successfully updated Section 1 in week1-lecture2.html.")
+        print("Successfully added interactive rational density stepper widget to week1-lecture2.html.")
         return True
 
-    print("Error: Could not locate exact Section 1 match in week1-lecture2.html.")
+    print("Error: Could not locate target anchor in week1-lecture2.html.")
     return False
 
 def synchronize_git_changes():
-    commit_message = (
-        "Refine and explain Rational Density section in week1-lecture2.html\n\n"
-        "Updated Section 1 of week1-lecture2.html to adopt a warm, intuitive\n"
-        "pedagogical approach, breaking down the midpoint construction and\n"
-        "highlighting the paradoxical gaps in the rational number line."
-    )
+    commit_message = """Add interactive rational density stepper widget to week1-lecture2.html
+
+Embedded an interactive SVG step-through widget in week1-lecture2.html to
+illustrate the midpoint construction (c1, c2, c3) dynamically, complete with
+live state telemetry and paired analytical explanation panes."""
     commands = [
         ['git', 'add', 'week1-lecture2.html', 'update.py'],
         ['git', 'commit', '-m', commit_message],
@@ -114,5 +145,5 @@ def synchronize_git_changes():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    if update_density_section():
+    if add_density_stepper_widget():
         synchronize_git_changes()
