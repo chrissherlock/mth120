@@ -33,7 +33,7 @@
             border-left: 5px solid var(--accent);
             border-radius: 8px;
             padding: 1.75rem;
-            margin-bottom: 2.5rem;
+            margin-bottom: 1.5rem;
         }
         .welcome-header { margin-bottom: 1.5rem; }
         .welcome-header h2 {
@@ -54,12 +54,31 @@
             overflow: hidden;
             background: #ffffff;
             box-shadow: 0 4px 6px -1px rgba(217, 119, 6, 0.1);
-            margin-bottom: 1.5rem;
+            margin-bottom: 0;
         }
         .welcome-image {
             width: 100%;
             height: auto;
             display: block;
+        }
+
+        /* Narrative Explanation Card (Outside Welcome Card) */
+        .narrative-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+        .narrative-card p {
+            margin: 0 0 0.85rem 0;
+            color: #334155;
+            font-size: 1rem;
+            line-height: 1.65;
+        }
+        .narrative-card p:last-child {
+            margin-bottom: 0;
         }
 
         .welcome-pillars-grid {
@@ -200,36 +219,34 @@
                 <div class="welcome-image-wrapper">
                     <img src="images/welcome-mth120.jpeg" alt="Overview Map of Course Mathematics" class="welcome-image">
                 </div>
+            </div>
 
-                <!-- Reassuring Course Overview Narrative -->
-                <div style="background: #ffffff; border: 1px solid #fed7aa; border-radius: 6px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem;">
-                    <p style="margin: 0 0 0.75rem 0; color: #334155; font-size: 0.98rem; line-height: 1.65;">
-                        Whether you are meeting formal proofs for the first time or revisiting calculus from a rigorous perspective, this companion is designed to walk alongside you every step of the way. You won't have to navigate abstract concepts alone: each module breaks down complex ideas into intuitive visual steps, connecting the everyday mechanics of numbers and functions to the foundational logic that holds them together.
-                    </p>
-                    <p style="margin: 0; color: #334155; font-size: 0.98rem; line-height: 1.65;">
-                        Over the coming weeks, our journey is structured around four interconnected pillars—moving from the bedrock of sets and limits through continuous change, accumulation, and finally into the multidimensional geometry of linear algebra. Take your time, explore the interactive visual tools, and remember that deep mathematical understanding is built one careful question at a time.
-                    </p>
-                </div>
-                    <img src="images/welcome-mth120.jpeg" alt="Overview Map of Course Mathematics" class="welcome-image">
-                </div>
+            <!-- Warm Reassuring Course Overview Explanation (Outside Card, directly under Hero Image) -->
+            <div class="narrative-card">
+                <p>
+                    <b>Weclome!</b> Whether you are meeting formal proofs for the first time or revisiting calculus from a rigorous perspective, this companion is designed to walk alongside you every step of the way. You won't have to navigate abstract concepts alone: each module breaks down complex ideas into intuitive visual steps, connecting the everyday mechanics of numbers and functions to the foundational logic that holds them together.
+                </p>
+                <p>
+                    Over the coming weeks, our journey is structured around four interconnected pillars—moving from the bedrock of sets and limits through continuous change, accumulation, and finally into the multidimensional geometry of linear algebra. Take your time, explore the interactive visual tools, and remember that deep mathematical understanding is built one careful question at a time.
+                </p>
+            </div>
 
-                <div class="welcome-pillars-grid">
-                    <div class="pillar-item">
-                        <h5>🎯 1. Sets, Sequences &amp; Limits</h5>
-                        <p>Foundations of mathematical logic, number closures ($\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$), and formal $\epsilon\text{–}N$ limit definitions.</p>
-                    </div>
-                    <div class="pillar-item">
-                        <h5>⚡ 2. Functions, Continuity &amp; Derivatives</h5>
-                        <p>Mapping behavior, $\epsilon\text{–}\delta$ continuity, rates of change, optimization, and concavity.</p>
-                    </div>
-                    <div class="pillar-item">
-                        <h5>📊 3. Accumulation &amp; Integration</h5>
-                        <p>Riemann sums, the Fundamental Theorem of Calculus, areas between curves, and volumes of revolution.</p>
-                    </div>
-                    <div class="pillar-item">
-                        <h5>🧩 4. Linear Algebra &amp; Vectors</h5>
-                        <p>Systems of linear equations, Gaussian elimination, determinants, vector spaces, and complex numbers ($\mathbb{C}$).</p>
-                    </div>
+            <div class="welcome-pillars-grid">
+                <div class="pillar-item">
+                    <h5>🎯 1. Sets, Sequences &amp; Limits</h5>
+                    <p>Foundations of mathematical logic, number closures ($\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$), and formal $\epsilon\text{–}N$ limit definitions.</p>
+                </div>
+                <div class="pillar-item">
+                    <h5>⚡ 2. Functions, Continuity &amp; Derivatives</h5>
+                    <p>Mapping behavior, $\epsilon\text{–}\delta$ continuity, rates of change, optimization, and concavity.</p>
+                </div>
+                <div class="pillar-item">
+                    <h5>📊 3. Accumulation &amp; Integration</h5>
+                    <p>Riemann sums, the Fundamental Theorem of Calculus, areas between curves, and volumes of revolution.</p>
+                </div>
+                <div class="pillar-item">
+                    <h5>🧩 4. Linear Algebra &amp; Vectors</h5>
+                    <p>Systems of linear equations, Gaussian elimination, determinants, vector spaces, and complex numbers ($\mathbb{C}$).</p>
                 </div>
             </div>
 
