@@ -556,13 +556,209 @@
 
             <!-- SECTION 3 -->
             <h2 id="field-order">3. Axiomatic Field and Order Properties of $\mathbb{R}$</h2>
-            <p>To patch the gaps in $\mathbb{Q}$, we construct the real numbers $\mathbb{R}$ uniting rationals and irrationals into a complete ordered field:</p>
-            <ul>
-                <li><strong>Field Axioms:</strong> Commutativity and associativity of addition and multiplication; distributivity ($(a+b)c = ac + bc$); additive identity $0$ and multiplicative identity $1 \ne 0$; additive inverse $-a$; reciprocal $a^{-1}$ (for $a \ne 0$).</li>
-                <li><strong>Trichotomy:</strong> For any $a, b \in \mathbb{R}$, exactly one of $a < b$, $a = b$, or $a > b$ holds.</li>
-                <li><strong>Order Transitivity:</strong> $a > b \text{ and } b > c \implies a > c$.</li>
-                <li><strong>Order Preservation:</strong> If $a > b$, then $a + c > b + c$ for all $c$. If $a > b$ and $c > 0$, then $ac > bc$.</li>
-            </ul>
+            <div style="font-size: 1.02rem; line-height: 1.7; color: #334155; margin-bottom: 1.25rem;">
+                <p>
+                    When we patch the gaps in the rational numbers $\mathbb{Q}$ to build the real numbers $\mathbb{R}$, we want to make sure our new number line behaves nicely. We don't want arithmetic to act unpredictably or inequalities to contradict themselves.
+                </p>
+                <p>
+                    To guarantee this, mathematicians define $\mathbb{R}$ as a <strong>complete ordered field</strong>. That sounds like intimidating vocabulary, but it simply means $\mathbb{R}$ is built on three common-sense promises:
+                </p>
+                <ol style="margin: 0.5rem 0 1rem 1.5rem; padding-left: 0;">
+                    <li><strong>It's a "Field" (The Arithmetic Promise):</strong> You can add, subtract, multiply, and divide freely, and all the familiar rules of algebra work. The arithmetic playground always plays fair. (<a href="algebraic_structures.html" style="color: var(--accent); font-weight: 500; text-decoration: underline;">Explore a deep dive on Groups, Rings, and Fields &rarr;</a>)</li>
+                    <li><strong>It's "Ordered" (The Direction Promise):</strong> Numbers have a strict, consistent left-to-right direction. Every number is either smaller than, equal to, or greater than any other number, and inequalities behave predictably when you shift or scale them.</li>
+                    <li><strong>It's "Complete" (The No-Holes Promise):</strong> Remember the invisible pinprick hole we found at $\sqrt{2}$ in the rational numbers ($\mathbb{Q}$)? Completeness means there are zero holes left on the line. Every set of numbers that has an upper ceiling has a tightest possible ceiling sitting right inside the system, plugging every gap permanently.</li>
+                </ol>
+
+                <!-- WHY IS THIS FOUNDATION IMPORTANT? -->
+                <div class="aside-box" style="margin: 1.25rem 0;">
+                    <h4>🌱 Why is this foundation so important?</h4>
+                    <p style="margin-bottom: 0;">
+                        Without these three guarantees, <strong>calculus as we know it would collapse</strong>:
+                        <br><br>
+                        • <strong>Without Completeness</strong>, limits could march endlessly toward a target value (like zooming in on $\sqrt{2}$) only to fall through a missing hole because the destination doesn't exist in the number system.<br>
+                        • <strong>Without Order</strong>, inequalities and directions would become unstable, making it impossible to define closeness or continuity.<br>
+                        • <strong>Without the Field rules</strong>, basic algebraic manipulation (like expanding brackets or solving equations) would break down into unpredictable exceptions.
+                        <br><br>
+                        Demanding that $\mathbb{R}$ be a complete ordered field gives us a flawless, unbroken bedrock where calculus can stand safely.
+                    </p>
+                </div>
+
+                <p>
+                    Let's break down how these three promises translate into everyday rules you can trust:
+                </p>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 1.25rem; margin-bottom: 1.75rem;">
+                <!-- PILLAR 1 WITH SVG DIAGRAM -->
+                <div style="background: #f8fafc; border: 1px solid var(--border); border-left: 4px solid #10b981; padding: 1.25rem 1.5rem; border-radius: 0 6px 6px 0;">
+                    <h3 style="margin-top: 0; color: #047857; font-size: 1.05rem;">1. The Field Rules (Fair Arithmetic)</h3>
+                    <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                        Think of this as the basic grammar of addition and multiplication. These are rules you have trusted your whole life:
+                    </p>
+                    <ul style="margin: 0 0 1.25rem 1.25rem; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                        <li><strong>Swapping (Commutativity):</strong> Changing the order of addition or multiplication never changes the final answer ($a + b = b + a$ and $ab = ba$).</li>
+                        <li><strong>Grouping (Associativity):</strong> Where you place parentheses when adding or multiplying multiple numbers doesn't matter ($(a + b) + c = a + (b + c)$).</li>
+                        <li><strong>Expanding (Distributivity):</strong> Multiplication distributes smoothly across addition ($a(b + c) = ab + ac$). As visualized in the area model below, multiplying a total width of $(3 + 4)$ by a height of $2$ is identical to adding the two individual box areas ($2 \times 3 + 2 \times 4$).</li>
+                        <li><strong>Undoing (Inverses):</strong> Every number has an opposite that neutralizes it to zero ($a + (-a) = 0$), and every non-zero number has a reciprocal that multiplies to one ($a \cdot a^{-1} = 1$).</li>
+                    </ul>
+
+                    <!-- DIAGRAM FOR DISTRIBUTIVITY -->
+                    <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; text-align: center;">
+                        <svg viewBox="0 0 500 130" style="width: 100%; max-width: 440px; height: auto; display: inline-block;">
+                            <rect x="80" y="30" width="150" height="60" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+                            <text x="155" y="65" font-family="sans-serif" font-size="13" font-weight="bold" fill="#047857" text-anchor="middle">2 × 3</text>
+
+                            <rect x="230" y="30" width="200" height="60" fill="#fed7aa" stroke="#f97316" stroke-width="2"/>
+                            <text x="330" y="65" font-family="sans-serif" font-size="13" font-weight="bold" fill="#c2410c" text-anchor="middle">2 × 4</text>
+
+                            <text x="155" y="18" font-family="sans-serif" font-size="11" fill="#475569" text-anchor="middle">length = 3</text>
+                            <text x="330" y="18" font-family="sans-serif" font-size="11" fill="#475569" text-anchor="middle">length = 4</text>
+                            <text x="45" y="65" font-family="sans-serif" font-size="11" fill="#475569" text-anchor="middle">height = 2</text>
+
+                            <text x="250" y="115" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">2 × (3 + 4)  =  (2 × 3) + (2 × 4)</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- PILLAR 2 WITH SVG DIAGRAM -->
+                <div style="background: #f8fafc; border: 1px solid var(--border); border-left: 4px solid #d97706; padding: 1.25rem 1.5rem; border-radius: 0 6px 6px 0;">
+                    <h3 style="margin-top: 0; color: #92400e; font-size: 1.05rem;">2. The Trichotomy Law (Strict Comparison)</h3>
+                    <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                        Have you ever wondered how numbers relate to each other on a line? The <em>Trichotomy Property</em> guarantees that if you pick any two real numbers $a$ and $b$, there is never any confusion or ambiguity about where they stand. Exactly <strong>one</strong> of three things must always be true:
+                    </p>
+                    <ul style="margin: 0 0 1.25rem 1.25rem; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                        <li>$a < b$ ($a$ sits strictly to the left of $b$)</li>
+                        <li>$a = b$ ($a$ and $b$ occupy the exact same point)</li>
+                        <li>$a > b$ ($a$ sits strictly to the right of $b$)</li>
+                    </ul>
+                    <p style="margin: 0 0 1rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                        As illustrated below relative to a fixed reference point $b$, any candidate number $a$ must fall into one of these three mutually exclusive zones:
+                    </p>
+
+                    <!-- DIAGRAM FOR TRICHOTOMY -->
+                    <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; text-align: center;">
+                        <svg viewBox="0 0 500 110" style="width: 100%; max-width: 440px; height: auto; display: inline-block;">
+                            <line x1="50" y1="55" x2="450" y2="55" stroke="#cbd5e1" stroke-width="2"/>
+                            <line x1="270" y1="45" x2="270" y2="65" stroke="#0f172a" stroke-width="2.5"/>
+                            <text x="270" y="35" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">b</text>
+                            <text x="160" y="50" font-family="sans-serif" font-size="11" font-weight="bold" fill="#047857" text-anchor="middle">Zone 1: a < b</text>
+                            <text x="160" y="65" font-family="sans-serif" font-size="10" fill="#64748b" text-anchor="middle">(Strictly Left)</text>
+                            <text x="360" y="50" font-family="sans-serif" font-size="11" font-weight="bold" fill="#1d4ed8" text-anchor="middle">Zone 3: a > b</text>
+                            <text x="360" y="65" font-family="sans-serif" font-size="10" fill="#64748b" text-anchor="middle">(Strictly Right)</text>
+                            <text x="270" y="90" font-family="sans-serif" font-size="10" font-weight="bold" fill="#b45309" text-anchor="middle">Zone 2: a = b (Exact Point)</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- PILLAR 3 WITH INDIVIDUAL DIAGRAMS FOR EACH ORDER RULE -->
+                <div style="background: #f8fafc; border: 1px solid var(--border); border-left: 4px solid #0284c7; padding: 1.25rem 1.5rem; border-radius: 0 6px 6px 0;">
+                    <h3 style="margin-top: 0; color: #0369a1; font-size: 1.05rem;">3. Order Rules (Predictable Inequalities)</h3>
+                    <p style="margin: 0 0 1rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                        When we work with inequalities, we need to know that shifting or scaling our numbers won't break logical sense. Let's examine each rule paired with its own visual diagram:
+                    </p>
+
+                    <!-- SUB-RULE A: TRANSITIVITY -->
+                    <div style="margin-bottom: 1.5rem; background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem;">
+                        <h4 style="margin: 0 0 0.5rem 0; color: #0369a1; font-size: 0.95rem;">A. Chaining Order (Transitivity)</h4>
+                        <p style="margin: 0 0 0.75rem 0; font-size: 0.9rem; color: #334155;">
+                            If $a > b$ and $b > c$, then $a > c$. If your budget is higher than Alice's, and Alice's is higher than Bob's, yours is definitely higher than Bob's.
+                        </p>
+                        <div style="text-align: center;">
+                            <svg viewBox="0 0 500 80" style="width: 100%; max-width: 440px; height: auto; display: inline-block;">
+                                <line x1="50" y1="40" x2="450" y2="40" stroke="#cbd5e1" stroke-width="2"/>
+                                <circle cx="150" cy="40" r="5" fill="#ef4444"/>
+                                <text x="150" y="62" font-family="sans-serif" font-size="11" font-weight="bold" fill="#dc2626" text-anchor="middle">c</text>
+                                <circle cx="270" cy="40" r="5" fill="#f59e0b"/>
+                                <text x="270" y="62" font-family="sans-serif" font-size="11" font-weight="bold" fill="#d97706" text-anchor="middle">b</text>
+                                <circle cx="390" cy="40" r="5" fill="#10b981"/>
+                                <text x="390" y="62" font-family="sans-serif" font-size="11" font-weight="bold" fill="#047857" text-anchor="middle">a</text>
+                                <path d="M 270 20 Q 330 10 390 20" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="2"/>
+                                <text x="330" y="10" font-family="sans-serif" font-size="10" font-weight="bold" fill="#d97706" text-anchor="middle">b > c</text>
+                                <path d="M 150 25 Q 270 0 390 25" fill="none" stroke="#10b981" stroke-width="1.5"/>
+                                <text x="270" y="-3" font-family="sans-serif" font-size="10" font-weight="bold" fill="#047857" text-anchor="middle">a > c (Chained)</text>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- SUB-RULE B: ADDING THE SAME AMOUNT -->
+                    <div style="margin-bottom: 1.5rem; background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem;">
+                        <h4 style="margin: 0 0 0.5rem 0; color: #0369a1; font-size: 0.95rem;">B. Adding the Same Amount</h4>
+                        <p style="margin: 0 0 0.75rem 0; font-size: 0.9rem; color: #334155;">
+                            If $a > b$, adding the same number $c$ to both sides preserves the inequality ($a + c > b + c$). Whoever had more beforehand still has more after a shared shift!
+                        </p>
+                        <div style="text-align: center;">
+                            <svg viewBox="0 0 500 80" style="width: 100%; max-width: 440px; height: auto; display: inline-block;">
+                                <line x1="50" y1="40" x2="450" y2="40" stroke="#cbd5e1" stroke-width="2"/>
+                                <circle cx="200" cy="40" r="5" fill="#f59e0b"/>
+                                <text x="200" y="62" font-family="sans-serif" font-size="11" font-weight="bold" fill="#d97706" text-anchor="middle">b</text>
+                                <circle cx="320" cy="40" r="5" fill="#10b981"/>
+                                <text x="320" y="62" font-family="sans-serif" font-size="11" font-weight="bold" fill="#047857" text-anchor="middle">a</text>
+                                <!-- Shift arrows -->
+                                <path d="M 200 25 Q 235 15 270 25" fill="none" stroke="#0284c7" stroke-width="1.5" marker-end="url(#arrow)"/>
+                                <path d="M 320 25 Q 355 15 390 25" fill="none" stroke="#0284c7" stroke-width="1.5"/>
+                                <text x="295" y="15" font-family="sans-serif" font-size="10" font-weight="bold" fill="#0284c7" text-anchor="middle">+ c shift</text>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- SUB-RULE C: MULTIPLYING BY POSITIVE -->
+                    <div style="margin-bottom: 1.5rem; background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem;">
+                        <h4 style="margin: 0 0 0.5rem 0; color: #0369a1; font-size: 0.95rem;">C. Multiplying by a Positive Number</h4>
+                        <p style="margin: 0 0 0.75rem 0; font-size: 0.9rem; color: #334155;">
+                            If $a > b$ and you scale both sides by a positive number $c$, the inequality remains unchanged ($ac > bc$ when $c > 0$).
+                        </p>
+                        <div style="text-align: center;">
+                            <svg viewBox="0 0 500 80" style="width: 100%; max-width: 440px; height: auto; display: inline-block;">
+                                <line x1="50" y1="40" x2="450" y2="40" stroke="#cbd5e1" stroke-width="2"/>
+                                <line x1="100" y1="32" x2="100" y2="48" stroke="#0f172a" stroke-width="2"/>
+                                <text x="100" y="24" font-family="sans-serif" font-size="10" fill="#64748b" text-anchor="middle">0</text>
+                                <circle cx="220" cy="40" r="5" fill="#f59e0b"/>
+                                <text x="220" y="62" font-family="sans-serif" font-size="11" font-weight="bold" fill="#d97706" text-anchor="middle">b</text>
+                                <circle cx="340" cy="40" r="5" fill="#10b981"/>
+                                <text x="340" y="62" font-family="sans-serif" font-size="11" font-weight="bold" fill="#047857" text-anchor="middle">a</text>
+                                <text x="280" y="25" font-family="sans-serif" font-size="10" font-weight="bold" fill="#0284c7" text-anchor="middle">Scaled outward by c > 0 (Order Preserved)</text>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- SUB-RULE D: MULTIPLYING BY NEGATIVE (THE MIRROR FLIP) -->
+                    <div style="margin-bottom: 0.5rem; background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem;">
+                        <h4 style="margin: 0 0 0.5rem 0; color: #0369a1; font-size: 0.95rem;">D. Multiplying by a Negative Number (The Famous Flip)</h4>
+                        <p style="margin: 0 0 0.75rem 0; font-size: 0.9rem; color: #334155;">
+                            If $a > b$ and you multiply both sides by a negative number $c$, the inequality symbol <em>flips around</em> ($ac < bc$ when $c < 0$). As shown below, multiplying by $-1$ mirrors the entire number line!
+                        </p>
+                        <div style="text-align: center;">
+                            <svg viewBox="0 0 600 210" style="width: 100%; max-width: 540px; height: auto; display: inline-block;">
+                                <!-- Top Axis Line -->
+                                <line x1="50" y1="75" x2="550" y2="75" stroke="#cbd5e1" stroke-width="2"/>
+                                <line x1="300" y1="67" x2="300" y2="83" stroke="#0f172a" stroke-width="2"/>
+                                <text x="300" y="58" font-family="sans-serif" font-size="11" fill="#64748b" text-anchor="middle">0</text>
+                                <circle cx="390" cy="75" r="5" fill="#0284c7"/>
+                                <text x="390" y="98" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0284c7" text-anchor="middle">3</text>
+                                <circle cx="450" cy="75" r="5" fill="#10b981"/>
+                                <text x="450" y="98" font-family="sans-serif" font-size="11" font-weight="bold" fill="#10b981" text-anchor="middle">5</text>
+                                <path d="M 390 42 Q 420 30 450 42" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="3"/>
+                                <text x="420" y="30" font-family="sans-serif" font-size="11" font-weight="bold" fill="#b45309" text-anchor="middle">5 > 3</text>
+
+                                <!-- Center Mirror Divider -->
+                                <line x1="300" y1="105" x2="300" y2="135" stroke="#d97706" stroke-width="2" stroke-dasharray="2"/>
+                                <text x="300" y="124" font-family="sans-serif" font-size="10" font-weight="bold" fill="#64748b" text-anchor="middle" dx="65">× (−1) Flip</text>
+
+                                <!-- Bottom Axis Line -->
+                                <line x1="50" y1="165" x2="550" y2="165" stroke="#cbd5e1" stroke-width="2"/>
+                                <line x1="300" y1="157" x2="300" y2="173" stroke="#0f172a" stroke-width="2"/>
+                                <text x="300" y="195" font-family="sans-serif" font-size="11" fill="#64748b" text-anchor="middle">0</text>
+                                <circle cx="150" cy="165" r="5" fill="#10b981"/>
+                                <text x="150" y="152" font-family="sans-serif" font-size="11" font-weight="bold" fill="#10b981" text-anchor="middle">-5</text>
+                                <circle cx="210" cy="165" r="5" fill="#0284c7"/>
+                                <text x="210" y="152" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0284c7" text-anchor="middle">-3</text>
+                                <path d="M 150 132 Q 180 120 210 132" fill="none" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3"/>
+                                <text x="180" y="120" font-family="sans-serif" font-size="11" font-weight="bold" fill="#dc2626" text-anchor="middle">-5 < -3 (Fliped!)</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- SECTION 4 -->
             <h2 id="absolute-value">4. Absolute Value and Distance Metrics</h2>
