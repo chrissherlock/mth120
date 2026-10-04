@@ -126,6 +126,39 @@
                 Induction is our primary tool for proving properties across infinite sequences. Once we step beyond the counting numbers into fractions ($\mathbb{Q}$) and the unbroken real continuum ($\mathbb{R}$), we rely on these foundational rules to ensure our arithmetic never breaks down.
             </p>
 
+            <!-- SECTION 1 WORKED EXAMPLE -->
+            <div class="worked-example-box">
+                <h4>🎯 Worked Example: Your First Proof by Mathematical Induction</h4>
+                <p style="margin-bottom: 0.5rem;">
+                    Let's prove the famous identity for the sum of the first $n$ positive integers for all $n \ge 1$:
+                </p>
+                <div style="text-align: center; margin: 0.5rem 0;">
+                    $$1 + 2 + 3 + \dots + n = \frac{n(n + 1)}{2}$$
+                </div>
+                <p style="margin-bottom: 0.4rem; font-size: 0.92rem; color: #334155;">
+                    Think of induction like toppling an infinite row of dominoes. We need two things: (1) knock down the very first domino, and (2) guarantee that each domino knocks down the next one.
+                </p>
+                <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.92rem; line-height: 1.6;">
+                    <li><strong>Base Case ($n = 1$):</strong><br>
+                        Left side: $1$. Right side: $\frac{1(1 + 1)}{2} = \frac{2}{2} = 1$. Both sides match, so the first domino falls!
+                    </li>
+                    <li><strong>Inductive Hypothesis (Assume for $k$):</strong><br>
+                        Assume the formula holds for some arbitrary natural number $k \ge 1$:
+                        $$1 + 2 + \dots + k = \frac{k(k + 1)}{2}$$
+                    </li>
+                    <li><strong>Inductive Step (Prove for $k + 1$):</strong><br>
+                        We want to show the sum up to $k + 1$ equals $\frac{(k + 1)((k + 1) + 1)}{2} = \frac{(k + 1)(k + 2)}{2}$.<br>
+                        Group the first $k$ terms using our assumption:
+                        $$(1 + 2 + \dots + k) + (k + 1) = \frac{k(k + 1)}{2} + (k + 1)$$
+                        Factor out the common term $(k + 1)$:
+                        $$= (k + 1) \left(\frac{k}{2} + 1\right) = (k + 1)\left(\frac{k + 2}{2}\right) = \frac{(k + 1)(k + 2)}{2}$$
+                    </li>
+                    <li><strong>Conclusion:</strong><br>
+                        Since the base case holds and the truth of step $k$ inevitably forces step $k + 1$ to be true, the formula holds for all natural numbers $n \ge 1$ by the Principle of Mathematical Induction.
+                    </li>
+                </ol>
+            </div>
+
             <!-- SECTION 2 -->
             <h2 id="density-rationals">2. Density of the Rational Numbers</h2>
             <div class="infobox">
@@ -280,6 +313,29 @@
                 function densityPrev() { if (densityStep > 0) { densityStep--; updateDensityWidget(); } }
                 function densityReset() { densityStep = 0; updateDensityWidget(); }
             </script>
+
+            <!-- SECTION 2 WORKED EXAMPLE -->
+            <div class="worked-example-box">
+                <h4>🎯 Worked Example: Trapping Rationals Without Decimals</h4>
+                <p style="margin-bottom: 0.5rem;">
+                    Suppose you are given two fractions that look right next to each other: $a = \frac{3}{7}$ and $b = \frac{4}{7}$. How do we find a rational number strictly between them without touching a calculator or using repeating decimals?
+                </p>
+                <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.92rem; line-height: 1.6;">
+                    <li><strong>Apply the Midpoint Formula:</strong> Add them together and halve the result:
+                        $$c_1 = \frac{a + b}{2} = \frac{\frac{3}{7} + \frac{4}{7}}{2} = \frac{\frac{7}{7}}{2} = \frac{1}{2}$$
+                        Notice that $\frac{3}{7} = \frac{6}{14}$ and $\frac{4}{7} = \frac{8}{14}$. Our midpoint is $\frac{1}{2} = \frac{7}{14}$, which sits dead center:
+                        $$\frac{6}{14} < \frac{7}{14} < \frac{8}{14} \implies \frac{3}{7} < \frac{1}{2} < \frac{4}{7}$$
+                    </li>
+                    <li><strong>Find a Second Intermediate Fraction:</strong> Take the midpoint between $a = \frac{6}{14}$ and $c_1 = \frac{7}{14}$:
+                        $$c_2 = \frac{\frac{6}{14} + \frac{7}{14}}{2} = \frac{\frac{13}{14}}{2} = \frac{13}{28}$$
+                        Comparing fractions with a common denominator of $28$:
+                        $$\frac{12}{28} < \frac{13}{28} < \frac{14}{28} < \frac{16}{28} \implies \frac{3}{7} < \frac{13}{28} < \frac{1}{2} < \frac{4}{7}$$
+                    </li>
+                </ol>
+                <p style="margin-top: 0.5rem; margin-bottom: 0; font-size: 0.92rem; color: #334155;">
+                    Every arithmetic operation on integers and fractions produces another fraction. You can produce an infinite sequence of rational stepping stones between any two points simply by repeating this process!
+                </p>
+            </div>
 
             <div class="aside-box">
                 <h4>💡 The Big Beginner Trap: Dense vs. Complete</h4>
@@ -540,6 +596,7 @@
                 drawZoom();
             </script>
 
+            <!-- SECTION 3 WORKED EXAMPLE -->
             <div class="worked-example-box">
                 <h4>🎯 Why $\sqrt{2}$ isn't a fraction (Proof by Contradiction)</h4>
 
@@ -781,6 +838,29 @@
                 </div>
             </div>
 
+            <!-- SECTION 4 WORKED EXAMPLE -->
+            <div class="worked-example-box">
+                <h4>🎯 Worked Example: Why Squares Are Always Non-Negative ($x^2 \ge 0$)</h4>
+                <p style="margin-bottom: 0.5rem;">
+                    We all know that $(-3)^2 = 9 > 0$ and $3^2 = 9 > 0$. But how do we prove from pure axioms that $x^2 \ge 0$ for <em>every</em> real number $x$, without making assumptions about arithmetic?
+                </p>
+                <p style="margin-bottom: 0.4rem; font-size: 0.92rem; color: #334155;">
+                    We use the <strong>Trichotomy Property</strong>. For any real number $x$, exactly one of three cases must be true:
+                </p>
+                <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.92rem; line-height: 1.6;">
+                    <li><strong>Case 1 ($x = 0$):</strong> By field properties of zero, $x^2 = 0 \times 0 = 0$. Since $0 \ge 0$, the claim holds.</li>
+                    <li><strong>Case 2 ($x > 0$):</strong> If $x$ is positive, we multiply both sides of the inequality $x > 0$ by the positive number $x$ (Order Rule C: Multiplying by a positive preserves order):
+                        $$x \cdot x > 0 \cdot x \implies x^2 > 0$$
+                    </li>
+                    <li><strong>Case 3 ($x < 0$):</strong> If $x$ is negative, we multiply both sides of the inequality $x < 0$ by the negative number $x$ (Order Rule D: Multiplying by a negative flips the symbol):
+                        $$x \cdot x > 0 \cdot x \implies x^2 > 0$$
+                    </li>
+                </ol>
+                <p style="margin-top: 0.5rem; margin-bottom: 0; font-size: 0.92rem; color: #334155;">
+                    By Trichotomy, there are no other possibilities. Therefore, <strong>$x^2 \ge 0$ for all $x \in \mathbb{R}$</strong>, with equality if and only if $x = 0$. From this single deduction flows almost all of optimization, quadratic equations, and metric distances!
+                </p>
+            </div>
+
             <!-- SECTION 5 -->
             <h2 id="absolute-value">5. Absolute Value and Distance Metrics</h2>
             <div style="font-size: 1.02rem; line-height: 1.7; color: #334155; margin-bottom: 1.25rem;">
@@ -917,7 +997,6 @@
                         <g>
                             <text x="140" y="22" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">2D Plane: The Classic Detour</text>
 
-                            <!-- Triangle Paths -->
                             <!-- Direct Path AC -->
                             <line x1="40" y1="130" x2="240" y2="130" stroke="#0284c7" stroke-width="2.5"/>
                             <!-- Detour AB and BC -->
@@ -1061,6 +1140,37 @@
                 <p style="margin-top: 0.5rem; margin-bottom: 0;">
                     In both cases, $|a + b|$ never exceeds $|a| + |b|$!
                 </p>
+            </div>
+
+            <!-- SECTION 5 WORKED EXAMPLE -->
+            <div class="worked-example-box">
+                <h4>🎯 Worked Example: Solving an Absolute Value Inequality Geometrically</h4>
+                <p style="margin-bottom: 0.5rem;">
+                    Find all real numbers $x$ that satisfy:
+                </p>
+                <div style="text-align: center; margin: 0.5rem 0;">
+                    $$|2x - 6| < 4$$
+                </div>
+                <p style="margin-bottom: 0.4rem; font-size: 0.92rem; color: #334155;">
+                    Instead of treating this as blind algebra, let's solve it both algebraically and geometrically as a neighbourhood:
+                </p>
+                <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.92rem; line-height: 1.6;">
+                    <li><strong>Method 1: Unpacking the Double Inequality ($\iff$):</strong><br>
+                        Using the property $|u| < d \iff -d < u < d$:
+                        $$-4 < 2x - 6 < 4$$
+                        Add $6$ across all three parts (Order Rule B: Adding preserves order):
+                        $$-4 + 6 < 2x < 4 + 6 \implies 2 < 2x < 10$$
+                        Multiply by $\frac{1}{2} > 0$ (Order Rule C: Multiplying by positive preserves order):
+                        $$1 < x < 5$$
+                        The solution set is the open interval $(1, 5)$.
+                    </li>
+                    <li><strong>Method 2: Geometric Neighbourhood View:</strong><br>
+                        Factor out $2$ from the absolute value:
+                        $$|2(x - 3)| < 4 \implies 2|x - 3| < 4 \implies |x - 3| < 2$$
+                        Read this directly as a distance statement: <em>"The distance from $x$ to $3$ is strictly less than $2$."</em><br>
+                        Start at the center $a = 3$, take a radius $\varepsilon = 2$ to the left ($3 - 2 = 1$), and a radius $\varepsilon = 2$ to the right ($3 + 2 = 5$). This immediately describes the interval $(1, 5)$ without doing any algebra!
+                    </li>
+                </ol>
             </div>
 
             <!-- SECTION 6 -->
@@ -1224,7 +1334,7 @@
                         <circle cx="320" cy="75" r="4.5" fill="#0284c7"/>
                         <text x="320" y="98" font-family="sans-serif" font-size="10" fill="#0369a1" text-anchor="middle">1.415</text>
 
-                        <circle cx="295" cy="75" r="4" fill="#0284c7"/>
+                        <circle cx="295" cy="75" r="4.5" fill="#0284c7"/>
                         <text x="295" y="98" font-family="sans-serif" font-size="9.5" fill="#0369a1" text-anchor="middle">1.4143</text>
 
                         <path d="M 370 45 Q 320 40 285 45" fill="none" stroke="#0284c7" stroke-width="1.5" marker-end="url(#arrow)"/>
