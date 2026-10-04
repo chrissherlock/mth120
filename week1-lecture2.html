@@ -40,7 +40,7 @@
         .infobox-intro { font-size: 0.93rem; color: #475569; line-height: 1.6; margin: 0 0 1.25rem 0; padding-bottom: 0.85rem; border-bottom: 1px solid #e2e8f0; }
 
         .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; border: 1px solid var(--border); border-left-width: 4px; }
-        .aside-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid var(--b45309, #b45309); padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .aside-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #b45309; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
         .aside-box h4 { margin-top: 0; color: #b45309; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
 
         .worked-example-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
@@ -124,23 +124,33 @@
             </div>
 
             <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
-                At first glance, fractions (rational numbers, $\mathbb{Q}$) feel like they fill up the number line entirely. If you pick any two fractions&mdash;say, $\frac{1}{3}$ and $\frac{1}{2}$&mdash;you can always find another one right between them (like their average, $\frac{5}{12}$). In real analysis, this property is known as <strong>density</strong>.
+                If you ask someone whether fractions (rational numbers, $\mathbb{Q}$) fill up the number line, their first instinct is usually <em>"Yes, absolutely."</em> After all, how could you possibly find empty space between fractions when they are crammed together so tightly?
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                To build our intuition, let's look at a concrete example. Pick any two fractions&mdash;say, $0.3$ and $0.4$. Are they touching? Not at all! We can easily slip $0.35$ right between them. But why stop there? Between $0.3$ and $0.35$, we can place $0.31$, $0.32$, or $0.301$. In mathematics, this property of endless crowding is called <strong>density</strong>.
             </p>
 
             <div class="definition-box">
-                <strong>Proposition 1 (Density of $\mathbb{Q}$):</strong> For any two distinct rational numbers $a$ and $b$ with $a < b$, there exist infinitely many rational numbers strictly between them.
+                <strong>Proposition 1 (Density of $\mathbb{Q}$):</strong> For any two distinct rational numbers $a$ and $b$ (no matter how close together they are), there is always another rational number sitting strictly between them. In fact, there are <em>infinitely</em> many!
             </div>
 
+            <h3 style="margin-top: 1.5rem; color: #1e293b; font-size: 1.1rem;">How Do We Prove This? (The Midpoint Trick)</h3>
             <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
-                <em>Building the Intuition:</em> How do we prove this rigorously without getting lost in an infinite loop? We use a constructive argument. If we take our two fractions $a$ and $b$, their arithmetic midpoint is guaranteed to sit safely halfway between them:
+                Instead of guessing decimals, how do we prove this works for <em>any</em> two arbitrary fractions $a$ and $b$ where $a < b$? We use a wonderfully simple tool: <strong>the arithmetic midpoint</strong>.
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                If you add two numbers together and divide by $2$, you get the exact halfway point:
             </p>
 
             <div style="text-align: center; margin: 1.25rem 0; font-size: 1.05rem;">
-                $$c_1 = \frac{a+b}{2}$$
+                $$c_1 = \frac{a + b}{2}$$
             </div>
 
             <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
-                Because the rational numbers are closed under addition and division by non-zero integers, $c_1$ is guaranteed to be a rational number itself. Now, imagine zooming in on the left half of our interval, between $a$ and $c_1$. We can take their midpoint $c_2 = \frac{a+c_1}{2}$. By repeating this zooming process endlessly, we generate an infinite descending sequence of unique rational numbers trapped between $a$ and $b$:
+                Because adding two fractions and dividing by a whole number always yields another fraction, $c_1$ is guaranteed to be a rational number. And because it's the exact average, it sits safely between $a$ and $b$ ($a < c_1 < b$).
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                Now, what happens if we take $a$ and our new midpoint $c_1$, and find <em>their</em> midpoint ($c_2 = \frac{a + c_1}{2}$)? We can repeat this zooming-in process endlessly, generating an infinite stack of unique fractions trapped between our original starting points:
             </p>
 
             <div style="text-align: center; margin: 1rem 0;">
@@ -148,9 +158,11 @@
             </div>
 
             <div class="aside-box">
-                <h4>💡 A Surprising Takeaway</h4>
+                <h4>💡 The Big Beginner Trap: Dense vs. Complete</h4>
                 <p style="margin-bottom: 0;">
-                    Even though $\mathbb{Q}$ is packed so tightly that you can never find two fractions "touching" without another fraction between them, <strong>it is still full of invisible gaps</strong>. As we will see in the next section, these microscopic rational gaps are precisely where irrational numbers like $\sqrt{2}$ live!
+                    It is completely natural for beginners to assume: <em>"If fractions are infinitely dense, they must cover every single point on the number line, right?"</em>
+                    <br><br>
+                    <strong>Surprise!</strong> That is the biggest trap in early analysis. Even though rational numbers are packed so tightly that you can never find two "touching" without another fraction between them, <strong>the rational line is riddled with microscopic holes</strong>. As we are about to discover in Section 2, numbers like $\sqrt{2}$ fall right through those invisible gaps!
                 </p>
             </div>
 
