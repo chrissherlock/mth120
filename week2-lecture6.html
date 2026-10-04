@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Week 2: Limits of Sequences | MTHS120</title>
+    <title>Week 2, Lecture 6: Recursive Sequences and Divergence to Infinity | MTHS120</title>
     <!-- KaTeX Integration -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
@@ -107,11 +107,11 @@
         <!-- TOP NAVIGATION HEADER -->
         <div class="header">
             <div>
-                <h1>Week 2: Limits of Sequences</h1>
-                <a href="index.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">&larr; Back to Curriculum Index</a>
+                <h1>Week 2, Lecture 6: Recursion &amp; Divergence to Infinity</h1>
+                <a href="week2.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">&larr; Week 2 Overview Hub</a>
             </div>
             <div>
-                <a href="week1.html" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">&larr; Prev: Week 1</a>
+                <a href="week2.html" style="background: var(--accent); color: white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">Week 2 Hub &rarr;</a>
             </div>
         </div>
 
@@ -122,66 +122,130 @@
             </div>
 
             <div class="intro-lead">
-                Welcome to Week 2 of MTHS120. This unit bridges intuitive calculus and real analysis by formalising the concept of infinity and convergence across three dedicated lectures.
+                Welcome to Lecture 6. Here we investigate recursive sequences, expose the dangers of blind algebraic limit evaluation, prove error contraction for continued fractions, and formalize divergence to infinity.
             </div>
 
-            <!-- ORIENTATION & ROADMAP -->
-            <div style="margin: 2.25rem 0 2rem 0;">
-                <h3 style="margin-top: 0; color: #0f172a;">Bridging the Gap: From Intuition to Epsilon-N Rigor</h3>
-                <p>In introductory calculus, we are often told that a limit is a value that a sequence "approaches" or "gets closer and closer to" as $n$ marches toward infinity. While that intuition helps picture motion, pure mathematics demands precision: exactly how close is "close," and after what point is that proximity permanently guaranteed?</p>
-                <p>This week transitions from intuitive hand-waving to rigorous analytical thinking across three focused lectures:</p>
-                <ul style="margin: 0.5rem 0 1rem 1.5rem; padding: 0;">
-                    <li style="margin-bottom: 0.5rem;"><strong>Lecture 4: Formal $\epsilon\text{-}N$ Convergence &amp; Limit Laws:</strong> Turning limits into an exact challenge. You name any tiny tolerance $\epsilon > 0$, and the sequence produces a cutoff index $N$ beyond which every term stays trapped within that narrow window forever.</li>
-                    <li style="margin-bottom: 0.5rem;"><strong>Lecture 5: The Monotone Convergence Theorem &amp; Squeeze Principle:</strong> Proving that bounded monotonic sequences must settle down to their supremum, deriving Euler's number $e$, and trapping wild oscillatory sequences between converging bounds.</li>
-                    <li><strong>Lecture 6: Recursive Sequences &amp; Divergence to Infinity:</strong> Discovering why blind algebra fails on recurrences without existence proofs, proving error contraction to $\sqrt{2}$, and testing unbounded growth with the $M\text{-}N$ towering floor test.</li>
+            <!-- TABLE OF CONTENTS -->
+            <div class="toc-box">
+                <h4>📌 Lecture 6 Topics</h4>
+                <ul class="toc-grid">
+                    <li><a href="#section-blind-algebra">1. The Fallacy of Blind Algebra</a></li>
+                    <li><a href="#section-recurrence-sqrt2">2. Continued Fractions &amp; Error Contraction to $\sqrt{2}$</a></li>
+                    <li><a href="#section-4step">3. The 4-Step Strategy for Recurrences</a></li>
+                    <li><a href="#section-infinity">4. Infinity as a Limit ($M\text{-}N$ Definition)</a></li>
+                    <li><a href="#section-growth-rates">5. Growth Rates: Geometric vs. Linear Divergence</a></li>
                 </ul>
             </div>
 
-            <div style="margin: 2rem 0;">
-                <h2 style="margin-top: 0;">Weekly Lecture Modules</h2>
-                <p style="color: #475569; font-size: 1.05rem;">Select a lecture module below to begin:</p>
-            </div>
-
-            <!-- LECTURE 4 CARD -->
-            <div class="lecture-card">
-                <span class="lecture-badge">Lecture 4</span>
-                <h3><a href="week2-lecture4.html" style="color: inherit; text-decoration: none;">Formal $\epsilon\text{-}N$ Convergence and Limit Laws &rarr;</a></h3>
-                <p style="color: #334155; margin-bottom: 1rem;">
-                    Master the formal $\epsilon\text{-}N$ definition of convergence through interactive archery simulators, explore quantifier order dependencies, prove sequence boundedness, and establish the algebraic limit laws for sums, products, and quotients.
-                </p>
-                <div>
-                    <a href="week2-lecture4.html" style="background: var(--accent); color: white; padding: 0.45rem 0.9rem; border-radius: 5px; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Open Lecture 4 &rarr;</a>
+            <!-- SECTION 1 -->
+            <h2 id="section-blind-algebra">1. The Fallacy of Blind Algebra</h2>
+            <div class="aside-box">
+                <h4>⚠️ Putting the Cart Before the Horse</h4>
+                <p>When given a recurrence $a_{n+1} = f(a_n)$, students often write $L = f(L)$ and solve for $L$. But this calculation is only legally valid <strong>after</strong> you have proven the limit exists!</p>
+                <p><strong>The Fibonacci Counterexample:</strong> Consider the Fibonacci numbers $f_0 = 1, f_1 = 1$, and $f_{n+2} = f_{n+1} + f_n$ ($1, 1, 2, 3, 5, 8, 13, \dots$). If we blindly assume $\lim f_n = L$ exists:</p>
+                <div style="text-align: center; margin: 0.5rem 0;">
+                    $$L = L + L \implies L = 2L \implies L = 0$$
                 </div>
+                <p style="margin-bottom: 0;">This is clearly false. Blind algebra assumes existence before proving it.</p>
             </div>
 
-            <!-- LECTURE 5 CARD -->
-            <div class="lecture-card">
-                <span class="lecture-badge">Lecture 5</span>
-                <h3><a href="week2-lecture5.html" style="color: inherit; text-decoration: none;">The Monotone Convergence Theorem and the Squeeze Principle &rarr;</a></h3>
-                <p style="color: #334155; margin-bottom: 1rem;">
-                    Connect sequence limits to suprema and real completeness. Study the full proof of the Monotone Convergence Theorem, trace Euler's number $e = \lim (1 + 1/n)^n$, explore the lottery thought experiment, and sandwich trigonometric sequences using the Squeeze Theorem.
-                </p>
-                <div>
-                    <a href="week2-lecture5.html" style="background: var(--accent); color: white; padding: 0.45rem 0.9rem; border-radius: 5px; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Open Lecture 5 &rarr;</a>
+            <!-- SECTION 2 -->
+            <h2 id="section-recurrence-sqrt2">2. Continued Fractions &amp; Error Contraction to $\sqrt{2}$</h2>
+            <p>Consider the recurrence defined by $a_0 = 1$ and $a_{n+1} = \frac{a_n + 2}{a_n + 1}$:</p>
+            <div style="text-align: center; margin: 0.5rem 0;">
+                $$a_0 = 1, \quad a_1 = \frac{3}{2} = 1.5, \quad a_2 = \frac{7}{5} = 1.4, \quad a_3 = \frac{17}{12} \approx 1.4167, \quad a_4 = \frac{41}{29} \approx 1.4138$$
+            </div>
+
+            <div class="worked-example-box">
+                <h4>🎯 Rigorous Proof of Convergence via Error Contraction</h4>
+                <p>Let $\alpha_n = |a_n - \sqrt{2}|$ measure the distance to $\sqrt{2}$. Then:</p>
+                <div style="text-align: center; margin: 0.5rem 0;">
+                    $$\alpha_{n+1} = \left|\frac{a_n + 2}{a_n + 1} - \sqrt{2}\right| = \left|\frac{a_n + 2 - \sqrt{2}a_n - \sqrt{2}}{a_n + 1}\right| = \frac{\sqrt{2} - 1}{a_n + 1} |a_n - \sqrt{2}|$$
                 </div>
-            </div>
-
-            <!-- LECTURE 6 CARD -->
-            <div class="lecture-card">
-                <span class="lecture-badge">Lecture 6</span>
-                <h3><a href="week2-lecture6.html" style="color: inherit; text-decoration: none;">Recursive Sequences and Divergence to Infinity &rarr;</a></h3>
-                <p style="color: #334155; margin-bottom: 1rem;">
-                    Learn why blind algebraic substitution fails on recurrence relations, prove error contraction for continued fractions approximating $\sqrt{2}$, master the 4-step recursive strategy, and formalize divergence to infinity via the $M\text{-}N$ towering floor test.
-                </p>
-                <div>
-                    <a href="week2-lecture6.html" style="background: var(--accent); color: white; padding: 0.45rem 0.9rem; border-radius: 5px; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Open Lecture 6 &rarr;</a>
+                <p>Since $\sqrt{2} - 1 < 0.5$ and $a_n \ge 1$ (so $\frac{1}{a_n+1} \le \frac{1}{2}$), we have $\frac{\sqrt{2}-1}{a_n+1} < \frac{1}{2}$, giving:</p>
+                <div style="text-align: center; margin: 0.5rem 0;">
+                    $$\alpha_{n+1} < \frac{1}{2}\alpha_n \implies 0 \le \alpha_n < \left(\frac{1}{2}\right)^n \alpha_0$$
                 </div>
+                <p style="margin-bottom: 0;">Since $\lim_{n\to\infty} \left(\frac{1}{2}\right)^n = 0$, by the Squeeze Theorem $\alpha_n \to 0$, proving $\lim_{n\to\infty} a_n = \sqrt{2}$.</p>
             </div>
 
-            <!-- BOTTOM NAVIGATION FOOTER -->
+            <!-- SECTION 3 -->
+            <h2 id="section-4step">3. The 4-Step Strategy for Recurrences</h2>
+            <div class="infobox">
+                <h4>🛠️ The 4-Step Strategy</h4>
+                <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
+                    <li style="margin-bottom: 0.4rem;"><strong>Step 1: Prove Boundedness.</strong> Use induction to show $a_n \le M$ (bounded above) or $a_n \ge m$ (bounded below).</li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Step 2: Prove Monotonicity.</strong> Show $a_{n+1} \ge a_n$ (increasing) or $a_{n+1} \le a_n$ (decreasing).</li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Step 3: Invoke the MCT.</strong> The Monotone Convergence Theorem guarantees a finite limit $L$ exists.</li>
+                    <li><strong>Step 4: Solve Algebraically.</strong> Take the limit of both sides of $a_{n+1} = f(a_n)$ to find $L$.</li>
+                </ol>
+            </div>
+
+            <div class="worked-example-box">
+                <h4>🎯 Worked Example: Nested Radical $x_1 = \sqrt{2}, \; x_{n+1} = \sqrt{2 + x_n}$</h4>
+                <ol style="margin: 0.4rem 0 0 1.25rem; padding: 0;">
+                    <li><strong>Boundedness:</strong> $x_1 < 2$. If $x_k < 2$, then $x_{k+1} = \sqrt{2 + x_k} < \sqrt{4} = 2$. Bounded above by 2.</li>
+                    <li><strong>Monotonicity:</strong> $x_2 = \sqrt{2 + \sqrt{2}} > \sqrt{2} = x_1$. By induction, strictly increasing.</li>
+                    <li><strong>MCT:</strong> Increasing and bounded above $\implies \lim x_n = L$ exists.</li>
+                    <li><strong>Evaluation:</strong> $L = \sqrt{2 + L} \implies L^2 - L - 2 = 0 \implies (L-2)(L+1) = 0$. Since $x_n > 0$, $L = 2$.</li>
+                </ol>
+            </div>
+
+            <!-- SECTION 4 -->
+            <h2 id="section-infinity">4. Infinity as a Limit ($M\text{-}N$ Definition)</h2>
+            <div class="definition-box">
+                <strong>Definition: Divergence to $\pm \infty$ ($M\text{-}N$ Test):</strong>
+                <p>A sequence tends to positive infinity ($\lim_{n\to\infty} a_n = \infty$) if:</p>
+                <div style="text-align: center; margin: 0.5rem 0;">
+                    $$\forall M > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad n > N \implies a_n > M$$
+                </div>
+                <p>Similarly, $\lim_{n\to\infty} a_n = -\infty$ if for every $M < 0$, $\exists N \in \mathbb{N}$ such that $n > N \implies a_n < M$.</p>
+            </div>
+
+            <!-- SVG THRESHOLD DIAGRAM -->
+            <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1.25rem; margin-top: 1.5rem; margin-bottom: 1.5rem;">
+                <p style="font-size: 0.85rem; font-weight: 700; color: #64748b; margin-top: 0; margin-bottom: 0.75rem; text-align: center;">VISUALIZATION: The $M\text{-}N$ Threshold Test for $\lim_{n\to\infty} \sqrt{n} = \infty$</p>
+                <svg viewBox="0 0 800 300" style="width: 100%; height: auto; display: block;">
+                    <line x1="80" y1="240" x2="760" y2="240" stroke="#0f172a" stroke-width="2"/>
+                    <line x1="80" y1="20" x2="80" y2="260" stroke="#0f172a" stroke-width="2"/>
+                    <text x="710" y="260" font-size="11" font-weight="bold" fill="#64748b">Index n</text>
+                    <text x="40" y="30" font-size="11" font-weight="bold" fill="#64748b">a_n</text>
+                    <line x1="80" y1="120" x2="760" y2="120" stroke="#ef4444" stroke-width="2" stroke-dasharray="6"/>
+                    <text x="95" y="112" font-size="12" font-weight="bold" fill="#ef4444">Threshold Level M</text>
+                    <line x1="500" y1="30" x2="500" y2="260" stroke="#d97706" stroke-width="2.5" stroke-dasharray="4"/>
+                    <text x="510" y="48" font-size="12" font-weight="bold" fill="#b45309">Cutoff Index N</text>
+                    <rect x="500" y="35" width="240" height="85" fill="#fef3c7" opacity="0.5" rx="4"/>
+                    <text x="525" y="75" font-size="11" font-weight="bold" fill="#92400e">Region where $a_n > M$</text>
+                    <g>
+                        <circle cx="100" cy="225" r="4" fill="#0284c7"/><circle cx="150" cy="207" r="4" fill="#0284c7"/><circle cx="200" cy="193" r="4" fill="#0284c7"/>
+                        <circle cx="250" cy="180" r="4" fill="#0284c7"/><circle cx="300" cy="168" r="4" fill="#0284c7"/><circle cx="350" cy="157" r="4" fill="#0284c7"/>
+                        <circle cx="400" cy="146" r="4" fill="#0284c7"/><circle cx="450" cy="136" r="4" fill="#0284c7"/>
+                        <circle cx="500" cy="126" r="5.5" fill="#10b981"/><circle cx="550" cy="107" r="5.5" fill="#10b981"/><circle cx="600" cy="89" r="5.5" fill="#10b981"/>
+                        <circle cx="650" cy="71" r="5.5" fill="#10b981"/><circle cx="700" cy="53" r="5.5" fill="#10b981"/>
+                    </g>
+                </svg>
+            </div>
+
+            <!-- SECTION 5 -->
+            <h2 id="section-growth-rates">5. Growth Rates: Geometric vs. Linear Divergence</h2>
+            <div class="worked-example-box">
+                <h4>🎯 Theorem: Geometric Sequences Diverge Faster Than Linear Ones</h4>
+                <p>Let $a_n = c r^n$ with $r > 1$ and $b_n = \alpha n + \beta$ ($\alpha > 0$). We prove $\frac{a_n}{b_n} \to \infty$ by showing $\frac{r^n}{n} \to \infty$.</p>
+                <p>Write $r = 1 + \epsilon$ for some $\epsilon > 0$. By the Binomial Formula:</p>
+                <div style="text-align: center; margin: 0.5rem 0;">
+                    $$r^n = (1 + \epsilon)^n \ge 1 + n\epsilon + \frac{n(n-1)}{2}\epsilon^2$$
+                </div>
+                <p>Dividing by $n$:</p>
+                <div style="text-align: center; margin: 0.5rem 0;">
+                    $$\frac{r^n}{n} \ge \frac{1}{n} + \epsilon + \frac{n-1}{2}\epsilon^2$$
+                </div>
+                <p style="margin-bottom: 0;">As $n \to \infty$, the term $\frac{n-1}{2}\epsilon^2$ grows without bound, forcing $\frac{r^n}{n} \to \infty$. Hence, exponential growth dominates any linear polynomial.</p>
+            </div>
+
+            <!-- FOOTER NAVIGATION -->
             <div style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-                <a href="week1.html" style="background: #64748b; color: white; padding: 0.6rem 1.2rem; border-radius: 6px; text-decoration: none; font-weight: 600;">&larr; Back to Week 1</a>
-                <a href="week2-lecture4.html" style="background: var(--accent); color: white; padding: 0.6rem 1.2rem; border-radius: 6px; text-decoration: none; font-weight: 600;">Begin Lecture 4 &rarr;</a>
+                <a href="week2-lecture5.html" style="color: var(--accent); text-decoration: none; font-weight: 600;">&larr; Lecture 5: MCT &amp; Squeeze</a>
+                <a href="week2.html" style="background: var(--accent); color: white; padding: 0.6rem 1.2rem; border-radius: 6px; text-decoration: none; font-weight: 600;">Back to Week 2 Hub &rarr;</a>
             </div>
         </div>
     </div>
