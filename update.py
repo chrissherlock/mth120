@@ -3,70 +3,75 @@ import os
 import subprocess
 import re
 
-def update_week1_overview():
+def apply_option_b_lecture1_summary():
     filepath = 'week1.html'
     if not os.path.exists(filepath):
-        print(f"Error: {filepath} not found in current directory.")
+        print(f"Error: {filepath} not found.")
         return False
 
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    new_intro = (
-        "<p style=\"font-size: 1.02rem; line-height: 1.7; color: #334155; margin-bottom: 1rem;\">\n"
-        "                Transitioning from computational calculus to formal analysis can feel like "
-        "learning a completely new language. In earlier courses, you learned how to calculate answers; "
-        "here, we explore why those calculations hold true and how to construct airtight proofs from "
-        "the ground up.\n"
-        "            </p>\n"
-        "            <p style=\"font-size: 1.02rem; line-height: 1.7; color: #334155; margin-bottom: 1.25rem;\">\n"
-        "                Because rebuilding your mathematical foundation from first principles is "
-        "conceptually demanding, Week 1 is deliberately broken into three progressive stages. "
-        "Rather than rushing straight into limits, each lecture focuses on mastering one layer of the "
-        "foundation before building the next:\n"
-        "            </p>"
+    option_b_text = (
+        "Build your confidence with the formal language of pure mathematics. "
+        "Rather than memorizing formulas, we explore how sets clarify mathematical "
+        "statements, demystify what functions actually do beneath the surface, "
+        "and take a look behind the scenes at how the counting numbers are built "
+        "from scratch."
     )
 
-    pattern = re.compile(
-        r'<p[^>]*>\s*To\s+make\s+studying\s+manageable\s+and\s+maintain\s+deep\s+conceptual\s+clarity,\s*'
-        r'the\s+material\s+is\s+organi[sz]ed\s+into\s+three\s+focused\s+lectures:?\s*</p>',
-        re.IGNORECASE | re.DOTALL
-    )
+    # Patterns to match either the original wording or an already updated Option A
+    patterns = [
+        # Match original text
+        re.compile(
+            r'Master\s+the\s+formal\s+language\s+of\s+mathematics\.\s*'
+            r'We\s+explore\s+set\s+operations,\s*compare\s+different\s+sizes\s+of\s+infinity\s*'
+            r'\(.*?N.*?vs.*?R.*?\),\s*'
+            r'analyze\s+functions\s+as\s+reliable\s+input-output\s+machines,\s*'
+            r'and\s+construct\s+the\s+natural\s+numbers\s+from\s+scratch\s+using\s+Peano\'?s\s+5\s+axioms\.',
+            re.IGNORECASE | re.DOTALL
+        ),
+        # Match Option A if previously applied
+        re.compile(
+            r'Get\s+comfortable\s+with\s+the\s+foundational\s+grammar\s+of\s+mathematics\.\s*'
+            r'We\s+introduce\s+set\s+operations\s+to\s+organize\s+mathematical\s+ideas\s+clearly,\s*'
+            r'look\s+at\s+how\s+functions\s+create\s+unambiguous\s+pairings\s+between\s+sets,\s*'
+            r'and\s+explore\s+how\s+something\s+as\s+intuitive\s+as\s+counting\s+can\s+be\s+built\s*'
+            r'from\s+five\s+simple,\s+elegant\s+rules\.',
+            re.IGNORECASE | re.DOTALL
+        )
+    ]
 
-    match = pattern.search(content)
-    if match:
-        content = content[:match.start()] + new_intro + content[match.end():]
-        with open(filepath, 'w', encoding='utf-8') as f:
-            f.write(content)
-        print("Successfully updated the roadmap introduction in week1.html.")
-        return True
+    for pattern in patterns:
+        match = pattern.search(content)
+        if match:
+            content = content[:match.start()] + option_b_text + content[match.end():]
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write(content)
+            print("Successfully updated Lecture 1 summary to Option B in week1.html.")
+            return True
 
-    # Fallback to bare sentence match if not enclosed in standard <p> tags
-    core_pattern = re.compile(
-        r'To\s+make\s+studying\s+manageable\s+and\s+maintain\s+deep\s+conceptual\s+clarity,\s*'
-        r'the\s+material\s+is\s+organi[sz]ed\s+into\s+three\s+focused\s+lectures:?',
-        re.IGNORECASE | re.DOTALL
-    )
-    core_match = core_pattern.search(content)
-    if core_match:
-        content = content[:core_match.start()] + new_intro + content[core_match.end():]
-        with open(filepath, 'w', encoding='utf-8') as f:
-            f.write(content)
-        print("Successfully updated the roadmap introduction in week1.html (via core match).")
-        return True
+    # Substring fallback for variations
+    for anchor in ["Master the formal language", "Get comfortable with the foundational grammar"]:
+        if anchor in content:
+            start_idx = content.find(anchor)
+            end_idx = content.find("</p>", start_idx)
+            if end_idx != -1:
+                content = content[:start_idx] + option_b_text + content[end_idx:]
+                with open(filepath, 'w', encoding='utf-8') as f:
+                    f.write(content)
+                print("Successfully updated Lecture 1 summary via fallback anchor.")
+                return True
 
-    print("Diagnostic: Could not match the roadmap phrase in week1.html.")
-    for line in content.splitlines():
-        if any(term in line.lower() for term in ["manageable", "three focused lectures", "three lectures"]):
-            print(f"  FOUND LINE: {repr(line)}")
+    print("Could not locate the Lecture 1 summary paragraph in week1.html.")
     return False
 
 def synchronize_git_changes():
     commit_message = (
-        "Revise Week 1 roadmap in week1.html with pedagogical framing\n\n"
-        "Replaced the logistical roadmap sentence in week1.html with a\n"
-        "supportive introduction explaining why the week is divided into three\n"
-        "progressive lectures to ease the transition from calculus to analysis."
+        "Update Lecture 1 summary in week1.html to supportive tone (Option B)\n\n"
+        "Revised the Lecture 1 summary card in week1.html using Option B to\n"
+        "emphasise building confidence with formal mathematical language,\n"
+        "shifting away from formula memorisation, and demystifying foundations."
     )
     commands = [
         ['git', 'add', 'week1.html', 'update.py'],
@@ -78,5 +83,5 @@ def synchronize_git_changes():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    if update_week1_overview():
+    if apply_option_b_lecture1_summary():
         synchronize_git_changes()
