@@ -3,8 +3,8 @@ import os
 import subprocess
 import re
 
-def soften_lecture3_description():
-    filepath = 'week1.html'
+def update_index_subtitle_option_1():
+    filepath = 'index.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
         return False
@@ -12,57 +12,51 @@ def soften_lecture3_description():
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    new_description = (
-        "See how simple lists open the door to limits. We explore sequences "
-        "both as everyday ordered lists and as functions on the counting numbers, "
-        "use visual tools to observe how their long-term behavior unfolds, "
-        "and discover clever algebraic patterns—like telescoping sums and "
-        "Gauss's formula—that make large calculations surprisingly clean."
+    new_subtitle = (
+        "A companion guide to real analysis—designed to build your "
+        "mathematical intuition through clear explanations, interactive visuals, "
+        "and step-by-step proofs."
     )
 
-    # Match across whitespace, newlines, and variations in math rendering for N
     pattern = re.compile(
-        r'Step\s+into\s+the\s+infinite\.\s*'
-        r'We\s+examine\s+sequences\s+through\s+dual\s+lenses\s*'
-        r'\(ordered\s+lists\s+vs\.\s+functions\s+on\s*.*?N.*?\),\s*'
-        r'observe\s+finite\s+samples\s+versus\s+infinite\s+tails\s+via\s+an\s+interactive\s+SVG\s+visualization,\s*'
-        r'analyze\s+discrete\s+rate\s+of\s+change\s+with\s+derived\s+sequences,\s*'
-        r'and\s+collapse\s+telescoping\s+sums\s+to\s+discover\s+Gauss\'?s\s+formula\.',
+        r'Personal\s+reference\s+companion,\s*interactive\s+pedagogical\s+tools,\s*'
+        r'and\s+derivations\s+aligned\s+with\s+the\s+unit\s+schedule\.?',
         re.IGNORECASE | re.DOTALL
     )
 
     match = pattern.search(content)
     if match:
-        content = content[:match.start()] + new_description + content[match.end():]
+        content = content[:match.start()] + new_subtitle + content[match.end():]
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
-        print("Successfully updated Lecture 3 summary in week1.html.")
+        print("Successfully updated course subtitle in index.html to Option 1.")
         return True
 
-    # Substring fallback
-    for anchor in ["Step into the infinite", "examine sequences through dual lenses"]:
-        if anchor in content:
-            start_idx = content.find(anchor)
-            end_idx = content.find("</p>", start_idx)
-            if end_idx != -1:
-                content = content[:start_idx] + new_description + content[end_idx:]
-                with open(filepath, 'w', encoding='utf-8') as f:
-                    f.write(content)
-                print("Successfully updated Lecture 3 summary via fallback anchor.")
-                return True
+    anchor = "Personal reference companion"
+    if anchor in content:
+        start_idx = content.find(anchor)
+        end_idx = content.find("</p>", start_idx)
+        if end_idx == -1:
+            end_idx = content.find("</div>", start_idx)
+        if end_idx != -1:
+            content = content[:start_idx] + new_subtitle + content[end_idx:]
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write(content)
+            print("Successfully updated course subtitle in index.html via fallback anchor.")
+            return True
 
-    print("Could not find the original Lecture 3 description in week1.html.")
+    print("Could not locate the target subtitle in index.html.")
     return False
 
 def synchronize_git_changes():
     commit_message = (
-        "Revise Lecture 3 overview in week1.html to supportive tone\n\n"
-        "Softened the description of Lecture 3 in week1.html to make the study\n"
-        "of sequences approachable, highlighting intuitive list-based thinking,\n"
-        "visual long-term behavior, and satisfying algebraic sum patterns."
+        "Apply Option 1 to course subtitle in index.html\n\n"
+        "Replaced the administrative subtitle in index.html with a welcoming\n"
+        "tagline emphasizing mathematical intuition, clear explanations,\n"
+        "interactive visual tools, and step-by-step proofs."
     )
     commands = [
-        ['git', 'add', 'week1.html', 'update.py'],
+        ['git', 'add', 'index.html', 'update.py'],
         ['git', 'commit', '-m', commit_message],
         ['git', 'push', 'origin', 'main']
     ]
@@ -71,5 +65,5 @@ def synchronize_git_changes():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    if soften_lecture3_description():
+    if update_index_subtitle_option_1():
         synchronize_git_changes()
