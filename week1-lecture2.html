@@ -73,7 +73,7 @@
             </div>
 
             <div class="intro-lead">
-                Welcome to Lecture 2. Here we examine the numerical continuum: proving why rational numbers leave infinite gaps on the line, measuring distance with absolute value, and defining the complete real numbers through suprema and infima.
+                Welcome to Lecture 2. Here we examine the numerical continuum: building natural numbers from foundational axioms, proving why rational numbers leave infinite gaps on the line, measuring distance with absolute value, and defining the complete real numbers through suprema and infima.
             </div>
 
             <!-- STUDENT ORIENTATION & REASSURANCE -->
@@ -97,16 +97,37 @@
             <div class="toc-box">
                 <h4>📌 Lecture 2 Topics</h4>
                 <ul class="toc-grid">
-                    <li><a href="#density-rationals">1. Density of the Rational Numbers</a></li>
-                    <li><a href="#rational-gaps">2. Rational Gaps and the Irrationality of $\sqrt{2}$</a></li>
-                    <li><a href="#field-order">3. Axiomatic Field and Order Properties of $\mathbb{R}$</a></li>
-                    <li><a href="#absolute-value">4. Absolute Value and Distance Metrics</a></li>
-                    <li><a href="#completeness-bounds">5. Bounds, Suprema, and Completeness</a></li>
+                    <li><a href="#peano-induction">1. Natural Numbers &amp; Induction (Peano's Axioms)</a></li>
+                    <li><a href="#density-rationals">2. Density of the Rational Numbers</a></li>
+                    <li><a href="#rational-gaps">3. Rational Gaps and the Irrationality of $\sqrt{2}$</a></li>
+                    <li><a href="#field-order">4. Axiomatic Field and Order Properties of $\mathbb{R}$</a></li>
+                    <li><a href="#absolute-value">5. Absolute Value and Distance Metrics</a></li>
+                    <li><a href="#completeness-bounds">6. Bounds, Suprema, and Completeness</a></li>
                 </ul>
             </div>
 
             <!-- SECTION 1 -->
-            <h2 id="density-rationals">1. Density of the Rational Numbers</h2>
+            <h2 id="peano-induction">1. The Natural Numbers and Mathematical Induction</h2>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                Before we examine fractions and the real number line, where do numbers begin? Mathematically, the set of natural numbers $\mathbb{N} = \{0, 1, 2, \dots\}$ is defined from the ground up using <strong>Peano's Axioms</strong>. Think of natural numbers as a connected chain or graph starting at root $0$ with <strong>no branching</strong> and <strong>no loops</strong>:
+            </p>
+
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-left: 4px solid var(--accent); padding: 1.25rem 1.5rem; margin: 1.25rem 0; border-radius: 0 6px 6px 0;">
+                <h4 style="margin-top: 0; color: #0f172a; font-size: 1rem;">The Four Pillars of Peano's Axioms</h4>
+                <ol style="margin: 0.5rem 0 0 1.25rem; color: #334155; font-size: 0.95rem; line-height: 1.6;">
+                    <li><strong>The Root:</strong> $0$ is a natural number.</li>
+                    <li><strong>Successors (No Branching):</strong> Each natural number has exactly one unique successor.</li>
+                    <li><strong>Uniqueness (No Loops):</strong> $0$ is not the successor of any natural number, and every other natural number is the successor of exactly one predecessor.</li>
+                    <li><strong>Principle of Mathematical Induction:</strong> A statement is true for all natural numbers if we can prove it holds for $n = 0$ (the base case) and that assuming it holds for $n-1$, it necessarily holds for $n$.</li>
+                </ol>
+            </div>
+
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                Induction is our primary tool for proving properties across infinite sequences. Once we step beyond the counting numbers into fractions ($\mathbb{Q}$) and the unbroken real continuum ($\mathbb{R}$), we rely on these foundational rules to ensure our arithmetic never breaks down.
+            </p>
+
+            <!-- SECTION 2 -->
+            <h2 id="density-rationals">2. Density of the Rational Numbers</h2>
             <div class="infobox">
                 <h4>📖 Notation Reference: Number Sets &amp; Bounds</h4>
                 <div class="infobox-intro">
@@ -265,14 +286,14 @@
                 <p style="margin-bottom: 0;">
                     It is completely natural for beginners to assume: <em>"If fractions are infinitely dense, they must cover every single point on the number line, right?"</em>
                     <br><br>
-                    <strong>Surprise!</strong> That is the biggest trap in early analysis. Even though rational numbers are packed so tightly that you can never find two "touching" without another fraction between them, <strong>the rational line is riddled with microscopic holes</strong>. As we are about to discover in Section 2, numbers like $\sqrt{2}$ fall right through those invisible gaps!
+                    <strong>Surprise!</strong> That is the biggest trap in early analysis. Even though rational numbers are packed so tightly that you can never find two "touching" without another fraction between them, <strong>the rational line is riddled with microscopic holes</strong>. As we are about to discover in Section 3, numbers like $\sqrt{2}$ fall right through those invisible gaps!
                 </p>
             </div>
 
-            <!-- SECTION 2 -->
-            <h2 id="rational-gaps">2. Rational Gaps and the Irrationality of $\sqrt{2}$</h2>
+            <!-- SECTION 3 -->
+            <h2 id="rational-gaps">3. Rational Gaps and the Irrationality of $\sqrt{2}$</h2>
             <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
-                In Section 1, we saw that the rational numbers ($\mathbb{Q}$) are dense&mdash;you can always squeeze another fraction between any two. It is tempting to look at that infinite crowding and assume the number line is completely solid. But ancient Greek mathematicians discovered a shocking geometric reality that shattered this illusion.
+                In Section 2, we saw that the rational numbers ($\mathbb{Q}$) are dense&mdash;you can always squeeze another fraction between any two. It is tempting to look at that infinite crowding and assume the number line is completely solid. But ancient Greek mathematicians discovered a shocking geometric reality that shattered this illusion.
             </p>
             <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
                 Imagine drawing a simple right-angled triangle with both legs measuring exactly $1$ unit. By Pythagoras' theorem, the length of the diagonal hypotenuse $c$ is given by $c^2 = 1^2 + 1^2 = 2$, which means $c = \sqrt{2}$. Where does this length live on our rational number line? <strong>Nowhere!</strong> Exactly where $\sqrt{2}$ belongs, there is an invisible pinprick hole.
@@ -351,7 +372,7 @@
                        why: "Each extra decimal place gives a closer rational, so we can squeeze as tightly as we like. But every terminating decimal is a fraction, and the proof below shows no fraction equals √2, so we never land on the red line." },
                     { title: "Step 3: Micro-Interval [1.4141, 1.4144]",
                        what: "At [1.4141, 1.4144], the green dot 1.4142 is about 0.00001 below √2 and the blue dot 1.4143 is about 0.00009 above it. They are extremely close, yet the red line still sits strictly between them.",
-                       why: "This is the incompleteness of ℚ: a sequence of rationals can close in on a point that is not itself rational. The Axiom of Completeness (Section 5) fills these holes and gives us ℝ." }
+                       why: "This is the incompleteness of ℚ: a sequence of rationals can close in on a point that is not itself rational. The Axiom of Completeness (Section 6) fills these holes and gives us ℝ." }
                 ];
 
                 let cacheD = 0, cacheS = 1n;
@@ -554,8 +575,8 @@
                 </p>
             </div>
 
-            <!-- SECTION 3 -->
-            <h2 id="field-order">3. Axiomatic Field and Order Properties of $\mathbb{R}$</h2>
+            <!-- SECTION 4 -->
+            <h2 id="field-order">4. Axiomatic Field and Order Properties of $\mathbb{R}$</h2>
             <div style="font-size: 1.02rem; line-height: 1.7; color: #334155; margin-bottom: 1.25rem;">
                 <p>
                     When we patch the gaps in the rational numbers $\mathbb{Q}$ to build the real numbers $\mathbb{R}$, we want to make sure our new number line behaves nicely. We don't want arithmetic to act unpredictably or inequalities to contradict themselves.
@@ -760,8 +781,8 @@
                 </div>
             </div>
 
-            <!-- SECTION 4 -->
-            <h2 id="absolute-value">4. Absolute Value and Distance Metrics</h2>
+            <!-- SECTION 5 -->
+            <h2 id="absolute-value">5. Absolute Value and Distance Metrics</h2>
             <p>The absolute value function $\vert{}\cdot\vert{}: \mathbb{R} \to \mathbb{R}$ measures distance along the real line: $\text{dist}(a, b) = \vert{}a - b\vert{}$.</p>
             <div class="definition-box">
                 <strong>Proposition 2 (Properties of Absolute Value):</strong>
@@ -782,8 +803,8 @@
                 </ul>
             </div>
 
-            <!-- SECTION 5 -->
-            <h2 id="completeness-bounds">5. Bounds, Suprema, and Completeness</h2>
+            <!-- SECTION 6 -->
+            <h2 id="completeness-bounds">6. Bounds, Suprema, and Completeness</h2>
             <p>Let $S \subseteq \mathbb{R}$ be a non-empty subset of real numbers:</p>
             <ul>
                 <li><strong>Upper Bound:</strong> A number $K$ such that $x \le K$ for all $x \in S$. If $K$ exists, $S$ is <em>bounded above</em>.</li>
