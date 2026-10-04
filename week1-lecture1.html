@@ -142,12 +142,12 @@
             <!-- SECTION 2 -->
             <h2 id="set-operations">2. Set Operations and Products</h2>
             <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
-                Sets can be combined and partitioned using algebraic operations analogous to arithmetic. Rather than operating on numerical values, set operations act on collections of elements governed by formal logical connectives.
+                When you first encounter set operations written in formal logic, they can look surprisingly intimidating. However, the underlying concepts are very natural. In pure analysis, our goal isn't to make simple ideas complicated—it is to give our intuition an unambiguous, watertight language so that our proofs hold up even in tricky infinite settings.
             </p>
             <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
-                To illustrate the mechanics of each operation, consider two concrete subsets of $\mathbb{N}$ throughout this section:
+                To see how these operations work in practice, we will use two concrete reference sets throughout this section:
             </p>
-            <div style="text-align: center; margin: 1rem 0; font-size: 1.1rem; background: #f8fafc; padding: 0.85rem; border-radius: 6px; border: 1px solid var(--border);">
+            <div style="text-align: center; margin: 1.25rem 0; font-size: 1.1rem; background: #f8fafc; padding: 0.85rem; border-radius: 6px; border: 1px solid var(--border);">
                 $$A = \{1, 2, 3\} \quad \text{and} \quad B = \{2, 3, 4, 5\}$$
             </div>
 
@@ -155,21 +155,21 @@
             <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-top: 1.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
                 <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.75rem; margin-bottom: 1rem;">
                     <h3 style="margin: 0; color: #0f172a; font-size: 1.15rem;">2.1 Union ($A \cup B$)</h3>
-                    <span style="font-weight: 700; color: var(--accent); font-size: 0.95rem;">Logical Connective: Disjunction ($\lor$)</span>
+                    <span style="font-weight: 700; color: var(--accent); font-size: 0.92rem;">Key Concept: Inclusive "OR" ($\lor$)</span>
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; align-items: center;">
                     <div>
                         <p style="margin-top: 0; color: #334155; line-height: 1.65;">
-                            The <strong>union</strong> of two sets contains every element that belongs to at least one of the sets.
+                            The <strong>union</strong> combines everything from both sets into a single collection:
                         </p>
                         <div class="definition-box" style="margin: 0.75rem 0;">
                             $$A \cup B = \{x \mid x \in A \lor x \in B\}$$
                         </div>
                         <p style="color: #334155; line-height: 1.65; margin-bottom: 0.5rem;">
-                            In formal mathematics, the disjunction $\lor$ ("or") is strictly <strong>inclusive</strong>: an element $x \in (A \cup B)$ if $x \in A$, $x \in B$, or $x$ belongs to both simultaneously. Since sets do not register duplicate elements, overlapping members are listed once.
+                            <strong>A Subtle Distinction:</strong> In everyday English, "or" often implies an exclusive choice (e.g., <em>pass or fail</em>). In mathematics, disjunction ($\lor$) is always <strong>inclusive</strong>. An element belongs to $A \cup B$ if it is in $A$, in $B$, or in both. Because sets only care about presence, shared elements like $2$ and $3$ appear just once.
                         </p>
                         <p style="color: #047857; font-weight: 600; margin-bottom: 0;">
-                            For our sample sets: $A \cup B = \{1, 2, 3, 4, 5\}$.
+                            Result: $A \cup B = \{1, 2, 3, 4, 5\}$.
                         </p>
                     </div>
                     <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; text-align: center;">
@@ -184,7 +184,7 @@
                             <text x="215" y="80" font-family="sans-serif" font-size="12" fill="#451a03">4</text>
                             <text x="215" y="108" font-family="sans-serif" font-size="12" fill="#451a03">5</text>
                             <rect x="85" y="152" width="150" height="22" rx="4" fill="#d97706"/>
-                            <text x="160" y="167" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Union: A ∪ B</text>
+                            <text x="160" y="167" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">A ∪ B (Combined Area)</text>
                         </svg>
                     </div>
                 </div>
@@ -194,21 +194,21 @@
             <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-top: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
                 <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.75rem; margin-bottom: 1rem;">
                     <h3 style="margin: 0; color: #0f172a; font-size: 1.15rem;">2.2 Intersection ($A \cap B$)</h3>
-                    <span style="font-weight: 700; color: #0284c7; font-size: 0.95rem;">Logical Connective: Conjunction ($\land$)</span>
+                    <span style="font-weight: 700; color: #0284c7; font-size: 0.92rem;">Key Concept: Simultaneous "AND" ($\land$)</span>
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; align-items: center;">
                     <div>
                         <p style="margin-top: 0; color: #334155; line-height: 1.65;">
-                            The <strong>intersection</strong> of two sets gathers only those elements that belong to both sets simultaneously.
+                            The <strong>intersection</strong> isolates elements that satisfy both membership criteria at the same time:
                         </p>
                         <div class="definition-box" style="margin: 0.75rem 0; border-left-color: #0284c7;">
                             $$A \cap B = \{x \mid x \in A \land x \in B\}$$
                         </div>
                         <p style="color: #334155; line-height: 1.65; margin-bottom: 0.5rem;">
-                            When two sets share no common elements ($A \cap B = \emptyset$), they are formally defined as <strong>mutually disjoint</strong>.
+                            Think of this as the common ground shared by both sets. If two sets have no overlap whatsoever ($A \cap B = \emptyset$), we say they are <strong>disjoint</strong>.
                         </p>
                         <p style="color: #0284c7; font-weight: 600; margin-bottom: 0;">
-                            For our sample sets: $A \cap B = \{2, 3\}$.
+                            Result: $A \cap B = \{2, 3\}$.
                         </p>
                     </div>
                     <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; text-align: center;">
@@ -231,7 +231,7 @@
                             <text x="215" y="80" font-family="sans-serif" font-size="12" fill="#94a3b8">4</text>
                             <text x="215" y="108" font-family="sans-serif" font-size="12" fill="#94a3b8">5</text>
                             <rect x="85" y="152" width="150" height="22" rx="4" fill="#0284c7"/>
-                            <text x="160" y="167" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Intersection: A ∩ B</text>
+                            <text x="160" y="167" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">A ∩ B (Shared Overlap)</text>
                         </svg>
                     </div>
                 </div>
@@ -240,23 +240,23 @@
             <!-- OPERATION 3: SET DIFFERENCE -->
             <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-top: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
                 <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.75rem; margin-bottom: 1rem;">
-                    <h3 style="margin: 0; color: #0f172a; font-size: 1.15rem;">2.3 Set Difference / Relative Complement ($A \setminus B$)</h3>
-                    <span style="font-weight: 700; color: #be185d; font-size: 0.95rem;">Non-Commutative Operation</span>
+                    <h3 style="margin: 0; color: #0f172a; font-size: 1.15rem;">2.3 Set Difference ($A \setminus B$)</h3>
+                    <span style="font-weight: 700; color: #be185d; font-size: 0.92rem;">Key Concept: Order Matters</span>
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; align-items: center;">
                     <div>
                         <p style="margin-top: 0; color: #334155; line-height: 1.65;">
-                            The <strong>set difference</strong> $A \setminus B$ (or relative complement of $B$ in $A$) consists of all elements that belong to $A$ but do not belong to $B$.
+                            The <strong>set difference</strong> $A \setminus B$ (read as <em>"A without B"</em> or <em>"A minus B"</em>) starts with $A$ and removes any element that also appears in $B$:
                         </p>
                         <div class="definition-box" style="margin: 0.75rem 0; border-left-color: #be185d;">
                             $$A \setminus B = \{x \mid x \in A \land x \notin B\}$$
                         </div>
                         <p style="color: #334155; line-height: 1.65; margin-bottom: 0.5rem;">
-                            Unlike union and intersection, set difference is strictly non-commutative ($A \setminus B \neq B \setminus A$):
+                            Notice that unlike union or intersection, this operation is <strong>non-commutative</strong>:
                         </p>
                         <ul style="margin: 0.25rem 0 0.5rem 1.25rem; padding: 0; color: #334155; font-size: 0.95rem;">
-                            <li>$A \setminus B = \{1\}$ (elements unique to $A$)</li>
-                            <li>$B \setminus A = \{4, 5\}$ (elements unique to $B$)</li>
+                            <li>$A \setminus B = \{1\}$ (elements in $A$ excluding any in $B$)</li>
+                            <li>$B \setminus A = \{4, 5\}$ (elements in $B$ excluding any in $A$)</li>
                         </ul>
                     </div>
                     <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; text-align: center;">
@@ -278,7 +278,7 @@
                             <text x="215" y="80" font-family="sans-serif" font-size="12" fill="#94a3b8">4</text>
                             <text x="215" y="108" font-family="sans-serif" font-size="12" fill="#94a3b8">5</text>
                             <rect x="85" y="152" width="150" height="22" rx="4" fill="#be185d"/>
-                            <text x="160" y="167" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Difference: A \ B</text>
+                            <text x="160" y="167" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">A \ B (Remainder in A)</text>
                         </svg>
                     </div>
                 </div>
@@ -288,21 +288,21 @@
             <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-top: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
                 <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.75rem; margin-bottom: 1rem;">
                     <h3 style="margin: 0; color: #0f172a; font-size: 1.15rem;">2.4 Cartesian Product ($A \times B$)</h3>
-                    <span style="font-weight: 700; color: #047857; font-size: 0.95rem;">Ordered Pairs &amp; Product Spaces</span>
+                    <span style="font-weight: 700; color: #047857; font-size: 0.92rem;">Key Concept: Constructing Higher Dimensions</span>
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; align-items: center;">
                     <div>
                         <p style="margin-top: 0; color: #334155; line-height: 1.65;">
-                            The <strong>Cartesian product</strong> $A \times B$ is the set of all ordered pairs $(a, b)$ formed by taking an element $a \in A$ and pairing it with an element $b \in B$.
+                            Rather than combining individual elements, the <strong>Cartesian product</strong> forms all possible <strong>ordered pairs</strong> $(a, b)$ where the first entry comes from $A$ and the second from $B$:
                         </p>
                         <div class="definition-box" style="margin: 0.75rem 0; border-left-color: #10b981;">
                             $$A \times B = \{(a, b) \mid a \in A \land b \in B\}$$
                         </div>
                         <p style="color: #334155; line-height: 1.65; margin-bottom: 0.5rem;">
-                            For finite sets, the cardinality of the product equals the product of their individual cardinalities: $|A \times B| = |A| \cdot |B|$. Here, $|A| = 3$ and $|B| = 4$, yielding exactly $3 \times 4 = 12$ ordered pairs.
+                            <strong>Why "Product"?</strong> The total number of pairs is simply the product of their sizes: $|A \times B| = |A| \cdot |B|$. Here, $3 \times 4 = 12$ distinct pairs are formed.
                         </p>
                         <p style="color: #047857; line-height: 1.6; margin-bottom: 0;">
-                            In analysis, this construction generalizes continuous spaces: the product of the real line with itself, $\mathbb{R} \times \mathbb{R} = \mathbb{R}^2$, forms the two-dimensional Euclidean plane.
+                            <strong>Connecting to Continuous Math:</strong> This exact mechanism builds multi-dimensional spaces. When you take the real number line $\mathbb{R}$ and form $\mathbb{R} \times \mathbb{R}$, you get $\mathbb{R}^2$—the familiar continuous Cartesian plane.
                         </p>
                     </div>
                     <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; text-align: center;">
@@ -338,7 +338,7 @@
                             <text x="195" y="55" font-family="sans-serif" font-size="10" font-weight="bold" fill="#047857">(2, 4)</text>
 
                             <rect x="70" y="177" width="180" height="20" rx="3" fill="#047857"/>
-                            <text x="160" y="191" font-family="sans-serif" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">A × B: 12 Ordered Pairs (a, b)</text>
+                            <text x="160" y="191" font-family="sans-serif" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">A × B: 12 Discrete Points (a, b)</text>
                         </svg>
                     </div>
                 </div>
