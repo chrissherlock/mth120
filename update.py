@@ -2,7 +2,7 @@
 import os
 import subprocess
 
-def insert_peano_biography_box():
+def relocate_peano_biography():
     filepath = 'week1-lecture1.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
@@ -11,12 +11,12 @@ def insert_peano_biography_box():
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    section4_heading = '<h2 id="peano-axioms">4. Peano\'s Axioms for Natural Numbers</h2>'
+    start_box_token = '<!-- HISTORICAL CONTEXT: GIUSEPPE PEANO -->'
+    end_box_token = '</div>\n            </div>'
+    footer_token = '<!-- FOOTER NAVIGATION -->'
 
-    peano_box_markup = r'''<h2 id="peano-axioms">4. Peano's Axioms for Natural Numbers</h2>
-
-            <!-- HISTORICAL CONTEXT: GIUSEPPE PEANO -->
-            <div class="infobox" style="margin-top: 1.5rem; margin-bottom: 2rem;">
+    peano_box_markup = r'''<!-- HISTORICAL CONTEXT: GIUSEPPE PEANO -->
+            <div class="infobox" style="margin-top: 2rem; margin-bottom: 2rem;">
                 <h4>📖 Who was Giuseppe Peano?</h4>
                 <div style="display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap; margin-top: 0.75rem;">
                     <div style="flex: 0 0 135px; max-width: 135px;">
@@ -37,26 +37,32 @@ def insert_peano_biography_box():
                 </div>
             </div>'''
 
-    if section4_heading in content:
-        if "Who was Giuseppe Peano?" in content:
-            print("Peano biography infobox is already present in week1-lecture1.html.")
-            return
+    # If the box is currently sitting at the top of Section 4, remove it first
+    if start_box_token in content:
+        start_idx = content.find(start_box_token)
+        end_idx = content.find(end_box_token, start_idx)
+        if start_idx != -1 and end_idx != -1:
+            end_idx += len(end_box_token)
+            content = content[:start_idx] + content[end_idx:].lstrip()
 
-        content = content.replace(section4_heading, peano_box_markup, 1)
+    # Re-insert the infobox right before the footer navigation
+    footer_idx = content.find(footer_token)
+    if footer_idx != -1:
+        content = content[:footer_idx] + peano_box_markup + '\n\n            ' + content[footer_idx:]
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
-        print("Successfully added Giuseppe Peano infobox to week1-lecture1.html.")
+        print("Successfully relocated Peano infobox to the bottom of Section 4.")
     else:
-        print("Could not find the Section 4 heading in week1-lecture1.html.")
+        print("Could not locate the footer navigation token in week1-lecture1.html.")
 
 def synchronize_git_changes():
     commit_message = (
-        "Add historical biography infobox for Giuseppe Peano to Lecture 1\n\n"
-        "Introduced an infobox under Section 4 of week1-lecture1.html detailing\n"
-        "who Giuseppe Peano was and the historical motivation behind his axioms.\n"
-        "Highlights the late 19th-century rigorization of analysis, his creation\n"
-        "of standard set notation, and his drive to eliminate hidden assumptions\n"
-        "from arithmetic."
+        "Relocate Giuseppe Peano biographical infobox to bottom of Section 4\n\n"
+        "Moved the historical infobox on Giuseppe Peano from the top of\n"
+        "Section 4 to the conclusion of the section. This ensures students\n"
+        "first engage with the mathematical mechanics of the five axioms and\n"
+        "primitive recursive arithmetic before exploring the historical context\n"
+        "and foundational crisis that motivated his work."
     )
     commands = [
         ['git', 'add', 'week1-lecture1.html', 'update.py'],
@@ -68,5 +74,5 @@ def synchronize_git_changes():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    insert_peano_biography_box()
+    relocate_peano_biography()
     synchronize_git_changes()
