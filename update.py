@@ -1,187 +1,612 @@
-#!/usr/bin/env python3
-import os
-import subprocess
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1, Lecture 2: Numbers, Metric Properties, and Completeness | MTHS120</title>
+    <!-- KaTeX Integration -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+    <style>
+        :root {
+            --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
+            --accent: #d97706; --accent-hover: #b45309;
+            --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
 
-def update_rational_gaps_section():
-    filepath = 'week1-lecture2.html'
-    if not os.path.exists(filepath):
-        print(f"Error: {filepath} not found.")
-        return False
+        .intro-lead { font-size: 1.1rem; color: #1e293b; line-height: 1.7; margin-bottom: 1.5rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); border: 1px solid var(--border); border-left-width: 4px; }
+        .toc-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.75rem; margin: 1.75rem 0 2.5rem 0; }
+        .toc-box h4 { margin: 0 0 0.75rem 0; color: #92400e; font-size: 1.05rem; }
+        .toc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.5rem 1.5rem; margin: 0; padding-left: 1.25rem; }
+        .toc-grid li { margin-bottom: 0.35rem; font-size: 0.95rem; }
+        .toc-grid a { color: #b45309; text-decoration: none; font-weight: 500; }
+        .toc-grid a:hover { text-decoration: underline; color: var(--accent-hover); }
 
-    with open(filepath, 'r', encoding='utf-8') as f:
-        content = f.read()
+        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+        h3 { color: #1e293b; margin-top: 1.5rem; font-family: var(--font-ui); scroll-margin-top: 2rem; }
 
-    # Old Section 2 block to replace
-    old_section_2 = (
-        '            <!-- SECTION 2 -->\n'
-        '            <h2 id="rational-gaps">2. Rational Gaps and the Irrationality of $\\sqrt{2}$</h2>\n'
-        '            <p>Even though fractions are infinitely dense, the rational line is filled with holes. Consider a right triangle with unit legs ($1$ and $1$). By Pythagoras\' theorem, the hypotenuse $c$ satisfies $c^2 = 1^2 + 1^2 = 2 \\implies c = \\sqrt{2}$.</p>\n\n'
-        '            <div class="worked-example-box">\n'
-        '                <h4>🎯 Why $\\sqrt{2}$ isn\'t a fraction (Proof by Contradiction)</h4>\n'
-        '                <p style="margin-bottom: 0.5rem;">Assume $\\sqrt{2}$ <em>could</em> be written as a simplified rational fraction $\\frac{p}{q}$ for integers $p, q$ with $q \\neq 0$. Squaring both sides yields:</p>\n'
-        '                <div style="text-align: center; margin: 0.5rem 0;">\n'
-        '                    $$\\frac{p^2}{q^2} = 2 \\implies p^2 = 2q^2$$\n'
-        '                </div>\n'
-        '                <p style="margin-bottom: 0.5rem;">\n'
-        '                    By the Fundamental Theorem of Arithmetic, every integer has a unique prime factorisation. When you square any number, all prime factor exponents double, meaning every perfect square must contain an <strong>even number of prime factors</strong> (counting multiplicities).\n'
-        '                </p>\n'
-        '                <p style="margin-bottom: 0;">\n'
-        '                    Therefore, $p^2$ contains an <strong>even</strong> number of prime factors. Meanwhile, $2q^2$ takes $q^2$ (which has an even number of factors) and multiplies it by one additional 2, giving it an <strong>odd</strong> number of prime factors. An even number cannot equal an odd number! Hence $p^2 = 2q^2$ is impossible, proving that $\\sqrt{2} \\notin \\mathbb{Q}$.\n'
-        '                </p>\n'
-        '            </div>'
-    )
+        .infobox { background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.25rem 0 1.75rem 0; }
+        .infobox h4 { margin: 0 0 0.85rem 0; color: #0f172a; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-ui); }
+        .notation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 0.85rem 1.75rem; font-size: 0.95rem; }
+        .notation-item { display: grid; grid-template-columns: minmax(130px, max-content) 1fr; gap: 0.75rem; align-items: center; }
+        .notation-sym { font-weight: 600; color: var(--accent); white-space: nowrap; display: flex; justify-content: center; align-items: center; text-align: center; }
+        .notation-desc { min-width: 0; word-break: break-word; line-height: 1.5; color: #334155; }
+        .infobox-intro { font-size: 0.93rem; color: #475569; line-height: 1.6; margin: 0 0 1.25rem 0; padding-bottom: 0.85rem; border-bottom: 1px solid #e2e8f0; }
 
-    # Enhanced Section 2 block with beginner narrative and interactive gap widget
-    new_section_2 = (
-        '            <!-- SECTION 2 -->\n'
-        '            <h2 id="rational-gaps">2. Rational Gaps and the Irrationality of $\\sqrt{2}$</h2>\n'
-        '            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">\n'
-        '                In Section 1, we saw that the rational numbers ($\\mathbb{Q}$) are dense&mdash;you can always squeeze another fraction between any two. It is tempting to look at that infinite crowding and assume the number line is completely solid. But ancient Greek mathematicians discovered a shocking geometric reality that shattered this illusion.\n'
-        '            </p>\n'
-        '            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">\n'
-        '                Imagine drawing a simple right-angled triangle with both legs measuring exactly $1$ unit. By Pythagoras\' theorem, the length of the diagonal hypotenuse $c$ is given by $c^2 = 1^2 + 1^2 = 2$, which means $c = \\sqrt{2}$. Where does this length live on our rational number line? <strong>Nowhere!</strong> Exactly where $\\sqrt{2}$ belongs, there is an invisible pinprick hole.\n'
-        '            </p>\n\n'
-        '            <!-- INTERACTIVE RATIONAL GAP STEPPER -->\n'
-        '            <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">\n'
-        '                <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.75rem; margin-bottom: 1rem;">\n'
-        '                    <h3 style="margin: 0; color: #0f172a; font-size: 1.1rem;">Interactive Walkthrough: Approaching the Void ($\\sqrt{2}$)</h3>\n'
-        '                    <span id="gap-telemetry" style="font-weight: 600; color: #047857; font-size: 0.88rem; background: #f0fdf4; padding: 0.2rem 0.6rem; border-radius: 4px; border: 1px solid #bbf7d0;">Phase: Initial Decimal Bounds</span>\n'
-        '                </div>\n\n'
-        '                <!-- SVG GAP VISUAL CANVAS -->\n'
-        '                <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; text-align: center; margin-bottom: 1.25rem;">\n'
-        '                    <svg id="gap-svg" viewBox="0 0 700 130" style="width: 100%; max-width: 660px; height: auto; display: inline-block;">\n'
-        '                        <!-- Main Number Line Axis -->\n'
-        '                        <line x1="50" y1="75" x2="650" y2="75" stroke="#0f172a" stroke-width="2.5"/>\n'
-        '                        <!-- Ticks for 1.4 and 1.5 -->\n'
-        '                        <line x1="150" y1="65" x2="150" y2="85" stroke="#0f172a" stroke-width="2"/>\n'
-        '                        <line x1="550" y1="65" x2="550" y2="85" stroke="#0f172a" stroke-width="2"/>\n'
-        '                        <text x="150" y="105" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">1.4</text>\n'
-        '                        <text x="550" y="105" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">1.5</text>\n\n'
-        '                        <!-- Target √2 Hole Marker (Always visible as a dashed target) -->\n'
-        '                        <line x1="350" y1="40" x2="350" y2="110" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"/>\n'
-        '                        <text x="350" y="28" font-family="sans-serif" font-size="11" font-weight="bold" fill="#dc2626" text-anchor="middle">Missing Hole (√2)</text>\n\n'
-        '                        <!-- Dynamic Approximation Markers -->\n'
-        '                        <g id="gap-m1" style="display: none;">\n'
-        '                            <circle cx="340" cy="75" r="5.5" fill="#10b981"/>\n'
-        '                            <text x="340" y="58" font-family="sans-serif" font-size="10.5" font-weight="bold" fill="#047857" text-anchor="middle">1.41</text>\n'
-        '                        </g>\n'
-        '                        <g id="gap-m2" style="display: none;">\n'
-        '                            <circle cx="348" cy="75" r="5.5" fill="#10b981"/>\n'
-        '                            <text x="355" y="58" font-family="sans-serif" font-size="10.5" font-weight="bold" fill="#047857" text-anchor="start">1.414</text>\n'
-        '                        </g>\n'
-        '                        <g id="gap-m3" style="display: none;">\n'
-        '                            <circle cx="349.5" cy="75" r="5.5" fill="#10b981"/>\n'
-        '                            <text x="358" y="92" font-family="sans-serif" font-size="10.5" font-weight="bold" fill="#047857" text-anchor="start">1.41421...</text>\n'
-        '                        </g>\n'
-        '                    </svg>\n'
-        '                </div>\n\n'
-        '                <!-- NAVIGATION CONTROLS -->\n'
-        '                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem;">\n'
-        '                    <div style="display: flex; gap: 0.5rem;">\n'
-        '                        <button onclick="gapPrev()" id="gap-prev-btn" style="background: #e2e8f0; color: #475569; border: none; padding: 0.45rem 1rem; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 0.9rem;" disabled>&larr; Previous</button>\n'
-        '                        <button onclick="gapNext()" id="gap-next-btn" style="background: #10b981; color: white; border: none; padding: 0.45rem 1rem; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">Zoom Closer &rarr;</button>\n'
-        '                    </div>\n'
-        '                    <button onclick="gapReset()" style="background: transparent; color: #64748b; border: 1px solid var(--border); padding: 0.45rem 0.85rem; border-radius: 4px; font-weight: 500; cursor: pointer; font-size: 0.85rem;">Reset View</button>\n'
-        '                </div>\n\n'
-        '                <!-- PAIRED ANALYTICAL PANES -->\n'
-        '                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">\n'
-        '                    <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; border-left: 3px solid #10b981;">\n'
-        '                        <h4 style="margin: 0 0 0.4rem 0; color: #047857; font-size: 0.95rem;">1. What Is Happening</h4>\n'
-        '                        <p id="gap-pane-what" style="margin: 0; font-size: 0.9rem; color: #334155; line-height: 1.5;">\n'
-        '                            We know $\\sqrt{2}$ sits between $1.4$ and $1.5$. Fractions can get arbitrarily close to the target hole without ever hitting it.\n'
-        '                        </p>\n'
-        '                    </div>\n'
-        '                    <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; border-left: 3px solid #d97706;">\n'
-        '                        <h4 style="margin: 0 0 0.4rem 0; color: #92400e; font-size: 0.95rem;">2. Why The System Does This</h4>\n'
-        '                        <p id="gap-pane-why" style="margin: 0; font-size: 0.9rem; color: #334155; line-height: 1.5;">\n'
-        '                            Demonstrating the limit defect of $\\mathbb{Q}$: infinite rational approximations converge on a point that doesn\'t actually exist within the rational universe.\n'
-        '                        </p>\n'
-        '                    </div>\n'
-        '                </div>\n'
-        '            </div>\n\n'
-        '            <!-- STEPPER JAVASCRIPT -->\n'
-        '            <script>\n'
-        '                let gapStep = 0;\n'
-        '                function updateGapWidget() {\n'
-        '                    const markerM1 = document.getElementById("gap-m1");\n'
-        '                    const markerM2 = document.getElementById("gap-m2");\n'
-        '                    const markerM3 = document.getElementById("gap-m3");\n'
-        '                    const prevBtn = document.getElementById("gap-prev-btn");\n'
-        '                    const nextBtn = document.getElementById("gap-next-btn");\n'
-        '                    const telemetry = document.getElementById("gap-telemetry");\n'
-        '                    const paneWhat = document.getElementById("gap-pane-what");\n'
-        '                    const paneWhy = document.getElementById("gap-pane-why");\n\n'
-        '                    markerM1.style.display = gapStep >= 1 ? "block" : "none";\n'
-        '                    markerM2.style.display = gapStep >= 2 ? "block" : "none";\n'
-        '                    markerM3.style.display = gapStep >= 3 ? "block" : "none";\n'
-        '                    prevBtn.disabled = gapStep === 0;\n'
-        '                    nextBtn.disabled = gapStep === 3;\n'
-        '                    nextBtn.style.opacity = gapStep === 3 ? "0.5" : "1";\n\n'
-        '                    if (gapStep === 0) {\n'
-        '                        telemetry.innerText = "Phase: Initial Decimal Bounds";\n'
-        '                        paneWhat.innerText = "We know √2 sits between 1.4 and 1.5. Fractions can get arbitrarily close to the target hole without ever hitting it.";\n'
-        '                        paneWhy.innerText = "Demonstrating the limit defect of Q: infinite rational approximations converge on a point that doesn\'t actually exist within the rational universe.";\n'
-        '                    } else if (gapStep === 1) {\n'
-        '                        telemetry.innerText = "Phase: Approximation 1.41";\n'
-        '                        paneWhat.innerText = "We test 1.41 (or 141/100). Since 1.41² = 1.9881 < 2, we are just under the target hole.";\n'
-        '                        paneWhy.innerText = "Rational fractions can creep infinitely close from below, but squaring any fraction will never yield exactly 2.";\n'
-        '                    } else if (gapStep === 2) {\n'
-        '                        telemetry.innerText = "Phase: Approximation 1.414";\n'
-        '                        paneWhat.innerText = "We refine further to 1.414 (1414/1000). 1.414² = 1.999396. We are practically touching the hole, yet still strictly rational.";\n'
-        '                        paneWhy.innerText = "This infinite sequence of decimals proves that Q has no 'plug' for this hole. We need a larger number system (R) to fill it.";\n'
-        '                    } else if (gapStep === 3) {\n'
-        '                        telemetry.innerText = "Phase: The Missing Limit";\n'
-        '                        paneWhat.innerText = "The sequence 1.4, 1.41, 1.414, 1.41421... marches endlessly toward the red dashed line without ever landing on a valid fraction.";\n'
-        '                        paneWhy.innerText = "This foundational gap is precisely why real analysis requires the Axiom of Completeness!";\n'
-        '                    }\n'
-        '                }\n'
-        '                function gapNext() { if (gapStep < 3) { gapStep++; updateGapWidget(); } }\n'
-        '                function gapPrev() { if (gapStep > 0) { gapStep--; updateGapWidget(); } }\n'
-        '                function gapReset() { gapStep = 0; updateGapWidget(); }\n'
-        '            </script>\n\n'
-        '            <div class="worked-example-box">\n'
-        '                <h4>🎯 Why $\\sqrt{2}$ isn\'t a fraction (Proof by Contradiction)</h4>\n'
-        '                <p style="margin-bottom: 0.5rem;">To prove mathematically that no fraction can ever plug this hole, we use a classic <strong>proof by contradiction</strong>. We start by assuming the exact opposite of what we want to prove:</p>\n'
-        '                <p style="margin-bottom: 0.5rem;">\n'
-        '                    Assume $\\sqrt{2}$ <em>could</em> be written as a simplified fraction $\\frac{p}{q}$ for integers $p$ and $q$ (with $q \\neq 0$ and no common factors). Squaring both sides gives:\n'
-        '                </p>\n'
-        '                <div style="text-align: center; margin: 0.5rem 0;">\n'
-        '                    $$\\frac{p^2}{q^2} = 2 \\implies p^2 = 2q^2$$\n'
-        '                </div>\n'
-        '                <p style="margin-bottom: 0.5rem;">\n'
-        '                    Think about prime factorizations. When you square any whole number, all its prime factors double in count, meaning <strong>every perfect square must contain an even number of prime factors</strong> (counting multiplicities).\n'
-        '                </p>\n'
-        '                <p style="margin-bottom: 0;">\n'
-        '                    Therefore, $p^2$ has an <strong>even</strong> number of prime factors. But look at $2q^2$: $q^2$ has an even number, and multiplying by one extra $2$ makes it an <strong>odd</strong> number! An even number can never equal an odd number ($2n \neq 2k+1$). This inescapable contradiction proves that our starting assumption was false: $\\sqrt{2}$ <strong>cannot</strong> be a fraction ($\\sqrt{2} \\notin \\mathbb{Q}$). Rounds out the hole permanently!\n'
-        '                </p>\n'
-        '            </div>'
-    )
+        .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; border: 1px solid var(--border); border-left-width: 4px; }
+        .aside-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #b45309; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .aside-box h4 { margin-top: 0; color: #b45309; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
 
-    if old_section_2 in content:
-        content = content.replace(old_section_2, new_section_2, 1)
-        with open(filepath, 'w', encoding='utf-8') as f:
-            f.write(content)
-        print("Successfully updated Section 2 in week1-lecture2.html with beginner-friendly narrative and gap widget.")
-        return True
+        .worked-example-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .worked-example-box h4 { margin-top: 0; color: #047857; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .worked-example-box p, .worked-example-box li { color: #0f172a !important; }
 
-    print("Error: Could not locate exact Section 2 match in week1-lecture2.html.")
-    return False
+        .lecture-card { background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+        .lecture-card:hover { transform: translateY(-2px); box-shadow: 0 6px 12px -2px rgba(0,0,0,0.08); border-color: var(--accent); }
+        .lecture-card h3 { margin-top: 0; color: #0f172a; }
+        .lecture-badge { display: inline-block; background: var(--accent); color: white; padding: 0.2rem 0.55rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- TOP NAVIGATION HEADER -->
+        <div class="header">
+            <div>
+                <h1>Week 1, Lecture 2: Numbers, Metric Properties, and Completeness</h1>
+                <a href="week1.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">&larr; Week 1 Overview Hub</a>
+            </div>
+            <div>
+                <a href="week1-lecture3.html" style="background: var(--accent); color: white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">Next: Lecture 3 &rarr;</a>
+            </div>
+        </div>
 
-def synchronize_git_changes():
-    commit_message = """Enhance Section 2 with gap visualization widget in week1-lecture2.html
+        <div class="module-content">
+            <!-- HERO IMAGE -->
+            <div style="margin-bottom: 2rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);">
+                <img src="images/chapter1-hero.jpg" alt="Week 1: Sets, Numbers, and Sequences - UNE Campus Discovery Trail" style="width: 100%; height: auto; display: block;">
+            </div>
 
-Rewrote Section 2 of week1-lecture2.html to feature an interactive SVG step-through
-widget illustrating how rational decimal approximations approach the 'missing hole'
-of sqrt(2), paired with an intuitive prime-factorization proof by contradiction."""
-    commands = [
-        ['git', 'add', 'week1-lecture2.html', 'update.py'],
-        ['git', 'commit', '-m', commit_message],
-        ['git', 'push', 'origin', 'main']
-    ]
-    for cmd in commands:
-        result = subprocess.run(cmd, capture_output=True, text=True)
-        print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
+            <div class="intro-lead">
+                Welcome to Lecture 2. Here we examine the numerical continuum: proving why rational numbers leave infinite gaps on the line, measuring distance with absolute value, and defining the complete real numbers through suprema and infima.
+            </div>
 
-if __name__ == '__main__':
-    if update_rational_gaps_section():
-        synchronize_git_changes()
+            <!-- STUDENT ORIENTATION & REASSURANCE -->
+            <div style="margin: 2rem 0 2.25rem 0;">
+                <h3 style="margin-top: 0; color: #0f172a; font-size: 1.25rem;">Finding Your Footing: Numbers, Fractions, and Proofs</h3>
+                <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                    Welcome to Lecture 2! In our previous session, we established the grammatical foundation of sets and mappings. Today, we turn our attention to numbers—objects you have been working with since primary school. Yet, as we examine them through the lens of real analysis, familiar concepts will take on a deeper, more rigorous character.
+                </p>
+                <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                    You might wonder why we need formal proofs to establish things that feel intuitively obvious—such as the fact that between any two fractions, there is always another fraction, or that $\sqrt{2}$ cannot be written as a simple ratio of integers. After all, if our calculators and geometric intuition already tell us these things are true, why labor through the logic?
+                </p>
+                <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                    The reason is that intuition alone can hide subtle traps. The ancient Greeks were profoundly shocked to discover that the diagonal of a unit square ($\sqrt{2}$) slips entirely through the cracks of the rational numbers, revealing invisible "holes" in the number line. Proving these properties from first principles gives us absolute certainty, ensuring that when we eventually build limits and calculus upon these numbers, our foundation never shakes.
+                </p>
+                <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 0;">
+                    If constructing proofs by contradiction or working through algebraic inequalities feels challenging at first, take a deep breath—that is completely normal. Mathematical rigor is a craft acquired one careful step at a time. Take your time with the examples, explore the arguments, and remember that every expert analyst started exactly where you are now.
+                </p>
+            </div>
+
+            <!-- TABLE OF CONTENTS -->
+            <div class="toc-box">
+                <h4>📌 Lecture 2 Topics</h4>
+                <ul class="toc-grid">
+                    <li><a href="#density-rationals">1. Density of the Rational Numbers</a></li>
+                    <li><a href="#rational-gaps">2. Rational Gaps and the Irrationality of $\sqrt{2}$</a></li>
+                    <li><a href="#field-order">3. Axiomatic Field and Order Properties of $\mathbb{R}$</a></li>
+                    <li><a href="#absolute-value">4. Absolute Value and Distance Metrics</a></li>
+                    <li><a href="#completeness-bounds">5. Bounds, Suprema, and Completeness</a></li>
+                </ul>
+            </div>
+
+            <!-- SECTION 1 -->
+            <h2 id="density-rationals">1. Density of the Rational Numbers</h2>
+            <div class="infobox">
+                <h4>📖 Notation Reference: Number Sets &amp; Bounds</h4>
+                <div class="infobox-intro">
+                    <strong>The numbers we stand on:</strong> From counting numbers up to the unbroken real line, each extension repairs a specific structural limitation.
+                </div>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{N}$</span><span class="notation-desc">Natural numbers $\{0, 1, 2, \dots\}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{Z}$</span><span class="notation-desc">Integers $\{\dots, -1, 0, 1, \dots\}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{Q}$</span><span class="notation-desc">Rational numbers $\{p/q \mid p \in \mathbb{Z}, q \in \mathbb{Z}_+\}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{R}$</span><span class="notation-desc">Real numbers (complete ordered field)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$|x|$</span><span class="notation-desc">Absolute value (distance to origin)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\sup S$</span><span class="notation-desc">Supremum (least upper bound) of set $S$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\inf S$</span><span class="notation-desc">Infimum (greatest lower bound) of set $S$</span></div>
+                </div>
+            </div>
+
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                If you ask someone whether fractions (rational numbers, $\mathbb{Q}$) fill up the number line, their first instinct is usually <em>"Yes, absolutely."</em> After all, how could you possibly find empty space between fractions when they are crammed together so tightly?
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                To build our intuition, let's look at a concrete example. Pick any two fractions&mdash;say, $0.3$ and $0.4$. Are they touching? Not at all! We can easily slip $0.35$ right between them. But why stop there? Between $0.3$ and $0.35$, we can place $0.31$, $0.32$, or $0.301$. In mathematics, this property of endless crowding is called <strong>density</strong>.
+            </p>
+
+            <div class="definition-box">
+                <strong>Proposition 1 (Density of $\mathbb{Q}$):</strong> For any two distinct rational numbers $a$ and $b$ (no matter how close together they are), there is always another rational number sitting strictly between them. In fact, there are <em>infinitely</em> many!
+            </div>
+
+            <h3 style="margin-top: 1.5rem; color: #1e293b; font-size: 1.1rem;">How Do We Prove This? (The Midpoint Trick)</h3>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                Instead of guessing decimals, how do we prove this works for <em>any</em> two arbitrary fractions $a$ and $b$ where $a < b$? We use a wonderfully simple tool: <strong>the arithmetic midpoint</strong>.
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                If you add two numbers together and divide by $2$, you get the exact halfway point:
+            </p>
+
+            <div style="text-align: center; margin: 1.25rem 0; font-size: 1.05rem;">
+                $$c_1 = \frac{a + b}{2}$$
+            </div>
+
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                Because adding two fractions and dividing by a whole number always yields another fraction, $c_1$ is guaranteed to be a rational number. And because it's the exact average, it sits safely between $a$ and $b$ ($a < c_1 < b$).
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                Now, what happens if we take $a$ and our new midpoint $c_1$, and find <em>their</em> midpoint ($c_2 = \frac{a + c_1}{2}$)? We can repeat this zooming-in process endlessly, generating an infinite stack of unique fractions trapped between our original starting points:
+            </p>
+
+            <div style="text-align: center; margin: 1rem 0;">
+                $$a < c_3 < c_2 < c_1 < b$$
+            </div>
+
+            <!-- INTERACTIVE RATIONAL DENSITY STEPPER -->
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.75rem; margin-bottom: 1rem;">
+                    <h3 style="margin: 0; color: #0f172a; font-size: 1.1rem;">Interactive Walkthrough: The Infinite Midpoint Nesting</h3>
+                    <span id="density-telemetry" style="font-weight: 600; color: var(--accent); font-size: 0.88rem; background: #fffbeb; padding: 0.2rem 0.6rem; border-radius: 4px; border: 1px solid #fde68a;">Phase: Initial Interval [0.3, 0.4]</span>
+                </div>
+
+                <!-- SVG VISUAL CANVAS -->
+                <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; text-align: center; margin-bottom: 1.25rem;">
+                    <svg id="density-svg" viewBox="0 0 700 130" style="width: 100%; max-width: 660px; height: auto; display: inline-block;">
+                        <line x1="50" y1="75" x2="650" y2="75" stroke="#0f172a" stroke-width="2.5"/>
+                        <line x1="100" y1="65" x2="100" y2="85" stroke="#0f172a" stroke-width="2"/>
+                        <line x1="600" y1="65" x2="600" y2="85" stroke="#0f172a" stroke-width="2"/>
+                        <text x="100" y="105" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">a = 0.3</text>
+                        <text x="600" y="105" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">b = 0.4</text>
+
+                        <g id="marker-c1" style="display: none;">
+                            <line x1="350" y1="50" x2="350" y2="100" stroke="#d97706" stroke-width="2" stroke-dasharray="3"/>
+                            <circle cx="350" cy="75" r="6" fill="#d97706"/>
+                            <text x="350" y="38" font-family="sans-serif" font-size="11.5" font-weight="bold" fill="#b45309" text-anchor="middle">c₁ = 0.35</text>
+                        </g>
+                        <g id="marker-c2" style="display: none;">
+                            <line x1="225" y1="50" x2="225" y2="100" stroke="#0284c7" stroke-width="2" stroke-dasharray="3"/>
+                            <circle cx="225" cy="75" r="6" fill="#0284c7"/>
+                            <text x="225" y="38" font-family="sans-serif" font-size="11.5" font-weight="bold" fill="#0369a1" text-anchor="middle">c₂ = 0.325</text>
+                        </g>
+                        <g id="marker-c3" style="display: none;">
+                            <line x1="162.5" y1="50" x2="162.5" y2="100" stroke="#10b981" stroke-width="2" stroke-dasharray="3"/>
+                            <circle cx="162.5" cy="75" r="6" fill="#10b981"/>
+                            <text x="162.5" y="38" font-family="sans-serif" font-size="11.5" font-weight="bold" fill="#047857" text-anchor="middle">c₃ = 0.3125</text>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- NAVIGATION CONTROLS -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem;">
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button onclick="densityPrev()" id="density-prev-btn" style="background: #e2e8f0; color: #475569; border: none; padding: 0.45rem 1rem; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 0.9rem;" disabled>&larr; Previous</button>
+                        <button onclick="densityNext()" id="density-next-btn" style="background: var(--accent); color: white; border: none; padding: 0.45rem 1rem; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">Next Step &rarr;</button>
+                    </div>
+                    <button onclick="densityReset()" style="background: transparent; color: #64748b; border: 1px solid var(--border); padding: 0.45rem 0.85rem; border-radius: 4px; font-weight: 500; cursor: pointer; font-size: 0.85rem;">Reset View</button>
+                </div>
+
+                <!-- PAIRED ANALYTICAL PANES -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+                    <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; border-left: 3px solid #0284c7;">
+                        <h4 style="margin: 0 0 0.4rem 0; color: #0369a1; font-size: 0.95rem;">1. What Is Happening</h4>
+                        <p id="pane-what" style="margin: 0; font-size: 0.9rem; color: #334155; line-height: 1.5;">
+                            We start with interval $[0.3, 0.4]$. No fractions are plotted yet. The line appears continuous, but infinitely many rational points are waiting between the endpoints.
+                        </p>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; border-left: 3px solid #d97706;">
+                        <h4 style="margin: 0 0 0.4rem 0; color: #92400e; font-size: 0.95rem;">2. Why The System Does This</h4>
+                        <p id="pane-why" style="margin: 0; font-size: 0.9rem; color: #334155; line-height: 1.5;">
+                            Demonstrating closure under division: any arithmetic average of two rationals is strictly guaranteed to generate a brand new, valid rational number.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEPPER JAVASCRIPT -->
+            <script>
+                let densityStep = 0;
+                function updateDensityWidget() {
+                    const markerC1 = document.getElementById("marker-c1");
+                    const markerC2 = document.getElementById("marker-c2");
+                    const markerC3 = document.getElementById("marker-c3");
+                    const prevBtn = document.getElementById("density-prev-btn");
+                    const nextBtn = document.getElementById("density-next-btn");
+                    const telemetry = document.getElementById("density-telemetry");
+                    const paneWhat = document.getElementById("pane-what");
+                    const paneWhy = document.getElementById("pane-why");
+
+                    markerC1.style.display = densityStep >= 1 ? "block" : "none";
+                    markerC2.style.display = densityStep >= 2 ? "block" : "none";
+                    markerC3.style.display = densityStep >= 3 ? "block" : "none";
+                    prevBtn.disabled = densityStep === 0;
+                    nextBtn.disabled = densityStep === 3;
+                    nextBtn.style.opacity = densityStep === 3 ? "0.5" : "1";
+
+                    if (densityStep === 0) {
+                        telemetry.innerText = "Phase: Initial Interval [0.3, 0.4]";
+                        paneWhat.innerText = "We start with interval [0.3, 0.4]. No fractions are plotted yet. The line appears solid, but infinitely many rational points are waiting between the endpoints.";
+                        paneWhy.innerText = "Demonstrating closure under division: any arithmetic average of two rationals is strictly guaranteed to generate a brand new, valid rational number.";
+                    } else if (densityStep === 1) {
+                        telemetry.innerText = "Phase: Step 1 (First Midpoint)";
+                        paneWhat.innerText = "Calculated first midpoint: c₁ = (0.3 + 0.4) / 2 = 0.35. A new rational marker is dropped exactly halfway between a and b.";
+                        paneWhy.innerText = "Even though we inserted a point, we haven't filled the gap; we now have two smaller sub-intervals, each containing infinitely more fractions.";
+                    } else if (densityStep === 2) {
+                        telemetry.innerText = "Phase: Step 2 (Zooming In)";
+                        paneWhat.innerText = "Calculated second midpoint on the left interval: c₂ = (0.3 + 0.35) / 2 = 0.325. Notice how densely points are beginning to cluster near 0.3.";
+                        paneWhy.innerText = "The midpoint construction is recursive. You can repeat this division infinitely without ever running out of fresh rational numbers.";
+                    } else if (densityStep === 3) {
+                        telemetry.innerText = "Phase: Step 3 (Infinite Nesting)";
+                        paneWhat.innerText = "Calculated third midpoint: c₃ = (0.3 + 0.325) / 2 = 0.3125. The sequence accumulates towards 0.3 from the right.";
+                        paneWhy.innerText = "This infinite nesting proves density, yet microscopic pinprick holes (like irrational numbers) still remain unplotted between these markers!";
+                    }
+                }
+                function densityNext() { if (densityStep < 3) { densityStep++; updateDensityWidget(); } }
+                function densityPrev() { if (densityStep > 0) { densityStep--; updateDensityWidget(); } }
+                function densityReset() { densityStep = 0; updateDensityWidget(); }
+            </script>
+
+            <div class="aside-box">
+                <h4>💡 The Big Beginner Trap: Dense vs. Complete</h4>
+                <p style="margin-bottom: 0;">
+                    It is completely natural for beginners to assume: <em>"If fractions are infinitely dense, they must cover every single point on the number line, right?"</em>
+                    <br><br>
+                    <strong>Surprise!</strong> That is the biggest trap in early analysis. Even though rational numbers are packed so tightly that you can never find two "touching" without another fraction between them, <strong>the rational line is riddled with microscopic holes</strong>. As we are about to discover in Section 2, numbers like $\sqrt{2}$ fall right through those invisible gaps!
+                </p>
+            </div>
+
+            <!-- SECTION 2 -->
+            <h2 id="rational-gaps">2. Rational Gaps and the Irrationality of $\sqrt{2}$</h2>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                In Section 1, we saw that the rational numbers ($\mathbb{Q}$) are dense&mdash;you can always squeeze another fraction between any two. It is tempting to look at that infinite crowding and assume the number line is completely solid. But ancient Greek mathematicians discovered a shocking geometric reality that shattered this illusion.
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                Imagine drawing a simple right-angled triangle with both legs measuring exactly $1$ unit. By Pythagoras' theorem, the length of the diagonal hypotenuse $c$ is given by $c^2 = 1^2 + 1^2 = 2$, which means $c = \sqrt{2}$. Where does this length live on our rational number line? <strong>Nowhere!</strong> Exactly where $\sqrt{2}$ belongs, there is an invisible pinprick hole.
+            </p>
+
+            <!-- INTERACTIVE RATIONAL GAP SMOOTH ZOOM WIDGET -->
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.75rem; margin-bottom: 1rem;">
+                    <h3 style="margin: 0; color: #0f172a; font-size: 1.1rem;">Interactive Walkthrough: Smooth Zooming into the Void ($\sqrt{2}$)</h3>
+                    <span id="zoom-telemetry" style="font-weight: 600; color: #047857; font-size: 0.88rem; background: #f0fdf4; padding: 0.2rem 0.6rem; border-radius: 4px; border: 1px solid #bbf7d0;">Step 0: Macro View [1.40, 1.50]</span>
+                </div>
+
+                <!-- SVG VISUAL ZOOM CANVAS -->
+                <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; text-align: center; margin-bottom: 1.25rem;">
+                    <svg viewBox="0 0 700 130" style="width: 100%; max-width: 660px; height: auto; display: inline-block;">
+                        <defs><clipPath id="zoom-clip"><rect x="40" y="0" width="620" height="130"/></clipPath></defs>
+                        <g clip-path="url(#zoom-clip)">
+                            <line x1="50" y1="75" x2="650" y2="75" stroke="#0f172a" stroke-width="2.5"/>
+                            <g id="zoom-ticks"></g>
+
+                            <g id="zoom-sqrt2">
+                                <line id="sqrt2-line" x1="0" y1="45" x2="0" y2="105" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="4"/>
+                                <text id="sqrt2-label" x="0" y="28" font-family="sans-serif" font-size="11" font-weight="bold" fill="#dc2626" text-anchor="middle">Missing hole: √2 = 1.41421…</text>
+                            </g>
+
+                            <g id="mk-lo" style="opacity:0; transition: opacity 0.5s ease;">
+                                <circle cx="0" cy="75" r="6" fill="#10b981"/>
+                                <text x="0" y="58" font-family="sans-serif" font-size="11" font-weight="bold" fill="#047857" text-anchor="middle"></text>
+                            </g>
+                            <g id="mk-hi" style="opacity:0; transition: opacity 0.5s ease;">
+                                <circle cx="0" cy="75" r="6" fill="#0284c7"/>
+                                <text x="0" y="58" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0369a1" text-anchor="middle"></text>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- NAVIGATION CONTROLS -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem;">
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button onclick="zoomOutStep()" id="zoom-out-btn" style="background: #e2e8f0; color: #475569; border: none; padding: 0.45rem 1rem; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 0.9rem;" disabled>&larr; Zoom Out</button>
+                        <button onclick="zoomInStep()" id="zoom-in-btn" style="background: #10b981; color: white; border: none; padding: 0.45rem 1rem; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">Smooth Zoom In &rarr;</button>
+                        <button onclick="toggleAutoZoom()" id="zoom-auto-btn" style="background: #0284c7; color: white; border: none; padding: 0.45rem 1rem; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">&#9654; Auto-zoom</button>
+                    </div>
+                    <button onclick="zoomReset()" style="background: transparent; color: #64748b; border: 1px solid var(--border); padding: 0.45rem 0.85rem; border-radius: 4px; font-weight: 500; cursor: pointer; font-size: 0.85rem;">Reset View</button>
+                </div>
+
+                <!-- PAIRED ANALYTICAL PANES -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+                    <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; border-left: 3px solid #10b981;">
+                        <h4 style="margin: 0 0 0.4rem 0; color: #047857; font-size: 0.95rem;">1. What Is Happening</h4>
+                        <p id="zoom-pane-what" style="margin: 0; font-size: 0.9rem; color: #334155; line-height: 1.5;">
+                            We view the macro scale between $1.40$ and $1.50$. The red dashed line marks the exact location of $\sqrt{2}$.
+                        </p>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; border-left: 3px solid #d97706;">
+                        <h4 style="margin: 0 0 0.4rem 0; color: #92400e; font-size: 0.95rem;">2. Why The System Does This</h4>
+                        <p id="zoom-pane-why" style="margin: 0; font-size: 0.9rem; color: #334155; line-height: 1.5;">
+                            Demonstrating coordinate limits: fractions can approach $\sqrt{2}$ infinitely closely without ever landing on the missing coordinate.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SMOOTH ZOOM SCRIPT -->
+            <script>
+                // Curated explanations for the first four steps; deeper steps are generated dynamically.
+                const curated = [
+                    { title: "Step 0: Macro View [1.40, 1.50]",
+                       what: "We are looking at the stretch of the number line from 1.40 to 1.50. The red dashed line marks where √2 ≈ 1.41421… sits. Every tick is a rational number, but nothing at the red line is one.",
+                       why: "Between any two ticks there are infinitely many more fractions (density), so the line looks solid. The hole at √2 only shows up when we ask whether any fraction equals √2 exactly." },
+                    { title: "Step 1: Zooming In [1.40, 1.43]",
+                       what: "We zoom into [1.40, 1.43]. The green dot is 1.41, about 0.0042 below √2, and the blue dot is 1.42, about 0.0058 above it. √2 is trapped between two rationals.",
+                       why: "Fractions crowd both sides of the red line, but the red line itself is not a fraction. Two rationals can bracket √2 without ever equalling it." },
+                    { title: "Step 2: Deep Magnification [1.413, 1.416]",
+                       what: "The view is now [1.413, 1.416]. The green dot 1.414 is about 0.0002 below √2 and the blue dot 1.415 is about 0.0008 above it. The bracket is 10 times tighter than in Step 1, and √2 is still strictly inside.",
+                       why: "Each extra decimal place gives a closer rational, so we can squeeze as tightly as we like. But every terminating decimal is a fraction, and the proof below shows no fraction equals √2, so we never land on the red line." },
+                    { title: "Step 3: Micro-Interval [1.4141, 1.4144]",
+                       what: "At [1.4141, 1.4144], the green dot 1.4142 is about 0.00001 below √2 and the blue dot 1.4143 is about 0.00009 above it. They are extremely close, yet the red line still sits strictly between them.",
+                       why: "This is the incompleteness of ℚ: a sequence of rationals can close in on a point that is not itself rational. The Axiom of Completeness (Section 5) fills these holes and gives us ℝ." }
+                ];
+
+                // Exact digits of √2 (BigInt), ensuring infinite precision during infinite zooming
+                let cacheD = 0, cacheS = 1n;
+                function isqrt(n) {
+                    if (n < 2n) return n;
+                    let x = 1n << BigInt((n.toString(2).length + 1) >> 1);
+                    while (true) { const y = (x + n / x) >> 1n; if (y >= x) return x; x = y; }
+                }
+                function getS(D) {
+                    if (D > cacheD) { const D2 = D + 60; cacheS = isqrt(2n * 10n ** BigInt(2 * D2)); cacheD = D2; }
+                    return cacheS / 10n ** BigInt(cacheD - D);
+                }
+                function off(num, m, unit) {
+                    const D = m + 30;
+                    const N = num * 10n ** BigInt(D - m) - getS(D);
+                    return parseFloat(N.toString() + "e-" + (D - unit));
+                }
+                function fmt(num, m) {
+                    let s = num.toString();
+                    if (m === 0) return s;
+                    s = s.padStart(m + 1, "0");
+                    const ip = s.slice(0, s.length - m), fp = s.slice(s.length - m);
+                    return m > 10 ? "…" + fp.slice(-6) : ip + "." + fp;
+                }
+                const SUP = "⁰¹²³⁴⁵⁶⁷⁸⁹";
+                const sup = n => String(n).split("").map(d => SUP[+d]).join("");
+
+                const nOf = L => L + 1;
+                let curLevel = 0, unitN = 1;
+                let view = { c: 0, w: 1 };
+                let animFrame = null, animating = false, autoOn = false, autoTimer = null;
+
+                function levelView(L, unit) {
+                    const n = nOf(L);
+                    if (L === 0) return { c: off(145n, 2, unit), w: Math.pow(10, unit - 1) };
+                    const B = getS(n);
+                    return { c: off(10n * B + 5n, n + 1, unit), w: 3 * Math.pow(10, unit - n) };
+                }
+
+                function levelInfo(L) {
+                    if (L < curated.length) return curated[L];
+                    const n = nOf(L);
+                    const B = getS(n);
+                    const d = B.toString();
+                    const digits = "1." + d.slice(1, Math.min(d.length, 21)) + "…";
+                    const frac = Number(getS(n + 15) % 10n ** 15n) / 1e15;
+                    return {
+                        title: "Step " + L + ": Interval of width 3×10⁻" + sup(n),
+                        what: "The window is now just 3 × 10⁻" + sup(n) + " wide (n = " + n + "). The green dot (" + fmt(B, n) + ") is √2 cut off after " + n + " decimals, and the blue dot (" + fmt(B + 1n, n) + ") is the next rational up. √2 = " + digits + " sits about " + Math.round(frac * 100) + "% of the way from green to blue, strictly between them.",
+                        why: "Zoom as deep as you like and the picture looks the same: two rationals one decimal digit apart with √2 strictly between them. Every truncation of √2 is a fraction, and no fraction equals √2, so the hole never closes and there is always room to zoom further."
+                    };
+                }
+
+                function drawZoom() {
+                    const c = view.c, w = view.w, lo = c - w / 2;
+                    const xOf = o => 50 + (o - lo) / w * 600;
+
+                    const raw = w / 5;
+                    const mag0 = Math.floor(Math.log10(raw));
+                    let s = [1, 2, 5, 10].find(k => k * Math.pow(10, mag0) >= raw * 0.999);
+                    let mag = mag0;
+                    if (s === 10) { s = 1; mag += 1; }
+                    const m = Math.max(unitN - mag, 0);
+                    const sBig = BigInt(s);
+                    const Bt = getS(m) / sBig;
+
+                    let html = "";
+                    for (let j = -12; j <= 12; j++) {
+                        const num = (Bt + BigInt(j)) * sBig;
+                        const x = xOf(off(num, m, unitN));
+                        if (x < 45 || x > 655) continue;
+                        html += '<line x1="' + x + '" y1="65" x2="' + x + '" y2="85" stroke="#0f172a" stroke-width="2"/>' +
+                                '<text x="' + x + '" y="105" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">' + fmt(num, m) + '</text>';
+                    }
+                    document.getElementById("zoom-ticks").innerHTML = html;
+
+                    const sx = xOf(0);
+                    const line = document.getElementById("sqrt2-line");
+                    line.setAttribute("x1", sx); line.setAttribute("x2", sx);
+                    document.getElementById("sqrt2-label").setAttribute("x", Math.min(Math.max(sx, 130), 570));
+
+                    const nm = curLevel === 0 ? 2 : nOf(curLevel);
+                    const B = getS(nm);
+                    [["mk-lo", B], ["mk-hi", B + 1n]].forEach(([id, val]) => {
+                        const g = document.getElementById(id);
+                        const x = xOf(off(val, nm, unitN));
+                        g.querySelector("circle").setAttribute("cx", x);
+                        const t = g.querySelector("text");
+                        t.setAttribute("x", x);
+                        t.textContent = fmt(val, nm);
+                    });
+                }
+
+                function updatePanes() {
+                    const info = levelInfo(curLevel);
+                    document.getElementById("zoom-telemetry").innerText = info.title;
+                    document.getElementById("zoom-pane-what").innerText = info.what;
+                    document.getElementById("zoom-pane-why").innerText = info.why;
+                    document.getElementById("zoom-out-btn").disabled = curLevel === 0;
+                    const op = curLevel === 0 ? "0" : "1";
+                    document.getElementById("mk-lo").style.opacity = op;
+                    document.getElementById("mk-hi").style.opacity = op;
+                }
+
+                function afterAnim() {
+                    animating = false;
+                    if (autoOn) autoTimer = setTimeout(() => { if (autoOn) goToLevel(curLevel + 1); }, 600);
+                }
+
+                function goToLevel(L, duration = 900) {
+                    cancelAnimationFrame(animFrame);
+                    clearTimeout(autoTimer);
+                    const nTo = nOf(L), nFrom = nOf(curLevel);
+                    curLevel = L;
+                    updatePanes();
+
+                    if (Math.abs(nTo - nFrom) > 6) {
+                        unitN = nTo;
+                        view = levelView(L, unitN);
+                        drawZoom();
+                        return afterAnim();
+                    }
+
+                    const ref = Math.max(unitN, nTo);
+                    const f = Math.pow(10, ref - unitN);
+                    view = { c: view.c * f, w: view.w * f };
+                    unitN = ref;
+                    const target = levelView(L, ref);
+                    const c0 = view.c, w0 = view.w, c1 = target.c, w1 = target.w;
+                    const t0 = performance.now();
+                    animating = true;
+
+                    function frame(now) {
+                        const t = Math.min((now - t0) / duration, 1);
+                        const e = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+                        const w = Math.exp(Math.log(w0) + (Math.log(w1) - Math.log(w0)) * e);
+                        view = { c: c0 + (c1 - c0) * e, w: w };
+                        drawZoom();
+                        if (t < 1) { animFrame = requestAnimationFrame(frame); }
+                        else {
+                            unitN = nTo;
+                            view = levelView(L, unitN);
+                            drawZoom();
+                            afterAnim();
+                        }
+                    }
+                    animFrame = requestAnimationFrame(frame);
+                }
+
+                function setAuto(on) {
+                    autoOn = on;
+                    document.getElementById("zoom-auto-btn").innerHTML = on ? "&#9208; Pause" : "&#9654; Auto-zoom";
+                    if (!on) clearTimeout(autoTimer);
+                }
+                function toggleAutoZoom() {
+                    setAuto(!autoOn);
+                    if (autoOn && !animating) goToLevel(curLevel + 1);
+                }
+                function zoomInStep()  { goToLevel(curLevel + 1); }
+                function zoomOutStep() { setAuto(false); if (curLevel > 0) goToLevel(curLevel - 1); }
+                function zoomReset()   { setAuto(false); goToLevel(0); }
+
+                view = levelView(0, unitN);
+                updatePanes();
+                drawZoom();
+            </script>
+
+            <div class="worked-example-box">
+                <h4>🎯 Why $\sqrt{2}$ isn't a fraction (Proof by Contradiction)</h4>
+
+                <!-- Explicit Proof by Contradiction Primer -->
+                <p style="margin-bottom: 0.75rem; font-weight: 500; color: #065f46;">
+                    <strong>How Proof by Contradiction Works (*Reductio ad Absurdum*):</strong><br>
+                    Instead of proving directly, we use an indirect four-step method:
+                    <ol style="margin: 0.25rem 0 0.75rem 1.25rem; padding-left: 0;">
+                        <li><strong>Assume the opposite:</strong> Temporarily assume the statement we want to prove is false (e.g., assume $\sqrt{2}$ <em>is</em> a fraction).</li>
+                        <li><strong>Follow the logic:</strong> Rigorously apply valid mathematical rules and algebra.</li>
+                        <li><strong>Hit a contradiction:</strong> Reach an impossible mathematical paradox (e.g., proving an even number equals an odd number).</li>
+                        <li><strong>Conclude:</strong> Since valid logic can never produce a contradiction, our initial assumption must have been false, proving the original statement true!</li>
+                    </ol>
+                </p>
+
+                <p style="margin-bottom: 0.5rem;">To prove mathematically that no fraction can ever plug this hole, let's apply this method to $\sqrt{2}$:</p>
+                <p style="margin-bottom: 0.5rem;">
+                    Assume $\sqrt{2}$ <em>could</em> be written as a simplified fraction $\frac{p}{q}$ for integers $p$ and $q$ (with $q \neq 0$ and no common factors). Squaring both sides gives:
+                </p>
+                <div style="text-align: center; margin: 0.5rem 0;">
+                    $$\frac{p^2}{q^2} = 2 \implies p^2 = 2q^2$$
+                </div>
+                <p style="margin-bottom: 0.5rem;">
+                    Think about prime factorizations. When you square any whole number, all its prime factors double in count, meaning <strong>every perfect square must contain an even number of prime factors</strong> (counting multiplicities).
+                </p>
+                <p style="margin-bottom: 0;">
+                    Therefore, $p^2$ has an <strong>even</strong> number of prime factors. But look at $2q^2$: $q^2$ has an even number, and multiplying by one extra $2$ makes it an <strong>odd</strong> number! An even number can never equal an odd number ($2n \neq 2k+1$). This inescapable contradiction proves that our starting assumption was false: $\sqrt{2}$ <strong>cannot</strong> be a fraction ($\sqrt{2} \notin \mathbb{Q}$).
+                </p>
+            </div>
+
+            <!-- SECTION 3 -->
+            <h2 id="field-order">3. Axiomatic Field and Order Properties of $\mathbb{R}$</h2>
+            <p>To patch the gaps in $\mathbb{Q}$, we construct the real numbers $\mathbb{R}$ uniting rationals and irrationals into a complete ordered field:</p>
+            <ul>
+                <li><strong>Field Axioms:</strong> Commutativity and associativity of addition and multiplication; distributivity ($(a+b)c = ac + bc$); additive identity $0$ and multiplicative identity $1 \ne 0$; additive inverse $-a$; reciprocal $a^{-1}$ (for $a \ne 0$).</li>
+                <li><strong>Trichotomy:</strong> For any $a, b \in \mathbb{R}$, exactly one of $a < b$, $a = b$, or $a > b$ holds.</li>
+                <li><strong>Order Transitivity:</strong> $a > b \text{ and } b > c \implies a > c$.</li>
+                <li><strong>Order Preservation:</strong> If $a > b$, then $a + c > b + c$ for all $c$. If $a > b$ and $c > 0$, then $ac > bc$.</li>
+            </ul>
+
+            <!-- SECTION 4 -->
+            <h2 id="absolute-value">4. Absolute Value and Distance Metrics</h2>
+            <p>The absolute value function $\vert{}\cdot\vert{}: \mathbb{R} \to \mathbb{R}$ measures distance along the real line: $\text{dist}(a, b) = \vert{}a - b\vert{}$.</p>
+            <div class="definition-box">
+                <strong>Proposition 2 (Properties of Absolute Value):</strong>
+                <ol style="margin-left: 1.25rem; margin-top: 0.5rem;">
+                    <li>$\vert{}a\vert{} \ge 0$, and $\vert{}a\vert{} = 0 \iff a = 0$.</li>
+                    <li>$\vert{}ab\vert{} = \vert{}a\vert{} \cdot \vert{}b\vert{}$.</li>
+                    <li>$\vert{}a\vert{}^2 = a^2$.</li>
+                    <li><strong>Triangle Inequality:</strong> $\vert{}a + b\vert{} \le \vert{}a\vert{} + \vert{}b\vert{}$.</li>
+                    <li><strong>Reverse Triangle Inequality:</strong> $\vert{}\vert{}a\vert{} - \vert{}b\vert{}\vert{} \le \vert{}a - b\vert{}$.</li>
+                </ol>
+            </div>
+            <div class="aside-box">
+                <h4>📐 Proving the Triangle Inequality</h4>
+                <p>Because $-\vert{}x\vert{} \le x \le \vert{}x\vert{}$ for any real number $x$, we check the sum $a+b$:</p>
+                <ul style="margin: 0.25rem 0 0 1.25rem;">
+                    <li>If $a+b \ge 0$, then $\vert{}a+b\vert{} = a+b \le \vert{}a\vert{} + \vert{}b\vert{}$ because $a \le \vert{}a\vert{}$ and $b \le \vert{}b\vert{}$.</li>
+                    <li>If $a+b < 0$, then $\vert{}a+b\vert{} = -(a+b) = (-a) + (-b) \le \vert{}a\vert{} + \vert{}b\vert{}$ because $-a \le \vert{}a\vert{}$ and $-b \le \vert{}b\vert{}$.</li>
+                </ul>
+            </div>
+
+            <!-- SECTION 5 -->
+            <h2 id="completeness-bounds">5. Bounds, Suprema, and Completeness</h2>
+            <p>Let $S \subseteq \mathbb{R}$ be a non-empty subset of real numbers:</p>
+            <ul>
+                <li><strong>Upper Bound:</strong> A number $K$ such that $x \le K$ for all $x \in S$. If $K$ exists, $S$ is <em>bounded above</em>.</li>
+                <li><strong>Lower Bound:</strong> A number $k$ such that $k \le x$ for all $x \in S$. If $k$ exists, $S$ is <em>bounded below</em>.</li>
+                <li><strong>Bounded Set:</strong> A set that is bounded both above and below.</li>
+                <li><strong>Supremum ($\sup S$):</strong> The least upper bound of $S$ (the lowest ceiling).</li>
+                <li><strong>Infimum ($\inf S$):</strong> The greatest lower bound of $S$ (the highest floor).</li>
+            </ul>
+
+            <div class="definition-box">
+                <strong>The Axiom of Completeness of $\mathbb{R}$:</strong> Every non-empty subset of real numbers that is bounded above has a supremum in $\mathbb{R}$.
+            </div>
+            <p>
+                <strong>The Rational Defect:</strong> Notice why $\mathbb{Q}$ is incomplete. The set $S = \{x \in \mathbb{Q} \mid x^2 < 2\}$ is bounded above in $\mathbb{Q}$ (for example, by 2 or 10), but has no supremum within $\mathbb{Q}$ because the ceiling $\sqrt{2}$ is not rational!
+            </p>
+
+            <!-- FOOTER NAVIGATION -->
+            <div style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <a href="week1-lecture1.html" style="color: var(--accent); text-decoration: none; font-weight: 600;">&larr; Lecture 1: Sets &amp; Functions</a>
+                <a href="week1-lecture3.html" style="background: var(--accent); color: white; padding: 0.6rem 1.2rem; border-radius: 6px; text-decoration: none; font-weight: 600;">Next: Lecture 3 (Sequences &amp; Sums) &rarr;</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
