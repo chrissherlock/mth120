@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 import os
 import subprocess
-import re
 
-def update_index_subtitle_option_1():
+def add_welcome_narrative():
     filepath = 'index.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
@@ -12,48 +11,42 @@ def update_index_subtitle_option_1():
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    new_subtitle = (
-        "A companion guide to real analysis—designed to build your "
-        "mathematical intuition through clear explanations, interactive visuals, "
-        "and step-by-step proofs."
+    target_anchor = '<div class="welcome-image-wrapper">'
+
+    welcome_narrative = (
+        '<div class="welcome-image-wrapper">\n'
+        '                    <img src="images/welcome-mth120.jpeg" alt="Overview Map of Course Mathematics" class="welcome-image">\n'
+        '                </div>\n\n'
+        '                <!-- Reassuring Course Overview Narrative -->\n'
+        '                <div style="background: #ffffff; border: 1px solid #fed7aa; border-radius: 6px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem;">\n'
+        '                    <p style="margin: 0 0 0.75rem 0; color: #334155; font-size: 0.98rem; line-height: 1.65;">\n'
+        '                        Whether you are meeting formal proofs for the first time or revisiting calculus from a rigorous perspective, this companion is designed to walk alongside you every step of the way. You won\'t have to navigate abstract concepts alone: each module breaks down complex ideas into intuitive visual steps, connecting the everyday mechanics of numbers and functions to the foundational logic that holds them together.\n'
+        '                    </p>\n'
+        '                    <p style="margin: 0; color: #334155; font-size: 0.98rem; line-height: 1.65;">\n'
+        '                        Over the coming weeks, our journey is structured around four interconnected pillars—moving from the bedrock of sets and limits through continuous change, accumulation, and finally into the multidimensional geometry of linear algebra. Take your time, explore the interactive visual tools, and remember that deep mathematical understanding is built one careful question at a time.\n'
+        '                    </p>\n'
+        '                </div>'
     )
 
-    pattern = re.compile(
-        r'Personal\s+reference\s+companion,\s*interactive\s+pedagogical\s+tools,\s*'
-        r'and\s+derivations\s+aligned\s+with\s+the\s+unit\s+schedule\.?',
-        re.IGNORECASE | re.DOTALL
-    )
-
-    match = pattern.search(content)
-    if match:
-        content = content[:match.start()] + new_subtitle + content[match.end():]
+    if target_anchor in content and "Whether you are meeting formal proofs" not in content:
+        content = content.replace(target_anchor, welcome_narrative, 1)
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
-        print("Successfully updated course subtitle in index.html to Option 1.")
+        print("Successfully added the warm overview narrative beneath the hero image.")
         return True
-
-    anchor = "Personal reference companion"
-    if anchor in content:
-        start_idx = content.find(anchor)
-        end_idx = content.find("</p>", start_idx)
-        if end_idx == -1:
-            end_idx = content.find("</div>", start_idx)
-        if end_idx != -1:
-            content = content[:start_idx] + new_subtitle + content[end_idx:]
-            with open(filepath, 'w', encoding='utf-8') as f:
-                f.write(content)
-            print("Successfully updated course subtitle in index.html via fallback anchor.")
-            return True
-
-    print("Could not locate the target subtitle in index.html.")
-    return False
+    elif "Whether you are meeting formal proofs" in content:
+        print("Overview narrative is already present in index.html.")
+        return True
+    else:
+        print("Could not find the target welcome-image-wrapper anchor in index.html.")
+        return False
 
 def synchronize_git_changes():
     commit_message = (
-        "Apply Option 1 to course subtitle in index.html\n\n"
-        "Replaced the administrative subtitle in index.html with a welcoming\n"
-        "tagline emphasizing mathematical intuition, clear explanations,\n"
-        "interactive visual tools, and step-by-step proofs."
+        "Add welcoming course overview paragraph beneath hero image in index.html\n\n"
+        "Included a warm, friendly explanatory paragraph directly beneath the\n"
+        "hero image in index.html to reassure incoming students and guide their\n"
+        "expectations across the four core mathematical pillars of the unit."
     )
     commands = [
         ['git', 'add', 'index.html', 'update.py'],
@@ -65,5 +58,5 @@ def synchronize_git_changes():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    if update_index_subtitle_option_1():
+    if add_welcome_narrative():
         synchronize_git_changes()
