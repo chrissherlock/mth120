@@ -898,37 +898,7 @@
                 </div>
             </div>
 
-            <!-- CORE PROPERTIES -->
-            <div class="definition-box">
-                <strong>Proposition 2 (Core Properties of Absolute Value):</strong>
-                <ol style="margin-left: 1.25rem; margin-top: 0.5rem; line-height: 1.7;">
-                    <li><strong>Positivity:</strong> $|a| \ge 0$ for all $a$, and $|a| = 0$ if and only if $a = 0$ (a point is distance zero only from itself).</li>
-                    <li><strong>Multiplication:</strong> $|ab| = |a| \cdot |b|$ (scaling preserves distance).</li>
-                    <li><strong>Squaring:</strong> $|a|^2 = a^2$ (squaring eliminates negative signs naturally).</li>
-                    <li><strong>Triangle Inequality:</strong> $|a + b| \le |a| + |b|$ (the direct path is always shorter than or equal to detour routes).</li>
-                    <li><strong>Reverse Triangle Inequality:</strong> $||a| - |b|| \le |a - b|$ (difference of lengths cannot exceed distance between endpoints).</li>
-                </ol>
-            </div>
-
-            <div class="aside-box">
-                <h4>📐 Proving the Triangle Inequality Without Tears</h4>
-                <p>
-                    Why does $|a + b| \le |a| + |b|$ hold for all real numbers? Remember that every real number $x$ is trapped between its negative and positive absolute value:
-                </p>
-                <div style="text-align: center; margin: 0.5rem 0;">
-                    $$-|x| \le x \le |x|$$
-                </div>
-                <p style="margin-bottom: 0.4rem;">Now test what happens to the sum $a + b$:</p>
-                <ul style="margin: 0.25rem 0 0 1.25rem; line-height: 1.6;">
-                    <li>If $a + b \ge 0$, then $|a + b| = a + b$. Since $a \le |a|$ and $b \le |b|$, adding them gives $a + b \le |a| + |b|$.</li>
-                    <li>If $a + b < 0$, then $|a + b| = -(a + b) = (-a) + (-b)$. Since $-a \le |a|$ and $-b \le |b|$, adding them yields $-(a + b) \le |a| + |b|$.</li>
-                </ul>
-                <p style="margin-top: 0.5rem; margin-bottom: 0;">
-                    In both cases, $|a + b|$ never exceeds $|a| + |b|$!
-                </p>
-            </div>
-
-            <!-- EMPATHETIC TRIANGLE INEQUALITY VISUAL BOX -->
+            <!-- EMPATHETIC FORWARD TRIANGLE INEQUALITY VISUAL BOX -->
             <div style="background: #f8fafc; border: 1px solid var(--border); border-left: 4px solid #10b981; padding: 1.25rem 1.5rem; border-radius: 0 6px 6px 0; margin: 1.5rem 0;">
                 <h4 style="margin-top: 0; color: #047857; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem;">
                     📐 Why is it called the "Triangle" Inequality?
@@ -947,6 +917,7 @@
                         <g>
                             <text x="140" y="22" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">2D Plane: The Classic Detour</text>
 
+                            <!-- Triangle Paths -->
                             <!-- Direct Path AC -->
                             <line x1="40" y1="130" x2="240" y2="130" stroke="#0284c7" stroke-width="2.5"/>
                             <!-- Detour AB and BC -->
@@ -1005,6 +976,90 @@
 
                 <p style="margin: 0; font-size: 0.92rem; color: #334155; line-height: 1.6;">
                     On the real number line, this triangle is simply <strong>flattened into one dimension</strong>. If $a$ and $b$ pull in opposite directions (like $-2$ and $+4$), their cancellation shrinks the net result to $|-2 + 4| = 2$, which is strictly smaller than walking the full detour distance $|-2| + |4| = 6$. The only time equality holds ($|a + b| = |a| + |b|$) is when both numbers push in the exact same direction!
+                </p>
+            </div>
+
+            <!-- EMPATHETIC REVERSE TRIANGLE INEQUALITY VISUAL BOX -->
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-left: 4px solid #0284c7; padding: 1.25rem 1.5rem; border-radius: 0 6px 6px 0; margin: 1.5rem 0;">
+                <h4 style="margin-top: 0; color: #0369a1; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem;">
+                    🔄 The Reverse Triangle Inequality: Setting the Floor
+                </h4>
+                <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                    The forward triangle inequality gives you a <strong>ceiling</strong>: the direct journey $|a - b|$ can never be longer than $|a| + |b|$. But does it have a <strong>floor</strong>? Can the distance between two points shrink to zero if the two sticks have different lengths?
+                </p>
+                <p style="margin: 0 0 1rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                    Of course not! If one stick has length $10$ and another stick has length $3$, the third side of any triangle connecting them must be <em>at least</em> $10 - 3 = 7$ units long, even if you fold them flat against each other. This is the <strong>Reverse Triangle Inequality</strong>:
+                </p>
+                <div style="text-align: center; margin: 0.75rem 0; font-size: 1.05rem;">
+                    $$||a| - |b|| \le |a - b|$$
+                </div>
+
+                <!-- SVG COMPARISON: REVERSE TRIANGLE COLLAPSED SPREAD -->
+                <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; text-align: center; margin-bottom: 1rem;">
+                    <svg viewBox="0 0 600 130" style="width: 100%; max-width: 540px; height: auto; display: inline-block;">
+                        <!-- Number line -->
+                        <line x1="50" y1="80" x2="550" y2="80" stroke="#cbd5e1" stroke-width="2"/>
+                        <!-- Origin 0 -->
+                        <line x1="120" y1="72" x2="120" y2="88" stroke="#0f172a" stroke-width="2"/>
+                        <text x="120" y="105" font-family="sans-serif" font-size="11" fill="#64748b" text-anchor="middle">0</text>
+
+                        <!-- Stick |a| = 7 (from 0 to 470) -->
+                        <line x1="120" y1="45" x2="470" y2="45" stroke="#0284c7" stroke-width="3"/>
+                        <circle cx="470" cy="80" r="5" fill="#0284c7"/>
+                        <text x="470" y="105" font-family="sans-serif" font-size="11.5" font-weight="bold" fill="#0284c7" text-anchor="middle">a = 7</text>
+                        <text x="295" y="38" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0284c7" text-anchor="middle">length |a| = 7</text>
+
+                        <!-- Stick |b| = 3 (from 0 to 270) -->
+                        <line x1="120" y1="62" x2="270" y2="62" stroke="#d97706" stroke-width="3"/>
+                        <circle cx="270" cy="80" r="5" fill="#d97706"/>
+                        <text x="270" y="105" font-family="sans-serif" font-size="11.5" font-weight="bold" fill="#b45309" text-anchor="middle">b = 3</text>
+                        <text x="195" y="56" font-family="sans-serif" font-size="10.5" font-weight="bold" fill="#b45309" text-anchor="middle">|b| = 3</text>
+
+                        <!-- Minimum gap |a - b| = 4 -->
+                        <line x1="270" y1="62" x2="470" y2="62" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="4"/>
+                        <path d="M 270 54 Q 370 42 470 54" fill="none" stroke="#ef4444" stroke-width="1.5"/>
+                        <text x="370" y="38" font-family="sans-serif" font-size="11" font-weight="bold" fill="#dc2626" text-anchor="middle">gap |a − b| ≥ |a| − |b| = 4</text>
+                    </svg>
+                </div>
+
+                <p style="margin: 0 0 0.5rem 0; font-size: 0.92rem; color: #334155; line-height: 1.6;">
+                    <strong>The 2-Line Sneaky Proof:</strong> You don't need a whole new framework to prove this—it falls out of the forward triangle inequality with a clever substitution! Write $a$ as $(a - b) + b$:
+                </p>
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 0.95rem;">
+                    $$|a| = |(a - b) + b| \le |a - b| + |b| \implies |a| - |b| \le |a - b|$$
+                </div>
+                <p style="margin: 0; font-size: 0.92rem; color: #334155; line-height: 1.6;">
+                    Swapping the roles of $a$ and $b$ gives $|b| - |a| \le |a - b|$ as well. Putting those two bounds together wraps the difference into absolute values: $||a| - |b|| \le |a - b|$!
+                </p>
+            </div>
+
+            <!-- CORE PROPERTIES -->
+            <div class="definition-box">
+                <strong>Proposition 2 (Core Properties of Absolute Value):</strong>
+                <ol style="margin-left: 1.25rem; margin-top: 0.5rem; line-height: 1.7;">
+                    <li><strong>Positivity:</strong> $|a| \ge 0$ for all $a$, and $|a| = 0$ if and only if $a = 0$ (a point is distance zero only from itself).</li>
+                    <li><strong>Multiplication:</strong> $|ab| = |a| \cdot |b|$ (scaling preserves distance).</li>
+                    <li><strong>Squaring:</strong> $|a|^2 = a^2$ (squaring eliminates negative signs naturally).</li>
+                    <li><strong>Triangle Inequality:</strong> $|a + b| \le |a| + |b|$ (the direct path is always shorter than or equal to detour routes).</li>
+                    <li><strong>Reverse Triangle Inequality:</strong> $||a| - |b|| \le |a - b|$ (the distance between points is always at least the difference of their lengths).</li>
+                </ol>
+            </div>
+
+            <div class="aside-box">
+                <h4>📐 Proving the Triangle Inequality Without Tears</h4>
+                <p>
+                    Why does $|a + b| \le |a| + |b|$ hold for all real numbers? Remember that every real number $x$ is trapped between its negative and positive absolute value:
+                </p>
+                <div style="text-align: center; margin: 0.5rem 0;">
+                    $$-|x| \le x \le |x|$$
+                </div>
+                <p style="margin-bottom: 0.4rem;">Now test what happens to the sum $a + b$:</p>
+                <ul style="margin: 0.25rem 0 0 1.25rem; line-height: 1.6;">
+                    <li>If $a + b \ge 0$, then $|a + b| = a + b$. Since $a \le |a|$ and $b \le |b|$, adding them gives $a + b \le |a| + |b|$.</li>
+                    <li>If $a + b < 0$, then $|a + b| = -(a + b) = (-a) + (-b)$. Since $-a \le |a|$ and $-b \le |b|$, adding them yields $-(a + b) \le |a| + |b|$.</li>
+                </ul>
+                <p style="margin-top: 0.5rem; margin-bottom: 0;">
+                    In both cases, $|a + b|$ never exceeds $|a| + |b|$!
                 </p>
             </div>
 
