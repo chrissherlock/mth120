@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1, Lecture 3: Sequences, Differences, and Sums | MTHS120</title>
+    <!-- KaTeX Integration -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+    <style>
+        :root {
+            --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
+            --accent: #d97706; --accent-hover: #b45309;
+            --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
+
+        .intro-lead { font-size: 1.1rem; color: #1e293b; line-height: 1.7; margin-bottom: 1.5rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); border: 1px solid var(--border); border-left-width: 4px; }
+        .toc-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.75rem; margin: 1.75rem 0 2.5rem 0; }
+        .toc-box h4 { margin: 0 0 0.75rem 0; color: #92400e; font-size: 1.05rem; }
+        .toc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.5rem 1.5rem; margin: 0; padding-left: 1.25rem; }
+        .toc-grid li { margin-bottom: 0.35rem; font-size: 0.95rem; }
+        .toc-grid a { color: #b45309; text-decoration: none; font-weight: 500; }
+        .toc-grid a:hover { text-decoration: underline; color: var(--accent-hover); }
+
+        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+        h3 { color: #1e293b; margin-top: 1.5rem; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+
+        .infobox { background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.25rem 0 1.75rem 0; }
+        .infobox h4 { margin: 0 0 0.85rem 0; color: #0f172a; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-ui); }
+        .notation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 0.85rem 1.75rem; font-size: 0.95rem; }
+        .notation-item { display: grid; grid-template-columns: minmax(130px, max-content) 1fr; gap: 0.75rem; align-items: center; }
+        .notation-sym { font-weight: 600; color: var(--accent); white-space: nowrap; display: flex; justify-content: center; align-items: center; text-align: center; }
+        .notation-desc { min-width: 0; word-break: break-word; line-height: 1.5; color: #334155; }
+        .infobox-intro { font-size: 0.93rem; color: #475569; line-height: 1.6; margin: 0 0 1.25rem 0; padding-bottom: 0.85rem; border-bottom: 1px solid #e2e8f0; }
+
+        .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; border: 1px solid var(--border); border-left-width: 4px; }
+        .aside-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid var(--b45309, #b45309); padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .aside-box h4 { margin-top: 0; color: #b45309; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+
+        .worked-example-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .worked-example-box h4 { margin-top: 0; color: #047857; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .worked-example-box p, .worked-example-box li { color: #0f172a !important; }
+
+        .lecture-card { background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+        .lecture-card:hover { transform: translateY(-2px); box-shadow: 0 6px 12px -2px rgba(0,0,0,0.08); border-color: var(--accent); }
+        .lecture-card h3 { margin-top: 0; color: #0f172a; }
+        .lecture-badge { display: inline-block; background: var(--accent); color: white; padding: 0.2rem 0.55rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- TOP NAVIGATION HEADER -->
+        <div class="header">
+            <div>
+                <h1>Week 1, Lecture 3: Sequences, Differences, and Sums</h1>
+                <a href="week1.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">&larr; Week 1 Overview Hub</a>
+            </div>
+            <div>
+                <a href="week2.html" style="background: var(--accent); color: white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">Next: Week 2 &rarr;</a>
+            </div>
+        </div>
+
+        <div class="module-content">
+            <!-- HERO IMAGE -->
+            <div style="margin-bottom: 2rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);">
+                <img src="images/chapter1-hero.jpg" alt="Week 1: Sets, Numbers, and Sequences - UNE Campus Discovery Trail" style="width: 100%; height: auto; display: block;">
+            </div>
+
+            <div class="intro-lead">
+                Welcome to Lecture 3. Here we step into discrete calculus: treating sequences as functions over the natural numbers, observing how finite samples relate to infinite tails, measuring change with derived sequences, and evaluating series through telescoping sums.
+            </div>
+
+            <!-- TABLE OF CONTENTS -->
+            <div class="toc-box">
+                <h4>📌 Lecture 3 Topics</h4>
+                <ul class="toc-grid">
+                    <li><a href="#sequences-intro">1. Sequences and Progressions</a></li>
+                    <li><a href="#finite-infinite-viz">2. Finite Sample vs. The Infinite Sequence</a></li>
+                    <li><a href="#sums-partial">3. Sums and Partial Sums</a></li>
+                    <li><a href="#derived-sequences">4. Derived Sequences (The Speedometer)</a></li>
+                    <li><a href="#telescoping-gauss">5. Telescoping Inversion and Gauss's Formula</a></li>
+                </ul>
+            </div>
+
+            <!-- SECTION 1 -->
+            <h2 id="sequences-intro">1. Sequences and Progressions</h2>
+            <div class="infobox">
+                <h4>📖 Notation Reference: Sequence Mechanics</h4>
+                <div class="infobox-intro">
+                    <strong>Think of a sequence simply as an endless ordered list</strong> —like a musical playlist or numbered parking spots—where every step has its own designated number.
+                </div>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym">$(a_n)$</span><span class="notation-desc">Sequence $(a_0, a_1, a_2, \dots)$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$an + b$</span><span class="notation-desc">Arithmetic progression</span></div>
+                    <div class="notation-item"><span class="notation-sym">$aq^n$</span><span class="notation-desc">Geometric progression</span></div>
+                </div>
+            </div>
+
+            <p>To truly grasp what a sequence is, look at it through two complementary lenses:</p>
+            <ul style="margin: 0.5rem 0 1rem 1.25rem; padding: 0;">
+                <li style="margin-bottom: 0.6rem;"><strong>1. The List View (Intuitive):</strong> An endless, ordered string of numbers $(a_n) = (a_1, a_2, a_3, a_4, \dots)$. Order matters deeply: $(1, 2, 3, \dots)$ is completely different from $(3, 2, 1, \dots)$.</li>
+                <li style="margin-bottom: 0.6rem;"><strong>2. The Function View (Rigorous):</strong> Formally, a sequence is a function whose domain is the natural numbers $\mathbb{N}$ and whose codomain is the real numbers $\mathbb{R}$. Instead of $f(n)$, we write $a_n$:
+                    <ul style="margin: 0.3rem 0 0.3rem 1.25rem; padding: 0;">
+                        <li><strong>Input ($n$):</strong> The position or index ($0, 1, 2, 3, \dots$).</li>
+                        <li><strong>Output ($a_n$):</strong> The actual real number sitting at that position.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="aside-box">
+                <h4>💡 Recipe Analogy: Explicit vs. Recursive Formulas</h4>
+                <ul>
+                    <li><strong>Explicit Formula (Instant Recipe):</strong> Tells you how to compute the 100th term right now without computing the first 99 (e.g., $a_n = 3n + 2$).</li>
+                    <li><strong>Recursive Formula (Step-by-Step Recipe):</strong> Tells you, <em>"Take yesterday's term and add two extra to it."</em> You must know the previous term to find the next (e.g., $a_1 = 5, a_n = a_{n-1} + 2$).</li>
+                </ul>
+            </div>
+
+            <!-- SECTION 2 -->
+            <h2 id="finite-infinite-viz">2. Finite Sample vs. The Infinite Sequence</h2>
+            <div id="finite-sample-container" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1.25rem; margin-top: 1.5rem; margin-bottom: 1.5rem;">
+                <p style="font-size: 0.85rem; font-weight: 700; color: #64748b; margin-top: 0; margin-bottom: 0.75rem; text-align: center;">VISUALIZATION: Finite Sample vs. The Infinite Sequence</p>
+                <svg viewBox="0 0 800 290" style="width: 100%; height: auto; display: block;">
+                    <!-- Background Grid -->
+                    <line x1="80" y1="230" x2="760" y2="230" stroke="#f1f5f9" stroke-width="1"/>
+                    <line x1="80" y1="170" x2="760" y2="170" stroke="#f1f5f9" stroke-width="1" stroke-dasharray="3"/>
+                    <line x1="80" y1="110" x2="760" y2="110" stroke="#f1f5f9" stroke-width="1" stroke-dasharray="3"/>
+                    <line x1="80" y1="50" x2="760" y2="50" stroke="#f1f5f9" stroke-width="1" stroke-dasharray="3"/>
+
+                    <!-- Axes -->
+                    <line x1="80" y1="230" x2="760" y2="230" stroke="#0f172a" stroke-width="2"/>
+                    <line x1="80" y1="25" x2="80" y2="245" stroke="#0f172a" stroke-width="2"/>
+                    <text x="725" y="250" font-size="11" font-weight="bold" fill="#64748b">Index n</text>
+                    <text x="35" y="35" font-size="11" font-weight="bold" fill="#64748b">Value a_n</text>
+
+                    <!-- Finite Sample Shading (Left Side) -->
+                    <rect x="85" y="40" width="375" height="185" fill="#f0f9ff" opacity="0.6" rx="4"/>
+                    <text x="210" y="58" font-size="11" font-weight="bold" fill="#0284c7">Observed Finite Sample (n = 1 to 6)</text>
+
+                    <!-- Infinite Tail Shading (Right Side) -->
+                    <rect x="470" y="40" width="280" height="185" fill="#f0fdf4" opacity="0.6" rx="4"/>
+                    <text x="535" y="58" font-size="11" font-weight="bold" fill="#047857">Infinite Continuation Tail</text>
+
+                    <!-- Vertical Projection Guidelines -->
+                    <line x1="125" y1="230" x2="125" y2="200" stroke="#cbd5e1" stroke-dasharray="2"/>
+                    <line x1="180" y1="230" x2="180" y2="170" stroke="#cbd5e1" stroke-dasharray="2"/>
+                    <line x1="235" y1="230" x2="235" y2="148" stroke="#cbd5e1" stroke-dasharray="2"/>
+                    <line x1="290" y1="230" x2="290" y2="132" stroke="#cbd5e1" stroke-dasharray="2"/>
+                    <line x1="345" y1="230" x2="345" y2="120" stroke="#cbd5e1" stroke-dasharray="2"/>
+                    <line x1="400" y1="230" x2="400" y2="110" stroke="#cbd5e1" stroke-dasharray="2"/>
+
+                    <!-- Finite Sample Points (Sky Blue) -->
+                    <circle class="fs-pt" cx="125" cy="200" r="5" fill="#0284c7" opacity="0" style="transition: opacity 0.3s ease;"/>
+                    <circle class="fs-pt" cx="180" cy="170" r="5" fill="#0284c7" opacity="0" style="transition: opacity 0.3s ease;"/>
+                    <circle class="fs-pt" cx="235" cy="148" r="5" fill="#0284c7" opacity="0" style="transition: opacity 0.3s ease;"/>
+                    <circle class="fs-pt" cx="290" cy="132" r="5" fill="#0284c7" opacity="0" style="transition: opacity 0.3s ease;"/>
+                    <circle class="fs-pt" cx="345" cy="120" r="5" fill="#0284c7" opacity="0" style="transition: opacity 0.3s ease;"/>
+                    <circle class="fs-pt" cx="400" cy="110" r="5" fill="#0284c7" opacity="0" style="transition: opacity 0.3s ease;"/>
+
+                    <!-- Index Numbers on X Axis -->
+                    <text x="121" y="248" font-size="10" fill="#64748b">1</text>
+                    <text x="176" y="248" font-size="10" fill="#64748b">2</text>
+                    <text x="231" y="248" font-size="10" fill="#64748b">3</text>
+                    <text x="286" y="248" font-size="10" fill="#64748b">4</text>
+                    <text x="341" y="248" font-size="10" fill="#64748b">5</text>
+                    <text x="396" y="248" font-size="10" fill="#64748b">6</text>
+
+                    <!-- SEPARATOR LINE -->
+                    <line x1="465" y1="35" x2="465" y2="235" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4"/>
+
+                    <!-- GREEN CONTINUATION DOTS (THE INFINITE TAIL) -->
+                    <g id="green-tail-dots">
+                        <circle class="fs-pt" cx="490" cy="102" r="5.5" fill="#10b981" opacity="0" style="transition: opacity 0.3s ease;"/>
+                        <circle class="fs-pt" cx="535" cy="95" r="5.5" fill="#10b981" opacity="0" style="transition: opacity 0.3s ease;"/>
+                        <circle class="fs-pt" cx="580" cy="89" r="5.5" fill="#10b981" opacity="0" style="transition: opacity 0.3s ease;"/>
+                        <circle class="fs-pt" cx="625" cy="84" r="5.5" fill="#10b981" opacity="0" style="transition: opacity 0.3s ease;"/>
+                        <circle class="fs-pt" cx="670" cy="80" r="5.5" fill="#10b981" opacity="0" style="transition: opacity 0.3s ease;"/>
+                        <circle class="fs-pt" cx="715" cy="77" r="5.5" fill="#10b981" opacity="0" style="transition: opacity 0.3s ease;"/>
+                        <text class="fs-pt" x="735" y="80" font-size="16" font-weight="bold" fill="#10b981" opacity="0" style="transition: opacity 0.3s ease;">...</text>
+                    </g>
+                    <text x="486" y="248" font-size="10" font-weight="bold" fill="#047857">7</text>
+                    <text x="531" y="248" font-size="10" font-weight="bold" fill="#047857">8</text>
+                    <text x="576" y="248" font-size="10" font-weight="bold" fill="#047857">9</text>
+                    <text x="621" y="248" font-size="10" font-weight="bold" fill="#047857">10</text>
+                    <text x="662" y="248" font-size="10" font-weight="bold" fill="#047857">n &rarr; &infin;</text>
+                </svg>
+                <div style="margin-top: 0.85rem; padding: 0.75rem 1rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid #10b981; border-radius: 4px; font-size: 0.9rem; color: #065f46;">
+                    <strong>The Infinite Reality:</strong> Any computational plot only ever reveals a <em>finite sample</em> (the blue terms $a_1, \dots, a_6$). The <strong style="color: #047857;">emerald green dots</strong> represent the infinite tail ($a_7, a_8, a_9, \dots$) which continues without end for every $n \in \mathbb{N}$.
+                </div>
+
+                <script>
+                    window.addEventListener('DOMContentLoaded', () => {
+                        const points = document.querySelectorAll('.fs-pt');
+                        points.forEach((pt, index) => {
+                            setTimeout(() => {
+                                pt.style.opacity = '1';
+                            }, 300 + (index * 200));
+                        });
+                    });
+                </script>
+            </div>
+
+            <!-- SECTION 3 -->
+            <h2 id="sums-partial">3. Sums and Partial Sums</h2>
+            <div class="infobox">
+                <h4>📖 Notation Reference: Summation Mechanics</h4>
+                <div class="infobox-intro">
+                    <strong>Meet the sigma machine:</strong> The Greek letter sigma ($\sum$) is shorthand for adding up a string of numbers without having to write out endless plus signs.
+                </div>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym">$\sum$</span><span class="notation-desc">Sigma operator: instruction to sum terms together</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\nu = 0$ or $1$</span><span class="notation-desc">Lower limit: starting index value</span></div>
+                    <div class="notation-item"><span class="notation-sym">$n$</span><span class="notation-desc">Upper limit: final index value where the sum stops</span></div>
+                    <div class="notation-item"><span class="notation-sym">$s_n$</span><span class="notation-desc">Partial sum: the running total score up to index $n$</span></div>
+                </div>
+            </div>
+
+            <p>Writing out $b_0 + b_1 + \dots + b_n$ becomes messy, so we define <strong>partial sums</strong> ($s_n$):</p>
+            <div class="definition-box">
+                <p>$$s_n = \sum_{\nu=0}^{n} b_\nu = b_0 + b_1 + b_2 + \dots + b_n$$</p>
+            </div>
+
+            <p>Two essential summation formulas appear repeatedly:</p>
+            <ul>
+                <li><strong>Triangular Numbers:</strong> $\sum_{\nu=1}^{n} \nu = 1 + 2 + \dots + n = \frac{n(n+1)}{2}$</li>
+                <li><strong>Geometric Series:</strong> $\sum_{\nu=0}^{n-1} q^\nu = \frac{1 - q^n}{1 - q} \quad (q \neq 1)$</li>
+            </ul>
+
+            <div class="worked-example-box">
+                <h4>🎯 Worked Example: Telescoping Cancellations</h4>
+                <p>Evaluate $\sum_{k=1}^{n} \left(\frac{1}{k} - \frac{1}{k+1}\right)$ by expanding terms:</p>
+                <div style="text-align: center; margin: 0.5rem 0;">
+                    $$\left(1 - \frac{1}{2}\right) + \left(\frac{1}{2} - \frac{1}{3}\right) + \left(\frac{1}{3} - \frac{1}{4}\right) + \dots + \left(\frac{1}{n} - \frac{1}{n+1}\right)$$
+                </div>
+                <p style="margin-bottom: 0;">All interior terms cancel out, leaving only the first and last: $1 - \frac{1}{n+1} = \frac{n}{n+1}$.</p>
+            </div>
+
+            <!-- SECTION 4 -->
+            <h2 id="derived-sequences">4. Derived Sequences (The Speedometer)</h2>
+            <div class="aside-box" style="background: #f1f5f9; border-left: 4px solid #0284c7; border-color: #cbd5e1;">
+                <h4 style="color: #0369a1;">⚖️ Side-by-Side: Derived Sequences vs. Partial Sums</h4>
+                <ul>
+                    <li><strong>Derived Sequences ($a_n'$):</strong> Look <em>locally</em> at immediate neighbors to measure <strong>change / speed / slope</strong> ($a_{n+1} - a_n$).</li>
+                    <li><strong>Partial Sums ($s_n$):</strong> Look <em>cumulatively</em> backward at everything that came before to measure <strong>total accumulation / area</strong> ($\sum b_\nu$).</li>
+                </ul>
+            </div>
+
+            <div class="infobox">
+                <h4>📖 Notation Reference: Derived Sequences</h4>
+                <div class="infobox-intro">
+                    <strong>The Speedometer Analogy:</strong> While a sequence tells you your position (odometer), a derived sequence tells you how fast you are jumping from step to step (speedometer).
+                </div>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym">$a_n'$</span><span class="notation-desc">Derived sequence: $a_n' = a_{n+1} - a_n$</span></div>
+                </div>
+            </div>
+
+            <div class="worked-example-box">
+                <h4>🎯 Worked Example: Squares and Differences</h4>
+                <p>For $(a_n) = (1, 4, 9, 16, 25, \dots)$ where $a_n = n^2$:</p>
+                <ul style="margin: 0.4rem 0 0 1.25rem;">
+                    <li>$a_1' = 4 - 1 = 3$</li>
+                    <li>$a_2' = 9 - 4 = 5$</li>
+                    <li>$a_3' = 16 - 9 = 7$</li>
+                    <li>$a_4' = 25 - 16 = 9$</li>
+                </ul>
+                <p style="margin-top: 0.5rem; margin-bottom: 0;">The derived sequence is $(3, 5, 7, 9, \dots)$, with explicit formula $a_n' = 2n + 1$.</p>
+            </div>
+
+            <div class="definition-box">
+                <strong>Proposition 4 (Monotonicity Tests via $a_n'$):</strong>
+                <ul style="margin: 0.35rem 0 0 1.25rem;">
+                    <li>$(a_n)$ is constant $\iff a_n' = 0$ for all $n$.</li>
+                    <li>$(a_n)$ is increasing (strictly increasing) $\iff a_n' \ge 0$ ($a_n' > 0$) for all $n$.</li>
+                    <li>$(a_n)$ is decreasing (strictly decreasing) $\iff a_n' \le 0$ ($a_n' < 0$) for all $n$.</li>
+                </ul>
+            </div>
+
+            <!-- SECTION 5 -->
+            <h2 id="telescoping-gauss">5. Telescoping Inversion and Gauss's Formula</h2>
+            <p>Because derived sequences act as discrete differences, we invert them via telescoping summation:</p>
+            <div style="text-align: center; margin: 1rem 0;">
+                $$\sum_{k=0}^{n-1} a_k' = (a_1 - a_0) + (a_2 - a_1) + \dots + (a_n - a_{n-1}) = a_n - a_0$$
+            </div>
+            <p>Rearranging yields the original sequence reconstruction formula:</p>
+            <div style="text-align: center; margin: 1rem 0;">
+                $$a_n = a_0 + \sum_{k=0}^{n-1} a_k'$$
+            </div>
+
+            <div class="worked-example-box">
+                <h4>🎯 Deriving Gauss's Formula via Difference Inversion</h4>
+                <p>We wish to evaluate $\sum_{k=0}^{n-1} k$, finding a sequence $a_n$ whose derived difference is $a_n' = n$ with $a_0 = 0$.</p>
+                <p>Since $(n^2)' = 2n + 1$ and $(n)' = 1$, by linearity:</p>
+                <div style="text-align: center; margin: 0.5rem 0;">
+                    $$(n^2 - n)' = (2n + 1) - 1 = 2n \implies \left(\frac{n^2 - n}{2}\right)' = n$$
+                </div>
+                <p>By telescoping inversion, $\sum_{k=0}^{n-1} k = \frac{n(n-1)}{2}$. Shifting indices $k \mapsto k+1$ gives Gauss's famous formula:</p>
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.1rem;">
+                    $$\sum_{k=1}^n k = \frac{n(n+1)}{2}$$
+                </div>
+            </div>
+
+            <!-- FOOTER NAVIGATION -->
+            <div style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <a href="week1-lecture2.html" style="color: var(--accent); text-decoration: none; font-weight: 600;">&larr; Lecture 2: Numbers &amp; Completeness</a>
+                <a href="week2.html" style="background: var(--accent); color: white; padding: 0.6rem 1.2rem; border-radius: 6px; text-decoration: none; font-weight: 600;">Next: Week 2 Module &rarr;</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

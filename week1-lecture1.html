@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1, Lecture 1: Sets, Functions, and Peano's Foundations | MTHS120</title>
+    <!-- KaTeX Integration -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+    <style>
+        :root {
+            --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
+            --accent: #d97706; --accent-hover: #b45309;
+            --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
+
+        .intro-lead { font-size: 1.1rem; color: #1e293b; line-height: 1.7; margin-bottom: 1.5rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); border: 1px solid var(--border); border-left-width: 4px; }
+        .toc-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.75rem; margin: 1.75rem 0 2.5rem 0; }
+        .toc-box h4 { margin: 0 0 0.75rem 0; color: #92400e; font-size: 1.05rem; }
+        .toc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.5rem 1.5rem; margin: 0; padding-left: 1.25rem; }
+        .toc-grid li { margin-bottom: 0.35rem; font-size: 0.95rem; }
+        .toc-grid a { color: #b45309; text-decoration: none; font-weight: 500; }
+        .toc-grid a:hover { text-decoration: underline; color: var(--accent-hover); }
+
+        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+        h3 { color: #1e293b; margin-top: 1.5rem; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+
+        .infobox { background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.25rem 0 1.75rem 0; }
+        .infobox h4 { margin: 0 0 0.85rem 0; color: #0f172a; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-ui); }
+        .notation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 0.85rem 1.75rem; font-size: 0.95rem; }
+        .notation-item { display: grid; grid-template-columns: minmax(130px, max-content) 1fr; gap: 0.75rem; align-items: center; }
+        .notation-sym { font-weight: 600; color: var(--accent); white-space: nowrap; display: flex; justify-content: center; align-items: center; text-align: center; }
+        .notation-desc { min-width: 0; word-break: break-word; line-height: 1.5; color: #334155; }
+        .infobox-intro { font-size: 0.93rem; color: #475569; line-height: 1.6; margin: 0 0 1.25rem 0; padding-bottom: 0.85rem; border-bottom: 1px solid #e2e8f0; }
+
+        .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; border: 1px solid var(--border); border-left-width: 4px; }
+        .aside-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid var(--b45309, #b45309); padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .aside-box h4 { margin-top: 0; color: #b45309; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+
+        .worked-example-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .worked-example-box h4 { margin-top: 0; color: #047857; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .worked-example-box p, .worked-example-box li { color: #0f172a !important; }
+
+        .lecture-card { background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+        .lecture-card:hover { transform: translateY(-2px); box-shadow: 0 6px 12px -2px rgba(0,0,0,0.08); border-color: var(--accent); }
+        .lecture-card h3 { margin-top: 0; color: #0f172a; }
+        .lecture-badge { display: inline-block; background: var(--accent); color: white; padding: 0.2rem 0.55rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- TOP NAVIGATION HEADER -->
+        <div class="header">
+            <div>
+                <h1>Week 1, Lecture 1: Sets, Functions, and Peano's Foundations</h1>
+                <a href="week1.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">&larr; Week 1 Overview Hub</a>
+            </div>
+            <div>
+                <a href="week1-lecture2.html" style="background: var(--accent); color: white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">Next: Lecture 2 &rarr;</a>
+            </div>
+        </div>
+
+        <div class="module-content">
+            <!-- HERO IMAGE -->
+            <div style="margin-bottom: 2rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);">
+                <img src="images/chapter1-hero.jpg" alt="Week 1: Sets, Numbers, and Sequences - UNE Campus Discovery Trail" style="width: 100%; height: auto; display: block;">
+            </div>
+
+            <div class="intro-lead">
+                Welcome to Lecture 1. Here we explore the fundamental grammar of pure mathematics: gathering objects into sets, mapping them through functions, and constructing our counting numbers from scratch using Peano's axioms.
+            </div>
+
+            <!-- TABLE OF CONTENTS -->
+            <div class="toc-box">
+                <h4>📌 Lecture 1 Topics</h4>
+                <ul class="toc-grid">
+                    <li><a href="#sets-cardinality">1. Sets and Infinite Cardinality</a></li>
+                    <li><a href="#set-operations">2. Set Operations and Products</a></li>
+                    <li><a href="#functions-mappings">3. Functions and Mappings</a></li>
+                    <li><a href="#peano-axioms">4. Peano's Axioms for Natural Numbers</a></li>
+                </ul>
+            </div>
+
+            <!-- SECTION 1 -->
+            <h2 id="sets-cardinality">1. Sets and Infinite Cardinality</h2>
+            <div class="infobox">
+                <h4>📖 Notation Reference: Sets &amp; Elements</h4>
+                <div class="infobox-intro">
+                    <strong>Don't worry if this feels abstract at first:</strong> Set theory is simply the friendly art of grouping things together without worrying about duplicate items or their order.
+                </div>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym">$x \in A$</span><span class="notation-desc">$x$ is an element of set $A$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \subseteq B$</span><span class="notation-desc">$A$ is a subset of $B$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\emptyset$</span><span class="notation-desc">The empty set (contains no elements, $|\emptyset| = 0$)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$|A|$</span><span class="notation-desc">Cardinality: the number of distinct elements in $A$</span></div>
+                </div>
+            </div>
+
+            <p>A <strong>set</strong> is simply an unordered collection of distinct elements. The order in which elements are listed does not matter, and repeating an element changes nothing:</p>
+            <div style="text-align: center; margin: 1rem 0; font-size: 1.05rem;">
+                $$\{1, 2, 3\} = \{3, 2, 1\} = \{1, 1, 1, 2, 2, 3\}$$
+            </div>
+            <p>The number of elements in a set $A$ is called its <strong>cardinality</strong>, denoted $|A|$. The unique set containing zero elements is the <strong>empty set</strong>, written $\emptyset = \{\}$, with $|\emptyset| = 0$.</p>
+
+            <div class="aside-box">
+                <h4>💡 Infinity Comes in Different Sizes!</h4>
+                <p>The standard number systems satisfy the subset inclusion chain:</p>
+                <div style="text-align: center; margin: 0.5rem 0;">
+                    $$\mathbb{N} \subseteq \mathbb{Z} \subseteq \mathbb{Q} \subseteq \mathbb{R} \subseteq \mathbb{C}$$
+                </div>
+                <p style="margin-bottom: 0;">
+                    Remarkably, their infinite cardinalities do not increase at every step! The counting numbers ($\mathbb{N}$), integers ($\mathbb{Z}$), and rational fractions ($\mathbb{Q}$) all share the exact same countable size of infinity. However, the continuous real line ($\mathbb{R}$) is strictly larger:
+                </p>
+                <div style="text-align: center; margin: 0.5rem 0;">
+                    $$\infty = |\mathbb{N}| = |\mathbb{Z}| = |\mathbb{Q}| < |\mathbb{R}| = |\mathbb{C}|$$
+                </div>
+            </div>
+
+            <!-- SECTION 2 -->
+            <h2 id="set-operations">2. Set Operations and Products</h2>
+            <p>Given subsets $A$ and $B$, we combine and slice them using standard operations:</p>
+            <ul>
+                <li><strong>Union ($A \cup B$):</strong> All elements in $A$ or in $B$ (or both). Note $A \cup \emptyset = A$.</li>
+                <li><strong>Intersection ($A \cap B$):</strong> Elements that belong to both $A$ and $B$ simultaneously. Note $A \cap \emptyset = \emptyset$.</li>
+                <li><strong>Difference ($A \setminus B$):</strong> Elements that belong to $A$ but do <em>not</em> belong to $B$. Note that set difference is strictly non-commutative: $A \setminus B \ne B \setminus A$.</li>
+                <li><strong>Cartesian Product ($A \times B$):</strong> The set of all ordered pairs $(a, b)$ with $a \in A$ and $b \in B$. Its size satisfies $|A \times B| = |A| \cdot |B|$. When applied to the real numbers, $\mathbb{R} \times \mathbb{R} = \mathbb{R}^2$ forms the two-dimensional coordinate plane.</li>
+            </ul>
+
+            <!-- SECTION 3 -->
+            <h2 id="functions-mappings">3. Functions and Mappings</h2>
+            <div class="infobox">
+                <h4>📖 Notation Reference: Functions &amp; Composition</h4>
+                <div class="infobox-intro">
+                    <strong>Functions as reliable machines:</strong> An input from the domain drops in, a rule processes it, and an output is delivered into the codomain.
+                </div>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym">$f: X \to Y$</span><span class="notation-desc">Function $f$ with domain $X$ and codomain $Y$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$f^{-1}(y)$</span><span class="notation-desc">Preimage of an output element $y$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$g \circ f$</span><span class="notation-desc">Composition: $(g \circ f)(x) = g(f(x))$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$f^{-1}$</span><span class="notation-desc">Inverse function (exists if and only if $f$ is bijective)</span></div>
+                </div>
+            </div>
+
+            <p>A <strong>function</strong> $f: X \to Y$ assigns to each element $x \in X$ (domain) exactly one output value $y = f(x) \in Y$ (codomain).</p>
+            <ul>
+                <li><strong>Range:</strong> The set of values actually produced: $R = \{f(x) \mid x \in X\} \subseteq Y$.</li>
+                <li><strong>Surjective (Onto):</strong> The range completely covers the codomain ($R = Y$), meaning every element in $Y$ is hit at least once.</li>
+                <li><strong>Injective (1-to-1):</strong> Distinct inputs produce distinct outputs: $x_1 \neq x_2 \implies f(x_1) \neq f(x_2)$.
+                    <br><em>Non-example:</em> $f: \mathbb{Z} \to \mathbb{Z}$ defined by $f(x) = x^2$ is not injective because $f(-2) = 4 = f(2)$.
+                </li>
+                <li><strong>Bijective:</strong> Both injective and surjective. Because every input pairs with exactly one unique output, the mapping is completely reversible, which is the necessary and sufficient condition for an <strong>inverse function</strong> $f^{-1}: Y \to X$ to exist.</li>
+                <li><strong>Composition:</strong> For $f: X \to Y$ and $g: Y \to Z$, the composition $g \circ f: X \to Z$ maps $x \mapsto g(f(x))$.</li>
+            </ul>
+
+            <!-- SECTION 4 -->
+            <h2 id="peano-axioms">4. Peano's Axioms for Natural Numbers</h2>
+            <h3>Building Numbers from Scratch: Peano's Axioms</h3>
+            <p>Have you ever wondered what the number "1" actually is? In higher mathematics, we don't take counting for granted. We build the natural numbers ($\mathbb{N}$) using a blueprint called <strong>Peano's Axioms</strong>. Think of this as creating an infinite chain of dominoes using just a starting point and a single rule for taking the "next step" (the successor function, $S(n)$):</p>
+            <ol style="margin: 0.5rem 0 1.5rem 1.25rem; padding: 0;">
+                <li style="margin-bottom: 0.5rem;"><strong>The Starting Line:</strong> $0 \in \mathbb{N}$. We have to start somewhere! This gives our number system a root.</li>
+                <li style="margin-bottom: 0.5rem;"><strong>The Next Step:</strong> Every number $n$ has exactly one valid next step, called its successor $S(n)$. (Intuitively, $S(n) = n + 1$).</li>
+                <li style="margin-bottom: 0.5rem;"><strong>No Merging Paths (Injectivity):</strong> If two numbers take a step and land in the exact same spot, they must have started in the exact same spot. Two different numbers can never share the same successor.</li>
+                <li style="margin-bottom: 0.5rem;"><strong>No Loops (The Root Property):</strong> $0$ is not the successor of <em>any</em> number. You can never take a step forward and end up back at zero. This prevents our number line from turning into a circular clock.</li>
+                <li><strong>No Ghost Chains (Mathematical Induction):</strong> The only numbers that exist are the ones you can reach by starting at $0$ and stepping forward. There are no disconnected, floating "ghost" numbers. If a property is true for $0$, and taking a step always keeps it true, then it is true for <em>every</em> natural number.</li>
+            </ol>
+
+            <div class="infobox">
+                <h4>📜 Axiom Set: Peano's Postulates</h4>
+                <div class="infobox-intro">
+                    <strong>An ordered foundation:</strong> These five postulates build the natural numbers step by step from the ground up, each adding a structural constraint upon the last.
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 0.65rem;">
+                    <div style="display: grid; grid-template-columns: 85px 1fr; gap: 0.75rem; align-items: baseline; padding-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0;">
+                        <span style="font-weight: 700; color: var(--accent);">Axiom 1</span>
+                        <span style="color: #334155;"><strong>Base Element:</strong> $0 \in \mathbb{N}$ — There is an initial starting line.</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 85px 1fr; gap: 0.75rem; align-items: baseline; padding-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0;">
+                        <span style="font-weight: 700; color: var(--accent);">Axiom 2</span>
+                        <span style="color: #334155;"><strong>Closure:</strong> $\forall n \in \mathbb{N}, \; S(n) \in \mathbb{N}$ — Every number has a well-defined next step.</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 85px 1fr; gap: 0.75rem; align-items: baseline; padding-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0;">
+                        <span style="font-weight: 700; color: var(--accent);">Axiom 3</span>
+                        <span style="color: #334155;"><strong>Injectivity:</strong> $S(m) = S(n) \implies m = n$ — Distinct steps never land on the same number (no merging paths).</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 85px 1fr; gap: 0.75rem; align-items: baseline; padding-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0;">
+                        <span style="font-weight: 700; color: var(--accent);">Axiom 4</span>
+                        <span style="color: #334155;"><strong>Root Property:</strong> $\forall n \in \mathbb{N}, \; S(n) \ne 0$ — Zero is not the successor of any number (no loops back to the start).</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 85px 1fr; gap: 0.75rem; align-items: baseline;">
+                        <span style="font-weight: 700; color: var(--accent);">Axiom 5</span>
+                        <span style="color: #334155;"><strong>Induction:</strong> If $0 \in K$ and $[n \in K \implies S(n) \in K]$, then $K = \mathbb{N}$ — Only reachable numbers exist (no disconnected ghost chains).</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="definition-box" style="margin-top: 1.5rem;">
+                <strong>Constructing Arithmetic with Primitive Recursion:</strong>
+                <p style="margin: 0.5rem 0 0.25rem 0;">From these five simple rules, we construct all arithmetic recursively:</p>
+                <ul style="margin: 0 0 0 1.25rem;">
+                    <li><strong>Addition ($+$):</strong> $n + 0 = n$, and $n + S(m) = S(n + m)$.</li>
+                    <li><strong>Multiplication ($\cdot$):</strong> $n \cdot 0 = 0$, and $n \cdot S(m) = (n \cdot m) + n$.</li>
+                </ul>
+            </div>
+
+            <!-- FOOTER NAVIGATION -->
+            <div style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <a href="week1.html" style="color: var(--accent); text-decoration: none; font-weight: 600;">&larr; Back to Week 1 Overview</a>
+                <a href="week1-lecture2.html" style="background: var(--accent); color: white; padding: 0.6rem 1.2rem; border-radius: 6px; text-decoration: none; font-weight: 600;">Next: Lecture 2 (Numbers &amp; Completeness) &rarr;</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

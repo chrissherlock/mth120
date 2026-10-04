@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1, Lecture 2: Numbers, Metric Properties, and Completeness | MTHS120</title>
+    <!-- KaTeX Integration -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+    <style>
+        :root {
+            --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
+            --accent: #d97706; --accent-hover: #b45309;
+            --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
+
+        .intro-lead { font-size: 1.1rem; color: #1e293b; line-height: 1.7; margin-bottom: 1.5rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); border: 1px solid var(--border); border-left-width: 4px; }
+        .toc-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.75rem; margin: 1.75rem 0 2.5rem 0; }
+        .toc-box h4 { margin: 0 0 0.75rem 0; color: #92400e; font-size: 1.05rem; }
+        .toc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.5rem 1.5rem; margin: 0; padding-left: 1.25rem; }
+        .toc-grid li { margin-bottom: 0.35rem; font-size: 0.95rem; }
+        .toc-grid a { color: #b45309; text-decoration: none; font-weight: 500; }
+        .toc-grid a:hover { text-decoration: underline; color: var(--accent-hover); }
+
+        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+        h3 { color: #1e293b; margin-top: 1.5rem; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+
+        .infobox { background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.25rem 0 1.75rem 0; }
+        .infobox h4 { margin: 0 0 0.85rem 0; color: #0f172a; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-ui); }
+        .notation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 0.85rem 1.75rem; font-size: 0.95rem; }
+        .notation-item { display: grid; grid-template-columns: minmax(130px, max-content) 1fr; gap: 0.75rem; align-items: center; }
+        .notation-sym { font-weight: 600; color: var(--accent); white-space: nowrap; display: flex; justify-content: center; align-items: center; text-align: center; }
+        .notation-desc { min-width: 0; word-break: break-word; line-height: 1.5; color: #334155; }
+        .infobox-intro { font-size: 0.93rem; color: #475569; line-height: 1.6; margin: 0 0 1.25rem 0; padding-bottom: 0.85rem; border-bottom: 1px solid #e2e8f0; }
+
+        .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; border: 1px solid var(--border); border-left-width: 4px; }
+        .aside-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid var(--b45309, #b45309); padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .aside-box h4 { margin-top: 0; color: #b45309; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+
+        .worked-example-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .worked-example-box h4 { margin-top: 0; color: #047857; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .worked-example-box p, .worked-example-box li { color: #0f172a !important; }
+
+        .lecture-card { background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+        .lecture-card:hover { transform: translateY(-2px); box-shadow: 0 6px 12px -2px rgba(0,0,0,0.08); border-color: var(--accent); }
+        .lecture-card h3 { margin-top: 0; color: #0f172a; }
+        .lecture-badge { display: inline-block; background: var(--accent); color: white; padding: 0.2rem 0.55rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- TOP NAVIGATION HEADER -->
+        <div class="header">
+            <div>
+                <h1>Week 1, Lecture 2: Numbers, Metric Properties, and Completeness</h1>
+                <a href="week1.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">&larr; Week 1 Overview Hub</a>
+            </div>
+            <div>
+                <a href="week1-lecture3.html" style="background: var(--accent); color: white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">Next: Lecture 3 &rarr;</a>
+            </div>
+        </div>
+
+        <div class="module-content">
+            <!-- HERO IMAGE -->
+            <div style="margin-bottom: 2rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);">
+                <img src="images/chapter1-hero.jpg" alt="Week 1: Sets, Numbers, and Sequences - UNE Campus Discovery Trail" style="width: 100%; height: auto; display: block;">
+            </div>
+
+            <div class="intro-lead">
+                Welcome to Lecture 2. Here we examine the numerical continuum: proving why rational numbers leave infinite gaps on the line, measuring distance with absolute value, and defining the complete real numbers through suprema and infima.
+            </div>
+
+            <!-- TABLE OF CONTENTS -->
+            <div class="toc-box">
+                <h4>📌 Lecture 2 Topics</h4>
+                <ul class="toc-grid">
+                    <li><a href="#density-rationals">1. Density of the Rational Numbers</a></li>
+                    <li><a href="#rational-gaps">2. Rational Gaps and the Irrationality of $\sqrt{2}$</a></li>
+                    <li><a href="#field-order">3. Axiomatic Field and Order Properties of $\mathbb{R}$</a></li>
+                    <li><a href="#absolute-value">4. Absolute Value and Distance Metrics</a></li>
+                    <li><a href="#completeness-bounds">5. Bounds, Suprema, and Completeness</a></li>
+                </ul>
+            </div>
+
+            <!-- SECTION 1 -->
+            <h2 id="density-rationals">1. Density of the Rational Numbers</h2>
+            <div class="infobox">
+                <h4>📖 Notation Reference: Number Sets &amp; Bounds</h4>
+                <div class="infobox-intro">
+                    <strong>The numbers we stand on:</strong> From counting numbers up to the unbroken real line, each extension repairs a specific structural limitation.
+                </div>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{N}$</span><span class="notation-desc">Natural numbers $\{0, 1, 2, \dots\}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{Z}$</span><span class="notation-desc">Integers $\{\dots, -1, 0, 1, \dots\}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{Q}$</span><span class="notation-desc">Rational numbers $\{p/q \mid p \in \mathbb{Z}, q \in \mathbb{Z}_+\}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{R}$</span><span class="notation-desc">Real numbers (complete ordered field)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$|x|$</span><span class="notation-desc">Absolute value (distance to origin)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\sup S$</span><span class="notation-desc">Supremum (least upper bound) of set $S$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\inf S$</span><span class="notation-desc">Infimum (greatest lower bound) of set $S$</span></div>
+                </div>
+            </div>
+
+            <p>Fractions (rational numbers, $\mathbb{Q}$) are packed incredibly tightly along the number line.</p>
+            <div class="definition-box">
+                <strong>Proposition 1 (Density of $\mathbb{Q}$):</strong> For any two distinct rational numbers $a$ and $b$ with $a < b$, there exist infinitely many rational numbers strictly between them.
+            </div>
+            <p>
+                <em>Proof Construction:</em> The arithmetic midpoint $c_1 = \frac{a+b}{2}$ is rational because $\mathbb{Q}$ is closed under addition and division. Since $a < c_1 < b$, we can repeat this process on $a$ and $c_1$ to find $c_2 = \frac{a+c_1}{2}$. Repeating this construction generates an infinite descending sequence of distinct rationals between $a$ and $b$:
+            </p>
+            <div style="text-align: center; margin: 1rem 0;">
+                $$b > c_1 > c_2 > c_3 > \dots > a$$
+            </div>
+
+            <!-- SECTION 2 -->
+            <h2 id="rational-gaps">2. Rational Gaps and the Irrationality of $\sqrt{2}$</h2>
+            <p>Even though fractions are infinitely dense, the rational line is filled with holes. Consider a right triangle with unit legs ($1$ and $1$). By Pythagoras' theorem, the hypotenuse $c$ satisfies $c^2 = 1^2 + 1^2 = 2 \implies c = \sqrt{2}$.</p>
+
+            <div class="worked-example-box">
+                <h4>🎯 Why $\sqrt{2}$ isn't a fraction (Proof by Contradiction)</h4>
+                <p style="margin-bottom: 0.5rem;">Assume $\sqrt{2}$ <em>could</em> be written as a simplified rational fraction $\frac{p}{q}$ for integers $p, q$ with $q \neq 0$. Squaring both sides yields:</p>
+                <div style="text-align: center; margin: 0.5rem 0;">
+                    $$\frac{p^2}{q^2} = 2 \implies p^2 = 2q^2$$
+                </div>
+                <p style="margin-bottom: 0.5rem;">
+                    By the Fundamental Theorem of Arithmetic, every integer has a unique prime factorisation. When you square any number, all prime factor exponents double, meaning every perfect square must contain an <strong>even number of prime factors</strong> (counting multiplicities).
+                </p>
+                <p style="margin-bottom: 0;">
+                    Therefore, $p^2$ contains an <strong>even</strong> number of prime factors. Meanwhile, $2q^2$ takes $q^2$ (which has an even number of factors) and multiplies it by one additional 2, giving it an <strong>odd</strong> number of prime factors. An even number cannot equal an odd number! Hence $p^2 = 2q^2$ is impossible, proving that $\sqrt{2} \notin \mathbb{Q}$.
+                </p>
+            </div>
+
+            <!-- SECTION 3 -->
+            <h2 id="field-order">3. Axiomatic Field and Order Properties of $\mathbb{R}$</h2>
+            <p>To patch the gaps in $\mathbb{Q}$, we construct the real numbers $\mathbb{R}$ uniting rationals and irrationals into a complete ordered field:</p>
+            <ul>
+                <li><strong>Field Axioms:</strong> Commutativity and associativity of addition and multiplication; distributivity ($(a+b)c = ac + bc$); additive identity $0$ and multiplicative identity $1 \ne 0$; additive inverse $-a$; reciprocal $a^{-1}$ (for $a \ne 0$).</li>
+                <li><strong>Trichotomy:</strong> For any $a, b \in \mathbb{R}$, exactly one of $a < b$, $a = b$, or $a > b$ holds.</li>
+                <li><strong>Order Transitivity:</strong> $a > b \text{ and } b > c \implies a > c$.</li>
+                <li><strong>Order Preservation:</strong> If $a > b$, then $a + c > b + c$ for all $c$. If $a > b$ and $c > 0$, then $ac > bc$.</li>
+            </ul>
+
+            <!-- SECTION 4 -->
+            <h2 id="absolute-value">4. Absolute Value and Distance Metrics</h2>
+            <p>The absolute value function $|\cdot|: \mathbb{R} \to \mathbb{R}$ measures distance along the real line: $\text{dist}(a, b) = |a - b|$.</p>
+            <div class="definition-box">
+                <strong>Proposition 2 (Properties of Absolute Value):</strong>
+                <ol style="margin-left: 1.25rem; margin-top: 0.5rem;">
+                    <li>$|a| \ge 0$, and $|a| = 0 \iff a = 0$.</li>
+                    <li>$|ab| = |a| \cdot |b|$.</li>
+                    <li>$|a|^2 = a^2$.</li>
+                    <li><strong>Triangle Inequality:</strong> $|a + b| \le |a| + |b|$.</li>
+                    <li><strong>Reverse Triangle Inequality:</strong> $||a| - |b|| \le |a - b|$.</li>
+                </ol>
+            </div>
+            <div class="aside-box">
+                <h4>📐 Proving the Triangle Inequality</h4>
+                <p>Because $-|x| \le x \le |x|$ for any real number $x$, we check the sum $a+b$:</p>
+                <ul style="margin: 0.25rem 0 0 1.25rem;">
+                    <li>If $a+b \ge 0$, then $|a+b| = a+b \le |a| + |b|$ because $a \le |a|$ and $b \le |b|$.</li>
+                    <li>If $a+b < 0$, then $|a+b| = -(a+b) = (-a) + (-b) \le |a| + |b|$ because $-a \le |a|$ and $-b \le |b|$.</li>
+                </ul>
+            </div>
+
+            <!-- SECTION 5 -->
+            <h2 id="completeness-bounds">5. Bounds, Suprema, and Completeness</h2>
+            <p>Let $S \subseteq \mathbb{R}$ be a non-empty subset of real numbers:</p>
+            <ul>
+                <li><strong>Upper Bound:</strong> A number $K$ such that $x \le K$ for all $x \in S$. If $K$ exists, $S$ is <em>bounded above</em>.</li>
+                <li><strong>Lower Bound:</strong> A number $k$ such that $k \le x$ for all $x \in S$. If $k$ exists, $S$ is <em>bounded below</em>.</li>
+                <li><strong>Bounded Set:</strong> A set that is bounded both above and below.</li>
+                <li><strong>Supremum ($\sup S$):</strong> The least upper bound of $S$ (the lowest ceiling).</li>
+                <li><strong>Infimum ($\inf S$):</strong> The greatest lower bound of $S$ (the highest floor).</li>
+            </ul>
+
+            <div class="definition-box">
+                <strong>The Axiom of Completeness of $\mathbb{R}$:</strong> Every non-empty subset of real numbers that is bounded above has a supremum in $\mathbb{R}$.
+            </div>
+            <p>
+                <strong>The Rational Defect:</strong> Notice why $\mathbb{Q}$ is incomplete. The set $S = \{x \in \mathbb{Q} \mid x^2 < 2\}$ is bounded above in $\mathbb{Q}$ (for example, by 2 or 10), but has no supremum within $\mathbb{Q}$ because the ceiling $\sqrt{2}$ is not rational!
+            </p>
+
+            <!-- FOOTER NAVIGATION -->
+            <div style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <a href="week1-lecture1.html" style="color: var(--accent); text-decoration: none; font-weight: 600;">&larr; Lecture 1: Sets &amp; Functions</a>
+                <a href="week1-lecture3.html" style="background: var(--accent); color: white; padding: 0.6rem 1.2rem; border-radius: 6px; text-decoration: none; font-weight: 600;">Next: Lecture 3 (Sequences &amp; Sums) &rarr;</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
