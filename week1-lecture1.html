@@ -538,34 +538,41 @@
                 </div>
             </div>
 
-            <!-- SUBSECTION 3.3: INVERTIBILITY AND COMPOSITION -->
+                        <!-- SUBSECTION 3.3: COMPOSITION AND INVERTIBILITY -->
             <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-top: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
                 <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.75rem; margin-bottom: 1rem;">
-                    <h3 style="margin: 0; color: #0f172a; font-size: 1.15rem;">3.3 Invertibility and Composition</h3>
-                    <span style="font-weight: 700; color: var(--accent); font-size: 0.92rem;">Two-Way Streets &amp; Pipeline Chains</span>
-                </div>
-                <p style="margin-top: 0; color: #334155; line-height: 1.65;">
-                    Why do mathematicians insist that a function must be bijective before it has an inverse? Consider what happens if you try to run the arrows backward:
-                </p>
-                <ul style="margin: 0.25rem 0 1rem 1.25rem; padding: 0; color: #334155; font-size: 0.95rem; line-height: 1.65;">
-                    <li><strong>If $f$ is not injective:</strong> Two different inputs share the same output. Reversing the arrow forces a single input to point to two different outputs, violating the definition of a function.</li>
-                    <li><strong>If $f$ is not surjective:</strong> Some elements in $Y$ were never hit. Reversing the arrows leaves those elements stranded with nowhere to go.</li>
-                </ul>
-                <div class="definition-box" style="margin-bottom: 1.25rem;">
-                    <strong>Theorem: Existence of Inverse Functions:</strong><br>
-                    A function $f: X \to Y$ possesses a two-sided inverse $f^{-1}: Y \to X$ such that $(f^{-1} \circ f)(x) = x$ and $(f \circ f^{-1})(y) = y$ <strong>if and only if</strong> $f$ is bijective.
+                    <h3 style="margin: 0; color: #0f172a; font-size: 1.15rem;">3.3 Composition and Invertibility</h3>
+                    <span style="font-weight: 700; color: var(--accent); font-size: 0.92rem;">Pipelines &amp; Reverse Paths</span>
                 </div>
 
-                <h4 style="color: #0f172a; margin: 1.25rem 0 0.5rem 0; font-size: 1.05rem;">Chaining Operations: Function Composition ($g \circ f$)</h4>
-                <p style="color: #334155; line-height: 1.65; margin-bottom: 0.5rem;">
-                    Given two mappings $f: X \to Y$ and $g: Y \to Z$, their <strong>composition</strong> $g \circ f: X \to Z$ creates an immediate path from $X$ to $Z$:
+                <h4 style="margin: 0 0 0.5rem 0; color: #0f172a; font-size: 1.02rem;">1. Composition ($g \circ f$): Chaining Actions in Series</h4>
+                <p style="margin: 0 0 0.75rem 0; color: #334155; line-height: 1.65;">
+                    Composition connects two functions like links in a pipeline: the output of the first function feeds directly as the input into the second. If $f: X \to Y$ and $g: Y \to Z$, their composite $g \circ f: X \to Z$ creates a single direct leap from $X$ to $Z$:
                 </p>
-                <div style="text-align: center; margin: 0.75rem 0; font-size: 1.05rem;">
+                <div class="definition-box" style="margin: 0.75rem 0;">
                     $$(g \circ f)(x) = g(f(x))$$
                 </div>
-                <p style="color: #334155; line-height: 1.65; margin-bottom: 0;">
-                    <em>Remember the evaluation order:</em> Although $g$ is written first on the left, $f$ acts on $x$ first. Think of $g \circ f$ as saying <em>"apply $f$, then apply $g$ to the result."</em> For composition to be valid, the range of $f$ must be contained within the domain of $g$.
+                <p style="color: #334155; line-height: 1.65; margin-bottom: 1.25rem;">
+                    <strong>Read from right to left:</strong> Although $g$ is written on the left, $f$ acts on $x$ first. Think of $(g \circ f)(x)$ as saying: <em>"evaluate $f(x)$ first, then pass that output into $g$."</em>
                 </p>
+
+                <h4 style="margin: 1.25rem 0 0.5rem 0; color: #0f172a; font-size: 1.02rem; border-top: 1px solid #f1f5f9; padding-top: 1rem;">2. Inverses ($f^{-1}$): The "Undo" Operation</h4>
+                <p style="margin: 0 0 0.75rem 0; color: #334155; line-height: 1.65;">
+                    An <strong>inverse function</strong> $f^{-1}: Y \to X$ simply undoes what $f$ did. Composing a function with its inverse brings you right back to your starting point:
+                </p>
+                <div style="text-align: center; margin: 0.75rem 0; font-size: 1.05rem;">
+                    $$(f^{-1} \circ f)(x) = x \quad \text{and} \quad (f \circ f^{-1})(y) = y$$
+                </div>
+                <p style="color: #334155; line-height: 1.65; margin-bottom: 0.5rem;">
+                    Why must a function be <strong>bijective</strong> to have an inverse? It comes down to what happens when you try to walk the arrows backward:
+                </p>
+                <ul style="margin: 0.25rem 0 0.75rem 1.25rem; padding: 0; color: #334155; font-size: 0.95rem; line-height: 1.65;">
+                    <li><strong>Must be Injective (No Ambiguity):</strong> If two inputs merged to the same output, walking backward leaves you at a fork with no unique answer for where you came from.</li>
+                    <li><strong>Must be Surjective (No Dead Ends):</strong> If an element in $Y$ was never hit by an arrow, the reverse path is undefined for that point.</li>
+                </ul>
+                <div class="definition-box" style="margin-top: 0.75rem; margin-bottom: 0;">
+                    <strong>Core Takeaway:</strong> A mapping $f: X \to Y$ has a two-sided inverse $f^{-1}: Y \to X$ <strong>if and only if</strong> it is bijective.
+                </div>
             </div>
 
             <!-- SECTION 4 -->
