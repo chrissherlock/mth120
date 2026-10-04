@@ -40,7 +40,7 @@
         .infobox-intro { font-size: 0.93rem; color: #475569; line-height: 1.6; margin: 0 0 1.25rem 0; padding-bottom: 0.85rem; border-bottom: 1px solid #e2e8f0; }
 
         .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; border: 1px solid var(--border); border-left-width: 4px; }
-        .aside-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid var(--b45309, #b45309); padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .aside-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #b45309; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
         .aside-box h4 { margin-top: 0; color: #b45309; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
 
         .worked-example-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
@@ -128,20 +128,6 @@
                 $$\{1, 2, 3\} = \{3, 2, 1\} = \{1, 1, 1, 2, 2, 3\}$$
             </div>
             <p>The number of elements in a set $A$ is called its <strong>cardinality</strong>, denoted $|A|$. The unique set containing zero elements is the <strong>empty set</strong>, written $\emptyset = \{\}$, with $|\emptyset| = 0$.</p>
-
-            <div class="aside-box">
-                <h4>💡 Infinity Comes in Different Sizes!</h4>
-                <p>The standard number systems satisfy the subset inclusion chain:</p>
-                <div style="text-align: center; margin: 0.5rem 0;">
-                    $$\mathbb{N} \subseteq \mathbb{Z} \subseteq \mathbb{Q} \subseteq \mathbb{R} \subseteq \mathbb{C}$$
-                </div>
-                <p style="margin-bottom: 0;">
-                    Remarkably, their infinite cardinalities do not increase at every step! The counting numbers ($\mathbb{N}$), integers ($\mathbb{Z}$), and rational fractions ($\mathbb{Q}$) all share the exact same countable size of infinity. However, the continuous real line ($\mathbb{R}$) is strictly larger:
-                </p>
-                <div style="text-align: center; margin: 0.5rem 0;">
-                    $$|\mathbb{N}| = |\mathbb{Z}| = |\mathbb{Q}| < |\mathbb{R}| = |\mathbb{C}|$$
-                </div>
-            </div>
 
             <!-- SECTION 2 -->
             <h2 id="set-operations">2. Set Operations and Products</h2>
@@ -362,7 +348,7 @@
                 </div>
             </div>
 
-                        <!-- HISTORICAL CONTEXT: RENE DESCARTES -->
+            <!-- HISTORICAL CONTEXT: RENE DESCARTES -->
             <div class="biography-box" style="margin-top: 2rem;">
                 <h4>🏛️ Why is it called a "Cartesian" Product? (René Descartes)</h4>
                 <div style="display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap; margin-top: 0.75rem;">
@@ -707,8 +693,23 @@
                 </div>
             </div>
 
-                        <!-- HISTORICAL CONTEXT: GEORG CANTOR -->
-            <div class="biography-box" style="margin-top: 2rem;">
+            <!-- ASIDE BOX: INFINITY SIZES MOVED HERE ABOVE CANTOR BOX -->
+            <div class="aside-box" style="margin-top: 2rem;">
+                <h4>💡 Infinity Comes in Different Sizes!</h4>
+                <p>The standard number systems satisfy the subset inclusion chain:</p>
+                <div style="text-align: center; margin: 0.5rem 0;">
+                    $$\mathbb{N} \subseteq \mathbb{Z} \subseteq \mathbb{Q} \subseteq \mathbb{R} \subseteq \mathbb{C}$$
+                </div>
+                <p style="margin-bottom: 0;">
+                    Remarkably, their infinite cardinalities do not increase at every step! The counting numbers ($\mathbb{N}$), integers ($\mathbb{Z}$), and rational fractions ($\mathbb{Q}$) all share the exact same countable size of infinity. However, the continuous real line ($\mathbb{R}$) is strictly larger:
+                </p>
+                <div style="text-align: center; margin: 0.5rem 0;">
+                    $$|\mathbb{N}| = |\mathbb{Z}| = |\mathbb{Q}| < |\mathbb{R}| = |\mathbb{C}|$$
+                </div>
+            </div>
+
+            <!-- HISTORICAL CONTEXT: GEORG CANTOR -->
+            <div class="biography-box" style="margin-top: 1.5rem;">
                 <h4>🏛️ Why Bijections Matter: Measuring the Infinite (Georg Cantor)</h4>
                 <div style="display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap; margin-top: 0.75rem;">
                     <div style="flex: 0 0 135px; max-width: 135px;">
