@@ -315,6 +315,7 @@
                     <div style="display: flex; gap: 0.5rem;">
                         <button onclick="zoomOutStep()" id="zoom-out-btn" style="background: #e2e8f0; color: #475569; border: none; padding: 0.45rem 1rem; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 0.9rem;" disabled>&larr; Zoom Out</button>
                         <button onclick="zoomInStep()" id="zoom-in-btn" style="background: #10b981; color: white; border: none; padding: 0.45rem 1rem; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">Smooth Zoom In &rarr;</button>
+                        <button onclick="toggleAutoZoom()" id="zoom-auto-btn" style="background: #0284c7; color: white; border: none; padding: 0.45rem 1rem; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">&#9654; Auto-zoom</button>
                     </div>
                     <button onclick="zoomReset()" style="background: transparent; color: #64748b; border: 1px solid var(--border); padding: 0.45rem 0.85rem; border-radius: 4px; font-weight: 500; cursor: pointer; font-size: 0.85rem;">Reset View</button>
                 </div>
@@ -338,99 +339,198 @@
 
             <!-- SMOOTH ZOOM SCRIPT -->
             <script>
-                const zoomLevels = [
-                    { lo: 1.40, hi: 1.50, pts: [1.41, 1.42], show: false,
-                      title: "Step 0: Macro View [1.40, 1.50]",
+                // Curated explanations for the first four steps; deeper steps are generated.
+                const curated = [
+                    { title: "Step 0: Macro View [1.40, 1.50]",
                       what: "We are looking at the stretch of the number line from 1.40 to 1.50. The red dashed line marks where √2 ≈ 1.41421… sits. Every tick is a rational number, but nothing at the red line is one.",
                       why: "Between any two ticks there are infinitely many more fractions (density), so the line looks solid. The hole at √2 only shows up when we ask whether any fraction equals √2 exactly." },
-                    { lo: 1.40, hi: 1.43, pts: [1.41, 1.42], show: true,
-                      title: "Step 1: Zooming In [1.40, 1.43]",
+                    { title: "Step 1: Zooming In [1.40, 1.43]",
                       what: "We zoom into [1.40, 1.43]. The green dot is 1.41, about 0.0042 below √2, and the blue dot is 1.42, about 0.0058 above it. √2 is trapped between two rationals.",
                       why: "Fractions crowd both sides of the red line, but the red line itself is not a fraction. Two rationals can bracket √2 without ever equalling it." },
-                    { lo: 1.413, hi: 1.416, pts: [1.414, 1.415], show: true,
-                      title: "Step 2: Deep Magnification [1.413, 1.416]",
+                    { title: "Step 2: Deep Magnification [1.413, 1.416]",
                       what: "The view is now [1.413, 1.416]. The green dot 1.414 is about 0.0002 below √2 and the blue dot 1.415 is about 0.0008 above it. The bracket is 10 times tighter than in Step 1, and √2 is still strictly inside.",
                       why: "Each extra decimal place gives a closer rational, so we can squeeze as tightly as we like. But every terminating decimal is a fraction, and the proof below shows no fraction equals √2, so we never land on the red line." },
-                    { lo: 1.4141, hi: 1.4144, pts: [1.4142, 1.4143], show: true,
-                      title: "Step 3: Micro-Interval [1.4141, 1.4144]",
+                    { title: "Step 3: Micro-Interval [1.4141, 1.4144]",
                       what: "At [1.4141, 1.4144], the green dot 1.4142 is about 0.00001 below √2 and the blue dot 1.4143 is about 0.00009 above it. They are extremely close, yet the red line still sits strictly between them.",
                       why: "This is the incompleteness of ℚ: a sequence of rationals can close in on a point that is not itself rational. The Axiom of Completeness (Section 5) fills these holes and gives us ℝ." }
                 ];
 
-                let currentZoomIdx = 0;
-                let view = { lo: zoomLevels[0].lo, hi: zoomLevels[0].hi };
-                let animFrame = null;
+                // ---- Exact digits of √2 (BigInt), so the zoom never runs out of precision ----
+                let cacheD = 0, cacheS = 1n;
+                function isqrt(n) {
+                    if (n < 2n) return n;
+                    let x = 1n << BigInt((n.toString(2).length + 1) >> 1);
+                    while (true) { const y = (x + n / x) >> 1n; if (y >= x) return x; x = y; }
+                }
+                // floor(√2 · 10^D)
+                function getS(D) {
+                    if (D > cacheD) { const D2 = D + 60; cacheS = isqrt(2n * 10n ** BigInt(2 * D2)); cacheD = D2; }
+                    return cacheS / 10n ** BigInt(cacheD - D);
+                }
+                // Position of (num · 10^-m) relative to √2, measured in units of 10^-unit
+                function off(num, m, unit) {
+                    const D = m + 30;
+                    const N = num * 10n ** BigInt(D - m) - getS(D);
+                    return parseFloat(N.toString() + "e-" + (D - unit));
+                }
+                function fmt(num, m) {
+                    let s = num.toString();
+                    if (m === 0) return s;
+                    s = s.padStart(m + 1, "0");
+                    const ip = s.slice(0, s.length - m), fp = s.slice(s.length - m);
+                    return m > 10 ? "…" + fp.slice(-6) : ip + "." + fp;
+                }
+                const SUP = "⁰¹²³⁴⁵⁶⁷⁸⁹";
+                const sup = n => String(n).split("").map(d => SUP[+d]).join("");
 
-                const xOf = v => 50 + (v - view.lo) / (view.hi - view.lo) * 600;
+                // ---- Level model ----
+                // Level 0: window [1.40, 1.50]. Level L >= 1: n = L + 1 decimals;
+                // markers are √2 truncated to n decimals (green) and that plus 10^-n (blue);
+                // window is one marker-gap of padding on each side (width 3·10^-n).
+                const nOf = L => L + 1;
+                let curLevel = 0, unitN = 1;
+                let view = { c: 0, w: 1 };
+                let animFrame = null, animating = false, autoOn = false, autoTimer = null;
 
+                function levelView(L, unit) {
+                    const n = nOf(L);
+                    if (L === 0) return { c: off(145n, 2, unit), w: Math.pow(10, unit - 1) };
+                    const B = getS(n);
+                    return { c: off(10n * B + 5n, n + 1, unit), w: 3 * Math.pow(10, unit - n) };
+                }
+
+                function levelInfo(L) {
+                    if (L < curated.length) return curated[L];
+                    const n = nOf(L);
+                    const B = getS(n);
+                    const d = B.toString();
+                    const digits = "1." + d.slice(1, Math.min(d.length, 21)) + "…";
+                    const frac = Number(getS(n + 15) % 10n ** 15n) / 1e15;
+                    return {
+                        title: "Step " + L + ": Interval of width 3×10⁻" + sup(n),
+                        what: "The window is now just 3 × 10⁻" + sup(n) + " wide (n = " + n + "). The green dot (" + fmt(B, n) + ") is √2 cut off after " + n + " decimals, and the blue dot (" + fmt(B + 1n, n) + ") is the next rational up. √2 = " + digits + " sits about " + Math.round(frac * 100) + "% of the way from green to blue, strictly between them.",
+                        why: "Zoom as deep as you like and the picture looks the same: two rationals one decimal digit apart with √2 strictly between them. Every truncation of √2 is a fraction, and no fraction equals √2, so the hole never closes and there is always room to zoom further."
+                    };
+                }
+
+                // ---- Drawing ----
                 function drawZoom() {
-                    const w = view.hi - view.lo;
+                    const c = view.c, w = view.w, lo = c - w / 2;
+                    const xOf = o => 50 + (o - lo) / w * 600;
+
+                    // Tick spacing: roughly 5 ticks per window, step = s · 10^-m
                     const raw = w / 5;
-                    const mag = Math.pow(10, Math.floor(Math.log10(raw)));
-                    const step = [1, 2, 5, 10].map(m => m * mag).find(s => s >= raw * 0.999);
-                    const dec = Math.max(0, -Math.floor(Math.log10(step) + 1e-9));
+                    const mag0 = Math.floor(Math.log10(raw));
+                    let s = [1, 2, 5, 10].find(k => k * Math.pow(10, mag0) >= raw * 0.999);
+                    let mag = mag0;
+                    if (s === 10) { s = 1; mag += 1; }
+                    const m = Math.max(unitN - mag, 0);
+                    const sBig = BigInt(s);
+                    const Bt = getS(m) / sBig;
 
                     let html = "";
-                    for (let k = Math.ceil(view.lo / step - 1e-9); k * step <= view.hi + 1e-12; k++) {
-                        const v = k * step, x = xOf(v);
-                        html += `<line x1="${x}" y1="65" x2="${x}" y2="85" stroke="#0f172a" stroke-width="2"/>` +
-                                `<text x="${x}" y="105" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">${v.toFixed(dec)}</text>`;
+                    for (let j = -12; j <= 12; j++) {
+                        const num = (Bt + BigInt(j)) * sBig;
+                        const x = xOf(off(num, m, unitN));
+                        if (x < 45 || x > 655) continue;
+                        html += '<line x1="' + x + '" y1="65" x2="' + x + '" y2="85" stroke="#0f172a" stroke-width="2"/>' +
+                                '<text x="' + x + '" y="105" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">' + fmt(num, m) + '</text>';
                     }
                     document.getElementById("zoom-ticks").innerHTML = html;
 
-                    const sx = xOf(Math.SQRT2);
+                    // √2 itself sits at offset 0
+                    const sx = xOf(0);
                     const line = document.getElementById("sqrt2-line");
                     line.setAttribute("x1", sx); line.setAttribute("x2", sx);
                     document.getElementById("sqrt2-label").setAttribute("x", Math.min(Math.max(sx, 130), 570));
 
-                    const pts = zoomLevels[currentZoomIdx].pts;
-                    [["mk-lo", pts[0]], ["mk-hi", pts[1]]].forEach(([id, val]) => {
+                    // Rational markers
+                    const nm = curLevel === 0 ? 2 : nOf(curLevel);
+                    const B = getS(nm);
+                    [["mk-lo", B], ["mk-hi", B + 1n]].forEach(([id, val]) => {
                         const g = document.getElementById(id);
-                        const x = xOf(val);
+                        const x = xOf(off(val, nm, unitN));
                         g.querySelector("circle").setAttribute("cx", x);
                         const t = g.querySelector("text");
                         t.setAttribute("x", x);
-                        t.textContent = val;
+                        t.textContent = fmt(val, nm);
                     });
                 }
 
-                function animateTo(target, duration = 900) {
+                function updatePanes() {
+                    const info = levelInfo(curLevel);
+                    document.getElementById("zoom-telemetry").innerText = info.title;
+                    document.getElementById("zoom-pane-what").innerText = info.what;
+                    document.getElementById("zoom-pane-why").innerText = info.why;
+                    document.getElementById("zoom-out-btn").disabled = curLevel === 0;
+                    const op = curLevel === 0 ? "0" : "1";
+                    document.getElementById("mk-lo").style.opacity = op;
+                    document.getElementById("mk-hi").style.opacity = op;
+                }
+
+                function afterAnim() {
+                    animating = false;
+                    if (autoOn) autoTimer = setTimeout(() => { if (autoOn) goToLevel(curLevel + 1); }, 600);
+                }
+
+                function goToLevel(L, duration = 900) {
                     cancelAnimationFrame(animFrame);
-                    const c0 = (view.lo + view.hi) / 2, w0 = view.hi - view.lo;
-                    const c1 = (target.lo + target.hi) / 2, w1 = target.hi - target.lo;
-                    const t0 = performance.now();
-                    function frame(now) {
-                        let t = Math.min((now - t0) / duration, 1);
-                        const e = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; // ease in-out
-                        const c = c0 + (c1 - c0) * e;
-                        const w = Math.exp(Math.log(w0) + (Math.log(w1) - Math.log(w0)) * e); // geometric zoom
-                        view = { lo: c - w / 2, hi: c + w / 2 };
+                    clearTimeout(autoTimer);
+                    const nTo = nOf(L), nFrom = nOf(curLevel);
+                    curLevel = L;
+                    updatePanes();
+
+                    // Big jumps (e.g. Reset from deep down) skip the animation
+                    if (Math.abs(nTo - nFrom) > 6) {
+                        unitN = nTo;
+                        view = levelView(L, unitN);
                         drawZoom();
-                        if (t < 1) animFrame = requestAnimationFrame(frame);
+                        return afterAnim();
+                    }
+
+                    // Work in units of the deeper level so numbers stay well-scaled
+                    const ref = Math.max(unitN, nTo);
+                    const f = Math.pow(10, ref - unitN);
+                    view = { c: view.c * f, w: view.w * f };
+                    unitN = ref;
+                    const target = levelView(L, ref);
+                    const c0 = view.c, w0 = view.w, c1 = target.c, w1 = target.w;
+                    const t0 = performance.now();
+                    animating = true;
+
+                    function frame(now) {
+                        const t = Math.min((now - t0) / duration, 1);
+                        const e = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; // ease in-out
+                        const w = Math.exp(Math.log(w0) + (Math.log(w1) - Math.log(w0)) * e); // geometric zoom
+                        view = { c: c0 + (c1 - c0) * e, w: w };
+                        drawZoom();
+                        if (t < 1) { animFrame = requestAnimationFrame(frame); }
+                        else {
+                            unitN = nTo;
+                            view = levelView(L, unitN);
+                            drawZoom();
+                            afterAnim();
+                        }
                     }
                     animFrame = requestAnimationFrame(frame);
                 }
 
-                function updateZoomWidget() {
-                    const lvl = zoomLevels[currentZoomIdx];
-                    document.getElementById("zoom-telemetry").innerText = lvl.title;
-                    document.getElementById("zoom-pane-what").innerText = lvl.what;
-                    document.getElementById("zoom-pane-why").innerText = lvl.why;
-                    document.getElementById("zoom-out-btn").disabled = currentZoomIdx === 0;
-                    const inBtn = document.getElementById("zoom-in-btn");
-                    inBtn.disabled = currentZoomIdx === zoomLevels.length - 1;
-                    inBtn.style.opacity = inBtn.disabled ? "0.5" : "1";
-
-                    const op = lvl.show ? "1" : "0";
-                    document.getElementById("mk-lo").style.opacity = op;
-                    document.getElementById("mk-hi").style.opacity = op;
-                    animateTo(lvl);
+                function setAuto(on) {
+                    autoOn = on;
+                    document.getElementById("zoom-auto-btn").innerHTML = on ? "&#9208; Pause" : "&#9654; Auto-zoom";
+                    if (!on) clearTimeout(autoTimer);
                 }
+                function toggleAutoZoom() {
+                    setAuto(!autoOn);
+                    if (autoOn && !animating) goToLevel(curLevel + 1);
+                }
+                function zoomInStep()  { goToLevel(curLevel + 1); }
+                function zoomOutStep() { setAuto(false); if (curLevel > 0) goToLevel(curLevel - 1); }
+                function zoomReset()   { setAuto(false); goToLevel(0); }
 
-                function zoomInStep()  { if (currentZoomIdx < zoomLevels.length - 1) { currentZoomIdx++; updateZoomWidget(); } }
-                function zoomOutStep() { if (currentZoomIdx > 0) { currentZoomIdx--; updateZoomWidget(); } }
-                function zoomReset()   { currentZoomIdx = 0; updateZoomWidget(); }
-
+                // Initial draw
+                view = levelView(0, unitN);
+                updatePanes();
                 drawZoom();
             </script>
 
