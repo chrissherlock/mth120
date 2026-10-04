@@ -2,7 +2,7 @@
 import os
 import subprocess
 
-def replace_set_operations_section():
+def rewrite_set_operations():
     filepath = 'week1-lecture1.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
@@ -14,10 +14,10 @@ def replace_set_operations_section():
     new_section_2 = r'''<!-- SECTION 2 -->
             <h2 id="set-operations">2. Set Operations and Products</h2>
             <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
-                Once we have gathered objects into sets, we need ways to combine, slice, and compare them. In everyday language, words like <em>"and"</em>, <em>"or"</em>, and <em>"without"</em> can be fuzzy. In pure mathematics, we turn these concepts into four surgical operations.
+                Sets can be combined and partitioned using algebraic operations analogous to arithmetic. Rather than operating on numerical values, set operations act on collections of elements governed by formal logical connectives.
             </p>
             <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
-                To see how each one behaves, we will use two friendly sample sets throughout this section:
+                To illustrate the mechanics of each operation, consider two concrete subsets of $\mathbb{N}$ throughout this section:
             </p>
             <div style="text-align: center; margin: 1rem 0; font-size: 1.1rem; background: #f8fafc; padding: 0.85rem; border-radius: 6px; border: 1px solid var(--border);">
                 $$A = \{1, 2, 3\} \quad \text{and} \quad B = \{2, 3, 4, 5\}$$
@@ -26,22 +26,22 @@ def replace_set_operations_section():
             <!-- OPERATION 1: UNION -->
             <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-top: 1.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
                 <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.75rem; margin-bottom: 1rem;">
-                    <h3 style="margin: 0; color: #0f172a; font-size: 1.15rem;">2.1 Union: The Big Basket ($A \cup B$)</h3>
-                    <span style="font-weight: 700; color: var(--accent); font-size: 0.95rem;">Logical Concept: Inclusive "OR"</span>
+                    <h3 style="margin: 0; color: #0f172a; font-size: 1.15rem;">2.1 Union ($A \cup B$)</h3>
+                    <span style="font-weight: 700; color: var(--accent); font-size: 0.95rem;">Logical Connective: Disjunction ($\lor$)</span>
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; align-items: center;">
                     <div>
                         <p style="margin-top: 0; color: #334155; line-height: 1.65;">
-                            The <strong>union</strong> ($A \cup B$) simply takes all elements from set $A$ and combines them with all elements from set $B$ into one unified collection.
+                            The <strong>union</strong> of two sets contains every element that belongs to at least one of the sets.
                         </p>
                         <div class="definition-box" style="margin: 0.75rem 0;">
                             $$A \cup B = \{x \mid x \in A \lor x \in B\}$$
                         </div>
                         <p style="color: #334155; line-height: 1.65; margin-bottom: 0.5rem;">
-                            <strong>A Note on "OR":</strong> In casual conversation, "or" usually means one or the other, but not both (like <em>soup or salad</em>). In mathematics, "or" is always <strong>inclusive</strong>: an element belongs to $A \cup B$ if it is in $A$, in $B$, or in both!
+                            In formal mathematics, the disjunction $\lor$ ("or") is strictly <strong>inclusive</strong>: an element $x \in (A \cup B)$ if $x \in A$, $x \in B$, or $x$ belongs to both simultaneously. Since sets do not register duplicate elements, overlapping members are listed once.
                         </p>
                         <p style="color: #047857; font-weight: 600; margin-bottom: 0;">
-                            With our sample sets: $A \cup B = \{1, 2, 3, 4, 5\}$. Notice duplicates are simply merged.
+                            For our sample sets: $A \cup B = \{1, 2, 3, 4, 5\}$.
                         </p>
                     </div>
                     <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; text-align: center;">
@@ -55,8 +55,8 @@ def replace_set_operations_section():
                             <text x="156" y="108" font-family="sans-serif" font-size="12" fill="#451a03">3</text>
                             <text x="215" y="80" font-family="sans-serif" font-size="12" fill="#451a03">4</text>
                             <text x="215" y="108" font-family="sans-serif" font-size="12" fill="#451a03">5</text>
-                            <rect x="75" y="152" width="170" height="22" rx="4" fill="#d97706"/>
-                            <text x="160" y="167" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">A ∪ B (Entire Shaded Area)</text>
+                            <rect x="85" y="152" width="150" height="22" rx="4" fill="#d97706"/>
+                            <text x="160" y="167" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Union: A ∪ B</text>
                         </svg>
                     </div>
                 </div>
@@ -65,22 +65,22 @@ def replace_set_operations_section():
             <!-- OPERATION 2: INTERSECTION -->
             <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-top: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
                 <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.75rem; margin-bottom: 1rem;">
-                    <h3 style="margin: 0; color: #0f172a; font-size: 1.15rem;">2.2 Intersection: The Common Ground ($A \cap B$)</h3>
-                    <span style="font-weight: 700; color: #0284c7; font-size: 0.95rem;">Logical Concept: "AND"</span>
+                    <h3 style="margin: 0; color: #0f172a; font-size: 1.15rem;">2.2 Intersection ($A \cap B$)</h3>
+                    <span style="font-weight: 700; color: #0284c7; font-size: 0.95rem;">Logical Connective: Conjunction ($\land$)</span>
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; align-items: center;">
                     <div>
                         <p style="margin-top: 0; color: #334155; line-height: 1.65;">
-                            The <strong>intersection</strong> ($A \cap B$) gathers only those elements that live in both sets simultaneously. Think of it as the shared middle lens between two overlapping circles.
+                            The <strong>intersection</strong> of two sets gathers only those elements that belong to both sets simultaneously.
                         </p>
                         <div class="definition-box" style="margin: 0.75rem 0; border-left-color: #0284c7;">
                             $$A \cap B = \{x \mid x \in A \land x \in B\}$$
                         </div>
                         <p style="color: #334155; line-height: 1.65; margin-bottom: 0.5rem;">
-                            If two sets share no elements at all, their intersection is the empty set ($A \cap B = \emptyset$). In this case, we say the sets are <strong>disjoint</strong>.
+                            When two sets share no common elements ($A \cap B = \emptyset$), they are formally defined as <strong>mutually disjoint</strong>.
                         </p>
                         <p style="color: #0284c7; font-weight: 600; margin-bottom: 0;">
-                            With our sample sets: $A \cap B = \{2, 3\}$.
+                            For our sample sets: $A \cap B = \{2, 3\}$.
                         </p>
                     </div>
                     <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; text-align: center;">
@@ -102,8 +102,8 @@ def replace_set_operations_section():
                             <text x="156" y="108" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0369a1">3</text>
                             <text x="215" y="80" font-family="sans-serif" font-size="12" fill="#94a3b8">4</text>
                             <text x="215" y="108" font-family="sans-serif" font-size="12" fill="#94a3b8">5</text>
-                            <rect x="75" y="152" width="170" height="22" rx="4" fill="#0284c7"/>
-                            <text x="160" y="167" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">A ∩ B (Shaded Lens Only)</text>
+                            <rect x="85" y="152" width="150" height="22" rx="4" fill="#0284c7"/>
+                            <text x="160" y="167" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Intersection: A ∩ B</text>
                         </svg>
                     </div>
                 </div>
@@ -112,23 +112,23 @@ def replace_set_operations_section():
             <!-- OPERATION 3: SET DIFFERENCE -->
             <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-top: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
                 <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.75rem; margin-bottom: 1rem;">
-                    <h3 style="margin: 0; color: #0f172a; font-size: 1.15rem;">2.3 Set Difference: The Selective Filter ($A \setminus B$)</h3>
-                    <span style="font-weight: 700; color: #be185d; font-size: 0.95rem;">Logical Concept: "WITHOUT"</span>
+                    <h3 style="margin: 0; color: #0f172a; font-size: 1.15rem;">2.3 Set Difference / Relative Complement ($A \setminus B$)</h3>
+                    <span style="font-weight: 700; color: #be185d; font-size: 0.95rem;">Non-Commutative Operation</span>
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; align-items: center;">
                     <div>
                         <p style="margin-top: 0; color: #334155; line-height: 1.65;">
-                            The <strong>difference</strong> $A \setminus B$ (spoken as <em>"A without B"</em> or <em>"A minus B"</em>) starts with all elements in $A$ and cuts away anything that also happens to belong to $B$.
+                            The <strong>set difference</strong> $A \setminus B$ (or relative complement of $B$ in $A$) consists of all elements that belong to $A$ but do not belong to $B$.
                         </p>
                         <div class="definition-box" style="margin: 0.75rem 0; border-left-color: #be185d;">
                             $$A \setminus B = \{x \mid x \in A \land x \notin B\}$$
                         </div>
                         <p style="color: #334155; line-height: 1.65; margin-bottom: 0.5rem;">
-                            <strong>Direction Matters Deeply:</strong> Unlike addition or intersection, set difference is <em>strictly non-commutative</em>:
+                            Unlike union and intersection, set difference is strictly non-commutative ($A \setminus B \neq B \setminus A$):
                         </p>
                         <ul style="margin: 0.25rem 0 0.5rem 1.25rem; padding: 0; color: #334155; font-size: 0.95rem;">
-                            <li>$A \setminus B = \{1\}$ (elements in $A$ that are not in $B$)</li>
-                            <li>$B \setminus A = \{4, 5\}$ (elements in $B$ that are not in $A$)</li>
+                            <li>$A \setminus B = \{1\}$ (elements unique to $A$)</li>
+                            <li>$B \setminus A = \{4, 5\}$ (elements unique to $B$)</li>
                         </ul>
                     </div>
                     <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; text-align: center;">
@@ -149,8 +149,8 @@ def replace_set_operations_section():
                             <text x="156" y="108" font-family="sans-serif" font-size="12" fill="#94a3b8">3</text>
                             <text x="215" y="80" font-family="sans-serif" font-size="12" fill="#94a3b8">4</text>
                             <text x="215" y="108" font-family="sans-serif" font-size="12" fill="#94a3b8">5</text>
-                            <rect x="75" y="152" width="170" height="22" rx="4" fill="#be185d"/>
-                            <text x="160" y="167" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">A \ B (Crescent Remaining)</text>
+                            <rect x="85" y="152" width="150" height="22" rx="4" fill="#be185d"/>
+                            <text x="160" y="167" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Difference: A \ B</text>
                         </svg>
                     </div>
                 </div>
@@ -159,22 +159,22 @@ def replace_set_operations_section():
             <!-- OPERATION 4: CARTESIAN PRODUCT -->
             <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-top: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
                 <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.75rem; margin-bottom: 1rem;">
-                    <h3 style="margin: 0; color: #0f172a; font-size: 1.15rem;">2.4 Cartesian Product: The Dimension Multiplier ($A \times B$)</h3>
-                    <span style="font-weight: 700; color: #047857; font-size: 0.95rem;">Building Coordinate Grids</span>
+                    <h3 style="margin: 0; color: #0f172a; font-size: 1.15rem;">2.4 Cartesian Product ($A \times B$)</h3>
+                    <span style="font-weight: 700; color: #047857; font-size: 0.95rem;">Ordered Pairs &amp; Product Spaces</span>
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; align-items: center;">
                     <div>
                         <p style="margin-top: 0; color: #334155; line-height: 1.65;">
-                            The <strong>Cartesian product</strong> ($A \times B$) does not merge numbers together; it pairs them up. It is the set of all possible <strong>ordered pairs</strong> $(a, b)$ where the first component comes from $A$ and the second comes from $B$.
+                            The <strong>Cartesian product</strong> $A \times B$ is the set of all ordered pairs $(a, b)$ formed by taking an element $a \in A$ and pairing it with an element $b \in B$.
                         </p>
                         <div class="definition-box" style="margin: 0.75rem 0; border-left-color: #10b981;">
                             $$A \times B = \{(a, b) \mid a \in A \land b \in B\}$$
                         </div>
                         <p style="color: #334155; line-height: 1.65; margin-bottom: 0.5rem;">
-                            <strong>Why is it called a product?</strong> Because the number of resulting pairs is exactly the product of the sizes of the two sets: $|A \times B| = |A| \cdot |B|$. For our sets, $|A| = 3$ and $|B| = 4$, so there are $3 \times 4 = 12$ distinct pairs.
+                            For finite sets, the cardinality of the product equals the product of their individual cardinalities: $|A \times B| = |A| \cdot |B|$. Here, $|A| = 3$ and $|B| = 4$, yielding exactly $3 \times 4 = 12$ ordered pairs.
                         </p>
                         <p style="color: #047857; line-height: 1.6; margin-bottom: 0;">
-                            <strong>Connection to Higher Dimensions:</strong> When both sets are the entire real number line $\mathbb{R}$, their Cartesian product $\mathbb{R} \times \mathbb{R} = \mathbb{R}^2$ forms the familiar continuous 2D coordinate plane!
+                            In analysis, this construction generalizes continuous spaces: the product of the real line with itself, $\mathbb{R} \times \mathbb{R} = \mathbb{R}^2$, forms the two-dimensional Euclidean plane.
                         </p>
                     </div>
                     <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; text-align: center;">
@@ -223,21 +223,21 @@ def replace_set_operations_section():
     end_idx = content.find(end_delim)
 
     if start_idx != -1 and end_idx != -1:
-        # Splice cleanly without regex escaping issues
         content = content[:start_idx] + new_section_2 + '\n\n            ' + content[end_idx:]
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
-        print("Successfully spliced Section 2 into week1-lecture1.html using string indexing.")
+        print("Successfully updated Section 2 in week1-lecture1.html with mature, collegiate exposition.")
     else:
-        print("Could not find section boundaries in week1-lecture1.html.")
+        print("Could not locate section boundaries in week1-lecture1.html.")
 
 def execute_git_sync():
     commit_message = (
-        "Replace regex replacement with string slicing for Section 2 update\n\n"
-        "Replaced re.sub in update.py with index-based string slicing to avoid\n"
-        "re.PatternError escape failures caused by LaTeX backslashes like \\quad.\n"
-        "Successfully updated Section 2 of week1-lecture1.html with pedagogical\n"
-        "set operation diagrams and narrative explanations."
+        "Refactor Section 2 to use collegiate, rigorous mathematical tone\n\n"
+        "Revised Section 2 of week1-lecture1.html to remove patronizing idioms\n"
+        "and analogies while maintaining pedagogical clarity. Preserved the SVG\n"
+        "Venn diagrams and coordinate grid, reframing them with standard\n"
+        "undergraduate analysis terminology, rigorous set builder notation, and\n"
+        "concise worked examples."
     )
     commands = [
         ['git', 'add', 'week1-lecture1.html', 'update.py'],
@@ -249,5 +249,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    replace_set_operations_section()
+    rewrite_set_operations()
     execute_git_sync()
