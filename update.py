@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 import os
-import re
 import subprocess
 
-def fix_peano_infobox_placement():
+def restructure_peano_infobox():
     filepath = 'week1.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
@@ -12,14 +11,7 @@ def fix_peano_infobox_placement():
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # 1. Strip out the infobox if it was already inserted to prevent duplicates
-    infobox_pattern = r'\s*<div class="infobox">\s*<h4>📖 Notation Reference: Peano\'s Axioms</h4>[\s\S]*?</div>\s*'
-    content = re.sub(infobox_pattern, '\n\n            ', content)
-
-    # 2. Re-insert it exactly beneath the H3 tag
-    h3_target = r"<h3>Building Numbers from Scratch: Peano's Axioms</h3>"
-
-    correct_placement = r'''<h3>Building Numbers from Scratch: Peano's Axioms</h3>
+    old_infobox = r'''<h3>Building Numbers from Scratch: Peano's Axioms</h3>
             <div class="infobox">
                 <h4>📖 Notation Reference: Peano's Axioms</h4>
                 <div class="infobox-intro">
@@ -34,20 +26,36 @@ def fix_peano_infobox_placement():
                 </div>
             </div>'''
 
-    if h3_target in content:
-        content = content.replace(h3_target, correct_placement, 1)
+    new_infobox = r'''<h3>Building Numbers from Scratch: Peano's Axioms</h3>
+            <div class="infobox">
+                <h4>📜 Axiom Set: Peano's Postulates</h4>
+                <div class="infobox-intro">
+                    <strong>An ordered foundation:</strong> Rather than just a dictionary of symbols, these are five sequential, logical postulates that build the natural numbers step by step from the ground up.
+                </div>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym">Axiom 1</span><span class="notation-desc"><strong>Base Element:</strong> $0 \in \mathbb{N}$ (There is a starting line).</span></div>
+                    <div class="notation-item"><span class="notation-sym">Axiom 2</span><span class="notation-desc"><strong>Closure:</strong> $S(n) \in \mathbb{N}$ (Every number has a valid next step).</span></div>
+                    <div class="notation-item"><span class="notation-sym">Axiom 3</span><span class="notation-desc"><strong>Injectivity:</strong> $S(m) = S(n) \implies m = n$ (No merging paths).</span></div>
+                    <div class="notation-item"><span class="notation-sym">Axiom 4</span><span class="notation-desc"><strong>Root Property:</strong> $S(n) \ne 0$ (No loops back to the start).</span></div>
+                    <div class="notation-item"><span class="notation-sym">Axiom 5</span><span class="notation-desc"><strong>Induction:</strong> If a property holds for $0$ and is preserved by $S(n)$, it holds for all $\mathbb{N}$ (No ghost chains).</span></div>
+                </div>
+            </div>'''
+
+    if old_infobox in content:
+        content = content.replace(old_infobox, new_infobox)
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
-        print("Successfully placed the Peano's Axioms infobox beneath the heading.")
+        print("Successfully refactored the Peano's Axioms infobox to an ordered axiom set.")
     else:
-        print("Could not locate the Peano's Axioms heading.")
+        print("Could not find the original Peano's Axioms infobox. Ensure the file state matches the previous step.")
 
 def execute_git_sync():
     commit_message = (
-        "Move Peano's Axioms infobox below the section heading\n\n"
-        "Relocated the Peano's Axioms notation infobox to appear directly beneath\n"
-        "the \"Building Numbers from Scratch\" heading rather than above it. This\n"
-        "improves the visual hierarchy and pedagogical flow of the section."
+        "Refactor Peano infobox to emphasize ordered axiomatic progression\n\n"
+        "Updated the Peano's Axioms infobox in week1.html to frame the content\n"
+        "as a sequential set of postulates (Axiom 1 through 5) instead of a\n"
+        "disconnected notation glossary. This reinforces the logical dependency\n"
+        "of the mathematical foundation."
     )
     commands = [
         ['git', 'add', 'week1.html', 'update.py'],
@@ -59,5 +67,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    fix_peano_infobox_placement()
+    restructure_peano_infobox()
     execute_git_sync()
