@@ -2,7 +2,7 @@
 import os
 import subprocess
 
-def correct_descartes_image_path():
+def retitle_descartes_box():
     filepath = 'week1-lecture1.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
@@ -11,25 +11,26 @@ def correct_descartes_image_path():
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    old_src = 'src="images/decartes.jpg"'
-    new_src = 'src="images/descartes.jpg"'
+    old_heading = '<h4>🏛️ Who was René Descartes?</h4>'
+    new_heading = '<h4>🏛️ Why is it called a "Cartesian" Product? (René Descartes)</h4>'
 
-    if old_src in content:
-        content = content.replace(old_src, new_src, 1)
+    if old_heading in content:
+        content = content.replace(old_heading, new_heading, 1)
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
-        print("Successfully updated Descartes image path to images/descartes.jpg.")
-    elif new_src in content:
-        print("Image path is already set to images/descartes.jpg.")
+        print("Successfully retitled the Descartes biographical infobox.")
+    elif new_heading in content:
+        print("Descartes infobox is already using the updated heading.")
     else:
-        print("Could not find Descartes image tag in week1-lecture1.html.")
+        print("Could not find the target heading in week1-lecture1.html.")
 
 def synchronize_git_changes():
     commit_message = (
-        "Fix image filename path for René Descartes portrait\n\n"
-        "Corrected the image path for René Descartes from images/decartes.jpg to\n"
-        "images/descartes.jpg in week1-lecture1.html so the portrait loads\n"
-        "reliably in the Section 2 biography box."
+        "Refactor Descartes infobox title to focus on Cartesian origin\n\n"
+        "Retitled the Section 2 biographical card in week1-lecture1.html from\n"
+        "\"Who was René Descartes?\" to \"Why is it called a 'Cartesian' Product?\n"
+        "(René Descartes)\" to provide a natural pedagogical connection to the\n"
+        "preceding material on ordered pairs."
     )
     commands = [
         ['git', 'add', 'week1-lecture1.html', 'update.py'],
@@ -41,5 +42,5 @@ def synchronize_git_changes():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    correct_descartes_image_path()
+    retitle_descartes_box()
     synchronize_git_changes()
