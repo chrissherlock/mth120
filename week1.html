@@ -152,6 +152,15 @@
             </div>
 
             <h3>Building Numbers from Scratch: Peano's Axioms</h3>
+            <p>Have you ever wondered what the number "1" actually is? In higher mathematics, we don't take counting for granted. We build the natural numbers ($\mathbb{N}$) using a blueprint called <strong>Peano's Axioms</strong>. Think of this as creating an infinite chain of dominoes using just a starting point and a single rule for taking the "next step" (the successor function, $S(n)$):</p>
+            <ol style="margin: 0.5rem 0 1.5rem 1.25rem; padding: 0;">
+                <li style="margin-bottom: 0.5rem;"><strong>The Starting Line:</strong> $0 \in \mathbb{N}$. We have to start somewhere! This gives our number system a root.</li>
+                <li style="margin-bottom: 0.5rem;"><strong>The Next Step:</strong> Every number $n$ has exactly one valid next step, called its successor $S(n)$. (Intuitively, $S(n) = n + 1$).</li>
+                <li style="margin-bottom: 0.5rem;"><strong>No Merging Paths (Injectivity):</strong> If two numbers take a step and land in the exact same spot, they must have started in the exact same spot. Two different numbers can never share the same successor.</li>
+                <li style="margin-bottom: 0.5rem;"><strong>No Loops (The Root Property):</strong> $0$ is not the successor of <em>any</em> number. You can never take a step forward and end up back at zero. This prevents our number line from turning into a circular clock.</li>
+                <li><strong>No Ghost Chains (Mathematical Induction):</strong> The only numbers that exist are the ones you can reach by starting at $0$ and stepping forward. There are no disconnected, floating "ghost" numbers. If a property is true for $0$, and taking a step always keeps it true, then it is true for <em>every</em> natural number.</li>
+            </ol>
+
             <div class="infobox">
                 <h4>📜 Axiom Set: Peano's Postulates</h4>
                 <div class="infobox-intro">
@@ -180,15 +189,6 @@
                     </div>
                 </div>
             </div>
-
-            <p>Have you ever wondered what the number "1" actually is? In higher mathematics, we don't take counting for granted. We build the natural numbers ($\mathbb{N}$) using a blueprint called <strong>Peano's Axioms</strong>. Think of this as creating an infinite chain of dominoes using just a starting point and a single rule for taking the "next step" (the successor function, $S(n)$):</p>
-            <ol style="margin: 0.5rem 0 1.5rem 1.25rem; padding: 0;">
-                <li style="margin-bottom: 0.5rem;"><strong>The Starting Line:</strong> $0 \in \mathbb{N}$. We have to start somewhere! This gives our number system a root.</li>
-                <li style="margin-bottom: 0.5rem;"><strong>The Next Step:</strong> Every number $n$ has exactly one valid next step, called its successor $S(n)$. (Intuitively, $S(n) = n + 1$).</li>
-                <li style="margin-bottom: 0.5rem;"><strong>No Merging Paths (Injectivity):</strong> If two numbers take a step and land in the exact same spot, they must have started in the exact same spot. Two different numbers can never share the same successor.</li>
-                <li style="margin-bottom: 0.5rem;"><strong>No Loops (The Root Property):</strong> $0$ is not the successor of <em>any</em> number. You can never take a step forward and end up back at zero. This prevents our number line from turning into a circular clock.</li>
-                <li><strong>No Ghost Chains (Mathematical Induction):</strong> The only numbers that exist are the ones you can reach by starting at $0$ and stepping forward. There are no disconnected, floating "ghost" numbers. If a property is true for $0$, and taking a step always keeps it true, then it is true for <em>every</em> natural number.</li>
-            </ol>
 
             <h3>The Rational Gap and Completeness</h3>
             <p>Fractions (rational numbers, $\mathbb{Q}$) are incredibly dense. If you pick any two fractions, you can always find another one exactly halfway between them just by averaging them. But is the number line completely filled with fractions? <strong>No. There are holes.</strong> The most famous hole is $\sqrt{2}$.</p>
