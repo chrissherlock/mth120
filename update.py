@@ -3,7 +3,7 @@ import os
 import subprocess
 import re
 
-def soften_lecture2_description():
+def soften_lecture3_description():
     filepath = 'week1.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
@@ -13,19 +13,21 @@ def soften_lecture2_description():
         content = f.read()
 
     new_description = (
-        "Uncover why fractions alone cannot capture every point on the number "
-        "line. We look at the classic argument showing why numbers like "
-        r"$\sqrt{2}$ cannot be written as simple fractions, introduce intuitive "
-        "geometric tools for measuring distance, and see how the real numbers "
-        "provide a seamless, gap-free continuum for the calculus ahead."
+        "See how simple lists open the door to limits. We explore sequences "
+        "both as everyday ordered lists and as functions on the counting numbers, "
+        "use visual tools to observe how their long-term behavior unfolds, "
+        "and discover clever algebraic patterns—like telescoping sums and "
+        "Gauss's formula—that make large calculations surprisingly clean."
     )
 
-    # Match across whitespace, newlines, and variations in math rendering for Q and sqrt(2)
+    # Match across whitespace, newlines, and variations in math rendering for N
     pattern = re.compile(
-        r'Discover\s+why\s+fractions\s*\(.*?Q.*?\)\s*leave\s+tiny\s+gaps\s+along\s+the\s+line,\s*'
-        r'examine\s+the\s+classical\s+proof\s+that\s*.*?2.*?\s*is\s+irrational,\s*'
-        r'investigate\s+distance\s+metrics\s+and\s+the\s+Triangle\s+Inequality,\s*'
-        r'and\s+study\s+the\s+Axiom\s+of\s+Completeness\s+that\s+guarantees\s+the\s+continuum\s+of\s+real\s+numbers\.',
+        r'Step\s+into\s+the\s+infinite\.\s*'
+        r'We\s+examine\s+sequences\s+through\s+dual\s+lenses\s*'
+        r'\(ordered\s+lists\s+vs\.\s+functions\s+on\s*.*?N.*?\),\s*'
+        r'observe\s+finite\s+samples\s+versus\s+infinite\s+tails\s+via\s+an\s+interactive\s+SVG\s+visualization,\s*'
+        r'analyze\s+discrete\s+rate\s+of\s+change\s+with\s+derived\s+sequences,\s*'
+        r'and\s+collapse\s+telescoping\s+sums\s+to\s+discover\s+Gauss\'?s\s+formula\.',
         re.IGNORECASE | re.DOTALL
     )
 
@@ -34,11 +36,11 @@ def soften_lecture2_description():
         content = content[:match.start()] + new_description + content[match.end():]
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
-        print("Successfully updated Lecture 2 summary in week1.html.")
+        print("Successfully updated Lecture 3 summary in week1.html.")
         return True
 
     # Substring fallback
-    for anchor in ["Discover why fractions", "leave tiny gaps along the line"]:
+    for anchor in ["Step into the infinite", "examine sequences through dual lenses"]:
         if anchor in content:
             start_idx = content.find(anchor)
             end_idx = content.find("</p>", start_idx)
@@ -46,19 +48,18 @@ def soften_lecture2_description():
                 content = content[:start_idx] + new_description + content[end_idx:]
                 with open(filepath, 'w', encoding='utf-8') as f:
                     f.write(content)
-                print("Successfully updated Lecture 2 summary via fallback anchor.")
+                print("Successfully updated Lecture 3 summary via fallback anchor.")
                 return True
 
-    print("Could not find the original Lecture 2 description in week1.html.")
+    print("Could not find the original Lecture 3 description in week1.html.")
     return False
 
 def synchronize_git_changes():
     commit_message = (
-        "Revise Lecture 2 overview in week1.html to supportive tone\n\n"
-        "Softened the description of Lecture 2 in week1.html to make the jump\n"
-        "from rational numbers to the real continuum approachable, framing the\n"
-        "irrationality of sqrt(2) and completeness as resolving natural geometric\n"
-        "puzzles rather than abstract formal hurdles."
+        "Revise Lecture 3 overview in week1.html to supportive tone\n\n"
+        "Softened the description of Lecture 3 in week1.html to make the study\n"
+        "of sequences approachable, highlighting intuitive list-based thinking,\n"
+        "visual long-term behavior, and satisfying algebraic sum patterns."
     )
     commands = [
         ['git', 'add', 'week1.html', 'update.py'],
@@ -70,5 +71,5 @@ def synchronize_git_changes():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    if soften_lecture2_description():
+    if soften_lecture3_description():
         synchronize_git_changes()
