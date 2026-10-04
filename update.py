@@ -1,66 +1,245 @@
 #!/usr/bin/env python3
 import os
-import re
 import subprocess
 
-def strip_cautionary_contrast():
+def write_clean_lecture5_html():
     filepath = 'week2-lecture5.html'
-    if not os.path.exists(filepath):
-        print(f"Error: {filepath} not found.")
-        return
 
-    with open(filepath, 'r', encoding='utf-8') as f:
-        content = f.read()
+    html_content = r'''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 2, Lecture 5: Monotone Convergence and Squeeze Theorem | MTHS120</title>
+    <!-- KaTeX Integration -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+    <style>
+        :root {
+            --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
+            --accent: #d97706; --accent-hover: #b45309;
+            --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
 
-    # Match the horizontal line, explanatory text, and the SVG container block
-    pattern = (
-        r'\s*<hr style="border: none; border-top: 1px solid #fde68a; margin: 1\.25rem 0;">\s*'
-        r'<p><strong>Cautionary Contrast: What about \$\\frac\{n\}\{\\sin\(n\)\}\?</strong>.*?</p>\s*'
-        r'<!-- Embedded Wild Divergence SVG -->\s*'
-        r'<div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1rem; margin-top: 1rem;">\s*'
-        r'<svg viewBox="0 0 800 240"[\s\S]*?</svg>\s*'
-        r'</div>'
-    )
+        .intro-lead { font-size: 1.1rem; color: #1e293b; line-height: 1.7; margin-bottom: 1.5rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); border: 1px solid var(--border); border-left-width: 4px; }
+        .toc-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.75rem; margin: 1.75rem 0 2.5rem 0; }
+        .toc-box h4 { margin: 0 0 0.75rem 0; color: #92400e; font-size: 1.05rem; }
+        .toc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.5rem 1.5rem; margin: 0; padding-left: 1.25rem; }
+        .toc-grid li { margin-bottom: 0.35rem; font-size: 0.95rem; }
+        .toc-grid a { color: #b45309; text-decoration: none; font-weight: 500; }
+        .toc-grid a:hover { text-decoration: underline; color: var(--accent-hover); }
 
-    if re.search(pattern, content):
-        content = re.sub(pattern, '', content, count=1)
-        with open(filepath, 'w', encoding='utf-8') as f:
-            f.write(content)
-        print("Successfully removed the cautionary contrast section from week2-lecture5.html.")
-    else:
-        print("Could not match the cautionary contrast section. Check if it was already removed.")
+        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+        h3 { color: #1e293b; margin-top: 1.5rem; font-family: var(--font-ui); scroll-margin-top: 2rem; }
 
-def update_generator_script():
-    script_path = 'update.py'
-    if not os.path.exists(script_path):
-        return
+        .infobox { background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.25rem 0 1.75rem 0; }
+        .infobox h4 { margin: 0 0 0.85rem 0; color: #0f172a; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-ui); }
+        .infobox-intro { font-size: 0.93rem; color: #475569; line-height: 1.6; margin: 0 0 1.25rem 0; padding-bottom: 0.85rem; border-bottom: 1px solid #e2e8f0; }
 
-    with open(script_path, 'r', encoding='utf-8') as f:
-        script_content = f.read()
+        .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; border: 1px solid var(--border); border-left-width: 4px; }
+        .aside-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #b45309; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .aside-box h4 { margin-top: 0; color: #b45309; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .aside-box p, .aside-box li, .infobox p, .infobox li { color: #0f172a !important; }
 
-    # Also remove it from the generate_lecture5_html() string template if present
-    pattern = (
-        r'\s*<hr style="border: none; border-top: 1px solid #fde68a; margin: 1\.25rem 0;">\s*'
-        r'<p><strong>Cautionary Contrast: What about \$\\frac\{n\}\{\\sin\(n\)\}\?</strong>.*?</p>\s*'
-        r'<!-- Embedded Wild Divergence SVG -->\s*'
-        r'<div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1rem; margin-top: 1rem;">\s*'
-        r'<svg viewBox="0 0 800 240"[\s\S]*?</svg>\s*'
-        r'</div>'
-    )
+        .worked-example-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .worked-example-box h4 { margin-top: 0; color: #047857; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .worked-example-box p, .worked-example-box li { color: #0f172a !important; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- TOP NAVIGATION HEADER -->
+        <div class="header">
+            <div>
+                <h1>Week 2, Lecture 5: Monotone Convergence &amp; Squeeze Theorem</h1>
+                <a href="week2.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">&larr; Week 2 Overview Hub</a>
+            </div>
+            <div>
+                <a href="week2-lecture6.html" style="background: var(--accent); color: white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">Next: Lecture 6 &rarr;</a>
+            </div>
+        </div>
 
-    if re.search(pattern, script_content):
-        script_content = re.sub(pattern, '', script_content, count=1)
-        with open(script_path, 'w', encoding='utf-8') as f:
-            f.write(script_content)
-        print("Updated template in update.py to omit cautionary contrast on future builds.")
+        <div class="module-content">
+            <!-- HERO IMAGE -->
+            <div style="margin-bottom: 2rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);">
+                <img src="images/chapter2-hero.jpg" alt="Week 2: Limits of Sequences - UNE Campus Discovery Trail" style="width: 100%; height: auto; display: block;">
+            </div>
 
-def execute_git_sync():
+            <div class="intro-lead">
+                Welcome to Lecture 5. Here we examine the deep connection between limits and real completeness: proving the Monotone Convergence Theorem, evaluating Euler's number $e$, and mastering the Squeeze Theorem.
+            </div>
+
+            <!-- TABLE OF CONTENTS -->
+            <div class="toc-box">
+                <h4>📌 Lecture 5 Topics</h4>
+                <ul class="toc-grid">
+                    <li><a href="#section-mct">1. The Monotone Convergence Theorem</a></li>
+                    <li><a href="#section-euler">2. Construction of Euler's Number $e$</a></li>
+                    <li><a href="#section-lottery">3. The Lottery Thought Experiment</a></li>
+                    <li><a href="#section-squeeze">4. The Comparison Principle &amp; Squeeze Theorem</a></li>
+                    <li><a href="#section-squeeze-viz">5. Visualizing Squeeze Collapse: $\frac{\sin(n)}{n}$</a></li>
+                </ul>
+            </div>
+
+            <!-- SECTION 1 -->
+            <h2 id="section-mct">1. The Monotone Convergence Theorem</h2>
+            <p>While the formal $\epsilon\text{-}N$ definition lets us <em>verify</em> a limit when we already know its value, how do we prove a limit exists when the value is unknown? The answer lies in monotonic behavior.</p>
+
+            <div class="definition-box">
+                <strong>Proposition 6:</strong> Let $S \subset \mathbb{R}$ be a non-empty bounded set and $\alpha = \sup S$. Then there exists an increasing sequence $(a_n)$ of elements in $S$ that converges to $\alpha$.<br>
+                <em>Proof:</em> For each $n \ge 1$, $\alpha - \frac{1}{n} < \alpha$. Since $\alpha$ is the least upper bound, $\alpha - \frac{1}{n}$ cannot be an upper bound for $S$. Hence, there exists $a_n \in S$ such that $\alpha - \frac{1}{n} < a_n \le \alpha$. As $n \to \infty$, the Squeeze Theorem yields $a_n \to \alpha$.
+            </div>
+
+            <div class="infobox" style="margin-top: 1.5rem;">
+                <h4>📈 Theorem 2: The Monotone Convergence Theorem (MCT)</h4>
+                <div class="infobox-intro">
+                    Every bounded monotonic sequence of real numbers converges.
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.95rem;">
+                    <div style="padding-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0;">
+                        <strong>1. Non-Decreasing:</strong> If $(a_n)$ is non-decreasing ($a_n \le a_{n+1}$) and bounded above, then $(a_n)$ converges, and:
+                        <p style="text-align: center; margin: 0.5rem 0;">$$\lim_{n\to\infty} a_n = \sup \{a_n : n \in \mathbb{N}\}$$</p>
+                    </div>
+                    <div>
+                        <strong>2. Non-Increasing:</strong> If $(a_n)$ is non-increasing ($a_n \ge a_{n+1}$) and bounded below, then $(a_n)$ converges, and:
+                        <p style="text-align: center; margin: 0.5rem 0;">$$\lim_{n\to\infty} a_n = \inf \{a_n : n \in \mathbb{N}\}$$</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="worked-example-box">
+                <h4>🎯 Formal Proof of the Monotone Convergence Theorem</h4>
+                <p>Let $(a_n)$ be increasing and bounded above. Define the set of values $S = \{a_n : n \ge 1\}$.</p>
+                <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
+                    <li>By the Completeness Axiom of $\mathbb{R}$, $S$ possesses a supremum: $\alpha = \sup S$.</li>
+                    <li>Let $\epsilon > 0$. Then $\alpha - \epsilon < \alpha$, so $\alpha - \epsilon$ is not an upper bound of $S$.</li>
+                    <li>Thus, there exists an index $N$ such that $\alpha - \epsilon < a_N \le \alpha$.</li>
+                    <li>Because $(a_n)$ is increasing, for any $n > N$ we have $a_n \ge a_N$. Hence:
+                        $$\alpha - \epsilon < a_N \le a_n \le \alpha < \alpha + \epsilon \implies |a_n - \alpha| < \epsilon$$
+                    </li>
+                    <li>Therefore, $\lim_{n\to\infty} a_n = \alpha = \sup \{a_n\}$. $\blacksquare$</li>
+                </ol>
+            </div>
+
+            <!-- SECTION 2 -->
+            <h2 id="section-euler">2. Construction of Euler's Number $e$</h2>
+            <p>Consider the sequence $a_n = \left(1 + \frac{1}{n}\right)^n$. By expanding via the Binomial Theorem:</p>
+            <div style="text-align: center; margin: 0.75rem 0;">
+                $$a_n = 1 + 1 + \frac{1}{2!}\left(1 - \frac{1}{n}\right) + \frac{1}{3!}\left(1 - \frac{1}{n}\right)\left(1 - \frac{2}{n}\right) + \dots + \frac{1}{n!}\left(1 - \frac{1}{n}\right)\dots\left(1 - \frac{n-1}{n}\right)$$
+            </div>
+            <p>Comparing term-by-term with $a_{n+1}$, each factor $\left(1 - \frac{k}{n+1}\right) > \left(1 - \frac{k}{n}\right)$ is strictly larger, and $a_{n+1}$ has an additional positive term. Hence, $(a_n)$ is <strong>strictly increasing</strong>.</p>
+            <p>To establish boundedness above, replace each bracket with 1 and use $\frac{1}{k!} \le \frac{1}{2^{k-1}}$:</p>
+            <div style="text-align: center; margin: 0.75rem 0;">
+                $$a_n < 1 + 1 + \frac{1}{2} + \frac{1}{4} + \dots + \frac{1}{2^{n-1}} < 1 + \frac{1}{1 - 1/2} = 3$$
+            </div>
+            <p>Because $(a_n)$ is increasing and bounded above by 3, the Monotone Convergence Theorem guarantees it converges. Its limit is <strong>Euler's number</strong>:</p>
+            <div style="text-align: center; margin: 0.75rem 0; font-size: 1.15rem;">
+                $$e = \lim_{n\to\infty} \left(1 + \frac{1}{n}\right)^n \approx 2.71828\dots$$
+            </div>
+
+            <!-- SECTION 3 -->
+            <h2 id="section-lottery">3. The Lottery Thought Experiment</h2>
+            <div class="aside-box">
+                <h4>🎟️ The "One-in-a-Million" Paradox</h4>
+                <p>Imagine the chance of winning a lottery ticket is one in a million ($p = 10^{-6}$). If you purchase $n = 1,000,000$ tickets, what is the probability that you win at least once?</p>
+                <p>The probability of losing on every single ticket is:</p>
+                <div style="text-align: center; margin: 0.5rem 0;">
+                    $$P(\text{lose all}) = \left(1 - \frac{1}{1,000,000}\right)^{1,000,000} \approx \lim_{n\to\infty} \left(1 - \frac{1}{n}\right)^n = e^{-1} = \frac{1}{e} \approx 0.3679$$
+                </div>
+                <p style="margin-bottom: 0;">
+                    Therefore, the probability of winning at least once is $1 - \frac{1}{e} \approx \mathbf{63.2\%}$, not $100\%$!
+                </p>
+            </div>
+
+            <!-- SECTION 4 -->
+            <h2 id="section-squeeze">4. The Comparison Principle &amp; Squeeze Theorem</h2>
+            <div class="definition-box">
+                <strong>Theorem 3 (Comparison Principle):</strong> If $a_n \le b_n$ for all $n$, and $\lim a_n = L$, $\lim b_n = K$, then $L \le K$.
+            </div>
+
+            <div class="definition-box" style="margin-top: 1rem;">
+                <strong>Theorem 4 (The Squeeze Theorem):</strong> Let $(a_n), (b_n), (c_n)$ be sequences such that $a_n \le b_n \le c_n$ for all $n \ge N_0$. If:
+                <p style="text-align: center; margin: 0.5rem 0;">$$\lim_{n\to\infty} a_n = L \quad \text{and} \quad \lim_{n\to\infty} c_n = L$$</p>
+                then $(b_n)$ converges and $\lim_{n\to\infty} b_n = L$.
+            </div>
+
+            <div class="worked-example-box">
+                <h4>🎯 Rigorous Proof of the Squeeze Theorem</h4>
+                <p>Let $\epsilon > 0$. We want to find $N$ such that $n > N \implies |b_n - L| < \epsilon$.</p>
+                <ul style="margin: 0.4rem 0 0 1.25rem;">
+                    <li>Since $a_n \to L$, $\exists N_1$ such that $n > N_1 \implies L - \epsilon < a_n < L + \epsilon$.</li>
+                    <li>Since $c_n \to L$, $\exists N_2$ such that $n > N_2 \implies L - \epsilon < c_n < L + \epsilon$.</li>
+                </ul>
+                <p>Set $N = \max(N_0, N_1, N_2)$. Then for any $n > N$:</p>
+                <div style="text-align: center; margin: 0.5rem 0;">
+                    $$L - \epsilon < a_n \le b_n \le c_n < L + \epsilon \implies |b_n - L| < \epsilon$$
+                </div>
+                <p style="margin-bottom: 0;">Hence $\lim b_n = L$. $\blacksquare$</p>
+            </div>
+
+            <!-- SECTION 5 -->
+            <h2 id="section-squeeze-viz">5. Visualizing Squeeze Collapse: $\frac{\sin(n)}{n}$</h2>
+            <div class="aside-box">
+                <h4>🎯 Classic Example: Trapping $\frac{\sin(n)}{n}$</h4>
+                <p>Because $-1 \le \sin(n) \le 1$, we have $-\frac{1}{n} \le \frac{\sin(n)}{n} \le \frac{1}{n}$. Since $\pm \frac{1}{n} \to 0$, the Squeeze Theorem yields $\lim \frac{\sin(n)}{n} = 0$.</p>
+
+                <!-- Embedded Squeeze SVG -->
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1rem; margin-top: 1rem;">
+                    <svg viewBox="0 0 800 280" style="width: 100%; height: auto; display: block;">
+                        <line x1="50" y1="140" x2="760" y2="140" stroke="#94a3b8" stroke-width="1.5"/>
+                        <text x="710" y="130" font-size="11" font-weight="bold" fill="#64748b">L = 0</text>
+                        <path d="M 70,20 Q 200,90 350,120 T 730,136" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4"/>
+                        <text x="600" y="105" font-size="10" font-weight="bold" fill="#d97706">Upper Bound: +1/n</text>
+                        <path d="M 70,260 Q 200,190 350,160 T 730,144" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4"/>
+                        <text x="600" y="175" font-size="10" font-weight="bold" fill="#d97706">Lower Bound: -1/n</text>
+                        <g>
+                            <circle cx="92" cy="70" r="4.5" fill="#059669"/><circle cx="114" cy="185" r="4.5" fill="#059669"/>
+                            <circle cx="136" cy="172" r="4.5" fill="#059669"/><circle cx="158" cy="115" r="4.5" fill="#059669"/>
+                            <circle cx="180" cy="120" r="4.5" fill="#059669"/><circle cx="202" cy="160" r="4.5" fill="#059669"/>
+                            <circle cx="224" cy="155" r="4.5" fill="#059669"/><circle cx="246" cy="130" r="4.5" fill="#059669"/>
+                            <circle cx="268" cy="133" r="4.5" fill="#059669"/><circle cx="290" cy="148" r="4.5" fill="#059669"/>
+                            <circle cx="312" cy="146" r="4.5" fill="#059669"/><circle cx="334" cy="138" r="4.5" fill="#059669"/>
+                            <circle cx="356" cy="139" r="4.5" fill="#059669"/><circle cx="378" cy="143" r="4.5" fill="#059669"/>
+                            <circle cx="400" cy="142" r="4.5" fill="#059669"/><circle cx="422" cy="139" r="4.5" fill="#059669"/>
+                            <circle cx="444" cy="140" r="4.5" fill="#059669"/><circle cx="466" cy="141" r="4.5" fill="#059669"/>
+                            <circle cx="488" cy="141" r="4.5" fill="#059669"/><circle cx="510" cy="140" r="4.5" fill="#059669"/>
+                            <circle cx="532" cy="140" r="4.5" fill="#059669"/><circle cx="554" cy="140" r="4.5" fill="#059669"/>
+                            <circle cx="576" cy="140" r="4.5" fill="#059669"/><circle cx="598" cy="140" r="4.5" fill="#059669"/>
+                            <circle cx="620" cy="140" r="4.5" fill="#059669"/><circle cx="642" cy="140" r="4.5" fill="#059669"/>
+                            <circle cx="664" cy="140" r="4.5" fill="#059669"/><circle cx="686" cy="140" r="4.5" fill="#059669"/>
+                            <circle cx="708" cy="140" r="4.5" fill="#059669"/><circle cx="730" cy="140" r="4.5" fill="#059669"/>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- FOOTER NAVIGATION -->
+            <div style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <a href="week2-lecture4.html" style="color: var(--accent); text-decoration: none; font-weight: 600;">&larr; Lecture 4: Convergence &amp; Limit Laws</a>
+                <a href="week2-lecture6.html" style="background: var(--accent); color: white; padding: 0.6rem 1.2rem; border-radius: 6px; text-decoration: none; font-weight: 600;">Next: Lecture 6 (Recursion &amp; Infinity) &rarr;</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>'''
+
+    with open(filepath, 'w', encoding='utf-8') as f:
+        f.write(html_content)
+    print("Successfully regenerated week2-lecture5.html without cautionary contrast.")
+
+def sync_git_repository():
     commit_message = (
-        "Remove cautionary contrast section from week2-lecture5.html\n\n"
-        "Excised the cautionary contrast paragraph and its accompanying wild\n"
-        "divergence SVG graph for n / sin(n) from Lecture 5. This streamlines\n"
-        "the Squeeze Theorem visualization to focus strictly on converging\n"
-        "bounds."
+        "Regenerate week2-lecture5.html omitting cautionary contrast section\n\n"
+        "Completely rebuilt week2-lecture5.html to avoid regex substitution\n"
+        "errors. Removed the n / sin(n) cautionary contrast and its divergence\n"
+        "plot while preserving the complete proofs for the Monotone Convergence\n"
+        "Theorem, Euler's number, and the Squeeze Theorem visualization."
     )
     commands = [
         ['git', 'add', 'week2-lecture5.html', 'update.py'],
@@ -72,6 +251,5 @@ def execute_git_sync():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    strip_cautionary_contrast()
-    update_generator_script()
-    execute_git_sync()
+    write_clean_lecture5_html()
+    sync_git_repository()
