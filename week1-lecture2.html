@@ -123,15 +123,35 @@
                 </div>
             </div>
 
-            <p>Fractions (rational numbers, $\mathbb{Q}$) are packed incredibly tightly along the number line.</p>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                At first glance, fractions (rational numbers, $\mathbb{Q}$) feel like they fill up the number line entirely. If you pick any two fractions&mdash;say, $\frac{1}{3}$ and $\frac{1}{2}$&mdash;you can always find another one right between them (like their average, $\frac{5}{12}$). In real analysis, this property is known as <strong>density</strong>.
+            </p>
+
             <div class="definition-box">
                 <strong>Proposition 1 (Density of $\mathbb{Q}$):</strong> For any two distinct rational numbers $a$ and $b$ with $a < b$, there exist infinitely many rational numbers strictly between them.
             </div>
-            <p>
-                <em>Proof Construction:</em> The arithmetic midpoint $c_1 = \frac{a+b}{2}$ is rational because $\mathbb{Q}$ is closed under addition and division. Since $a < c_1 < b$, we can repeat this process on $a$ and $c_1$ to find $c_2 = \frac{a+c_1}{2}$. Repeating this construction generates an infinite descending sequence of distinct rationals between $a$ and $b$:
+
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                <em>Building the Intuition:</em> How do we prove this rigorously without getting lost in an infinite loop? We use a constructive argument. If we take our two fractions $a$ and $b$, their arithmetic midpoint is guaranteed to sit safely halfway between them:
             </p>
+
+            <div style="text-align: center; margin: 1.25rem 0; font-size: 1.05rem;">
+                $$c_1 = \frac{a+b}{2}$$
+            </div>
+
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                Because the rational numbers are closed under addition and division by non-zero integers, $c_1$ is guaranteed to be a rational number itself. Now, imagine zooming in on the left half of our interval, between $a$ and $c_1$. We can take their midpoint $c_2 = \frac{a+c_1}{2}$. By repeating this zooming process endlessly, we generate an infinite descending sequence of unique rational numbers trapped between $a$ and $b$:
+            </p>
+
             <div style="text-align: center; margin: 1rem 0;">
-                $$b > c_1 > c_2 > c_3 > \dots > a$$
+                $$a < c_3 < c_2 < c_1 < b$$
+            </div>
+
+            <div class="aside-box">
+                <h4>💡 A Surprising Takeaway</h4>
+                <p style="margin-bottom: 0;">
+                    Even though $\mathbb{Q}$ is packed so tightly that you can never find two fractions "touching" without another fraction between them, <strong>it is still full of invisible gaps</strong>. As we will see in the next section, these microscopic rational gaps are precisely where irrational numbers like $\sqrt{2}$ live!
+                </p>
             </div>
 
             <!-- SECTION 2 -->
