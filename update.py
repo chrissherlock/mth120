@@ -2,7 +2,7 @@
 import os
 import subprocess
 
-def insert_peano_wiki_links():
+def apply_biography_box_style():
     filepath = 'week1-lecture1.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
@@ -11,38 +11,58 @@ def insert_peano_wiki_links():
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # Targets within the biography card
-    old_author = "<strong>Giuseppe Peano</strong> was an Italian mathematician"
-    new_author = (
-        '<strong><a href="https://en.wikipedia.org/wiki/Giuseppe_Peano" '
-        'target="_blank" rel="noopener noreferrer" '
-        'style="color: var(--accent); text-decoration: underline;">Giuseppe Peano</a></strong> '
-        'was an Italian mathematician'
+    # 1. Add CSS class if not present
+    bio_css = (
+        "\n        .biography-box { background: #f5f3ff; border: 1px solid #ddd6fe; "
+        "border-left: 5px solid #6366f1; padding: 1.25rem 1.5rem; margin: 2rem 0; "
+        "border-radius: 0 6px 6px 0; }\n"
+        "        .biography-box h4 { margin-top: 0; color: #3730a3; font-size: 1.05rem; "
+        "display: flex; align-items: center; gap: 0.5rem; }\n"
+        "        .biography-box p, .biography-box li { color: #0f172a !important; }"
     )
 
-    old_treatise = "<em>Arithmetices principia, nova methodo exposita</em>"
-    new_treatise = (
-        '<a href="https://en.wikipedia.org/wiki/Arithmetices_principia,_nova_methodo_exposita" '
-        'target="_blank" rel="noopener noreferrer" '
-        'style="color: var(--accent); font-style: italic; text-decoration: underline;">'
-        'Arithmetices principia, nova methodo exposita</a>'
+    style_end_tag = '</style>'
+    if '.biography-box' not in content and style_end_tag in content:
+        content = content.replace(style_end_tag, bio_css + '\n    ' + style_end_tag, 1)
+
+    # 2. Update Peano box container to use .biography-box
+    old_box_start = (
+        '<!-- HISTORICAL CONTEXT: GIUSEPPE PEANO -->\n'
+        '            <div class="infobox" style="margin-top: 2rem; margin-bottom: 2rem;">\n'
+        '                <h4>📖 Who was Giuseppe Peano?</h4>'
     )
 
-    if old_author in content and old_treatise in content:
-        content = content.replace(old_author, new_author, 1)
-        content = content.replace(old_treatise, new_treatise, 1)
+    new_box_start = (
+        '<!-- HISTORICAL CONTEXT: GIUSEPPE PEANO -->\n'
+        '            <div class="biography-box">\n'
+        '                <h4>🏛️ Who was Giuseppe Peano?</h4>'
+    )
+
+    if old_box_start in content:
+        content = content.replace(old_box_start, new_box_start, 1)
+        # Update link color inside to match indigo scheme
+        content = content.replace(
+            'style="color: var(--accent); text-decoration: underline;"',
+            'style="color: #4f46e5; text-decoration: underline;"'
+        )
+        content = content.replace(
+            'style="color: var(--accent); font-style: italic; text-decoration: underline;"',
+            'style="color: #4f46e5; font-style: italic; text-decoration: underline;"'
+        )
+
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
-        print("Successfully integrated Wikipedia reference links into week1-lecture1.html.")
+        print("Successfully applied .biography-box to Giuseppe Peano in week1-lecture1.html.")
     else:
-        print("Target biography text not found. The links may have already been applied.")
+        print("Could not find the target Peano markup block in week1-lecture1.html.")
 
 def synchronize_git_changes():
     commit_message = (
-        "Add Wikipedia reference links to Giuseppe Peano infobox\n\n"
-        "Added external links to Wikipedia for Giuseppe Peano and his 1889\n"
-        "treatise Arithmetices principia, nova methodo exposita within the\n"
-        "biographical card in week1-lecture1.html."
+        "Add dedicated styling for biographical and historical infoboxes\n\n"
+        "Introduced .biography-box with an indigo and soft lavender palette to\n"
+        "distinguish historical profiles from mathematical definitions and\n"
+        "worked examples. Updated the Giuseppe Peano biography in\n"
+        "week1-lecture1.html to adopt the new style."
     )
     commands = [
         ['git', 'add', 'week1-lecture1.html', 'update.py'],
@@ -54,5 +74,5 @@ def synchronize_git_changes():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    insert_peano_wiki_links()
+    apply_biography_box_style()
     synchronize_git_changes()
