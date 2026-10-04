@@ -3,7 +3,7 @@ import os
 import subprocess
 import re
 
-def apply_option_b_lecture1_summary():
+def soften_lecture2_description():
     filepath = 'week1.html'
     if not os.path.exists(filepath):
         print(f"Error: {filepath} not found.")
@@ -12,66 +12,53 @@ def apply_option_b_lecture1_summary():
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    option_b_text = (
-        "Build your confidence with the formal language of pure mathematics. "
-        "Rather than memorizing formulas, we explore how sets clarify mathematical "
-        "statements, demystify what functions actually do beneath the surface, "
-        "and take a look behind the scenes at how the counting numbers are built "
-        "from scratch."
+    new_description = (
+        "Uncover why fractions alone cannot capture every point on the number "
+        "line. We look at the classic argument showing why numbers like "
+        r"$\sqrt{2}$ cannot be written as simple fractions, introduce intuitive "
+        "geometric tools for measuring distance, and see how the real numbers "
+        "provide a seamless, gap-free continuum for the calculus ahead."
     )
 
-    # Patterns to match either the original wording or an already updated Option A
-    patterns = [
-        # Match original text
-        re.compile(
-            r'Master\s+the\s+formal\s+language\s+of\s+mathematics\.\s*'
-            r'We\s+explore\s+set\s+operations,\s*compare\s+different\s+sizes\s+of\s+infinity\s*'
-            r'\(.*?N.*?vs.*?R.*?\),\s*'
-            r'analyze\s+functions\s+as\s+reliable\s+input-output\s+machines,\s*'
-            r'and\s+construct\s+the\s+natural\s+numbers\s+from\s+scratch\s+using\s+Peano\'?s\s+5\s+axioms\.',
-            re.IGNORECASE | re.DOTALL
-        ),
-        # Match Option A if previously applied
-        re.compile(
-            r'Get\s+comfortable\s+with\s+the\s+foundational\s+grammar\s+of\s+mathematics\.\s*'
-            r'We\s+introduce\s+set\s+operations\s+to\s+organize\s+mathematical\s+ideas\s+clearly,\s*'
-            r'look\s+at\s+how\s+functions\s+create\s+unambiguous\s+pairings\s+between\s+sets,\s*'
-            r'and\s+explore\s+how\s+something\s+as\s+intuitive\s+as\s+counting\s+can\s+be\s+built\s*'
-            r'from\s+five\s+simple,\s+elegant\s+rules\.',
-            re.IGNORECASE | re.DOTALL
-        )
-    ]
+    # Match across whitespace, newlines, and variations in math rendering for Q and sqrt(2)
+    pattern = re.compile(
+        r'Discover\s+why\s+fractions\s*\(.*?Q.*?\)\s*leave\s+tiny\s+gaps\s+along\s+the\s+line,\s*'
+        r'examine\s+the\s+classical\s+proof\s+that\s*.*?2.*?\s*is\s+irrational,\s*'
+        r'investigate\s+distance\s+metrics\s+and\s+the\s+Triangle\s+Inequality,\s*'
+        r'and\s+study\s+the\s+Axiom\s+of\s+Completeness\s+that\s+guarantees\s+the\s+continuum\s+of\s+real\s+numbers\.',
+        re.IGNORECASE | re.DOTALL
+    )
 
-    for pattern in patterns:
-        match = pattern.search(content)
-        if match:
-            content = content[:match.start()] + option_b_text + content[match.end():]
-            with open(filepath, 'w', encoding='utf-8') as f:
-                f.write(content)
-            print("Successfully updated Lecture 1 summary to Option B in week1.html.")
-            return True
+    match = pattern.search(content)
+    if match:
+        content = content[:match.start()] + new_description + content[match.end():]
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write(content)
+        print("Successfully updated Lecture 2 summary in week1.html.")
+        return True
 
-    # Substring fallback for variations
-    for anchor in ["Master the formal language", "Get comfortable with the foundational grammar"]:
+    # Substring fallback
+    for anchor in ["Discover why fractions", "leave tiny gaps along the line"]:
         if anchor in content:
             start_idx = content.find(anchor)
             end_idx = content.find("</p>", start_idx)
             if end_idx != -1:
-                content = content[:start_idx] + option_b_text + content[end_idx:]
+                content = content[:start_idx] + new_description + content[end_idx:]
                 with open(filepath, 'w', encoding='utf-8') as f:
                     f.write(content)
-                print("Successfully updated Lecture 1 summary via fallback anchor.")
+                print("Successfully updated Lecture 2 summary via fallback anchor.")
                 return True
 
-    print("Could not locate the Lecture 1 summary paragraph in week1.html.")
+    print("Could not find the original Lecture 2 description in week1.html.")
     return False
 
 def synchronize_git_changes():
     commit_message = (
-        "Update Lecture 1 summary in week1.html to supportive tone (Option B)\n\n"
-        "Revised the Lecture 1 summary card in week1.html using Option B to\n"
-        "emphasise building confidence with formal mathematical language,\n"
-        "shifting away from formula memorisation, and demystifying foundations."
+        "Revise Lecture 2 overview in week1.html to supportive tone\n\n"
+        "Softened the description of Lecture 2 in week1.html to make the jump\n"
+        "from rational numbers to the real continuum approachable, framing the\n"
+        "irrationality of sqrt(2) and completeness as resolving natural geometric\n"
+        "puzzles rather than abstract formal hurdles."
     )
     commands = [
         ['git', 'add', 'week1.html', 'update.py'],
@@ -83,5 +70,5 @@ def synchronize_git_changes():
         print(f"> {' '.join(cmd)}\n{result.stdout}{result.stderr}")
 
 if __name__ == '__main__':
-    if apply_option_b_lecture1_summary():
+    if soften_lecture2_description():
         synchronize_git_changes()
