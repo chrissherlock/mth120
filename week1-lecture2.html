@@ -167,15 +167,12 @@
                 <!-- SVG VISUAL CANVAS -->
                 <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; text-align: center; margin-bottom: 1.25rem;">
                     <svg id="density-svg" viewBox="0 0 700 130" style="width: 100%; max-width: 660px; height: auto; display: inline-block;">
-                        <!-- Main Number Line Axis -->
                         <line x1="50" y1="75" x2="650" y2="75" stroke="#0f172a" stroke-width="2.5"/>
-                        <!-- Ticks for 0.3 and 0.4 -->
                         <line x1="100" y1="65" x2="100" y2="85" stroke="#0f172a" stroke-width="2"/>
                         <line x1="600" y1="65" x2="600" y2="85" stroke="#0f172a" stroke-width="2"/>
                         <text x="100" y="105" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">a = 0.3</text>
                         <text x="600" y="105" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">b = 0.4</text>
 
-                        <!-- Dynamic Midpoint Markers -->
                         <g id="marker-c1" style="display: none;">
                             <line x1="350" y1="50" x2="350" y2="100" stroke="#d97706" stroke-width="2" stroke-dasharray="3"/>
                             <circle cx="350" cy="75" r="6" fill="#d97706"/>
@@ -274,19 +271,183 @@
 
             <!-- SECTION 2 -->
             <h2 id="rational-gaps">2. Rational Gaps and the Irrationality of $\sqrt{2}$</h2>
-            <p>Even though fractions are infinitely dense, the rational line is filled with holes. Consider a right triangle with unit legs ($1$ and $1$). By Pythagoras' theorem, the hypotenuse $c$ satisfies $c^2 = 1^2 + 1^2 = 2 \implies c = \sqrt{2}$.</p>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                In Section 1, we saw that the rational numbers ($\mathbb{Q}$) are dense&mdash;you can always squeeze another fraction between any two. It is tempting to look at that infinite crowding and assume the number line is completely solid. But ancient Greek mathematicians discovered a shocking geometric reality that shattered this illusion.
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                Imagine drawing a simple right-angled triangle with both legs measuring exactly $1$ unit. By Pythagoras' theorem, the length of the diagonal hypotenuse $c$ is given by $c^2 = 1^2 + 1^2 = 2$, which means $c = \sqrt{2}$. Where does this length live on our rational number line? <strong>Nowhere!</strong> Exactly where $\sqrt{2}$ belongs, there is an invisible pinprick hole.
+            </p>
+
+            <!-- INTERACTIVE RATIONAL GAP SMOOTH ZOOM WIDGET -->
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.75rem; margin-bottom: 1rem;">
+                    <h3 style="margin: 0; color: #0f172a; font-size: 1.1rem;">Interactive Walkthrough: Smooth Zooming into the Void ($\sqrt{2}$)</h3>
+                    <span id="zoom-telemetry" style="font-weight: 600; color: #047857; font-size: 0.88rem; background: #f0fdf4; padding: 0.2rem 0.6rem; border-radius: 4px; border: 1px solid #bbf7d0;">Step 0: Macro View [1.40, 1.50]</span>
+                </div>
+
+                <!-- SVG VISUAL ZOOM CANVAS -->
+                <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; text-align: center; margin-bottom: 1.25rem;">
+                    <svg viewBox="0 0 700 130" style="width: 100%; max-width: 660px; height: auto; display: inline-block;">
+                        <defs><clipPath id="zoom-clip"><rect x="40" y="0" width="620" height="130"/></clipPath></defs>
+                        <g clip-path="url(#zoom-clip)">
+                            <line x1="50" y1="75" x2="650" y2="75" stroke="#0f172a" stroke-width="2.5"/>
+                            <g id="zoom-ticks"></g>
+
+                            <g id="zoom-sqrt2">
+                                <line id="sqrt2-line" x1="0" y1="45" x2="0" y2="105" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="4"/>
+                                <text id="sqrt2-label" x="0" y="28" font-family="sans-serif" font-size="11" font-weight="bold" fill="#dc2626" text-anchor="middle">Missing hole: √2 = 1.41421…</text>
+                            </g>
+
+                            <g id="mk-lo" style="opacity:0; transition: opacity 0.5s ease;">
+                                <circle cx="0" cy="75" r="6" fill="#10b981"/>
+                                <text x="0" y="58" font-family="sans-serif" font-size="11" font-weight="bold" fill="#047857" text-anchor="middle"></text>
+                            </g>
+                            <g id="mk-hi" style="opacity:0; transition: opacity 0.5s ease;">
+                                <circle cx="0" cy="75" r="6" fill="#0284c7"/>
+                                <text x="0" y="58" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0369a1" text-anchor="middle"></text>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- NAVIGATION CONTROLS -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem;">
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button onclick="zoomOutStep()" id="zoom-out-btn" style="background: #e2e8f0; color: #475569; border: none; padding: 0.45rem 1rem; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 0.9rem;" disabled>&larr; Zoom Out</button>
+                        <button onclick="zoomInStep()" id="zoom-in-btn" style="background: #10b981; color: white; border: none; padding: 0.45rem 1rem; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">Smooth Zoom In &rarr;</button>
+                    </div>
+                    <button onclick="zoomReset()" style="background: transparent; color: #64748b; border: 1px solid var(--border); padding: 0.45rem 0.85rem; border-radius: 4px; font-weight: 500; cursor: pointer; font-size: 0.85rem;">Reset View</button>
+                </div>
+
+                <!-- PAIRED ANALYTICAL PANES -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+                    <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; border-left: 3px solid #10b981;">
+                        <h4 style="margin: 0 0 0.4rem 0; color: #047857; font-size: 0.95rem;">1. What Is Happening</h4>
+                        <p id="zoom-pane-what" style="margin: 0; font-size: 0.9rem; color: #334155; line-height: 1.5;">
+                            We are looking at the stretch of the number line from 1.40 to 1.50. The red dashed line marks where √2 ≈ 1.41421… sits. Every tick is a rational number, but nothing at the red line is one.
+                        </p>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; border-left: 3px solid #d97706;">
+                        <h4 style="margin: 0 0 0.4rem 0; color: #92400e; font-size: 0.95rem;">2. Why The System Does This</h4>
+                        <p id="zoom-pane-why" style="margin: 0; font-size: 0.9rem; color: #334155; line-height: 1.5;">
+                            Between any two ticks there are infinitely many more fractions (density), so the line looks solid. The hole at √2 only shows up when we ask whether any fraction equals √2 exactly.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SMOOTH ZOOM SCRIPT -->
+            <script>
+                const zoomLevels = [
+                    { lo: 1.40, hi: 1.50, pts: [1.41, 1.42], show: false,
+                      title: "Step 0: Macro View [1.40, 1.50]",
+                      what: "We are looking at the stretch of the number line from 1.40 to 1.50. The red dashed line marks where √2 ≈ 1.41421… sits. Every tick is a rational number, but nothing at the red line is one.",
+                      why: "Between any two ticks there are infinitely many more fractions (density), so the line looks solid. The hole at √2 only shows up when we ask whether any fraction equals √2 exactly." },
+                    { lo: 1.40, hi: 1.43, pts: [1.41, 1.42], show: true,
+                      title: "Step 1: Zooming In [1.40, 1.43]",
+                      what: "We zoom into [1.40, 1.43]. The green dot is 1.41, about 0.0042 below √2, and the blue dot is 1.42, about 0.0058 above it. √2 is trapped between two rationals.",
+                      why: "Fractions crowd both sides of the red line, but the red line itself is not a fraction. Two rationals can bracket √2 without ever equalling it." },
+                    { lo: 1.413, hi: 1.416, pts: [1.414, 1.415], show: true,
+                      title: "Step 2: Deep Magnification [1.413, 1.416]",
+                      what: "The view is now [1.413, 1.416]. The green dot 1.414 is about 0.0002 below √2 and the blue dot 1.415 is about 0.0008 above it. The bracket is 10 times tighter than in Step 1, and √2 is still strictly inside.",
+                      why: "Each extra decimal place gives a closer rational, so we can squeeze as tightly as we like. But every terminating decimal is a fraction, and the proof below shows no fraction equals √2, so we never land on the red line." },
+                    { lo: 1.4141, hi: 1.4144, pts: [1.4142, 1.4143], show: true,
+                      title: "Step 3: Micro-Interval [1.4141, 1.4144]",
+                      what: "At [1.4141, 1.4144], the green dot 1.4142 is about 0.00001 below √2 and the blue dot 1.4143 is about 0.00009 above it. They are extremely close, yet the red line still sits strictly between them.",
+                      why: "This is the incompleteness of ℚ: a sequence of rationals can close in on a point that is not itself rational. The Axiom of Completeness (Section 5) fills these holes and gives us ℝ." }
+                ];
+
+                let currentZoomIdx = 0;
+                let view = { lo: zoomLevels[0].lo, hi: zoomLevels[0].hi };
+                let animFrame = null;
+
+                const xOf = v => 50 + (v - view.lo) / (view.hi - view.lo) * 600;
+
+                function drawZoom() {
+                    const w = view.hi - view.lo;
+                    const raw = w / 5;
+                    const mag = Math.pow(10, Math.floor(Math.log10(raw)));
+                    const step = [1, 2, 5, 10].map(m => m * mag).find(s => s >= raw * 0.999);
+                    const dec = Math.max(0, -Math.floor(Math.log10(step) + 1e-9));
+
+                    let html = "";
+                    for (let k = Math.ceil(view.lo / step - 1e-9); k * step <= view.hi + 1e-12; k++) {
+                        const v = k * step, x = xOf(v);
+                        html += `<line x1="${x}" y1="65" x2="${x}" y2="85" stroke="#0f172a" stroke-width="2"/>` +
+                                `<text x="${x}" y="105" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">${v.toFixed(dec)}</text>`;
+                    }
+                    document.getElementById("zoom-ticks").innerHTML = html;
+
+                    const sx = xOf(Math.SQRT2);
+                    const line = document.getElementById("sqrt2-line");
+                    line.setAttribute("x1", sx); line.setAttribute("x2", sx);
+                    document.getElementById("sqrt2-label").setAttribute("x", Math.min(Math.max(sx, 130), 570));
+
+                    const pts = zoomLevels[currentZoomIdx].pts;
+                    [["mk-lo", pts[0]], ["mk-hi", pts[1]]].forEach(([id, val]) => {
+                        const g = document.getElementById(id);
+                        const x = xOf(val);
+                        g.querySelector("circle").setAttribute("cx", x);
+                        const t = g.querySelector("text");
+                        t.setAttribute("x", x);
+                        t.textContent = val;
+                    });
+                }
+
+                function animateTo(target, duration = 900) {
+                    cancelAnimationFrame(animFrame);
+                    const c0 = (view.lo + view.hi) / 2, w0 = view.hi - view.lo;
+                    const c1 = (target.lo + target.hi) / 2, w1 = target.hi - target.lo;
+                    const t0 = performance.now();
+                    function frame(now) {
+                        let t = Math.min((now - t0) / duration, 1);
+                        const e = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; // ease in-out
+                        const c = c0 + (c1 - c0) * e;
+                        const w = Math.exp(Math.log(w0) + (Math.log(w1) - Math.log(w0)) * e); // geometric zoom
+                        view = { lo: c - w / 2, hi: c + w / 2 };
+                        drawZoom();
+                        if (t < 1) animFrame = requestAnimationFrame(frame);
+                    }
+                    animFrame = requestAnimationFrame(frame);
+                }
+
+                function updateZoomWidget() {
+                    const lvl = zoomLevels[currentZoomIdx];
+                    document.getElementById("zoom-telemetry").innerText = lvl.title;
+                    document.getElementById("zoom-pane-what").innerText = lvl.what;
+                    document.getElementById("zoom-pane-why").innerText = lvl.why;
+                    document.getElementById("zoom-out-btn").disabled = currentZoomIdx === 0;
+                    const inBtn = document.getElementById("zoom-in-btn");
+                    inBtn.disabled = currentZoomIdx === zoomLevels.length - 1;
+                    inBtn.style.opacity = inBtn.disabled ? "0.5" : "1";
+
+                    const op = lvl.show ? "1" : "0";
+                    document.getElementById("mk-lo").style.opacity = op;
+                    document.getElementById("mk-hi").style.opacity = op;
+                    animateTo(lvl);
+                }
+
+                function zoomInStep()  { if (currentZoomIdx < zoomLevels.length - 1) { currentZoomIdx++; updateZoomWidget(); } }
+                function zoomOutStep() { if (currentZoomIdx > 0) { currentZoomIdx--; updateZoomWidget(); } }
+                function zoomReset()   { currentZoomIdx = 0; updateZoomWidget(); }
+
+                drawZoom();
+            </script>
 
             <div class="worked-example-box">
                 <h4>🎯 Why $\sqrt{2}$ isn't a fraction (Proof by Contradiction)</h4>
-                <p style="margin-bottom: 0.5rem;">Assume $\sqrt{2}$ <em>could</em> be written as a simplified rational fraction $\frac{p}{q}$ for integers $p, q$ with $q \neq 0$. Squaring both sides yields:</p>
+                <p style="margin-bottom: 0.5rem;">To prove mathematically that no fraction can ever plug this hole, we use a classic <strong>proof by contradiction</strong>. We start by assuming the exact opposite of what we want to prove:</p>
+                <p style="margin-bottom: 0.5rem;">
+                    Assume $\sqrt{2}$ <em>could</em> be written as a simplified fraction $\frac{p}{q}$ for integers $p$ and $q$ (with $q \neq 0$ and no common factors). Squaring both sides gives:
+                </p>
                 <div style="text-align: center; margin: 0.5rem 0;">
                     $$\frac{p^2}{q^2} = 2 \implies p^2 = 2q^2$$
                 </div>
                 <p style="margin-bottom: 0.5rem;">
-                    By the Fundamental Theorem of Arithmetic, every integer has a unique prime factorisation. When you square any number, all prime factor exponents double, meaning every perfect square must contain an <strong>even number of prime factors</strong> (counting multiplicities).
+                    Think about prime factorizations. When you square any whole number, all its prime factors double in count, meaning <strong>every perfect square must contain an even number of prime factors</strong> (counting multiplicities).
                 </p>
                 <p style="margin-bottom: 0;">
-                    Therefore, $p^2$ contains an <strong>even</strong> number of prime factors. Meanwhile, $2q^2$ takes $q^2$ (which has an even number of factors) and multiplies it by one additional 2, giving it an <strong>odd</strong> number of prime factors. An even number cannot equal an odd number! Hence $p^2 = 2q^2$ is impossible, proving that $\sqrt{2} \notin \mathbb{Q}$.
+                    Therefore, $p^2$ has an <strong>even</strong> number of prime factors. But look at $2q^2$: $q^2$ has an even number, and multiplying by one extra $2$ makes it an <strong>odd</strong> number! An even number can never equal an odd number ($2n \neq 2k+1$). This inescapable contradiction proves that our starting assumption was false: $\sqrt{2}$ <strong>cannot</strong> be a fraction ($\sqrt{2} \notin \mathbb{Q}$).
                 </p>
             </div>
 
@@ -302,23 +463,23 @@
 
             <!-- SECTION 4 -->
             <h2 id="absolute-value">4. Absolute Value and Distance Metrics</h2>
-            <p>The absolute value function $|\cdot|: \mathbb{R} \to \mathbb{R}$ measures distance along the real line: $\text{dist}(a, b) = |a - b|$.</p>
+            <p>The absolute value function $\vert{}\cdot\vert{}: \mathbb{R} \to \mathbb{R}$ measures distance along the real line: $\text{dist}(a, b) = \vert{}a - b\vert{}$.</p>
             <div class="definition-box">
                 <strong>Proposition 2 (Properties of Absolute Value):</strong>
                 <ol style="margin-left: 1.25rem; margin-top: 0.5rem;">
-                    <li>$|a| \ge 0$, and $|a| = 0 \iff a = 0$.</li>
-                    <li>$|ab| = |a| \cdot |b|$.</li>
-                    <li>$|a|^2 = a^2$.</li>
-                    <li><strong>Triangle Inequality:</strong> $|a + b| \le |a| + |b|$.</li>
-                    <li><strong>Reverse Triangle Inequality:</strong> $||a| - |b|| \le |a - b|$.</li>
+                    <li>$\vert{}a\vert{} \ge 0$, and $\vert{}a\vert{} = 0 \iff a = 0$.</li>
+                    <li>$\vert{}ab\vert{} = \vert{}a\vert{} \cdot \vert{}b\vert{}$.</li>
+                    <li>$\vert{}a\vert{}^2 = a^2$.</li>
+                    <li><strong>Triangle Inequality:</strong> $\vert{}a + b\vert{} \le \vert{}a\vert{} + \vert{}b\vert{}$.</li>
+                    <li><strong>Reverse Triangle Inequality:</strong> $\vert{}\vert{}a\vert{} - \vert{}b\vert{}\vert{} \le \vert{}a - b\vert{}$.</li>
                 </ol>
             </div>
             <div class="aside-box">
                 <h4>📐 Proving the Triangle Inequality</h4>
-                <p>Because $-|x| \le x \le |x|$ for any real number $x$, we check the sum $a+b$:</p>
+                <p>Because $-\vert{}x\vert{} \le x \le \vert{}x\vert{}$ for any real number $x$, we check the sum $a+b$:</p>
                 <ul style="margin: 0.25rem 0 0 1.25rem;">
-                    <li>If $a+b \ge 0$, then $|a+b| = a+b \le |a| + |b|$ because $a \le |a|$ and $b \le |b|$.</li>
-                    <li>If $a+b < 0$, then $|a+b| = -(a+b) = (-a) + (-b) \le |a| + |b|$ because $-a \le |a|$ and $-b \le |b|$.</li>
+                    <li>If $a+b \ge 0$, then $\vert{}a+b\vert{} = a+b \le \vert{}a\vert{} + \vert{}b\vert{}$ because $a \le \vert{}a\vert{}$ and $b \le \vert{}b\vert{}$.</li>
+                    <li>If $a+b < 0$, then $\vert{}a+b\vert{} = -(a+b) = (-a) + (-b) \le \vert{}a\vert{} + \vert{}b\vert{}$ because $-a \le \vert{}a\vert{}$ and $-b \le \vert{}b\vert{}$.</li>
                 </ul>
             </div>
 
