@@ -783,24 +783,229 @@
 
             <!-- SECTION 5 -->
             <h2 id="absolute-value">5. Absolute Value and Distance Metrics</h2>
-            <p>The absolute value function $\vert{}\cdot\vert{}: \mathbb{R} \to \mathbb{R}$ measures distance along the real line: $\text{dist}(a, b) = \vert{}a - b\vert{}$.</p>
+            <div style="font-size: 1.02rem; line-height: 1.7; color: #334155; margin-bottom: 1.25rem;">
+                <p>
+                    In everyday speech, when someone says <em>"take the absolute value,"</em> the rule of thumb you probably learned was simply: <em>"throw away the minus sign."</em> For example, $|5| = 5$ and $|-5| = 5$.
+                </p>
+                <p>
+                    While that rule of thumb is fine for quick mental arithmetic, real analysis asks you to look at absolute value through a much more powerful lens: <strong>geometry and physical distance</strong>. If you place a tape measure between two marks on a workbench, the distance is never negative, regardless of whether you measure from left to right or from right to left.
+                </p>
+            </div>
+
+            <!-- STEP 1: PIECEWISE DEFINITION -->
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-left: 4px solid #0284c7; padding: 1.25rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 1.5rem;">
+                <h3 style="margin-top: 0; color: #0369a1; font-size: 1.05rem;">1. How Absolute Value is Defined (The Split-Formula)</h3>
+                <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                    To express this rigorously without relying on informal words like "drop the sign", mathematics defines the absolute value function $|x|: \mathbb{R} \to \mathbb{R}$ piecewise:
+                </p>
+                <div style="text-align: center; margin: 1rem 0; font-size: 1.05rem;">
+                    $$|x| = \begin{cases} x & \text{if } x \ge 0 \\ -x & \text{if } x < 0 \end{cases}$$
+                </div>
+                <p style="margin: 0; font-size: 0.93rem; color: #475569; line-height: 1.6;">
+                    Notice what happens when $x$ is negative: if $x = -4$, then $-x = -(-4) = +4$. The extra minus sign cancels out the negativity, guaranteeing the final output is always non-negative.
+                </p>
+            </div>
+
+            <!-- STEP 2: DISTANCE BETWEEN TWO POINTS -->
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-left: 4px solid #10b981; padding: 1.25rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 1.5rem;">
+                <h3 style="margin-top: 0; color: #047857; font-size: 1.05rem;">2. Distance Between Two Points along the Line</h3>
+                <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                    When you measure the distance between any two coordinates $a$ and $b$ on the number line, you simply take the difference between them inside an absolute value:
+                </p>
+                <div style="text-align: center; margin: 0.75rem 0; font-size: 1.05rem;">
+                    $$\text{dist}(a, b) = |a - b| = |b - a|$$
+                </div>
+                <p style="margin: 0 0 1rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                    Because $|a - b| = |b - a|$, distance is completely symmetric: the distance from Alice at $2$ to Bob at $6$ is $|2 - 6| = |-4| = 4$, and the distance from Bob to Alice is $|6 - 2| = |4| = 4$.
+                </p>
+
+                <!-- SVG DIAGRAM: DISTANCE ON NUMBER LINE -->
+                <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; text-align: center;">
+                    <svg viewBox="0 0 600 110" style="width: 100%; max-width: 540px; height: auto; display: inline-block;">
+                        <!-- Axis -->
+                        <line x1="50" y1="65" x2="550" y2="65" stroke="#cbd5e1" stroke-width="2"/>
+                        <!-- Origin 0 -->
+                        <line x1="120" y1="57" x2="120" y2="73" stroke="#94a3b8" stroke-width="2"/>
+                        <text x="120" y="88" font-family="sans-serif" font-size="11" fill="#64748b" text-anchor="middle">0</text>
+
+                        <!-- Point a = 2 -->
+                        <circle cx="220" cy="65" r="5.5" fill="#0284c7"/>
+                        <text x="220" y="88" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0284c7" text-anchor="middle">a = 2</text>
+
+                        <!-- Point b = 6 -->
+                        <circle cx="440" cy="65" r="5.5" fill="#10b981"/>
+                        <text x="440" y="88" font-family="sans-serif" font-size="12" font-weight="bold" fill="#047857" text-anchor="middle">b = 6</text>
+
+                        <!-- Distance Bracket -->
+                        <path d="M 220 48 Q 330 30 440 48" fill="none" stroke="#d97706" stroke-width="2"/>
+                        <text x="330" y="28" font-family="sans-serif" font-size="12" font-weight="bold" fill="#b45309" text-anchor="middle">dist(a, b) = |2 − 6| = 4</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- STEP 3: EPSILON-NEIGHBOURHOODS -->
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-left: 4px solid #d97706; padding: 1.25rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 1.5rem;">
+                <h3 style="margin-top: 0; color: #92400e; font-size: 1.05rem;">3. Measuring "Closeness": $\varepsilon$-Neighbourhoods</h3>
+                <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                    Here is where real analysis truly begins. In calculus, when we say <em>"$x$ is getting closer and closer to $a$,"</em> how do we write that with mathematical precision? We use the Greek letter epsilon ($\varepsilon$) to represent an arbitrarily small positive margin of error.
+                </p>
+                <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                    We say that $x$ is <strong>$\varepsilon$-close to $a$</strong> if the distance between them is strictly less than $\varepsilon$:
+                </p>
+                <div style="text-align: center; margin: 0.75rem 0; font-size: 1.05rem;">
+                    $$|x - a| < \varepsilon \iff a - \varepsilon < x < a + \varepsilon$$
+                </div>
+                <p style="margin: 0 0 1rem 0; font-size: 0.9rem; color: #64748b; line-height: 1.5; font-style: italic;">
+                    <strong>Notation note:</strong> The double arrow $\iff$ stands for <em>"if and only if"</em> (logical equivalence). It simply means the statement on the left and the statement on the right are two different ways of saying the exact same truth: if one holds, the other automatically holds!
+                </p>
+                <p style="margin: 0 0 1rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                    Geometrically, this creates an open safety buffer centered right at $a$, reaching $\varepsilon$ units to the left and $\varepsilon$ units to the right. In analysis, this open interval $(a - \varepsilon, a + \varepsilon)$ is called the <strong>$\varepsilon$-neighbourhood of $a$</strong>.
+                </p>
+
+                <!-- SVG DIAGRAM: EPSILON NEIGHBOURHOOD -->
+                <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1.25rem; text-align: center;">
+                    <svg viewBox="0 0 600 130" style="width: 100%; max-width: 540px; height: auto; display: inline-block;">
+                        <!-- Full Line -->
+                        <line x1="50" y1="70" x2="550" y2="70" stroke="#cbd5e1" stroke-width="2"/>
+
+                        <!-- Interval Band Shading -->
+                        <rect x="180" y="58" width="240" height="24" rx="4" fill="#fde68a" fill-opacity="0.5"/>
+                        <line x1="180" y1="70" x2="420" y2="70" stroke="#d97706" stroke-width="3"/>
+
+                        <!-- Left boundary (a - epsilon) -->
+                        <circle cx="180" cy="70" r="5" fill="#ffffff" stroke="#d97706" stroke-width="2.5"/>
+                        <text x="180" y="96" font-family="sans-serif" font-size="11.5" font-weight="bold" fill="#b45309" text-anchor="middle">a − ε</text>
+
+                        <!-- Center (a) -->
+                        <line x1="300" y1="60" x2="300" y2="80" stroke="#0f172a" stroke-width="2.5"/>
+                        <circle cx="300" cy="70" r="5" fill="#0f172a"/>
+                        <text x="300" y="96" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">a (center)</text>
+
+                        <!-- Right boundary (a + epsilon) -->
+                        <circle cx="420" cy="70" r="5" fill="#ffffff" stroke="#d97706" stroke-width="2.5"/>
+                        <text x="420" y="96" font-family="sans-serif" font-size="11.5" font-weight="bold" fill="#b45309" text-anchor="middle">a + ε</text>
+
+                        <!-- Radius brackets -->
+                        <path d="M 180 50 Q 240 38 300 50" fill="none" stroke="#0284c7" stroke-width="1.5"/>
+                        <text x="240" y="38" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0369a1" text-anchor="middle">radius ε</text>
+
+                        <path d="M 300 50 Q 360 38 420 50" fill="none" stroke="#0284c7" stroke-width="1.5"/>
+                        <text x="360" y="38" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0369a1" text-anchor="middle">radius ε</text>
+
+                        <!-- Overview banner -->
+                        <text x="300" y="16" font-family="sans-serif" font-size="11.5" font-weight="bold" fill="#475569" text-anchor="middle">ε-Neighbourhood: (a − ε, a + ε)</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- CORE PROPERTIES -->
             <div class="definition-box">
-                <strong>Proposition 2 (Properties of Absolute Value):</strong>
-                <ol style="margin-left: 1.25rem; margin-top: 0.5rem;">
-                    <li>$\vert{}a\vert{} \ge 0$, and $\vert{}a\vert{} = 0 \iff a = 0$.</li>
-                    <li>$\vert{}ab\vert{} = \vert{}a\vert{} \cdot \vert{}b\vert{}$.</li>
-                    <li>$\vert{}a\vert{}^2 = a^2$.</li>
-                    <li><strong>Triangle Inequality:</strong> $\vert{}a + b\vert{} \le \vert{}a\vert{} + \vert{}b\vert{}$.</li>
-                    <li><strong>Reverse Triangle Inequality:</strong> $\vert{}\vert{}a\vert{} - \vert{}b\vert{}\vert{} \le \vert{}a - b\vert{}$.</li>
+                <strong>Proposition 2 (Core Properties of Absolute Value):</strong>
+                <ol style="margin-left: 1.25rem; margin-top: 0.5rem; line-height: 1.7;">
+                    <li><strong>Positivity:</strong> $|a| \ge 0$ for all $a$, and $|a| = 0$ if and only if $a = 0$ (a point is distance zero only from itself).</li>
+                    <li><strong>Multiplication:</strong> $|ab| = |a| \cdot |b|$ (scaling preserves distance).</li>
+                    <li><strong>Squaring:</strong> $|a|^2 = a^2$ (squaring eliminates negative signs naturally).</li>
+                    <li><strong>Triangle Inequality:</strong> $|a + b| \le |a| + |b|$ (the direct path is always shorter than or equal to detour routes).</li>
+                    <li><strong>Reverse Triangle Inequality:</strong> $||a| - |b|| \le |a - b|$ (difference of lengths cannot exceed distance between endpoints).</li>
                 </ol>
             </div>
+
             <div class="aside-box">
-                <h4>📐 Proving the Triangle Inequality</h4>
-                <p>Because $-\vert{}x\vert{} \le x \le \vert{}x\vert{}$ for any real number $x$, we check the sum $a+b$:</p>
-                <ul style="margin: 0.25rem 0 0 1.25rem;">
-                    <li>If $a+b \ge 0$, then $\vert{}a+b\vert{} = a+b \le \vert{}a\vert{} + \vert{}b\vert{}$ because $a \le \vert{}a\vert{}$ and $b \le \vert{}b\vert{}$.</li>
-                    <li>If $a+b < 0$, then $\vert{}a+b\vert{} = -(a+b) = (-a) + (-b) \le \vert{}a\vert{} + \vert{}b\vert{}$ because $-a \le \vert{}a\vert{}$ and $-b \le \vert{}b\vert{}$.</li>
+                <h4>📐 Proving the Triangle Inequality Without Tears</h4>
+                <p>
+                    Why does $|a + b| \le |a| + |b|$ hold for all real numbers? Remember that every real number $x$ is trapped between its negative and positive absolute value:
+                </p>
+                <div style="text-align: center; margin: 0.5rem 0;">
+                    $$-|x| \le x \le |x|$$
+                </div>
+                <p style="margin-bottom: 0.4rem;">Now test what happens to the sum $a + b$:</p>
+                <ul style="margin: 0.25rem 0 0 1.25rem; line-height: 1.6;">
+                    <li>If $a + b \ge 0$, then $|a + b| = a + b$. Since $a \le |a|$ and $b \le |b|$, adding them gives $a + b \le |a| + |b|$.</li>
+                    <li>If $a + b < 0$, then $|a + b| = -(a + b) = (-a) + (-b)$. Since $-a \le |a|$ and $-b \le |b|$, adding them yields $-(a + b) \le |a| + |b|$.</li>
                 </ul>
+                <p style="margin-top: 0.5rem; margin-bottom: 0;">
+                    In both cases, $|a + b|$ never exceeds $|a| + |b|$!
+                </p>
+            </div>
+
+            <!-- EMPATHETIC TRIANGLE INEQUALITY VISUAL BOX -->
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-left: 4px solid #10b981; padding: 1.25rem 1.5rem; border-radius: 0 6px 6px 0; margin: 1.5rem 0;">
+                <h4 style="margin-top: 0; color: #047857; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem;">
+                    📐 Why is it called the "Triangle" Inequality?
+                </h4>
+                <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                    Have you ever wondered why an algebraic rule about numbers on a flat line is named after a <strong>triangle</strong>?
+                </p>
+                <p style="margin: 0 0 1rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                    In geometry, the shortest distance between two points is a direct straight line. If you start at point $A$ and want to go to $C$, walking directly along side $c$ will <em>always</em> be shorter than taking a detour through point $B$ (walking $a + b$). In any physical triangle, no single side can ever be longer than the other two sides combined:
+                </p>
+
+                <!-- SVG COMPARISON: 2D TRIANGLE VS 1D COLLAPSED NUMBER LINE -->
+                <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; text-align: center; margin-bottom: 1rem;">
+                    <svg viewBox="0 0 620 180" style="width: 100%; max-width: 580px; height: auto; display: inline-block;">
+                        <!-- LEFT PANE: 2D GEOMETRIC TRIANGLE -->
+                        <g>
+                            <text x="140" y="22" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">2D Plane: The Classic Detour</text>
+
+                            <!-- Direct Path AC -->
+                            <line x1="40" y1="130" x2="240" y2="130" stroke="#0284c7" stroke-width="2.5"/>
+                            <!-- Detour AB and BC -->
+                            <line x1="40" y1="130" x2="150" y2="50" stroke="#10b981" stroke-width="2" stroke-dasharray="3"/>
+                            <line x1="150" y1="50" x2="240" y2="130" stroke="#10b981" stroke-width="2" stroke-dasharray="3"/>
+
+                            <!-- Vertices -->
+                            <circle cx="40" cy="130" r="4.5" fill="#0f172a"/>
+                            <text x="30" y="145" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0f172a">A</text>
+
+                            <circle cx="150" cy="50" r="4.5" fill="#d97706"/>
+                            <text x="150" y="40" font-family="sans-serif" font-size="11" font-weight="bold" fill="#b45309" text-anchor="middle">B (Detour)</text>
+
+                            <circle cx="240" cy="130" r="4.5" fill="#0f172a"/>
+                            <text x="250" y="145" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0f172a">C</text>
+
+                            <!-- Labels -->
+                            <text x="140" y="150" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0284c7" text-anchor="middle">Direct: |a + b|</text>
+                            <text x="85" y="80" font-family="sans-serif" font-size="10.5" fill="#047857" text-anchor="middle">side |a|</text>
+                            <text x="205" y="80" font-family="sans-serif" font-size="10.5" fill="#047857" text-anchor="middle">side |b|</text>
+                        </g>
+
+                        <!-- DIVIDER -->
+                        <line x1="300" y1="20" x2="300" y2="160" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="4"/>
+
+                        <!-- RIGHT PANE: 1D NUMBER LINE FLATTENED TRIANGLE -->
+                        <g>
+                            <text x="460" y="22" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">1D Line: The Flattened Triangle</text>
+
+                            <!-- Number line -->
+                            <line x1="330" y1="120" x2="590" y2="120" stroke="#cbd5e1" stroke-width="2"/>
+
+                            <!-- Origin / Pivot -->
+                            <line x1="430" y1="112" x2="430" y2="128" stroke="#0f172a" stroke-width="2"/>
+                            <text x="430" y="142" font-family="sans-serif" font-size="11" fill="#64748b" text-anchor="middle">0</text>
+
+                            <!-- Vectors / Segments on 1D -->
+                            <!-- a vector (leftwards) -->
+                            <path d="M 430 100 Q 390 85 350 100" fill="none" stroke="#10b981" stroke-width="2"/>
+                            <circle cx="350" cy="120" r="4.5" fill="#10b981"/>
+                            <text x="350" y="142" font-family="sans-serif" font-size="11" font-weight="bold" fill="#047857" text-anchor="middle">a = −2</text>
+                            <text x="390" y="82" font-family="sans-serif" font-size="10.5" fill="#047857" text-anchor="middle">|a| = 2</text>
+
+                            <!-- b vector (rightwards) -->
+                            <path d="M 430 100 Q 490 85 550 100" fill="none" stroke="#d97706" stroke-width="2"/>
+                            <circle cx="550" cy="120" r="4.5" fill="#d97706"/>
+                            <text x="550" y="142" font-family="sans-serif" font-size="11" font-weight="bold" fill="#b45309" text-anchor="middle">b = +4</text>
+                            <text x="490" y="82" font-family="sans-serif" font-size="10.5" fill="#b45309" text-anchor="middle">|b| = 4</text>
+
+                            <!-- Net Result a + b -->
+                            <circle cx="490" cy="120" r="4.5" fill="#0284c7"/>
+                            <text x="490" y="160" font-family="sans-serif" font-size="10.5" font-weight="bold" fill="#0284c7" text-anchor="middle">a + b = 2</text>
+                        </g>
+                    </svg>
+                </div>
+
+                <p style="margin: 0; font-size: 0.92rem; color: #334155; line-height: 1.6;">
+                    On the real number line, this triangle is simply <strong>flattened into one dimension</strong>. If $a$ and $b$ pull in opposite directions (like $-2$ and $+4$), their cancellation shrinks the net result to $|-2 + 4| = 2$, which is strictly smaller than walking the full detour distance $|-2| + |4| = 6$. The only time equality holds ($|a + b| = |a| + |b|$) is when both numbers push in the exact same direction!
+                </p>
             </div>
 
             <!-- SECTION 6 -->
