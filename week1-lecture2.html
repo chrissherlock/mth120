@@ -1065,21 +1065,220 @@
 
             <!-- SECTION 6 -->
             <h2 id="completeness-bounds">6. Bounds, Suprema, and Completeness</h2>
-            <p>Let $S \subseteq \mathbb{R}$ be a non-empty subset of real numbers:</p>
-            <ul>
-                <li><strong>Upper Bound:</strong> A number $K$ such that $x \le K$ for all $x \in S$. If $K$ exists, $S$ is <em>bounded above</em>.</li>
-                <li><strong>Lower Bound:</strong> A number $k$ such that $k \le x$ for all $x \in S$. If $k$ exists, $S$ is <em>bounded below</em>.</li>
-                <li><strong>Bounded Set:</strong> A set that is bounded both above and below.</li>
-                <li><strong>Supremum ($\sup S$):</strong> The least upper bound of $S$ (the lowest ceiling).</li>
-                <li><strong>Infimum ($\inf S$):</strong> The greatest lower bound of $S$ (the highest floor).</li>
-            </ul>
-
-            <div class="definition-box">
-                <strong>The Axiom of Completeness of $\mathbb{R}$:</strong> Every non-empty subset of real numbers that is bounded above has a supremum in $\mathbb{R}$.
+            <div style="font-size: 1.02rem; line-height: 1.7; color: #334155; margin-bottom: 1.25rem;">
+                <p>
+                    Up to this point, we have established arithmetic rules and measured distances between numbers. But we now arrive at the true crown jewel of introductory real analysis: <strong>Completeness</strong>.
+                </p>
+                <p>
+                    In Section 3, we discovered that the rational numbers $\mathbb{Q}$ have missing coordinates like $\sqrt{2}$. We promised that the real numbers $\mathbb{R}$ "patch" all of these invisible pinpricks. But how do mathematicians describe an unbroken continuum without using hand-wavy words like "no holes"?
+                </p>
+                <p>
+                    The answer lies in two deceptively simple concepts: <strong>ceilings (bounds)</strong> and <strong>tightest ceilings (suprema)</strong>.
+                </p>
             </div>
-            <p>
-                <strong>The Rational Defect:</strong> Notice why $\mathbb{Q}$ is incomplete. The set $S = \{x \in \mathbb{Q} \mid x^2 < 2\}$ is bounded above in $\mathbb{Q}$ (for example, by 2 or 10), but has no supremum within $\mathbb{Q}$ because the ceiling $\sqrt{2}$ is not rational!
-            </p>
+
+            <!-- PILLAR 1: BOUNDS & MAXIMUMS -->
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-left: 4px solid #0284c7; padding: 1.25rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 1.5rem;">
+                <h3 style="margin-top: 0; color: #0369a1; font-size: 1.05rem;">1. Ceilings and Floors: Upper and Lower Bounds</h3>
+                <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                    Imagine a collection of numbers sitting inside a set $S \subseteq \mathbb{R}$. Think of an <strong>upper bound</strong> as any ceiling that hangs above every single member of the set:
+                </p>
+                <ul style="margin: 0 0 1rem 1.25rem; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                    <li><strong>Upper Bound:</strong> A number $K$ is an upper bound of $S$ if $x \le K$ for every $x \in S$. If such a number exists, we say $S$ is <em>bounded above</em>.</li>
+                    <li><strong>Lower Bound:</strong> A number $k$ is a lower bound of $S$ if $k \le x$ for every $x \in S$. If such a number exists, we say $S$ is <em>bounded below</em>.</li>
+                    <li><strong>Bounded Set:</strong> A set that has both a floor and a ceiling (bounded below and above simultaneously).</li>
+                </ul>
+                <p style="margin: 0 0 1rem 0; font-size: 0.93rem; color: #475569; line-height: 1.6;">
+                    <strong>The Ceiling Ambiguity:</strong> Notice that ceilings are never unique! If you are standing in a room with a 3-metre ceiling, a 10-metre ceiling is <em>also</em> safely above your head, as is a 100-metre ceiling. If $K$ is an upper bound, any larger number $K' > K$ is automatically an upper bound too.
+                </p>
+
+                <!-- THE MAXIMUM TRAP CALLOUT -->
+                <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem;">
+                    <strong style="color: #0369a1; font-size: 0.95rem;">Why Isn't a "Maximum" Enough? (The Open Interval Trap):</strong>
+                    <p style="margin: 0.4rem 0 0.5rem 0; font-size: 0.9rem; color: #334155; line-height: 1.5;">
+                        A set has a <strong>maximum</strong> only if the highest ceiling actually <em>belongs to the set itself</em> ($M \in S$).
+                    </p>
+                    <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.9rem; color: #334155; line-height: 1.5;">
+                        <li>For the closed interval $[0, 1]$, the number $1$ is inside the set. So $\max([0, 1]) = 1$.</li>
+                        <li>Now look at the open interval $(0, 1) = \{x \in \mathbb{R} \mid 0 < x < 1\}$. What is the largest number in this set? Is it $0.9$? No, $0.99$ is bigger. Is it $0.9999$? No, $0.99999$ is bigger!</li>
+                    </ul>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; color: #334155; line-height: 1.5;">
+                        The open interval $(0, 1)$ gets infinitely close to $1$ without ever touching it. Therefore, <strong>$(0, 1)$ has no maximum</strong>! This reveals why we need a sharper tool than just maximums and minimums.
+                    </p>
+                </div>
+            </div>
+
+            <!-- PILLAR 2: SUPREMUM & INFIMUM -->
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-left: 4px solid #10b981; padding: 1.25rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 1.5rem;">
+                <h3 style="margin-top: 0; color: #047857; font-size: 1.05rem;">2. The Tightest Bounds: Supremum ($\sup$) and Infimum ($\inf$)</h3>
+                <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                    Since upper bounds can be unnecessarily tall (like choosing a ceiling a kilometer high), analysts ask: <em>"What is the lowest, tightest possible ceiling you can place over the set without cutting into it?"</em>
+                </p>
+
+                <div class="definition-box" style="margin: 0.75rem 0 1rem 0;">
+                    <strong>Definition (Supremum / Least Upper Bound):</strong> The number $s = \sup S$ is the supremum of $S$ if:
+                    <ol style="margin: 0.4rem 0 0 1.25rem; padding-left: 0; line-height: 1.6;">
+                        <li><strong>It is an upper bound:</strong> $x \le s$ for all $x \in S$.</li>
+                        <li><strong>It is the lowest upper bound:</strong> If $K$ is any other upper bound of $S$, then $s \le K$.</li>
+                    </ol>
+                </div>
+
+                <p style="margin: 0 0 1rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                    Similarly, the <strong>infimum</strong> ($t = \inf S$) is the greatest lower bound—the highest possible floor supporting the set from below.
+                </p>
+
+                <!-- SVG DIAGRAM: SUPREMUM AS THE TIGHTEST CEILING -->
+                <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1.25rem; text-align: center; margin-bottom: 1rem;">
+                    <svg viewBox="0 0 620 140" style="width: 100%; max-width: 580px; height: auto; display: inline-block;">
+                        <!-- Number line -->
+                        <line x1="40" y1="85" x2="580" y2="85" stroke="#cbd5e1" stroke-width="2"/>
+
+                        <!-- Set S band (e.g. interval [1, 3)) -->
+                        <rect x="130" y="73" width="220" height="24" rx="4" fill="#d1fae5"/>
+                        <line x1="130" y1="85" x2="350" y2="85" stroke="#10b981" stroke-width="3"/>
+                        <text x="240" y="60" font-family="sans-serif" font-size="12" font-weight="bold" fill="#047857" text-anchor="middle">Set S = (1, 3)</text>
+
+                        <!-- Infimum at 1 -->
+                        <circle cx="130" cy="85" r="5" fill="#ffffff" stroke="#047857" stroke-width="2.5"/>
+                        <text x="130" y="112" font-family="sans-serif" font-size="11" font-weight="bold" fill="#047857" text-anchor="middle">inf S = 1</text>
+                        <text x="130" y="127" font-family="sans-serif" font-size="9.5" fill="#64748b" text-anchor="middle">(Highest Floor)</text>
+
+                        <!-- Supremum at 3 -->
+                        <circle cx="350" cy="85" r="5.5" fill="#ffffff" stroke="#b45309" stroke-width="3"/>
+                        <line x1="350" y1="40" x2="350" y2="95" stroke="#d97706" stroke-width="2" stroke-dasharray="3"/>
+                        <text x="350" y="30" font-family="sans-serif" font-size="11.5" font-weight="bold" fill="#b45309" text-anchor="middle">sup S = 3</text>
+                        <text x="350" y="112" font-family="sans-serif" font-size="11" font-weight="bold" fill="#b45309" text-anchor="middle">Lowest Ceiling</text>
+
+                        <!-- Loose Upper Bounds K1, K2 -->
+                        <circle cx="440" cy="85" r="4.5" fill="#94a3b8"/>
+                        <text x="440" y="112" font-family="sans-serif" font-size="10.5" fill="#475569" text-anchor="middle">K₁ = 3.8</text>
+
+                        <circle cx="520" cy="85" r="4.5" fill="#94a3b8"/>
+                        <text x="520" y="112" font-family="sans-serif" font-size="10.5" fill="#475569" text-anchor="middle">K₂ = 4.5</text>
+
+                        <!-- Upper bounds bracket -->
+                        <path d="M 350 48 H 560" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="2"/>
+                        <text x="470" y="42" font-family="sans-serif" font-size="10" fill="#64748b" text-anchor="middle">All valid upper bounds (K ≥ 3)</text>
+                    </svg>
+                </div>
+
+                <p style="margin: 0; font-size: 0.93rem; color: #334155; line-height: 1.6;">
+                    <strong>The Crucial Difference:</strong> While $(0, 1)$ has no maximum, its supremum exists and is exactly $1$ ($\sup(0, 1) = 1$). A supremum acts as a generalized maximum: if the maximum exists, it equals the supremum; if the maximum does not exist, the supremum still pins down the exact border where the set ends!
+                </p>
+            </div>
+
+            <!-- PILLAR 3: THE AXIOM OF COMPLETENESS -->
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-left: 4px solid #d97706; padding: 1.25rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 1.5rem;">
+                <h3 style="margin-top: 0; color: #92400e; font-size: 1.05rem;">3. The Axiom of Completeness: What Makes $\mathbb{R}$ Solid</h3>
+                <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                    Now we can formulate the bedrock principle that separates the rational numbers from the real numbers:
+                </p>
+
+                <div class="definition-box" style="margin: 0.75rem 0 1rem 0;">
+                    <strong>The Axiom of Completeness (Least Upper Bound Property):</strong><br>
+                    Every non-empty subset $S \subseteq \mathbb{R}$ that is bounded above has a supremum sitting right inside $\mathbb{R}$.
+                </div>
+
+                <p style="margin: 0 0 1rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                    In plain language: <strong>if a set of real numbers has any ceiling at all, it is guaranteed to have an exact, tightest ceiling that belongs to the real number continuum.</strong>
+                </p>
+
+                <!-- THE RATIONAL COLLAPSE -->
+                <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; margin-bottom: 1rem;">
+                    <h4 style="margin: 0 0 0.5rem 0; color: #92400e; font-size: 0.95rem;">Why Rational Numbers $\mathbb{Q}$ Fail Completeness</h4>
+                    <p style="margin: 0 0 0.6rem 0; font-size: 0.9rem; color: #334155; line-height: 1.6;">
+                        Consider the set of rational numbers whose squares are less than $2$:
+                    </p>
+                    <div style="text-align: center; margin: 0.5rem 0; font-size: 1rem;">
+                        $$S = \{x \in \mathbb{Q} \mid x^2 < 2\}$$
+                    </div>
+                    <p style="margin: 0 0 0.6rem 0; font-size: 0.9rem; color: #334155; line-height: 1.6;">
+                        Is $S$ bounded above in $\mathbb{Q}$? Absolutely. The rational numbers $2$, $1.5$, and $1.42$ are all valid rational ceilings.
+                    </p>
+                    <p style="margin: 0; font-size: 0.9rem; color: #334155; line-height: 1.6;">
+                        Does $S$ have a <em>least</em> upper bound inside $\mathbb{Q}$? <strong>No!</strong> The tightest ceiling wants to sit at exactly $\sqrt{2}$. But as we proved in Section 3, $\sqrt{2}$ is not rational! If you choose any rational upper bound slightly larger than $\sqrt{2}$ (like $1.415$), you can always find another rational upper bound even closer (like $1.4143$). Because the target point is missing from $\mathbb{Q}$, the ceiling falls right through the hole!
+                    </p>
+                </div>
+
+                <!-- SVG DIAGRAM: COMPLETENESS HOLE -->
+                <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; text-align: center;">
+                    <svg viewBox="0 0 600 120" style="width: 100%; max-width: 540px; height: auto; display: inline-block;">
+                        <!-- Number line -->
+                        <line x1="40" y1="75" x2="560" y2="75" stroke="#cbd5e1" stroke-width="2"/>
+
+                        <!-- Set S on left -->
+                        <line x1="80" y1="75" x2="280" y2="75" stroke="#10b981" stroke-width="3"/>
+                        <circle cx="80" cy="75" r="4" fill="#10b981"/>
+                        <text x="180" y="55" font-family="sans-serif" font-size="11.5" font-weight="bold" fill="#047857" text-anchor="middle">S = {x ∈ ℚ | x² < 2}</text>
+
+                        <!-- Missing hole at sqrt(2) -->
+                        <circle cx="280" cy="75" r="6" fill="#ffffff" stroke="#ef4444" stroke-width="2.5"/>
+                        <line x1="280" y1="35" x2="280" y2="95" stroke="#ef4444" stroke-width="2" stroke-dasharray="3"/>
+                        <text x="280" y="24" font-family="sans-serif" font-size="11" font-weight="bold" fill="#dc2626" text-anchor="middle">Missing in ℚ: √2</text>
+                        <text x="280" y="112" font-family="sans-serif" font-size="9.5" fill="#dc2626" text-anchor="middle">No rational sup exists!</text>
+
+                        <!-- Rational upper bounds creeping in -->
+                        <circle cx="360" cy="75" r="4.5" fill="#0284c7"/>
+                        <text x="360" y="98" font-family="sans-serif" font-size="10" fill="#0369a1" text-anchor="middle">1.42</text>
+
+                        <circle cx="320" cy="75" r="4.5" fill="#0284c7"/>
+                        <text x="320" y="98" font-family="sans-serif" font-size="10" fill="#0369a1" text-anchor="middle">1.415</text>
+
+                        <circle cx="295" cy="75" r="4" fill="#0284c7"/>
+                        <text x="295" y="98" font-family="sans-serif" font-size="9.5" fill="#0369a1" text-anchor="middle">1.4143</text>
+
+                        <path d="M 370 45 Q 320 40 285 45" fill="none" stroke="#0284c7" stroke-width="1.5" marker-end="url(#arrow)"/>
+                        <text x="360" y="35" font-family="sans-serif" font-size="9.5" fill="#0369a1" text-anchor="middle">Bounds creep closer without end</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- PILLAR 4: ARCHIMEDEAN PROPERTY (BRIDGING NO GAPS TO NO INFINITIES) -->
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-left: 4px solid #8b5cf6; padding: 1.25rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 1.5rem;">
+                <h3 style="margin-top: 0; color: #6d28d9; font-size: 1.05rem;">4. The Archimedean Property: No Infinitely Large Numbers</h3>
+                <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                    Completeness guarantees there are <strong>enough</strong> numbers to plug every gap. But how do we ensure there aren't <em>too many</em> numbers (like mysterious infinitely large elements sitting beyond all natural counting)?
+                </p>
+                <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                    This is settled by the <strong>Archimedean Property</strong> of the real numbers:
+                </p>
+                <div style="text-align: center; margin: 0.75rem 0; font-size: 1.05rem;">
+                    $$\text{For any two positive real numbers } x \text{ and } y, \text{ there is an integer } n \in \mathbb{N} \text{ such that } nx > y$$
+                </div>
+                <p style="margin: 0; font-size: 0.93rem; color: #475569; line-height: 1.6;">
+                    In simple terms: no matter how tiny a step $x$ you take (say, a millimeter), and no matter how huge a mountain $y$ stands before you (the distance to the moon), taking sufficiently many repeated steps ($nx$) will eventually surpass $y$. The natural numbers $\mathbb{N}$ march without boundary across all of $\mathbb{R}$.
+                </p>
+            </div>
+
+            <!-- WORKED EXAMPLE BOX: CALCULATING SUP AND INF -->
+            <div class="worked-example-box">
+                <h4>🎯 Worked Practice: Finding Bounds, Suprema, and Maximums</h4>
+                <p style="margin-bottom: 0.6rem;">Let's test these concepts on three representative sets:</p>
+
+                <div style="background: #ffffff; border: 1px solid #bbf7d0; border-radius: 6px; padding: 1rem; margin-bottom: 0.75rem;">
+                    <strong>Case A: The Harmonic Sequence Terms $S = \{\frac{1}{n} \mid n \in \mathbb{Z}_+\} = \{1, \frac{1}{2}, \frac{1}{3}, \frac{1}{4}, \dots\}$</strong>
+                    <ul style="margin: 0.35rem 0 0 1.25rem; font-size: 0.9rem; line-height: 1.6;">
+                        <li><strong>Supremum &amp; Maximum:</strong> The largest term is $1$. Because $1 \in S$, we have $\sup S = 1$ and $\max S = 1$.</li>
+                        <li><strong>Infimum &amp; Minimum:</strong> As $n$ grows, terms shrink closer and closer to $0$. Since all terms are positive, $0$ is a lower bound, and no positive number can be a lower bound. Hence $\inf S = 0$. However, $\frac{1}{n}$ is never actually zero, so <strong>$\min S$ does not exist</strong>!</li>
+                    </ul>
+                </div>
+
+                <div style="background: #ffffff; border: 1px solid #bbf7d0; border-radius: 6px; padding: 1rem; margin-bottom: 0.75rem;">
+                    <strong>Case B: The Semi-Closed Interval $S = [-2, 5)$</strong>
+                    <ul style="margin: 0.35rem 0 0 1.25rem; font-size: 0.9rem; line-height: 1.6;">
+                        <li><strong>Left side:</strong> $-2$ is in the set, so $\inf S = -2$ and $\min S = -2$.</li>
+                        <li><strong>Right side:</strong> $5$ is the least upper bound, so $\sup S = 5$. But $5 \notin S$, so $\max S$ does not exist.</li>
+                    </ul>
+                </div>
+
+                <div style="background: #ffffff; border: 1px solid #bbf7d0; border-radius: 6px; padding: 1rem;">
+                    <strong>Case C: The Natural Numbers $\mathbb{N} = \{0, 1, 2, 3, \dots\}$</strong>
+                    <ul style="margin: 0.35rem 0 0 1.25rem; font-size: 0.9rem; line-height: 1.6;">
+                        <li>$\mathbb{N}$ has a floor: $\inf \mathbb{N} = 0$ and $\min \mathbb{N} = 0$.</li>
+                        <li>By the Archimedean property, $\mathbb{N}$ is unbounded above. Therefore, $\sup \mathbb{N}$ does not exist as a real number (we say $\sup \mathbb{N} = +\infty$).</li>
+                    </ul>
+                </div>
+            </div>
 
             <!-- FOOTER NAVIGATION -->
             <div style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
