@@ -2,11 +2,12 @@
 r"""
 update.py
 
-Generates week1-lecture3.html with an interactive, visual treatment of
-Section 4, Subsection 3 (Boundedness):
-- Embeds a 2-panel SVG contrasting a bounded corridor with unbounded escape.
-- Preserves the expanded prose distinguishing infinite domain vs range.
-- Enforces strict .nobr wrapping on all inline math and punctuation.
+Generates week1-lecture3.html with corrected SVG coordinates in Section 4,
+Subsection 3 (Boundedness):
+- Shifts the Y-axis to x=80 so end-anchored labels (Ceiling M, Floor m)
+  stay well within the panel border.
+- Lowers the plot top to y=64 to prevent a_n from overlapping the subtitle.
+- Preserves all MTHS120 course scaffolding and .nobr LaTeX formatting.
 
 Stages week1-lecture3.html and update.py, commits, and pushes upstream.
 """
@@ -160,9 +161,9 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </div>
                 <div class="notation-grid">
                     <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n$</span></span><span class="notation-desc">The $n$-th term of the sequence (the value stored at position $n$)</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$(a_n)_{n=0}^\infty$</span></span><span class="notation-desc">The complete infinite ordered sequence $(a_0, a_1, a_2, a_3, \dots)$</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$(a_n)_{n=1}^\infty$</span></span><span class="notation-desc">Sequence starting at index $1$ when $n=0$ is undefined (e.g. <span class="nobr">$a_n = 1/n$</span>)</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a: \mathbb{N} \to \mathbb{R}$</span></span><span class="notation-desc">Formal definition: a function assigning each natural index $n$ to a real number $a_n$</span></div>
+                    <div class="notation-item"><span class="nobr">$(a_n)_{n=0}^\infty$</span><span class="notation-desc">The complete infinite ordered sequence $(a_0, a_1, a_2, a_3, \dots)$</span></div>
+                    <div class="notation-item"><span class="nobr">$(a_n)_{n=1}^\infty$</span><span class="notation-desc">Sequence starting at index $1$ when $n=0$ is undefined (e.g. <span class="nobr">$a_n = 1/n$</span>)</span></div>
+                    <div class="notation-item"><span class="nobr">$a: \mathbb{N} \to \mathbb{R}$</span><span class="notation-desc">Formal definition: a function assigning each natural index $n$ to a real number $a_n$</span></div>
                 </div>
             </div>
 
@@ -754,7 +755,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 Look at the four discrete profiles below. Notice how clearly the discrete points reveal the underlying directional behavior:
             </p>
 
-            <!-- 2x2 VISUAL GRID FOR MONOTONICITY (PROPERLY POSITIONED UNDER SUBSECTION 1 EXPLANATION) -->
+            <!-- 2x2 VISUAL GRID FOR MONOTONICITY -->
             <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; text-align: center;">
                 <p style="font-size: 0.95rem; font-weight: 700; color: #1e293b; margin-top: 0; margin-bottom: 0.35rem;">
                     VISUALIZING MONOTONICITY: Directional Profiles in the Discrete Plane
@@ -766,13 +767,13 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     <!-- PANEL 1: STRICTLY INCREASING -->
                     <g transform="translate(10, 10)">
                         <rect x="0" y="0" width="395" height="210" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
-                        <text x="20" y="26" font-size="12" font-weight="bold" fill="#0284c7">1. Strictly Increasing: aₙ₊₁ > aₙ</text>
-                        <text x="20" y="42" font-size="10.5" fill="#64748b">Climbs at every single step (never pauses or dips)</text>
+                        <text x="20" y="24" font-size="12" font-weight="bold" fill="#0284c7">1. Strictly Increasing: aₙ₊₁ > aₙ</text>
+                        <text x="20" y="38" font-size="10.5" fill="#64748b">Climbs at every single step (never pauses or dips)</text>
 
                         <line x1="45" y1="180" x2="370" y2="180" stroke="#0f172a" stroke-width="1.5" />
-                        <line x1="50" y1="185" x2="50" y2="55" stroke="#0f172a" stroke-width="1.5" />
+                        <line x1="50" y1="185" x2="50" y2="62" stroke="#0f172a" stroke-width="1.5" />
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
-                        <text x="46" y="50" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
+                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
 
                         <!-- Points -->
                         <line x1="80" y1="180" x2="80" y2="155" stroke="#94a3b8" stroke-dasharray="2,2" />
@@ -801,13 +802,13 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     <!-- PANEL 2: WEAKLY INCREASING (PLATEAU) -->
                     <g transform="translate(435, 10)">
                         <rect x="0" y="0" width="395" height="210" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
-                        <text x="20" y="26" font-size="12" font-weight="bold" fill="#059669">2. Increasing (Weak): aₙ₊₁ ≥ aₙ</text>
-                        <text x="20" y="42" font-size="10.5" fill="#64748b">Never steps backwards, but flat plateaus are permitted</text>
+                        <text x="20" y="24" font-size="12" font-weight="bold" fill="#059669">2. Increasing (Weak): aₙ₊₁ ≥ aₙ</text>
+                        <text x="20" y="38" font-size="10.5" fill="#64748b">Never steps backwards, but flat plateaus are permitted</text>
 
                         <line x1="45" y1="180" x2="370" y2="180" stroke="#0f172a" stroke-width="1.5" />
-                        <line x1="50" y1="185" x2="50" y2="55" stroke="#0f172a" stroke-width="1.5" />
+                        <line x1="50" y1="185" x2="50" y2="62" stroke="#0f172a" stroke-width="1.5" />
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
-                        <text x="46" y="50" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
+                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
 
                         <!-- Points with plateau at n=1 and n=2 -->
                         <line x1="80" y1="180" x2="80" y2="150" stroke="#94a3b8" stroke-dasharray="2,2" />
@@ -839,13 +840,13 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     <!-- PANEL 3: STRICTLY DECREASING -->
                     <g transform="translate(10, 240)">
                         <rect x="0" y="0" width="395" height="210" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
-                        <text x="20" y="26" font-size="12" font-weight="bold" fill="#d97706">3. Strictly Decreasing: aₙ₊₁ &lt; aₙ</text>
-                        <text x="20" y="42" font-size="10.5" fill="#64748b">Cascades downward at each step (always drops)</text>
+                        <text x="20" y="24" font-size="12" font-weight="bold" fill="#d97706">3. Strictly Decreasing: aₙ₊₁ &lt; aₙ</text>
+                        <text x="20" y="38" font-size="10.5" fill="#64748b">Cascades downward at each step (always drops)</text>
 
                         <line x1="45" y1="180" x2="370" y2="180" stroke="#0f172a" stroke-width="1.5" />
-                        <line x1="50" y1="185" x2="50" y2="55" stroke="#0f172a" stroke-width="1.5" />
+                        <line x1="50" y1="185" x2="50" y2="62" stroke="#0f172a" stroke-width="1.5" />
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
-                        <text x="46" y="50" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
+                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
 
                         <!-- Points -->
                         <line x1="80" y1="180" x2="80" y2="60" stroke="#94a3b8" stroke-dasharray="2,2" />
@@ -874,13 +875,13 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     <!-- PANEL 4: NON-MONOTONIC -->
                     <g transform="translate(435, 240)">
                         <rect x="0" y="0" width="395" height="210" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
-                        <text x="20" y="26" font-size="12" font-weight="bold" fill="#dc2626">4. Non-Monotonic: Changes Direction</text>
-                        <text x="20" y="42" font-size="10.5" fill="#64748b">Zigzags up and down (fails the single-direction test)</text>
+                        <text x="20" y="24" font-size="12" font-weight="bold" fill="#dc2626">4. Non-Monotonic: Changes Direction</text>
+                        <text x="20" y="38" font-size="10.5" fill="#64748b">Zigzags up and down (fails the single-direction test)</text>
 
                         <line x1="45" y1="180" x2="370" y2="180" stroke="#0f172a" stroke-width="1.5" />
-                        <line x1="50" y1="185" x2="50" y2="55" stroke="#0f172a" stroke-width="1.5" />
+                        <line x1="50" y1="185" x2="50" y2="62" stroke="#0f172a" stroke-width="1.5" />
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
-                        <text x="46" y="50" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
+                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
 
                         <!-- Points zigzagging -->
                         <line x1="80" y1="180" x2="80" y2="140" stroke="#94a3b8" stroke-dasharray="2,2" />
@@ -967,7 +968,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </ul>
             </div>
 
-            <!-- 2-PANEL VISUALIZATION FOR BOUNDEDNESS -->
+            <!-- 2-PANEL VISUALIZATION FOR BOUNDEDNESS (FIXED COORDINATES) -->
             <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; text-align: center;">
                 <p style="font-size: 0.95rem; font-weight: 700; color: #1e293b; margin-top: 0; margin-bottom: 0.35rem;">
                     VISUALIZING BOUNDS: Shaded Corridors vs. Unbounded Escapes
@@ -982,34 +983,34 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <text x="20" y="24" font-size="11.5" font-weight="bold" fill="#047857">1. Bounded Sequence: m &le; aₙ &le; M</text>
                         <text x="20" y="38" font-size="10" fill="#64748b">Trapped forever inside a horizontal corridor</text>
 
-                        <!-- Shaded Corridor between y=65 (M) and y=175 (m) -->
-                        <rect x="50" y="65" width="320" height="110" fill="#ecfdf5" opacity="0.7" />
+                        <!-- Shaded Corridor between y=80 (M) and y=175 (m) -->
+                        <rect x="80" y="80" width="290" height="95" fill="#ecfdf5" opacity="0.8" />
 
-                        <!-- Axes -->
-                        <line x1="45" y1="205" x2="370" y2="205" stroke="#0f172a" stroke-width="1.5" />
-                        <line x1="50" y1="210" x2="50" y2="45" stroke="#0f172a" stroke-width="1.5" />
+                        <!-- Axes: Origin at (80, 205) -->
+                        <line x1="75" y1="205" x2="370" y2="205" stroke="#0f172a" stroke-width="1.5" />
+                        <line x1="80" y1="210" x2="80" y2="62" stroke="#0f172a" stroke-width="1.5" />
                         <text x="375" y="209" font-size="11" font-weight="bold" fill="#0f172a">n</text>
-                        <text x="46" y="42" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
+                        <text x="76" y="56" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">aₙ</text>
 
                         <!-- Upper Bound Ceiling M -->
-                        <line x1="50" y1="65" x2="370" y2="65" stroke="#10b981" stroke-width="1.8" stroke-dasharray="4,3" />
-                        <text x="42" y="69" font-size="10" font-weight="bold" fill="#047857" text-anchor="end">Ceiling M</text>
+                        <line x1="80" y1="80" x2="370" y2="80" stroke="#10b981" stroke-width="1.8" stroke-dasharray="4,3" />
+                        <text x="74" y="84" font-size="10" font-weight="bold" fill="#047857" text-anchor="end">Ceiling M</text>
 
                         <!-- Lower Bound Floor m -->
-                        <line x1="50" y1="175" x2="370" y2="175" stroke="#10b981" stroke-width="1.8" stroke-dasharray="4,3" />
-                        <text x="42" y="179" font-size="10" font-weight="bold" fill="#047857" text-anchor="end">Floor m</text>
+                        <line x1="80" y1="175" x2="370" y2="175" stroke="#10b981" stroke-width="1.8" stroke-dasharray="4,3" />
+                        <text x="74" y="179" font-size="10" font-weight="bold" fill="#047857" text-anchor="end">Floor m</text>
 
                         <!-- Trapped Points -->
-                        <circle cx="80" cy="155" r="4" fill="#059669" />
-                        <circle cx="120" cy="85" r="4" fill="#059669" />
-                        <circle cx="160" cy="140" r="4" fill="#059669" />
-                        <circle cx="200" cy="100" r="4" fill="#059669" />
-                        <circle cx="240" cy="130" r="4" fill="#059669" />
-                        <circle cx="280" cy="110" r="4" fill="#059669" />
-                        <circle cx="320" cy="125" r="4" fill="#059669" />
-                        <circle cx="355" cy="115" r="4" fill="#059669" />
+                        <circle cx="110" cy="155" r="4" fill="#059669" />
+                        <circle cx="145" cy="95" r="4" fill="#059669" />
+                        <circle cx="180" cy="145" r="4" fill="#059669" />
+                        <circle cx="215" cy="110" r="4" fill="#059669" />
+                        <circle cx="250" cy="140" r="4" fill="#059669" />
+                        <circle cx="285" cy="118" r="4" fill="#059669" />
+                        <circle cx="320" cy="132" r="4" fill="#059669" />
+                        <circle cx="355" cy="125" r="4" fill="#059669" />
 
-                        <text x="210" y="123" font-size="9.5" font-weight="bold" fill="#065f46" text-anchor="middle">|aₙ| &le; K (Safe inside corridor)</text>
+                        <text x="235" y="102" font-size="9" font-weight="bold" fill="#065f46" text-anchor="middle">|aₙ| &le; K (Trapped inside corridor)</text>
                     </g>
 
                     <!-- PANEL 2: UNBOUNDED ESCAPE -->
@@ -1018,27 +1019,27 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <text x="20" y="24" font-size="11.5" font-weight="bold" fill="#b91c1c">2. Unbounded Sequence (Escape)</text>
                         <text x="20" y="38" font-size="10" fill="#64748b">Punches through any proposed ceiling M</text>
 
-                        <!-- Axes -->
-                        <line x1="45" y1="205" x2="370" y2="205" stroke="#0f172a" stroke-width="1.5" />
-                        <line x1="50" y1="210" x2="50" y2="45" stroke="#0f172a" stroke-width="1.5" />
+                        <!-- Axes: Origin at (80, 205) -->
+                        <line x1="75" y1="205" x2="370" y2="205" stroke="#0f172a" stroke-width="1.5" />
+                        <line x1="80" y1="210" x2="80" y2="62" stroke="#0f172a" stroke-width="1.5" />
                         <text x="375" y="209" font-size="11" font-weight="bold" fill="#0f172a">n</text>
-                        <text x="46" y="42" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
+                        <text x="76" y="56" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">aₙ</text>
 
                         <!-- Attempted Ceiling M -->
-                        <line x1="50" y1="110" x2="370" y2="110" stroke="#ef4444" stroke-width="1.8" stroke-dasharray="4,3" />
-                        <text x="42" y="114" font-size="10" font-weight="bold" fill="#b91c1c" text-anchor="end">Ceiling M</text>
+                        <line x1="80" y1="120" x2="370" y2="120" stroke="#ef4444" stroke-width="1.8" stroke-dasharray="4,3" />
+                        <text x="74" y="124" font-size="10" font-weight="bold" fill="#b91c1c" text-anchor="end">Ceiling M</text>
 
                         <!-- Points Escaping Upward -->
-                        <circle cx="80" cy="190" r="4" fill="#dc2626" />
-                        <circle cx="130" cy="170" r="4" fill="#dc2626" />
-                        <circle cx="180" cy="145" r="4" fill="#dc2626" />
-                        <circle cx="230" cy="115" r="4" fill="#dc2626" />
-                        <circle cx="280" cy="80" r="5" fill="#dc2626" stroke="#b91c1c" stroke-width="1.5" />
+                        <circle cx="110" cy="190" r="4" fill="#dc2626" />
+                        <circle cx="150" cy="170" r="4" fill="#dc2626" />
+                        <circle cx="195" cy="145" r="4" fill="#dc2626" />
+                        <circle cx="240" cy="115" r="4" fill="#dc2626" />
+                        <circle cx="285" cy="80" r="5" fill="#dc2626" stroke="#b91c1c" stroke-width="1.5" />
                         <circle cx="330" cy="40" r="5" fill="#dc2626" stroke="#b91c1c" stroke-width="1.5" />
 
                         <!-- Indicator arrow -->
-                        <line x1="280" y1="105" x2="280" y2="88" stroke="#dc2626" stroke-width="1.5" />
-                        <text x="295" y="98" font-size="8.5" font-weight="bold" fill="#b91c1c">Breaks ceiling!</text>
+                        <line x1="285" y1="108" x2="285" y2="88" stroke="#dc2626" stroke-width="1.5" />
+                        <text x="302" y="98" font-size="8.5" font-weight="bold" fill="#b91c1c">Breaks ceiling!</text>
                     </g>
                 </svg>
             </div>
@@ -1555,7 +1556,7 @@ def execute_git(args: list[str]) -> subprocess.CompletedProcess:
 
 def main() -> None:
     TARGET_HTML.write_text(WEEK1_LECTURE3_HTML, encoding="utf-8")
-    print(f"Successfully generated {TARGET_HTML.name} with boundedness visual corridor.")
+    print(f"Successfully generated {TARGET_HTML.name} with adjusted SVG coordinate padding.")
 
     execute_git(["git", "rev-parse", "--is-inside-work-tree"])
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
@@ -1565,11 +1566,11 @@ def main() -> None:
         print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Add 2-panel boundedness visual comparing corridors and escapes"
+    commit_subject = "Fix SVG label clipping and overlaps in Section 4 bounds visual"
     commit_body = (
-        "Add 2-panel SVG to Section 4 Subsection 3 illustrating bounds,\n"
-        "contrast shaded horizontal corridor (m <= a_n <= M) with escapes,\n"
-        "place visual directly beneath formal bounds definition box,\n"
+        "Shift Y-axis to x=80 in Section 4 boundedness 2-panel SVG,\n"
+        "provide padding so Ceiling M and Floor m labels remain inside box,\n"
+        "lower plot ceiling to y=64 to prevent a_n from overlapping subtitle,\n"
         "and stage updated week1-lecture3.html alongside update.py."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
