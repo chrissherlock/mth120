@@ -99,17 +99,22 @@
                 Welcome to Lecture 3. Having built the grammatical machinery of sets and functions (Lecture 1) and solidified the continuous real line $\mathbb{R}$ with completeness (Lecture 2), we now introduce motion into our universe. Here we study <strong>sequences</strong>—the fundamental vehicles of convergence, approximation, and discrete calculus.
             </div>
 
-            <!-- REASSURING STUDENT ORIENTATION -->
-            <div style="margin: 2rem 0 2.25rem 0;">
-                <h3 style="margin-top: 0; color: #0f172a; font-size: 1.25rem;">Finding Your Footing: Welcome to Discrete Dynamics</h3>
+            <!-- EXPANDED REASSURING STUDENT ORIENTATION -->
+            <div style="margin: 2rem 0 2.25rem 0; background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 8px; padding: 1.75rem 2rem;">
+                <h3 style="margin-top: 0; color: #0f172a; font-size: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>🧭</span> Finding Your Footing: Welcome to Discrete Dynamics
+                </h3>
                 <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                    If you have studied calculus in secondary school, functions have almost always meant continuous curves: drawing a parabola $y = x^2$ with an unbroken pencil line, sliding along a smooth curve, or taking the tangent line at any arbitrary decimal value like $x = 1.414$.
+                    If you have studied calculus in secondary school, functions have almost always meant continuous curves: drawing a parabola $y = x^2$ with an unbroken pencil line, sliding along a smooth curve, or taking the tangent line at any arbitrary decimal value like $x = 1.414$. In that continuous universe, numbers flow into one another without gaps, and change happens smoothly and instantaneously.
                 </p>
                 <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                    In this lecture, we step back from smooth slides and instead examine <strong>stepping stones</strong>. Rather than gliding smoothly across all real numbers, we take discrete integer steps: step 0, step 1, step 2, step 3... This is the world of <strong>sequences</strong>.
+                    In this lecture, we step back from smooth slides and instead examine <strong>stepping stones</strong>. Rather than gliding across all real numbers, we take discrete integer steps: step 0, step 1, step 2, step 3... This is the world of <strong>sequences</strong>. Instead of asking what happens at $x = 1.414$, we ask what happens at the 100th locker, or how an infinite list of numbers behaves as our step counter marches toward infinity.
+                </p>
+                <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                    At first glance, undergraduate analysis notation—subscripts <span class="nobr">$a_n$,</span> index ranges <span class="nobr">$(a_n)_{n=0}^\infty$,</span> and difference operators <span class="nobr">$a_n'$</span>—can look intimidatingly formal. Rest assured: every symbol in this lecture is simply a clean, precise way to label an item in an infinite list. You already intuitively understand these patterns from everyday life (such as monthly bank balances or compounding interest).
                 </p>
                 <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 0;">
-                    At first glance, some of the notation—such as subscripts <span class="nobr">$a_n$,</span> index ranges, and differences between terms—can look intimidatingly formal. Rest assured: every symbol is simply a compact way to label an item in an infinite list. Take your time, picture the lockers and steps, and enjoy seeing how discrete arithmetic lays the foundation for continuous calculus!
+                    Take your time as we walk down the infinite locker corridor. See how arithmetic strides and geometric zoom factors govern discrete growth, notice how taking differences gives us a "discrete derivative," and enjoy seeing how discrete arithmetic lays the unshakable foundation for the limits and convergence theorems awaiting us in Week 2!
                 </p>
             </div>
 
@@ -464,7 +469,7 @@
                 </div>
             </div>
 
-            <!-- INTERACTIVE PEDAGOGICAL AID: PROGRESSION STEPPING SIMULATOR -->
+            <!-- INTERACTIVE PEDAGOGICAL AID: PROGRESSION STEPPING SIMULATOR (POSITIONED TO DEMONSTRATE THE INTUITION) -->
             <div id="progression-stepper-widget" style="margin: 2.25rem 0; background: #ffffff; border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); overflow: hidden;">
                 <!-- HEADER & COMPARATIVE TOGGLES -->
                 <div style="background: #f8fafc; border-bottom: 1px solid var(--border); padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
