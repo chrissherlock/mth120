@@ -2,206 +2,522 @@
 """
 update.py
 
-Injects historical biography boxes for Hippasus, Eudoxus, Weierstrass,
-and Dedekind into week1-lecture2.html using the exact lavender .biography-box
-styling, then stages both the HTML file and update.py before committing
-and pushing upstream.
+Generates week1-lecture3.html with reassuring student orientation,
+notation glossaries, SVG diagrams, worked examples for discrete calculus,
+and a Grand Arc synthesis, then stages both files and pushes to Git.
 """
 
 from pathlib import Path
-import re
 import subprocess
 import sys
 
-TARGET_HTML = Path("week1-lecture2.html")
+TARGET_HTML = Path("week1-lecture3.html")
 SCRIPT_FILE = Path(__file__).resolve()
 
-HIPPASUS_BOX = r"""            <!-- HISTORICAL CONTEXT: HIPPASUS -->
-            <div class="biography-box" style="margin-top: 2rem;">
-                <h4>🏛️ The Scandal of Incommensurability: Hippasus of Metapontum</h4>
-                <div style="display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap; margin-top: 0.75rem;">
-                    <div style="flex: 0 0 135px; max-width: 135px;">
-                        <img src="images/hippasus.png" alt="Hippasus of Metapontum" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.06); display: block;">
-                        <span style="display: block; font-size: 0.8rem; color: #64748b; text-align: center; margin-top: 0.4rem; line-height: 1.3;">Hippasus of Metapontum<br>(c. 5th Century BCE)</span>
-                    </div>
-                    <div style="flex: 1; min-width: 260px;">
-                        <p style="margin-top: 0; color: #334155; line-height: 1.65; font-size: 0.96rem;">
-                            <strong><a href="https://en.wikipedia.org/wiki/Hippasus" target="_blank" rel="noopener noreferrer" style="color: #4f46e5; text-decoration: underline;">Hippasus of Metapontum</a></strong> was an early Greek philosopher and member of the Pythagorean brotherhood. The Pythagoreans held a mystical doctrine that <em>"all is number"</em>, believing that every geometric magnitude in the cosmos could be expressed as an exact ratio of integers.
-                        </p>
-                        <p style="color: #334155; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0.5rem;">
-                            <strong>Shattering the World of Fractions:</strong> While examining the simplest geometric figure imaginable—a unit square with side lengths of $1$—Hippasus evaluated the diagonal hypotenuse $\sqrt{1^2 + 1^2} = \sqrt{2}$. Using an early geometric version of the parity contradiction shown above, he proved the diagonal is <strong>incommensurable</strong> with the sides: no common sub-unit exists that divides evenly into both.
-                        </p>
-                        <p style="color: #334155; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0;">
-                            By proving that $\sqrt{2} \notin \mathbb{Q}$, Hippasus revealed that the rational numbers leave gaping, invisible pinprick holes along the number line. According to mathematical lore, the discovery so severely undermined Pythagorean cosmology that Hippasus was taken out to sea and thrown overboard for heresy.
-                        </p>
-                    </div>
-                </div>
-            </div>"""
+WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1, Lecture 3: Sequences and Discrete Calculus | MTHS120</title>
+    <!-- KaTeX Integration -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+    <style>
+        :root {
+            --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
+            --accent: #d97706; --accent-hover: #b45309;
+            --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { max-width: 100%; overflow-x: hidden; }
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; width: 100%; }
+        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
 
-EUDOXUS_BOX = r"""            <!-- HISTORICAL CONTEXT: EUDOXUS -->
-            <div class="biography-box" style="margin-top: 2rem;">
-                <h4>🏛️ Banishment of the Infinitesimal: Eudoxus of Cnidus</h4>
-                <div style="display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap; margin-top: 0.75rem;">
-                    <div style="flex: 0 0 135px; max-width: 135px;">
-                        <img src="images/eudoxus.jpg" alt="Eudoxus of Cnidus" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.06); display: block;">
-                        <span style="display: block; font-size: 0.8rem; color: #64748b; text-align: center; margin-top: 0.4rem; line-height: 1.3;">Eudoxus of Cnidus<br>(c. 408–355 BCE)</span>
-                    </div>
-                    <div style="flex: 1; min-width: 260px;">
-                        <p style="margin-top: 0; color: #334155; line-height: 1.65; font-size: 0.96rem;">
-                            <strong><a href="https://en.wikipedia.org/wiki/Eudoxus_of_Cnidus" target="_blank" rel="noopener noreferrer" style="color: #4f46e5; text-decoration: underline;">Eudoxus of Cnidus</a></strong> was an ancient Greek astronomer, scholar, and mathematician, widely considered antiquity's greatest geometer alongside Archimedes. Following the crisis of incommensurability sparked by Hippasus, Greek geometry was paralyzed because existing proofs relied on integer ratios that failed for irrational lengths.
-                        </p>
-                        <p style="color: #334155; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0.5rem;">
-                            <strong>The Theory of Proportions:</strong> Preserved in Book V of Euclid's <em><a href="https://en.wikipedia.org/wiki/Euclid%27s_Elements" target="_blank" rel="noopener noreferrer" style="color: #4f46e5; font-style: italic; text-decoration: underline;">Elements</a></em>, Eudoxus formulated a rigorous definition of proportion that applied equally to rational and incommensurable magnitudes. Crucially, he established what we now know as the <strong>Archimedean Property</strong>: any two positive quantities can exceed one another if either is added to itself a sufficient number of times.
-                        </p>
-                        <p style="color: #334155; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0;">
-                            In modern analysis, this guarantees that the real line contains no non-zero "infinitely small" ghosts. No matter how small an interval $\epsilon > 0$ is chosen, taking enough discrete steps of size $\epsilon$ will inevitably outrun any finite number, establishing an essential bridge between discrete counting and continuous space.
-                        </p>
-                    </div>
-                </div>
-            </div>"""
+        .intro-lead { font-size: 1.1rem; color: #1e293b; line-height: 1.7; margin-bottom: 1.5rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); border: 1px solid var(--border); border-left-width: 4px; }
+        .toc-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.75rem; margin: 1.75rem 0 2.5rem 0; }
+        .toc-box h4 { margin: 0 0 0.75rem 0; color: #92400e; font-size: 1.05rem; }
+        .toc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.5rem 1.5rem; margin: 0; padding-left: 1.25rem; }
+        .toc-grid li { margin-bottom: 0.35rem; font-size: 0.95rem; }
+        .toc-grid a { color: #b45309; text-decoration: none; font-weight: 500; }
+        .toc-grid a:hover { text-decoration: underline; color: var(--accent-hover); }
 
-WEIERSTRASS_BOX = r"""            <!-- HISTORICAL CONTEXT: WEIERSTRASS -->
-            <div class="biography-box" style="margin-top: 2rem;">
-                <h4>🏛️ The Architect of Rigor: Karl Weierstrass</h4>
-                <div style="display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap; margin-top: 0.75rem;">
-                    <div style="flex: 0 0 135px; max-width: 135px;">
-                        <img src="images/weierstrass.png" alt="Karl Weierstrass" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.06); display: block;">
-                        <span style="display: block; font-size: 0.8rem; color: #64748b; text-align: center; margin-top: 0.4rem; line-height: 1.3;">Karl Weierstrass<br>(1815–1897)</span>
-                    </div>
-                    <div style="flex: 1; min-width: 260px;">
-                        <p style="margin-top: 0; color: #334155; line-height: 1.65; font-size: 0.96rem;">
-                            <strong><a href="https://en.wikipedia.org/wiki/Karl_Weierstrass" target="_blank" rel="noopener noreferrer" style="color: #4f46e5; text-decoration: underline;">Karl Weierstrass</a></strong> was a German mathematician universally regarded as the "father of modern analysis." For the first two centuries following Newton and Leibniz, calculus relied heavily on physical intuition, moving particles, and geometric graphs—descriptions that frequently collapsed when dealing with pathological curves.
-                        </p>
-                        <p style="color: #334155; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0.5rem;">
-                            <strong>Absolute Value as a Metric:</strong> Weierstrass realized that rigorous analysis required eliminating vague kinematic phrases like <em>"approaches"</em> or <em>"gets infinitely close."</em> He replaced them with static, algebraic inequalities centered entirely on the <strong>absolute value function</strong> $|x - y|$.
-                        </p>
-                        <p style="color: #334155; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0;">
-                            By defining closeness through exact distance bounds ($|f(x) - L| < \epsilon$ whenever $|x - c| < \delta$), Weierstrass transformed the absolute value from a mere sign-stripping operation into the primary measuring tape of pure mathematics. Properties like the <strong>Triangle Inequality</strong> became the workhorses that prove whether sequences converge and functions stay continuous.
-                        </p>
-                    </div>
-                </div>
-            </div>"""
+        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+        h3 { color: #1e293b; margin-top: 1.5rem; font-family: var(--font-ui); scroll-margin-top: 2rem; }
 
-DEDEKIND_BOX = r"""            <!-- HISTORICAL CONTEXT: DEDEKIND -->
-            <div class="biography-box" style="margin-top: 2rem;">
-                <h4>🏛️ Slicing the Continuum: Richard Dedekind</h4>
-                <div style="display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap; margin-top: 0.75rem;">
-                    <div style="flex: 0 0 135px; max-width: 135px;">
-                        <img src="images/dedekind.jpg" alt="Richard Dedekind" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.06); display: block;">
-                        <span style="display: block; font-size: 0.8rem; color: #64748b; text-align: center; margin-top: 0.4rem; line-height: 1.3;">Richard Dedekind<br>(1831–1916)</span>
-                    </div>
-                    <div style="flex: 1; min-width: 260px;">
-                        <p style="margin-top: 0; color: #334155; line-height: 1.65; font-size: 0.96rem;">
-                            <strong><a href="https://en.wikipedia.org/wiki/Richard_Dedekind" target="_blank" rel="noopener noreferrer" style="color: #4f46e5; text-decoration: underline;">Richard Dedekind</a></strong> was a German mathematician who made foundational contributions to abstract algebra and number theory. In 1858, while preparing lecture notes for an introductory calculus class at the Polytechnic in Zürich, he was deeply troubled to discover that while textbooks spoke constantly of the "continuous real line," mathematics possessed no rigorous definition of what continuity actually meant.
-                        </p>
-                        <p style="color: #334155; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0.5rem;">
-                            <strong>Dedekind Cuts:</strong> In his landmark 1872 treatise <em><a href="https://en.wikipedia.org/wiki/Dedekind_cut" target="_blank" rel="noopener noreferrer" style="color: #4f46e5; font-style: italic; text-decoration: underline;">Stetigkeit und irrationale Zahlen</a></em> (Continuity and Irrational Numbers), Dedekind asked: <em>What is the fundamental property of a line that has no gaps?</em> His insight was that any knife cut dividing the real numbers into left and right halves must pass through an exact boundary point.
-                        </p>
-                        <p style="color: #334155; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0;">
-                            When slicing the rational numbers $\mathbb{Q}$ at $\sqrt{2}$, however, the knife passes through nothing: the left set has no maximum, and the right set has no minimum. Dedekind showed that by defining irrational numbers as the <em>cuts themselves</em>, we fill every microscopic pinprick hole in $\mathbb{Q}$, guaranteeing that every bounded set has a supremum and completing the continuum $\mathbb{R}$.
-                        </p>
-                    </div>
-                </div>
-            </div>"""
+        .infobox { background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.25rem 0 1.75rem 0; }
+        .infobox h4 { margin: 0 0 0.85rem 0; color: #0f172a; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-ui); }
+        .notation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 0.85rem 1.75rem; font-size: 0.95rem; }
+        .notation-item { display: grid; grid-template-columns: minmax(130px, max-content) 1fr; gap: 0.75rem; align-items: center; }
+        .notation-sym { font-weight: 600; color: var(--accent); white-space: nowrap; display: flex; justify-content: center; align-items: center; text-align: center; }
+        .notation-desc { min-width: 0; word-break: break-word; line-height: 1.5; color: #334155; }
+        .infobox-intro { font-size: 0.93rem; color: #475569; line-height: 1.6; margin: 0 0 1.25rem 0; padding-bottom: 0.85rem; border-bottom: 1px solid #e2e8f0; }
 
-def run_git(args: list[str]) -> subprocess.CompletedProcess:
-    result = subprocess.run(args, capture_output=True, text=True)
-    if result.returncode != 0:
+        .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; border: 1px solid var(--border); border-left-width: 4px; }
+        .aside-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #b45309; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .aside-box h4 { margin-top: 0; color: #b45309; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+
+        .worked-example-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .worked-example-box h4 { margin-top: 0; color: #047857; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .worked-example-box p, .worked-example-box li { color: #0f172a !important; }
+
+        .biography-box { background: #f5f3ff; border: 1px solid #ddd6fe; border-left: 5px solid #6366f1; padding: 1.25rem 1.5rem; margin: 2rem 0; border-radius: 0 6px 6px 0; }
+        .biography-box h4 { margin-top: 0; color: #3730a3; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; }
+        .biography-box p, .biography-box li { color: #0f172a !important; }
+
+        @media (max-width: 768px) {
+            body { background: #ffffff !important; padding: 1rem 0.75rem !important; margin: 0 !important; max-width: 100vw !important; overflow-x: hidden !important; }
+            .container { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
+            .module-content { background: transparent !important; padding: 0 !important; border: none !important; border-radius: 0 !important; box-shadow: none !important; margin-bottom: 1rem !important; }
+            .header { padding-bottom: 0.75rem !important; margin-bottom: 1.25rem !important; }
+
+            .biography-box { padding: 1.25rem 1rem !important; }
+            .biography-box > div { flex-direction: column !important; align-items: stretch !important; gap: 1.25rem !important; }
+            .biography-box > div > div:first-child { flex: 0 0 100% !important; width: 100% !important; max-width: 100% !important; margin: 0 0 0.5rem 0 !important; }
+            .biography-box > div > div:first-child img { width: 100% !important; max-height: 380px !important; object-fit: cover !important; border-radius: 6px !important; display: block !important; }
+            .biography-box > div > div:last-child { width: 100% !important; min-width: 0 !important; }
+
+            ol, ul { padding-left: 1.25rem !important; margin-left: 0 !important; }
+
+            .header > div:last-child, .nav-btn-group, .footer-nav {
+                display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; width: 100% !important; gap: 0.5rem !important;
+            }
+            .header > div:last-child a, .nav-btn-group a, .footer-nav a {
+                flex: 1 1 0 !important; min-width: 0 !important; text-align: center !important; padding: 0.55rem 0.4rem !important;
+                font-size: 0.84rem !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
+            }
+
+            p, li, .definition-box { overflow-wrap: anywhere; word-break: normal; }
+            .katex-display {
+                overflow-x: auto !important; overflow-y: hidden !important; -webkit-overflow-scrolling: touch !important;
+                max-width: 100% !important; padding: 0.25rem 0 !important; margin: 0.5rem 0 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- TOP NAVIGATION HEADER -->
+        <div class="header">
+            <div>
+                <h1>Week 1, Lecture 3: Sequences and Discrete Calculus</h1>
+                <a href="week1.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">&larr; Week 1 Overview Hub</a>
+            </div>
+            <div class="nav-btn-group" style="display: flex; gap: 0.5rem; align-items: center;">
+                <a href="week1-lecture2.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem;">&larr; Prev: Lecture 2</a>
+                <a href="week1.html" style="background: var(--accent); color: white; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Week 1 Hub &rarr;</a>
+            </div>
+        </div>
+
+        <div class="module-content">
+            <div class="intro-lead">
+                Welcome to Lecture 3. Having built the grammatical machinery of sets and functions (Lecture 1) and solidified the continuous real line $\mathbb{R}$ with completeness (Lecture 2), we now introduce motion and dynamics into our universe. Here we study <strong>sequences</strong>—the fundamental vehicles of convergence, infinite approximation, and discrete calculus.
+            </div>
+
+            <!-- REASSURING STUDENT ORIENTATION -->
+            <div style="margin: 2rem 0 2.25rem 0;">
+                <h3 style="margin-top: 0; color: #0f172a; font-size: 1.25rem;">Finding Your Footing: Why Think of a Sequence as a Function?</h3>
+                <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                    Almost everyone has seen sequences before in school: they are presented casually as an ordered row of numbers with commas, like $2, 4, 6, 8, \dots$, or a puzzle where you find "the next pattern." When university analysis begins, mathematicians suddenly replace this casual list with formal functional notation: $a: \mathbb{N} \to \mathbb{R}$.
+                </p>
+                <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                    You might wonder: <em>"Why overcomplicate something as simple as a list of numbers?"</em>
+                </p>
+                <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                    The reason is that casual lists cannot be analyzed rigorously when they become infinite. If you simply write down dots ($\dots$), you have not defined a rule. But when you treat a sequence as a <strong>function whose domain is the natural numbers $\mathbb{N}$</strong>, every term $a_n$ is anchored to an exact index $n$. This allows us to use all the algebraic machinery of functions, composition, and bounds that we built in Lectures 1 and 2.
+                </p>
+                <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 0;">
+                    In this lecture, we will also explore how sequences can change over time. By looking at the difference between consecutive terms ($a_{n+1} - a_n$), we discover <strong>discrete calculus</strong>—the stepping-stone that leads directly into continuous derivatives in later weeks. Don't worry if the subscript indices look busy; take them step-by-step!
+                </p>
+            </div>
+
+            <!-- TABLE OF CONTENTS -->
+            <div class="toc-box">
+                <h4>📌 Lecture 3 Topics</h4>
+                <ul class="toc-grid">
+                    <li><a href="#sequences-as-functions">1. Sequences Defined as Functions ($f: \mathbb{N} \to \mathbb{R}$)</a></li>
+                    <li><a href="#catalogue-sequences">2. A Gallery of Fundamental Sequences</a></li>
+                    <li><a href="#arithmetic-geometric">3. Arithmetic and Geometric Sequences</a></li>
+                    <li><a href="#sequence-properties">4. Classifying Behavior: Monotonicity and Bounds</a></li>
+                    <li><a href="#algebra-of-sequences">5. The Algebra of Sequences (Scaling and Sums)</a></li>
+                    <li><a href="#derived-sequences">6. Discrete Calculus: The Derived Sequence ($a_n'$)</a></li>
+                    <li><a href="#grand-arc">7. The Grand Arc: From Discrete Rungs to the Continuum</a></li>
+                </ul>
+            </div>
+
+            <!-- SECTION 1 -->
+            <h2 id="sequences-as-functions">1. Sequences Defined as Functions ($f: \mathbb{N} \to \mathbb{R}$)</h2>
+            <div class="infobox">
+                <h4>📖 Notation Reference: Sequences &amp; Index Notation</h4>
+                <div class="infobox-intro">
+                    <strong>Lists through functional eyes:</strong> Instead of writing inputs inside parentheses like $f(n)$, sequences use subscript notation $a_n$ to represent the $n$-th value.
+                </div>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym">$a: \mathbb{N} \to \mathbb{R}$</span><span class="notation-desc">A sequence as a function mapping index $n$ to real output $a(n)$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$a_n$</span><span class="notation-desc">Index shorthand for $a(n)$ (the $n$-th term of the sequence)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$(a_n)_{n=0}^\infty$</span><span class="notation-desc">The complete infinite ordered sequence $(a_0, a_1, a_2, \dots)$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$(a_n)_{n=1}^\infty$</span><span class="notation-desc">Sequence starting at index $1$ when $n=0$ is undefined (e.g. $1/n$)</span></div>
+                </div>
+            </div>
+
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                In everyday language, an infinite sequence of real numbers is simply an ordered list:
+            </p>
+            <div style="text-align: center; margin: 1rem 0; font-size: 1.05rem;">
+                $$a_0, \; a_1, \; a_2, \; a_3, \; \dots, \; a_n, \; \dots$$
+            </div>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                Formally, however, we define a <strong>sequence</strong> as a function $a$ whose domain is the set of natural numbers $\mathbb{N}$ (or $\mathbb{N} \setminus \{0\} = \{1, 2, 3, \dots\}$) and whose codomain is the set of real numbers $\mathbb{R}$. We denote the output of the function at input $n$ using a subscript:
+            </p>
+            <div style="text-align: center; margin: 0.5rem 0; font-size: 1.05rem;">
+                $$a(n) \equiv a_n$$
+            </div>
+
+            <!-- VISUAL DIAGRAM: SEQUENCE AS A MAPPING -->
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; text-align: center;">
+                <p style="font-size: 0.88rem; font-weight: 700; color: #475569; margin-top: 0; margin-bottom: 0.75rem;">
+                    VISUALIZATION: The Sequence Mapping $a: \mathbb{N} \to \mathbb{R}$
+                </p>
+                <svg viewBox="0 0 680 220" style="width: 100%; max-width: 650px; height: auto; display: inline-block;">
+                    <defs>
+                        <marker id="seq-arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0284c7"/>
+                        </marker>
+                    </defs>
+
+                    <!-- Domain N (Discrete Integers) -->
+                    <rect x="50" y="30" width="160" height="150" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
+                    <text x="130" y="55" font-family="sans-serif" font-size="13" font-weight="bold" fill="#0f172a" text-anchor="middle">Domain ℕ (Discrete)</text>
+
+                    <circle cx="130" cy="80" r="4.5" fill="#0284c7"/><text x="115" y="84" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0369a1" text-anchor="end">0</text>
+                    <circle cx="130" cy="110" r="4.5" fill="#0284c7"/><text x="115" y="114" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0369a1" text-anchor="end">1</text>
+                    <circle cx="130" cy="140" r="4.5" fill="#0284c7"/><text x="115" y="144" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0369a1" text-anchor="end">2</text>
+                    <circle cx="130" cy="165" r="2" fill="#64748b"/><circle cx="130" cy="170" r="2" fill="#64748b"/><circle cx="130" cy="175" r="2" fill="#64748b"/>
+
+                    <!-- Codomain R (Continuous Real Line) -->
+                    <rect x="470" y="30" width="160" height="150" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
+                    <text x="550" y="55" font-family="sans-serif" font-size="13" font-weight="bold" fill="#0f172a" text-anchor="middle">Codomain ℝ (Continuous)</text>
+                    <line x1="550" y1="70" x2="550" y2="165" stroke="#cbd5e1" stroke-width="2"/>
+
+                    <circle cx="550" cy="80" r="4.5" fill="#d97706"/><text x="565" y="84" font-family="sans-serif" font-size="12" font-weight="bold" fill="#92400e" text-anchor="start">a₀ = a(0)</text>
+                    <circle cx="550" cy="120" r="4.5" fill="#d97706"/><text x="565" y="124" font-family="sans-serif" font-size="12" font-weight="bold" fill="#92400e" text-anchor="start">a₁ = a(1)</text>
+                    <circle cx="550" cy="150" r="4.5" fill="#d97706"/><text x="565" y="154" font-family="sans-serif" font-size="12" font-weight="bold" fill="#92400e" text-anchor="start">a₂ = a(2)</text>
+
+                    <!-- Mapping Paths -->
+                    <path d="M 136 80 C 260 40, 380 60, 540 78" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#seq-arrow)"/>
+                    <path d="M 136 110 C 260 90, 380 110, 540 118" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#seq-arrow)"/>
+                    <path d="M 136 140 C 260 140, 380 140, 540 148" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#seq-arrow)"/>
+
+                    <text x="340" y="105" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0284c7" text-anchor="middle">Mapping: n ↦ aₙ</text>
+                    <text x="340" y="205" font-family="sans-serif" font-size="11" fill="#64748b" text-anchor="middle">Every natural index n is coupled to an exact point on the continuous line ℝ.</text>
+                </svg>
+            </div>
+
+            <div class="aside-box">
+                <h4>💡 Does Indexing Start at $0$ or $1$?</h4>
+                <p style="margin-top: 0; margin-bottom: 0.5rem;">
+                    In mathematics, whether the natural numbers $\mathbb{N}$ include $0$ depends on context and convenience:
+                </p>
+                <ul style="margin: 0; padding-left: 1.25rem;">
+                    <li>When modeling sets, counting dominoes, or building polynomial terms ($c_0 + c_1 x + \dots$), starting at $n=0$ is standard.</li>
+                    <li>When dealing with fractions like $a_n = \frac{1}{n}$, dividing by zero is undefined, so we start at $n=1$.</li>
+                </ul>
+                <p style="margin: 0.5rem 0 0 0;">
+                    Neither choice is "wrong." Always check the bottom bound on the index notation $(a_n)_{n=0}^\infty$ versus $(a_n)_{n=1}^\infty$.
+                </p>
+            </div>
+
+            <!-- SECTION 2 -->
+            <h2 id="catalogue-sequences">2. A Gallery of Fundamental Sequences</h2>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                A sequence can be defined by an explicit mathematical formula, or it can be described through an intrinsic rule. Here are the core prototypes encountered in analysis:
+            </p>
+
+            <div class="worked-example-box">
+                <h4>🎯 Examples of Fundamental Sequences</h4>
+                <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
+                    <li><strong>The Sequence of Perfect Squares:</strong> $a_n = n^2$ (for $n \ge 0$).<br>
+                        Explicit terms: $a_0 = 0,\; a_1 = 1,\; a_2 = 4,\; a_3 = 9,\; a_4 = 16,\; \dots$<br>
+                        <em>Behavior:</em> Grows without bound as $n \to \infty$.
+                    </li>
+                    <li><strong>The Harmonic Sequence:</strong> $a_n = \frac{1}{n}$ (for $n \ge 1$).<br>
+                        Explicit terms: $a_1 = 1,\; a_2 = \frac{1}{2},\; a_3 = \frac{1}{3},\; a_4 = \frac{1}{4},\; \dots$<br>
+                        <em>Behavior:</em> Values grow progressively smaller and closer to $0$, illustrating convergence.
+                    </li>
+                    <li><strong>The Alternating Sequence:</strong> $a_n = (-1)^n$ (for $n \ge 0$).<br>
+                        Explicit terms: $a_0 = 1,\; a_1 = -1,\; a_2 = 1,\; a_3 = -1,\; a_4 = 1,\; \dots$<br>
+                        <em>Behavior:</em> Bounces infinitely back and forth between $1$ and $-1$. It never settles down to a single number!
+                    </li>
+                    <li><strong>The Prime Sequence:</strong> $p_n$ where $p_n$ is the $n$-th prime number ($n \ge 1$).<br>
+                        Explicit terms: $p_1 = 2,\; p_2 = 3,\; p_3 = 5,\; p_4 = 7,\; p_5 = 11,\; \dots$<br>
+                        <em>Behavior:</em> This sequence has no simple algebraic formula, yet it is completely well-defined because every natural index $n$ determines a unique prime.
+                    </li>
+                </ol>
+            </div>
+
+            <!-- SECTION 3 -->
+            <h2 id="arithmetic-geometric">3. Arithmetic and Geometric Sequences</h2>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                Two families of sequences occur constantly across algebra, discrete mathematics, and finance: sequences that grow by <strong>repeated addition</strong>, and sequences that grow by <strong>repeated multiplication</strong>.
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.5rem; margin: 1.5rem 0;">
+                <!-- ARITHMETIC -->
+                <div style="background: #ffffff; border: 1px solid var(--border); border-left: 4px solid #0284c7; border-radius: 6px; padding: 1.25rem;">
+                    <h3 style="margin-top: 0; color: #0369a1; font-size: 1.1rem;">Arithmetic Sequences (Additive Growth)</h3>
+                    <p style="font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                        An <strong>arithmetic sequence</strong> adds a constant difference $a$ at each successive step:
+                    </p>
+                    <div class="definition-box" style="border-left-color: #0284c7; margin: 0.5rem 0;">
+                        $$c_n = an + b \quad (n \ge 0)$$
+                    </div>
+                    <ul style="font-size: 0.9rem; color: #334155; padding-left: 1.25rem; line-height: 1.6;">
+                        <li><strong>Starting value:</strong> $c_0 = b$</li>
+                        <li><strong>Step difference:</strong> $c_{n+1} - c_n = a$</li>
+                        <li><strong>Example:</strong> Odd numbers starting at $1$: $c_n = 2n + 1 \implies (1, 3, 5, 7, \dots)$.</li>
+                    </ul>
+                </div>
+
+                <!-- GEOMETRIC -->
+                <div style="background: #ffffff; border: 1px solid var(--border); border-left: 4px solid #10b981; border-radius: 6px; padding: 1.25rem;">
+                    <h3 style="margin-top: 0; color: #047857; font-size: 1.1rem;">Geometric Sequences (Multiplicative Growth)</h3>
+                    <p style="font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                        A <strong>geometric sequence</strong> scales the previous term by a constant ratio $q$ at each step:
+                    </p>
+                    <div class="definition-box" style="border-left-color: #10b981; margin: 0.5rem 0;">
+                        $$c_n = a \cdot q^n \quad (n \ge 0)$$
+                    </div>
+                    <ul style="font-size: 0.9rem; color: #334155; padding-left: 1.25rem; line-height: 1.6;">
+                        <li><strong>Base factor:</strong> $a \ne 0$</li>
+                        <li><strong>Common ratio:</strong> $q \ne 0, 1$</li>
+                        <li><strong>Example:</strong> Powers of 2: $c_n = 1 \cdot 2^n \implies (1, 2, 4, 8, 16, \dots)$.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- SECTION 4 -->
+            <h2 id="sequence-properties">4. Classifying Behavior: Monotonicity and Bounds</h2>
+            <div class="infobox">
+                <h4>📖 Notation Reference: Monotonicity &amp; Boundedness</h4>
+                <div class="infobox-intro">
+                    <strong>Describing directional motion:</strong> Sequences are classified by whether their values march in one direction or stay trapped within fences.
+                </div>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym">$a_{n+1} \ge a_n$</span><span class="notation-desc">Increasing sequence (each term is greater than or equal to previous)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$a_{n+1} > a_n$</span><span class="notation-desc">Strictly increasing sequence (values strictly grow)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$a_{n+1} \le a_n$</span><span class="notation-desc">Decreasing sequence (each term is smaller than or equal to previous)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$a_n \le M$</span><span class="notation-desc">Bounded above by real number $M$ ($\forall n \in \mathbb{N}$)</span></div>
+                </div>
+            </div>
+
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                To analyze where an infinite sequence travels, we use standardized vocabulary:
+            </p>
+            <ul style="font-size: 0.98rem; line-height: 1.7; color: #334155; padding-left: 1.25rem;">
+                <li><strong>Constant:</strong> $a_n = c$ for all $n \in \mathbb{N}$. The sequence never changes value.</li>
+                <li><strong>Positive / Negative:</strong> $a_n > 0$ for all $n$ (positive), or $a_n < 0$ for all $n$ (negative).</li>
+                <li><strong>Monotonic:</strong> A sequence that moves in one direction only (either non-decreasing for all $n$, or non-increasing for all $n$).</li>
+                <li><strong>Bounded:</strong> A sequence $(a_n)$ is bounded if there exists a number $M > 0$ such that $|a_n| \le M$ for every index $n$. Its points are trapped inside a finite interval $[-M, M]$.</li>
+            </ul>
+
+            <!-- SECTION 5 -->
+            <h2 id="algebra-of-sequences">5. The Algebra of Sequences (Scaling and Sums)</h2>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                Because sequences are functions whose codomains are real numbers, we can perform arithmetic operations on them term-by-term.
+            </p>
+
+            <div class="definition-box">
+                <strong>Algebraic Operations on Sequences:</strong><br>
+                Let $(a_n)_{n=0}^\infty$ and $(b_n)_{n=0}^\infty$ be two sequences in $\mathbb{R}$, and let $\lambda \in \mathbb{R}$ be a scalar.
+                <ul style="margin: 0.5rem 0 0 1.25rem;">
+                    <li><strong>Scalar Multiplication (Scaling):</strong> $(\lambda a)_n = \lambda \cdot a_n$. Every term is magnified or shrunk by $\lambda$.</li>
+                    <li><strong>Sum of Sequences:</strong> $(a + b)_n = a_n + b_n$. Consecutive terms at matching index positions are added together.</li>
+                    <li><strong>Product of Sequences:</strong> $(a \cdot b)_n = a_n \cdot b_n$.</li>
+                </ul>
+            </div>
+
+            <div class="worked-example-box">
+                <h4>🎯 Worked Example: Combining Sequences Term-by-Term</h4>
+                <p>Consider the sequences $a_n = 2n + 1$ (odd numbers) and $b_n = (-1)^n$ for $n \ge 0$:</p>
+                <ul style="margin: 0.25rem 0 0.5rem 1.25rem; font-size: 0.95rem; line-height: 1.6;">
+                    <li>$a = (1, 3, 5, 7, 9, \dots)$</li>
+                    <li>$b = (1, -1, 1, -1, 1, \dots)$</li>
+                </ul>
+                <p style="margin: 0.5rem 0; font-size: 0.95rem;">
+                    <strong>Form the sum sequence $c_n = a_n + b_n$:</strong><br>
+                    • $c_0 = 1 + 1 = 2$<br>
+                    • $c_1 = 3 + (-1) = 2$<br>
+                    • $c_2 = 5 + 1 = 6$<br>
+                    • $c_3 = 7 + (-1) = 6$<br>
+                    Result: $c = (2, 2, 6, 6, 10, 10, \dots)$. Notice how algebraic combinations generate brand new stepping patterns!
+                </p>
+            </div>
+
+            <!-- SECTION 6 -->
+            <h2 id="derived-sequences">6. Discrete Calculus: The Derived Sequence ($a_n'$)</h2>
+            <div class="infobox">
+                <h4>📖 Notation Reference: The Derived Sequence</h4>
+                <div class="infobox-intro">
+                    <strong>Measuring discrete rate of change:</strong> The difference between consecutive elements measures how fast the sequence grows per step.
+                </div>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym">$a_n'$ <span style="font-weight: 400; color: #64748b;">or</span> $\Delta a_n$</span><span class="notation-desc">Derived sequence: difference between consecutive terms $a_{n+1} - a_n$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$a_n' > 0$</span><span class="notation-desc">Indicates the original sequence is strictly increasing at step $n$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$a_n' = 0$</span><span class="notation-desc">Indicates no change between step $n$ and step $n+1$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$a_n' = c$</span><span class="notation-desc">Constant rate of change (identifies an arithmetic sequence)</span></div>
+                </div>
+            </div>
+
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                In secondary school calculus, you learned that the derivative of a continuous function $f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}$ measures the instantaneous rate of change. But on the discrete ladder of natural numbers $\mathbb{N}$, there is no such thing as an infinitesimal $h \to 0$: the smallest possible step between distinct indices is $h = 1$!
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                When we evaluate the difference quotient with step size $h = 1$, we obtain:
+            </p>
+            <div style="text-align: center; margin: 0.75rem 0; font-size: 1.05rem;">
+                $$\frac{a(n + 1) - a(n)}{1} = a_{n+1} - a_n$$
+            </div>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                This motivates the formal definition of the <strong>derived sequence</strong>.
+            </p>
+
+            <div class="definition-box">
+                <strong>Definition: The Derived Sequence ($a_n'$):</strong><br>
+                Given a sequence $(a_n)_{n=0}^\infty$, the <strong>derived sequence</strong> $(a_n')_{n=0}^\infty$ is defined by:
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.05rem;">
+                    $$a_n' = a_{n+1} - a_n \quad (n \ge 0)$$
+                </div>
+                Writing out the terms explicitly:
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 0.98rem;">
+                    $$a_0' = a_1 - a_0, \quad a_1' = a_2 - a_1, \quad a_2' = a_3 - a_2, \quad \dots$$
+                </div>
+            </div>
+
+            <!-- VISUAL DIAGRAM: DISCRETE DERIVATIVE -->
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; text-align: center;">
+                <p style="font-size: 0.88rem; font-weight: 700; color: #475569; margin-top: 0; margin-bottom: 0.75rem;">
+                    VISUALIZATION: Discrete Rate of Change ($a_n' = a_{n+1} - a_n$)
+                </p>
+                <svg viewBox="0 0 640 220" style="width: 100%; max-width: 600px; height: auto; display: inline-block;">
+                    <!-- Coordinate Axes -->
+                    <line x1="60" y1="180" x2="580" y2="180" stroke="#0f172a" stroke-width="2"/>
+                    <line x1="60" y1="180" x2="60" y2="30" stroke="#0f172a" stroke-width="2"/>
+                    <text x="590" y="184" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0f172a">n</text>
+                    <text x="56" y="24" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0f172a">aₙ</text>
+
+                    <!-- Grid Points for a_n = n^2 / 4 -->
+                    <circle cx="120" cy="175" r="4.5" fill="#0284c7"/><text x="120" y="196" font-family="sans-serif" font-size="11" fill="#475569" text-anchor="middle">0</text>
+                    <circle cx="220" cy="165" r="4.5" fill="#0284c7"/><text x="220" y="196" font-family="sans-serif" font-size="11" fill="#475569" text-anchor="middle">1</text>
+                    <circle cx="320" cy="135" r="4.5" fill="#0284c7"/><text x="320" y="196" font-family="sans-serif" font-size="11" fill="#475569" text-anchor="middle">2</text>
+                    <circle cx="420" cy="75" r="4.5" fill="#0284c7"/><text x="420" y="196" font-family="sans-serif" font-size="11" fill="#475569" text-anchor="middle">3</text>
+
+                    <!-- Stepping Lines showing Δa_n -->
+                    <line x1="220" y1="165" x2="320" y2="165" stroke="#94a3b8" stroke-dasharray="3"/>
+                    <line x1="320" y1="165" x2="320" y2="135" stroke="#d97706" stroke-width="2.5"/>
+                    <text x="330" y="152" font-family="sans-serif" font-size="11" font-weight="bold" fill="#d97706">a₁' = a₂ - a₁</text>
+
+                    <line x1="320" y1="135" x2="420" y2="135" stroke="#94a3b8" stroke-dasharray="3"/>
+                    <line x1="420" y1="135" x2="420" y2="75" stroke="#d97706" stroke-width="2.5"/>
+                    <text x="430" y="108" font-family="sans-serif" font-size="11" font-weight="bold" fill="#d97706">a₂' = a₃ - a₂</text>
+
+                    <!-- Run indicator -->
+                    <text x="270" y="177" font-family="sans-serif" font-size="10" fill="#64748b" text-anchor="middle">Δn = 1</text>
+                    <text x="370" y="147" font-family="sans-serif" font-size="10" fill="#64748b" text-anchor="middle">Δn = 1</text>
+                </svg>
+            </div>
+
+            <div class="worked-example-box">
+                <h4>🎯 Worked Example: Deriving Sequences</h4>
+                <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
+                    <li><strong>Arithmetic Sequence:</strong> Let $a_n = 5n + 3$.
+                        <div style="text-align: center; margin: 0.4rem 0;">
+                            $$a_n' = a_{n+1} - a_n = [5(n+1) + 3] - [5n + 3] = 5n + 8 - 5n - 3 = 5$$
+                        </div>
+                        <em>Observation:</em> The derived sequence of an arithmetic progression is a constant sequence ($a_n' = 5$). This mirrors continuous calculus, where the derivative of a linear function $f(x) = 5x + 3$ is the constant $f'(x) = 5$!
+                    </li>
+                    <li><strong>Quadratic Sequence:</strong> Let $a_n = n^2$.
+                        <div style="text-align: center; margin: 0.4rem 0;">
+                            $$a_n' = (n+1)^2 - n^2 = (n^2 + 2n + 1) - n^2 = 2n + 1$$
+                        </div>
+                        <em>Observation:</em> The derived sequence is the arithmetic sequence of odd numbers $(1, 3, 5, 7, \dots)$. Notice how close $2n+1$ is to the continuous derivative $\frac{d}{dn}(n^2) = 2n$!
+                    </li>
+                </ol>
+            </div>
+
+            <!-- SECTION 7 -->
+            <h2 id="grand-arc">7. The Grand Arc: From Discrete Rungs to the Continuum</h2>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1.25rem;">
+                As we close out Week 1, take a step back and examine the magnificent mathematical edifice we have assembled across these first three lectures. What initially appeared to be separate, abstract topics is actually an interconnected three-part symphony:
+            </p>
+
+            <ol style="margin: 0 0 1.5rem 1.5rem; font-size: 0.98rem; line-height: 1.75; color: #334155;">
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>Lecture 1 established the Grammar:</strong> We defined sets without duplicates, paired them through Cartesian products into coordinates, established functions as strict non-ambiguous mappings, and locked the counting numbers into an unbroken inductive ladder using Peano's axioms.
+                </li>
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>Lecture 2 built the Continuum Stage:</strong> We demonstrated that integer fractions $\mathbb{Q}$ leave gaping holes ($\sqrt{2} \notin \mathbb{Q}$), created measuring tapes with absolute value metrics $|x - y|$, and sealed the number line into an unbreakable continuum $\mathbb{R}$ using the Axiom of Completeness and Suprema.
+                </li>
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>Lecture 3 set Objects in Motion:</strong> Today, we unified both worlds. By taking the discrete counting rungs of $\mathbb{N}$ and mapping them into the continuous stage of $\mathbb{R}$, we invented <strong>sequences</strong>. We measured their discrete speed of change using the <strong>derived sequence</strong> $a_n' = a_{n+1} - a_n$, proving that discrete calculus directly mirrors the continuous rates of change of high school calculus.
+                </li>
+            </ol>
+
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem; margin-bottom: 0.75rem;">Where We Go Next Week</h3>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 0.75rem;">
+                If sequences are arrows marching along the real line, what happens when $n$ approaches infinity? Do the numbers bunch up? Do they settle down to a single destination point?
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 2rem;">
+                In <strong>Week 2</strong>, we enter the beating heart of pure analysis: <strong>Limits and Convergence</strong> ($\lim_{n \to \infty} a_n = L$). Using Weierstrass's epsilon-band measuring tape ($\epsilon > 0$) and the completeness of the real line, we will formally define what it means for an infinite journey to arrive at an exact destination. Congratulations on completing Week 1!
+            </p>
+
+            <!-- FOOTER NAVIGATION -->
+            <div class="footer-nav" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 0.75rem;">
+                <a href="week1-lecture2.html" style="background: #f1f5f9; color: var(--accent); border: 1px solid var(--border); padding: 0.6rem 1rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">&larr; Prev: Week 1, Lecture 2</a>
+                <a href="week1.html" style="background: var(--accent); color: white; padding: 0.6rem 1rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">Week 1 Overview Hub &rarr;</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+"""
+
+def execute_git(args: list[str]) -> subprocess.CompletedProcess:
+    res = subprocess.run(args, capture_output=True, text=True)
+    if res.returncode != 0:
         print(f"Git execution error: {' '.join(args)}", file=sys.stderr)
-        print(result.stderr.strip(), file=sys.stderr)
-        sys.exit(result.returncode)
-    return result
+        print(res.stderr.strip(), file=sys.stderr)
+        sys.exit(res.returncode)
+    return res
 
 def main() -> None:
-    if not TARGET_HTML.exists():
-        print(f"Error: {TARGET_HTML} does not exist.", file=sys.stderr)
-        sys.exit(1)
+    TARGET_HTML.write_text(WEEK1_LECTURE3_HTML, encoding="utf-8")
+    print(f"Successfully wrote {TARGET_HTML.name}.")
 
-    content = TARGET_HTML.read_text(encoding="utf-8")
-    original = content
-
-    # Clean out any previous biographical injections cleanly
-    content = re.sub(
-        r'<!-- HISTORICAL (?:CARD|CONTEXT): HIPPASUS -->.*?(?=\s*<h2 id="field-order">)',
-        '',
-        content,
-        flags=re.DOTALL
-    )
-    content = re.sub(
-        r'<!-- HISTORICAL (?:CARD|CONTEXT): EUDOXUS -->.*?(?=\s*<h2 id="absolute-value">)',
-        '',
-        content,
-        flags=re.DOTALL
-    )
-    content = re.sub(
-        r'<!-- HISTORICAL (?:CARD|CONTEXT): WEIERSTRASS -->.*?(?=\s*<h2 id="completeness-bounds">)',
-        '',
-        content,
-        flags=re.DOTALL
-    )
-    content = re.sub(
-        r'<!-- HISTORICAL (?:CARD|CONTEXT): DEDEKIND -->.*?(?=\s*<!-- FOOTER NAVIGATION -->)',
-        '',
-        content,
-        flags=re.DOTALL
-    )
-
-    # 1. Section 2: Insert Hippasus above Section 3
-    if '<h2 id="field-order">' in content:
-        content = content.replace(
-            '<h2 id="field-order">',
-            f"{HIPPASUS_BOX}\n\n            <h2 id=\"field-order\">"
-        )
-
-    # 2. Section 3: Insert Eudoxus above Section 4
-    if '<h2 id="absolute-value">' in content:
-        content = content.replace(
-            '<h2 id="absolute-value">',
-            f"{EUDOXUS_BOX}\n\n            <h2 id=\"absolute-value\">"
-        )
-
-    # 3. Section 4: Insert Weierstrass above Section 5
-    if '<h2 id="completeness-bounds">' in content:
-        content = content.replace(
-            '<h2 id="completeness-bounds">',
-            f"{WEIERSTRASS_BOX}\n\n            <h2 id=\"completeness-bounds\">"
-        )
-
-    # 4. Section 5: Insert Dedekind before Footer Navigation
-    if '<!-- FOOTER NAVIGATION -->' in content:
-        content = content.replace(
-            '<!-- FOOTER NAVIGATION -->',
-            f"{DEDEKIND_BOX}\n\n            <!-- FOOTER NAVIGATION -->"
-        )
-
-    if content != original:
-        TARGET_HTML.write_text(content, encoding="utf-8")
-        print(f"Updated biography boxes in {TARGET_HTML.name}.")
-    else:
-        print(f"{TARGET_HTML.name} is already up to date.")
-
-    # Git workflow: stage both week1-lecture2.html and update.py
-    run_git(["git", "rev-parse", "--is-inside-work-tree"])
-    run_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
+    execute_git(["git", "rev-parse", "--is-inside-work-tree"])
+    execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
 
     diff_check = subprocess.run(["git", "diff", "--cached", "--quiet"])
     if diff_check.returncode == 0:
-        print("No staged changes detected. Working tree is clean.")
+        print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Add Lecture 2 lavender history cards and version update.py"
+    commit_subject = "Expand Week 1 Lecture 3 with discrete calculus and diagrams"
     commit_body = (
-        "Add Hippasus, Eudoxus, Weierstrass, and Dedekind history cards to\n"
-        "week1-lecture2.html using the lavender biography-box style, and\n"
-        "stage update.py alongside the modified HTML document."
+        "Rebuild week1-lecture3.html with reassuring beginner explanations,\n"
+        "SVG sequence mapping diagrams, worked examples for derived sequences,\n"
+        "and a Grand Arc synthesis linking sets, reals, and sequences."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
 
-    run_git(["git", "commit", "-m", full_message])
+    execute_git(["git", "commit", "-m", full_message])
     print("Committed successfully.")
 
     print("Pushing to remote repository...")
-    run_git(["git", "push"])
+    execute_git(["git", "push"])
     print("Push complete.")
 
 if __name__ == "__main__":
