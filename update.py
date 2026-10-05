@@ -2,13 +2,13 @@
 r"""
 update.py
 
-Generates week1-lecture3.html with an enhanced visual decomposition in
-Section 5, Subsection 3:
-- Plots the individual linear stride line and isolated sine wave curve
-  in each panel alongside the combined sum sequence.
-- Shows that stride 2 > wave drop 1.73 in Panel 1 (strictly increasing).
-- Shows that wave drop 2.17 > stride 1 in Panel 2 (monotonicity broken).
-- Adds detailed explanatory prose breaking down the tug-of-war arithmetic.
+Generates week1-lecture3.html with an approachable, student-centered
+treatment of Section 6 (Discrete Calculus: The Derived Sequence):
+- Eliminates premature continuous limit definitions in Week 1.
+- Introduces the derived sequence a_n' as simple subtraction between
+  adjacent lockers (value at n+1 minus value at n).
+- Explains the discrete advantage: fixed step size h=1 requires no limits.
+- Preserves the discrete derivative SVG and progression characterizations.
 - Enforces strict .nobr wrapping on all inline math and punctuation.
 
 Stages week1-lecture3.html and update.py, commits, and pushes upstream.
@@ -163,9 +163,9 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </div>
                 <div class="notation-grid">
                     <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n$</span></span><span class="notation-desc">The $n$-th term of the sequence (the value stored at position $n$)</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$(a_n)_{n=0}^\infty$</span></span><span class="notation-desc">The complete infinite ordered sequence $(a_0, a_1, a_2, a_3, \dots)$</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$(a_n)_{n=1}^\infty$</span></span><span class="notation-desc">Sequence starting at index $1$ when $n=0$ is undefined (e.g. <span class="nobr">$a_n = 1/n$</span>)</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a: \mathbb{N} \to \mathbb{R}$</span></span><span class="notation-desc">Formal definition: a function assigning each natural index $n$ to a real number $a_n$</span></div>
+                    <div class="notation-item"><span class="nobr">$(a_n)_{n=0}^\infty$</span><span class="notation-desc">The complete infinite ordered sequence $(a_0, a_1, a_2, a_3, \dots)$</span></div>
+                    <div class="notation-item"><span class="nobr">$(a_n)_{n=1}^\infty$</span><span class="notation-desc">Sequence starting at index $1$ when $n=0$ is undefined (e.g. <span class="nobr">$a_n = 1/n$</span>)</span></div>
+                    <div class="notation-item"><span class="nobr">$a: \mathbb{N} \to \mathbb{R}$</span><span class="notation-desc">Formal definition: a function assigning each natural index $n$ to a real number $a_n$</span></div>
                 </div>
             </div>
 
@@ -415,7 +415,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <text x="215" y="128" font-size="9" font-weight="600" fill="#4338ca" text-anchor="middle">5</text>
                         <line x1="275" y1="195" x2="275" y2="111" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="275" cy="111" r="4.5" fill="#6366f1" />
-                        <text x="275" y="104" font-size="9.5" font-weight="600" fill="#4338ca" text-anchor="middle">7</text>
+                        <text x="275" y="104" font-size="9" font-weight="600" fill="#4338ca" text-anchor="middle">7</text>
                         <line x1="335" y1="195" x2="335" y2="63" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="335" cy="63" r="4.5" fill="#6366f1" />
                         <text x="335" y="56" font-size="9" font-weight="600" fill="#4338ca" text-anchor="middle">11</text>
@@ -877,7 +877,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     <!-- PANEL 4: NON-MONOTONIC -->
                     <g transform="translate(435, 240)">
                         <rect x="0" y="0" width="395" height="210" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
-                        <text x="20" y="26" font-size="12" font-weight="bold" fill="#dc2626">4. Non-Monotonic: Changes Direction</text>
+                        <text x="20" y="24" font-size="12" font-weight="bold" fill="#dc2626">4. Non-Monotonic: Changes Direction</text>
                         <text x="20" y="42" font-size="10.5" fill="#64748b">Zigzags up and down (fails the single-direction test)</text>
 
                         <line x1="45" y1="180" x2="370" y2="180" stroke="#0f172a" stroke-width="1.5" />
@@ -1401,17 +1401,12 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <text x="355" y="243" font-size="9" fill="#475569" text-anchor="middle">6</text>
 
                         <!-- LINE: 2n (Scale: 1 unit = 11.5px. Origin 0 = 230) -->
-                        <!-- n=0: 230, n=6: 230 - 138 = 92 -->
                         <line x1="85" y1="230" x2="355" y2="92" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="4,3" />
 
                         <!-- WAVE: 2 sin(πn/3) (Centered at y=230) -->
-                        <!-- Values: 0, 1.732, 1.732, 0, -1.732, -1.732, 0 -->
-                        <!-- y: 230, 210, 210, 230, 250, 250, 230 -->
                         <path d="M 85 230 Q 107 202 130 210 T 175 210 T 220 230 T 265 250 T 310 250 T 355 230" fill="none" stroke="#d97706" stroke-width="1.8" />
 
                         <!-- SUM: c_n = 2n + 2 sin(πn/3) -->
-                        <!-- Values: 0, 3.73, 5.73, 6.0, 6.27, 8.27, 12.0 -->
-                        <!-- y: 230, 187, 164, 161, 158, 135, 92 -->
                         <path d="M 85 230 L 130 187 L 175 164 L 220 161 L 265 158 L 310 135 L 355 92" fill="none" stroke="#059669" stroke-width="2" />
                         <circle cx="85" cy="230" r="4" fill="#059669" />
                         <circle cx="130" cy="187" r="4" fill="#059669" />
@@ -1459,25 +1454,20 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <text x="355" y="218" font-size="9" fill="#475569" text-anchor="middle">6</text>
 
                         <!-- LINE: n (Scale: 1 unit = 16px. Origin 0 = 205) -->
-                        <!-- n=0: 205, n=6: 205 - 96 = 109 -->
                         <line x1="85" y1="205" x2="355" y2="109" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="4,3" />
 
                         <!-- WAVE: 2.5 sin(πn/3) (Centered at y=205) -->
-                        <!-- Values: 0, 2.165, 2.165, 0, -2.165, -2.165, 0 -->
-                        <!-- y: 205, 170, 170, 205, 240, 240, 205 -->
                         <path d="M 85 205 Q 107 160 130 170 T 175 170 T 220 205 T 265 240 T 310 240 T 355 205" fill="none" stroke="#d97706" stroke-width="1.8" />
 
                         <!-- SUM: c_n = n + 2.5 sin(πn/3) -->
-                        <!-- Values: 0, 3.165, 4.165, 3.0, 1.835, 2.835, 6.0 -->
-                        <!-- y: 205, 154, 138, 157, 176, 160, 109 -->
                         <path d="M 85 205 L 130 154 L 175 138 L 220 157 L 265 176 L 310 160 L 355 109" fill="none" stroke="#dc2626" stroke-width="2" />
                         <circle cx="85" cy="205" r="4" fill="#dc2626" />
                         <circle cx="130" cy="154" r="4" fill="#dc2626" />
                         <circle cx="175" cy="138" r="4.5" fill="#dc2626" stroke="#b91c1c" stroke-width="1.5" />
                         <circle cx="220" cy="157" r="4.5" fill="#dc2626" stroke="#b91c1c" stroke-width="1.5" />
                         <circle cx="265" cy="176" r="4.5" fill="#dc2626" stroke="#b91c1c" stroke-width="1.5" />
-                        <circle cx="310" cy="160" r="4" fill="#dc2626" />
-                        <circle cx="355" cy="109" r="4" fill="#dc2626" />
+                        <circle cx="310" cy="160" r="4.5" fill="#dc2626" />
+                        <circle cx="355" cy="109" r="4.5" fill="#dc2626" />
 
                         <!-- Backward step indicator line -->
                         <line x1="175" y1="138" x2="265" y2="176" stroke="#b91c1c" stroke-width="1.5" stroke-dasharray="2,2" />
@@ -1509,37 +1499,47 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </ol>
             </div>
 
-            <!-- SECTION 6 -->
+            <!-- SECTION 6 (REFRAMED: REASSURING NEIGHBOR SUBTRACTION) -->
             <h2 id="derived-sequences">6. Discrete Calculus: The Derived Sequence (<span class="nobr">$a_n'$</span>)</h2>
             <div class="infobox">
                 <h4>📖 Notation Reference: The Derived Sequence</h4>
                 <div class="infobox-intro">
-                    <strong>Measuring discrete rate of change:</strong> The difference between consecutive elements measures how fast the sequence grows per step.
+                    <strong>Measuring discrete step-by-step changes:</strong> The difference between consecutive elements measures how much the sequence grows or drops from one locker to the next.
                 </div>
                 <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n'$</span> <span style="font-weight: 400; color: #64748b;">or</span> <span class="nobr">$\Delta a_n$</span></span><span class="notation-desc">Derived sequence: difference between consecutive terms <span class="nobr">$a_{n+1} - a_n$</span></span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n' > 0$</span></span><span class="notation-desc">Indicates the original sequence is strictly increasing at step $n$</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n' = 0$</span></span><span class="notation-desc">Indicates no change between step $n$ and step $n+1$</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n' = c$</span></span><span class="notation-desc">Constant rate of change (characterizes an arithmetic sequence)</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n'$</span> <span style="font-weight: 400; color: #64748b;">or</span> <span class="nobr">$\Delta a_n$</span></span><span class="notation-desc">Derived sequence: difference between adjacent terms <span class="nobr">$a_{n+1} - a_n$</span></span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n' > 0$</span></span><span class="notation-desc">Step climbed uphill: term <span class="nobr">$a_{n+1}$</span> is strictly larger than <span class="nobr">$a_n$</span></span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n' = 0$</span></span><span class="notation-desc">Flat step: no change between locker <span class="nobr">$n$</span> and locker <span class="nobr">$n+1$</span></span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n' = c$</span></span><span class="notation-desc">Constant step size (characterizes an arithmetic progression)</span></div>
                 </div>
             </div>
 
-            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
-                In secondary school calculus, you learned that the derivative of a continuous function <span class="nobr">$f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}$</span> measures the instantaneous rate of change. But on the discrete ladder of natural numbers $\mathbb{N}$, there is no such thing as an infinitesimal $h \to 0$: the smallest possible step between distinct indices is $h = 1$!
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.25rem;">1. No Limits Required: Simple Subtraction Between Neighbors</h3>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                When students first see the prime symbol <span class="nobr">$a_n'$</span> or hear the term <em>"discrete calculus,"</em> they often brace for continuous limits, epsilon-delta proofs, and complicated derivative rules.
             </p>
-            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
-                When we evaluate the difference quotient with step size $h = 1$, we obtain:
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                Take a deep breath: <strong>there are no limits or continuous infinitesimals here.</strong> The entire operation is simply basic subtraction between two immediate neighbors in our locker hallway:
+            </p>
+            <div style="text-align: center; margin: 1.25rem 0; font-size: 1.1rem; background: #f8fafc; padding: 1rem; border-radius: 6px; border: 1px solid var(--border); font-weight: 500;">
+                $$\text{Step Change at Locker } n = (\text{Value in Locker } n+1) - (\text{Value in Locker } n)$$
+            </div>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                In secondary school calculus, curves slide continuously across real numbers, forcing mathematicians to shrink step sizes infinitely small (<span class="nobr">$h \to 0$</span>) to measure instantaneous slopes. But on our integer ladder of counting numbers $\mathbb{N}$, there is no such thing as an infinitesimal: the smallest possible step between distinct lockers is locked at exactly <span class="nobr">$h = 1$!</span>
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                Evaluating a difference quotient with step size <span class="nobr">$h = 1$</span> requires zero limits:
             </p>
             <div style="text-align: center; margin: 0.75rem 0; font-size: 1.05rem;">
                 $$\frac{a(n + 1) - a(n)}{1} = a_{n+1} - a_n$$
             </div>
-            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
-                This motivates the formal definition of the <strong>derived sequence</strong>.
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1.25rem;">
+                This clean neighbor subtraction gives us the <strong>derived sequence</strong>:
             </p>
 
             <div class="definition-box">
-                <strong>Definition: The Derived Sequence (<span class="nobr">$a_n'$</span>):</strong><br>
-                Given a sequence <span class="nobr">$(a_n)_{n=0}^\infty$,</span> the <strong>derived sequence</strong> <span class="nobr">$(a_n')_{n=0}^\infty$</span> is defined by:
+                <strong>Formal Definition: The Derived Sequence (<span class="nobr">$a_n'$</span>):</strong><br>
+                Given a sequence <span class="nobr">$(a_n)_{n=0}^\infty$,</span> the <strong>derived sequence</strong> <span class="nobr">$(a_n')_{n=0}^\infty$</span> is defined by the step-by-step difference between consecutive terms:
                 <div style="text-align: center; margin: 0.5rem 0; font-size: 1.05rem;">
                     $$a_n' = a_{n+1} - a_n \quad (n \ge 0)$$
                 </div>
@@ -1941,7 +1941,7 @@ def execute_git(args: list[str]) -> subprocess.CompletedProcess:
 
 def main() -> None:
     TARGET_HTML.write_text(WEEK1_LECTURE3_HTML, encoding="utf-8")
-    print(f"Successfully generated {TARGET_HTML.name} with linear and sine wave decomposition lines.")
+    print(f"Successfully generated {TARGET_HTML.name} with reframed derived sequence section.")
 
     execute_git(["git", "rev-parse", "--is-inside-work-tree"])
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
@@ -1951,12 +1951,12 @@ def main() -> None:
         print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Add linear and sine decomposition lines to Section 5 visual"
+    commit_subject = "Reframe Section 6 derived sequence as simple neighbor subtraction"
     commit_body = (
-        "Plot independent linear and sine wave lines alongside combined sums,\n"
-        "show stride 2 > wave drop 1.73 for 2n + 2 sin(pi*n/3),\n"
-        "show wave drop 2.17 > stride 1 for n + 2.5 sin(pi*n/3),\n"
-        "add text explaining the stride vs wave plunge tug-of-war,\n"
+        "Remove premature continuous limit definition from Week 1 opening,\n"
+        "reframe derived sequence a_n' as basic subtraction between neighbors,\n"
+        "explain discrete advantage where fixed step size h=1 needs no limits,\n"
+        "preserve discrete difference visualization and progression properties,\n"
         "and stage updated week1-lecture3.html alongside update.py."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
