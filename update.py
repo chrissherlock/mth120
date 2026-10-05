@@ -2,13 +2,10 @@
 r"""
 update.py
 
-Generates week1-lecture3.html with full curriculum coverage from MTHS120 Notes:
-- Section 3: Arithmetic & Geometric progressions with detailed parameter guides.
-- Progression characterizations: c_n' = a (arithmetic iff derived is constant)
-  and c_n' = a(q-1)q^n (geometric derived sequence, with q=2 invariance).
-- Inverting the difference operator: a_n = c + sum(b_nu) as discrete integration.
-- Exact derivations of the Gaussian sum n(n+1)/2 and geometric sum (1-q^n)/(1-q).
-- Unbreakable .nobr formatting on all parenthesized math and punctuation.
+Generates week1-lecture3.html with:
+1. Complete MTHS120 curriculum coverage (progressions, derived sequences, sums).
+2. The Detective Test in action: diagnosing arithmetic, geometric, and trap sequences.
+3. All formulas and trailing punctuation protected by non-breaking .nobr spans.
 
 Stages week1-lecture3.html and update.py, commits, and pushes to Git.
 """
@@ -354,6 +351,49 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </ol>
             </div>
 
+            <!-- WORKED EXAMPLE: DIAGNOSING THREE MYSTERY SEQUENCES -->
+            <div class="worked-example-box" style="margin-top: 1.5rem;">
+                <h4>🔍 Worked Example: Diagnosing Three Mystery Sequences From Raw Terms</h4>
+                <p style="margin-top: 0; font-size: 0.98rem; line-height: 1.7;">
+                    Suppose you are handed three raw lists on an exam and asked to identify their type and determine their closed-form formula for Locker <span class="nobr">$n$:</span>
+                </p>
+                <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
+                    <li style="margin-bottom: 1rem;">
+                        <strong>Mystery Sequence A:</strong> <span class="nobr">$(7, 11, 15, 19, 23, \dots)$</span><br>
+                        • <em>Step 1 (Check Differences):</em><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="nobr">$c_1 - c_0 = 11 - 7 = 4$</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="nobr">$c_2 - c_1 = 15 - 11 = 4$</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="nobr">$c_3 - c_2 = 19 - 15 = 4$</span><br>
+                        • <em>Diagnosis:</em> The difference is constant (<span class="nobr">$a = 4$</span>). This is an <strong>Arithmetic Progression</strong>.<br>
+                        • <em>Construct the Formula:</em> Baseline at Locker 0 is <span class="nobr">$b = 7$.</span> The general term is:
+                        <div style="margin: 0.25rem 0; font-weight: 600; color: #065f46;">
+                            $$c_n = an + b = 4n + 7 \quad (n \ge 0)$$
+                        </div>
+                    </li>
+                    <li style="margin-bottom: 1rem;">
+                        <strong>Mystery Sequence B:</strong> <span class="nobr">$(48, -24, 12, -6, 3, \dots)$</span><br>
+                        • <em>Step 1 (Check Differences):</em><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="nobr">$c_1 - c_0 = -24 - 48 = -72$</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="nobr">$c_2 - c_1 = 12 - (-24) = 36$</span> (Not constant! Not arithmetic.)<br>
+                        • <em>Step 2 (Check Quotients):</em><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="nobr">$\frac{c_1}{c_0} = \frac{-24}{48} = -\frac{1}{2}$</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="nobr">$\frac{c_2}{c_1} = \frac{12}{-24} = -\frac{1}{2}$</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="nobr">$\frac{c_3}{c_2} = \frac{-6}{12} = -\frac{1}{2}$</span><br>
+                        • <em>Diagnosis:</em> The quotient is constant (<span class="nobr">$q = -\frac{1}{2}$</span>). This is a <strong>Geometric Progression</strong>.<br>
+                        • <em>Construct the Formula:</em> Starting factor at Locker 0 is <span class="nobr">$a = 48$.</span> The general term is:
+                        <div style="margin: 0.25rem 0; font-weight: 600; color: #065f46;">
+                            $$c_n = a \cdot q^n = 48 \cdot \left(-\frac{1}{2}\right)^n \quad (n \ge 0)$$
+                        </div>
+                    </li>
+                    <li>
+                        <strong>Mystery Sequence C (The Trap):</strong> <span class="nobr">$(1, \frac{1}{2}, \frac{1}{3}, \frac{1}{4}, \dots)$</span><br>
+                        • <em>Step 1 (Differences):</em> <span class="nobr">$\frac{1}{2} - 1 = -\frac{1}{2}$,</span> but <span class="nobr">$\frac{1}{3} - \frac{1}{2} = -\frac{1}{6}$.</span> (Fails arithmetic test.)<br>
+                        • <em>Step 2 (Quotients):</em> <span class="nobr">$\frac{1/2}{1} = \frac{1}{2}$,</span> but <span class="nobr">$\frac{1/3}{1/2} = \frac{2}{3}$.</span> (Fails geometric test.)<br>
+                        • <em>Diagnosis:</em> <strong>Neither!</strong> This is the harmonic sequence <span class="nobr">$c_n = \frac{1}{n+1}$</span> (or <span class="nobr">$1/n$</span> for <span class="nobr">$n \ge 1$</span>). Knowing when to say "neither" prevents you from forcing the wrong formula onto a problem!
+                    </li>
+                </ol>
+            </div>
+
             <div class="aside-box">
                 <h4>💡 Why Do We Exclude $a = 0$ and $q \in \{0, 1\}$ in Geometric Sequences?</h4>
                 <p style="margin-top: 0; margin-bottom: 0.5rem; font-size: 0.95rem;">
@@ -366,8 +406,8 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </ul>
             </div>
 
-            <!-- TWO FULLY WORKED EXAMPLES -->
-            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 2rem;">3. Fully Worked Step-by-Step Examples</h3>
+            <!-- TWO FULLY WORKED REAL-WORLD APPLICATIONS -->
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 2rem;">3. Fully Worked Application Scenarios</h3>
 
             <div class="worked-example-box">
                 <h4>🎯 Worked Example A: The Daily Savings Account (Arithmetic Progression)</h4>
@@ -723,7 +763,7 @@ def execute_git(args: list[str]) -> subprocess.CompletedProcess:
 
 def main() -> None:
     TARGET_HTML.write_text(WEEK1_LECTURE3_HTML, encoding="utf-8")
-    print(f"Successfully generated {TARGET_HTML.name} with complete MTHS120 curriculum coverage.")
+    print(f"Successfully generated {TARGET_HTML.name} with detective mystery worked example.")
 
     execute_git(["git", "rev-parse", "--is-inside-work-tree"])
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
@@ -733,11 +773,11 @@ def main() -> None:
         print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Align Lecture 3 with course notes on discrete sums and derivatives"
+    commit_subject = "Add raw sequence diagnostic worked example to Lecture 3"
     commit_body = (
-        "Add progression characterization theorems for arithmetic and geometric forms,\n"
-        "detail the discrete rate formula c_n' = a(q-1)q^n with q=2 invariance,\n"
-        "and add derivations of the Gaussian sum and geometric series sum."
+        "Add three-part diagnostic worked walkthrough in Section 3,\n"
+        "demonstrating difference test, quotient test, and harmonic trap,\n"
+        "and stage updated week1-lecture3.html alongside update.py."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
 
