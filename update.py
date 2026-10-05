@@ -2,10 +2,11 @@
 r"""
 update.py
 
-Generates week1-lecture3.html with the "Examples of Fundamental Sequences"
-list converted from a boxed card into clean, flowing narrative typography:
-- Removes background container and border box from Section 2 examples.
-- Integrates the list smoothly alongside the 4-panel discrete plot grid.
+Generates week1-lecture3.html with an expanded, detailed narrative prose
+in Section 3, Subsection 3 (Boundedness) explaining why an infinite sequence
+does not necessarily imply values flying off to infinity.
+- Disentangles domain infinity (infinite lockers) from output boundedness.
+- Contrasts unbounded sequences like n^2 with trapped sequences like n/(n+1).
 - Enforces strict .nobr wrapping on all inline math and punctuation.
 
 Stages week1-lecture3.html and update.py, commits, and pushes upstream.
@@ -939,11 +940,21 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </div>
             </div>
 
-            <!-- SUBSECTION 3: BOUNDEDNESS -->
+            <!-- SUBSECTION 3: BOUNDEDNESS (EXPANDED DETAILED PROSE) -->
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">3. Boundedness: Building Fences Around the Infinite List</h3>
-            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
-                An infinite sequence has an endless number of terms, but that does not mean its values must fly off to infinity!
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                One of the most common misconceptions when beginning real analysis is assuming that because an infinite sequence contains an endless number of terms, its values must inevitably grow larger and larger until they fly off to infinity.
             </p>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                It is vital to distinguish between an <strong>infinite domain</strong> (we never run out of counting numbers $n \in \mathbb{N}$) and the <strong>range of outputs</strong> inside the lockers. For example, consider the sequence of perfect squares <span class="nobr">$a_n = n^2 = (0, 1, 4, 9, 16, \dots)$.</span> Here, the values truly do grow without bound; as $n$ marches toward infinity, the outputs explode upward toward infinity.
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                However, many infinite sequences do the exact opposite. Look at our earlier harmonic prototype, <span class="nobr">$a_n = \frac{n}{n+1} = (0, \frac{1}{2}, \frac{2}{3}, \frac{3}{4}, \dots)$.</span> This list contains infinitely many terms, yet every single value is strictly trapped between $0$ and $1$. As $n$ grows larger and larger, the terms crowd closer and closer to $1$, but they never cross it.
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1.25rem;">
+                To capture this restriction mathematically, we construct <strong>bounds</strong>—impenetrable floors and ceilings that enclose the entire infinite list:
+            </p>
+
             <div class="definition-box">
                 <strong>Formal Definitions of Bounds:</strong>
                 <ul style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
@@ -1466,7 +1477,7 @@ def execute_git(args: list[str]) -> subprocess.CompletedProcess:
 
 def main() -> None:
     TARGET_HTML.write_text(WEEK1_LECTURE3_HTML, encoding="utf-8")
-    print(f"Successfully generated {TARGET_HTML.name} with unboxed intro and examples list.")
+    print(f"Successfully generated {TARGET_HTML.name} with restored definitions and expanded text.")
 
     execute_git(["git", "rev-parse", "--is-inside-work-tree"])
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
@@ -1476,10 +1487,10 @@ def main() -> None:
         print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Remove card wrapper from Finding Your Footing introductory section"
+    commit_subject = "Restore progression definitions and expand textual narrative prose"
     commit_body = (
-        "Convert orientation intro block from boxed card into clean flowing prose,\n"
-        "convert Section 2 examples list into unboxed typography,\n"
+        "Reinstate formal arithmetic and geometric definition boxes,\n"
+        "expand textual narrative prose in Section 3 and Section 4 bounds,\n"
         "and stage updated week1-lecture3.html alongside update.py."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"

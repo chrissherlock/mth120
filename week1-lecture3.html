@@ -919,11 +919,21 @@
                 </div>
             </div>
 
-            <!-- SUBSECTION 3: BOUNDEDNESS -->
+            <!-- SUBSECTION 3: BOUNDEDNESS (EXPANDED DETAILED PROSE) -->
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">3. Boundedness: Building Fences Around the Infinite List</h3>
-            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
-                An infinite sequence has an endless number of terms, but that does not mean its values must fly off to infinity!
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                One of the most common misconceptions when beginning real analysis is assuming that because an infinite sequence contains an endless number of terms, its values must inevitably grow larger and larger until they fly off to infinity.
             </p>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                It is vital to distinguish between an <strong>infinite domain</strong> (we never run out of counting numbers $n \in \mathbb{N}$) and the <strong>range of outputs</strong> inside the lockers. For example, consider the sequence of perfect squares <span class="nobr">$a_n = n^2 = (0, 1, 4, 9, 16, \dots)$.</span> Here, the values truly do grow without bound; as $n$ marches toward infinity, the outputs explode upward toward infinity.
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                However, many infinite sequences do the exact opposite. Look at our earlier harmonic prototype, <span class="nobr">$a_n = \frac{n}{n+1} = (0, \frac{1}{2}, \frac{2}{3}, \frac{3}{4}, \dots)$.</span> This list contains infinitely many terms, yet every single value is strictly trapped between $0$ and $1$. As $n$ grows larger and larger, the terms crowd closer and closer to $1$, but they never cross it.
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1.25rem;">
+                To capture this restriction mathematically, we construct <strong>bounds</strong>—impenetrable floors and ceilings that enclose the entire infinite list:
+            </p>
+
             <div class="definition-box">
                 <strong>Formal Definitions of Bounds:</strong>
                 <ul style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
