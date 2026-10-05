@@ -2,13 +2,11 @@
 r"""
 update.py
 
-Generates week1-lecture3.html with an extensively scaffolded, empathetic,
-deep-dive explanation of Arithmetic and Geometric Sequences in Section 3:
-- Clear physical intuition (walking strides vs zoom scaling).
-- Demystifying the index offset (Locker 0 vs Locker 1).
-- Step-by-step detective method to identify unknown sequences.
-- Fully solved, non-trivial worked examples with conversational commentary.
-- Unwrappable .nobr protection on all formulas and trailing punctuation.
+Generates week1-lecture3.html with:
+1. Reassurance text placed naturally under the Section 3 notation reference.
+2. Step-by-step arithmetic vs geometric walkthroughs and detective tests.
+3. Fully worked examples for both progressions.
+4. Unwrappable .nobr protection on formulas and trailing punctuation.
 
 Stages week1-lecture3.html and update.py, commits, and pushes to Git.
 """
@@ -278,17 +276,6 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
             <!-- SECTION 3 -->
             <h2 id="arithmetic-geometric">3. Arithmetic and Geometric Sequences</h2>
 
-            <!-- EMPATHETIC BEGINNER ORIENTATION -->
-            <div style="background: #fdf4ff; border: 1px solid #f5d0fe; border-left: 5px solid #a855f7; border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
-                <h4 style="margin: 0 0 0.5rem 0; color: #7e22ce; font-size: 1.05rem;">🌱 Finding Your Confidence: Demystifying Progression Formulas</h4>
-                <p style="margin: 0 0 0.75rem 0; font-size: 0.98rem; line-height: 1.7; color: #3b0764;">
-                    If you have ever felt confused or intimidated by arithmetic and geometric sequences, please take comfort in knowing that <strong>almost everyone feels this way at first</strong>. High school math often presents these as mysterious formulas to memorize (<span class="nobr">$c_n = an + b$</span> and <span class="nobr">$c_n = a q^n$</span>) without ever explaining the simple physical engine under the hood.
-                </p>
-                <p style="margin: 0; font-size: 0.98rem; line-height: 1.7; color: #3b0764;">
-                    Here is the secret: there are only <strong>two fundamental operations</strong> happening. You are either taking a fixed step and <em>adding it over and over</em>, or you are taking a fixed multiplier and <em>multiplying by it over and over</em>. Once you see the step-by-step ladder, you will never get lost in the algebra again.
-                </p>
-            </div>
-
             <div class="infobox">
                 <h4>📖 Notation Reference: Progression Parameters</h4>
                 <div class="infobox-intro">
@@ -301,6 +288,14 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     <div class="notation-item"><span class="notation-sym"><span class="nobr">$\frac{c_{n+1}}{c_n} = q$</span></span><span class="notation-desc">Common ratio: the constant scaling factor between adjacent terms</span></div>
                 </div>
             </div>
+
+            <!-- REASSURANCE PLACED NATURALLY UNDER NOTATION REFERENCE -->
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-top: 1.25rem;">
+                If you have ever found arithmetic and geometric progressions confusing or hard to keep straight, take reassurance: that experience is widespread. Traditional courses often rush to introduce <span class="nobr">$c_n = an + b$</span> and <span class="nobr">$c_n = a q^n$</span> as abstract algebraic recipes to memorize, obscuring the simple concrete patterns underneath.
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1.5rem;">
+                In reality, only <strong>two fundamental operations</strong> govern these sequences. You are either choosing a fixed step and <em>repeatedly adding it</em>, or choosing a fixed factor and <em>repeatedly multiplying by it</em>. Keeping that stepping picture in mind removes the guesswork from the algebra.
+            </p>
 
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">1. The Intuition: Walking with Strides vs. Multiplying by Zoom</h3>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
@@ -636,7 +631,7 @@ def execute_git(args: list[str]) -> subprocess.CompletedProcess:
 
 def main() -> None:
     TARGET_HTML.write_text(WEEK1_LECTURE3_HTML, encoding="utf-8")
-    print(f"Successfully generated {TARGET_HTML.name} with deep-dive Section 3.")
+    print(f"Successfully generated {TARGET_HTML.name} with natural prose reassurance.")
 
     execute_git(["git", "rev-parse", "--is-inside-work-tree"])
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
@@ -646,11 +641,10 @@ def main() -> None:
         print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Massively expand Section 3 with reassuring guides and worked steps"
+    commit_subject = "Relocate Section 3 reassurance text directly under notation box"
     commit_body = (
-        "Add empathetic beginner orientation deconstructing additive strides,\n"
-        "clarify starting indices (Locker 0 vs Locker 1) to eliminate confusion,\n"
-        "provide detective walkthrough to diagnose sequences from raw numbers,\n"
+        "Remove card styling from progression reassurance text,\n"
+        "place reassurance text as natural prose beneath notation reference,\n"
         "and stage updated week1-lecture3.html alongside update.py."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
