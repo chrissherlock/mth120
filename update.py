@@ -2,12 +2,12 @@
 r"""
 update.py
 
-Generates week1-lecture3.html without course citations or specific notes
-references:
-- Removes MTHS120 and Proposition 4 numbering in Section 6, presenting it
-  directly as a proposition.
-- Removes course notes citations from Section 7.
-- Cleans document title metadata.
+Generates week1-lecture3.html with an intuitive "Rise over Run" explanation
+in Section 6 (Discrete Calculus: The Derived Sequence):
+- Eliminates the ambiguous variable h=1.
+- Explains the discrete rate of change as (Change in Value) / (Change in Index).
+- Demonstrates how a denominator of (n+1) - n = 1 reduces rate of change
+  directly to neighbor subtraction without limits or fractions.
 - Enforces strict .nobr wrapping on all inline math and punctuation.
 
 Stages week1-lecture3.html and update.py, commits, and pushes upstream.
@@ -697,8 +697,8 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     <li><strong>Compute the first few terms by hand:</strong><br>
                         • Hour 0: <span class="nobr">$c_0 = 80 \cdot (1/2)^0 = 80 \cdot 1 = 80\text{ g}$</span><br>
                         • Hour 1: <span class="nobr">$c_1 = 80 \cdot (1/2)^1 = 40\text{ g}$</span> (halved once)<br>
-                        • Hour 2: <span class="nobr">$c_2 = 80 \cdot (1/2)^2 = 80 \cdot \frac{1}{4} = 20\text{ g}$</span> (halved again)<br>
-                        • Hour 3: <span class="nobr">$c_3 = 80 \cdot (1/2)^3 = 80 \cdot \frac{1}{8} = 10\text{ g}$</span><br>
+                        • Hour 2: <span class="nobr">$c_2 = 80 \cdot (1/2)^2 = 80 \cdot 1/4 = 20\text{ g}$</span> (halved again)<br>
+                        • Hour 3: <span class="nobr">$c_3 = 80 \cdot (1/2)^3 = 80 \cdot 1/8 = 10\text{ g}$</span><br>
                         The sequence is <span class="nobr">$(80, 40, 20, 10, 5, \dots)$.</span>
                     </li>
                     <li><strong>Jump directly to Hour 6:</strong><br>
@@ -809,7 +809,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <line x1="45" y1="180" x2="370" y2="180" stroke="#0f172a" stroke-width="1.5" />
                         <line x1="50" y1="185" x2="50" y2="62" stroke="#0f172a" stroke-width="1.5" />
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
-                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
+                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">aₙ</text>
 
                         <!-- Points with plateau at n=1 and n=2 -->
                         <line x1="80" y1="180" x2="80" y2="150" stroke="#94a3b8" stroke-dasharray="2,2" />
@@ -1184,7 +1184,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                             <td style="padding: 0.6rem 0.75rem; color: #0369a1;"><span class="nobr">$3$</span></td>
                             <td style="padding: 0.6rem 0.75rem; color: #b45309;"><span class="nobr">$-1$</span></td>
                             <td style="padding: 0.6rem 0.75rem; font-weight: 700; color: #047857;"><span class="nobr">$2$</span></td>
-                            <td style="padding: 0.6rem 0.75rem; text-align: left; font-weight: 600; color: #166534;">⏸️ Flat plateau: <span class="nobr">$-1$</span> cancels climb (<span class="nobr">$c_1 = c_0$</span>)</td>
+                            <td style="padding: 0.6rem 0.75rem; text-align: left; font-weight: 600; color: #166534;">⏸ Flat plateau: <span class="nobr">$-1$</span> cancels climb (<span class="nobr">$c_1 = c_0$</span>)</td>
                         </tr>
                         <tr style="border-bottom: 1px solid #e2e8f0;">
                             <td style="padding: 0.6rem 0.75rem; font-weight: 600; color: #475569;"><span class="nobr">$n = 2$</span></td>
@@ -1198,7 +1198,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                             <td style="padding: 0.6rem 0.75rem; color: #0369a1;"><span class="nobr">$7$</span></td>
                             <td style="padding: 0.6rem 0.75rem; color: #b45309;"><span class="nobr">$-1$</span></td>
                             <td style="padding: 0.6rem 0.75rem; font-weight: 700; color: #047857;"><span class="nobr">$6$</span></td>
-                            <td style="padding: 0.6rem 0.75rem; text-align: left; font-weight: 600; color: #166534;">⏸️ Flat plateau: <span class="nobr">$-1$</span> cancels climb (<span class="nobr">$c_3 = c_2$</span>)</td>
+                            <td style="padding: 0.6rem 0.75rem; text-align: left; font-weight: 600; color: #166534;">⏸ Flat plateau: <span class="nobr">$-1$</span> cancels climb (<span class="nobr">$c_3 = c_2$</span>)</td>
                         </tr>
                         <tr style="border-bottom: 1px solid #e2e8f0;">
                             <td style="padding: 0.6rem 0.75rem; font-weight: 600; color: #475569;"><span class="nobr">$n = 4$</span></td>
@@ -1498,7 +1498,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </ol>
             </div>
 
-            <!-- SECTION 6 (REFRAMED: REASSURING NEIGHBOR SUBTRACTION) -->
+            <!-- SECTION 6 (REFRAMED: RISE OVER RUN BETWEEN LOCKERS) -->
             <h2 id="derived-sequences">6. Discrete Calculus: The Derived Sequence (<span class="nobr">$a_n'$</span>)</h2>
             <div class="infobox">
                 <h4>📖 Notation Reference: The Derived Sequence</h4>
@@ -1513,27 +1513,41 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </div>
             </div>
 
-            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.25rem;">1. No Limits Required: Simple Subtraction Between Neighbors</h3>
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.25rem;">1. Rate of Change Without Fractions: Rise Over Run Between Lockers</h3>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                When students first see the prime symbol <span class="nobr">$a_n'$</span> or hear the term <em>"discrete calculus,"</em> they often brace for continuous limits, epsilon-delta proofs, and complicated derivative rules.
+                When students first see the prime symbol <span class="nobr">$a_n'$</span> or hear the term <em>"discrete calculus,"</em> they often brace for complicated derivative machinery. But here, there are no continuous limits or infinitesimals to worry about.
             </p>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                Take a deep breath: <strong>there are no limits or continuous infinitesimals here.</strong> The entire operation is simply basic subtraction between two immediate neighbors in our locker hallway:
+                In everyday mathematics, any rate of change is simply <strong>rise over run</strong>: how much the output value changed, divided by how far the input index moved:
             </p>
-            <div style="text-align: center; margin: 1.25rem 0; font-size: 1.1rem; background: #f8fafc; padding: 1rem; border-radius: 6px; border: 1px solid var(--border); font-weight: 500;">
-                $$\text{Step Change at Locker } n = (\text{Value in Locker } n+1) - (\text{Value in Locker } n)$$
+            <div style="text-align: center; margin: 1rem 0; font-size: 1.05rem; background: #f8fafc; padding: 0.85rem; border-radius: 6px; border: 1px solid var(--border); font-weight: 500;">
+                $$\text{Rate of Change} = \frac{\Delta \text{Value}}{\Delta \text{Input}} = \frac{\text{Change in Stored Value}}{\text{Change in Locker Index}}$$
             </div>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                In secondary school calculus, curves slide continuously across real numbers, forcing mathematicians to shrink step sizes infinitely small (<span class="nobr">$h \to 0$</span>) to measure instantaneous slopes. But on our integer ladder of counting numbers $\mathbb{N}$, there is no such thing as an infinitesimal: the smallest possible step between distinct lockers is locked at exactly <span class="nobr">$h = 1$!</span>
+                Let's look at what happens to both the top and bottom of that fraction when you step from Locker <span class="nobr">$n$</span> to its immediate neighbor, Locker <span class="nobr">$n+1$:</span>
             </p>
+            <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem; margin-bottom: 1.25rem;">
+                <li style="margin-bottom: 0.65rem;">
+                    <strong>The Run (Change in Locker Number):</strong> Lockers only exist at whole counting numbers <span class="nobr">($0, 1, 2, 3, \dots$).</span> You cannot visit Locker $2.5$ or Locker $2.001$. Therefore, the index distance between any locker and its next neighbor is always strictly <strong>one single locker</strong>:
+                    <div style="text-align: center; margin: 0.35rem 0; font-weight: 600; color: #0284c7;">
+                        $$\Delta \text{Input} = (n + 1) - n = 1$$
+                    </div>
+                </li>
+                <li>
+                    <strong>The Rise (Change in Stored Value):</strong> The difference between the numbers written on the slips inside those two adjacent doors is simply:
+                    <div style="text-align: center; margin: 0.35rem 0; font-weight: 600; color: #059669;">
+                        $$\Delta \text{Value} = a_{n+1} - a_n$$
+                    </div>
+                </li>
+            </ul>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                Evaluating a difference quotient with step size <span class="nobr">$h = 1$</span> requires zero limits:
+                Putting the rise over the run gives:
             </p>
-            <div style="text-align: center; margin: 0.75rem 0; font-size: 1.05rem;">
-                $$\frac{a(n + 1) - a(n)}{1} = a_{n+1} - a_n$$
+            <div style="text-align: center; margin: 0.75rem 0; font-size: 1.1rem;">
+                $$\frac{\Delta \text{Value}}{\Delta \text{Input}} = \frac{a_{n+1} - a_n}{(n + 1) - n} = \frac{a_{n+1} - a_n}{1} = a_{n+1} - a_n$$
             </div>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1.25rem;">
-                This clean neighbor subtraction gives us the <strong>derived sequence</strong>:
+                Because dividing by $1$ leaves the numerator unchanged, the discrete rate of change collapses into <strong>plain neighbor subtraction</strong>! There are no fractions left to simplify and no limits to calculate.
             </p>
 
             <div class="definition-box">
@@ -1575,8 +1589,8 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     <line x1="420" y1="135" x2="420" y2="75" stroke="#d97706" stroke-width="2.5"/>
                     <text x="430" y="108" font-family="sans-serif" font-size="11" font-weight="bold" fill="#d97706">a₂' = a₃ - a₂</text>
 
-                    <text x="270" y="177" font-family="sans-serif" font-size="10" fill="#64748b" text-anchor="middle">Δn = 1</text>
-                    <text x="370" y="147" font-family="sans-serif" font-size="10" fill="#64748b" text-anchor="middle">Δn = 1</text>
+                    <text x="270" y="177" font-family="sans-serif" font-size="10" fill="#64748b" text-anchor="middle">ΔInput = 1</text>
+                    <text x="370" y="147" font-family="sans-serif" font-size="10" fill="#64748b" text-anchor="middle">ΔInput = 1</text>
                 </svg>
             </div>
 
@@ -1778,7 +1792,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 steps: [
                     { n: 0, val: 64, op: "Initial Base", formula: "64 · (½)⁰ = 64", preview: "Standing in front of Locker 0. Initial level starting at 64.", what: "Sample starts at magnitude c₀ = 64. Zero decay intervals elapsed.", why: "Initial term corresponds to zero multiplications: c₀ = 64 · 1 = 64." },
                     { n: 1, val: 32, op: "Scaled ×0.5", formula: "64 · (½)¹ = 32", preview: "First half-step interval. Halving value from 64 down to 32.", what: "Value drops by 32 units, arriving at position 32.", why: "Ratio q = ½ causes contraction: c₁ = 64 · ½ = 32." },
-                    { n: 2, val: 16, op: "Scaled ×0.5", formula: "64 · (½)² = 16", preview: "Second half-step interval. Stride drops to 16 units as values contract.", what: "Value drops from 32 to 16. The step size itself has been cut in half.", why: "Successive steps compress: c₂ = 64 · (½)² = 64 · ¼ = 16." },
+                    { n: 2, val: 16, op: "Scaled ×0.5", formula: "64 · (½)² = 16", preview: "Second half-step interval. Stride drops to 16 units as values contract.", what: "Value drops from 32 to 16. The step size itself has been cut in half.", why: "Successive steps compress: c₂ = 64 · (½)² = 64 · 1/4 = 16." },
                     { n: 3, val: 8, op: "Scaled ×0.5", formula: "64 · (½)³ = 8", preview: "Third interval. Steps grow progressively tighter as value nears zero floor.", what: "Value contracts to 8. Jump size is now only 8 units.", why: "Differences become smaller and smaller: decay naturally decelerates toward zero." },
                     { n: 4, val: 4, op: "Scaled ×0.5", formula: "64 · (½)⁴ = 4", preview: "Fourth interval. Approaching zero asymptotically without crossing it.", what: "Value drops to 4. All terms remain strictly positive (cₙ > 0).", why: "Multiplying positive numbers by positive fractions can never produce a negative." },
                     { n: 5, val: 2, op: "Scaled ×0.5", formula: "64 · (½)⁵ = 2", preview: "Fifth interval. Initial value has reduced to a small fraction of baseline.", what: "We reach Locker 5 with c₅ = 2. The value has shrunk by a factor of (½)⁵ = 1/32.", why: "Geometric decay models half-life, depreciation, and asymptotic convergence." }
@@ -1943,7 +1957,7 @@ def execute_git(args: list[str]) -> subprocess.CompletedProcess:
 
 def main() -> None:
     TARGET_HTML.write_text(WEEK1_LECTURE3_HTML, encoding="utf-8")
-    print(f"Successfully generated {TARGET_HTML.name} without course citations.")
+    print(f"Successfully generated {TARGET_HTML.name} with rise over run explanation.")
 
     execute_git(["git", "rev-parse", "--is-inside-work-tree"])
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
@@ -1953,12 +1967,12 @@ def main() -> None:
         print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Remove course citations and rename Proposition 4 to a proposition"
+    commit_subject = "Clarify Section 6 discrete rate of change using rise over run"
     commit_body = (
-        "Remove references to MTHS120 and Proposition 4 numbering,\n"
-        "frame difference characterization directly as a formal proposition,\n"
-        "remove course notes citation from Section 7 discrete integration,\n"
-        "clean document title metadata in week1-lecture3.html,\n"
+        "Replace confusing h=1 step terminology with rise over run framing,\n"
+        "show run between locker doors is always strictly (n+1) - n = 1,\n"
+        "explain how dividing rise by 1 reduces rate of change to subtraction,\n"
+        "eliminate calculus variable h to prevent beginner confusion in Week 1,\n"
         "and stage updated week1-lecture3.html alongside update.py."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
