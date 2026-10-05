@@ -2,12 +2,13 @@
 r"""
 update.py
 
-Generates week1-lecture3.html with a grounded, mathematically appropriate
-interactive stepping dynamics simulator in Section 3:
-- Replaces interplanetary rover narrative with natural hallway walkthrough.
-- Preserves all comparative modes (arithmetic, growth, and decay).
-- Preserves telemetry status bar, SVG hop canvas, and dual analytical panes.
-- Retains all non-breaking .nobr wrappers for math expressions and punctuation.
+Generates week1-lecture3.html with:
+1. Section 4 upgraded with a 2x2 discrete coordinate plot SVG illustrating
+   Strictly Increasing, Weakly Increasing (Plateaus), Strictly Decreasing,
+   and Non-Monotonic (Oscillating) profiles.
+2. Removal of the conveyor belt analogy in favor of precise mathematical prose.
+3. Interactive Stepper in Section 3 and complete discrete calculus scaffolding.
+4. Non-breaking .nobr protection for all inline math and punctuation.
 
 Stages week1-lecture3.html and update.py, commits, and pushes upstream.
 """
@@ -158,9 +159,9 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </div>
                 <div class="notation-grid">
                     <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n$</span></span><span class="notation-desc">The $n$-th term of the sequence (the value stored at position $n$)</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$(a_n)_{n=0}^\infty$</span></span><span class="notation-desc">The complete infinite ordered sequence $(a_0, a_1, a_2, a_3, \dots)$</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$(a_n)_{n=1}^\infty$</span></span><span class="notation-desc">Sequence starting at index $1$ when $n=0$ is undefined (e.g. <span class="nobr">$a_n = 1/n$</span>)</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a: \mathbb{N} \to \mathbb{R}$</span></span><span class="notation-desc">Formal definition: a function assigning each natural index $n$ to a real number $a_n$</span></div>
+                    <div class="notation-item"><span class="nobr">$(a_n)_{n=0}^\infty$</span><span class="notation-desc">The complete infinite ordered sequence $(a_0, a_1, a_2, a_3, \dots)$</span></div>
+                    <div class="notation-item"><span class="nobr">$(a_n)_{n=1}^\infty$</span><span class="notation-desc">Sequence starting at index $1$ when $n=0$ is undefined (e.g. <span class="nobr">$a_n = 1/n$</span>)</span></div>
+                    <div class="notation-item"><span class="nobr">$a: \mathbb{N} \to \mathbb{R}$</span><span class="notation-desc">Formal definition: a function assigning each natural index $n$ to a real number $a_n$</span></div>
                 </div>
             </div>
 
@@ -269,26 +270,23 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     In secondary school, you drew functions by tracing unbroken curves. In analysis, because the domain is the discrete counting numbers $\mathbb{N}$, a sequence graph consists strictly of <strong>isolated points</strong> (perched on dashed drop lines) at each natural index $n$.
                 </p>
                 <svg viewBox="0 0 840 500" style="width: 100%; max-width: 820px; height: auto; display: inline-block;">
-                    <!-- PANEL 1: SQUARES (Unbounded Acceleration) -->
+                    <!-- PANEL 1: SQUARES -->
                     <g transform="translate(10, 10)">
                         <rect x="0" y="0" width="395" height="225" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
                         <text x="20" y="26" font-size="12" font-weight="bold" fill="#0284c7">1. Perfect Squares: aₙ = n²</text>
                         <text x="20" y="42" font-size="10.5" fill="#64748b">Accelerates upward without bound (diverges to ∞)</text>
 
-                        <!-- Axes: Origin at (50, 195) -->
                         <line x1="45" y1="195" x2="370" y2="195" stroke="#0f172a" stroke-width="1.5" />
                         <line x1="50" y1="200" x2="50" y2="55" stroke="#0f172a" stroke-width="1.5" />
                         <text x="375" y="199" font-size="11" font-weight="bold" fill="#0f172a">n</text>
                         <text x="46" y="50" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
 
-                        <!-- Grid Marks -->
                         <text x="50" y="210" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
                         <text x="115" y="210" font-size="9.5" fill="#475569" text-anchor="middle">1</text>
                         <text x="180" y="210" font-size="9.5" fill="#475569" text-anchor="middle">2</text>
                         <text x="245" y="210" font-size="9.5" fill="#475569" text-anchor="middle">3</text>
                         <text x="310" y="210" font-size="9.5" fill="#475569" text-anchor="middle">4</text>
 
-                        <!-- Points -->
                         <circle cx="50" cy="195" r="4.5" fill="#0284c7" />
                         <line x1="115" y1="195" x2="115" y2="187" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="115" cy="187" r="4.5" fill="#0284c7" />
@@ -304,131 +302,108 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <text x="310" y="60" font-size="9" font-weight="600" fill="#0369a1" text-anchor="middle">16</text>
                     </g>
 
-                    <!-- PANEL 2: HARMONIC (Monotone Decay / Convergence) -->
+                    <!-- PANEL 2: HARMONIC -->
                     <g transform="translate(435, 10)">
                         <rect x="0" y="0" width="395" height="225" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
                         <text x="20" y="26" font-size="12" font-weight="bold" fill="#059669">2. Harmonic Sequence: aₙ = 1/n</text>
                         <text x="20" y="42" font-size="10.5" fill="#64748b">Decays progressively toward 0 (converges to 0)</text>
 
-                        <!-- Axes: Origin at (50, 195) -->
                         <line x1="45" y1="195" x2="370" y2="195" stroke="#0f172a" stroke-width="1.5" />
                         <line x1="50" y1="200" x2="50" y2="55" stroke="#0f172a" stroke-width="1.5" />
                         <text x="375" y="199" font-size="11" font-weight="bold" fill="#0f172a">n</text>
                         <text x="46" y="50" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
 
-                        <!-- Grid Marks -->
                         <text x="95" y="210" font-size="9.5" fill="#475569" text-anchor="middle">1</text>
                         <text x="155" y="210" font-size="9.5" fill="#475569" text-anchor="middle">2</text>
                         <text x="215" y="210" font-size="9.5" fill="#475569" text-anchor="middle">3</text>
                         <text x="275" y="210" font-size="9.5" fill="#475569" text-anchor="middle">4</text>
                         <text x="335" y="210" font-size="9.5" fill="#475569" text-anchor="middle">5</text>
 
-                        <!-- Points -->
                         <line x1="95" y1="195" x2="95" y2="75" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="95" cy="75" r="4.5" fill="#059669" />
                         <text x="95" y="68" font-size="9" font-weight="600" fill="#047857" text-anchor="middle">1</text>
-
                         <line x1="155" y1="195" x2="155" y2="135" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="155" cy="135" r="4.5" fill="#059669" />
                         <text x="155" y="128" font-size="9" font-weight="600" fill="#047857" text-anchor="middle">½</text>
-
                         <line x1="215" y1="195" x2="215" y2="155" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="215" cy="155" r="4.5" fill="#059669" />
                         <text x="215" y="148" font-size="9" font-weight="600" fill="#047857" text-anchor="middle">⅓</text>
-
                         <line x1="275" y1="195" x2="275" y2="165" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="275" cy="165" r="4.5" fill="#059669" />
                         <text x="275" y="158" font-size="9" font-weight="600" fill="#047857" text-anchor="middle">¼</text>
-
                         <line x1="335" y1="195" x2="335" y2="171" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="335" cy="171" r="4.5" fill="#059669" />
                         <text x="335" y="164" font-size="9" font-weight="600" fill="#047857" text-anchor="middle">⅕</text>
 
-                        <!-- Limit Indicator -->
                         <line x1="50" y1="195" x2="370" y2="195" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4,3" />
                         <text x="365" y="188" font-size="9" font-weight="bold" fill="#059669" text-anchor="end">Limit = 0</text>
                     </g>
 
-                    <!-- PANEL 3: ALTERNATING (Oscillation / No Limit) -->
+                    <!-- PANEL 3: ALTERNATING -->
                     <g transform="translate(10, 260)">
                         <rect x="0" y="0" width="395" height="225" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
                         <text x="20" y="26" font-size="12" font-weight="bold" fill="#d97706">3. Alternating Sequence: aₙ = (-1)ⁿ</text>
                         <text x="20" y="42" font-size="10.5" fill="#64748b">Bounces between +1 and -1 (diverges by oscillation)</text>
 
-                        <!-- Axes: Origin at (50, 140) -->
                         <line x1="45" y1="140" x2="370" y2="140" stroke="#0f172a" stroke-width="1.5" />
                         <line x1="50" y1="205" x2="50" y2="55" stroke="#0f172a" stroke-width="1.5" />
                         <text x="375" y="144" font-size="11" font-weight="bold" fill="#0f172a">n</text>
                         <text x="46" y="50" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
 
-                        <!-- y=+1 and y=-1 guide tracks -->
                         <line x1="50" y1="85" x2="370" y2="85" stroke="#fde68a" stroke-width="1.2" stroke-dasharray="3,3" />
                         <line x1="50" y1="195" x2="370" y2="195" stroke="#fde68a" stroke-width="1.2" stroke-dasharray="3,3" />
                         <text x="42" y="88" font-size="9.5" font-weight="bold" fill="#b45309" text-anchor="end">+1</text>
                         <text x="42" y="198" font-size="9.5" font-weight="bold" fill="#b45309" text-anchor="end">-1</text>
 
-                        <!-- Points -->
                         <line x1="80" y1="140" x2="80" y2="85" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="80" cy="85" r="4.5" fill="#d97706" />
                         <text x="80" y="153" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
-
                         <line x1="130" y1="140" x2="130" y2="195" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="130" cy="195" r="4.5" fill="#d97706" />
                         <text x="130" y="133" font-size="9.5" fill="#475569" text-anchor="middle">1</text>
-
                         <line x1="180" y1="140" x2="180" y2="85" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="180" cy="85" r="4.5" fill="#d97706" />
                         <text x="180" y="153" font-size="9.5" fill="#475569" text-anchor="middle">2</text>
-
                         <line x1="230" y1="140" x2="230" y2="195" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="230" cy="195" r="4.5" fill="#d97706" />
                         <text x="230" y="133" font-size="9.5" fill="#475569" text-anchor="middle">3</text>
-
                         <line x1="280" y1="140" x2="280" y2="85" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="280" cy="85" r="4.5" fill="#d97706" />
                         <text x="280" y="153" font-size="9.5" fill="#475569" text-anchor="middle">4</text>
-
                         <line x1="330" y1="140" x2="330" y2="195" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="330" cy="195" r="4.5" fill="#d97706" />
                         <text x="330" y="133" font-size="9.5" fill="#475569" text-anchor="middle">5</text>
                     </g>
 
-                    <!-- PANEL 4: PRIMES (Discrete Rule / Irregular Steps) -->
+                    <!-- PANEL 4: PRIMES -->
                     <g transform="translate(435, 260)">
                         <rect x="0" y="0" width="395" height="225" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
                         <text x="20" y="26" font-size="12" font-weight="bold" fill="#6366f1">4. Prime Sequence: pₙ = (2, 3, 5, 7, 11...)</text>
                         <text x="20" y="42" font-size="10.5" fill="#64748b">Well-defined intrinsic rule (no simple formula)</text>
 
-                        <!-- Axes: Origin at (50, 195) -->
                         <line x1="45" y1="195" x2="370" y2="195" stroke="#0f172a" stroke-width="1.5" />
                         <line x1="50" y1="200" x2="50" y2="55" stroke="#0f172a" stroke-width="1.5" />
                         <text x="375" y="199" font-size="11" font-weight="bold" fill="#0f172a">n</text>
                         <text x="46" y="50" font-size="11" font-weight="bold" fill="#0f172a">pₙ</text>
 
-                        <!-- Grid Marks -->
                         <text x="95" y="210" font-size="9.5" fill="#475569" text-anchor="middle">1</text>
                         <text x="155" y="210" font-size="9.5" fill="#475569" text-anchor="middle">2</text>
                         <text x="215" y="210" font-size="9.5" fill="#475569" text-anchor="middle">3</text>
                         <text x="275" y="210" font-size="9.5" fill="#475569" text-anchor="middle">4</text>
                         <text x="335" y="210" font-size="9.5" fill="#475569" text-anchor="middle">5</text>
 
-                        <!-- Points -->
                         <line x1="95" y1="195" x2="95" y2="171" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="95" cy="171" r="4.5" fill="#6366f1" />
                         <text x="95" y="164" font-size="9" font-weight="600" fill="#4338ca" text-anchor="middle">2</text>
-
                         <line x1="155" y1="195" x2="155" y2="159" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="155" cy="159" r="4.5" fill="#6366f1" />
                         <text x="155" y="152" font-size="9" font-weight="600" fill="#4338ca" text-anchor="middle">3</text>
-
                         <line x1="215" y1="195" x2="215" y2="135" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="215" cy="135" r="4.5" fill="#6366f1" />
                         <text x="215" y="128" font-size="9" font-weight="600" fill="#4338ca" text-anchor="middle">5</text>
-
                         <line x1="275" y1="195" x2="275" y2="111" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="275" cy="111" r="4.5" fill="#6366f1" />
                         <text x="275" y="104" font-size="9" font-weight="600" fill="#4338ca" text-anchor="middle">7</text>
-
                         <line x1="335" y1="195" x2="335" y2="63" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="335" cy="63" r="4.5" fill="#6366f1" />
                         <text x="335" y="56" font-size="9" font-weight="600" fill="#4338ca" text-anchor="middle">11</text>
@@ -467,7 +442,6 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <span style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); display: block;">Interactive Stepper</span>
                         <strong style="color: #0f172a; font-size: 1.05rem;">The Stepping Dynamics Simulator: Strides vs. Zoom</strong>
                     </div>
-                    <!-- Comparative Dimension Toggles -->
                     <div style="display: flex; gap: 0.4rem; background: #e2e8f0; padding: 0.25rem; border-radius: 6px;">
                         <button id="toggle-arithmetic" onclick="setMode('arithmetic')" style="padding: 0.35rem 0.75rem; border: none; border-radius: 4px; font-size: 0.82rem; font-weight: 600; cursor: pointer; background: #ffffff; color: #0284c7; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">Arithmetic (+3)</button>
                         <button id="toggle-geom-growth" onclick="setMode('geom_growth')" style="padding: 0.35rem 0.75rem; border: none; border-radius: 4px; font-size: 0.82rem; font-weight: 600; cursor: pointer; background: transparent; color: #475569;">Geometric (&times;2)</button>
@@ -497,7 +471,6 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <button id="btn-next" onclick="stepNext()" style="flex: 1; padding: 0.6rem 0.8rem; background: var(--accent); border: none; border-radius: 6px; font-weight: 600; font-size: 0.85rem; cursor: pointer; color: #ffffff;">Next &rarr;</button>
                         <button id="btn-reset" onclick="resetStepper()" style="padding: 0.6rem 0.75rem; background: #e2e8f0; border: none; border-radius: 6px; font-weight: 600; font-size: 0.85rem; cursor: pointer; color: #475569;" title="Reset to Locker 0">&#8635;</button>
                     </div>
-                    <!-- Dedicated Inline Preview Panel -->
                     <div style="background: #ffffff; border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 6px; padding: 0.6rem 0.9rem;">
                         <span style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: #64748b; display: block;">Step Walkthrough Preview</span>
                         <p id="inline-preview-text" style="margin: 0; font-size: 0.88rem; line-height: 1.45; color: #1e293b;">
@@ -508,7 +481,6 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
 
                 <!-- PAIRED ANALYTICAL PANES -->
                 <div class="stepper-analytical-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 1.25rem; background: #ffffff;">
-                    <!-- PANE 1: WHAT IS HAPPENING -->
                     <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 1rem;">
                         <h5 style="margin: 0 0 0.4rem 0; font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.04em; color: #166534; display: flex; align-items: center; gap: 0.4rem;">
                             <span>⚙️</span> What Is Happening (Mechanics)
@@ -518,7 +490,6 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         </div>
                     </div>
 
-                    <!-- PANE 2: WHY THE SYSTEM DOES THIS -->
                     <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 1rem;">
                         <h5 style="margin: 0 0 0.4rem 0; font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.04em; color: #1e40af; display: flex; align-items: center; gap: 0.4rem;">
                             <span>💡</span> Why The System Does This (Rationale)
@@ -729,13 +700,173 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </div>
             </div>
 
-            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">1. Monotonicity: The One-Way Conveyor Belt</h3>
+            <!-- 2x2 VISUAL GRID FOR MONOTONICITY -->
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; text-align: center;">
+                <p style="font-size: 0.95rem; font-weight: 700; color: #1e293b; margin-top: 0; margin-bottom: 0.35rem;">
+                    VISUALIZING MONOTONICITY: Directional Profiles in the Discrete Plane
+                </p>
+                <p style="font-size: 0.88rem; color: #64748b; margin-top: 0; margin-bottom: 1.25rem; max-width: 780px; display: inline-block; line-height: 1.5;">
+                    Monotonicity means committing to a direction along the real line and never reversing course. Notice that weak monotonicity permits flat horizontal rests, but strictly forbids a step backward.
+                </p>
+                <svg viewBox="0 0 840 460" style="width: 100%; max-width: 820px; height: auto; display: inline-block;">
+                    <!-- PANEL 1: STRICTLY INCREASING -->
+                    <g transform="translate(10, 10)">
+                        <rect x="0" y="0" width="395" height="210" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
+                        <text x="20" y="26" font-size="12" font-weight="bold" fill="#0284c7">1. Strictly Increasing: aₙ₊₁ > aₙ</text>
+                        <text x="20" y="42" font-size="10.5" fill="#64748b">Climbs at every single step (never pauses or dips)</text>
+
+                        <line x1="45" y1="180" x2="370" y2="180" stroke="#0f172a" stroke-width="1.5" />
+                        <line x1="50" y1="185" x2="50" y2="55" stroke="#0f172a" stroke-width="1.5" />
+                        <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
+                        <text x="46" y="50" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
+
+                        <!-- Points -->
+                        <line x1="80" y1="180" x2="80" y2="155" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="80" cy="155" r="4.5" fill="#0284c7" />
+                        <text x="80" y="195" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
+
+                        <line x1="140" y1="180" x2="140" y2="130" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="140" cy="130" r="4.5" fill="#0284c7" />
+                        <text x="140" y="195" font-size="9.5" fill="#475569" text-anchor="middle">1</text>
+
+                        <line x1="200" y1="180" x2="200" y2="105" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="200" cy="105" r="4.5" fill="#0284c7" />
+                        <text x="200" y="195" font-size="9.5" fill="#475569" text-anchor="middle">2</text>
+
+                        <line x1="260" y1="180" x2="260" y2="78" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="260" cy="78" r="4.5" fill="#0284c7" />
+                        <text x="260" y="195" font-size="9.5" fill="#475569" text-anchor="middle">3</text>
+
+                        <line x1="320" y1="180" x2="320" y2="60" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="320" cy="60" r="4.5" fill="#0284c7" />
+                        <text x="320" y="195" font-size="9.5" fill="#475569" text-anchor="middle">4</text>
+
+                        <path d="M 80 155 L 140 130 L 200 105 L 260 78 L 320 60" fill="none" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.4" />
+                    </g>
+
+                    <!-- PANEL 2: WEAKLY INCREASING (PLATEAU) -->
+                    <g transform="translate(435, 10)">
+                        <rect x="0" y="0" width="395" height="210" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
+                        <text x="20" y="26" font-size="12" font-weight="bold" fill="#059669">2. Increasing (Weak): aₙ₊₁ ≥ aₙ</text>
+                        <text x="20" y="42" font-size="10.5" fill="#64748b">Never steps backwards, but flat plateaus are permitted</text>
+
+                        <line x1="45" y1="180" x2="370" y2="180" stroke="#0f172a" stroke-width="1.5" />
+                        <line x1="50" y1="185" x2="50" y2="55" stroke="#0f172a" stroke-width="1.5" />
+                        <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
+                        <text x="46" y="50" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
+
+                        <!-- Points with plateau at n=1 and n=2 -->
+                        <line x1="80" y1="180" x2="80" y2="150" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="80" cy="150" r="4.5" fill="#059669" />
+                        <text x="80" y="195" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
+
+                        <line x1="140" y1="180" x2="140" y2="115" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="140" cy="115" r="4.5" fill="#059669" />
+                        <text x="140" y="195" font-size="9.5" fill="#475569" text-anchor="middle">1</text>
+
+                        <line x1="200" y1="180" x2="200" y2="115" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="200" cy="115" r="4.5" fill="#059669" />
+                        <text x="200" y="195" font-size="9.5" fill="#475569" text-anchor="middle">2</text>
+
+                        <!-- Plateau visual highlight -->
+                        <line x1="140" y1="115" x2="200" y2="115" stroke="#10b981" stroke-width="2.5" />
+                        <text x="170" y="104" font-size="9.5" font-weight="bold" fill="#047857" text-anchor="middle">Flat Plateau: a₁ = a₂</text>
+
+                        <line x1="260" y1="180" x2="260" y2="85" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="260" cy="85" r="4.5" fill="#059669" />
+                        <text x="260" y="195" font-size="9.5" fill="#475569" text-anchor="middle">3</text>
+
+                        <line x1="320" y1="180" x2="320" y2="60" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="320" cy="60" r="4.5" fill="#059669" />
+                        <text x="320" y="195" font-size="9.5" fill="#475569" text-anchor="middle">4</text>
+
+                        <path d="M 80 150 L 140 115 L 200 115 L 260 85 L 320 60" fill="none" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.4" />
+                    </g>
+
+                    <!-- PANEL 3: STRICTLY DECREASING -->
+                    <g transform="translate(10, 240)">
+                        <rect x="0" y="0" width="395" height="210" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
+                        <text x="20" y="26" font-size="12" font-weight="bold" fill="#d97706">3. Strictly Decreasing: aₙ₊₁ &lt; aₙ</text>
+                        <text x="20" y="42" font-size="10.5" fill="#64748b">Cascades downward at each step (always drops)</text>
+
+                        <line x1="45" y1="180" x2="370" y2="180" stroke="#0f172a" stroke-width="1.5" />
+                        <line x1="50" y1="185" x2="50" y2="55" stroke="#0f172a" stroke-width="1.5" />
+                        <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
+                        <text x="46" y="50" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
+
+                        <!-- Points -->
+                        <line x1="80" y1="180" x2="80" y2="60" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="80" cy="60" r="4.5" fill="#d97706" />
+                        <text x="80" y="195" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
+
+                        <line x1="140" y1="180" x2="140" y2="90" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="140" cy="90" r="4.5" fill="#d97706" />
+                        <text x="140" y="195" font-size="9.5" fill="#475569" text-anchor="middle">1</text>
+
+                        <line x1="200" y1="180" x2="200" y2="120" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="200" cy="120" r="4.5" fill="#d97706" />
+                        <text x="200" y="195" font-size="9.5" fill="#475569" text-anchor="middle">2</text>
+
+                        <line x1="260" y1="180" x2="260" y2="145" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="260" cy="145" r="4.5" fill="#d97706" />
+                        <text x="260" y="195" font-size="9.5" fill="#475569" text-anchor="middle">3</text>
+
+                        <line x1="320" y1="180" x2="320" y2="162" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="320" cy="162" r="4.5" fill="#d97706" />
+                        <text x="320" y="195" font-size="9.5" fill="#475569" text-anchor="middle">4</text>
+
+                        <path d="M 80 60 L 140 90 L 200 120 L 260 145 L 320 162" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.4" />
+                    </g>
+
+                    <!-- PANEL 4: NON-MONOTONIC -->
+                    <g transform="translate(435, 240)">
+                        <rect x="0" y="0" width="395" height="210" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
+                        <text x="20" y="26" font-size="12" font-weight="bold" fill="#dc2626">4. Non-Monotonic: Changes Direction</text>
+                        <text x="20" y="42" font-size="10.5" fill="#64748b">Zigzags up and down (fails the single-direction test)</text>
+
+                        <line x1="45" y1="180" x2="370" y2="180" stroke="#0f172a" stroke-width="1.5" />
+                        <line x1="50" y1="185" x2="50" y2="55" stroke="#0f172a" stroke-width="1.5" />
+                        <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
+                        <text x="46" y="50" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
+
+                        <!-- Points zigzagging -->
+                        <line x1="80" y1="180" x2="80" y2="140" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="80" cy="140" r="4.5" fill="#ef4444" />
+                        <text x="80" y="195" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
+
+                        <line x1="140" y1="180" x2="140" y2="75" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="140" cy="75" r="4.5" fill="#ef4444" />
+                        <text x="140" y="195" font-size="9.5" fill="#475569" text-anchor="middle">1</text>
+
+                        <line x1="200" y1="180" x2="200" y2="155" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="200" cy="155" r="4.5" fill="#ef4444" />
+                        <text x="200" y="195" font-size="9.5" fill="#475569" text-anchor="middle">2</text>
+
+                        <line x1="260" y1="180" x2="260" y2="85" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="260" cy="85" r="4.5" fill="#ef4444" />
+                        <text x="260" y="195" font-size="9.5" fill="#475569" text-anchor="middle">3</text>
+
+                        <line x1="320" y1="180" x2="320" y2="135" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="320" cy="135" r="4.5" fill="#ef4444" />
+                        <text x="320" y="195" font-size="9.5" fill="#475569" text-anchor="middle">4</text>
+
+                        <path d="M 80 140 L 140 75 L 200 155 L 260 85 L 320 135" fill="none" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.5" />
+                    </g>
+                </svg>
+            </div>
+
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">1. The Geometry of Monotonicity: Preserving Direction</h3>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
-                In plain English, a sequence is <strong>monotonic</strong> if it picks a direction along the real number line and sticks to it. It is not allowed to turn around or oscillate back and forth.
+                In mathematical analysis, a sequence is <strong>monotonic</strong> if its values advance in an unbroken, one-way trajectory across the real line. It commits to a direction and never doubles back.
             </p>
             <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem;">
-                <li><strong>Weak vs. Strict Inequality:</strong> Notice the crucial difference between <span class="nobr">$a_{n+1} \ge a_n$</span> and <span class="nobr">$a_{n+1} > a_n$.</span> If a sequence pauses at the same value—like <span class="nobr">$(2, 2, 3, 3, 4, 4, \dots)$</span>—it is still considered <strong>increasing</strong> because it never moves backward! If it climbs at every single step with no pauses, like <span class="nobr">$(1, 2, 3, 4, \dots)$,</span> it is <strong>strictly increasing</strong>.</li>
-                <li><strong>Oscillating (Non-Monotonic):</strong> The alternating sequence <span class="nobr">$a_n = (-1)^n = (1, -1, 1, -1, \dots)$</span> is neither increasing nor decreasing. It bounces across the origin forever.</li>
+                <li><strong>Strict vs. Weak Monotonicity:</strong> Pay close attention to the relational symbols:
+                    <ul style="margin-top: 0.35rem; margin-bottom: 0.5rem;">
+                        <li><strong>Strictly Increasing ($a_{n+1} > a_n$):</strong> Every discrete step climbs strictly higher than the previous one. Plateaus are forbidden.</li>
+                        <li><strong>Weakly Increasing / Non-Decreasing ($a_{n+1} \ge a_n$):</strong> Terms are allowed to pause on flat horizontal plateaus (e.g. $a_2 = a_3$). As long as the sequence never steps downward, it remains technically <em>increasing</em>.</li>
+                    </ul>
+                </li>
+                <li><strong>Non-Monotonic Sequences:</strong> Any sequence that alters its direction—such as the alternating sequence <span class="nobr">$a_n = (-1)^n = (1, -1, 1, -1, \dots)$</span>—fails monotonicity completely.</li>
             </ul>
 
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">2. Two Tool-Box Tests: How to Prove Monotonicity</h3>
@@ -917,7 +1048,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     <text x="590" y="184" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0f172a">n</text>
                     <text x="56" y="24" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0f172a">aₙ</text>
 
-                    <!-- Grid Points for a_n = n^2 / 4 -->
+                    <!-- Grid Points -->
                     <circle cx="120" cy="175" r="4.5" fill="#0284c7"/><text x="120" y="196" font-family="sans-serif" font-size="11" fill="#475569" text-anchor="middle">0</text>
                     <circle cx="220" cy="165" r="4.5" fill="#0284c7"/><text x="220" y="196" font-family="sans-serif" font-size="11" fill="#475569" text-anchor="middle">1</text>
                     <circle cx="320" cy="135" r="4.5" fill="#0284c7"/><text x="320" y="196" font-family="sans-serif" font-size="11" fill="#475569" text-anchor="middle">2</text>
@@ -932,7 +1063,6 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     <line x1="420" y1="135" x2="420" y2="75" stroke="#d97706" stroke-width="2.5"/>
                     <text x="430" y="108" font-family="sans-serif" font-size="11" font-weight="bold" fill="#d97706">a₂' = a₃ - a₂</text>
 
-                    <!-- Run indicator -->
                     <text x="270" y="177" font-family="sans-serif" font-size="10" fill="#64748b" text-anchor="middle">Δn = 1</text>
                     <text x="370" y="147" font-family="sans-serif" font-size="10" fill="#64748b" text-anchor="middle">Δn = 1</text>
                 </svg>
@@ -1298,7 +1428,7 @@ def execute_git(args: list[str]) -> subprocess.CompletedProcess:
 
 def main() -> None:
     TARGET_HTML.write_text(WEEK1_LECTURE3_HTML, encoding="utf-8")
-    print(f"Successfully generated {TARGET_HTML.name} with updated stepper narrative.")
+    print(f"Successfully generated {TARGET_HTML.name} with monotonicity 2x2 visual grid.")
 
     execute_git(["git", "rev-parse", "--is-inside-work-tree"])
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
@@ -1308,11 +1438,12 @@ def main() -> None:
         print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Tone down stepper narrative from rover mission to corridor walkthrough"
+    commit_subject = "Replace conveyor belt metaphor with 2x2 monotonicity visual grid"
     commit_body = (
-        "Replace space-probe rover narrative with natural corridor inspection,\n"
-        "update step telemetry and analytical pane text across all 3 modes,\n"
-        "maintain synchronized SVG hop rendering and state telemetry bar,\n"
+        "Replace conveyor belt analogy with precise discrete stepping prose,\n"
+        "add 2x2 SVG visual grid contrasting strict, weak, and oscillation,\n"
+        "detail plateau allowance in non-decreasing sequences (a_{n+1} >= a_n),\n"
+        "preserve difference and ratio tests along with completeness bridge,\n"
         "and stage updated week1-lecture3.html alongside update.py."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
