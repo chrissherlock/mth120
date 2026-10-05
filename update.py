@@ -2,12 +2,12 @@
 r"""
 update.py
 
-Generates week1-lecture3.html with clean, natural prose in Section 5,
-Subsection 2:
-- Replaces the inflated "Synthesizing New Dynamics" heading with
-  "Combining Simple Sequences to Create New Patterns".
-- Strips out self-conscious academic meta-commentary in favor of direct,
-  approachable mathematical explanation.
+Generates week1-lecture3.html with an accessible, student-friendly table
+in Section 5, Subsection 2:
+- Replaces the monospace text dump with a 5-column comparative table.
+- Highlights resting plateau steps with subtle tinted row styling.
+- Replaces duplicate calculations in the subsequent worked example box
+  with a distinct exercise on scalar scaling and differences.
 - Enforces strict .nobr wrapping on all inline math and punctuation.
 
 Stages week1-lecture3.html and update.py, commits, and pushes upstream.
@@ -774,7 +774,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <line x1="45" y1="180" x2="370" y2="180" stroke="#0f172a" stroke-width="1.5" />
                         <line x1="50" y1="185" x2="50" y2="62" stroke="#0f172a" stroke-width="1.5" />
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
-                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">aₙ</text>
+                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
 
                         <!-- Points -->
                         <line x1="80" y1="180" x2="80" y2="155" stroke="#94a3b8" stroke-dasharray="2,2" />
@@ -809,7 +809,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <line x1="45" y1="180" x2="370" y2="180" stroke="#0f172a" stroke-width="1.5" />
                         <line x1="50" y1="185" x2="50" y2="62" stroke="#0f172a" stroke-width="1.5" />
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
-                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">aₙ</text>
+                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
 
                         <!-- Points with plateau at n=1 and n=2 -->
                         <line x1="80" y1="180" x2="80" y2="150" stroke="#94a3b8" stroke-dasharray="2,2" />
@@ -841,13 +841,13 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     <!-- PANEL 3: STRICTLY DECREASING -->
                     <g transform="translate(10, 240)">
                         <rect x="0" y="0" width="395" height="210" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
-                        <text x="20" y="26" font-size="12" font-weight="bold" fill="#d97706">3. Strictly Decreasing: aₙ₊₁ &lt; aₙ</text>
+                        <text x="20" y="24" font-size="12" font-weight="bold" fill="#d97706">3. Strictly Decreasing: aₙ₊₁ &lt; aₙ</text>
                         <text x="20" y="38" font-size="10.5" fill="#64748b">Cascades downward at each step (always drops)</text>
 
                         <line x1="45" y1="180" x2="370" y2="180" stroke="#0f172a" stroke-width="1.5" />
                         <line x1="50" y1="185" x2="50" y2="62" stroke="#0f172a" stroke-width="1.5" />
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
-                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">aₙ</text>
+                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
 
                         <!-- Points -->
                         <line x1="80" y1="180" x2="80" y2="60" stroke="#94a3b8" stroke-dasharray="2,2" />
@@ -1138,7 +1138,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </ul>
             </div>
 
-            <!-- SIMPLIFIED, DIRECT SUBSECTION 2 (NO PRETENTIOUS PHRASING) -->
+            <!-- SIMPLIFIED, DIRECT SUBSECTION 2 WITH ACCESSIBLE COMPARISON TABLE -->
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">2. Combining Simple Sequences to Create New Patterns</h3>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
                 One of the most useful features of sequence algebra is how adding two simple sequences can produce a brand-new stepping behavior that neither parent sequence had on its own.
@@ -1156,16 +1156,66 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
             </ul>
 
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                When you add them together term-by-term into <span class="nobr">$c_n = a_n + b_n$,</span> their individual rhythms interact in a striking way:
+                When you add them together term-by-term into <span class="nobr">$c_n = a_n + b_n$,</span> notice how their individual rhythms align across each locker door:
             </p>
 
-            <div style="text-align: center; margin: 1rem 0; font-size: 0.98rem; font-family: ui-monospace, monospace; background: #f8fafc; padding: 1rem; border-radius: 6px; border: 1px solid var(--border); line-height: 1.8;">
-                n = 0: &nbsp; 1 + (+1) = 2<br>
-                n = 1: &nbsp; 3 + (-1) = 2 &nbsp; (a flat resting plateau!)<br>
-                n = 2: &nbsp; 5 + (+1) = 6<br>
-                n = 3: &nbsp; 7 + (-1) = 6 &nbsp; (another resting plateau!)<br>
-                n = 4: &nbsp; 9 + (+1) = 10<br>
-                n = 5: &nbsp; 11 + (-1) = 10
+            <!-- BEGINNER-FRIENDLY COMPARATIVE STEPPING TABLE -->
+            <div style="overflow-x: auto; margin: 1.25rem 0;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.95rem; text-align: center;">
+                    <thead>
+                        <tr style="background: #f1f5f9; border-bottom: 2px solid var(--border);">
+                            <th style="padding: 0.65rem 0.75rem; color: #475569; font-weight: 600;">Locker <span class="nobr">$n$</span></th>
+                            <th style="padding: 0.65rem 0.75rem; color: #0284c7; font-weight: 600;">Climb: <span class="nobr">$a_n = 2n + 1$</span></th>
+                            <th style="padding: 0.65rem 0.75rem; color: #d97706; font-weight: 600;">Bounce: <span class="nobr">$b_n = (-1)^n$</span></th>
+                            <th style="padding: 0.65rem 0.75rem; color: #059669; font-weight: 600;">Sum: <span class="nobr">$c_n = a_n + b_n$</span></th>
+                            <th style="padding: 0.65rem 0.75rem; color: #0f172a; font-weight: 600; text-align: left;">Stepping Motion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 0.6rem 0.75rem; font-weight: 600; color: #475569;"><span class="nobr">$n = 0$</span></td>
+                            <td style="padding: 0.6rem 0.75rem; color: #0369a1;"><span class="nobr">$1$</span></td>
+                            <td style="padding: 0.6rem 0.75rem; color: #b45309;"><span class="nobr">$+1$</span></td>
+                            <td style="padding: 0.6rem 0.75rem; font-weight: 700; color: #047857;"><span class="nobr">$2$</span></td>
+                            <td style="padding: 0.6rem 0.75rem; text-align: left; color: #475569;">Baseline starting point</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0; background: #f0fdf4;">
+                            <td style="padding: 0.6rem 0.75rem; font-weight: 600; color: #475569;"><span class="nobr">$n = 1$</span></td>
+                            <td style="padding: 0.6rem 0.75rem; color: #0369a1;"><span class="nobr">$3$</span></td>
+                            <td style="padding: 0.6rem 0.75rem; color: #b45309;"><span class="nobr">$-1$</span></td>
+                            <td style="padding: 0.6rem 0.75rem; font-weight: 700; color: #047857;"><span class="nobr">$2$</span></td>
+                            <td style="padding: 0.6rem 0.75rem; text-align: left; font-weight: 600; color: #166534;">⏸️ Flat plateau: <span class="nobr">$-1$</span> cancels climb (<span class="nobr">$c_1 = c_0$</span>)</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 0.6rem 0.75rem; font-weight: 600; color: #475569;"><span class="nobr">$n = 2$</span></td>
+                            <td style="padding: 0.6rem 0.75rem; color: #0369a1;"><span class="nobr">$5$</span></td>
+                            <td style="padding: 0.6rem 0.75rem; color: #b45309;"><span class="nobr">$+1$</span></td>
+                            <td style="padding: 0.6rem 0.75rem; font-weight: 700; color: #047857;"><span class="nobr">$6$</span></td>
+                            <td style="padding: 0.6rem 0.75rem; text-align: left; color: #475569;">Steps forward by <span class="nobr">$+4$</span></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0; background: #f0fdf4;">
+                            <td style="padding: 0.6rem 0.75rem; font-weight: 600; color: #475569;"><span class="nobr">$n = 3$</span></td>
+                            <td style="padding: 0.6rem 0.75rem; color: #0369a1;"><span class="nobr">$7$</span></td>
+                            <td style="padding: 0.6rem 0.75rem; color: #b45309;"><span class="nobr">$-1$</span></td>
+                            <td style="padding: 0.6rem 0.75rem; font-weight: 700; color: #047857;"><span class="nobr">$6$</span></td>
+                            <td style="padding: 0.6rem 0.75rem; text-align: left; font-weight: 600; color: #166534;">⏸️ Flat plateau: <span class="nobr">$-1$</span> cancels climb (<span class="nobr">$c_3 = c_2$</span>)</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 0.6rem 0.75rem; font-weight: 600; color: #475569;"><span class="nobr">$n = 4$</span></td>
+                            <td style="padding: 0.6rem 0.75rem; color: #0369a1;"><span class="nobr">$9$</span></td>
+                            <td style="padding: 0.6rem 0.75rem; color: #b45309;"><span class="nobr">$+1$</span></td>
+                            <td style="padding: 0.6rem 0.75rem; font-weight: 700; color: #047857;"><span class="nobr">$10$</span></td>
+                            <td style="padding: 0.6rem 0.75rem; text-align: left; color: #475569;">Steps forward by <span class="nobr">$+4$</span></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.6rem 0.75rem; font-weight: 600; color: #475569;"><span class="nobr">$n = 5$</span></td>
+                            <td style="padding: 0.6rem 0.75rem; color: #0369a1;"><span class="nobr">$11$</span></td>
+                            <td style="padding: 0.6rem 0.75rem; color: #b45309;"><span class="nobr">$-1$</span></td>
+                            <td style="padding: 0.6rem 0.75rem; font-weight: 700; color: #047857;"><span class="nobr">$10$</span></td>
+                            <td style="padding: 0.6rem 0.75rem; text-align: left; font-weight: 600; color: #166534;">⏸️ Flat plateau: <span class="nobr">$-1$</span> cancels climb (<span class="nobr">$c_5 = c_4$</span>)</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
@@ -1263,28 +1313,24 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </svg>
             </div>
 
-            <!-- WORKED EXAMPLE: TERM BY TERM CALCULATION -->
+            <!-- DISTINCT WORKED EXAMPLE: SCALING AND DIFFERENCE -->
             <div class="worked-example-box" style="margin-top: 1.5rem;">
-                <h4>🎯 Worked Example: Combining Sequences Term-by-Term</h4>
+                <h4>🎯 Worked Example: Scaling and Difference</h4>
                 <p style="margin-top: 0; font-size: 0.98rem; line-height: 1.7;">
-                    Consider the arithmetic sequence of odd positive integers <span class="nobr">$a_n = 2n + 1$</span> and the oscillating alternating sequence <span class="nobr">$b_n = (-1)^n$</span> for <span class="nobr">$n \ge 0$:</span>
+                    Suppose you want to scale a sequence by a constant factor and subtract another sequence from it. Let <span class="nobr">$u_n = n + 2$</span> and <span class="nobr">$v_n = 2n$</span> for <span class="nobr">$n \ge 0$.</span> Find the general formula and the first four terms of <span class="nobr">$w_n = (3u - v)_n$:</span>
                 </p>
-                <ul style="margin: 0.25rem 0 0 0.5rem; font-size: 0.95rem; line-height: 1.6; list-style-position: inside;">
-                    <li><span class="nobr">$a = (1, 3, 5, 7, 9, 11, \dots)$</span></li>
-                    <li><span class="nobr">$b = (1, -1, 1, -1, 1, -1, \dots)$</span></li>
-                </ul>
-                <p style="margin: 0.5rem 0; font-size: 0.95rem; line-height: 1.7;">
-                    <strong>Construct the sum sequence <span class="nobr">$c_n = (a + b)_n = a_n + b_n$</span> index-by-index:</strong><br>
-                    • At <span class="nobr">$n = 0$:</span> <span class="nobr">$c_0 = a_0 + b_0 = 1 + 1 = 2$</span><br>
-                    • At <span class="nobr">$n = 1$:</span> <span class="nobr">$c_1 = a_1 + b_1 = 3 + (-1) = 2$</span><br>
-                    • At <span class="nobr">$n = 2$:</span> <span class="nobr">$c_2 = a_2 + b_2 = 5 + 1 = 6$</span><br>
-                    • At <span class="nobr">$n = 3$:</span> <span class="nobr">$c_3 = a_3 + b_3 = 7 + (-1) = 6$</span><br>
-                    • At <span class="nobr">$n = 4$:</span> <span class="nobr">$c_4 = a_4 + b_4 = 9 + 1 = 10$</span>
-                </p>
-                <p style="margin: 0.5rem 0 0 0; font-size: 0.95rem; line-height: 1.7;">
-                    <em>Result:</em> <span class="nobr">$c = (2, 2, 6, 6, 10, 10, \dots)$.</span><br>
-                    Notice how this algebraic combination synthesizes a non-trivial stepping behavior: it is weakly increasing (<span class="nobr">$c_{n+1} \ge c_n$</span>) because it rests on flat plateaus at every even-to-odd step, but never backpedals!
-                </p>
+                <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
+                    <li><strong>Apply scalar multiplication and subtraction pointwise:</strong><br>
+                        <span class="nobr">$$w_n = 3u_n - v_n = 3(n + 2) - 2n = 3n + 6 - 2n = n + 6$$</span>
+                    </li>
+                    <li><strong>Compute the first few terms by hand:</strong><br>
+                        • At <span class="nobr">$n = 0$:</span> <span class="nobr">$w_0 = 3(2) - 0 = 6$</span><br>
+                        • At <span class="nobr">$n = 1$:</span> <span class="nobr">$w_1 = 3(3) - 2 = 7$</span><br>
+                        • At <span class="nobr">$n = 2$:</span> <span class="nobr">$w_2 = 3(4) - 4 = 8$</span><br>
+                        • At <span class="nobr">$n = 3$:</span> <span class="nobr">$w_3 = 3(5) - 6 = 9$</span><br>
+                        <em>Result:</em> <span class="nobr">$w = (6, 7, 8, 9, \dots)$.</span> Notice how the linear combination of two arithmetic sequences yields another arithmetic sequence with common difference <span class="nobr">$a = 1$.</span>
+                    </li>
+                </ol>
             </div>
 
             <!-- SECTION 6 -->
@@ -1719,7 +1765,7 @@ def execute_git(args: list[str]) -> subprocess.CompletedProcess:
 
 def main() -> None:
     TARGET_HTML.write_text(WEEK1_LECTURE3_HTML, encoding="utf-8")
-    print(f"Successfully generated {TARGET_HTML.name} with natural sequence combination prose.")
+    print(f"Successfully generated {TARGET_HTML.name} with structured sequence algebra table.")
 
     execute_git(["git", "rev-parse", "--is-inside-work-tree"])
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
@@ -1729,12 +1775,12 @@ def main() -> None:
         print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Simplify Section 5 synthesis heading and replace convoluted prose"
+    commit_subject = "Replace monospace calculations with structured sequence algebra table"
     commit_body = (
-        "Rename Subsection 2 to Combining Simple Sequences to Create New Patterns,\n"
-        "remove self-inflicted academic phrasing and meta-commentary,\n"
-        "explain how adding climb and bounce produces flat resting plateaus,\n"
-        "highlight how addition avoids piecewise conditional rules,\n"
+        "Replace monospace terminal dump with 5-column comparative table,\n"
+        "align index, linear climb, alternating bounce, and sum into columns,\n"
+        "highlight plateau steps (n = 1, 3, 5) with subtle green accents,\n"
+        "replace duplicate bullet calculations with scalar combination example,\n"
         "and stage updated week1-lecture3.html alongside update.py."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
