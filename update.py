@@ -2,7 +2,8 @@
 r"""
 update.py
 
-Generates week1-lecture3.html with images/infinite-lockers.png in Section 1,
+Generates week1-lecture3.html with images/infinite-lockers.png positioned
+directly under 'The Intuitive Picture: An Infinite Hallway of Numbered Lockers',
 bound parenthesized math to prevent unwanted line wrapping, comprehensive
 notation tables, and discrete calculus examples, then commits both files.
 """
@@ -179,6 +180,16 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 <li>When you open door $n$, there is a slip of paper inside with an actual real number written on it. We call that stored number the <strong>$n$-th term</strong> <span class="nobr">($a_n \in \mathbb{R}$).</span></li>
             </ul>
 
+            <!-- ILLUSTRATION: INFINITE LOCKERS PERSPECTIVE -->
+            <div style="margin: 1.75rem 0 2rem 0; text-align: center;">
+                <div style="border-radius: 8px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); background: #ffffff;">
+                    <img src="images/infinite-lockers.png" alt="Mathematical Sequence as an Infinite Locker Corridor" style="width: 100%; height: auto; display: block;">
+                </div>
+                <p style="font-size: 0.88rem; color: #64748b; margin-top: 0.6rem; line-height: 1.5;">
+                    <em>Figure 3.1:</em> The sequence mapping <span class="nobr">$a: \mathbb{N} \to \mathbb{R}$</span> visualized as an infinite corridor. Each discrete locker door represents the natural index <span class="nobr">($n \in \mathbb{N}$),</span> while the contents inside reveal the corresponding real term <span class="nobr">($a_n \in \mathbb{R}$).</span>
+                </p>
+            </div>
+
             <div style="text-align: center; margin: 1.25rem 0; font-size: 1.1rem; background: #f8fafc; padding: 1rem; border-radius: 6px; border: 1px solid var(--border);">
                 $$(a_n)_{n=0}^\infty = \Big(\underbrace{a_0}_{\text{Locker } 0}, \; \underbrace{a_1}_{\text{Locker } 1}, \; \underbrace{a_2}_{\text{Locker } 2}, \; \underbrace{a_3}_{\text{Locker } 3}, \; \dots, \; \underbrace{a_n}_{\text{Locker } n}, \; \dots\Big)$$
             </div>
@@ -201,16 +212,6 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 <div style="text-align: center; margin: 0.5rem 0; font-size: 1.05rem;">
                     $$a(n) \equiv a_n$$
                 </div>
-            </div>
-
-            <!-- ILLUSTRATION: INFINITE LOCKERS PERSPECTIVE -->
-            <div style="margin: 2rem 0; text-align: center;">
-                <div style="border-radius: 8px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); background: #ffffff;">
-                    <img src="images/infinite-lockers.png" alt="Mathematical Sequence as an Infinite Locker Corridor" style="width: 100%; height: auto; display: block;">
-                </div>
-                <p style="font-size: 0.88rem; color: #64748b; margin-top: 0.6rem; line-height: 1.5;">
-                    <em>Figure 3.1:</em> The sequence mapping <span class="nobr">$a: \mathbb{N} \to \mathbb{R}$</span> visualized as an infinite corridor. Each discrete locker door represents the natural index <span class="nobr">($n \in \mathbb{N}$),</span> while the contents inside reveal the corresponding real term <span class="nobr">($a_n \in \mathbb{R}$).</span>
-                </p>
             </div>
 
             <div class="aside-box">
@@ -491,7 +492,7 @@ def execute_git(args: list[str]) -> subprocess.CompletedProcess:
 
 def main() -> None:
     TARGET_HTML.write_text(WEEK1_LECTURE3_HTML, encoding="utf-8")
-    print(f"Successfully generated {TARGET_HTML.name} with images/infinite-lockers.png.")
+    print(f"Successfully generated {TARGET_HTML.name} with repositioned infinite-lockers.png.")
 
     execute_git(["git", "rev-parse", "--is-inside-work-tree"])
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
@@ -501,10 +502,10 @@ def main() -> None:
         print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Replace Section 1 SVG with infinite-lockers.png in Lecture 3"
+    commit_subject = "Move infinite-lockers.png under intuitive hallway analogy in Lecture 3"
     commit_body = (
-        "Swap inline SVG mapping in Section 1 for images/infinite-lockers.png,\n"
-        "add caption connecting perspective corridor to sequence definition,\n"
+        "Relocate infinite-lockers.png directly beneath hallway locker bullets,\n"
+        "position visual aid before formal definition box for better flow,\n"
         "and stage updated week1-lecture3.html alongside update.py."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
