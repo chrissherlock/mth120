@@ -103,6 +103,15 @@
     
         /* Mobile-first layout adjustment for phones / smaller viewports */
         @media (max-width: 768px) {
+            /* Allow long formulas to scroll horizontally on small viewports */
+            .katex-display {
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+                -webkit-overflow-scrolling: touch !important;
+                max-width: 100% !important;
+                padding: 0.25rem 0 !important;
+            }
+
             body {
                 background: #ffffff;
                 padding: 1rem 0.75rem;
