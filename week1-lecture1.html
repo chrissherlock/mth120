@@ -130,6 +130,18 @@
                 overflow: hidden !important;
                 text-overflow: ellipsis !important;
             }
+        
+            /* Prevent long math text or expressions from overflowing mobile screens */
+            p, div, li, blockquote {
+                word-break: break-word;
+                overflow-wrap: break-word;
+            }
+            .math-overflow-fix, div[style*="text-align: center"] {
+                max-width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
         }
     </style>
 </head>
