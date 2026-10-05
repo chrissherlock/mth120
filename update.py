@@ -2,10 +2,13 @@
 r"""
 update.py
 
-Generates week1-lecture3.html with images/infinite-lockers.png positioned
-directly under 'The Intuitive Picture: An Infinite Hallway of Numbered Lockers',
-bound parenthesized math to prevent unwanted line wrapping, comprehensive
-notation tables, and discrete calculus examples, then commits both files.
+Generates week1-lecture3.html with:
+1. Trailing punctuation bound inside .nobr spans (preventing dangling commas).
+2. Upgraded scaffolding in Section 2 (explicit formulas vs descriptive rules).
+3. Image infinite-lockers.png under the hallway analogy.
+4. Comprehensive notation tables, SVG derivative step diagram, and Grand Arc.
+
+Then stages both files and pushes to Git.
 """
 
 from pathlib import Path
@@ -71,8 +74,8 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
         .biography-box p, .biography-box li { color: #0f172a !important; }
 
         /* Ensure math with parentheses and punctuation never splits across lines */
-        .nobr { white-space: nowrap; word-break: keep-all; display: inline; }
-        .katex { white-space: nowrap; }
+        .nobr { white-space: nowrap !important; word-break: keep-all !important; display: inline; }
+        .katex { white-space: nowrap !important; }
 
         @media (max-width: 768px) {
             body { background: #ffffff !important; padding: 1rem 0.75rem !important; margin: 0 !important; max-width: 100vw !important; overflow-x: hidden !important; }
@@ -138,7 +141,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     In this lecture, we step back from smooth slides and instead examine <strong>stepping stones</strong>. Rather than gliding smoothly across all real numbers, we take discrete integer steps: step 0, step 1, step 2, step 3... This is the world of <strong>sequences</strong>.
                 </p>
                 <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 0;">
-                    At first glance, some of the notation—such as subscripts $a_n$, index ranges, and differences between terms—can look intimidatingly formal. Rest assured: every symbol is simply a compact way to label an item in an infinite list. Take your time, picture the lockers and steps, and enjoy seeing how discrete arithmetic lays the foundation for continuous calculus!
+                    At first glance, some of the notation—such as subscripts <span class="nobr">$a_n$,</span> index ranges, and differences between terms—can look intimidatingly formal. Rest assured: every symbol is simply a compact way to label an item in an infinite list. Take your time, picture the lockers and steps, and enjoy seeing how discrete arithmetic lays the foundation for continuous calculus!
                 </p>
             </div>
 
@@ -161,10 +164,10 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
             <div class="infobox">
                 <h4>📖 Notation Reference: Sequences &amp; Index Notation</h4>
                 <div class="infobox-intro">
-                    <strong>Lists through functional eyes:</strong> Instead of writing inputs inside parentheses like $f(n)$, sequences use subscript notation $a_n$ to represent the $n$-th value in the list.
+                    <strong>Lists through functional eyes:</strong> Instead of writing inputs inside parentheses like <span class="nobr">$f(n)$,</span> sequences use subscript notation <span class="nobr">$a_n$</span> to represent the $n$-th value in the list.
                 </div>
                 <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$a_n$</span><span class="notation-desc">The $n$-th term of the sequence (the value stored at position $n$)</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n$</span></span><span class="notation-desc">The $n$-th term of the sequence (the value stored at position $n$)</span></div>
                     <div class="notation-item"><span class="notation-sym"><span class="nobr">$(a_n)_{n=0}^\infty$</span></span><span class="notation-desc">The complete infinite ordered sequence $(a_0, a_1, a_2, a_3, \dots)$</span></div>
                     <div class="notation-item"><span class="notation-sym"><span class="nobr">$(a_n)_{n=1}^\infty$</span></span><span class="notation-desc">Sequence starting at index $1$ when $n=0$ is undefined (e.g. <span class="nobr">$a_n = 1/n$</span>)</span></div>
                     <div class="notation-item"><span class="notation-sym"><span class="nobr">$a: \mathbb{N} \to \mathbb{R}$</span></span><span class="notation-desc">Formal definition: a function assigning each natural index $n$ to a real number $a_n$</span></div>
@@ -208,9 +211,9 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
             <div class="definition-box">
                 <strong>Formal Definition of a Real Sequence:</strong><br>
                 A <strong>sequence of real numbers</strong> is a function <span class="nobr">$a: \mathbb{N} \to \mathbb{R}$</span> whose domain is the set of natural numbers $\mathbb{N}$ <span class="nobr">(or $\mathbb{N} \setminus \{0\} = \{1, 2, 3, \dots\}$)</span> and whose codomain is the set of real numbers $\mathbb{R}$.<br><br>
-                Instead of writing function parentheses like $a(n)$, we write the input as a lower subscript:
+                Instead of writing function parentheses like <span class="nobr">$a(n)$,</span> we write the input as a lower subscript:
                 <div style="text-align: center; margin: 0.5rem 0; font-size: 1.05rem;">
-                    $$a(n) \equiv a_n$$
+                    $$\text{Function notation: } a(n) \quad\Longleftrightarrow\quad \text{Index notation: } a_n$$
                 </div>
             </div>
 
@@ -230,27 +233,41 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
 
             <!-- SECTION 2 -->
             <h2 id="catalogue-sequences">2. A Gallery of Fundamental Sequences</h2>
-            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
-                A sequence can be defined by an explicit mathematical formula, or it can be described through an intrinsic rule. Here are the core prototypes encountered in analysis:
-            </p>
+            <div style="margin-bottom: 1.5rem;">
+                <h3 style="margin-top: 0; color: #0f172a; font-size: 1.15rem;">How Do We Specify What Goes Inside Each Locker?</h3>
+                <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                    When constructing a sequence, there are two primary ways to describe the contents of every locker along the infinite corridor:
+                </p>
+                <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem; margin-bottom: 1rem;">
+                    <li style="margin-bottom: 0.5rem;">
+                        <strong>An Explicit Formula (Direct Calculation):</strong> A direct algebraic equation that lets you calculate the value inside locker $n$ immediately. For example, if <span class="nobr">$a_n = n^2$,</span> finding the contents of the $100\text{th}$ locker requires no intermediate work: <span class="nobr">$a_{100} = 100^2 = 10{,}000$.</span>
+                    </li>
+                    <li>
+                        <strong>A Descriptive or Structural Rule (Pattern-Based):</strong> A well-defined rule that uniquely determines what number belongs at step $n$, even if there is no high-school algebraic formula to jump there directly. For instance, "let <span class="nobr">$p_n$</span> be the $n\text{th}$ prime number" is completely rigorous because every natural index $n$ pairs with a single, unambiguous prime.
+                    </li>
+                </ul>
+                <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 0;">
+                    Below are four foundational prototypes encountered throughout real analysis:
+                </p>
+            </div>
 
             <div class="worked-example-box">
                 <h4>🎯 Examples of Fundamental Sequences</h4>
                 <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
                     <li><strong>The Sequence of Perfect Squares:</strong> $a_n = n^2$ <span class="nobr">(for $n \ge 0$).</span><br>
-                        Explicit terms: $a_0 = 0,\; a_1 = 1,\; a_2 = 4,\; a_3 = 9,\; a_4 = 16,\; \dots$<br>
+                        Explicit terms: <span class="nobr">$a_0 = 0,$</span> <span class="nobr">$a_1 = 1,$</span> <span class="nobr">$a_2 = 4,$</span> <span class="nobr">$a_3 = 9,$</span> <span class="nobr">$a_4 = 16,$</span> $\dots$<br>
                         <em>Behavior:</em> Grows without bound as <span class="nobr">$n \to \infty$.</span>
                     </li>
                     <li><strong>The Harmonic Sequence:</strong> $a_n = \frac{1}{n}$ <span class="nobr">(for $n \ge 1$).</span><br>
-                        Explicit terms: $a_1 = 1,\; a_2 = \frac{1}{2},\; a_3 = \frac{1}{3},\; a_4 = \frac{1}{4},\; \dots$<br>
+                        Explicit terms: <span class="nobr">$a_1 = 1,$</span> <span class="nobr">$a_2 = \frac{1}{2},$</span> <span class="nobr">$a_3 = \frac{1}{3},$</span> <span class="nobr">$a_4 = \frac{1}{4},$</span> $\dots$<br>
                         <em>Behavior:</em> Values grow progressively smaller and closer to $0$, illustrating convergence.
                     </li>
                     <li><strong>The Alternating Sequence:</strong> $a_n = (-1)^n$ <span class="nobr">(for $n \ge 0$).</span><br>
-                        Explicit terms: $a_0 = 1,\; a_1 = -1,\; a_2 = 1,\; a_3 = -1,\; a_4 = 1,\; \dots$<br>
+                        Explicit terms: <span class="nobr">$a_0 = 1,$</span> <span class="nobr">$a_1 = -1,$</span> <span class="nobr">$a_2 = 1,$</span> <span class="nobr">$a_3 = -1,$</span> <span class="nobr">$a_4 = 1,$</span> $\dots$<br>
                         <em>Behavior:</em> Bounces infinitely back and forth between $1$ and $-1$. It never settles down to a single number!
                     </li>
                     <li><strong>The Prime Sequence:</strong> $p_n$ where $p_n$ is the $n$-th prime number <span class="nobr">($n \ge 1$).</span><br>
-                        Explicit terms: $p_1 = 2,\; p_2 = 3,\; p_3 = 5,\; p_4 = 7,\; p_5 = 11,\; \dots$<br>
+                        Explicit terms: <span class="nobr">$p_1 = 2,$</span> <span class="nobr">$p_2 = 3,$</span> <span class="nobr">$p_3 = 5,$</span> <span class="nobr">$p_4 = 7,$</span> <span class="nobr">$p_5 = 11,$</span> $\dots$<br>
                         <em>Behavior:</em> This sequence has no simple algebraic formula, yet it is completely well-defined because every natural index $n$ determines a unique prime.
                     </li>
                 </ol>
@@ -274,7 +291,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     </div>
                     <ul style="font-size: 0.9rem; color: #334155; padding-left: 1.25rem; line-height: 1.6;">
                         <li><strong>Starting value:</strong> $c_0 = b$</li>
-                        <li><strong>Step difference:</strong> $c_{n+1} - c_n = a$</li>
+                        <li><strong>Step difference:</strong> <span class="nobr">$c_{n+1} - c_n = a$</span></li>
                         <li><strong>Example:</strong> Odd numbers starting at $1$: <span class="nobr">$c_n = 2n + 1 \implies (1, 3, 5, 7, \dots)$.</span></li>
                     </ul>
                 </div>
@@ -304,10 +321,10 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     <strong>Describing directional motion:</strong> Sequences are classified by whether their values march in one direction or stay trapped within fences.
                 </div>
                 <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$a_{n+1} \ge a_n$</span><span class="notation-desc">Increasing sequence (each term is greater than or equal to previous)</span></div>
-                    <div class="notation-item"><span class="notation-sym">$a_{n+1} > a_n$</span><span class="notation-desc">Strictly increasing sequence (values strictly grow)</span></div>
-                    <div class="notation-item"><span class="notation-sym">$a_{n+1} \le a_n$</span><span class="notation-desc">Decreasing sequence (each term is smaller than or equal to previous)</span></div>
-                    <div class="notation-item"><span class="notation-sym">$a_n \le M$</span><span class="notation-desc">Bounded above by real number $M$ <span class="nobr">($\forall n \in \mathbb{N}$).</span></span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_{n+1} \ge a_n$</span></span><span class="notation-desc">Increasing sequence (each term is greater than or equal to previous)</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_{n+1} > a_n$</span></span><span class="notation-desc">Strictly increasing sequence (values strictly grow)</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_{n+1} \le a_n$</span></span><span class="notation-desc">Decreasing sequence (each term is smaller than or equal to previous)</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n \le M$</span></span><span class="notation-desc">Bounded above by real number $M$ <span class="nobr">($\forall n \in \mathbb{N}$).</span></span></div>
                 </div>
             </div>
 
@@ -318,7 +335,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 <li><strong>Constant:</strong> $a_n = c$ for all <span class="nobr">$n \in \mathbb{N}$.</span> The sequence never changes value.</li>
                 <li><strong>Positive / Negative:</strong> $a_n > 0$ for all $n$ (positive), or $a_n < 0$ for all $n$ (negative).</li>
                 <li><strong>Monotonic:</strong> A sequence that moves in one direction only (either non-decreasing for all $n$, or non-increasing for all $n$).</li>
-                <li><strong>Bounded:</strong> A sequence <span class="nobr">$(a_n)$</span> is bounded if there exists a number $M > 0$ such that $|a_n| \le M$ for every index $n$. Its points are trapped inside a finite interval $[-M, M]$.</li>
+                <li><strong>Bounded:</strong> A sequence <span class="nobr">$(a_n)$</span> is bounded if there exists a number $M > 0$ such that <span class="nobr">$|a_n| \le M$</span> for every index $n$. Its points are trapped inside a finite interval $[-M, M]$.</li>
             </ul>
 
             <!-- SECTION 5 -->
@@ -339,7 +356,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
 
             <div class="worked-example-box">
                 <h4>🎯 Worked Example: Combining Sequences Term-by-Term</h4>
-                <p>Consider the sequences $a_n = 2n + 1$ (odd numbers) and $b_n = (-1)^n$ for <span class="nobr">$n \ge 0$:</span></p>
+                <p>Consider the sequences <span class="nobr">$a_n = 2n + 1$</span> (odd numbers) and <span class="nobr">$b_n = (-1)^n$</span> for <span class="nobr">$n \ge 0$:</span></p>
                 <ul style="margin: 0.25rem 0 0.5rem 1.25rem; font-size: 0.95rem; line-height: 1.6;">
                     <li>$a = (1, 3, 5, 7, 9, \dots)$</li>
                     <li>$b = (1, -1, 1, -1, 1, \dots)$</li>
@@ -430,13 +447,13 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
             <div class="worked-example-box">
                 <h4>🎯 Worked Example: Deriving Sequences</h4>
                 <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
-                    <li><strong>Arithmetic Sequence:</strong> Let $a_n = 5n + 3$.
+                    <li><strong>Arithmetic Sequence:</strong> Let <span class="nobr">$a_n = 5n + 3$.</span>
                         <div style="text-align: center; margin: 0.4rem 0;">
                             $$a_n' = a_{n+1} - a_n = [5(n+1) + 3] - [5n + 3] = 5n + 8 - 5n - 3 = 5$$
                         </div>
                         <em>Observation:</em> The derived sequence of an arithmetic progression is a constant sequence ($a_n' = 5$). This mirrors continuous calculus, where the derivative of a linear function $f(x) = 5x + 3$ is the constant $f'(x) = 5$!
                     </li>
-                    <li><strong>Quadratic Sequence:</strong> Let $a_n = n^2$.
+                    <li><strong>Quadratic Sequence:</strong> Let <span class="nobr">$a_n = n^2$.</span>
                         <div style="text-align: center; margin: 0.4rem 0;">
                             $$a_n' = (n+1)^2 - n^2 = (n^2 + 2n + 1) - n^2 = 2n + 1$$
                         </div>
@@ -492,7 +509,7 @@ def execute_git(args: list[str]) -> subprocess.CompletedProcess:
 
 def main() -> None:
     TARGET_HTML.write_text(WEEK1_LECTURE3_HTML, encoding="utf-8")
-    print(f"Successfully generated {TARGET_HTML.name} with repositioned infinite-lockers.png.")
+    print(f"Successfully generated {TARGET_HTML.name} with bound formula punctuation.")
 
     execute_git(["git", "rev-parse", "--is-inside-work-tree"])
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
@@ -502,10 +519,10 @@ def main() -> None:
         print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Move infinite-lockers.png under intuitive hallway analogy in Lecture 3"
+    commit_subject = "Bind trailing punctuation on formulas and scaffold Section 2"
     commit_body = (
-        "Relocate infinite-lockers.png directly beneath hallway locker bullets,\n"
-        "position visual aid before formal definition box for better flow,\n"
+        "Wrap formula-punctuation pairs like a(n), in nobr spans to stop wrap,\n"
+        "expand Section 2 intro with explicit formula vs rule scaffolding,\n"
         "and stage updated week1-lecture3.html alongside update.py."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
