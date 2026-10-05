@@ -2,12 +2,11 @@
 r"""
 update.py
 
-Generates week1-lecture3.html with a fixed and optimized SVG visualization
-for the Discrete Rate of Change (Section 6):
-- Lifts the starting coordinate to prevent x-axis clipping.
-- Includes the a_0' starting step.
-- Adjusts run and rise label placements to eliminate overlap.
-- Tightens the viewBox and increases font sizes for readability.
+Generates week1-lecture3.html with Section 5, Subsection 3 converted into
+an enrichment aside box:
+- Wraps the linear climb plus sine wave discussion into an aside box.
+- Preserves the dual-line decomposition SVG and arithmetic breakdown.
+- Keeps core Section 5 focused on basic pointwise operations and plateaus.
 - Enforces strict .nobr wrapping on all inline math and punctuation.
 
 Stages week1-lecture3.html and update.py, commits, and pushes upstream.
@@ -774,7 +773,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <line x1="45" y1="180" x2="370" y2="180" stroke="#0f172a" stroke-width="1.5" />
                         <line x1="50" y1="185" x2="50" y2="62" stroke="#0f172a" stroke-width="1.5" />
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
-                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
+                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">aₙ</text>
 
                         <!-- Points -->
                         <line x1="80" y1="180" x2="80" y2="155" stroke="#94a3b8" stroke-dasharray="2,2" />
@@ -847,7 +846,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <line x1="45" y1="180" x2="370" y2="180" stroke="#0f172a" stroke-width="1.5" />
                         <line x1="50" y1="185" x2="50" y2="62" stroke="#0f172a" stroke-width="1.5" />
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
-                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
+                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">aₙ</text>
 
                         <!-- Points -->
                         <line x1="80" y1="180" x2="80" y2="60" stroke="#94a3b8" stroke-dasharray="2,2" />
@@ -876,8 +875,8 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     <!-- PANEL 4: NON-MONOTONIC -->
                     <g transform="translate(435, 240)">
                         <rect x="0" y="0" width="395" height="210" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
-                        <text x="20" y="24" font-size="12" font-weight="bold" fill="#dc2626">4. Non-Monotonic: Changes Direction</text>
-                        <text x="20" y="38" font-size="10.5" fill="#64748b">Zigzags up and down (fails the single-direction test)</text>
+                        <text x="20" y="26" font-size="12" font-weight="bold" fill="#dc2626">4. Non-Monotonic: Changes Direction</text>
+                        <text x="20" y="42" font-size="10.5" fill="#64748b">Zigzags up and down (fails the single-direction test)</text>
 
                         <line x1="45" y1="180" x2="370" y2="180" stroke="#0f172a" stroke-width="1.5" />
                         <line x1="50" y1="185" x2="50" y2="62" stroke="#0f172a" stroke-width="1.5" />
@@ -1046,7 +1045,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
             </div>
 
             <div class="aside-box">
-                <h4>🔗 The Bridge to Lecture 2: Sequences and Suprema</h4>
+                <h4>💡 The Bridge to Lecture 2: Sequences and Suprema</h4>
                 <p style="margin-top: 0; margin-bottom: 0.5rem; font-size: 0.95rem;">
                     Notice how this connects directly to the <strong>Axiom of Completeness</strong> from Lecture 2!
                 </p>
@@ -1138,7 +1137,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </ul>
             </div>
 
-            <!-- SIMPLIFIED, DIRECT SUBSECTION 2 (NO PRETENTIOUS PHRASING) -->
+            <!-- SUBSECTION 2: COMBINING SIMPLE SEQUENCES -->
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">2. Combining Simple Sequences to Create New Patterns</h3>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
                 One of the most useful features of sequence algebra is how adding two simple sequences can produce a brand-new stepping behavior that neither parent sequence had on its own.
@@ -1184,7 +1183,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                             <td style="padding: 0.6rem 0.75rem; color: #0369a1;"><span class="nobr">$3$</span></td>
                             <td style="padding: 0.6rem 0.75rem; color: #b45309;"><span class="nobr">$-1$</span></td>
                             <td style="padding: 0.6rem 0.75rem; font-weight: 700; color: #047857;"><span class="nobr">$2$</span></td>
-                            <td style="padding: 0.6rem 0.75rem; text-align: left; font-weight: 600; color: #166534;">⏸️ Flat plateau: <span class="nobr">$-1$</span> cancels climb (<span class="nobr">$c_1 = c_0$</span>)</td>
+                            <td style="padding: 0.6rem 0.75rem; text-align: left; font-weight: 600; color: #166534;">⏸ Flat plateau: <span class="nobr">$-1$</span> cancels climb (<span class="nobr">$c_1 = c_0$</span>)</td>
                         </tr>
                         <tr style="border-bottom: 1px solid #e2e8f0;">
                             <td style="padding: 0.6rem 0.75rem; font-weight: 600; color: #475569;"><span class="nobr">$n = 2$</span></td>
@@ -1198,7 +1197,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                             <td style="padding: 0.6rem 0.75rem; color: #0369a1;"><span class="nobr">$7$</span></td>
                             <td style="padding: 0.6rem 0.75rem; color: #b45309;"><span class="nobr">$-1$</span></td>
                             <td style="padding: 0.6rem 0.75rem; font-weight: 700; color: #047857;"><span class="nobr">$6$</span></td>
-                            <td style="padding: 0.6rem 0.75rem; text-align: left; font-weight: 600; color: #166534;">⏸️ Flat plateau: <span class="nobr">$-1$</span> cancels climb (<span class="nobr">$c_3 = c_2$</span>)</td>
+                            <td style="padding: 0.6rem 0.75rem; text-align: left; font-weight: 600; color: #166534;">⏸ Flat plateau: <span class="nobr">$-1$</span> cancels climb (<span class="nobr">$c_3 = c_2$</span>)</td>
                         </tr>
                         <tr style="border-bottom: 1px solid #e2e8f0;">
                             <td style="padding: 0.6rem 0.75rem; font-weight: 600; color: #475569;"><span class="nobr">$n = 4$</span></td>
@@ -1313,169 +1312,139 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </svg>
             </div>
 
-            <!-- SUBSECTION 3: LINEAR CLIMB + SINE WAVE WITH DECOMPOSED VISUALIZATION -->
-            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 2rem;">3. What If the Oscillation Is a Smooth Sine Wave?</h3>
-            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                Once you see how the alternating sequence <span class="nobr">$(-1)^n$</span> adds a sharp, digital bounce to a linear walk, a natural question arises: <strong>what happens if we replace the abrupt bounce with a smooth, continuous wave, like a sine function?</strong>
-            </p>
-            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                Suppose our first sequence is a steady linear climb <span class="nobr">$a_n = \alpha n$</span> and our second sequence is a discrete sinusoidal wave <span class="nobr">$b_n = A \sin(\omega n)$.</span> Adding them pointwise into <span class="nobr">$c_n = a_n + b_n = \alpha n + A \sin(\omega n)$</span> models real-world phenomena found across science and engineering:
-            </p>
-            <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem; margin-bottom: 1.25rem;">
-                <li style="margin-bottom: 0.65rem;">
-                    <strong>Climate and Meteorology:</strong> A seasonal sinusoidal temperature cycle (summer peaks and winter troughs) riding on top of a subtle long-term climate drift.
-                </li>
-                <li style="margin-bottom: 0.65rem;">
-                    <strong>Economics and Retail:</strong> Quarterly holiday shopping surges and winter slumps superimposed onto a company's steady multi-year revenue growth.
-                </li>
-                <li>
-                    <strong>Acoustics and Signals:</strong> A high-frequency vibration riding on a low-frequency carrier wave.
-                </li>
-            </ul>
-            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                Instead of flat, abrupt resting ledges, the sine wave creates <strong>curving ripples that weave smoothly above and below the diagonal linear trend</strong>.
-            </p>
-            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1.25rem;">
-                To understand whether the combined sequence continues climbing monotonically, look at the two constituent lines independently on the graph below. It comes down to a direct test between two opposing forces: <strong>is the forward stride of the line greater than the steepest downward plunge of the wave?</strong>
-            </p>
-
-            <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem;">
-                <h4 style="margin-top: 0; color: #0f172a; font-size: 1rem;">The Arithmetic of the Contest (Frequency $\omega = \pi/3$)</h4>
+            <!-- ENRICHMENT ASIDE: LINEAR CLIMB + SINE WAVE -->
+            <div class="aside-box" style="margin-top: 2rem;">
+                <h4>💡 Exploration: What If the Oscillation Is a Smooth Sine Wave?</h4>
+                <p style="margin-top: 0; font-size: 0.98rem; line-height: 1.7; color: #1e293b;">
+                    Once you see how the alternating sequence <span class="nobr">$(-1)^n$</span> adds a digital bounce to a linear walk, you might wonder what happens if we replace the abrupt bounce with a smooth, continuous wave, like a sine function: <span class="nobr">$c_n = \alpha n + A \sin(\omega n)$.</span>
+                </p>
                 <p style="font-size: 0.95rem; line-height: 1.7; color: #334155; margin-bottom: 0.75rem;">
-                    For frequency <span class="nobr">$\omega = \frac{\pi}{3}$,</span> the sine wave takes its steepest downward plunge between step <span class="nobr">$n = 2$</span> and step <span class="nobr">$n = 3$:</span>
-                    <span class="nobr">$$\sin\left(\frac{2\pi}{3}\right) = \frac{\sqrt{3}}{2} \approx 0.866 \quad \longrightarrow \quad \sin(\pi) = 0$$</span>
-                    This means the wave drops by approximately <span class="nobr">$0.866 \times A$</span> units in a single step!
+                    This composite model describes real-world dynamics across science:
                 </p>
-                <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.93rem; line-height: 1.7; color: #334155;">
-                    <li style="margin-bottom: 0.5rem;">
-                        <strong>Panel 1 ($c_n = 2n + 2\sin\frac{\pi n}{3}$): Line Stride ($+2$) &gt; Wave Drop ($1.73$)</strong><br>
-                        The line climbs by <span class="nobr">$+2$</span> at every step, while the wave drops by at most <span class="nobr">$2 \times 0.866 \approx 1.73$.</span> Because the line's upward stride is strictly greater than the wave's downward plunge (<span class="nobr">$2 > 1.73$</span>), the line wins everywhere. The green sum points undulate, but every step is strictly higher than the previous one (<span class="nobr">$c_{n+1} > c_n$</span>). The sequence remains <strong>strictly increasing</strong>!
-                    </li>
-                    <li>
-                        <strong>Panel 2 ($c_n = n + 2.5\sin\frac{\pi n}{3}$): Wave Drop ($2.17$) &gt; Line Stride ($+1$)</strong><br>
-                        The line only advances by <span class="nobr">$+1$</span> per step, but the wave plunges downward by <span class="nobr">$2.5 \times 0.866 \approx 2.17$</span> between <span class="nobr">$n=2$</span> and <span class="nobr">$n=3$.</span> Because the wave's drop is greater than the line's step (<span class="nobr">$2.17 > 1$</span>), the wave overpowers the climb, pulling the combined red sequence into a valley (<span class="nobr">$c_3 = 3 < c_2 \approx 4.17$</span>) and <strong>breaking monotonicity</strong>!
-                    </li>
+                <ul style="margin: 0 0 1rem 0; padding-left: 1.25rem; font-size: 0.92rem; line-height: 1.65; color: #334155;">
+                    <li><strong>Climate &amp; Meteorology:</strong> A seasonal temperature wave (summer peaks, winter troughs) riding on a long-term climate drift.</li>
+                    <li><strong>Retail &amp; Economics:</strong> Quarterly holiday sales surges superimposed on a company's steady year-over-year revenue climb.</li>
+                    <li><strong>Signal Processing:</strong> High-frequency vibrations riding along a low-frequency carrier wave.</li>
                 </ul>
-            </div>
-
-            <!-- VISUALIZATION: LINEAR AND SINE DECOMPOSITION -->
-            <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; text-align: center;">
-                <p style="font-size: 0.95rem; font-weight: 700; color: #1e293b; margin-top: 0; margin-bottom: 0.35rem;">
-                    VISUALIZING LINEAR + SINE: Comparing the Linear Line vs. the Wave Line
+                <p style="font-size: 0.95rem; line-height: 1.7; color: #334155; margin-bottom: 1rem;">
+                    Whether the combined sequence continues marching strictly uphill comes down to a direct tug-of-war between two opposing forces: <strong>is the forward stride of the line greater than the steepest downward plunge of the wave?</strong>
                 </p>
-                <p style="font-size: 0.88rem; color: #64748b; margin-top: 0; margin-bottom: 1.25rem; max-width: 780px; display: inline-block; line-height: 1.5;">
-                    Each panel plots the linear ramp (blue), the isolated sine wave (amber), and the combined sum (green or red). Watch how the relationship between the line's slope and the wave's drop decides whether the sequence can preserve monotonicity.
-                </p>
-                <svg viewBox="0 0 840 310" style="width: 100%; max-width: 820px; height: auto; display: inline-block;">
-                    <!-- PANEL 1: 2n > 2 sin(pi n / 3) -->
-                    <g transform="translate(10, 10)">
-                        <rect x="0" y="0" width="395" height="285" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
-                        <text x="20" y="24" font-size="11.5" font-weight="bold" fill="#047857">1. Line Stride Dominates: 2 > 1.73</text>
-                        <text x="20" y="38" font-size="10" fill="#64748b">Line climbs (+2) faster than wave can drop (-1.73)</text>
 
-                        <!-- Legend -->
-                        <line x1="20" y1="52" x2="42" y2="52" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="3,2" />
-                        <text x="46" y="55" font-size="8.5" fill="#0284c7">Line: 2n</text>
-                        <path d="M 100 52 Q 106 47 112 52 T 124 52" fill="none" stroke="#d97706" stroke-width="1.8" />
-                        <text x="128" y="55" font-size="8.5" fill="#d97706">Wave: 2 sin(πn/3)</text>
-                        <circle cx="218" cy="52" r="3.5" fill="#059669" />
-                        <text x="226" y="55" font-size="8.5" font-weight="bold" fill="#047857">Sum cₙ (Climbs!)</text>
+                <!-- ARITHMETIC BOX INSIDE ASIDE -->
+                <div style="background: #ffffff; border: 1px solid #fde68a; border-radius: 6px; padding: 1rem 1.25rem; margin-bottom: 1.25rem;">
+                    <strong style="color: #92400e; font-size: 0.95rem; display: block; margin-bottom: 0.4rem;">The Arithmetic of the Contest (Frequency $\omega = \pi/3$):</strong>
+                    <p style="font-size: 0.91rem; line-height: 1.65; color: #334155; margin: 0 0 0.5rem 0;">
+                        Between step <span class="nobr">$n = 2$</span> and <span class="nobr">$n = 3$,</span> the wave plunges from <span class="nobr">$\sin(2\pi/3) \approx 0.866$</span> down to <span class="nobr">$\sin(\pi) = 0$,</span> a single-step drop of approximately <span class="nobr">$0.866 \times A$</span> units.
+                    </p>
+                    <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.91rem; line-height: 1.65; color: #334155;">
+                        <li><strong>Line Stride Dominates (<span class="nobr">$2n + 2\sin(\pi n/3)$</span>):</strong> Stride <span class="nobr">$+2$</span> is strictly greater than the maximum wave drop <span class="nobr">$2 \times 0.866 \approx 1.73$.</span> The line wins everywhere, preserving <strong>strict monotonicity</strong> (<span class="nobr">$c_{n+1} > c_n$</span>).</li>
+                        <li><strong>Wave Drop Dominates (<span class="nobr">$n + 2.5\sin(\pi n/3)$</span>):</strong> The wave drop <span class="nobr">$2.5 \times 0.866 \approx 2.17$</span> exceeds the stride of <span class="nobr">$+1$.</span> The wave overpowers the climb, pulling terms into a valley (<span class="nobr">$c_3 < c_2$</span>) and <strong>breaking monotonicity</strong>!</li>
+                    </ul>
+                </div>
 
-                        <!-- Axes: Origin at (70, 230) -->
-                        <line x1="65" y1="230" x2="370" y2="230" stroke="#0f172a" stroke-width="1.5" />
-                        <line x1="70" y1="260" x2="70" y2="65" stroke="#0f172a" stroke-width="1.5" />
-                        <text x="375" y="234" font-size="11" font-weight="bold" fill="#0f172a">n</text>
-                        <text x="66" y="60" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">val</text>
+                <!-- 2-PANEL SVG INSIDE ASIDE -->
+                <div style="background: #ffffff; border: 1px solid #fde68a; border-radius: 6px; padding: 1rem; text-align: center;">
+                    <svg viewBox="0 0 840 310" style="width: 100%; max-width: 800px; height: auto; display: inline-block;">
+                        <!-- PANEL 1: 2n > 2 sin(pi n / 3) -->
+                        <g transform="translate(10, 10)">
+                            <rect x="0" y="0" width="395" height="285" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2" />
+                            <text x="20" y="24" font-size="11.5" font-weight="bold" fill="#047857">1. Line Stride Dominates: 2 > 1.73</text>
+                            <text x="20" y="38" font-size="10" fill="#64748b">Line climbs (+2) faster than wave can drop (-1.73)</text>
 
-                        <!-- Zero reference dashed line for wave -->
-                        <line x1="70" y1="230" x2="370" y2="230" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2,2" />
+                            <!-- Legend -->
+                            <line x1="20" y1="52" x2="42" y2="52" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="3,2" />
+                            <text x="46" y="55" font-size="8.5" fill="#0284c7">Line: 2n</text>
+                            <path d="M 100 52 Q 106 47 112 52 T 124 52" fill="none" stroke="#d97706" stroke-width="1.8" />
+                            <text x="128" y="55" font-size="8.5" fill="#d97706">Wave: 2 sin(πn/3)</text>
+                            <circle cx="218" cy="52" r="3.5" fill="#059669" />
+                            <text x="226" y="55" font-size="8.5" font-weight="bold" fill="#047857">Sum cₙ (Climbs!)</text>
 
-                        <!-- Ticks on n-axis -->
-                        <text x="85" y="243" font-size="9" fill="#475569" text-anchor="middle">0</text>
-                        <text x="130" y="243" font-size="9" fill="#475569" text-anchor="middle">1</text>
-                        <text x="175" y="243" font-size="9" fill="#475569" text-anchor="middle">2</text>
-                        <text x="220" y="243" font-size="9" fill="#475569" text-anchor="middle">3</text>
-                        <text x="265" y="243" font-size="9" fill="#475569" text-anchor="middle">4</text>
-                        <text x="310" y="243" font-size="9" fill="#475569" text-anchor="middle">5</text>
-                        <text x="355" y="243" font-size="9" fill="#475569" text-anchor="middle">6</text>
+                            <!-- Axes -->
+                            <line x1="65" y1="230" x2="370" y2="230" stroke="#0f172a" stroke-width="1.5" />
+                            <line x1="70" y1="260" x2="70" y2="65" stroke="#0f172a" stroke-width="1.5" />
+                            <text x="375" y="234" font-size="11" font-weight="bold" fill="#0f172a">n</text>
+                            <text x="66" y="60" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">val</text>
 
-                        <!-- LINE: 2n (Scale: 1 unit = 11.5px. Origin 0 = 230) -->
-                        <line x1="85" y1="230" x2="355" y2="92" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="4,3" />
+                            <!-- Ticks -->
+                            <text x="85" y="243" font-size="9" fill="#475569" text-anchor="middle">0</text>
+                            <text x="130" y="243" font-size="9" fill="#475569" text-anchor="middle">1</text>
+                            <text x="175" y="243" font-size="9" fill="#475569" text-anchor="middle">2</text>
+                            <text x="220" y="243" font-size="9" fill="#475569" text-anchor="middle">3</text>
+                            <text x="265" y="243" font-size="9" fill="#475569" text-anchor="middle">4</text>
+                            <text x="310" y="243" font-size="9" fill="#475569" text-anchor="middle">5</text>
+                            <text x="355" y="243" font-size="9" fill="#475569" text-anchor="middle">6</text>
 
-                        <!-- WAVE: 2 sin(πn/3) (Centered at y=230) -->
-                        <path d="M 85 230 Q 107 202 130 210 T 175 210 T 220 230 T 265 250 T 310 250 T 355 230" fill="none" stroke="#d97706" stroke-width="1.8" />
+                            <!-- Line 2n -->
+                            <line x1="85" y1="230" x2="355" y2="92" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="4,3" />
 
-                        <!-- SUM: c_n = 2n + 2 sin(πn/3) -->
-                        <path d="M 85 230 L 130 187 L 175 164 L 220 161 L 265 158 L 310 135 L 355 92" fill="none" stroke="#059669" stroke-width="2" />
-                        <circle cx="85" cy="230" r="4" fill="#059669" />
-                        <circle cx="130" cy="187" r="4" fill="#059669" />
-                        <circle cx="175" cy="164" r="4" fill="#059669" />
-                        <circle cx="220" cy="161" r="4" fill="#059669" />
-                        <circle cx="265" cy="158" r="4" fill="#059669" />
-                        <circle cx="310" cy="135" r="4" fill="#059669" />
-                        <circle cx="355" cy="92" r="4" fill="#059669" />
+                            <!-- Wave -->
+                            <path d="M 85 230 Q 107 202 130 210 T 175 210 T 220 230 T 265 250 T 310 250 T 355 230" fill="none" stroke="#d97706" stroke-width="1.8" />
 
-                        <!-- Banner Badge -->
-                        <rect x="135" y="100" width="220" height="18" rx="4" fill="#ecfdf5" stroke="#a7f3d0" />
-                        <text x="245" y="112" font-size="8.5" font-weight="bold" fill="#047857" text-anchor="middle">Stride (+2) &gt; Max Wave Drop (1.73) ✓</text>
-                    </g>
+                            <!-- Sum -->
+                            <path d="M 85 230 L 130 187 L 175 164 L 220 161 L 265 158 L 310 135 L 355 92" fill="none" stroke="#059669" stroke-width="2" />
+                            <circle cx="85" cy="230" r="4" fill="#059669" />
+                            <circle cx="130" cy="187" r="4" fill="#059669" />
+                            <circle cx="175" cy="164" r="4" fill="#059669" />
+                            <circle cx="220" cy="161" r="4" fill="#059669" />
+                            <circle cx="265" cy="158" r="4" fill="#059669" />
+                            <circle cx="310" cy="135" r="4" fill="#059669" />
+                            <circle cx="355" cy="92" r="4" fill="#059669" />
 
-                    <!-- PANEL 2: n < 2.5 sin(pi n / 3) -->
-                    <g transform="translate(435, 10)">
-                        <rect x="0" y="0" width="395" height="285" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
-                        <text x="20" y="24" font-size="11.5" font-weight="bold" fill="#b91c1c">2. Wave Drop Dominates: 2.17 > 1</text>
-                        <text x="20" y="38" font-size="10" fill="#64748b">Wave drops (-2.17) faster than line climbs (+1)</text>
+                            <rect x="135" y="100" width="220" height="18" rx="4" fill="#ecfdf5" stroke="#a7f3d0" />
+                            <text x="245" y="112" font-size="8.5" font-weight="bold" fill="#047857" text-anchor="middle">Stride (+2) &gt; Max Wave Drop (1.73) ✓</text>
+                        </g>
 
-                        <!-- Legend -->
-                        <line x1="20" y1="52" x2="42" y2="52" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="3,2" />
-                        <text x="46" y="55" font-size="8.5" fill="#0284c7">Line: n</text>
-                        <path d="M 100 52 Q 106 47 112 52 T 124 52" fill="none" stroke="#d97706" stroke-width="1.8" />
-                        <text x="128" y="55" font-size="8.5" fill="#d97706">Wave: 2.5 sin(πn/3)</text>
-                        <circle cx="225" cy="52" r="3.5" fill="#dc2626" />
-                        <text x="233" y="55" font-size="8.5" font-weight="bold" fill="#b91c1c">Sum cₙ (Dips!)</text>
+                        <!-- PANEL 2: n < 2.5 sin(pi n / 3) -->
+                        <g transform="translate(435, 10)">
+                            <rect x="0" y="0" width="395" height="285" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2" />
+                            <text x="20" y="24" font-size="11.5" font-weight="bold" fill="#b91c1c">2. Wave Drop Dominates: 2.17 > 1</text>
+                            <text x="20" y="38" font-size="10" fill="#64748b">Wave drops (-2.17) faster than line climbs (+1)</text>
 
-                        <!-- Axes: Origin at (70, 205) -->
-                        <line x1="65" y1="205" x2="370" y2="205" stroke="#0f172a" stroke-width="1.5" />
-                        <line x1="70" y1="250" x2="70" y2="65" stroke="#0f172a" stroke-width="1.5" />
-                        <text x="375" y="209" font-size="11" font-weight="bold" fill="#0f172a">n</text>
-                        <text x="66" y="60" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">val</text>
+                            <!-- Legend -->
+                            <line x1="20" y1="52" x2="42" y2="52" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="3,2" />
+                            <text x="46" y="55" font-size="8.5" fill="#0284c7">Line: n</text>
+                            <path d="M 100 52 Q 106 47 112 52 T 124 52" fill="none" stroke="#d97706" stroke-width="1.8" />
+                            <text x="128" y="55" font-size="8.5" fill="#d97706">Wave: 2.5 sin(πn/3)</text>
+                            <circle cx="225" cy="52" r="3.5" fill="#dc2626" />
+                            <text x="233" y="55" font-size="8.5" font-weight="bold" fill="#b91c1c">Sum cₙ (Dips!)</text>
 
-                        <!-- Zero reference dashed line for wave -->
-                        <line x1="70" y1="205" x2="370" y2="205" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2,2" />
+                            <!-- Axes -->
+                            <line x1="65" y1="205" x2="370" y2="205" stroke="#0f172a" stroke-width="1.5" />
+                            <line x1="70" y1="250" x2="70" y2="65" stroke="#0f172a" stroke-width="1.5" />
+                            <text x="375" y="209" font-size="11" font-weight="bold" fill="#0f172a">n</text>
+                            <text x="66" y="60" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">val</text>
 
-                        <!-- Ticks on n-axis -->
-                        <text x="85" y="218" font-size="9" fill="#475569" text-anchor="middle">0</text>
-                        <text x="130" y="218" font-size="9" fill="#475569" text-anchor="middle">1</text>
-                        <text x="175" y="218" font-size="9" fill="#475569" text-anchor="middle">2</text>
-                        <text x="220" y="218" font-size="9" fill="#475569" text-anchor="middle">3</text>
-                        <text x="265" y="218" font-size="9" fill="#475569" text-anchor="middle">4</text>
-                        <text x="310" y="218" font-size="9" fill="#475569" text-anchor="middle">5</text>
-                        <text x="355" y="218" font-size="9" fill="#475569" text-anchor="middle">6</text>
+                            <!-- Ticks -->
+                            <text x="85" y="218" font-size="9" fill="#475569" text-anchor="middle">0</text>
+                            <text x="130" y="218" font-size="9" fill="#475569" text-anchor="middle">1</text>
+                            <text x="175" y="218" font-size="9" fill="#475569" text-anchor="middle">2</text>
+                            <text x="220" y="218" font-size="9" fill="#475569" text-anchor="middle">3</text>
+                            <text x="265" y="218" font-size="9" fill="#475569" text-anchor="middle">4</text>
+                            <text x="310" y="218" font-size="9" fill="#475569" text-anchor="middle">5</text>
+                            <text x="355" y="218" font-size="9" fill="#475569" text-anchor="middle">6</text>
 
-                        <!-- LINE: n (Scale: 1 unit = 16px. Origin 0 = 205) -->
-                        <line x1="85" y1="205" x2="355" y2="109" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="4,3" />
+                            <!-- Line n -->
+                            <line x1="85" y1="205" x2="355" y2="109" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="4,3" />
 
-                        <!-- WAVE: 2.5 sin(πn/3) (Centered at y=205) -->
-                        <path d="M 85 205 Q 107 160 130 170 T 175 170 T 220 205 T 265 240 T 310 240 T 355 205" fill="none" stroke="#d97706" stroke-width="1.8" />
+                            <!-- Wave -->
+                            <path d="M 85 205 Q 107 160 130 170 T 175 170 T 220 205 T 265 240 T 310 240 T 355 205" fill="none" stroke="#d97706" stroke-width="1.8" />
 
-                        <!-- SUM: c_n = n + 2.5 sin(πn/3) -->
-                        <path d="M 85 205 L 130 154 L 175 138 L 220 157 L 265 176 L 310 160 L 355 109" fill="none" stroke="#dc2626" stroke-width="2" />
-                        <circle cx="85" cy="205" r="4" fill="#dc2626" />
-                        <circle cx="130" cy="154" r="4" fill="#dc2626" />
-                        <circle cx="175" cy="138" r="4.5" fill="#dc2626" stroke="#b91c1c" stroke-width="1.5" />
-                        <circle cx="220" cy="157" r="4.5" fill="#dc2626" stroke="#b91c1c" stroke-width="1.5" />
-                        <circle cx="265" cy="176" r="4.5" fill="#dc2626" stroke="#b91c1c" stroke-width="1.5" />
-                        <circle cx="310" cy="160" r="4.5" fill="#dc2626" />
-                        <circle cx="355" cy="109" r="4.5" fill="#dc2626" />
+                            <!-- Sum -->
+                            <path d="M 85 205 L 130 154 L 175 138 L 220 157 L 265 176 L 310 160 L 355 109" fill="none" stroke="#dc2626" stroke-width="2" />
+                            <circle cx="85" cy="205" r="4" fill="#dc2626" />
+                            <circle cx="130" cy="154" r="4" fill="#dc2626" />
+                            <circle cx="175" cy="138" r="4.5" fill="#dc2626" stroke="#b91c1c" stroke-width="1.5" />
+                            <circle cx="220" cy="157" r="4.5" fill="#dc2626" stroke="#b91c1c" stroke-width="1.5" />
+                            <circle cx="265" cy="176" r="4.5" fill="#dc2626" stroke="#b91c1c" stroke-width="1.5" />
+                            <circle cx="310" cy="160" r="4.5" fill="#dc2626" />
+                            <circle cx="355" cy="109" r="4.5" fill="#dc2626" />
 
-                        <!-- Backward step indicator line -->
-                        <line x1="175" y1="138" x2="265" y2="176" stroke="#b91c1c" stroke-width="1.5" stroke-dasharray="2,2" />
-
-                        <!-- Banner Badge -->
-                        <rect x="135" y="85" width="220" height="18" rx="4" fill="#fef2f2" stroke="#fecaca" />
-                        <text x="245" y="97" font-size="8.5" font-weight="bold" fill="#b91c1c" text-anchor="middle">Max Wave Drop (2.17) &gt; Stride (+1) ✗ Dip!</text>
-                    </g>
-                </svg>
+                            <line x1="175" y1="138" x2="265" y2="176" stroke="#b91c1c" stroke-width="1.5" stroke-dasharray="2,2" />
+                            <rect x="135" y="85" width="220" height="18" rx="4" fill="#fef2f2" stroke="#fecaca" />
+                            <text x="245" y="97" font-size="8.5" font-weight="bold" fill="#b91c1c" text-anchor="middle">Max Wave Drop (2.17) &gt; Stride (+1) ✗ Dip!</text>
+                        </g>
+                    </svg>
+                </div>
             </div>
 
             <!-- DISTINCT WORKED EXAMPLE: SCALING AND DIFFERENCE -->
@@ -1521,7 +1490,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 In everyday mathematics, any rate of change is simply <strong>rise over run</strong>: how much the output value changed, divided by how far the input index moved:
             </p>
             <div style="text-align: center; margin: 1rem 0; font-size: 1.05rem; background: #f8fafc; padding: 0.85rem; border-radius: 6px; border: 1px solid var(--border); font-weight: 500;">
-                $$\text{Rate of Change} = \frac{\Delta \text{Value}}{\Delta \text{Input}} = \frac{\text{Change in Stored Value}}{\text{Change in Locker Index}}$$
+                $$\text{Rate of Change} = \frac{\Delta \text{Value}}{\Delta \text{Input}} = \frac{a_{n+1} - a_n}{(n + 1) - n}$$
             </div>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
                 Let's look at what happens to both the top and bottom of that fraction when you step from Locker <span class="nobr">$n$</span> to its immediate neighbor, Locker <span class="nobr">$n+1$:</span>
@@ -1590,19 +1559,19 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     <!-- Step 0 -->
                     <line x1="120" y1="180" x2="240" y2="180" stroke="#94a3b8" stroke-dasharray="4,3" stroke-width="1.5"/>
                     <line x1="240" y1="180" x2="240" y2="140" stroke="#d97706" stroke-width="3"/>
-                    <text x="180" y="174" font-family="sans-serif" font-size="12" fill="#64748b" text-anchor="middle">Δn = 1</text>
+                    <text x="180" y="174" font-family="sans-serif" font-size="12" fill="#64748b" text-anchor="middle">ΔInput = 1</text>
                     <text x="250" y="165" font-family="sans-serif" font-size="13" font-weight="bold" fill="#d97706">a₀' = a₁ - a₀</text>
 
                     <!-- Step 1 -->
                     <line x1="240" y1="140" x2="360" y2="140" stroke="#94a3b8" stroke-dasharray="4,3" stroke-width="1.5"/>
                     <line x1="360" y1="140" x2="360" y2="90" stroke="#d97706" stroke-width="3"/>
-                    <text x="300" y="134" font-family="sans-serif" font-size="12" fill="#64748b" text-anchor="middle">Δn = 1</text>
+                    <text x="300" y="134" font-family="sans-serif" font-size="12" fill="#64748b" text-anchor="middle">ΔInput = 1</text>
                     <text x="370" y="120" font-family="sans-serif" font-size="13" font-weight="bold" fill="#d97706">a₁' = a₂ - a₁</text>
 
                     <!-- Step 2 -->
                     <line x1="360" y1="90" x2="480" y2="90" stroke="#94a3b8" stroke-dasharray="4,3" stroke-width="1.5"/>
                     <line x1="480" y1="90" x2="480" y2="30" stroke="#d97706" stroke-width="3"/>
-                    <text x="420" y="84" font-family="sans-serif" font-size="12" fill="#64748b" text-anchor="middle">Δn = 1</text>
+                    <text x="420" y="84" font-family="sans-serif" font-size="12" fill="#64748b" text-anchor="middle">ΔInput = 1</text>
                     <text x="490" y="65" font-family="sans-serif" font-size="13" font-weight="bold" fill="#d97706">a₂' = a₃ - a₂</text>
                 </svg>
             </div>
@@ -1970,7 +1939,7 @@ def execute_git(args: list[str]) -> subprocess.CompletedProcess:
 
 def main() -> None:
     TARGET_HTML.write_text(WEEK1_LECTURE3_HTML, encoding="utf-8")
-    print(f"Successfully generated {TARGET_HTML.name} with updated Section 6 SVG.")
+    print(f"Successfully generated {TARGET_HTML.name} with linear + sine converted to aside.")
 
     execute_git(["git", "rev-parse", "--is-inside-work-tree"])
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
@@ -1980,13 +1949,11 @@ def main() -> None:
         print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Fix Discrete Rate of Change SVG layout and typography"
+    commit_subject = "Convert linear plus sinusoidal sequence synthesis to an aside box"
     commit_body = (
-        "Tighten SVG viewBox to remove excessive whitespace margins,\n"
-        "increase font sizes for readability and prevent label collisions,\n"
-        "lift starting point a_0 above the X-axis to prevent clipping,\n"
-        "add a_0' step triangle to ensure pattern consistency from origin,\n"
-        "stagger run labels above dashed lines to eliminate overlaps,\n"
+        "Demote Section 5 Subsection 3 from formal heading to enrichment aside,\n"
+        "retain linear stride vs wave plunge explanation and dual-line SVG,\n"
+        "keep core Section 5 focused on pointwise algebra and plateaus,\n"
         "and stage updated week1-lecture3.html alongside update.py."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
