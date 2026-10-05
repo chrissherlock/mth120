@@ -2,11 +2,10 @@
 r"""
 update.py
 
-Generates week1-lecture3.html with both formal progression definitions
-reinstated and rich, expansive prose explaining the arithmetic and geometric
-mechanics in Section 3.
-- Restores structure and definition boxes for clarity.
-- Adds comprehensive textual explanations before and around the stepper.
+Generates week1-lecture3.html with the "Finding Your Footing" orientation
+section converted from a boxed card into clean, flowing narrative prose:
+- Removes background container, borders, and padding box from the intro.
+- Integrates the welcoming introduction naturally into the module content.
 - Enforces strict .nobr wrapping on all inline math and punctuation.
 
 Stages week1-lecture3.html and update.py, commits, and pushes upstream.
@@ -120,11 +119,9 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 Welcome to Lecture 3. Having built the grammatical machinery of sets and functions (Lecture 1) and solidified the continuous real line $\mathbb{R}$ with completeness (Lecture 2), we now introduce motion into our universe. Here we study <strong>sequences</strong>—the fundamental vehicles of convergence, approximation, and discrete calculus.
             </div>
 
-            <!-- EXPANDED REASSURING STUDENT ORIENTATION -->
-            <div style="margin: 2rem 0 2.25rem 0; background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 8px; padding: 1.75rem 2rem;">
-                <h3 style="margin-top: 0; color: #0f172a; font-size: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
-                    <span>🧭</span> Finding Your Footing: Welcome to Discrete Dynamics
-                </h3>
+            <!-- EXPANDED REASSURING STUDENT ORIENTATION (UNBOXED FLOWING TEXT) -->
+            <div style="margin: 2.25rem 0 2.5rem 0;">
+                <h3 style="margin-top: 0; color: #0f172a; font-size: 1.25rem;">Finding Your Footing: Welcome to Discrete Dynamics</h3>
                 <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
                     If you have studied calculus in secondary school, functions have almost always meant continuous curves: drawing a parabola $y = x^2$ with an unbroken pencil line, sliding along a smooth curve, or taking the tangent line at any arbitrary decimal value like $x = 1.414$. In that continuous universe, numbers flow into one another without gaps, and change happens smoothly and instantaneously.
                 </p>
@@ -431,13 +428,13 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </div>
             </div>
 
-            <!-- EXPANDED TEXTUAL PROSE FOR SECTION 3 (WITH DEFINITIONS REINSTATED) -->
+            <!-- EXPANDED TEXTUAL PROSE FOR SECTION 3 WITH FORMAL DEFINITIONS -->
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.25rem;">1. Unpacking the Two Great Motions: Strides vs. Zoom</h3>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
                 If you have ever stared at formulas like <span class="nobr">$c_n = an + b$</span> and <span class="nobr">$c_n = a q^n$</span> and wondered why one has $n$ multiplied as a coefficient while the other pops up as an exponent, take heart. Traditional mathematics courses often present these two equations as arbitrary algebraic recipes to memorize for exams, obscuring the simple physical rhythm underneath.
             </p>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                In reality, arithmetic and geometric progressions describe two distinct, tangible motions along our infinite locker corridor. Let us examine each in detail to see why their algebraic structures take the shapes they do.
+                In reality, arithmetic and geometric progressions describe two distinct, tangible physical motions along our infinite locker corridor. Let us examine each in detail to see why their algebraic structures take the shapes they do.
             </p>
 
             <h4 style="color: #1e293b; margin-top: 1.5rem;">The Arithmetic Progression: Walking with Constant Strides</h4>
@@ -479,7 +476,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
             </p>
             <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem; margin-bottom: 1.25rem;">
                 <li>At <strong>Locker 0</strong>, you have multiplied by $q$ zero times: <span class="nobr">$c_0 = a \cdot q^0 = a \cdot 1 = a$.</span></li>
-                <div>At <strong>Locker 1</strong>, you have multiplied your seed quantity by $q$ once: <span class="nobr">$c_1 = a \cdot q$.</span></div>
+                <li>At <strong>Locker 1</strong>, you have multiplied your seed quantity by $q$ once: <span class="nobr">$c_1 = a \cdot q$.</span></li>
                 <li>At <strong>Locker 2</strong>, you have multiplied by $q$ twice: <span class="nobr">$c_2 = (a \cdot q) \cdot q = a \cdot q^2$.</span></li>
                 <li>At <strong>Locker $n$</strong>, you have applied the multiplicative zoom factor $q$ exactly $n$ successive times, which naturally groups into the exponent <span class="nobr">$q^n$.</span></li>
             </ul>
