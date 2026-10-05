@@ -47,38 +47,33 @@
         .worked-example-box h4 { margin-top: 0; color: #047857; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
         .worked-example-box p, .worked-example-box li { color: #0f172a !important; }
 
-        .lecture-card { background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; transition: transform 0.15s ease, box-shadow 0.15s ease; }
-        .lecture-card:hover { transform: translateY(-2px); box-shadow: 0 6px 12px -2px rgba(0,0,0,0.08); border-color: var(--accent); }
-        .lecture-card h3 { margin-top: 0; color: #0f172a; }
-        .lecture-badge { display: inline-block; background: var(--accent); color: white; padding: 0.2rem 0.55rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem; }
-
         .biography-box { background: #f5f3ff; border: 1px solid #ddd6fe; border-left: 5px solid #6366f1; padding: 1.25rem 1.5rem; margin: 2rem 0; border-radius: 0 6px 6px 0; }
         .biography-box h4 { margin-top: 0; color: #3730a3; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; }
         .biography-box p, .biography-box li { color: #0f172a !important; }
-    
+
         /* Mobile-first layout adjustment for phones / smaller viewports */
         @media (max-width: 768px) {
             body {
-                background: #ffffff;
-                padding: 1rem 0.75rem;
+                background: #ffffff !important;
+                padding: 1rem 0.75rem !important;
             }
             .container {
-                max-width: 100%;
-                margin: 0;
+                max-width: 100% !important;
+                margin: 0 !important;
             }
             .module-content {
-                background: transparent;
-                padding: 0;
-                border: none;
-                border-radius: 0;
-                box-shadow: none;
-                margin-bottom: 1rem;
+                background: transparent !important;
+                padding: 0 !important;
+                border: none !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+                margin-bottom: 1rem !important;
             }
             .header {
-                padding-bottom: 0.75rem;
-                margin-bottom: 1.25rem;
+                padding-bottom: 0.75rem !important;
+                margin-bottom: 1.25rem !important;
             }
-        
+
             /* Full-width responsive biography cards on mobile */
             .biography-box {
                 padding: 1.25rem 1rem !important;
@@ -106,17 +101,16 @@
                 min-width: 0 !important;
             }
 
-        
             /* Tighten list indentation exclusively on mobile */
             ol, ul {
                 padding-left: 1.25rem !important;
                 margin-left: 0 !important;
             }
 
-        
             /* Keep header and footer navigation buttons side-by-side on mobile */
             .header > div:last-child,
-            .nav-btn-group {
+            .nav-btn-group,
+            .footer-nav {
                 display: flex !important;
                 flex-direction: row !important;
                 flex-wrap: nowrap !important;
@@ -125,17 +119,17 @@
             }
 
             .header > div:last-child a,
-            .nav-btn-group a {
+            .nav-btn-group a,
+            .footer-nav a {
                 flex: 1 1 0 !important;
                 min-width: 0 !important;
                 text-align: center !important;
                 padding: 0.55rem 0.4rem !important;
-                font-size: 0.82rem !important;
+                font-size: 0.84rem !important;
                 white-space: nowrap !important;
                 overflow: hidden !important;
                 text-overflow: ellipsis !important;
             }
-
         }
     </style>
 </head>
@@ -148,9 +142,9 @@
                 <a href="week1.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">&larr; Week 1 Overview Hub</a>
             </div>
             <div class="nav-btn-group" style="display: flex; gap: 0.5rem; align-items: center;">
-            <a href="week1.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem;">&larr; Week 1 Hub</a>
-            <a href="week1-lecture2.html" style="background: var(--accent); color: white; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Next: Week 1, Lecture 2 &rarr;</a>
-        </div>
+                <a href="week1.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem;">&larr; Week 1 Hub</a>
+                <a href="week1-lecture2.html" style="background: var(--accent); color: white; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Next: Lecture 2 &rarr;</a>
+            </div>
         </div>
 
         <div class="module-content">
@@ -227,8 +221,11 @@
                     There are two primary ways to describe a set:
                 </p>
                 <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.95rem; color: #334155; line-height: 1.6;">
-                    <li><strong>Roster (List) Notation:</strong> Enumerate every element explicitly between curly braces, e.g., $E = \{2, 4, 6, 8\}$. This works well for small collections, but becomes clumsy or impossible for infinite ones.</li>
-                    <li><strong>Set-Builder (Predicate) Notation:</strong> Specify a condition or property that selects precisely the members belonging to the set:
+                    <li style="margin-bottom: 0.75rem;">
+                        <strong>Roster (List) Notation:</strong> Enumerate every element explicitly between curly braces, e.g., $E = \{2, 4, 6, 8\}$. This works well for small collections, but becomes clumsy or impossible for infinite ones.
+                    </li>
+                    <li>
+                        <strong>Set-Builder (Predicate) Notation:</strong> Specify a condition or property that selects precisely the members belonging to the set:
                         <div style="text-align: center; margin: 0.75rem 0; font-size: 1.05rem;">
                             $$S = \{x \in U \mid P(x)\}$$
                         </div>
@@ -453,22 +450,41 @@
             <!-- OPERATION 4: CARTESIAN PRODUCT -->
             <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-top: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
                 <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.75rem; margin-bottom: 1rem;">
-                    <h3 style="margin: 0; color: #0f172a; font-size: 1.15rem;">2.4 Cartesian Product ($A \times B$)</h3>
+                    <h3 style="margin: 0; color: #0f172a; font-size: 1.15rem;">2.4 Cartesian Product ($A \times B$) and Ordered Pairs</h3>
                     <span style="font-weight: 700; color: #047857; font-size: 0.92rem;">Key Concept: Constructing Higher Dimensions</span>
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; align-items: center;">
                     <div>
                         <p style="margin-top: 0; color: #334155; line-height: 1.65;">
-                            Rather than combining individual elements, the <strong>Cartesian product</strong> forms all possible <strong>ordered pairs</strong> $(a, b)$ where the first entry comes from $A$ and the second from $B$:
+                            Unlike unions or intersections, which collect individual elements into a single flat set, the <strong>Cartesian product</strong> builds pairs. Specifically, $A \times B$ is the collection of all possible <strong>ordered pairs</strong> $(a, b)$ where the first component $a$ belongs to $A$ and the second component $b$ belongs to $B$:
                         </p>
                         <div class="definition-box" style="margin: 0.75rem 0; border-left-color: #10b981;">
                             $$A \times B = \{(a, b) \mid a \in A \land b \in B\}$$
                         </div>
-                        <p style="color: #334155; line-height: 1.65; margin-bottom: 0.5rem;">
-                            <strong>Why "Product"?</strong> The total number of pairs is simply the product of their sizes: $|A \times B| = |A| \cdot |B|$. Here, $3 \times 4 = 12$ distinct pairs are formed.
+                        <p style="color: #334155; line-height: 1.65; margin-bottom: 0.75rem;">
+                            <strong>Why "Ordered" Matters:</strong> Back in Section 1, we emphasized that order is meaningless inside a standard set: $\{1, 4\} = \{4, 1\}$. For an ordered pair, however, <strong>order is everything</strong>. Round parentheses denote a strict sequence: $(a, b) \neq (b, a)$ unless $a = b$. Formally, two ordered pairs are equal if and only if their respective coordinates match:
+                        </p>
+                        <div style="text-align: center; margin: 0.5rem 0; font-size: 1.05rem;">
+                            $$(a, b) = (c, d) \iff a = c \land b = d$$
+                        </div>
+                        <p style="color: #334155; line-height: 1.65; margin-bottom: 0.75rem;">
+                            Because position matters, the Cartesian product is <strong>non-commutative</strong>: $A \times B \neq B \times A$. Using our reference sets $A = \{1, 2, 3\}$ and $B = \{2, 3, 4, 5\}$, the pair $(1, 4)$ is an element of $A \times B$ because $1 \in A$ and $4 \in B$. But $(1, 4) \notin B \times A$ because $1 \notin B$.
+                        </p>
+                        <p style="color: #334155; line-height: 1.65; margin-bottom: 0.75rem;">
+                            Writing out all combinations systematically yields $3 \times 4 = 12$ distinct coordinates:
+                        </p>
+                        <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 6px; padding: 0.75rem 1rem; font-size: 0.88rem; color: #334155; margin-bottom: 0.75rem; overflow-x: auto;">
+                            $$A \times B = \left\{\begin{aligned}
+                                &(1, 2), (1, 3), (1, 4), (1, 5), \\
+                                &(2, 2), (2, 3), (2, 4), (2, 5), \\
+                                &(3, 2), (3, 3), (3, 4), (3, 5)
+                            \end{aligned}\right\}$$
+                        </div>
+                        <p style="color: #334155; line-height: 1.65; margin-bottom: 0.75rem;">
+                            <strong>Product Cardinality:</strong> The total number of pairs is simply the product of the individual cardinalities: $|A \times B| = |A| \cdot |B|$. When both sets are finite, counting the rows and columns gives $|A \times B| = 3 \cdot 4 = 12$.
                         </p>
                         <p style="color: #047857; line-height: 1.6; margin-bottom: 0;">
-                            <strong>Connecting to Continuous Math:</strong> This exact mechanism builds multi-dimensional spaces. When you take the real number line $\mathbb{R}$ and form $\mathbb{R} \times \mathbb{R}$, you get $\mathbb{R}^2$—the familiar continuous Cartesian plane.
+                            <strong>Foundation for Higher Dimensions:</strong> Ordered pairs form the bedrock of analytic geometry. When we take the continuous real line $\mathbb{R}$ and form the Cartesian product with itself ($\mathbb{R} \times \mathbb{R}$, abbreviated $\mathbb{R}^2$), we generate every 2D coordinate $(x, y)$ that makes graphs, geometry, and vector spaces possible.
                         </p>
                     </div>
                     <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; text-align: center;">
