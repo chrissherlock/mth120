@@ -140,9 +140,9 @@
                 </div>
                 <div class="notation-grid">
                     <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n$</span></span><span class="notation-desc">The $n$-th term of the sequence (the value stored at position $n$)</span></div>
-                    <div class="notation-item"><span class="nobr">$(a_n)_{n=0}^\infty$</span><span class="notation-desc">The complete infinite ordered sequence $(a_0, a_1, a_2, a_3, \dots)$</span></div>
-                    <div class="notation-item"><span class="nobr">$(a_n)_{n=1}^\infty$</span><span class="notation-desc">Sequence starting at index $1$ when $n=0$ is undefined (e.g. <span class="nobr">$a_n = 1/n$</span>)</span></div>
-                    <div class="notation-item"><span class="nobr">$a: \mathbb{N} \to \mathbb{R}$</span><span class="notation-desc">Formal definition: a function assigning each natural index $n$ to a real number $a_n$</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$(a_n)_{n=0}^\infty$</span></span><span class="notation-desc">The complete infinite ordered sequence $(a_0, a_1, a_2, a_3, \dots)$</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$(a_n)_{n=1}^\infty$</span></span><span class="notation-desc">Sequence starting at index $1$ when $n=0$ is undefined (e.g. <span class="nobr">$a_n = 1/n$</span>)</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a: \mathbb{N} \to \mathbb{R}$</span></span><span class="notation-desc">Formal definition: a function assigning each natural index $n$ to a real number $a_n$</span></div>
                 </div>
             </div>
 
@@ -922,7 +922,7 @@
                 </div>
             </div>
 
-            <!-- SUBSECTION 3: BOUNDEDNESS (EXPANDED DETAILED PROSE + VISUAL GRAPH) -->
+            <!-- SUBSECTION 3: BOUNDEDNESS -->
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">3. Boundedness: Building Fences Around the Infinite List</h3>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
                 One of the most common misconceptions when beginning real analysis is assuming that because an infinite sequence contains an endless number of terms, its values must inevitably grow larger and larger until they fly off to infinity.
@@ -1072,34 +1072,168 @@
 
             <!-- SECTION 5 -->
             <h2 id="algebra-of-sequences">5. The Algebra of Sequences (Scaling and Sums)</h2>
-            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
-                Because sequences are functions whose codomains are real numbers, we can perform arithmetic operations on them term-by-term.
+
+            <div class="infobox">
+                <h4>📖 Notation Reference: Sequence Operations &amp; Linear Combinations</h4>
+                <div class="infobox-intro">
+                    <strong>Locker-by-locker arithmetic:</strong> Algebraic operations on sequences are performed term-by-term. Each new sequence is built by evaluating the operation independently at each index <span class="nobr">$n \in \mathbb{N}$.</span>
+                </div>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$(\lambda a)_n = \lambda a_n$</span></span><span class="notation-desc">Scalar multiplication: every stored locker value is scaled by real number $\lambda$</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$(a + b)_n = a_n + b_n$</span></span><span class="notation-desc">Sum sequence: locker $n$ contains the sum of terms at matching door index $n$</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$(a \cdot b)_n = a_n b_n$</span></span><span class="notation-desc">Product sequence: term-by-term multiplication at matching door index $n$</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$(a / b)_n = a_n / b_n$</span></span><span class="notation-desc">Quotient sequence: term-by-term division (valid when <span class="nobr">$b_n \ne 0$</span> for all $n$)</span></div>
+                </div>
+            </div>
+
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">1. Two Hallways Running Side-by-Side: Pointwise Operations</h3>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                When you first see symbols like <span class="nobr">$(a + b)_n = a_n + b_n$</span> or <span class="nobr">$(\lambda a)_n = \lambda a_n$,</span> it can be easy to confuse them with adding all the numbers inside a sequence together (which is a <em>series</em>, as we will explore in Section 7).
             </p>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                In sequence algebra, we are not summing across the lockers of a single hallway. Instead, picture <strong>two parallel locker hallways running side-by-side</strong>: Hallway $A$ and Hallway $B$.
+            </p>
+            <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem; margin-bottom: 1.25rem;">
+                <li style="margin-bottom: 0.65rem;">
+                    To build the new <strong>Sum Hallway</strong> <span class="nobr">$(a + b)$,</span> you walk up to Door $n$, open Locker $n$ in Hallway $A$ to read $a_n$, open Locker $n$ in Hallway $B$ to read $b_n$, add those two numbers together, and store the result <span class="nobr">$a_n + b_n$</span> into Locker $n$ of the new hallway.
+                </li>
+                <li style="margin-bottom: 0.65rem;">
+                    To build the <strong>Scaled Hallway</strong> <span class="nobr">$(\lambda a)$,</span> you take every slip of paper in Hallway $A$ and multiply its value by a fixed scalar multiplier $\lambda$. If $\lambda = 3$, every locker value triples. If $\lambda = -1$, every term flips sign across the origin.
+                </li>
+                <li>
+                    Notice that each index $n$ operates in total independence from every other locker. Mathematicians describe this as <strong>pointwise</strong> or <strong>term-by-term</strong> arithmetic.
+                </li>
+            </ul>
 
             <div class="definition-box">
-                <strong>Algebraic Operations on Sequences:</strong><br>
-                Let <span class="nobr">$(a_n)_{n=0}^\infty$</span> and <span class="nobr">$(b_n)_{n=0}^\infty$</span> be two sequences in $\mathbb{R}$, and let $\lambda \in \mathbb{R}$ be a scalar.
-                <ul style="margin: 0.5rem 0 0 1.25rem;">
-                    <li><strong>Scalar Multiplication (Scaling):</strong> <span class="nobr">$(\lambda a)_n = \lambda \cdot a_n$.</span> Every term is magnified or shrunk by $\lambda$.</li>
-                    <li><strong>Sum of Sequences:</strong> <span class="nobr">$(a + b)_n = a_n + b_n$.</span> Consecutive terms at matching index positions are added together.</li>
-                    <li><strong>Product of Sequences:</strong> <span class="nobr">$(a \cdot b)_n = a_n \cdot b_n$.</span></li>
+                <strong>Formal Definitions of Sequence Operations:</strong><br>
+                Let <span class="nobr">$(a_n)_{n=0}^\infty$</span> and <span class="nobr">$(b_n)_{n=0}^\infty$</span> be two real sequences, and let <span class="nobr">$\lambda \in \mathbb{R}$</span> be a real scalar.
+                <ul style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
+                    <li><strong>Scalar Multiplication:</strong> <span class="nobr">$(\lambda a)_n = \lambda \cdot a_n$</span> for all <span class="nobr">$n \in \mathbb{N}$.</span></li>
+                    <li><strong>Sum of Sequences:</strong> <span class="nobr">$(a + b)_n = a_n + b_n$</span> for all <span class="nobr">$n \in \mathbb{N}$.</span></li>
+                    <li><strong>Product of Sequences:</strong> <span class="nobr">$(a \cdot b)_n = a_n \cdot b_n$</span> for all <span class="nobr">$n \in \mathbb{N}$.</span></li>
+                    <li><strong>Quotient of Sequences:</strong> <span class="nobr">$\left(\frac{a}{b}\right)_n = \frac{a_n}{b_n}$</span> for all <span class="nobr">$n \in \mathbb{N}$,</span> provided <span class="nobr">$b_n \ne 0$</span> for every $n$.</li>
                 </ul>
             </div>
 
-            <div class="worked-example-box">
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">2. Synthesizing New Dynamics from Simple Building Blocks</h3>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                Why is sequence algebra so powerful? Because combining elementary building blocks allows us to construct intricate, sophisticated stepping patterns that would otherwise be difficult to express from scratch.
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1.25rem;">
+                Remember back in Section 4 when we discussed <strong>weak monotonicity</strong> and noted that sequences could pause on flat horizontal plateaus (like $2, 2, 6, 6, 10, 10, \dots$)? Where does such a sequence actually come from? It is simply the pointwise sum of an arithmetic sequence and an alternating sequence!
+            </p>
+
+            <!-- VISUALIZATION: SEQUENCE ALGEBRA COMBINATION -->
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; text-align: center;">
+                <p style="font-size: 0.95rem; font-weight: 700; color: #1e293b; margin-top: 0; margin-bottom: 0.35rem;">
+                    VISUALIZING SEQUENCE ALGEBRA: Linear Climb + Oscillation = Staircase Plateaus
+                </p>
+                <p style="font-size: 0.88rem; color: #64748b; margin-top: 0; margin-bottom: 1.25rem; max-width: 780px; display: inline-block; line-height: 1.5;">
+                    Adding the alternating sequence <span class="nobr">$b_n = (-1)^n$</span> term-by-term to the arithmetic sequence <span class="nobr">$a_n = 2n + 1$</span> synthesizes a staircase progression featuring flat resting plateaus.
+                </p>
+                <svg viewBox="0 0 840 260" style="width: 100%; max-width: 820px; height: auto; display: inline-block;">
+                    <!-- PANEL 1: CONSTITUENT SEQUENCES -->
+                    <g transform="translate(10, 10)">
+                        <rect x="0" y="0" width="395" height="235" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
+                        <text x="20" y="24" font-size="11.5" font-weight="bold" fill="#0369a1">1. Constituents: aₙ (Climb) and bₙ (Oscillation)</text>
+                        <text x="20" y="38" font-size="10" fill="#64748b">Two independent sequences evaluated at each index n</text>
+
+                        <!-- Axes: Origin at (60, 185) -->
+                        <line x1="55" y1="185" x2="370" y2="185" stroke="#0f172a" stroke-width="1.5" />
+                        <line x1="60" y1="195" x2="60" y2="55" stroke="#0f172a" stroke-width="1.5" />
+                        <text x="375" y="189" font-size="11" font-weight="bold" fill="#0f172a">n</text>
+                        <text x="56" y="48" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">val</text>
+
+                        <!-- Ticks -->
+                        <text x="100" y="198" font-size="9" fill="#475569" text-anchor="middle">0</text>
+                        <text x="160" y="198" font-size="9" fill="#475569" text-anchor="middle">1</text>
+                        <text x="220" y="198" font-size="9" fill="#475569" text-anchor="middle">2</text>
+                        <text x="280" y="198" font-size="9" fill="#475569" text-anchor="middle">3</text>
+                        <text x="340" y="198" font-size="9" fill="#475569" text-anchor="middle">4</text>
+
+                        <!-- a_n = 2n + 1 (Blue Dots: 1, 3, 5, 7, 9) -->
+                        <circle cx="100" cy="172" r="4" fill="#0284c7" />
+                        <circle cx="160" cy="148" r="4" fill="#0284c7" />
+                        <circle cx="220" cy="124" r="4" fill="#0284c7" />
+                        <circle cx="280" cy="100" r="4" fill="#0284c7" />
+                        <circle cx="340" cy="76" r="4" fill="#0284c7" />
+                        <path d="M 100 172 L 340 76" stroke="#0284c7" stroke-dasharray="2,2" stroke-width="1.2" opacity="0.4" fill="none" />
+                        <text x="345" y="73" font-size="9" font-weight="bold" fill="#0284c7">aₙ = 2n+1</text>
+
+                        <!-- b_n = (-1)^n (Amber Dots: +1, -1, +1, -1, +1) -->
+                        <circle cx="100" cy="172" r="3.5" fill="#d97706" />
+                        <circle cx="160" cy="198" r="3.5" fill="#d97706" />
+                        <circle cx="220" cy="172" r="3.5" fill="#d97706" />
+                        <circle cx="280" cy="198" r="3.5" fill="#d97706" />
+                        <circle cx="340" cy="172" r="3.5" fill="#d97706" />
+                        <text x="345" y="172" font-size="9" font-weight="bold" fill="#d97706">bₙ = (-1)ⁿ</text>
+                    </g>
+
+                    <!-- PANEL 2: SUM SEQUENCE (STAIRCASE) -->
+                    <g transform="translate(435, 10)">
+                        <rect x="0" y="0" width="395" height="235" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
+                        <text x="20" y="24" font-size="11.5" font-weight="bold" fill="#059669">2. Sum Sequence: cₙ = aₙ + bₙ (Staircase)</text>
+                        <text x="20" y="38" font-size="10" fill="#64748b">Pointwise addition creates flat horizontal plateaus</text>
+
+                        <!-- Axes: Origin at (60, 185) -->
+                        <line x1="55" y1="185" x2="370" y2="185" stroke="#0f172a" stroke-width="1.5" />
+                        <line x1="60" y1="195" x2="60" y2="55" stroke="#0f172a" stroke-width="1.5" />
+                        <text x="375" y="189" font-size="11" font-weight="bold" fill="#0f172a">n</text>
+                        <text x="56" y="48" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">cₙ</text>
+
+                        <!-- Ticks -->
+                        <text x="100" y="198" font-size="9" fill="#475569" text-anchor="middle">0</text>
+                        <text x="160" y="198" font-size="9" fill="#475569" text-anchor="middle">1</text>
+                        <text x="220" y="198" font-size="9" fill="#475569" text-anchor="middle">2</text>
+                        <text x="280" y="198" font-size="9" fill="#475569" text-anchor="middle">3</text>
+                        <text x="340" y="198" font-size="9" fill="#475569" text-anchor="middle">4</text>
+
+                        <!-- c_n values: c0=2 (y=160), c1=2 (y=160), c2=6 (y=112), c3=6 (y=112), c4=10 (y=64) -->
+                        <!-- Plateau 1: n=0 and n=1 -->
+                        <line x1="100" y1="160" x2="160" y2="160" stroke="#10b981" stroke-width="2.5" />
+                        <circle cx="100" cy="160" r="4.5" fill="#059669" />
+                        <circle cx="160" cy="160" r="4.5" fill="#059669" />
+                        <text x="130" y="152" font-size="8.5" font-weight="bold" fill="#047857" text-anchor="middle">c₀ = c₁ = 2</text>
+
+                        <!-- Plateau 2: n=2 and n=3 -->
+                        <line x1="220" y1="112" x2="280" y2="112" stroke="#10b981" stroke-width="2.5" />
+                        <circle cx="220" cy="112" r="4.5" fill="#059669" />
+                        <circle cx="280" cy="112" r="4.5" fill="#059669" />
+                        <text x="250" y="104" font-size="8.5" font-weight="bold" fill="#047857" text-anchor="middle">c₂ = c₃ = 6</text>
+
+                        <!-- Next step -->
+                        <circle cx="340" cy="64" r="4.5" fill="#059669" />
+                        <text x="340" y="56" font-size="8.5" font-weight="bold" fill="#047857" text-anchor="middle">c₄ = 10</text>
+
+                        <!-- Connector -->
+                        <line x1="160" y1="160" x2="220" y2="112" stroke="#94a3b8" stroke-dasharray="2,2" stroke-width="1.2" />
+                        <line x1="280" y1="112" x2="340" y2="64" stroke="#94a3b8" stroke-dasharray="2,2" stroke-width="1.2" />
+                    </g>
+                </svg>
+            </div>
+
+            <!-- WORKED EXAMPLE: TERM BY TERM CALCULATION -->
+            <div class="worked-example-box" style="margin-top: 1.5rem;">
                 <h4>🎯 Worked Example: Combining Sequences Term-by-Term</h4>
-                <p>Consider the sequences <span class="nobr">$a_n = 2n + 1$</span> (odd numbers) and <span class="nobr">$b_n = (-1)^n$</span> for <span class="nobr">$n \ge 0$:</span></p>
+                <p style="margin-top: 0; font-size: 0.98rem; line-height: 1.7;">
+                    Consider the arithmetic sequence of odd positive integers <span class="nobr">$a_n = 2n + 1$</span> and the oscillating alternating sequence <span class="nobr">$b_n = (-1)^n$</span> for <span class="nobr">$n \ge 0$:</span>
+                </p>
                 <ul style="margin: 0.25rem 0 0.5rem 1.25rem; font-size: 0.95rem; line-height: 1.6;">
-                    <li>$a = (1, 3, 5, 7, 9, \dots)$</li>
-                    <li>$b = (1, -1, 1, -1, 1, \dots)$</li>
+                    <li><span class="nobr">$a = (1, 3, 5, 7, 9, 11, \dots)$</span></li>
+                    <li><span class="nobr">$b = (1, -1, 1, -1, 1, -1, \dots)$</span></li>
                 </ul>
-                <p style="margin: 0.5rem 0; font-size: 0.95rem;">
-                    <strong>Form the sum sequence <span class="nobr">$c_n = a_n + b_n$:</span></strong><br>
-                    • $c_0 = 1 + 1 = 2$<br>
-                    • $c_1 = 3 + (-1) = 2$<br>
-                    • $c_2 = 5 + 1 = 6$<br>
-                    • $c_3 = 7 + (-1) = 6$<br>
-                    Result: <span class="nobr">$c = (2, 2, 6, 6, 10, 10, \dots)$.</span> Notice how algebraic combinations generate brand new stepping patterns!
+                <p style="margin: 0.5rem 0; font-size: 0.95rem; line-height: 1.7;">
+                    <strong>Construct the sum sequence <span class="nobr">$c_n = (a + b)_n = a_n + b_n$</span> index-by-index:</strong><br>
+                    • At <span class="nobr">$n = 0$:</span> <span class="nobr">$c_0 = a_0 + b_0 = 1 + 1 = 2$</span><br>
+                    • At <span class="nobr">$n = 1$:</span> <span class="nobr">$c_1 = a_1 + b_1 = 3 + (-1) = 2$</span><br>
+                    • At <span class="nobr">$n = 2$:</span> <span class="nobr">$c_2 = a_2 + b_2 = 5 + 1 = 6$</span><br>
+                    • At <span class="nobr">$n = 3$:</span> <span class="nobr">$c_3 = a_3 + b_3 = 7 + (-1) = 6$</span><br>
+                    • At <span class="nobr">$n = 4$:</span> <span class="nobr">$c_4 = a_4 + b_4 = 9 + 1 = 10$</span>
+                </p>
+                <p style="margin: 0.5rem 0 0 0; font-size: 0.95rem; line-height: 1.7;">
+                    <em>Result:</em> <span class="nobr">$c = (2, 2, 6, 6, 10, 10, \dots)$.</span><br>
+                    Notice how this algebraic combination synthesizes a non-trivial stepping behavior: it is weakly increasing (<span class="nobr">$c_{n+1} \ge c_n$</span>) because it rests on flat plateaus at every even-to-odd step, but never backpedals!
                 </p>
             </div>
 
