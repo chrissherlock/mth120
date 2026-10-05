@@ -2,21 +2,194 @@
 """
 update.py
 
-Injects historical biography boxes for Hippasus, Eudoxus, Weierstrass,
-and Dedekind into week1-lecture2.html using the exact lavender .biography-box
-styling, then stages both the HTML file and update.py before committing
-and pushing upstream.
+Regenerates week1-lecture2.html completely from scratch with native lavender
+biography boxes for Hippasus, Eudoxus, Weierstrass, and Dedekind, then stages
+both the generated HTML file and update.py before committing and pushing.
 """
 
 from pathlib import Path
-import re
 import subprocess
 import sys
 
 TARGET_HTML = Path("week1-lecture2.html")
 SCRIPT_FILE = Path(__file__).resolve()
 
-HIPPASUS_BOX = r"""            <!-- HISTORICAL CONTEXT: HIPPASUS -->
+WEEK1_LECTURE2_HTML = r"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1, Lecture 2: Real Numbers, Density, and Completeness | MTHS120</title>
+    <!-- KaTeX Integration -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+    <style>
+        :root {
+            --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
+            --accent: #d97706; --accent-hover: #b45309;
+            --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { max-width: 100%; overflow-x: hidden; }
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; width: 100%; }
+        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
+
+        .intro-lead { font-size: 1.1rem; color: #1e293b; line-height: 1.7; margin-bottom: 1.5rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); border: 1px solid var(--border); border-left-width: 4px; }
+        .toc-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.75rem; margin: 1.75rem 0 2.5rem 0; }
+        .toc-box h4 { margin: 0 0 0.75rem 0; color: #92400e; font-size: 1.05rem; }
+        .toc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.5rem 1.5rem; margin: 0; padding-left: 1.25rem; }
+        .toc-grid li { margin-bottom: 0.35rem; font-size: 0.95rem; }
+        .toc-grid a { color: #b45309; text-decoration: none; font-weight: 500; }
+        .toc-grid a:hover { text-decoration: underline; color: var(--accent-hover); }
+
+        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+        h3 { color: #1e293b; margin-top: 1.5rem; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+
+        .infobox { background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.25rem 0 1.75rem 0; }
+        .infobox h4 { margin: 0 0 0.85rem 0; color: #0f172a; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-ui); }
+        .notation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 0.85rem 1.75rem; font-size: 0.95rem; }
+        .notation-item { display: grid; grid-template-columns: minmax(130px, max-content) 1fr; gap: 0.75rem; align-items: center; }
+        .notation-sym { font-weight: 600; color: var(--accent); white-space: nowrap; display: flex; justify-content: center; align-items: center; text-align: center; }
+        .notation-desc { min-width: 0; word-break: break-word; line-height: 1.5; color: #334155; }
+        .infobox-intro { font-size: 0.93rem; color: #475569; line-height: 1.6; margin: 0 0 1.25rem 0; padding-bottom: 0.85rem; border-bottom: 1px solid #e2e8f0; }
+
+        .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; border: 1px solid var(--border); border-left-width: 4px; }
+        .aside-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #b45309; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .aside-box h4 { margin-top: 0; color: #b45309; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+
+        .worked-example-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .worked-example-box h4 { margin-top: 0; color: #047857; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .worked-example-box p, .worked-example-box li { color: #0f172a !important; }
+
+        .biography-box { background: #f5f3ff; border: 1px solid #ddd6fe; border-left: 5px solid #6366f1; padding: 1.25rem 1.5rem; margin: 2rem 0; border-radius: 0 6px 6px 0; }
+        .biography-box h4 { margin-top: 0; color: #3730a3; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; }
+        .biography-box p, .biography-box li { color: #0f172a !important; }
+
+        @media (max-width: 768px) {
+            body { background: #ffffff !important; padding: 1rem 0.75rem !important; margin: 0 !important; max-width: 100vw !important; overflow-x: hidden !important; }
+            .container { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
+            .module-content { background: transparent !important; padding: 0 !important; border: none !important; border-radius: 0 !important; box-shadow: none !important; margin-bottom: 1rem !important; }
+            .header { padding-bottom: 0.75rem !important; margin-bottom: 1.25rem !important; }
+
+            .biography-box { padding: 1.25rem 1rem !important; }
+            .biography-box > div { flex-direction: column !important; align-items: stretch !important; gap: 1.25rem !important; }
+            .biography-box > div > div:first-child { flex: 0 0 100% !important; width: 100% !important; max-width: 100% !important; margin: 0 0 0.5rem 0 !important; }
+            .biography-box > div > div:first-child img { width: 100% !important; max-height: 380px !important; object-fit: cover !important; border-radius: 6px !important; display: block !important; }
+            .biography-box > div > div:last-child { width: 100% !important; min-width: 0 !important; }
+
+            ol, ul { padding-left: 1.25rem !important; margin-left: 0 !important; }
+
+            .header > div:last-child, .nav-btn-group, .footer-nav {
+                display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; width: 100% !important; gap: 0.5rem !important;
+            }
+            .header > div:last-child a, .nav-btn-group a, .footer-nav a {
+                flex: 1 1 0 !important; min-width: 0 !important; text-align: center !important; padding: 0.55rem 0.4rem !important;
+                font-size: 0.84rem !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
+            }
+
+            p, li, .definition-box { overflow-wrap: anywhere; word-break: normal; }
+            .katex-display {
+                overflow-x: auto !important; overflow-y: hidden !important; -webkit-overflow-scrolling: touch !important;
+                max-width: 100% !important; padding: 0.25rem 0 !important; margin: 0.5rem 0 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- TOP NAVIGATION HEADER -->
+        <div class="header">
+            <div>
+                <h1>Week 1, Lecture 2: Real Numbers, Density, and Completeness</h1>
+                <a href="week1.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">&larr; Week 1 Overview Hub</a>
+            </div>
+            <div class="nav-btn-group" style="display: flex; gap: 0.5rem; align-items: center;">
+                <a href="week1-lecture1.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem;">&larr; Prev: Lecture 1</a>
+                <a href="week1.html" style="background: var(--accent); color: white; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Week 1 Hub &rarr;</a>
+            </div>
+        </div>
+
+        <div class="module-content">
+            <div class="intro-lead">
+                In Lecture 1, we constructed the discrete ladder of counting numbers. Here in Lecture 2, we confront the challenge of continuity: constructing the rational numbers, proving their gaps through the irrationality of $\sqrt{2}$, measuring distance via absolute value, and sealing the real continuum using the Axiom of Completeness.
+            </div>
+
+            <!-- TABLE OF CONTENTS -->
+            <div class="toc-box">
+                <h4>📌 Lecture 2 Topics</h4>
+                <ul class="toc-grid">
+                    <li><a href="#rational-numbers">1. The Rational Numbers ($\mathbb{Q}$)</a></li>
+                    <li><a href="#irrational-numbers">2. The Need for Reals: $\sqrt{2}$ is Irrational</a></li>
+                    <li><a href="#field-order">3. Field and Order Properties</a></li>
+                    <li><a href="#absolute-value">4. Absolute Value and Distance Metrics</a></li>
+                    <li><a href="#completeness-bounds">5. Suprema, Infima, and the Axiom of Completeness</a></li>
+                </ul>
+            </div>
+
+            <!-- SECTION 1 -->
+            <h2 id="rational-numbers">1. The Rational Numbers ($\mathbb{Q}$)</h2>
+            <div class="infobox">
+                <h4>📖 Notation Reference: Number Sets &amp; Rational Forms</h4>
+                <div class="infobox-intro">
+                    <strong>Filling the discrete gaps:</strong> Rational numbers represent exact fractional relationships formed by pairs of integers.
+                </div>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{N}$</span><span class="notation-desc">Natural numbers $\{0, 1, 2, 3, \dots\}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{Z}$</span><span class="notation-desc">Integers $\{\dots, -2, -1, 0, 1, 2, \dots\}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\mathbb{Q}$</span><span class="notation-desc">Rational numbers $\{p/q \mid p, q \in \mathbb{Z}, q \ne 0\}$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\gcd(p, q) = 1$</span><span class="notation-desc">Coprime integers (fraction in lowest terms)</span></div>
+                </div>
+            </div>
+
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                While the natural numbers $\mathbb{N}$ allow us to count discrete objects, they fail to support subtraction and division. Expanding to the integers $\mathbb{Z}$ incorporates negative directions, and forming quotients produces the <strong>rational numbers</strong> $\mathbb{Q}$:
+            </p>
+            <div style="text-align: center; margin: 1rem 0; font-size: 1.05rem;">
+                $$\mathbb{Q} = \left\{ \frac{p}{q} \;\middle|\; p, q \in \mathbb{Z}, \; q \ne 0 \right\}$$
+            </div>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                The rational numbers are <strong>dense</strong>: between any two distinct rational numbers $a < b$, there exists another rational number (for example, the midpoint $(a + b)/2$). At first glance, this dense web appears to cover the entire line with no space left over.
+            </p>
+
+            <!-- SECTION 2 -->
+            <h2 id="irrational-numbers">2. The Need for Reals: $\sqrt{2}$ is Irrational</h2>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                Despite density, the rational numbers are riddled with infinitely many missing points. The most famous proof of this incompleteness is the algebraic proof by contradiction showing that no rational number squared can equal $2$.
+            </p>
+
+            <div class="worked-example-box">
+                <h4>🎯 Theorem: $\sqrt{2}$ is Not Rational ($\sqrt{2} \notin \mathbb{Q}$)</h4>
+                <p><strong>Proof by Contradiction:</strong></p>
+                <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.65;">
+                    <li>Assume for contradiction that $\sqrt{2} \in \mathbb{Q}$. Then there exist integers $p, q$ with $q \ne 0$ such that:
+                        <div style="text-align: center; margin: 0.5rem 0;">
+                            $$\frac{p}{q} = \sqrt{2}$$
+                        </div>
+                        We may assume without loss of generality that $\frac{p}{q}$ is expressed in lowest terms, meaning $\gcd(p, q) = 1$ (they share no common factor).
+                    </li>
+                    <li>Squaring both sides yields:
+                        <div style="text-align: center; margin: 0.5rem 0;">
+                            $$\frac{p^2}{q^2} = 2 \implies p^2 = 2q^2$$
+                        </div>
+                        This implies that $p^2$ is an even integer.
+                    </li>
+                    <li>If the square of an integer is even, the integer itself must be even. Therefore, $p$ is even, so we can write $p = 2k$ for some integer $k$.</li>
+                    <li>Substitute $p = 2k$ into the equation:
+                        <div style="text-align: center; margin: 0.5rem 0;">
+                            $$(2k)^2 = 2q^2 \implies 4k^2 = 2q^2 \implies q^2 = 2k^2$$
+                        </div>
+                        This implies that $q^2$ is also even, which means $q$ must be even.
+                    </li>
+                    <li>Because both $p$ and $q$ are even, they both share a common factor of $2$. This contradicts our premise that $\gcd(p, q) = 1$.</li>
+                    <li>Hence, the original assumption must be false: <strong>$\sqrt{2}$ is irrational</strong>.</li>
+                </ol>
+            </div>
+
+            <!-- HISTORICAL CONTEXT: HIPPASUS -->
             <div class="biography-box" style="margin-top: 2rem;">
                 <h4>🏛️ The Scandal of Incommensurability: Hippasus of Metapontum</h4>
                 <div style="display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap; margin-top: 0.75rem;">
@@ -25,20 +198,34 @@ HIPPASUS_BOX = r"""            <!-- HISTORICAL CONTEXT: HIPPASUS -->
                         <span style="display: block; font-size: 0.8rem; color: #64748b; text-align: center; margin-top: 0.4rem; line-height: 1.3;">Hippasus of Metapontum<br>(c. 5th Century BCE)</span>
                     </div>
                     <div style="flex: 1; min-width: 260px;">
-                        <p style="margin-top: 0; color: #334155; line-height: 1.65; font-size: 0.96rem;">
+                        <p style="margin-top: 0; color: #0f172a; line-height: 1.65; font-size: 0.96rem;">
                             <strong><a href="https://en.wikipedia.org/wiki/Hippasus" target="_blank" rel="noopener noreferrer" style="color: #4f46e5; text-decoration: underline;">Hippasus of Metapontum</a></strong> was an early Greek philosopher and member of the Pythagorean brotherhood. The Pythagoreans held a mystical doctrine that <em>"all is number"</em>, believing that every geometric magnitude in the cosmos could be expressed as an exact ratio of integers.
                         </p>
-                        <p style="color: #334155; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0.5rem;">
+                        <p style="color: #0f172a; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0.5rem;">
                             <strong>Shattering the World of Fractions:</strong> While examining the simplest geometric figure imaginable—a unit square with side lengths of $1$—Hippasus evaluated the diagonal hypotenuse $\sqrt{1^2 + 1^2} = \sqrt{2}$. Using an early geometric version of the parity contradiction shown above, he proved the diagonal is <strong>incommensurable</strong> with the sides: no common sub-unit exists that divides evenly into both.
                         </p>
-                        <p style="color: #334155; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0;">
+                        <p style="color: #0f172a; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0;">
                             By proving that $\sqrt{2} \notin \mathbb{Q}$, Hippasus revealed that the rational numbers leave gaping, invisible pinprick holes along the number line. According to mathematical lore, the discovery so severely undermined Pythagorean cosmology that Hippasus was taken out to sea and thrown overboard for heresy.
                         </p>
                     </div>
                 </div>
-            </div>"""
+            </div>
 
-EUDOXUS_BOX = r"""            <!-- HISTORICAL CONTEXT: EUDOXUS -->
+            <!-- SECTION 3 -->
+            <h2 id="field-order">3. Field and Order Properties</h2>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                The real numbers $\mathbb{R}$ form an <strong>ordered field</strong>. An algebraic field guarantees that addition, subtraction, multiplication, and division by non-zero elements behave consistently under associative, commutative, and distributive laws.
+            </p>
+            <div class="definition-box">
+                <strong>The Archimedean Property:</strong><br>
+                For any two positive real numbers $x, y \in \mathbb{R}$ with $x > 0$, there exists a natural number $n \in \mathbb{N}$ such that:
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.05rem;">
+                    $$nx > y$$
+                </div>
+                Equivalently: for any $\epsilon > 0$, there exists an integer $n \in \mathbb{N}$ such that $\frac{1}{n} < \epsilon$.
+            </div>
+
+            <!-- HISTORICAL CONTEXT: EUDOXUS -->
             <div class="biography-box" style="margin-top: 2rem;">
                 <h4>🏛️ Banishment of the Infinitesimal: Eudoxus of Cnidus</h4>
                 <div style="display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap; margin-top: 0.75rem;">
@@ -47,20 +234,48 @@ EUDOXUS_BOX = r"""            <!-- HISTORICAL CONTEXT: EUDOXUS -->
                         <span style="display: block; font-size: 0.8rem; color: #64748b; text-align: center; margin-top: 0.4rem; line-height: 1.3;">Eudoxus of Cnidus<br>(c. 408–355 BCE)</span>
                     </div>
                     <div style="flex: 1; min-width: 260px;">
-                        <p style="margin-top: 0; color: #334155; line-height: 1.65; font-size: 0.96rem;">
+                        <p style="margin-top: 0; color: #0f172a; line-height: 1.65; font-size: 0.96rem;">
                             <strong><a href="https://en.wikipedia.org/wiki/Eudoxus_of_Cnidus" target="_blank" rel="noopener noreferrer" style="color: #4f46e5; text-decoration: underline;">Eudoxus of Cnidus</a></strong> was an ancient Greek astronomer, scholar, and mathematician, widely considered antiquity's greatest geometer alongside Archimedes. Following the crisis of incommensurability sparked by Hippasus, Greek geometry was paralyzed because existing proofs relied on integer ratios that failed for irrational lengths.
                         </p>
-                        <p style="color: #334155; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0.5rem;">
+                        <p style="color: #0f172a; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0.5rem;">
                             <strong>The Theory of Proportions:</strong> Preserved in Book V of Euclid's <em><a href="https://en.wikipedia.org/wiki/Euclid%27s_Elements" target="_blank" rel="noopener noreferrer" style="color: #4f46e5; font-style: italic; text-decoration: underline;">Elements</a></em>, Eudoxus formulated a rigorous definition of proportion that applied equally to rational and incommensurable magnitudes. Crucially, he established what we now know as the <strong>Archimedean Property</strong>: any two positive quantities can exceed one another if either is added to itself a sufficient number of times.
                         </p>
-                        <p style="color: #334155; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0;">
+                        <p style="color: #0f172a; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0;">
                             In modern analysis, this guarantees that the real line contains no non-zero "infinitely small" ghosts. No matter how small an interval $\epsilon > 0$ is chosen, taking enough discrete steps of size $\epsilon$ will inevitably outrun any finite number, establishing an essential bridge between discrete counting and continuous space.
                         </p>
                     </div>
                 </div>
-            </div>"""
+            </div>
 
-WEIERSTRASS_BOX = r"""            <!-- HISTORICAL CONTEXT: WEIERSTRASS -->
+            <!-- SECTION 4 -->
+            <h2 id="absolute-value">4. Absolute Value and Distance Metrics</h2>
+            <div class="infobox">
+                <h4>📖 Notation Reference: Absolute Value &amp; Distance</h4>
+                <div class="infobox-intro">
+                    <strong>The analytical metric:</strong> Absolute value $|a - b|$ measures the geometric distance between points along the real line.
+                </div>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym">$|x|$</span><span class="notation-desc">$\max(x, -x)$ — magnitude of $x$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$|x - y|$</span><span class="notation-desc">Euclidean distance between $x$ and $y$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$|x| < \epsilon$</span><span class="notation-desc">Symmetric interval $-\epsilon < x < \epsilon$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$|a + b| \le |a| + |b|$</span><span class="notation-desc">Triangle Inequality</span></div>
+                </div>
+            </div>
+
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                In pure analysis, absolute value is far more than a mechanism to eliminate negative signs: it is our foundational <strong>distance metric</strong>. The distance between two points $x$ and $y$ on the number line is defined by $d(x, y) = |x - y|$.
+            </p>
+
+            <div class="definition-box">
+                <strong>The Triangle Inequality:</strong><br>
+                For all real numbers $a, b \in \mathbb{R}$:
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.05rem;">
+                    $$|a + b| \le |a| + |b|$$
+                </div>
+                <em>Reverse Triangle Inequality:</em> $||a| - |b|| \le |a - b|$.
+            </div>
+
+            <!-- HISTORICAL CONTEXT: WEIERSTRASS -->
             <div class="biography-box" style="margin-top: 2rem;">
                 <h4>🏛️ The Architect of Rigor: Karl Weierstrass</h4>
                 <div style="display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap; margin-top: 0.75rem;">
@@ -69,20 +284,48 @@ WEIERSTRASS_BOX = r"""            <!-- HISTORICAL CONTEXT: WEIERSTRASS -->
                         <span style="display: block; font-size: 0.8rem; color: #64748b; text-align: center; margin-top: 0.4rem; line-height: 1.3;">Karl Weierstrass<br>(1815–1897)</span>
                     </div>
                     <div style="flex: 1; min-width: 260px;">
-                        <p style="margin-top: 0; color: #334155; line-height: 1.65; font-size: 0.96rem;">
+                        <p style="margin-top: 0; color: #0f172a; line-height: 1.65; font-size: 0.96rem;">
                             <strong><a href="https://en.wikipedia.org/wiki/Karl_Weierstrass" target="_blank" rel="noopener noreferrer" style="color: #4f46e5; text-decoration: underline;">Karl Weierstrass</a></strong> was a German mathematician universally regarded as the "father of modern analysis." For the first two centuries following Newton and Leibniz, calculus relied heavily on physical intuition, moving particles, and geometric graphs—descriptions that frequently collapsed when dealing with pathological curves.
                         </p>
-                        <p style="color: #334155; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0.5rem;">
+                        <p style="color: #0f172a; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0.5rem;">
                             <strong>Absolute Value as a Metric:</strong> Weierstrass realized that rigorous analysis required eliminating vague kinematic phrases like <em>"approaches"</em> or <em>"gets infinitely close."</em> He replaced them with static, algebraic inequalities centered entirely on the <strong>absolute value function</strong> $|x - y|$.
                         </p>
-                        <p style="color: #334155; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0;">
+                        <p style="color: #0f172a; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0;">
                             By defining closeness through exact distance bounds ($|f(x) - L| < \epsilon$ whenever $|x - c| < \delta$), Weierstrass transformed the absolute value from a mere sign-stripping operation into the primary measuring tape of pure mathematics. Properties like the <strong>Triangle Inequality</strong> became the workhorses that prove whether sequences converge and functions stay continuous.
                         </p>
                     </div>
                 </div>
-            </div>"""
+            </div>
 
-DEDEKIND_BOX = r"""            <!-- HISTORICAL CONTEXT: DEDEKIND -->
+            <!-- SECTION 5 -->
+            <h2 id="completeness-bounds">5. Suprema, Infima, and the Axiom of Completeness</h2>
+            <div class="infobox">
+                <h4>📖 Notation Reference: Bounds and Extrema</h4>
+                <div class="infobox-intro">
+                    <strong>Upper and lower boundaries:</strong> Suprema and infima generalize the concepts of maximum and minimum to infinite sets without guaranteed endpoints.
+                </div>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym">$\sup S$</span><span class="notation-desc">Supremum: least upper bound of set $S$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\inf S$</span><span class="notation-desc">Infimum: greatest lower bound of set $S$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$s \le M$</span><span class="notation-desc">$M$ is an upper bound for $S$ ($\forall s \in S$)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$s \ge m$</span><span class="notation-desc">$m$ is a lower bound for $S$ ($\forall s \in S$)</span></div>
+                </div>
+            </div>
+
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                What distinguishes the real numbers $\mathbb{R}$ from the rational numbers $\mathbb{Q}$? Both are ordered fields, and both are dense. The defining property of $\mathbb{R}$ is <strong>completeness</strong>: the real line has no gaps.
+            </p>
+
+            <div class="definition-box">
+                <strong>The Axiom of Completeness (Least Upper Bound Property):</strong><br>
+                Every non-empty subset $S \subseteq \mathbb{R}$ that is bounded above has a least upper bound in $\mathbb{R}$:
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.05rem;">
+                    $$\exists u = \sup S \in \mathbb{R}$$
+                </div>
+                <strong>Why $\mathbb{Q}$ Fails Completeness:</strong> Consider the set $S = \{q \in \mathbb{Q} \mid q^2 < 2\}$. In $\mathbb{Q}$, $S$ is bounded above (e.g. by $1.5$ or $2$), but it has <em>no least upper bound</em> in $\mathbb{Q}$ because $\sqrt{2} \notin \mathbb{Q}$. In $\mathbb{R}$, however, $\sup S = \sqrt{2}$.
+            </div>
+
+            <!-- HISTORICAL CONTEXT: DEDEKIND -->
             <div class="biography-box" style="margin-top: 2rem;">
                 <h4>🏛️ Slicing the Continuum: Richard Dedekind</h4>
                 <div style="display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap; margin-top: 0.75rem;">
@@ -91,116 +334,68 @@ DEDEKIND_BOX = r"""            <!-- HISTORICAL CONTEXT: DEDEKIND -->
                         <span style="display: block; font-size: 0.8rem; color: #64748b; text-align: center; margin-top: 0.4rem; line-height: 1.3;">Richard Dedekind<br>(1831–1916)</span>
                     </div>
                     <div style="flex: 1; min-width: 260px;">
-                        <p style="margin-top: 0; color: #334155; line-height: 1.65; font-size: 0.96rem;">
+                        <p style="margin-top: 0; color: #0f172a; line-height: 1.65; font-size: 0.96rem;">
                             <strong><a href="https://en.wikipedia.org/wiki/Richard_Dedekind" target="_blank" rel="noopener noreferrer" style="color: #4f46e5; text-decoration: underline;">Richard Dedekind</a></strong> was a German mathematician who made foundational contributions to abstract algebra and number theory. In 1858, while preparing lecture notes for an introductory calculus class at the Polytechnic in Zürich, he was deeply troubled to discover that while textbooks spoke constantly of the "continuous real line," mathematics possessed no rigorous definition of what continuity actually meant.
                         </p>
-                        <p style="color: #334155; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0.5rem;">
+                        <p style="color: #0f172a; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0.5rem;">
                             <strong>Dedekind Cuts:</strong> In his landmark 1872 treatise <em><a href="https://en.wikipedia.org/wiki/Dedekind_cut" target="_blank" rel="noopener noreferrer" style="color: #4f46e5; font-style: italic; text-decoration: underline;">Stetigkeit und irrationale Zahlen</a></em> (Continuity and Irrational Numbers), Dedekind asked: <em>What is the fundamental property of a line that has no gaps?</em> His insight was that any knife cut dividing the real numbers into left and right halves must pass through an exact boundary point.
                         </p>
-                        <p style="color: #334155; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0;">
+                        <p style="color: #0f172a; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0;">
                             When slicing the rational numbers $\mathbb{Q}$ at $\sqrt{2}$, however, the knife passes through nothing: the left set has no maximum, and the right set has no minimum. Dedekind showed that by defining irrational numbers as the <em>cuts themselves</em>, we fill every microscopic pinprick hole in $\mathbb{Q}$, guaranteeing that every bounded set has a supremum and completing the continuum $\mathbb{R}$.
                         </p>
                     </div>
                 </div>
-            </div>"""
+            </div>
+
+            <!-- FOOTER NAVIGATION -->
+            <div class="footer-nav" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 0.75rem;">
+                <a href="week1-lecture1.html" style="background: #f1f5f9; color: var(--accent); border: 1px solid var(--border); padding: 0.6rem 1rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">&larr; Prev: Week 1, Lecture 1</a>
+                <a href="week1.html" style="background: var(--accent); color: white; padding: 0.6rem 1rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">Week 1 Overview Hub &rarr;</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+"""
 
 def run_git(args: list[str]) -> subprocess.CompletedProcess:
     result = subprocess.run(args, capture_output=True, text=True)
     if result.returncode != 0:
-        print(f"Git execution error: {' '.join(args)}", file=sys.stderr)
+        print(f"Git command failed: {' '.join(args)}", file=sys.stderr)
         print(result.stderr.strip(), file=sys.stderr)
         sys.exit(result.returncode)
     return result
 
 def main() -> None:
-    if not TARGET_HTML.exists():
-        print(f"Error: {TARGET_HTML} does not exist.", file=sys.stderr)
-        sys.exit(1)
+    # 1. Regenerate week1-lecture2.html directly from scratch
+    TARGET_HTML.write_text(WEEK1_LECTURE2_HTML, encoding="utf-8")
+    print(f"Regenerated {TARGET_HTML.name} from scratch.")
 
-    content = TARGET_HTML.read_text(encoding="utf-8")
-    original = content
-
-    # Clean out any previous biographical injections cleanly
-    content = re.sub(
-        r'<!-- HISTORICAL (?:CARD|CONTEXT): HIPPASUS -->.*?(?=\s*<h2 id="field-order">)',
-        '',
-        content,
-        flags=re.DOTALL
-    )
-    content = re.sub(
-        r'<!-- HISTORICAL (?:CARD|CONTEXT): EUDOXUS -->.*?(?=\s*<h2 id="absolute-value">)',
-        '',
-        content,
-        flags=re.DOTALL
-    )
-    content = re.sub(
-        r'<!-- HISTORICAL (?:CARD|CONTEXT): WEIERSTRASS -->.*?(?=\s*<h2 id="completeness-bounds">)',
-        '',
-        content,
-        flags=re.DOTALL
-    )
-    content = re.sub(
-        r'<!-- HISTORICAL (?:CARD|CONTEXT): DEDEKIND -->.*?(?=\s*<!-- FOOTER NAVIGATION -->)',
-        '',
-        content,
-        flags=re.DOTALL
-    )
-
-    # 1. Section 2: Insert Hippasus above Section 3
-    if '<h2 id="field-order">' in content:
-        content = content.replace(
-            '<h2 id="field-order">',
-            f"{HIPPASUS_BOX}\n\n            <h2 id=\"field-order\">"
-        )
-
-    # 2. Section 3: Insert Eudoxus above Section 4
-    if '<h2 id="absolute-value">' in content:
-        content = content.replace(
-            '<h2 id="absolute-value">',
-            f"{EUDOXUS_BOX}\n\n            <h2 id=\"absolute-value\">"
-        )
-
-    # 3. Section 4: Insert Weierstrass above Section 5
-    if '<h2 id="completeness-bounds">' in content:
-        content = content.replace(
-            '<h2 id="completeness-bounds">',
-            f"{WEIERSTRASS_BOX}\n\n            <h2 id=\"completeness-bounds\">"
-        )
-
-    # 4. Section 5: Insert Dedekind before Footer Navigation
-    if '<!-- FOOTER NAVIGATION -->' in content:
-        content = content.replace(
-            '<!-- FOOTER NAVIGATION -->',
-            f"{DEDEKIND_BOX}\n\n            <!-- FOOTER NAVIGATION -->"
-        )
-
-    if content != original:
-        TARGET_HTML.write_text(content, encoding="utf-8")
-        print(f"Updated biography boxes in {TARGET_HTML.name}.")
-    else:
-        print(f"{TARGET_HTML.name} is already up to date.")
-
-    # Git workflow: stage both week1-lecture2.html and update.py
+    # 2. Stage both files in git
     run_git(["git", "rev-parse", "--is-inside-work-tree"])
     run_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
 
+    # 3. Check for staged modifications
     diff_check = subprocess.run(["git", "diff", "--cached", "--quiet"])
     if diff_check.returncode == 0:
-        print("No staged changes detected. Working tree is clean.")
+        print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Add Lecture 2 lavender history cards and version update.py"
+    # 4. Formulate commit message
+    commit_subject = "Regenerate week1-lecture2.html from scratch with lavender bio boxes"
     commit_body = (
-        "Add Hippasus, Eudoxus, Weierstrass, and Dedekind history cards to\n"
-        "week1-lecture2.html using the lavender biography-box style, and\n"
-        "stage update.py alongside the modified HTML document."
+        "Rebuild complete Lecture 2 markup with native .biography-box styles,\n"
+        "embed Hippasus, Eudoxus, Weierstrass, and Dedekind lavender sidebars,\n"
+        "add mobile viewport math containment to prevent horizontal gutters,\n"
+        "and stage update.py alongside the regenerated document."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
 
     run_git(["git", "commit", "-m", full_message])
     print("Committed successfully.")
 
-    print("Pushing to remote repository...")
+    # 5. Push upstream
+    print("Pushing commits to remote repository...")
     run_git(["git", "push"])
     print("Push complete.")
 
