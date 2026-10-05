@@ -2,13 +2,11 @@
 r"""
 update.py
 
-Generates week1-lecture3.html with:
-1. A 4-panel discrete plot SVG in Section 2 illustrating the fundamental
-   sequence archetypes (squares, harmonic, alternating, and primes).
-2. Deep scaffolding across Sections 3 and 4 with the detective tests.
-3. Unwrappable .nobr protection on all formulas and trailing punctuation.
+Generates week1-lecture3.html with an interactive Directed Narrative Stepper
+in Section 3 demonstrating discrete stepping dynamics (Arithmetic strides,
+Geometric growth, and Geometric decay), fully compliant with UNE MTHS120.
 
-Stages week1-lecture3.html and update.py, commits, and pushes to Git.
+Stages week1-lecture3.html and update.py, commits, and pushes upstream.
 """
 
 from pathlib import Path
@@ -90,6 +88,8 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 overflow-x: auto !important; overflow-y: hidden !important; -webkit-overflow-scrolling: touch !important;
                 max-width: 100% !important; padding: 0.25rem 0 !important; margin: 0.5rem 0 !important;
             }
+            .stepper-nav-grid { grid-template-columns: 1fr !important; }
+            .stepper-analytical-grid { grid-template-columns: 1fr !important; }
         }
     </style>
 </head>
@@ -285,22 +285,17 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <text x="245" y="210" font-size="9.5" fill="#475569" text-anchor="middle">3</text>
                         <text x="310" y="210" font-size="9.5" fill="#475569" text-anchor="middle">4</text>
 
-                        <!-- Points: a0=0, a1=1, a2=4, a3=9, a4=16 -->
-                        <!-- n=0: (50, 195) -->
+                        <!-- Points -->
                         <circle cx="50" cy="195" r="4.5" fill="#0284c7" />
-                        <!-- n=1: (115, 187) -->
                         <line x1="115" y1="195" x2="115" y2="187" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="115" cy="187" r="4.5" fill="#0284c7" />
                         <text x="115" y="180" font-size="9" font-weight="600" fill="#0369a1" text-anchor="middle">1</text>
-                        <!-- n=2: (180, 163) -->
                         <line x1="180" y1="195" x2="180" y2="163" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="180" cy="163" r="4.5" fill="#0284c7" />
                         <text x="180" y="156" font-size="9" font-weight="600" fill="#0369a1" text-anchor="middle">4</text>
-                        <!-- n=3: (245, 123) -->
                         <line x1="245" y1="195" x2="245" y2="123" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="245" cy="123" r="4.5" fill="#0284c7" />
                         <text x="245" y="116" font-size="9" font-weight="600" fill="#0369a1" text-anchor="middle">9</text>
-                        <!-- n=4: (310, 67) -->
                         <line x1="310" y1="195" x2="310" y2="67" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="310" cy="67" r="4.5" fill="#0284c7" />
                         <text x="310" y="60" font-size="9" font-weight="600" fill="#0369a1" text-anchor="middle">16</text>
@@ -318,14 +313,14 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <text x="375" y="199" font-size="11" font-weight="bold" fill="#0f172a">n</text>
                         <text x="46" y="50" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
 
-                        <!-- Grid Marks (n=1 to 5) -->
+                        <!-- Grid Marks -->
                         <text x="95" y="210" font-size="9.5" fill="#475569" text-anchor="middle">1</text>
                         <text x="155" y="210" font-size="9.5" fill="#475569" text-anchor="middle">2</text>
                         <text x="215" y="210" font-size="9.5" fill="#475569" text-anchor="middle">3</text>
                         <text x="275" y="210" font-size="9.5" fill="#475569" text-anchor="middle">4</text>
                         <text x="335" y="210" font-size="9.5" fill="#475569" text-anchor="middle">5</text>
 
-                        <!-- Points: a1=1 (y=75), a2=1/2 (y=135), a3=1/3 (y=155), a4=1/4 (y=165), a5=1/5 (y=171) -->
+                        <!-- Points -->
                         <line x1="95" y1="195" x2="95" y2="75" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="95" cy="75" r="4.5" fill="#059669" />
                         <text x="95" y="68" font-size="9" font-weight="600" fill="#047857" text-anchor="middle">1</text>
@@ -369,33 +364,27 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <text x="42" y="88" font-size="9.5" font-weight="bold" fill="#b45309" text-anchor="end">+1</text>
                         <text x="42" y="198" font-size="9.5" font-weight="bold" fill="#b45309" text-anchor="end">-1</text>
 
-                        <!-- Points (n=0 to 5) -->
-                        <!-- n=0: +1 -->
+                        <!-- Points -->
                         <line x1="80" y1="140" x2="80" y2="85" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="80" cy="85" r="4.5" fill="#d97706" />
                         <text x="80" y="153" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
 
-                        <!-- n=1: -1 -->
                         <line x1="130" y1="140" x2="130" y2="195" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="130" cy="195" r="4.5" fill="#d97706" />
                         <text x="130" y="133" font-size="9.5" fill="#475569" text-anchor="middle">1</text>
 
-                        <!-- n=2: +1 -->
                         <line x1="180" y1="140" x2="180" y2="85" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="180" cy="85" r="4.5" fill="#d97706" />
                         <text x="180" y="153" font-size="9.5" fill="#475569" text-anchor="middle">2</text>
 
-                        <!-- n=3: -1 -->
                         <line x1="230" y1="140" x2="230" y2="195" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="230" cy="195" r="4.5" fill="#d97706" />
                         <text x="230" y="133" font-size="9.5" fill="#475569" text-anchor="middle">3</text>
 
-                        <!-- n=4: +1 -->
                         <line x1="280" y1="140" x2="280" y2="85" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="280" cy="85" r="4.5" fill="#d97706" />
                         <text x="280" y="153" font-size="9.5" fill="#475569" text-anchor="middle">4</text>
 
-                        <!-- n=5: -1 -->
                         <line x1="330" y1="140" x2="330" y2="195" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="330" cy="195" r="4.5" fill="#d97706" />
                         <text x="330" y="133" font-size="9.5" fill="#475569" text-anchor="middle">5</text>
@@ -413,14 +402,14 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <text x="375" y="199" font-size="11" font-weight="bold" fill="#0f172a">n</text>
                         <text x="46" y="50" font-size="11" font-weight="bold" fill="#0f172a">pₙ</text>
 
-                        <!-- Grid Marks (n=1 to 5) -->
+                        <!-- Grid Marks -->
                         <text x="95" y="210" font-size="9.5" fill="#475569" text-anchor="middle">1</text>
                         <text x="155" y="210" font-size="9.5" fill="#475569" text-anchor="middle">2</text>
                         <text x="215" y="210" font-size="9.5" fill="#475569" text-anchor="middle">3</text>
                         <text x="275" y="210" font-size="9.5" fill="#475569" text-anchor="middle">4</text>
                         <text x="335" y="210" font-size="9.5" fill="#475569" text-anchor="middle">5</text>
 
-                        <!-- Points: p1=2 (y=171), p2=3 (y=159), p3=5 (y=135), p4=7 (y=111), p5=11 (y=63) -->
+                        <!-- Points -->
                         <line x1="95" y1="195" x2="95" y2="171" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="95" cy="171" r="4.5" fill="#6366f1" />
                         <text x="95" y="164" font-size="9" font-weight="600" fill="#4338ca" text-anchor="middle">2</text>
@@ -466,6 +455,77 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1.5rem;">
                 In reality, only <strong>two fundamental operations</strong> govern these sequences. You are either choosing a fixed step and <em>repeatedly adding it</em>, or choosing a fixed factor and <em>repeatedly multiplying by it</em>. Keeping that stepping picture in mind removes the guesswork from the algebra.
             </p>
+
+            <!-- INTERACTIVE PEDAGOGICAL AID: PROGRESSION STEPPING SIMULATOR -->
+            <div id="progression-stepper-widget" style="margin: 2rem 0; background: #ffffff; border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); overflow: hidden;">
+                <!-- HEADER & COMPARATIVE TOGGLES -->
+                <div style="background: #f8fafc; border-bottom: 1px solid var(--border); padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+                    <div>
+                        <span style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); display: block;">Interactive Stepper</span>
+                        <strong style="color: #0f172a; font-size: 1.05rem;">The Stepping Dynamics Simulator: Strides vs. Zoom</strong>
+                    </div>
+                    <!-- Comparative Dimension Toggles -->
+                    <div style="display: flex; gap: 0.4rem; background: #e2e8f0; padding: 0.25rem; border-radius: 6px;">
+                        <button id="toggle-arithmetic" onclick="setMode('arithmetic')" style="padding: 0.35rem 0.75rem; border: none; border-radius: 4px; font-size: 0.82rem; font-weight: 600; cursor: pointer; background: #ffffff; color: #0284c7; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">Arithmetic (+3)</button>
+                        <button id="toggle-geom-growth" onclick="setMode('geom_growth')" style="padding: 0.35rem 0.75rem; border: none; border-radius: 4px; font-size: 0.82rem; font-weight: 600; cursor: pointer; background: transparent; color: #475569;">Geometric (&times;2)</button>
+                        <button id="toggle-geom-decay" onclick="setMode('geom_decay')" style="padding: 0.35rem 0.75rem; border: none; border-radius: 4px; font-size: 0.82rem; font-weight: 600; cursor: pointer; background: transparent; color: #475569;">Geometric (&times;0.5)</button>
+                    </div>
+                </div>
+
+                <!-- LIVE STATE TELEMETRY STATUS BAR -->
+                <div style="background: #0f172a; color: #f8fafc; padding: 0.75rem 1.25rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.75rem; font-size: 0.82rem; font-family: ui-monospace, monospace; border-bottom: 1px solid #1e293b;">
+                    <div><span style="color: #94a3b8; display: block; font-size: 0.72rem; text-transform: uppercase;">Locker Index (n)</span><strong id="telem-n" style="font-size: 1.05rem; color: #38bdf8;">0</strong></div>
+                    <div><span style="color: #94a3b8; display: block; font-size: 0.72rem; text-transform: uppercase;">Stored Value (cₙ)</span><strong id="telem-val" style="font-size: 1.05rem; color: #34d399;">2</strong></div>
+                    <div><span style="color: #94a3b8; display: block; font-size: 0.72rem; text-transform: uppercase;">Transition Step</span><strong id="telem-op" style="font-size: 1.05rem; color: #fbbf24;">Baseline Initializer</strong></div>
+                    <div><span style="color: #94a3b8; display: block; font-size: 0.72rem; text-transform: uppercase;">Formula Expansion</span><strong id="telem-formula" style="font-size: 0.95rem; color: #cbd5e1;">b = 2</strong></div>
+                </div>
+
+                <!-- SYNCHRONIZED VISUAL CANVAS -->
+                <div style="padding: 1.5rem 1.25rem; background: #ffffff; text-align: center; border-bottom: 1px solid var(--border);">
+                    <svg id="stepper-canvas" viewBox="0 0 760 140" style="width: 100%; max-width: 740px; height: auto; display: inline-block; overflow: visible;">
+                        <!-- Rendered dynamically via JS -->
+                    </svg>
+                </div>
+
+                <!-- NAVIGATION CONTROLS & INLINE PREVIEW PANEL -->
+                <div class="stepper-nav-grid" style="padding: 1.25rem; background: #f8fafc; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 220px 1fr; gap: 1.25rem; align-items: center;">
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                        <button id="btn-prev" onclick="stepPrev()" style="flex: 1; padding: 0.6rem 0.8rem; background: #ffffff; border: 1px solid var(--border); border-radius: 6px; font-weight: 600; font-size: 0.85rem; cursor: pointer; color: #475569;">&larr; Prev</button>
+                        <button id="btn-next" onclick="stepNext()" style="flex: 1; padding: 0.6rem 0.8rem; background: var(--accent); border: none; border-radius: 6px; font-weight: 600; font-size: 0.85rem; cursor: pointer; color: #ffffff;">Next &rarr;</button>
+                        <button id="btn-reset" onclick="resetStepper()" style="padding: 0.6rem 0.75rem; background: #e2e8f0; border: none; border-radius: 6px; font-weight: 600; font-size: 0.85rem; cursor: pointer; color: #475569;" title="Reset to Locker 0">&#8635;</button>
+                    </div>
+                    <!-- Dedicated Inline Preview Panel -->
+                    <div style="background: #ffffff; border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 6px; padding: 0.6rem 0.9rem;">
+                        <span style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: #64748b; display: block;">Step Mission Preview</span>
+                        <p id="inline-preview-text" style="margin: 0; font-size: 0.88rem; line-height: 1.45; color: #1e293b;">
+                            Establishing position at Locker 0. Reading baseline contents before any steps are taken.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- PAIRED ANALYTICAL PANES -->
+                <div class="stepper-analytical-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 1.25rem; background: #ffffff;">
+                    <!-- PANE 1: WHAT IS HAPPENING -->
+                    <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 1rem;">
+                        <h5 style="margin: 0 0 0.4rem 0; font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.04em; color: #166534; display: flex; align-items: center; gap: 0.4rem;">
+                            <span>⚙️</span> What Is Happening (Mechanics)
+                        </h5>
+                        <div id="pane-what" style="font-size: 0.9rem; line-height: 1.55; color: #14532d;">
+                            The rover is stationed at locker index 0. Value is initialized to the base constant b = 2.
+                        </div>
+                    </div>
+
+                    <!-- PANE 2: WHY THE SYSTEM DOES THIS -->
+                    <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 1rem;">
+                        <h5 style="margin: 0 0 0.4rem 0; font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.04em; color: #1e40af; display: flex; align-items: center; gap: 0.4rem;">
+                            <span>💡</span> Why The System Does This (Rationale)
+                        </h5>
+                        <div id="pane-why" style="font-size: 0.9rem; line-height: 1.55; color: #1e3a8a;">
+                            Locker 0 represents state before iteration begins. Because no step difference has been added yet, the step counter is n = 0, leaving only the pure baseline b.
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">1. The Intuition: Walking with Strides vs. Multiplying by Zoom</h3>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
@@ -1029,6 +1089,199 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
             </div>
         </div>
     </div>
+
+    <!-- SCRIPT FOR PROGRESSION STEPPING SIMULATOR -->
+    <script>
+    (function() {
+        const config = {
+            arithmetic: {
+                title: "Arithmetic Progression (a = 3, b = 2)",
+                color: "#0284c7",
+                minVal: 0,
+                maxVal: 20,
+                steps: [
+                    { n: 0, val: 2, op: "Initial Base", formula: "b = 2", preview: "Stationed at Locker 0. Reading baseline parameter b before any strides are taken.", what: "Rover initializes at position c₀ = 2. Zero strides of size a = 3 have occurred.", why: "In an arithmetic model cₙ = an + b, the term an vanishes when n = 0, leaving pure baseline b." },
+                    { n: 1, val: 5, op: "Added +3", formula: "2 + 3 = 5", preview: "Taking first stride. Advancing from Locker 0 to Locker 1 by adding fixed difference a = 3.", what: "Rover moves from 2 to 5 by adding stride a = 3. One hop executed.", why: "Discrete stepping advances by constant addition: c₁ = c₀ + a = 2 + 3." },
+                    { n: 2, val: 8, op: "Added +3", formula: "2 + 3(2) = 8", preview: "Taking second stride. Stacking another stride of size 3 to reach Locker 2.", what: "Rover advances to position 8. Two strides of size 3 have now accumulated.", why: "Repeated addition compresses into multiplication by index n: 2 + 3 + 3 = 2 + 3(2)." },
+                    { n: 3, val: 11, op: "Added +3", formula: "2 + 3(3) = 11", preview: "Taking third stride. Marching along the line at an exact steady, rhythmic pace.", what: "Rover advances to 11. Stride length remains identically 3 units.", why: "Notice the rate of change is constant: cₙ' = cₙ₊₁ - cₙ = 3 everywhere." },
+                    { n: 4, val: 14, op: "Added +3", formula: "2 + 3(4) = 14", preview: "Taking fourth stride. Leaping directly forward without changing stride width.", what: "Rover advances to position 14. Four identical intervals of 3 have been traversed.", why: "Direct calculation c₄ = 3(4) + 2 = 14 matches the 4-step walk identically." },
+                    { n: 5, val: 17, op: "Added +3", formula: "2 + 3(5) = 17", preview: "Reaching fifth waypoint. Verifying linear progression along the locker corridor.", what: "Rover arrives at final station c₅ = 17. Total distance gained is 5 × 3 = 15 units.", why: "Linear growth has no surprises: every single gap across the corridor is congruent." }
+                ]
+            },
+            geom_growth: {
+                title: "Geometric Growth (a = 2, q = 2)",
+                color: "#059669",
+                minVal: 0,
+                maxVal: 68,
+                steps: [
+                    { n: 0, val: 2, op: "Initial Base", formula: "a · q⁰ = 2", preview: "Stationed at Locker 0. Base scale factor initialized to a = 2.", what: "Quantity starts at c₀ = 2. Zero zoom multiplications have taken place.", why: "Because q⁰ = 1 for any non-zero ratio, c₀ = a · 1 = a." },
+                    { n: 1, val: 4, op: "Scaled ×2", formula: "2 · 2¹ = 4", preview: "Applying first scaling factor. Doubling contents of Locker 0 to fill Locker 1.", what: "Current value 2 is multiplied by common ratio q = 2, reaching 4.", why: "Geometric steps advance by ratio multiplication: c₁ = c₀ · q = 2 · 2." },
+                    { n: 2, val: 8, op: "Scaled ×2", formula: "2 · 2² = 8", preview: "Applying second doubling. Stride length between lockers visibly doubles.", what: "Value jumps from 4 to 8. Notice the jump distance (4) is already twice the first jump (2).", why: "Repeated multiplication creates exponents: c₂ = a · q · q = a · q²." },
+                    { n: 3, val: 16, op: "Scaled ×2", formula: "2 · 2³ = 16", preview: "Third doubling step. Observe the stride beginning to stretch aggressively across the canvas.", what: "Value jumps from 8 to 16. Jump span is 8 units.", why: "Each step difference is itself growing: cₙ' = a(q - 1)qⁿ = 2(1)2ⁿ = cₙ." },
+                    { n: 4, val: 32, op: "Scaled ×2", formula: "2 · 2⁴ = 32", preview: "Fourth doubling step. The gap expands past all previous milestones combined.", what: "Value explodes from 16 to 32. One single jump covers more ground than the whole prior journey.", why: "Exponential acceleration: powers of 2 outpace any linear stride after few steps." },
+                    { n: 5, val: 64, op: "Scaled ×2", formula: "2 · 2⁵ = 64", preview: "Final station reached. Total magnification reaches 32-fold over Locker 0.", what: "Rover terminates at c₅ = 64. Initial quantity 2 has multiplied by 2⁵ = 32.", why: "In geometric growth, index n determines how many times ratio q multiplies itself." }
+                ]
+            },
+            geom_decay: {
+                title: "Geometric Decay (a = 64, q = 0.5)",
+                color: "#d97706",
+                minVal: 0,
+                maxVal: 68,
+                steps: [
+                    { n: 0, val: 64, op: "Initial Base", formula: "64 · (½)⁰ = 64", preview: "Stationed at Locker 0. High initial concentration starting at mass 64.", what: "Sample starts at full magnitude c₀ = 64. Zero decay intervals elapsed.", why: "Initial term corresponds to zero multiplications: c₀ = 64 · 1 = 64." },
+                    { n: 1, val: 32, op: "Scaled ×0.5", formula: "64 · (½)¹ = 32", preview: "First half-life interval. Halving mass from 64 down to 32.", what: "Value drops by 32 units, arriving at position 32.", why: "Ratio q = ½ causes contraction: c₁ = 64 · ½ = 32." },
+                    { n: 2, val: 16, op: "Scaled ×0.5", formula: "64 · (½)² = 16", preview: "Second half-life interval. Stride drops to 16 units as values contract.", what: "Value drops from 32 to 16. The step size itself has been cut in half.", why: "Successive steps compress: c₂ = 64 · (½)² = 64 · ¼ = 16." },
+                    { n: 3, val: 8, op: "Scaled ×0.5", formula: "64 · (½)³ = 8", preview: "Third interval. Steps grow progressively tighter as value nears zero floor.", what: "Value contracts to 8. Jump size is now only 8 units.", why: "Differences become smaller and smaller: decay naturally decelerates toward zero." },
+                    { n: 4, val: 4, op: "Scaled ×0.5", formula: "64 · (½)⁴ = 4", preview: "Fourth interval. Approaching zero asymptotically without crossing it.", what: "Value drops to 4. All terms remain strictly positive (cₙ > 0).", why: "Multiplying positive numbers by positive fractions can never produce a negative." },
+                    { n: 5, val: 2, op: "Scaled ×0.5", formula: "64 · (½)⁵ = 2", preview: "Fifth interval. Massive initial stock has reduced to a sliver of baseline.", what: "Rover finishes at c₅ = 2. Value has shrunk by a factor of (½)⁵ = 1/32.", why: "Geometric decay models half-life, depreciation, and asymptotic convergence." }
+                ]
+            }
+        };
+
+        let activeMode = 'arithmetic';
+        let currentStep = 0;
+
+        function renderCanvas() {
+            const svg = document.getElementById('stepper-canvas');
+            if (!svg) return;
+            const mode = config[activeMode];
+            const stepData = mode.steps[currentStep];
+            const minV = mode.minVal;
+            const maxV = mode.maxVal;
+
+            const leftX = 50;
+            const rightX = 710;
+            const axisY = 100;
+
+            function scaleX(val) {
+                return leftX + ((val - minV) / (maxV - minV)) * (rightX - leftX);
+            }
+
+            let html = '';
+
+            // Axis line
+            html += `<line x1="${leftX - 15}" y1="${axisY}" x2="${rightX + 25}" y2="${axisY}" stroke="#0f172a" stroke-width="2" />`;
+            html += `<polygon points="${rightX + 32},${axisY} ${rightX + 22},${axisY - 4} ${rightX + 22},${axisY + 4}" fill="#0f172a" />`;
+            html += `<text x="${rightX + 35}" y="${axisY + 4}" font-size="11" font-weight="bold" fill="#0f172a">val</text>`;
+
+            // Tick marks
+            mode.steps.forEach((s, idx) => {
+                const sx = scaleX(s.val);
+                const isPassed = idx <= currentStep;
+                const isCurrent = idx === currentStep;
+
+                html += `<line x1="${sx}" y1="${axisY - 5}" x2="${sx}" y2="${axisY + 5}" stroke="${isPassed ? mode.color : '#94a3b8'}" stroke-width="${isCurrent ? '2.5' : '1.5'}" />`;
+                html += `<text x="${sx}" y="${axisY + 20}" font-size="10.5" font-family="monospace" font-weight="${isCurrent ? 'bold' : 'normal'}" fill="${isCurrent ? mode.color : '#64748b'}" text-anchor="middle">${s.val}</text>`;
+                html += `<text x="${sx}" y="${axisY + 34}" font-size="9" fill="${isCurrent ? '#0f172a' : '#94a3b8'}" text-anchor="middle">n=${s.n}</text>`;
+            });
+
+            // Arched trajectory hops
+            for (let i = 0; i < currentStep; i++) {
+                const startX = scaleX(mode.steps[i].val);
+                const endX = scaleX(mode.steps[i + 1].val);
+                const midX = (startX + endX) / 2;
+                const hopHeight = Math.min(60, Math.max(25, Math.abs(endX - startX) * 0.35));
+                const controlY = axisY - hopHeight;
+
+                const isLastHop = (i === currentStep - 1);
+                const strokeColor = isLastHop ? mode.color : '#cbd5e1';
+                const strokeWidth = isLastHop ? 2.5 : 1.5;
+
+                html += `<path d="M ${startX} ${axisY} Q ${midX} ${controlY} ${endX} ${axisY}" fill="none" stroke="${strokeColor}" stroke-width="${strokeWidth}" stroke-dasharray="${isLastHop ? 'none' : '3,3'}" />`;
+
+                if (isLastHop) {
+                    const badgeText = activeMode === 'arithmetic' ? '+3' : (activeMode === 'geom_growth' ? '×2' : '×0.5');
+                    html += `<rect x="${midX - 16}" y="${controlY - 14}" width="32" height="16" rx="4" fill="${mode.color}" />`;
+                    html += `<text x="${midX}" y="${controlY - 2}" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">${badgeText}</text>`;
+                }
+            }
+
+            // Rover active point
+            const curX = scaleX(stepData.val);
+            html += `<circle cx="${curX}" cy="${axisY}" r="7" fill="${mode.color}" stroke="#ffffff" stroke-width="2.5" />`;
+            html += `<circle cx="${curX}" cy="${axisY}" r="13" fill="${mode.color}" opacity="0.25" />`;
+
+            svg.innerHTML = html;
+        }
+
+        function renderTelemetry() {
+            const mode = config[activeMode];
+            const stepData = mode.steps[currentStep];
+
+            document.getElementById('telem-n').textContent = stepData.n;
+            document.getElementById('telem-val').textContent = stepData.val;
+            document.getElementById('telem-op').textContent = stepData.op;
+            document.getElementById('telem-formula').textContent = stepData.formula;
+        }
+
+        function renderPanels() {
+            const mode = config[activeMode];
+            const stepData = mode.steps[currentStep];
+
+            document.getElementById('inline-preview-text').textContent = stepData.preview;
+            document.getElementById('pane-what').textContent = stepData.what;
+            document.getElementById('pane-why').textContent = stepData.why;
+
+            const btnPrev = document.getElementById('btn-prev');
+            const btnNext = document.getElementById('btn-next');
+            btnPrev.disabled = (currentStep === 0);
+            btnNext.disabled = (currentStep === mode.steps.length - 1);
+            btnPrev.style.opacity = (currentStep === 0) ? '0.5' : '1';
+            btnNext.style.opacity = (currentStep === mode.steps.length - 1) ? '0.5' : '1';
+        }
+
+        function updateDisplay() {
+            renderCanvas();
+            renderTelemetry();
+            renderPanels();
+        }
+
+        window.setMode = function(modeKey) {
+            activeMode = modeKey;
+            currentStep = 0;
+
+            ['arithmetic', 'geom_growth', 'geom_decay'].forEach(k => {
+                const btn = document.getElementById('toggle-' + k.replace('_', '-'));
+                if (k === modeKey) {
+                    btn.style.background = '#ffffff';
+                    btn.style.color = config[k].color;
+                    btn.style.boxShadow = '0 1px 2px rgba(0,0,0,0.05)';
+                } else {
+                    btn.style.background = 'transparent';
+                    btn.style.color = '#475569';
+                    btn.style.boxShadow = 'none';
+                }
+            });
+
+            updateDisplay();
+        };
+
+        window.stepNext = function() {
+            if (currentStep < config[activeMode].steps.length - 1) {
+                currentStep++;
+                updateDisplay();
+            }
+        };
+
+        window.stepPrev = function() {
+            if (currentStep > 0) {
+                currentStep--;
+                updateDisplay();
+            }
+        };
+
+        window.resetStepper = function() {
+            currentStep = 0;
+            updateDisplay();
+        };
+
+        document.addEventListener('DOMContentLoaded', updateDisplay);
+        // Fallback for direct script placement
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            updateDisplay();
+        }
+    })();
+    </script>
 </body>
 </html>
 """
@@ -1043,7 +1296,7 @@ def execute_git(args: list[str]) -> subprocess.CompletedProcess:
 
 def main() -> None:
     TARGET_HTML.write_text(WEEK1_LECTURE3_HTML, encoding="utf-8")
-    print(f"Successfully generated {TARGET_HTML.name} with discrete plot gallery.")
+    print(f"Successfully generated {TARGET_HTML.name} with stepping dynamics simulator.")
 
     execute_git(["git", "rev-parse", "--is-inside-work-tree"])
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
@@ -1053,11 +1306,12 @@ def main() -> None:
         print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Add 4-panel discrete plot visualization to Section 2 in Lecture 3"
+    commit_subject = "Add interactive stepping dynamics simulator to Lecture 3 Section 3"
     commit_body = (
-        "Add 2x2 lollipop graph SVG illustrating fundamental sequence archetypes,\n"
-        "emphasize discrete isolated points over continuous curves, and\n"
-        "stage updated week1-lecture3.html alongside update.py."
+        "Embed interactive Directed Narrative Stepper in Section 3,\n"
+        "providing quick-switch toggles for arithmetic, growth, and decay,\n"
+        "telemetry status bar, SVG hop canvas, and paired analytical panes,\n"
+        "and stage updated week1-lecture3.html alongside update.py."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
 
