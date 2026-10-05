@@ -2,12 +2,11 @@
 r"""
 update.py
 
-Generates week1-lecture3.html with properly positioned diagrams:
-1. Section 3: The Interactive Stepper is positioned directly after the
-   Arithmetic and Geometric intuition cards.
-2. Section 4: The 2x2 Monotonicity SVG grid is positioned directly inside
-   Subsection 1, immediately following the strict/weak/plateau definitions.
-3. Preserves all non-breaking .nobr math wraps and MTHS120 course scaffolding.
+Generates week1-lecture3.html with an expanded, student-centered, reassuring
+prose explanation in Section 4, Subsection 1 (The Geometry of Monotonicity).
+- Breaks down directional preservation, strict climbs, and flat plateaus.
+- Connects directly to the 2x2 coordinate plot visual grid.
+- Enforces strict .nobr wrapping on all inline math and trailing punctuation.
 
 Stages week1-lecture3.html and update.py, commits, and pushes upstream.
 """
@@ -699,20 +698,35 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </div>
             </div>
 
-            <!-- SUBSECTION 1: THE GEOMETRY OF MONOTONICITY -->
+            <!-- SUBSECTION 1: THE GEOMETRY OF MONOTONICITY (EXPANDED DETAILED REASSURING PROSE) -->
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">1. The Geometry of Monotonicity: Preserving Direction</h3>
-            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
-                In mathematical analysis, a sequence is <strong>monotonic</strong> if its values advance in an unbroken, one-way trajectory across the real line. It commits to a direction and never doubles back.
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                The word <em>monotonic</em> comes from Greek roots meaning <em>"one single tone"</em> or <em>"one single style."</em> When mathematicians apply this term to an infinite sequence, don't let the formal notation intimidate you. The concept is deeply intuitive: <strong>a sequence is monotonic if it picks a single direction along the real line and commits to it forever.</strong>
             </p>
-            <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem;">
-                <li><strong>Strict vs. Weak Monotonicity:</strong> Pay close attention to the relational symbols:
-                    <ul style="margin-top: 0.35rem; margin-bottom: 0.5rem;">
-                        <li><strong>Strictly Increasing ($a_{n+1} > a_n$):</strong> Every discrete step climbs strictly higher than the previous one. Plateaus are forbidden.</li>
-                        <li><strong>Weakly Increasing / Non-Decreasing ($a_{n+1} \ge a_n$):</strong> Terms are allowed to pause on flat horizontal plateaus (e.g. $a_2 = a_3$). As long as the sequence never steps downward, it remains technically <em>increasing</em>.</li>
-                    </ul>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                Imagine walking along a trail in mountainous terrain where your position at each minute is recorded:
+            </p>
+            <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem; margin-bottom: 1.25rem;">
+                <li style="margin-bottom: 0.65rem;">
+                    <strong>Strictly Increasing (<span class="nobr">$a_{n+1} > a_n$</span>):</strong> Every step you take gains elevation. You are strictly climbing up the mountain. You are not allowed to step downward, and you are not allowed to stand still. Every locker holds a number strictly greater than the locker before it:
+                    <div style="text-align: center; margin: 0.35rem 0; font-weight: 600; color: #0284c7;">
+                        $$a_0 < a_1 < a_2 < a_3 < \dots < a_n < a_{n+1} < \dots$$
+                    </div>
                 </li>
-                <li><strong>Non-Monotonic Sequences:</strong> Any sequence that alters its direction—such as the alternating sequence <span class="nobr">$a_n = (-1)^n = (1, -1, 1, -1, \dots)$</span>—fails monotonicity completely.</li>
+                <li style="margin-bottom: 0.65rem;">
+                    <strong>Weakly Increasing or "Non-Decreasing" (<span class="nobr">$a_{n+1} \ge a_n$</span>):</strong> You are hiking upward, but you encounter a flat horizontal plateau (a ridge). You might pause at elevation $100\text{ meters}$ for three steps: <span class="nobr">$(80, 95, 100, 100, 100, 115, \dots)$.</span> Notice that you have <em>never stepped down</em>. In higher mathematics, this is still classified as <strong>increasing</strong>! If an instructor wants to guarantee there are no flat plateaus, they will explicitly specify <strong>strictly increasing</strong>.
+                </li>
+                <li style="margin-bottom: 0.65rem;">
+                    <strong>Strictly Decreasing (<span class="nobr">$a_{n+1} < a_n$</span>) and Weakly Decreasing (<span class="nobr">$a_{n+1} \le a_n$</span>):</strong> The exact mirror image. Every step either descends into a valley or crosses a flat stretch, but you are strictly forbidden from taking a single step uphill.
+                </li>
+                <li>
+                    <strong>Non-Monotonic (Oscillation / Direction Changes):</strong> What if you hike up two steps, drop down one step, and hike up three more? That sequence has changed direction. It fails the test. Prototype sequences like <span class="nobr">$a_n = (-1)^n = (1, -1, 1, -1, \dots)$</span> or <span class="nobr">$a_n = \sin(n)$</span> bounce endlessly up and down, making them non-monotonic.
+                </li>
             </ul>
+
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1.5rem;">
+                Look at the four discrete profiles below. Notice how clearly the discrete points reveal the underlying directional behavior:
+            </p>
 
             <!-- 2x2 VISUAL GRID FOR MONOTONICITY (PROPERLY POSITIONED UNDER SUBSECTION 1 EXPLANATION) -->
             <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; text-align: center;">
@@ -734,6 +748,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
                         <text x="46" y="50" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
 
+                        <!-- Points -->
                         <line x1="80" y1="180" x2="80" y2="155" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="80" cy="155" r="4.5" fill="#0284c7" />
                         <text x="80" y="195" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
@@ -768,6 +783,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
                         <text x="46" y="50" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
 
+                        <!-- Points with plateau at n=1 and n=2 -->
                         <line x1="80" y1="180" x2="80" y2="150" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="80" cy="150" r="4.5" fill="#059669" />
                         <text x="80" y="195" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
@@ -780,6 +796,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <circle cx="200" cy="115" r="4.5" fill="#059669" />
                         <text x="200" y="195" font-size="9.5" fill="#475569" text-anchor="middle">2</text>
 
+                        <!-- Plateau visual highlight -->
                         <line x1="140" y1="115" x2="200" y2="115" stroke="#10b981" stroke-width="2.5" />
                         <text x="170" y="104" font-size="9.5" font-weight="bold" fill="#047857" text-anchor="middle">Flat Plateau: a₁ = a₂</text>
 
@@ -805,6 +822,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
                         <text x="46" y="50" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
 
+                        <!-- Points -->
                         <line x1="80" y1="180" x2="80" y2="60" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="80" cy="60" r="4.5" fill="#d97706" />
                         <text x="80" y="195" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
@@ -839,6 +857,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
                         <text x="46" y="50" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
 
+                        <!-- Points zigzagging -->
                         <line x1="80" y1="180" x2="80" y2="140" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="80" cy="140" r="4.5" fill="#ef4444" />
                         <text x="80" y="195" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
@@ -1425,7 +1444,7 @@ def execute_git(args: list[str]) -> subprocess.CompletedProcess:
 
 def main() -> None:
     TARGET_HTML.write_text(WEEK1_LECTURE3_HTML, encoding="utf-8")
-    print(f"Successfully generated {TARGET_HTML.name} with correctly positioned diagrams.")
+    print(f"Successfully generated {TARGET_HTML.name} with expanded monotonicity prose.")
 
     execute_git(["git", "rev-parse", "--is-inside-work-tree"])
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
@@ -1435,11 +1454,11 @@ def main() -> None:
         print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Relocate Section 3 and Section 4 diagrams to follow explanatory text"
+    commit_subject = "Expand monotonicity prose with reassuring geometric breakdown"
     commit_body = (
-        "Move Section 4 monotonicity 2x2 grid inside Subsection 1,\n"
-        "position monotonicity visual directly after plateau explanations,\n"
-        "move Section 3 interactive stepper directly after progression cards,\n"
+        "Enhance Section 4 Subsection 1 with friendly, detailed intuition,\n"
+        "contrast strict elevation changes with non-decreasing plateaus,\n"
+        "place expanded prose immediately before 2x2 monotonicity visual grid,\n"
         "and stage updated week1-lecture3.html alongside update.py."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
