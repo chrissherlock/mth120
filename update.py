@@ -2,13 +2,14 @@
 r"""
 update.py
 
-Generates week1-lecture3.html with an expanded, student-centered treatment
-of Section 5 (The Algebra of Sequences: Scaling and Sums):
-- Adds a notation reference box for pointwise operations.
-- Expands prose explaining the dual-hallway mental model and distinguishing
-  pointwise sequence addition from series summation.
-- Adds a 2-panel SVG demonstrating how adding an alternating sequence to a
-  linear sequence synthesizes a plateau staircase.
+Generates week1-lecture3.html with an expanded, student-centered, and deeply
+intuitive explanation of "Synthesizing New Dynamics from Simple Building
+Blocks" in Section 5 (The Algebra of Sequences):
+- Unpacks the paint-mixing and LEGO mental models for sequence synthesis.
+- Details primitive building blocks (linear climb vs. alternating bounce).
+- Explains "dynamics" as the stepping rhythm of numbers.
+- Demonstrates how addition naturally creates hesitating staircases with
+  flat plateaus, avoiding clunky piecewise conditional rules.
 - Enforces strict .nobr wrapping on all inline math and punctuation.
 
 Stages week1-lecture3.html and update.py, commits, and pushes upstream.
@@ -163,9 +164,9 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </div>
                 <div class="notation-grid">
                     <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n$</span></span><span class="notation-desc">The $n$-th term of the sequence (the value stored at position $n$)</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$(a_n)_{n=0}^\infty$</span></span><span class="notation-desc">The complete infinite ordered sequence $(a_0, a_1, a_2, a_3, \dots)$</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$(a_n)_{n=1}^\infty$</span></span><span class="notation-desc">Sequence starting at index $1$ when $n=0$ is undefined (e.g. <span class="nobr">$a_n = 1/n$</span>)</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a: \mathbb{N} \to \mathbb{R}$</span></span><span class="notation-desc">Formal definition: a function assigning each natural index $n$ to a real number $a_n$</span></div>
+                    <div class="notation-item"><span class="nobr">$(a_n)_{n=0}^\infty$</span><span class="notation-desc">The complete infinite ordered sequence $(a_0, a_1, a_2, a_3, \dots)$</span></div>
+                    <div class="notation-item"><span class="nobr">$(a_n)_{n=1}^\infty$</span><span class="notation-desc">Sequence starting at index $1$ when $n=0$ is undefined (e.g. <span class="nobr">$a_n = 1/n$</span>)</span></div>
+                    <div class="notation-item"><span class="nobr">$a: \mathbb{N} \to \mathbb{R}$</span><span class="notation-desc">Formal definition: a function assigning each natural index $n$ to a real number $a_n$</span></div>
                 </div>
             </div>
 
@@ -557,7 +558,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 <div class="stepper-analytical-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 1.25rem; background: #ffffff;">
                     <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 1rem;">
                         <h5 style="margin: 0 0 0.4rem 0; font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.04em; color: #166534; display: flex; align-items: center; gap: 0.4rem;">
-                            <span>⚙️</span> What Is Happening (Mechanics)
+                            <span>⚙️️</span> What Is Happening (Mechanics)
                         </h5>
                         <div id="pane-what" style="font-size: 0.9rem; line-height: 1.55; color: #14532d;">
                             The index pointer is stationed at Locker 0. The value is initialized to the base constant b = 2.
@@ -775,7 +776,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <line x1="45" y1="180" x2="370" y2="180" stroke="#0f172a" stroke-width="1.5" />
                         <line x1="50" y1="185" x2="50" y2="62" stroke="#0f172a" stroke-width="1.5" />
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
-                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
+                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">aₙ</text>
 
                         <!-- Points -->
                         <line x1="80" y1="180" x2="80" y2="155" stroke="#94a3b8" stroke-dasharray="2,2" />
@@ -877,8 +878,8 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     <!-- PANEL 4: NON-MONOTONIC -->
                     <g transform="translate(435, 240)">
                         <rect x="0" y="0" width="395" height="210" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
-                        <text x="20" y="24" font-size="12" font-weight="bold" fill="#dc2626">4. Non-Monotonic: Changes Direction</text>
-                        <text x="20" y="38" font-size="10.5" fill="#64748b">Zigzags up and down (fails the single-direction test)</text>
+                        <text x="20" y="26" font-size="12" font-weight="bold" fill="#dc2626">4. Non-Monotonic: Changes Direction</text>
+                        <text x="20" y="42" font-size="10.5" fill="#64748b">Zigzags up and down (fails the single-direction test)</text>
 
                         <line x1="45" y1="180" x2="370" y2="180" stroke="#0f172a" stroke-width="1.5" />
                         <line x1="50" y1="185" x2="50" y2="62" stroke="#0f172a" stroke-width="1.5" />
@@ -1139,12 +1140,42 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </ul>
             </div>
 
+            <!-- EXPANDED SUBSECTION 2: DETAILED INTUITIVE BREAKDOWN -->
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">2. Synthesizing New Dynamics from Simple Building Blocks</h3>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                Why is sequence algebra so powerful? Because combining elementary building blocks allows us to construct intricate, sophisticated stepping patterns that would otherwise be difficult to express from scratch.
+                What does <em>"synthesizing new dynamics from simple building blocks"</em> actually mean in practice? Strip away the academic phrasing, and it represents one of the most powerful and creative principles in all of mathematics: <strong>taking two simple, predictable behaviors, adding them together, and ending up with a brand-new emergent behavior that neither parent sequence possessed on its own.</strong>
             </p>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                Think of it like mixing two primary paint colors to create a shade that didn't exist in either tube, or snapping together simple LEGO bricks to build an intricate structure. Let's break this down into three concrete ideas:
+            </p>
+
+            <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem; margin-bottom: 1.25rem;">
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>1. The Simple Building Blocks (The Elementary Primitives):</strong> These are basic sequences whose behaviors we already know intimately. Consider two contrasting examples:
+                    <ul style="margin-top: 0.35rem; margin-bottom: 0.35rem;">
+                        <li><em>A Steady Linear Climb:</em> <span class="nobr">$a_n = 2n + 1 = (1, 3, 5, 7, 9, 11, \dots)$.</span> This sequence marches strictly uphill. It climbs at every single step, never pauses, and has zero flat spots.</li>
+                        <li><em>A Pure Alternating Bounce:</em> <span class="nobr">$b_n = (-1)^n = (1, -1, 1, -1, 1, -1, \dots)$.</span> This sequence never climbs and never descends. It bounces back and forth across zero, caught in permanent oscillation.</li>
+                    </ul>
+                </li>
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>2. The Dynamics (The Stepping Rhythm):</strong> In mathematics and physics, <em>"dynamics"</em> simply refers to the motion, rhythm, or gait of numbers as the index $n$ ticks forward. Is a sequence accelerating? Is it decelerating toward a floor? Is it hesitating or marching at an unwavering, constant stride?
+                </li>
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>3. Synthesizing the Emergent Behavior:</strong> When we add these two primitive sequences together term-by-term into <span class="nobr">$c_n = a_n + b_n$,</span> their individual characteristics interact:
+                    <div style="text-align: center; margin: 0.5rem 0; font-size: 0.98rem; font-family: ui-monospace, monospace;">
+                        n = 0: &nbsp; 1 + (+1) = 2<br>
+                        n = 1: &nbsp; 3 + (-1) = 2 &nbsp; (a flat resting plateau!)<br>
+                        n = 2: &nbsp; 5 + (+1) = 6<br>
+                        n = 3: &nbsp; 7 + (-1) = 6 &nbsp; (another resting plateau!)<br>
+                        n = 4: &nbsp; 9 + (+1) = 10<br>
+                        n = 5: &nbsp; 11 + (-1) = 10
+                    </div>
+                    The resulting sequence is <span class="nobr">$(2, 2, 6, 6, 10, 10, \dots)$.</span> Notice the new dynamic: it is a <strong>staircase that hesitates on flat plateaus</strong>! The $-1$ drop on odd steps perfectly counterbalances the linear climb, causing the sequence to pause on a level ridge, while the $+1$ on even steps gives it a double boost.
+                </li>
+            </ul>
+
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1.25rem;">
-                Remember back in Section 4 when we discussed <strong>weak monotonicity</strong> and noted that sequences could pause on flat horizontal plateaus (like $2, 2, 6, 6, 10, 10, \dots$)? Where does such a sequence actually come from? It is simply the pointwise sum of an arithmetic sequence and an alternating sequence!
+                <strong>Why does this matter?</strong> Without sequence algebra, if a programmer or mathematician wanted a list that steps up and pauses every two ticks, they would likely write a clunky, conditional piecewise rule: <em>"if $n$ is even, calculate this; if $n$ is odd, calculate that."</em> Sequence algebra reveals that you don't need clunky conditional logic. By simply adding a gentle bounce to a steady climb, <strong>the algebra naturally generates the hesitating staircase</strong>. This is the exact foundational concept that engineers and analysts use to synthesize complex radio signals, acoustic sound waves, and economic models from simple trigonometric and polynomial components!
             </p>
 
             <!-- VISUALIZATION: SEQUENCE ALGEBRA COMBINATION -->
@@ -1212,7 +1243,6 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <text x="280" y="198" font-size="9" fill="#475569" text-anchor="middle">3</text>
                         <text x="340" y="198" font-size="9" fill="#475569" text-anchor="middle">4</text>
 
-                        <!-- c_n values: c0=2 (y=160), c1=2 (y=160), c2=6 (y=112), c3=6 (y=112), c4=10 (y=64) -->
                         <!-- Plateau 1: n=0 and n=1 -->
                         <line x1="100" y1="160" x2="160" y2="160" stroke="#10b981" stroke-width="2.5" />
                         <circle cx="100" cy="160" r="4.5" fill="#059669" />
@@ -1229,7 +1259,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <circle cx="340" cy="64" r="4.5" fill="#059669" />
                         <text x="340" y="56" font-size="8.5" font-weight="bold" fill="#047857" text-anchor="middle">c₄ = 10</text>
 
-                        <!-- Connector -->
+                        <!-- Connectors -->
                         <line x1="160" y1="160" x2="220" y2="112" stroke="#94a3b8" stroke-dasharray="2,2" stroke-width="1.2" />
                         <line x1="280" y1="112" x2="340" y2="64" stroke="#94a3b8" stroke-dasharray="2,2" stroke-width="1.2" />
                     </g>
@@ -1692,7 +1722,7 @@ def execute_git(args: list[str]) -> subprocess.CompletedProcess:
 
 def main() -> None:
     TARGET_HTML.write_text(WEEK1_LECTURE3_HTML, encoding="utf-8")
-    print(f"Successfully generated {TARGET_HTML.name} with expanded Section 5 sequence algebra.")
+    print(f"Successfully generated {TARGET_HTML.name} with expanded Section 5 synthesis prose.")
 
     execute_git(["git", "rev-parse", "--is-inside-work-tree"])
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
@@ -1702,12 +1732,12 @@ def main() -> None:
         print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Expand Section 5 sequence algebra with dual-hallway prose and visual"
+    commit_subject = "Expand Section 5 sequence synthesis prose with intuitive breakdown"
     commit_body = (
-        "Add notation reference infobox for pointwise sequence operations,\n"
-        "add reassuring prose contrasting sequence sums with series,\n"
-        "embed 2-panel SVG showing synthesis of staircase sequence plateaus,\n"
-        "connect (2n+1) + (-1)^n to Section 4 weak monotonicity,\n"
+        "Unpack synthesizing new dynamics with paint and LEGO mental models,\n"
+        "explain primitive building blocks (linear climb vs alternating bounce),\n"
+        "define dynamics as the stepping rhythm and gait of the sequence,\n"
+        "show how addition produces hesitating staircase without piecewise rules,\n"
         "and stage updated week1-lecture3.html alongside update.py."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
