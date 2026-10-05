@@ -2,10 +2,9 @@
 """
 update.py
 
-Generates week1-lecture3.html with an empathetic, beginner-friendly
-introduction to sequences (numbered lockers analogy), full notation tables,
-SVG diagrams, discrete calculus worked examples, and course synthesis,
-then stages and commits both files.
+Generates week1-lecture3.html with unwrappable inline math wrappers
+(preventing orphan parentheses and split formulas), comprehensive notation
+tables, SVG diagrams, and discrete calculus examples, then commits both files.
 """
 
 from pathlib import Path
@@ -69,6 +68,10 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
         .biography-box { background: #f5f3ff; border: 1px solid #ddd6fe; border-left: 5px solid #6366f1; padding: 1.25rem 1.5rem; margin: 2rem 0; border-radius: 0 6px 6px 0; }
         .biography-box h4 { margin-top: 0; color: #3730a3; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; }
         .biography-box p, .biography-box li { color: #0f172a !important; }
+
+        /* Ensure math with parentheses never splits across lines */
+        .nobr { white-space: nowrap; display: inline-block; }
+        .katex { white-space: nowrap; }
 
         @media (max-width: 768px) {
             body { background: #ffffff !important; padding: 1rem 0.75rem !important; margin: 0 !important; max-width: 100vw !important; overflow-x: hidden !important; }
@@ -147,7 +150,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     <li><a href="#arithmetic-geometric">3. Arithmetic and Geometric Sequences</a></li>
                     <li><a href="#sequence-properties">4. Classifying Behavior: Monotonicity and Bounds</a></li>
                     <li><a href="#algebra-of-sequences">5. The Algebra of Sequences (Scaling and Sums)</a></li>
-                    <li><a href="#derived-sequences">6. Discrete Calculus: The Derived Sequence ($a_n'$)</a></li>
+                    <li><a href="#derived-sequences">6. Discrete Calculus: The Derived Sequence (<span class="nobr">$a_n'$</span>)</a></li>
                     <li><a href="#grand-arc">7. The Grand Arc: From Discrete Rungs to the Continuum</a></li>
                 </ul>
             </div>
@@ -161,9 +164,9 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </div>
                 <div class="notation-grid">
                     <div class="notation-item"><span class="notation-sym">$a_n$</span><span class="notation-desc">The $n$-th term of the sequence (the value stored at position $n$)</span></div>
-                    <div class="notation-item"><span class="notation-sym">$(a_n)_{n=0}^\infty$</span><span class="notation-desc">The complete infinite ordered sequence $(a_0, a_1, a_2, a_3, \dots)$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$(a_n)_{n=1}^\infty$</span><span class="notation-desc">Sequence starting at index $1$ when $n=0$ is undefined (e.g. $a_n = 1/n$)</span></div>
-                    <div class="notation-item"><span class="notation-sym">$a: \mathbb{N} \to \mathbb{R}$</span><span class="notation-desc">Formal definition: a function assigning each natural index $n$ to a real number $a_n$</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$(a_n)_{n=0}^\infty$</span></span><span class="notation-desc">The complete infinite ordered sequence $(a_0, a_1, a_2, a_3, \dots)$</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$(a_n)_{n=1}^\infty$</span></span><span class="notation-desc">Sequence starting at index $1$ when $n=0$ is undefined (e.g. <span class="nobr">$a_n = 1/n$</span>)</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a: \mathbb{N} \to \mathbb{R}$</span></span><span class="notation-desc">Formal definition: a function assigning each natural index $n$ to a real number $a_n$</span></div>
                 </div>
             </div>
 
@@ -172,8 +175,8 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 Before writing down any abstract symbols, think of a sequence as an infinite hallway lined with numbered school lockers:
             </p>
             <ul style="font-size: 0.98rem; line-height: 1.7; color: #334155; padding-left: 1.25rem; margin-bottom: 1.25rem;">
-                <li>The <strong>locker door</strong> is labeled with a natural counting number: Locker $0$, Locker $1$, Locker $2$, Locker $3$, and so on. We call this whole number the <strong>index</strong> ($n \in \mathbb{N}$).</li>
-                <li>When you open door $n$, there is a slip of paper inside with an actual real number written on it. We call that stored number the <strong>$n$-th term</strong> ($a_n \in \mathbb{R}$).</li>
+                <li>The <strong>locker door</strong> is labeled with a natural counting number: Locker $0$, Locker $1$, Locker $2$, Locker $3$, and so on. We call this whole number the <strong>index</strong> <span class="nobr">($n \in \mathbb{N}$)</span>.</li>
+                <li>When you open door $n$, there is a slip of paper inside with an actual real number written on it. We call that stored number the <strong>$n$-th term</strong> <span class="nobr">($a_n \in \mathbb{R}$)</span>.</li>
             </ul>
 
             <div style="text-align: center; margin: 1.25rem 0; font-size: 1.1rem; background: #f8fafc; padding: 1rem; border-radius: 6px; border: 1px solid var(--border);">
@@ -188,12 +191,12 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 Think back to our definition of a function in Lecture 1: a rule that takes every input from a starting set (the domain) and assigns it to exactly one output in a target set (the codomain). That is <em>exactly</em> what our locker hallway does!
             </p>
             <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
-                You give the system a locker number ($n \in \mathbb{N}$), and it returns the single real number inside that locker ($a_n \in \mathbb{R}$). Therefore:
+                You give the system a locker number <span class="nobr">($n \in \mathbb{N}$)</span>, and it returns the single real number inside that locker <span class="nobr">($a_n \in \mathbb{R}$)</span>. Therefore:
             </p>
 
             <div class="definition-box">
                 <strong>Formal Definition of a Real Sequence:</strong><br>
-                A <strong>sequence of real numbers</strong> is a function $a: \mathbb{N} \to \mathbb{R}$ whose domain is the set of natural numbers $\mathbb{N}$ and whose codomain is the set of real numbers $\mathbb{R}$.<br><br>
+                A <strong>sequence of real numbers</strong> is a function <span class="nobr">$a: \mathbb{N} \to \mathbb{R}$</span> whose domain is the set of natural numbers $\mathbb{N}$ <span class="nobr">(or $\mathbb{N} \setminus \{0\} = \{1, 2, 3, \dots\}$)</span> and whose codomain is the set of real numbers $\mathbb{R}$.<br><br>
                 Instead of writing function parentheses like $a(n)$, we write the input as a lower subscript:
                 <div style="text-align: center; margin: 0.5rem 0; font-size: 1.05rem;">
                     $$a(n) \equiv a_n$$
@@ -250,7 +253,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     <li>When dealing with fractions like $a_n = \frac{1}{n}$, dividing by zero is undefined, so we start at $n=1$.</li>
                 </ul>
                 <p style="margin: 0.5rem 0 0 0;">
-                    Neither choice is "wrong." Always check the bottom bound on the index notation $(a_n)_{n=0}^\infty$ versus $(a_n)_{n=1}^\infty$.
+                    Neither choice is "wrong." Always check the bottom bound on the index notation <span class="nobr">$(a_n)_{n=0}^\infty$</span> versus <span class="nobr">$(a_n)_{n=1}^\infty$</span>.
                 </p>
             </div>
 
@@ -263,19 +266,19 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
             <div class="worked-example-box">
                 <h4>🎯 Examples of Fundamental Sequences</h4>
                 <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
-                    <li><strong>The Sequence of Perfect Squares:</strong> $a_n = n^2$ (for $n \ge 0$).<br>
+                    <li><strong>The Sequence of Perfect Squares:</strong> $a_n = n^2$ <span class="nobr">(for $n \ge 0$)</span>.<br>
                         Explicit terms: $a_0 = 0,\; a_1 = 1,\; a_2 = 4,\; a_3 = 9,\; a_4 = 16,\; \dots$<br>
                         <em>Behavior:</em> Grows without bound as $n \to \infty$.
                     </li>
-                    <li><strong>The Harmonic Sequence:</strong> $a_n = \frac{1}{n}$ (for $n \ge 1$).<br>
+                    <li><strong>The Harmonic Sequence:</strong> $a_n = \frac{1}{n}$ <span class="nobr">(for $n \ge 1$)</span>.<br>
                         Explicit terms: $a_1 = 1,\; a_2 = \frac{1}{2},\; a_3 = \frac{1}{3},\; a_4 = \frac{1}{4},\; \dots$<br>
                         <em>Behavior:</em> Values grow progressively smaller and closer to $0$, illustrating convergence.
                     </li>
-                    <li><strong>The Alternating Sequence:</strong> $a_n = (-1)^n$ (for $n \ge 0$).<br>
+                    <li><strong>The Alternating Sequence:</strong> $a_n = (-1)^n$ <span class="nobr">(for $n \ge 0$)</span>.<br>
                         Explicit terms: $a_0 = 1,\; a_1 = -1,\; a_2 = 1,\; a_3 = -1,\; a_4 = 1,\; \dots$<br>
                         <em>Behavior:</em> Bounces infinitely back and forth between $1$ and $-1$. It never settles down to a single number!
                     </li>
-                    <li><strong>The Prime Sequence:</strong> $p_n$ where $p_n$ is the $n$-th prime number ($n \ge 1$).<br>
+                    <li><strong>The Prime Sequence:</strong> $p_n$ where $p_n$ is the $n$-th prime number <span class="nobr">($n \ge 1$)</span>.<br>
                         Explicit terms: $p_1 = 2,\; p_2 = 3,\; p_3 = 5,\; p_4 = 7,\; p_5 = 11,\; \dots$<br>
                         <em>Behavior:</em> This sequence has no simple algebraic formula, yet it is completely well-defined because every natural index $n$ determines a unique prime.
                     </li>
@@ -301,7 +304,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     <ul style="font-size: 0.9rem; color: #334155; padding-left: 1.25rem; line-height: 1.6;">
                         <li><strong>Starting value:</strong> $c_0 = b$</li>
                         <li><strong>Step difference:</strong> $c_{n+1} - c_n = a$</li>
-                        <li><strong>Example:</strong> Odd numbers starting at $1$: $c_n = 2n + 1 \implies (1, 3, 5, 7, \dots)$.</li>
+                        <li><strong>Example:</strong> Odd numbers starting at $1$: <span class="nobr">$c_n = 2n + 1 \implies (1, 3, 5, 7, \dots)$</span>.</li>
                     </ul>
                 </div>
 
@@ -317,7 +320,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     <ul style="font-size: 0.9rem; color: #334155; padding-left: 1.25rem; line-height: 1.6;">
                         <li><strong>Base factor:</strong> $a \ne 0$</li>
                         <li><strong>Common ratio:</strong> $q \ne 0, 1$</li>
-                        <li><strong>Example:</strong> Powers of 2: $c_n = 1 \cdot 2^n \implies (1, 2, 4, 8, 16, \dots)$.</li>
+                        <li><strong>Example:</strong> Powers of 2: <span class="nobr">$c_n = 1 \cdot 2^n \implies (1, 2, 4, 8, 16, \dots)$</span>.</li>
                     </ul>
                 </div>
             </div>
@@ -333,7 +336,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     <div class="notation-item"><span class="notation-sym">$a_{n+1} \ge a_n$</span><span class="notation-desc">Increasing sequence (each term is greater than or equal to previous)</span></div>
                     <div class="notation-item"><span class="notation-sym">$a_{n+1} > a_n$</span><span class="notation-desc">Strictly increasing sequence (values strictly grow)</span></div>
                     <div class="notation-item"><span class="notation-sym">$a_{n+1} \le a_n$</span><span class="notation-desc">Decreasing sequence (each term is smaller than or equal to previous)</span></div>
-                    <div class="notation-item"><span class="notation-sym">$a_n \le M$</span><span class="notation-desc">Bounded above by real number $M$ ($\forall n \in \mathbb{N}$)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$a_n \le M$</span><span class="notation-desc">Bounded above by real number $M$ <span class="nobr">($\forall n \in \mathbb{N}$)</span></span></div>
                 </div>
             </div>
 
@@ -341,10 +344,10 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 To analyze where an infinite sequence travels, we use standardized vocabulary:
             </p>
             <ul style="font-size: 0.98rem; line-height: 1.7; color: #334155; padding-left: 1.25rem;">
-                <li><strong>Constant:</strong> $a_n = c$ for all $n \in \mathbb{N}$. The sequence never changes value.</li>
+                <li><strong>Constant:</strong> $a_n = c$ for all <span class="nobr">$n \in \mathbb{N}$</span>. The sequence never changes value.</li>
                 <li><strong>Positive / Negative:</strong> $a_n > 0$ for all $n$ (positive), or $a_n < 0$ for all $n$ (negative).</li>
                 <li><strong>Monotonic:</strong> A sequence that moves in one direction only (either non-decreasing for all $n$, or non-increasing for all $n$).</li>
-                <li><strong>Bounded:</strong> A sequence $(a_n)$ is bounded if there exists a number $M > 0$ such that $|a_n| \le M$ for every index $n$. Its points are trapped inside a finite interval $[-M, M]$.</li>
+                <li><strong>Bounded:</strong> A sequence <span class="nobr">$(a_n)$</span> is bounded if there exists a number $M > 0$ such that $|a_n| \le M$ for every index $n$. Its points are trapped inside a finite interval $[-M, M]$.</li>
             </ul>
 
             <!-- SECTION 5 -->
@@ -355,23 +358,23 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
 
             <div class="definition-box">
                 <strong>Algebraic Operations on Sequences:</strong><br>
-                Let $(a_n)_{n=0}^\infty$ and $(b_n)_{n=0}^\infty$ be two sequences in $\mathbb{R}$, and let $\lambda \in \mathbb{R}$ be a scalar.
+                Let <span class="nobr">$(a_n)_{n=0}^\infty$</span> and <span class="nobr">$(b_n)_{n=0}^\infty$</span> be two sequences in $\mathbb{R}$, and let $\lambda \in \mathbb{R}$ be a scalar.
                 <ul style="margin: 0.5rem 0 0 1.25rem;">
-                    <li><strong>Scalar Multiplication (Scaling):</strong> $(\lambda a)_n = \lambda \cdot a_n$. Every term is magnified or shrunk by $\lambda$.</li>
-                    <li><strong>Sum of Sequences:</strong> $(a + b)_n = a_n + b_n$. Consecutive terms at matching index positions are added together.</li>
-                    <li><strong>Product of Sequences:</strong> $(a \cdot b)_n = a_n \cdot b_n$.</li>
+                    <li><strong>Scalar Multiplication (Scaling):</strong> <span class="nobr">$(\lambda a)_n = \lambda \cdot a_n$</span>. Every term is magnified or shrunk by $\lambda$.</li>
+                    <li><strong>Sum of Sequences:</strong> <span class="nobr">$(a + b)_n = a_n + b_n$</span>. Consecutive terms at matching index positions are added together.</li>
+                    <li><strong>Product of Sequences:</strong> <span class="nobr">$(a \cdot b)_n = a_n \cdot b_n$</span>.</li>
                 </ul>
             </div>
 
             <div class="worked-example-box">
                 <h4>🎯 Worked Example: Combining Sequences Term-by-Term</h4>
-                <p>Consider the sequences $a_n = 2n + 1$ (odd numbers) and $b_n = (-1)^n$ for $n \ge 0$:</p>
+                <p>Consider the sequences $a_n = 2n + 1$ (odd numbers) and $b_n = (-1)^n$ for <span class="nobr">$n \ge 0$</span>:</p>
                 <ul style="margin: 0.25rem 0 0.5rem 1.25rem; font-size: 0.95rem; line-height: 1.6;">
                     <li>$a = (1, 3, 5, 7, 9, \dots)$</li>
                     <li>$b = (1, -1, 1, -1, 1, \dots)$</li>
                 </ul>
                 <p style="margin: 0.5rem 0; font-size: 0.95rem;">
-                    <strong>Form the sum sequence $c_n = a_n + b_n$:</strong><br>
+                    <strong>Form the sum sequence <span class="nobr">$c_n = a_n + b_n$</span>:</strong><br>
                     • $c_0 = 1 + 1 = 2$<br>
                     • $c_1 = 3 + (-1) = 2$<br>
                     • $c_2 = 5 + 1 = 6$<br>
@@ -381,22 +384,22 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
             </div>
 
             <!-- SECTION 6 -->
-            <h2 id="derived-sequences">6. Discrete Calculus: The Derived Sequence ($a_n'$)</h2>
+            <h2 id="derived-sequences">6. Discrete Calculus: The Derived Sequence (<span class="nobr">$a_n'$</span>)</h2>
             <div class="infobox">
                 <h4>📖 Notation Reference: The Derived Sequence</h4>
                 <div class="infobox-intro">
                     <strong>Measuring discrete rate of change:</strong> The difference between consecutive elements measures how fast the sequence grows per step.
                 </div>
                 <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$a_n'$ <span style="font-weight: 400; color: #64748b;">or</span> $\Delta a_n$</span><span class="notation-desc">Derived sequence: difference between consecutive terms $a_{n+1} - a_n$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$a_n' > 0$</span><span class="notation-desc">Indicates the original sequence is strictly increasing at step $n$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$a_n' = 0$</span><span class="notation-desc">Indicates no change between step $n$ and step $n+1$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$a_n' = c$</span><span class="notation-desc">Constant rate of change (identifies an arithmetic sequence)</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n'$</span> <span style="font-weight: 400; color: #64748b;">or</span> <span class="nobr">$\Delta a_n$</span></span><span class="notation-desc">Derived sequence: difference between consecutive terms <span class="nobr">$a_{n+1} - a_n$</span></span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n' > 0$</span></span><span class="notation-desc">Indicates the original sequence is strictly increasing at step $n$</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n' = 0$</span></span><span class="notation-desc">Indicates no change between step $n$ and step $n+1$</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n' = c$</span></span><span class="notation-desc">Constant rate of change (identifies an arithmetic sequence)</span></div>
                 </div>
             </div>
 
             <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
-                In secondary school calculus, you learned that the derivative of a continuous function $f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}$ measures the instantaneous rate of change. But on the discrete ladder of natural numbers $\mathbb{N}$, there is no such thing as an infinitesimal $h \to 0$: the smallest possible step between distinct indices is $h = 1$!
+                In secondary school calculus, you learned that the derivative of a continuous function <span class="nobr">$f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}$</span> measures the instantaneous rate of change. But on the discrete ladder of natural numbers $\mathbb{N}$, there is no such thing as an infinitesimal $h \to 0$: the smallest possible step between distinct indices is $h = 1$!
             </p>
             <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
                 When we evaluate the difference quotient with step size $h = 1$, we obtain:
@@ -409,8 +412,8 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
             </p>
 
             <div class="definition-box">
-                <strong>Definition: The Derived Sequence ($a_n'$):</strong><br>
-                Given a sequence $(a_n)_{n=0}^\infty$, the <strong>derived sequence</strong> $(a_n')_{n=0}^\infty$ is defined by:
+                <strong>Definition: The Derived Sequence (<span class="nobr">$a_n'$</span>):</strong><br>
+                Given a sequence <span class="nobr">$(a_n)_{n=0}^\infty$</span>, the <strong>derived sequence</strong> <span class="nobr">$(a_n')_{n=0}^\infty$</span> is defined by:
                 <div style="text-align: center; margin: 0.5rem 0; font-size: 1.05rem;">
                     $$a_n' = a_{n+1} - a_n \quad (n \ge 0)$$
                 </div>
@@ -423,7 +426,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
             <!-- VISUAL DIAGRAM: DISCRETE DERIVATIVE -->
             <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; text-align: center;">
                 <p style="font-size: 0.88rem; font-weight: 700; color: #475569; margin-top: 0; margin-bottom: 0.75rem;">
-                    VISUALIZATION: Discrete Rate of Change ($a_n' = a_{n+1} - a_n$)
+                    VISUALIZATION: Discrete Rate of Change <span class="nobr">($a_n' = a_{n+1} - a_n$)</span>
                 </p>
                 <svg viewBox="0 0 640 220" style="width: 100%; max-width: 600px; height: auto; display: inline-block;">
                     <!-- Coordinate Axes -->
@@ -482,10 +485,10 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     <strong>Lecture 1 established the Grammar:</strong> We defined sets without duplicates, paired them through Cartesian products into coordinates, established functions as strict non-ambiguous mappings, and locked the counting numbers into an unbroken inductive ladder using Peano's axioms.
                 </li>
                 <li style="margin-bottom: 0.75rem;">
-                    <strong>Lecture 2 built the Continuum Stage:</strong> We demonstrated that integer fractions $\mathbb{Q}$ leave gaping holes ($\sqrt{2} \notin \mathbb{Q}$), created measuring tapes with absolute value metrics $|x - y|$, and sealed the number line into an unbreakable continuum $\mathbb{R}$ using the Axiom of Completeness and Suprema.
+                    <strong>Lecture 2 built the Continuum Stage:</strong> We demonstrated that integer fractions $\mathbb{Q}$ leave gaping holes <span class="nobr">($\sqrt{2} \notin \mathbb{Q}$)</span>, created measuring tapes with absolute value metrics $|x - y|$, and sealed the number line into an unbreakable continuum $\mathbb{R}$ using the Axiom of Completeness and Suprema.
                 </li>
                 <li style="margin-bottom: 0.75rem;">
-                    <strong>Lecture 3 set Objects in Motion:</strong> Today, we unified both worlds. By taking the discrete counting rungs of $\mathbb{N}$ and mapping them into the continuous stage of $\mathbb{R}$, we invented <strong>sequences</strong>. We measured their discrete speed of change using the <strong>derived sequence</strong> $a_n' = a_{n+1} - a_n$, proving that discrete calculus directly mirrors the continuous rates of change of high school calculus.
+                    <strong>Lecture 3 set Objects in Motion:</strong> Today, we unified both worlds. By taking the discrete counting rungs of $\mathbb{N}$ and mapping them into the continuous stage of $\mathbb{R}$, we invented <strong>sequences</strong>. We measured their discrete speed of change using the <strong>derived sequence</strong> <span class="nobr">($a_n' = a_{n+1} - a_n$)</span>, proving that discrete calculus directly mirrors the continuous rates of change of high school calculus.
                 </li>
             </ol>
 
@@ -494,7 +497,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 If sequences are arrows marching along the real line, what happens when $n$ approaches infinity? Do the numbers bunch up? Do they settle down to a single destination point?
             </p>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 2rem;">
-                In <strong>Week 2</strong>, we enter the beating heart of pure analysis: <strong>Limits and Convergence</strong> ($\lim_{n \to \infty} a_n = L$). Using Weierstrass's epsilon-band measuring tape ($\epsilon > 0$) and the completeness of the real line, we will formally define what it means for an infinite journey to arrive at an exact destination. Congratulations on completing Week 1!
+                In <strong>Week 2</strong>, we enter the beating heart of pure analysis: <strong>Limits and Convergence</strong> <span class="nobr">($\lim_{n \to \infty} a_n = L$)</span>. Using Weierstrass's epsilon-band measuring tape <span class="nobr">($\epsilon > 0$)</span> and the completeness of the real line, we will formally define what it means for an infinite journey to arrive at an exact destination. Congratulations on completing Week 1!
             </p>
 
             <!-- FOOTER NAVIGATION -->
@@ -518,7 +521,7 @@ def execute_git(args: list[str]) -> subprocess.CompletedProcess:
 
 def main() -> None:
     TARGET_HTML.write_text(WEEK1_LECTURE3_HTML, encoding="utf-8")
-    print(f"Successfully generated {TARGET_HTML.name} with beginner-friendly Section 1.")
+    print(f"Successfully generated {TARGET_HTML.name} with unwrappable math formatting.")
 
     execute_git(["git", "rev-parse", "--is-inside-work-tree"])
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
@@ -528,10 +531,10 @@ def main() -> None:
         print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Rethink Lecture 3 Section 1 with numbered locker sequence analogy"
+    commit_subject = "Prevent awkward line breaks on parenthesized math in Lecture 3"
     commit_body = (
-        "Retitle Section 1 to focus on numbered lockers and intuitive lists,\n"
-        "introduce formal f: N -> R mapping as a realization rather than a barrier,\n"
+        "Add global .nobr white-space nowrap rule for inline formulas,\n"
+        "wrap parenthesized math tokens like (n in N) to prevent breaking,\n"
         "and stage updated week1-lecture3.html alongside update.py."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
