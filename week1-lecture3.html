@@ -1617,6 +1617,38 @@
                 </div>
             </div>
 
+            <!-- TUTORIAL: HOW THE SUMMATION OPERATOR WORKS -->
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0;">
+                <h4 style="margin-top: 0; color: #0f172a; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>📐</span> Quick Tutorial: How the Summation ($\Sigma$) Operator Works
+                </h4>
+                <p style="font-size: 0.98rem; line-height: 1.7; color: #334155; margin-bottom: 1rem;">
+                    If you haven't worked with summation notation before, the Greek letter $\Sigma$ (capital sigma) can look intimidating. Think of it simply as an <strong>automated loop instruction</strong> in computer programming. It tells you to take an expression, plug in consecutive integers from a starting point to an ending point, and add all the results together.
+                </p>
+
+                <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1.25rem; margin-bottom: 1rem; text-align: center;">
+                    <div style="font-size: 1.4rem; font-family: ui-monospace, monospace; color: #0284c7; margin-bottom: 0.75rem;">
+                        $$\sum_{k=1}^{4} k^2$$
+                    </div>
+                    <p style="font-size: 0.9rem; color: #64748b; margin: 0; line-height: 1.5;">
+                        <strong>Anatomy:</strong> The <span class="nobr"><strong>index variable</strong> ($k$)</span> starts at the <span class="nobr"><strong>lower bound</strong> ($1$),</span> steps up by integer increments one by one, and stops when it hits the <span class="nobr"><strong>upper bound</strong> ($4$).</span>
+                    </p>
+                </div>
+
+                <p style="font-size: 0.98rem; line-height: 1.7; color: #334155; margin-bottom: 0.75rem;">
+                    <strong>Step-by-Step Expansion:</strong>
+                </p>
+                <ol style="margin: 0 0 1rem 0; padding-left: 1.25rem; font-size: 0.95rem; line-height: 1.7; color: #334155;">
+                    <li>Plug in <span class="nobr">$k = 1$:</span> get <span class="nobr">$1^2 = 1$</span></li>
+                    <li>Plug in <span class="nobr">$k = 2$:</span> get <span class="nobr">$2^2 = 4$</span></li>
+                    <li>Plug in <span class="nobr">$k = 3$:</span> get <span class="nobr">$3^2 = 9$</span></li>
+                    <li>Plug in <span class="nobr">$k = 4$:</span> get <span class="nobr">$4^2 = 16$</span> (Stop, because we reached the upper bound 4)</li>
+                </ol>
+                <p style="font-size: 0.98rem; line-height: 1.7; color: #334155; margin-bottom: 0;">
+                    Now, add them all up: <span class="nobr">$1 + 4 + 9 + 16 = 30$.</span> That's all a sum operator does—it's shorthand for an addition chain!
+                </p>
+            </div>
+
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.25rem;">1. The Collapsing Pocket Telescope: How Differences Cancel</h3>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
                 In Section 6, we learned how to move <strong>forward</strong>: given a sequence of values <span class="nobr">$(a_n)$,</span> we subtract consecutive neighbors to find the step sizes <span class="nobr">$a_k' = a_{k+1} - a_k$.</span>
