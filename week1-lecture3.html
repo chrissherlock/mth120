@@ -534,7 +534,7 @@
                 <div class="stepper-analytical-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 1.25rem; background: #ffffff;">
                     <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 1rem;">
                         <h5 style="margin: 0 0 0.4rem 0; font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.04em; color: #166534; display: flex; align-items: center; gap: 0.4rem;">
-                            <span>⚙️️</span> What Is Happening (Mechanics)
+                            <span>⚙</span> What Is Happening (Mechanics)
                         </h5>
                         <div id="pane-what" style="font-size: 0.9rem; line-height: 1.55; color: #14532d;">
                             The index pointer is stationed at Locker 0. The value is initialized to the base constant b = 2.
@@ -787,7 +787,7 @@
                         <line x1="45" y1="180" x2="370" y2="180" stroke="#0f172a" stroke-width="1.5" />
                         <line x1="50" y1="185" x2="50" y2="62" stroke="#0f172a" stroke-width="1.5" />
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
-                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
+                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">aₙ</text>
 
                         <!-- Points with plateau at n=1 and n=2 -->
                         <line x1="80" y1="180" x2="80" y2="150" stroke="#94a3b8" stroke-dasharray="2,2" />
@@ -819,13 +819,13 @@
                     <!-- PANEL 3: STRICTLY DECREASING -->
                     <g transform="translate(10, 240)">
                         <rect x="0" y="0" width="395" height="210" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
-                        <text x="20" y="24" font-size="12" font-weight="bold" fill="#d97706">3. Strictly Decreasing: aₙ₊₁ &lt; aₙ</text>
+                        <text x="20" y="26" font-size="12" font-weight="bold" fill="#d97706">3. Strictly Decreasing: aₙ₊₁ &lt; aₙ</text>
                         <text x="20" y="38" font-size="10.5" fill="#64748b">Cascades downward at each step (always drops)</text>
 
                         <line x1="45" y1="180" x2="370" y2="180" stroke="#0f172a" stroke-width="1.5" />
                         <line x1="50" y1="185" x2="50" y2="62" stroke="#0f172a" stroke-width="1.5" />
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
-                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
+                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">aₙ</text>
 
                         <!-- Points -->
                         <line x1="80" y1="180" x2="80" y2="60" stroke="#94a3b8" stroke-dasharray="2,2" />
@@ -855,7 +855,7 @@
                     <g transform="translate(435, 240)">
                         <rect x="0" y="0" width="395" height="210" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
                         <text x="20" y="26" font-size="12" font-weight="bold" fill="#dc2626">4. Non-Monotonic: Changes Direction</text>
-                        <text x="20" y="42" font-size="10.5" fill="#64748b">Zigzags up and down (fails the single-direction test)</text>
+                        <text x="20" y="38" font-size="10.5" fill="#64748b">Zigzags up and down (fails the single-direction test)</text>
 
                         <line x1="45" y1="180" x2="370" y2="180" stroke="#0f172a" stroke-width="1.5" />
                         <line x1="50" y1="185" x2="50" y2="62" stroke="#0f172a" stroke-width="1.5" />
@@ -1116,42 +1116,41 @@
                 </ul>
             </div>
 
-            <!-- EXPANDED SUBSECTION 2: DETAILED INTUITIVE BREAKDOWN -->
-            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">2. Synthesizing New Dynamics from Simple Building Blocks</h3>
+            <!-- SIMPLIFIED, DIRECT SUBSECTION 2 (NO PRETENTIOUS PHRASING) -->
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">2. Combining Simple Sequences to Create New Patterns</h3>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                What does <em>"synthesizing new dynamics from simple building blocks"</em> actually mean in practice? Strip away the academic phrasing, and it represents one of the most powerful and creative principles in all of mathematics: <strong>taking two simple, predictable behaviors, adding them together, and ending up with a brand-new emergent behavior that neither parent sequence possessed on its own.</strong>
+                One of the most useful features of sequence algebra is how adding two simple sequences can produce a brand-new stepping behavior that neither parent sequence had on its own.
             </p>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                Think of it like mixing two primary paint colors to create a shade that didn't exist in either tube, or snapping together simple LEGO bricks to build an intricate structure. Let's break this down into three concrete ideas:
+                Think of it like mixing two primary paint colors to create a shade that didn't exist in either tube:
             </p>
-
             <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem; margin-bottom: 1.25rem;">
-                <li style="margin-bottom: 0.75rem;">
-                    <strong>1. The Simple Building Blocks (The Elementary Primitives):</strong> These are basic sequences whose behaviors we already know intimately. Consider two contrasting examples:
-                    <ul style="margin-top: 0.35rem; margin-bottom: 0.35rem;">
-                        <li><em>A Steady Linear Climb:</em> <span class="nobr">$a_n = 2n + 1 = (1, 3, 5, 7, 9, 11, \dots)$.</span> This sequence marches strictly uphill. It climbs at every single step, never pauses, and has zero flat spots.</li>
-                        <li><em>A Pure Alternating Bounce:</em> <span class="nobr">$b_n = (-1)^n = (1, -1, 1, -1, 1, -1, \dots)$.</span> This sequence never climbs and never descends. It bounces back and forth across zero, caught in permanent oscillation.</li>
-                    </ul>
+                <li style="margin-bottom: 0.65rem;">
+                    <strong>The First Ingredient (A Steady Linear Climb):</strong> Consider <span class="nobr">$a_n = 2n + 1 = (1, 3, 5, 7, 9, 11, \dots)$.</span> This sequence marches strictly uphill. It gains 2 units at every single step, never pauses, and has zero flat spots.
                 </li>
-                <li style="margin-bottom: 0.75rem;">
-                    <strong>2. The Dynamics (The Stepping Rhythm):</strong> In mathematics and physics, <em>"dynamics"</em> simply refers to the motion, rhythm, or gait of numbers as the index $n$ ticks forward. Is a sequence accelerating? Is it decelerating toward a floor? Is it hesitating or marching at an unwavering, constant stride?
-                </li>
-                <li style="margin-bottom: 0.75rem;">
-                    <strong>3. Synthesizing the Emergent Behavior:</strong> When we add these two primitive sequences together term-by-term into <span class="nobr">$c_n = a_n + b_n$,</span> their individual characteristics interact:
-                    <div style="text-align: center; margin: 0.5rem 0; font-size: 0.98rem; font-family: ui-monospace, monospace;">
-                        n = 0: &nbsp; 1 + (+1) = 2<br>
-                        n = 1: &nbsp; 3 + (-1) = 2 &nbsp; (a flat resting plateau!)<br>
-                        n = 2: &nbsp; 5 + (+1) = 6<br>
-                        n = 3: &nbsp; 7 + (-1) = 6 &nbsp; (another resting plateau!)<br>
-                        n = 4: &nbsp; 9 + (+1) = 10<br>
-                        n = 5: &nbsp; 11 + (-1) = 10
-                    </div>
-                    The resulting sequence is <span class="nobr">$(2, 2, 6, 6, 10, 10, \dots)$.</span> Notice the new dynamic: it is a <strong>staircase that hesitates on flat plateaus</strong>! The $-1$ drop on odd steps perfectly counterbalances the linear climb, causing the sequence to pause on a level ridge, while the $+1$ on even steps gives it a double boost.
+                <li style="margin-bottom: 0.65rem;">
+                    <strong>The Second Ingredient (A Pure Alternating Bounce):</strong> Consider <span class="nobr">$b_n = (-1)^n = (1, -1, 1, -1, 1, -1, \dots)$.</span> This sequence never climbs and never descends. It bounces back and forth across zero, caught in permanent oscillation without making any forward progress.
                 </li>
             </ul>
 
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                When you add them together term-by-term into <span class="nobr">$c_n = a_n + b_n$,</span> their individual rhythms interact in a striking way:
+            </p>
+
+            <div style="text-align: center; margin: 1rem 0; font-size: 0.98rem; font-family: ui-monospace, monospace; background: #f8fafc; padding: 1rem; border-radius: 6px; border: 1px solid var(--border); line-height: 1.8;">
+                n = 0: &nbsp; 1 + (+1) = 2<br>
+                n = 1: &nbsp; 3 + (-1) = 2 &nbsp; (a flat resting plateau!)<br>
+                n = 2: &nbsp; 5 + (+1) = 6<br>
+                n = 3: &nbsp; 7 + (-1) = 6 &nbsp; (another resting plateau!)<br>
+                n = 4: &nbsp; 9 + (+1) = 10<br>
+                n = 5: &nbsp; 11 + (-1) = 10
+            </div>
+
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                The resulting list is <span class="nobr">$(2, 2, 6, 6, 10, 10, \dots)$.</span> Notice the emergent pattern: it is a <strong>staircase that hesitates on flat plateaus</strong>. On odd steps, the $-1$ drop exactly cancels out the $+2$ forward climb, freezing the value in place. On even steps, the $+1$ gives the climb an extra boost.
+            </p>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1.25rem;">
-                <strong>Why does this matter?</strong> Without sequence algebra, if a programmer or mathematician wanted a list that steps up and pauses every two ticks, they would likely write a clunky, conditional piecewise rule: <em>"if $n$ is even, calculate this; if $n$ is odd, calculate that."</em> Sequence algebra reveals that you don't need clunky conditional logic. By simply adding a gentle bounce to a steady climb, <strong>the algebra naturally generates the hesitating staircase</strong>. This is the exact foundational concept that engineers and analysts use to synthesize complex radio signals, acoustic sound waves, and economic models from simple trigonometric and polynomial components!
+                Best of all, you don't need to write a clunky conditional rule like <em>"if $n$ is even, do X; if $n$ is odd, do Y."</em> The term-by-term algebra produces the exact hesitating, weakly increasing behavior automatically.
             </p>
 
             <!-- VISUALIZATION: SEQUENCE ALGEBRA COMBINATION -->
@@ -1248,7 +1247,7 @@
                 <p style="margin-top: 0; font-size: 0.98rem; line-height: 1.7;">
                     Consider the arithmetic sequence of odd positive integers <span class="nobr">$a_n = 2n + 1$</span> and the oscillating alternating sequence <span class="nobr">$b_n = (-1)^n$</span> for <span class="nobr">$n \ge 0$:</span>
                 </p>
-                <ul style="margin: 0.25rem 0 0.5rem 1.25rem; font-size: 0.95rem; line-height: 1.6;">
+                <ul style="margin: 0.25rem 0 0 0.5rem; font-size: 0.95rem; line-height: 1.6; list-style-position: inside;">
                     <li><span class="nobr">$a = (1, 3, 5, 7, 9, 11, \dots)$</span></li>
                     <li><span class="nobr">$b = (1, -1, 1, -1, 1, -1, \dots)$</span></li>
                 </ul>
