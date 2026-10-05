@@ -101,7 +101,7 @@
             <div class="toc-box">
                 <h4>📌 Lecture 1 Topics</h4>
                 <ul class="toc-grid">
-                    <li><a href="#sets-cardinality">1. Sets and Infinite Cardinality</a></li>
+                    <li><a href="#sets-cardinality">1. Sets, Elements, and Notation</a></li>
                     <li><a href="#set-operations">2. Set Operations and Products</a></li>
                     <li><a href="#functions-mappings">3. Functions and Mappings</a></li>
                     <li><a href="#peano-axioms">4. Peano's Axioms for Natural Numbers</a></li>
@@ -110,7 +110,7 @@
             </div>
 
             <!-- SECTION 1 -->
-            <h2 id="sets-cardinality">1. Sets and Infinite Cardinality</h2>
+            <h2 id="sets-cardinality">1. Sets, Elements, and Notation</h2>
             <div class="infobox">
                 <h4>📖 Notation Reference: Sets &amp; Elements</h4>
                 <div class="infobox-intro">
@@ -118,17 +118,95 @@
                 </div>
                 <div class="notation-grid">
                     <div class="notation-item"><span class="notation-sym">$x \in A$</span><span class="notation-desc">$x$ is an element of set $A$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$A \subseteq B$</span><span class="notation-desc">$A$ is a subset of $B$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$x \notin A$</span><span class="notation-desc">$x$ is not an element of set $A$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \subseteq B$</span><span class="notation-desc">$A$ is a subset of $B$ (every element of $A$ is in $B$)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \subset B$</span><span class="notation-desc">$A$ is a proper subset of $B$ ($A \subseteq B$ and $A \neq B$)</span></div>
                     <div class="notation-item"><span class="notation-sym">$\emptyset$</span><span class="notation-desc">The empty set (contains no elements, $|\emptyset| = 0$)</span></div>
                     <div class="notation-item"><span class="notation-sym">$|A|$</span><span class="notation-desc">Cardinality: the number of distinct elements in $A$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$\{x \in U \mid P(x)\}$</span><span class="notation-desc">Set-builder: elements in universe $U$ satisfying condition $P(x)$</span></div>
                 </div>
             </div>
 
-            <p>A <strong>set</strong> is simply an unordered collection of distinct elements. The order in which elements are listed does not matter, and repeating an element changes nothing:</p>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                A <strong>set</strong> is simply an unordered collection of distinct elements. The order in which elements are listed does not matter, and repeating an element changes nothing:
+            </p>
             <div style="text-align: center; margin: 1rem 0; font-size: 1.05rem;">
                 $$\{1, 2, 3\} = \{3, 2, 1\} = \{1, 1, 1, 2, 2, 3\}$$
             </div>
-            <p>The number of elements in a set $A$ is called its <strong>cardinality</strong>, denoted $|A|$. The unique set containing zero elements is the <strong>empty set</strong>, written $\emptyset = \{\}$, with $|\emptyset| = 0$.</p>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                The number of elements in a set $A$ is called its <strong>cardinality</strong>, denoted $|A|$. The unique set containing zero elements is the <strong>empty set</strong>, written $\emptyset = \{\}$, with $|\emptyset| = 0$.
+            </p>
+
+            <!-- SUBSECTION 1.1: SPECIFYING SETS -->
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-left: 4px solid #0284c7; padding: 1.25rem 1.5rem; border-radius: 0 6px 6px 0; margin: 1.5rem 0;">
+                <h3 style="margin-top: 0; color: #0369a1; font-size: 1.05rem;">1.1 How We Write Sets: Roster vs. Set-Builder Notation</h3>
+                <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                    There are two primary ways to describe a set:
+                </p>
+                <ul style="margin: 0 0 1rem 1.25rem; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                    <li><strong>Roster (List) Notation:</strong> Enumerate every element explicitly between curly braces, e.g., $E = \{2, 4, 6, 8\}$. This works well for small collections, but becomes clumsy or impossible for infinite ones.</li>
+                    <li><strong>Set-Builder (Predicate) Notation:</strong> Specify a condition or property that selects precisely the members belonging to the set:
+                        <div style="text-align: center; margin: 0.75rem 0; font-size: 1.05rem;">
+                            $$S = \{x \in U \mid P(x)\}$$
+                        </div>
+                        Read the vertical bar $\mid$ (sometimes written as a colon $:$) as <em>"such that"</em>:
+                        <blockquote style="margin: 0.5rem 0; padding-left: 1rem; border-left: 3px solid #cbd5e1; color: #475569; font-style: italic;">
+                            "The set of all elements $x$ in universe $U$ <strong>such that</strong> property $P(x)$ is true."
+                        </blockquote>
+                        For example, $\{n \in \mathbb{Z} \mid n > 0 \land n \le 4\} = \{1, 2, 3, 4\}$.
+                    </li>
+                </ul>
+            </div>
+
+            <!-- SUBSECTION 1.2: ELEMENTS VS SUBSETS -->
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-left: 4px solid #d97706; padding: 1.25rem 1.5rem; border-radius: 0 6px 6px 0; margin: 1.5rem 0;">
+                <h3 style="margin-top: 0; color: #92400e; font-size: 1.05rem;">1.2 The Big Beginner Trap: Element ($\in$) vs. Subset ($\subseteq$)</h3>
+                <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                    One of the most frequent sources of lost marks in early assignments is confusing <strong>membership</strong> with <strong>containment</strong>:
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin: 0.75rem 0;">
+                    <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem;">
+                        <strong style="color: #0369a1; font-size: 0.95rem;">Membership: $x \in A$</strong>
+                        <p style="margin: 0.4rem 0 0 0; font-size: 0.9rem; color: #334155; line-height: 1.5;">
+                            Relates an <strong>individual object</strong> to a set. Think of opening the set bag and pointing directly to the item inside.<br>
+                            <em>Example:</em> $2 \in \{1, 2, 3\}$ is true.
+                        </p>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem;">
+                        <strong style="color: #92400e; font-size: 0.95rem;">Inclusion: $A \subseteq B$</strong>
+                        <p style="margin: 0.4rem 0 0 0; font-size: 0.9rem; color: #334155; line-height: 1.5;">
+                            Relates <strong>one set to another set</strong>. Every element living in the first set must also live in the second set.<br>
+                            <em>Example:</em> $\{2\} \subseteq \{1, 2, 3\}$ is true, but $2 \subseteq \{1, 2, 3\}$ is nonsense.
+                        </p>
+                    </div>
+                </div>
+                <p style="margin: 0.75rem 0 0 0; font-size: 0.92rem; color: #475569; line-height: 1.6;">
+                    <strong>Double Inclusion for Equality:</strong> Two sets $A$ and $B$ are equal ($A = B$) if and only if $A \subseteq B$ and $B \subseteq A$. Almost every major set proof in analysis is executed by showing both directions of subset containment.
+                </p>
+            </div>
+
+            <!-- SECTION 1 WORKED EXAMPLE -->
+            <div class="worked-example-box">
+                <h4>🎯 Worked Example: Deciphering Set-Builder Notation and Containment</h4>
+                <p style="margin-bottom: 0.5rem;">
+                    Consider the set $A = \{x \in \mathbb{R} \mid x^2 - 5x + 6 = 0\}$ and $B = \{2, 3, \{4\}\}$.
+                </p>
+                <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.92rem; line-height: 1.6;">
+                    <li><strong>Unpack set $A$ into roster notation:</strong><br>
+                        We solve the condition $x^2 - 5x + 6 = 0 \implies (x - 2)(x - 3) = 0$.<br>
+                        The solutions are $x = 2$ and $x = 3$. Both are real numbers, so $A = \{2, 3\}$.
+                    </li>
+                    <li><strong>Is $A \subseteq B$?</strong><br>
+                        Check each element of $A$: $2 \in B$ (yes) and $3 \in B$ (yes). Since every element of $A$ belongs to $B$, <strong>$A \subseteq B$ is true</strong>. Furthermore, because $B$ contains an extra element, $A \subset B$ is a proper subset.
+                    </li>
+                    <li><strong>Evaluate the membership $4 \in B$ vs. $\{4\} \in B$:</strong><br>
+                        Look inside $B$: the items are the number $2$, the number $3$, and the <em>set</em> $\{4\}$.<br>
+                        • $4 \in B$ is <strong>false</strong> (the number $4$ itself is not in $B$, only the box $\{4\}$ is).<br>
+                        • $\{4\} \in B$ is <strong>true</strong> (the set $\{4\}$ is literally an element inside $B$).<br>
+                        • $\{\{4\}\} \subseteq B$ is <strong>true</strong> (a subset containing the element $\{4\}$).
+                    </li>
+                </ol>
+            </div>
 
             <!-- SECTION 2 -->
             <h2 id="set-operations">2. Set Operations and Products</h2>
@@ -138,7 +216,7 @@
                     <strong>The algebra of collections:</strong> Just as arithmetic has addition and multiplication, set theory uses precise logical operations to combine, compare, and partition sets.
                 </div>
                 <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$A \cup B$</span><span class="notation-desc">Union: elements in $A$, in $B$, or in both ($\lor$)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$A \cup B$</span><span class="notation-desc">Union: elements in $A$, in $B$, or in both&nbsp;<span style="white-space: nowrap;">($\lor$)</span></span></div>
                     <div class="notation-item"><span class="notation-sym">$A \cap B$</span><span class="notation-desc">Intersection: elements common to both $A$ and $B$&nbsp;<span style="white-space: nowrap;">($\land$)</span></span></div>
                     <div class="notation-item"><span class="notation-sym">$A \setminus B$</span><span class="notation-desc">Difference: elements in $A$ that are not in $B$</span></div>
                     <div class="notation-item"><span class="notation-sym">$A \times B$</span><span class="notation-desc">Cartesian product: set of all ordered pairs $(a, b)$</span></div>
