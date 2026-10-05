@@ -2,13 +2,12 @@
 r"""
 update.py
 
-Generates week1-lecture3.html with an approachable, student-centered
-treatment of Section 6 (Discrete Calculus: The Derived Sequence):
-- Eliminates premature continuous limit definitions in Week 1.
-- Introduces the derived sequence a_n' as simple subtraction between
-  adjacent lockers (value at n+1 minus value at n).
-- Explains the discrete advantage: fixed step size h=1 requires no limits.
-- Preserves the discrete derivative SVG and progression characterizations.
+Generates week1-lecture3.html without course citations or specific notes
+references:
+- Removes MTHS120 and Proposition 4 numbering in Section 6, presenting it
+  directly as a proposition.
+- Removes course notes citations from Section 7.
+- Cleans document title metadata.
 - Enforces strict .nobr wrapping on all inline math and punctuation.
 
 Stages week1-lecture3.html and update.py, commits, and pushes upstream.
@@ -26,7 +25,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Week 1, Lecture 3: Sequences and Discrete Calculus | MTHS120</title>
+    <title>Week 1, Lecture 3: Sequences and Discrete Calculus</title>
     <!-- KaTeX Integration -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
@@ -775,7 +774,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <line x1="45" y1="180" x2="370" y2="180" stroke="#0f172a" stroke-width="1.5" />
                         <line x1="50" y1="185" x2="50" y2="62" stroke="#0f172a" stroke-width="1.5" />
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
-                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
+                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">aₙ</text>
 
                         <!-- Points -->
                         <line x1="80" y1="180" x2="80" y2="155" stroke="#94a3b8" stroke-dasharray="2,2" />
@@ -848,7 +847,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <line x1="45" y1="180" x2="370" y2="180" stroke="#0f172a" stroke-width="1.5" />
                         <line x1="50" y1="185" x2="50" y2="62" stroke="#0f172a" stroke-width="1.5" />
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
-                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
+                        <text x="46" y="56" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">aₙ</text>
 
                         <!-- Points -->
                         <line x1="80" y1="180" x2="80" y2="60" stroke="#94a3b8" stroke-dasharray="2,2" />
@@ -877,7 +876,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     <!-- PANEL 4: NON-MONOTONIC -->
                     <g transform="translate(435, 240)">
                         <rect x="0" y="0" width="395" height="210" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
-                        <text x="20" y="24" font-size="12" font-weight="bold" fill="#dc2626">4. Non-Monotonic: Changes Direction</text>
+                        <text x="20" y="26" font-size="12" font-weight="bold" fill="#dc2626">4. Non-Monotonic: Changes Direction</text>
                         <text x="20" y="42" font-size="10.5" fill="#64748b">Zigzags up and down (fails the single-direction test)</text>
 
                         <line x1="45" y1="180" x2="370" y2="180" stroke="#0f172a" stroke-width="1.5" />
@@ -1581,16 +1580,19 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </svg>
             </div>
 
-            <!-- PROPOSITIONS FROM LECTURE NOTES -->
+            <!-- PROPOSITIONS -->
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">Characterizing Behavior Through the Derived Sequence</h3>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
-                In the MTHS120 course notes, Proposition 4 establishes three fundamental connections between a sequence and its derived differences:
+                We state this formally as a proposition establishing three fundamental connections between a sequence and its derived differences:
             </p>
-            <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem;">
-                <li><strong>Constant Sequences:</strong> A sequence $(a_n)$ is constant if and only if its derived sequence is identically zero: <span class="nobr">$a_n' = 0$</span> for all $n$.</li>
-                <li><strong>Increasing Sequences:</strong> A sequence is (strictly) increasing if and only if its derived sequence is non-negative (strictly positive): <span class="nobr">$a_n' \ge 0$</span> (or <span class="nobr">$a_n' > 0$</span>).</li>
-                <li><strong>Decreasing Sequences:</strong> A sequence is (strictly) decreasing if and only if its derived sequence is non-positive (strictly negative): <span class="nobr">$a_n' \le 0$</span> (or <span class="nobr">$a_n' < 0$</span>).</li>
-            </ul>
+            <div class="definition-box" style="border-left-color: #0284c7;">
+                <strong>Proposition (Characterization of Sequences by Differences):</strong>
+                <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem; margin: 0.5rem 0 0 0;">
+                    <li><strong>Constant Sequences:</strong> A sequence <span class="nobr">$(a_n)$</span> is constant if and only if its derived sequence is identically zero: <span class="nobr">$a_n' = 0$</span> for all <span class="nobr">$n$.</span></li>
+                    <li><strong>Increasing Sequences:</strong> A sequence is (strictly) increasing if and only if its derived sequence is non-negative (strictly positive): <span class="nobr">$a_n' \ge 0$</span> (or <span class="nobr">$a_n' > 0$</span>).</li>
+                    <li><strong>Decreasing Sequences:</strong> A sequence is (strictly) decreasing if and only if its derived sequence is non-positive (strictly negative): <span class="nobr">$a_n' \le 0$</span> (or <span class="nobr">$a_n' < 0$</span>).</li>
+                </ul>
+            </div>
 
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">The Derived Sequence of Progressions</h3>
             <div class="definition-box">
@@ -1628,10 +1630,10 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
             <!-- SECTION 7 -->
             <h2 id="discrete-integration">7. Reversing the Difference: Partial Sums and Series</h2>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
-                What happens if we know the difference sequence $(b_n)$ and want to <strong>reconstruct the original sequence $(a_n)$</strong>?
+                What happens if we know the difference sequence <span class="nobr">$(b_n)$</span> and want to <strong>reconstruct the original sequence <span class="nobr">$(a_n)$</span></strong>?
             </p>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
-                In the MTHS120 course notes, this is shown to be the discrete equivalent of <strong>integration</strong>:
+                This reversal of differences is the discrete equivalent of <strong>integration</strong>:
             </p>
             <div style="text-align: center; margin: 1rem 0; font-size: 1.05rem;">
                 $$a_0 = c, \quad a_1 = c + b_0, \quad a_2 = c + b_0 + b_1, \quad \dots, \quad a_n = c + \sum_{\nu=0}^{n-1} b_\nu$$
@@ -1941,7 +1943,7 @@ def execute_git(args: list[str]) -> subprocess.CompletedProcess:
 
 def main() -> None:
     TARGET_HTML.write_text(WEEK1_LECTURE3_HTML, encoding="utf-8")
-    print(f"Successfully generated {TARGET_HTML.name} with reframed derived sequence section.")
+    print(f"Successfully generated {TARGET_HTML.name} without course citations.")
 
     execute_git(["git", "rev-parse", "--is-inside-work-tree"])
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
@@ -1951,12 +1953,12 @@ def main() -> None:
         print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Reframe Section 6 derived sequence as simple neighbor subtraction"
+    commit_subject = "Remove course citations and rename Proposition 4 to a proposition"
     commit_body = (
-        "Remove premature continuous limit definition from Week 1 opening,\n"
-        "reframe derived sequence a_n' as basic subtraction between neighbors,\n"
-        "explain discrete advantage where fixed step size h=1 needs no limits,\n"
-        "preserve discrete difference visualization and progression properties,\n"
+        "Remove references to MTHS120 and Proposition 4 numbering,\n"
+        "frame difference characterization directly as a formal proposition,\n"
+        "remove course notes citation from Section 7 discrete integration,\n"
+        "clean document title metadata in week1-lecture3.html,\n"
         "and stage updated week1-lecture3.html alongside update.py."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
