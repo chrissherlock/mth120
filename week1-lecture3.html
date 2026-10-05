@@ -137,9 +137,9 @@
                 </div>
                 <div class="notation-grid">
                     <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n$</span></span><span class="notation-desc">The $n$-th term of the sequence (the value stored at position $n$)</span></div>
-                    <div class="notation-item"><span class="nobr">$(a_n)_{n=0}^\infty$</span><span class="notation-desc">The complete infinite ordered sequence $(a_0, a_1, a_2, a_3, \dots)$</span></div>
-                    <div class="notation-item"><span class="nobr">$(a_n)_{n=1}^\infty$</span><span class="notation-desc">Sequence starting at index $1$ when $n=0$ is undefined (e.g. <span class="nobr">$a_n = 1/n$</span>)</span></div>
-                    <div class="notation-item"><span class="nobr">$a: \mathbb{N} \to \mathbb{R}$</span><span class="notation-desc">Formal definition: a function assigning each natural index $n$ to a real number $a_n$</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$(a_n)_{n=0}^\infty$</span></span><span class="notation-desc">The complete infinite ordered sequence $(a_0, a_1, a_2, a_3, \dots)$</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$(a_n)_{n=1}^\infty$</span></span><span class="notation-desc">Sequence starting at index $1$ when $n=0$ is undefined (e.g. <span class="nobr">$a_n = 1/n$</span>)</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a: \mathbb{N} \to \mathbb{R}$</span></span><span class="notation-desc">Formal definition: a function assigning each natural index $n$ to a real number $a_n$</span></div>
                 </div>
             </div>
 
@@ -412,8 +412,55 @@
                 In reality, only <strong>two fundamental operations</strong> govern these sequences. You are either choosing a fixed step and <em>repeatedly adding it</em>, or choosing a fixed factor and <em>repeatedly multiplying by it</em>. Keeping that stepping picture in mind removes the guesswork from the algebra.
             </p>
 
-            <!-- INTERACTIVE PEDAGOGICAL AID: PROGRESSION STEPPING SIMULATOR -->
-            <div id="progression-stepper-widget" style="margin: 2rem 0; background: #ffffff; border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); overflow: hidden;">
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">1. The Intuition: Walking with Strides vs. Multiplying by Zoom</h3>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
+                Picture our infinite locker corridor. We want to place numbers inside each locker so that every step follows a rhythmic, predictable beat. There are two natural ways to do this:
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.5rem; margin: 1.5rem 0;">
+                <!-- ARITHMETIC -->
+                <div style="background: #ffffff; border: 1px solid var(--border); border-left: 4px solid #0284c7; border-radius: 6px; padding: 1.25rem;">
+                    <h3 style="margin-top: 0; color: #0369a1; font-size: 1.1rem;">Arithmetic Sequences: The Equal-Stride Walker</h3>
+                    <p style="font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                        Imagine standing at position <span class="nobr">$b$</span> in front of Locker 0. To reach the next locker, you take a fixed stride forward of length <span class="nobr">$a$.</span>
+                    </p>
+                    <div class="definition-box" style="border-left-color: #0284c7; margin: 0.5rem 0;">
+                        $$c_n = an + b \quad (n \ge 0)$$
+                    </div>
+                    <p style="font-size: 0.92rem; color: #334155; line-height: 1.6; margin-bottom: 0.5rem;">
+                        <strong>Why does this formula make sense?</strong>
+                    </p>
+                    <ul style="font-size: 0.9rem; color: #334155; padding-left: 1.25rem; line-height: 1.6; margin: 0;">
+                        <li>Locker 0: You haven't taken any steps yet: <span class="nobr">$c_0 = a(0) + b = b$.</span></li>
+                        <li>Locker 1: You take 1 stride: <span class="nobr">$c_1 = b + a$.</span></li>
+                        <li>Locker 2: You take 2 strides: <span class="nobr">$c_2 = b + a + a = 2a + b$.</span></li>
+                        <li>Locker $n$: You take $n$ strides: <span class="nobr">$c_n = an + b$.</span></li>
+                    </ul>
+                </div>
+
+                <!-- GEOMETRIC -->
+                <div style="background: #ffffff; border: 1px solid var(--border); border-left: 4px solid #10b981; border-radius: 6px; padding: 1.25rem;">
+                    <h3 style="margin-top: 0; color: #047857; font-size: 1.1rem;">Geometric Sequences: The Exponential Multiplier</h3>
+                    <p style="font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                        Imagine Locker 0 starts with quantity <span class="nobr">$a$.</span> At every subsequent locker, the quantity is multiplied by a zoom factor <span class="nobr">$q$.</span>
+                    </p>
+                    <div class="definition-box" style="border-left-color: #10b981; margin: 0.5rem 0;">
+                        $$c_n = a \cdot q^n \quad (n \ge 0)$$
+                    </div>
+                    <p style="font-size: 0.92rem; color: #334155; line-height: 1.6; margin-bottom: 0.5rem;">
+                        <strong>Why does this formula make sense?</strong>
+                    </p>
+                    <ul style="font-size: 0.9rem; color: #334155; padding-left: 1.25rem; line-height: 1.6; margin: 0;">
+                        <li>Locker 0: Multiplied 0 times (<span class="nobr">$q^0 = 1$</span>): <span class="nobr">$c_0 = a \cdot 1 = a$.</span></li>
+                        <li>Locker 1: Multiplied once: <span class="nobr">$c_1 = a \cdot q$.</span></li>
+                        <li>Locker 2: Multiplied twice: <span class="nobr">$c_2 = a \cdot q \cdot q = aq^2$.</span></li>
+                        <li>Locker $n$: Multiplied $n$ times: <span class="nobr">$c_n = a \cdot q^n$.</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- INTERACTIVE PEDAGOGICAL AID: PROGRESSION STEPPING SIMULATOR (POSITIONED TO DEMONSTRATE THE INTUITION) -->
+            <div id="progression-stepper-widget" style="margin: 2.25rem 0; background: #ffffff; border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); overflow: hidden;">
                 <!-- HEADER & COMPARATIVE TOGGLES -->
                 <div style="background: #f8fafc; border-bottom: 1px solid var(--border); padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
                     <div>
@@ -476,53 +523,6 @@
                             Locker 0 represents the state before iteration begins. Because no step difference has been added yet, the step counter is n = 0, leaving only the pure baseline b.
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">1. The Intuition: Walking with Strides vs. Multiplying by Zoom</h3>
-            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
-                Picture our infinite locker corridor. We want to place numbers inside each locker so that every step follows a rhythmic, predictable beat. There are two natural ways to do this:
-            </p>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.5rem; margin: 1.5rem 0;">
-                <!-- ARITHMETIC -->
-                <div style="background: #ffffff; border: 1px solid var(--border); border-left: 4px solid #0284c7; border-radius: 6px; padding: 1.25rem;">
-                    <h3 style="margin-top: 0; color: #0369a1; font-size: 1.1rem;">Arithmetic Sequences: The Equal-Stride Walker</h3>
-                    <p style="font-size: 0.95rem; color: #334155; line-height: 1.6;">
-                        Imagine standing at position <span class="nobr">$b$</span> in front of Locker 0. To reach the next locker, you take a fixed stride forward of length <span class="nobr">$a$.</span>
-                    </p>
-                    <div class="definition-box" style="border-left-color: #0284c7; margin: 0.5rem 0;">
-                        $$c_n = an + b \quad (n \ge 0)$$
-                    </div>
-                    <p style="font-size: 0.92rem; color: #334155; line-height: 1.6; margin-bottom: 0.5rem;">
-                        <strong>Why does this formula make sense?</strong>
-                    </p>
-                    <ul style="font-size: 0.9rem; color: #334155; padding-left: 1.25rem; line-height: 1.6; margin: 0;">
-                        <li>Locker 0: You haven't taken any steps yet: <span class="nobr">$c_0 = a(0) + b = b$.</span></li>
-                        <li>Locker 1: You take 1 stride: <span class="nobr">$c_1 = b + a$.</span></li>
-                        <li>Locker 2: You take 2 strides: <span class="nobr">$c_2 = b + a + a = 2a + b$.</span></li>
-                        <li>Locker $n$: You take $n$ strides: <span class="nobr">$c_n = an + b$.</span></li>
-                    </ul>
-                </div>
-
-                <!-- GEOMETRIC -->
-                <div style="background: #ffffff; border: 1px solid var(--border); border-left: 4px solid #10b981; border-radius: 6px; padding: 1.25rem;">
-                    <h3 style="margin-top: 0; color: #047857; font-size: 1.1rem;">Geometric Sequences: The Exponential Multiplier</h3>
-                    <p style="font-size: 0.95rem; color: #334155; line-height: 1.6;">
-                        Imagine Locker 0 starts with quantity <span class="nobr">$a$.</span> At every subsequent locker, the quantity is multiplied by a zoom factor <span class="nobr">$q$.</span>
-                    </p>
-                    <div class="definition-box" style="border-left-color: #10b981; margin: 0.5rem 0;">
-                        $$c_n = a \cdot q^n \quad (n \ge 0)$$
-                    </div>
-                    <p style="font-size: 0.92rem; color: #334155; line-height: 1.6; margin-bottom: 0.5rem;">
-                        <strong>Why does this formula make sense?</strong>
-                    </p>
-                    <ul style="font-size: 0.9rem; color: #334155; padding-left: 1.25rem; line-height: 1.6; margin: 0;">
-                        <li>Locker 0: Multiplied 0 times (<span class="nobr">$q^0 = 1$</span>): <span class="nobr">$c_0 = a \cdot 1 = a$.</span></li>
-                        <li>Locker 1: Multiplied once: <span class="nobr">$c_1 = a \cdot q$.</span></li>
-                        <li>Locker 2: Multiplied twice: <span class="nobr">$c_2 = a \cdot q \cdot q = aq^2$.</span></li>
-                        <li>Locker $n$: Multiplied $n$ times: <span class="nobr">$c_n = a \cdot q^n$.</span></li>
-                    </ul>
                 </div>
             </div>
 
@@ -678,7 +678,22 @@
                 </div>
             </div>
 
-            <!-- 2x2 VISUAL GRID FOR MONOTONICITY -->
+            <!-- SUBSECTION 1: THE GEOMETRY OF MONOTONICITY -->
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">1. The Geometry of Monotonicity: Preserving Direction</h3>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
+                In mathematical analysis, a sequence is <strong>monotonic</strong> if its values advance in an unbroken, one-way trajectory across the real line. It commits to a direction and never doubles back.
+            </p>
+            <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem;">
+                <li><strong>Strict vs. Weak Monotonicity:</strong> Pay close attention to the relational symbols:
+                    <ul style="margin-top: 0.35rem; margin-bottom: 0.5rem;">
+                        <li><strong>Strictly Increasing ($a_{n+1} > a_n$):</strong> Every discrete step climbs strictly higher than the previous one. Plateaus are forbidden.</li>
+                        <li><strong>Weakly Increasing / Non-Decreasing ($a_{n+1} \ge a_n$):</strong> Terms are allowed to pause on flat horizontal plateaus (e.g. $a_2 = a_3$). As long as the sequence never steps downward, it remains technically <em>increasing</em>.</li>
+                    </ul>
+                </li>
+                <li><strong>Non-Monotonic Sequences:</strong> Any sequence that alters its direction—such as the alternating sequence <span class="nobr">$a_n = (-1)^n = (1, -1, 1, -1, \dots)$</span>—fails monotonicity completely.</li>
+            </ul>
+
+            <!-- 2x2 VISUAL GRID FOR MONOTONICITY (PROPERLY POSITIONED UNDER SUBSECTION 1 EXPLANATION) -->
             <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; text-align: center;">
                 <p style="font-size: 0.95rem; font-weight: 700; color: #1e293b; margin-top: 0; margin-bottom: 0.35rem;">
                     VISUALIZING MONOTONICITY: Directional Profiles in the Discrete Plane
@@ -698,7 +713,6 @@
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
                         <text x="46" y="50" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
 
-                        <!-- Points -->
                         <line x1="80" y1="180" x2="80" y2="155" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="80" cy="155" r="4.5" fill="#0284c7" />
                         <text x="80" y="195" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
@@ -733,7 +747,6 @@
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
                         <text x="46" y="50" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
 
-                        <!-- Points with plateau at n=1 and n=2 -->
                         <line x1="80" y1="180" x2="80" y2="150" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="80" cy="150" r="4.5" fill="#059669" />
                         <text x="80" y="195" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
@@ -746,7 +759,6 @@
                         <circle cx="200" cy="115" r="4.5" fill="#059669" />
                         <text x="200" y="195" font-size="9.5" fill="#475569" text-anchor="middle">2</text>
 
-                        <!-- Plateau visual highlight -->
                         <line x1="140" y1="115" x2="200" y2="115" stroke="#10b981" stroke-width="2.5" />
                         <text x="170" y="104" font-size="9.5" font-weight="bold" fill="#047857" text-anchor="middle">Flat Plateau: a₁ = a₂</text>
 
@@ -772,7 +784,6 @@
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
                         <text x="46" y="50" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
 
-                        <!-- Points -->
                         <line x1="80" y1="180" x2="80" y2="60" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="80" cy="60" r="4.5" fill="#d97706" />
                         <text x="80" y="195" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
@@ -807,7 +818,6 @@
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
                         <text x="46" y="50" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
 
-                        <!-- Points zigzagging -->
                         <line x1="80" y1="180" x2="80" y2="140" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="80" cy="140" r="4.5" fill="#ef4444" />
                         <text x="80" y="195" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
@@ -833,20 +843,7 @@
                 </svg>
             </div>
 
-            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">1. The Geometry of Monotonicity: Preserving Direction</h3>
-            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
-                In mathematical analysis, a sequence is <strong>monotonic</strong> if its values advance in an unbroken, one-way trajectory across the real line. It commits to a direction and never doubles back.
-            </p>
-            <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem;">
-                <li><strong>Strict vs. Weak Monotonicity:</strong> Pay close attention to the relational symbols:
-                    <ul style="margin-top: 0.35rem; margin-bottom: 0.5rem;">
-                        <li><strong>Strictly Increasing ($a_{n+1} > a_n$):</strong> Every discrete step climbs strictly higher than the previous one. Plateaus are forbidden.</li>
-                        <li><strong>Weakly Increasing / Non-Decreasing ($a_{n+1} \ge a_n$):</strong> Terms are allowed to pause on flat horizontal plateaus (e.g. $a_2 = a_3$). As long as the sequence never steps downward, it remains technically <em>increasing</em>.</li>
-                    </ul>
-                </li>
-                <li><strong>Non-Monotonic Sequences:</strong> Any sequence that alters its direction—such as the alternating sequence <span class="nobr">$a_n = (-1)^n = (1, -1, 1, -1, \dots)$</span>—fails monotonicity completely.</li>
-            </ul>
-
+            <!-- SUBSECTION 2: PROVING MONOTONICITY -->
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">2. Two Tool-Box Tests: How to Prove Monotonicity</h3>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
                 When an assignment asks you to prove that a sequence is monotonic, do not just list the first four numbers! Listing terms only proves what happens at the start; it does not prove what happens all the way to infinity. Use one of these two reliable algebraic methods:
@@ -880,6 +877,7 @@
                 </div>
             </div>
 
+            <!-- SUBSECTION 3: BOUNDEDNESS -->
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">3. Boundedness: Building Fences Around the Infinite List</h3>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
                 An infinite sequence has an endless number of terms, but that does not mean its values must fly off to infinity!
