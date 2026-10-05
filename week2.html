@@ -158,6 +158,29 @@
                 margin-left: 0 !important;
             }
 
+        
+            /* Keep header and footer navigation buttons side-by-side on mobile */
+            .header > div:last-child,
+            .nav-btn-group {
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+                width: 100% !important;
+                gap: 0.5rem !important;
+            }
+
+            .header > div:last-child a,
+            .nav-btn-group a {
+                flex: 1 1 0 !important;
+                min-width: 0 !important;
+                text-align: center !important;
+                padding: 0.55rem 0.4rem !important;
+                font-size: 0.82rem !important;
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+            }
+
         }
     </style>
 </head>
