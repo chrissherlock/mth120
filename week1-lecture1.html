@@ -55,6 +55,58 @@
         .biography-box { background: #f5f3ff; border: 1px solid #ddd6fe; border-left: 5px solid #6366f1; padding: 1.25rem 1.5rem; margin: 2rem 0; border-radius: 0 6px 6px 0; }
         .biography-box h4 { margin-top: 0; color: #3730a3; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; }
         .biography-box p, .biography-box li { color: #0f172a !important; }
+    
+        /* Mobile-first layout adjustment for phones / smaller viewports */
+        @media (max-width: 768px) {
+            body {
+                background: #ffffff;
+                padding: 1rem 0.75rem;
+            }
+            .container {
+                max-width: 100%;
+                margin: 0;
+            }
+            .module-content {
+                background: transparent;
+                padding: 0;
+                border: none;
+                border-radius: 0;
+                box-shadow: none;
+                margin-bottom: 1rem;
+            }
+            .header {
+                padding-bottom: 0.75rem;
+                margin-bottom: 1.25rem;
+            }
+        
+            /* Full-width responsive biography cards on mobile */
+            .biography-box {
+                padding: 1.25rem 1rem !important;
+            }
+            .biography-box > div {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 1.25rem !important;
+            }
+            .biography-box > div > div:first-child {
+                flex: 0 0 100% !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 0 0.5rem 0 !important;
+            }
+            .biography-box > div > div:first-child img {
+                width: 100% !important;
+                max-height: 380px !important;
+                object-fit: cover !important;
+                border-radius: 6px !important;
+                display: block !important;
+            }
+            .biography-box > div > div:last-child {
+                width: 100% !important;
+                min-width: 0 !important;
+            }
+
+        }
     </style>
 </head>
 <body>
@@ -143,14 +195,14 @@
                 <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
                     There are two primary ways to describe a set:
                 </p>
-                <ul style="margin: 0 0 1rem 1.25rem; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.95rem; color: #334155; line-height: 1.6;">
                     <li><strong>Roster (List) Notation:</strong> Enumerate every element explicitly between curly braces, e.g., $E = \{2, 4, 6, 8\}$. This works well for small collections, but becomes clumsy or impossible for infinite ones.</li>
                     <li><strong>Set-Builder (Predicate) Notation:</strong> Specify a condition or property that selects precisely the members belonging to the set:
                         <div style="text-align: center; margin: 0.75rem 0; font-size: 1.05rem;">
                             $$S = \{x \in U \mid P(x)\}$$
                         </div>
                         Read the vertical bar $\mid$ (sometimes written as a colon $:$) as <em>"such that"</em>:
-                        <blockquote style="margin: 0.5rem 0; padding-left: 1rem; border-left: 3px solid #cbd5e1; color: #475569; font-style: italic;">
+                        <blockquote style="margin: 0.4rem 0 0.5rem 0; padding-left: 0.75rem; border-left: 3px solid #cbd5e1; color: #475569; font-style: italic;">
                             "The set of all elements $x$ in universe $U$ <strong>such that</strong> property $P(x)$ is true."
                         </blockquote>
                         For example, $\{n \in \mathbb{Z} \mid n > 0 \land n \le 4\} = \{1, 2, 3, 4\}$.
@@ -545,93 +597,99 @@
                 </p>
 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin: 1rem 0;">
-                    <!-- INJECTIVE -->
-                    <div style="background: #f8fafc; border: 1px solid var(--border); border-left: 4px solid #0284c7; border-radius: 6px; padding: 1rem;">
-                        <h4 style="margin: 0 0 0.5rem 0; color: #0369a1; font-size: 1rem;">Injective (1-to-1): "No Collisions"</h4>
-                        <p style="margin: 0 0 0.5rem 0; font-size: 0.92rem; color: #334155; line-height: 1.55;">
-                            Distinct inputs always yield distinct outputs:
-                        </p>
-                        <div style="font-size: 0.9rem; text-align: center; margin-bottom: 0.5rem;">
-                            $$x_1 \neq x_2 \implies f(x_1) \neq f(x_2)$$
+                    <!-- CARD 1: INJECTIVE -->
+                    <div style="background: #f8fafc; border: 1px solid var(--border); border-left: 4px solid #0284c7; border-radius: 6px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <h4 style="margin: 0 0 0.5rem 0; color: #0369a1; font-size: 1rem;">Injective (1-to-1): "No Collisions"</h4>
+                            <p style="margin: 0 0 0.5rem 0; font-size: 0.92rem; color: #334155; line-height: 1.55;">
+                                Distinct inputs always yield distinct outputs:
+                            </p>
+                            <div style="font-size: 0.9rem; text-align: center; margin-bottom: 0.5rem;">
+                                $$x_1 \neq x_2 \implies f(x_1) \neq f(x_2)$$
+                            </div>
+                            <p style="margin: 0 0 1rem 0; font-size: 0.88rem; color: #475569;">
+                                <em>Contrapositive:</em> $f(a) = f(b) \implies a = b$. No two arrows ever merge into the same destination point.
+                            </p>
                         </div>
-                        <p style="margin: 0; font-size: 0.88rem; color: #475569;">
-                            <em>Contrapositive proof form:</em> $f(a) = f(b) \implies a = b$. No two arrows ever merge into the same destination point.
-                        </p>
+                        <!-- Embedded Injective SVG -->
+                        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 0.75rem; text-align: center;">
+                            <svg viewBox="0 0 240 160" style="width: 100%; max-width: 220px; height: auto; display: inline-block;">
+                                <ellipse cx="50" cy="80" rx="35" ry="65" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+                                <ellipse cx="190" cy="80" rx="35" ry="65" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+                                <text x="50" y="24" font-family="sans-serif" font-size="11" font-weight="bold" fill="#64748b" text-anchor="middle">Domain</text>
+                                <text x="190" y="24" font-family="sans-serif" font-size="11" font-weight="bold" fill="#64748b" text-anchor="middle">Codomain</text>
+                                <circle cx="50" cy="50" r="4.5" fill="#0284c7"/><circle cx="50" cy="80" r="4.5" fill="#0284c7"/><circle cx="50" cy="110" r="4.5" fill="#0284c7"/>
+                                <circle cx="190" cy="45" r="4.5" fill="#0284c7"/><circle cx="190" cy="70" r="4.5" fill="#0284c7"/><circle cx="190" cy="95" r="4.5" fill="#0284c7"/><circle cx="190" cy="120" r="4" fill="#94a3b8"/>
+                                <line x1="55" y1="50" x2="185" y2="45" stroke="#0284c7" stroke-width="1.6"/>
+                                <line x1="55" y1="80" x2="185" y2="70" stroke="#0284c7" stroke-width="1.6"/>
+                                <line x1="55" y1="110" x2="185" y2="95" stroke="#0284c7" stroke-width="1.6"/>
+                                <text x="120" y="152" font-family="sans-serif" font-size="10.5" fill="#64748b" text-anchor="middle">No collisions (1 unhit target)</text>
+                            </svg>
+                        </div>
                     </div>
 
-                    <!-- SURJECTIVE -->
-                    <div style="background: #f8fafc; border: 1px solid var(--border); border-left: 4px solid #d97706; border-radius: 6px; padding: 1rem;">
-                        <h4 style="margin: 0 0 0.5rem 0; color: #92400e; font-size: 1rem;">Surjective (Onto): "No Stranded Targets"</h4>
-                        <p style="margin: 0 0 0.5rem 0; font-size: 0.92rem; color: #334155; line-height: 1.55;">
-                            Every element in the codomain is hit by at least one arrow:
-                        </p>
-                        <div style="font-size: 0.9rem; text-align: center; margin-bottom: 0.5rem;">
-                            $$\forall y \in Y, \; \exists x \in X \text{ such that } f(x) = y$$
+                    <!-- CARD 2: SURJECTIVE -->
+                    <div style="background: #f8fafc; border: 1px solid var(--border); border-left: 4px solid #d97706; border-radius: 6px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <h4 style="margin: 0 0 0.5rem 0; color: #92400e; font-size: 1rem;">Surjective (Onto): "No Stranded Targets"</h4>
+                            <p style="margin: 0 0 0.5rem 0; font-size: 0.92rem; color: #334155; line-height: 1.55;">
+                                Every element in the codomain is hit by at least one arrow:
+                            </p>
+                            <div style="font-size: 0.9rem; text-align: center; margin-bottom: 0.5rem;">
+                                $$\forall y \in Y, \; \exists x \in X \text{ such that } f(x) = y$$
+                            </div>
+                            <p style="margin: 0 0 1rem 0; font-size: 0.88rem; color: #475569;">
+                                The range completely covers the codomain: $f(X) = Y$. No target point is left empty.
+                            </p>
                         </div>
-                        <p style="margin: 0; font-size: 0.88rem; color: #475569;">
-                            In other words, the range completely covers the codomain: $f(X) = Y$. No target is left unhit.
-                        </p>
+                        <!-- Embedded Surjective SVG -->
+                        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 0.75rem; text-align: center;">
+                            <svg viewBox="0 0 240 160" style="width: 100%; max-width: 220px; height: auto; display: inline-block;">
+                                <ellipse cx="50" cy="80" rx="35" ry="65" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+                                <ellipse cx="190" cy="80" rx="35" ry="65" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+                                <text x="50" y="24" font-family="sans-serif" font-size="11" font-weight="bold" fill="#64748b" text-anchor="middle">Domain</text>
+                                <text x="190" y="24" font-family="sans-serif" font-size="11" font-weight="bold" fill="#64748b" text-anchor="middle">Codomain</text>
+                                <circle cx="50" cy="45" r="4.5" fill="#d97706"/><circle cx="50" cy="70" r="4.5" fill="#d97706"/><circle cx="50" cy="95" r="4.5" fill="#d97706"/><circle cx="50" cy="120" r="4.5" fill="#d97706"/>
+                                <circle cx="190" cy="55" r="4.5" fill="#d97706"/><circle cx="190" cy="80" r="4.5" fill="#d97706"/><circle cx="190" cy="110" r="4.5" fill="#d97706"/>
+                                <line x1="55" y1="45" x2="185" y2="55" stroke="#d97706" stroke-width="1.6"/>
+                                <line x1="55" y1="70" x2="185" y2="55" stroke="#d97706" stroke-width="1.6"/>
+                                <line x1="55" y1="95" x2="185" y2="80" stroke="#d97706" stroke-width="1.6"/>
+                                <line x1="55" y1="120" x2="185" y2="110" stroke="#d97706" stroke-width="1.6"/>
+                                <text x="120" y="152" font-family="sans-serif" font-size="10.5" fill="#64748b" text-anchor="middle">All hit (collision at top)</text>
+                            </svg>
+                        </div>
                     </div>
 
-                    <!-- BIJECTIVE -->
-                    <div style="background: #f8fafc; border: 1px solid var(--border); border-left: 4px solid #10b981; border-radius: 6px; padding: 1rem;">
-                        <h4 style="margin: 0 0 0.5rem 0; color: #047857; font-size: 1rem;">Bijective: "The Perfect Pairing"</h4>
-                        <p style="margin: 0 0 0.5rem 0; font-size: 0.92rem; color: #334155; line-height: 1.55;">
-                            A mapping that is <strong>both injective and surjective</strong>:
-                        </p>
-                        <div style="font-size: 0.9rem; text-align: center; margin-bottom: 0.5rem;">
-                            $$\text{Injective} + \text{Surjective} \iff \text{Bijective}$$
+                    <!-- CARD 3: BIJECTIVE -->
+                    <div style="background: #f8fafc; border: 1px solid var(--border); border-left: 4px solid #10b981; border-radius: 6px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <h4 style="margin: 0 0 0.5rem 0; color: #047857; font-size: 1rem;">Bijective: "The Perfect Pairing"</h4>
+                            <p style="margin: 0 0 0.5rem 0; font-size: 0.92rem; color: #334155; line-height: 1.55;">
+                                A mapping that is <strong>both injective and surjective</strong>:
+                            </p>
+                            <div style="font-size: 0.9rem; text-align: center; margin-bottom: 0.5rem;">
+                                $$\text{Injective} + \text{Surjective} \iff \text{Bijective}$$
+                            </div>
+                            <p style="margin: 0 0 1rem 0; font-size: 0.88rem; color: #475569;">
+                                Establishes an exact 1-to-1 correspondence. Every element matches uniquely with zero leftovers.
+                            </p>
                         </div>
-                        <p style="margin: 0; font-size: 0.88rem; color: #475569;">
-                            Establishes a 1-to-1 correspondence. Every element in $X$ matches with exactly one unique element in $Y$, with none left over.
-                        </p>
+                        <!-- Embedded Bijective SVG -->
+                        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 0.75rem; text-align: center;">
+                            <svg viewBox="0 0 240 160" style="width: 100%; max-width: 220px; height: auto; display: inline-block;">
+                                <ellipse cx="50" cy="80" rx="35" ry="65" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+                                <ellipse cx="190" cy="80" rx="35" ry="65" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+                                <text x="50" y="24" font-family="sans-serif" font-size="11" font-weight="bold" fill="#64748b" text-anchor="middle">Domain</text>
+                                <text x="190" y="24" font-family="sans-serif" font-size="11" font-weight="bold" fill="#64748b" text-anchor="middle">Codomain</text>
+                                <circle cx="50" cy="50" r="4.5" fill="#10b981"/><circle cx="50" cy="80" r="4.5" fill="#10b981"/><circle cx="50" cy="110" r="4.5" fill="#10b981"/>
+                                <circle cx="190" cy="50" r="4.5" fill="#10b981"/><circle cx="190" cy="80" r="4.5" fill="#10b981"/><circle cx="190" cy="110" r="4.5" fill="#10b981"/>
+                                <line x1="55" y1="50" x2="185" y2="50" stroke="#10b981" stroke-width="1.6"/>
+                                <line x1="55" y1="80" x2="185" y2="80" stroke="#10b981" stroke-width="1.6"/>
+                                <line x1="55" y1="110" x2="185" y2="110" stroke="#10b981" stroke-width="1.6"/>
+                                <text x="120" y="152" font-family="sans-serif" font-size="10.5" fill="#64748b" text-anchor="middle">1-to-1 matching (reversible)</text>
+                            </svg>
+                        </div>
                     </div>
-                </div>
-
-                <!-- COMPARISON SVG DIAGRAM -->
-                <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 6px; padding: 1.25rem; margin-top: 1rem; text-align: center;">
-                    <p style="font-size: 0.85rem; font-weight: 700; color: #64748b; margin-top: 0; margin-bottom: 0.75rem;">VISUAL COMPARISON: Mapping Structures</p>
-                    <svg viewBox="0 0 760 210" style="width: 100%; height: auto; display: block;">
-                        <!-- PANEL 1: INJECTIVE ONLY -->
-                        <g transform="translate(10, 0)">
-                            <text x="110" y="22" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0369a1" text-anchor="middle">Injective (Not Surjective)</text>
-                            <ellipse cx="50" cy="115" rx="35" ry="65" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
-                            <ellipse cx="170" cy="115" rx="35" ry="65" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
-                            <circle cx="50" cy="80" r="4" fill="#0284c7"/><circle cx="50" cy="115" r="4" fill="#0284c7"/><circle cx="50" cy="150" r="4" fill="#0284c7"/>
-                            <circle cx="170" cy="70" r="4" fill="#0284c7"/><circle cx="170" cy="105" r="4" fill="#0284c7"/><circle cx="170" cy="135" r="4" fill="#0284c7"/><circle cx="170" cy="165" r="4" fill="#94a3b8"/>
-                            <line x1="54" y1="80" x2="164" y2="70" stroke="#0284c7" stroke-width="1.5"/>
-                            <line x1="54" y1="115" x2="164" y2="105" stroke="#0284c7" stroke-width="1.5"/>
-                            <line x1="54" y1="150" x2="164" y2="135" stroke="#0284c7" stroke-width="1.5"/>
-                            <text x="110" y="195" font-family="sans-serif" font-size="10.5" fill="#64748b" text-anchor="middle">No collisions, but one unhit target</text>
-                        </g>
-
-                        <!-- PANEL 2: SURJECTIVE ONLY -->
-                        <g transform="translate(265, 0)">
-                            <text x="110" y="22" font-family="sans-serif" font-size="12" font-weight="bold" fill="#b45309" text-anchor="middle">Surjective (Not Injective)</text>
-                            <ellipse cx="50" cy="115" rx="35" ry="65" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
-                            <ellipse cx="170" cy="115" rx="35" ry="65" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
-                            <circle cx="50" cy="75" r="4" fill="#d97706"/><circle cx="50" cy="105" r="4" fill="#d97706"/><circle cx="50" cy="135" r="4" fill="#d97706"/><circle cx="50" cy="160" r="4" fill="#d97706"/>
-                            <circle cx="170" cy="85" r="4" fill="#d97706"/><circle cx="170" cy="120" r="4" fill="#d97706"/><circle cx="170" cy="155" r="4" fill="#d97706"/>
-                            <line x1="54" y1="75" x2="164" y2="85" stroke="#d97706" stroke-width="1.5"/>
-                            <line x1="54" y1="105" x2="164" y2="85" stroke="#d97706" stroke-width="1.5"/>
-                            <line x1="54" y1="135" x2="164" y2="120" stroke="#d97706" stroke-width="1.5"/>
-                            <line x1="54" y1="160" x2="164" y2="155" stroke="#d97706" stroke-width="1.5"/>
-                            <text x="110" y="195" font-family="sans-serif" font-size="10.5" fill="#64748b" text-anchor="middle">All targets hit, but a collision occurs</text>
-                        </g>
-
-                        <!-- PANEL 3: BIJECTIVE -->
-                        <g transform="translate(520, 0)">
-                            <text x="110" y="22" font-family="sans-serif" font-size="12" font-weight="bold" fill="#047857" text-anchor="middle">Bijective (Invertible)</text>
-                            <ellipse cx="50" cy="115" rx="35" ry="65" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
-                            <ellipse cx="170" cy="115" rx="35" ry="65" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
-                            <circle cx="50" cy="80" r="4" fill="#10b981"/><circle cx="50" cy="115" r="4" fill="#10b981"/><circle cx="50" cy="150" r="4" fill="#10b981"/>
-                            <circle cx="170" cy="80" r="4" fill="#10b981"/><circle cx="170" cy="115" r="4" fill="#10b981"/><circle cx="170" cy="150" r="4" fill="#10b981"/>
-                            <line x1="54" y1="80" x2="164" y2="80" stroke="#10b981" stroke-width="1.5"/>
-                            <line x1="54" y1="115" x2="164" y2="115" stroke="#10b981" stroke-width="1.5"/>
-                            <line x1="54" y1="150" x2="164" y2="150" stroke="#10b981" stroke-width="1.5"/>
-                            <text x="110" y="195" font-family="sans-serif" font-size="10.5" fill="#64748b" text-anchor="middle">1-to-1 matching: cleanly reversible</text>
-                        </g>
-                    </svg>
                 </div>
             </div>
 

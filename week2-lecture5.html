@@ -43,6 +43,58 @@
         .worked-example-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
         .worked-example-box h4 { margin-top: 0; color: #047857; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
         .worked-example-box p, .worked-example-box li { color: #0f172a !important; }
+    
+        /* Mobile-first layout adjustment for phones / smaller viewports */
+        @media (max-width: 768px) {
+            body {
+                background: #ffffff;
+                padding: 1rem 0.75rem;
+            }
+            .container {
+                max-width: 100%;
+                margin: 0;
+            }
+            .module-content {
+                background: transparent;
+                padding: 0;
+                border: none;
+                border-radius: 0;
+                box-shadow: none;
+                margin-bottom: 1rem;
+            }
+            .header {
+                padding-bottom: 0.75rem;
+                margin-bottom: 1.25rem;
+            }
+        
+            /* Full-width responsive biography cards on mobile */
+            .biography-box {
+                padding: 1.25rem 1rem !important;
+            }
+            .biography-box > div {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 1.25rem !important;
+            }
+            .biography-box > div > div:first-child {
+                flex: 0 0 100% !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 0 0.5rem 0 !important;
+            }
+            .biography-box > div > div:first-child img {
+                width: 100% !important;
+                max-height: 380px !important;
+                object-fit: cover !important;
+                border-radius: 6px !important;
+                display: block !important;
+            }
+            .biography-box > div > div:last-child {
+                width: 100% !important;
+                min-width: 0 !important;
+            }
+
+        }
     </style>
 </head>
 <body>
