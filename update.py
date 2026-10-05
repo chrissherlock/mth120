@@ -2,10 +2,10 @@
 r"""
 update.py
 
-Generates week1-lecture3.html with the "Finding Your Footing" orientation
-section converted from a boxed card into clean, flowing narrative prose:
-- Removes background container, borders, and padding box from the intro.
-- Integrates the welcoming introduction naturally into the module content.
+Generates week1-lecture3.html with the "Examples of Fundamental Sequences"
+list converted from a boxed card into clean, flowing narrative typography:
+- Removes background container and border box from Section 2 examples.
+- Integrates the list smoothly alongside the 4-panel discrete plot grid.
 - Enforces strict .nobr wrapping on all inline math and punctuation.
 
 Stages week1-lecture3.html and update.py, commits, and pushes upstream.
@@ -119,7 +119,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 Welcome to Lecture 3. Having built the grammatical machinery of sets and functions (Lecture 1) and solidified the continuous real line $\mathbb{R}$ with completeness (Lecture 2), we now introduce motion into our universe. Here we study <strong>sequences</strong>—the fundamental vehicles of convergence, approximation, and discrete calculus.
             </div>
 
-            <!-- EXPANDED REASSURING STUDENT ORIENTATION (UNBOXED FLOWING TEXT) -->
+            <!-- UNBOXED FLOWING ORIENTATION -->
             <div style="margin: 2.25rem 0 2.5rem 0;">
                 <h3 style="margin-top: 0; color: #0f172a; font-size: 1.25rem;">Finding Your Footing: Welcome to Discrete Dynamics</h3>
                 <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
@@ -238,25 +238,33 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <strong>A Descriptive or Structural Rule (Pattern-Based):</strong> A well-defined rule that uniquely determines what number belongs at step $n$, even if there is no high-school algebraic formula to jump there directly. For instance, "let <span class="nobr">$p_n$</span> be the $n\text{th}$ prime number" is completely rigorous because every natural index $n$ pairs with a single, unambiguous prime.
                     </li>
                 </ul>
+                <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 0;">
+                    Below are four foundational prototypes encountered throughout real analysis:
+                </p>
             </div>
 
-            <div class="worked-example-box">
-                <h4>🎯 Examples of Fundamental Sequences</h4>
-                <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
-                    <li><strong>The Sequence of Perfect Squares:</strong> $a_n = n^2$ <span class="nobr">(for $n \ge 0$).</span><br>
-                        Explicit terms: <span class="nobr">$a_0 = 0,$</span> <span class="nobr">$a_1 = 1,$</span> <span class="nobr">$a_2 = 4,$</span> <span class="nobr">$a_3 = 9,$</span> <span class="nobr">$a_4 = 16,$</span> $\dots$<br>
+            <!-- UNBOXED FLOWING EXAMPLES LIST -->
+            <div style="margin: 1.5rem 0 2rem 0;">
+                <h4 style="color: #0f172a; font-size: 1.1rem; margin-bottom: 0.75rem;">Prototypes of Fundamental Sequences</h4>
+                <ol style="margin: 0 0 0 1.25rem; font-size: 1.02rem; line-height: 1.8; color: #334155;">
+                    <li style="margin-bottom: 0.85rem;">
+                        <strong>The Sequence of Perfect Squares:</strong> <span class="nobr">$a_n = n^2$</span> <span class="nobr">(for $n \ge 0$).</span><br>
+                        <em>Explicit terms:</em> <span class="nobr">$a_0 = 0,$</span> <span class="nobr">$a_1 = 1,$</span> <span class="nobr">$a_2 = 4,$</span> <span class="nobr">$a_3 = 9,$</span> <span class="nobr">$a_4 = 16,$</span> $\dots$<br>
                         <em>Behavior:</em> Grows without bound as <span class="nobr">$n \to \infty$.</span>
                     </li>
-                    <li><strong>The Harmonic Sequence:</strong> $a_n = \frac{1}{n}$ <span class="nobr">(for $n \ge 1$).</span><br>
-                        Explicit terms: <span class="nobr">$a_1 = 1,$</span> <span class="nobr">$a_2 = \frac{1}{2},$</span> <span class="nobr">$a_3 = \frac{1}{3},$</span> <span class="nobr">$a_4 = \frac{1}{4},$</span> $\dots$<br>
+                    <li style="margin-bottom: 0.85rem;">
+                        <strong>The Harmonic Sequence:</strong> <span class="nobr">$a_n = \frac{1}{n}$</span> <span class="nobr">(for $n \ge 1$).</span><br>
+                        <em>Explicit terms:</em> <span class="nobr">$a_1 = 1,$</span> <span class="nobr">$a_2 = \frac{1}{2},$</span> <span class="nobr">$a_3 = \frac{1}{3},$</span> <span class="nobr">$a_4 = \frac{1}{4},$</span> $\dots$<br>
                         <em>Behavior:</em> Values grow progressively smaller and closer to $0$, illustrating convergence.
                     </li>
-                    <li><strong>The Alternating Sequence:</strong> $a_n = (-1)^n$ <span class="nobr">(for $n \ge 0$).</span><br>
-                        Explicit terms: <span class="nobr">$a_0 = 1,$</span> <span class="nobr">$a_1 = -1,$</span> <span class="nobr">$a_2 = 1,$</span> <span class="nobr">$a_3 = -1,$</span> <span class="nobr">$a_4 = 1,$</span> $\dots$<br>
+                    <li style="margin-bottom: 0.85rem;">
+                        <strong>The Alternating Sequence:</strong> <span class="nobr">$a_n = (-1)^n$</span> <span class="nobr">(for $n \ge 0$).</span><br>
+                        <em>Explicit terms:</em> <span class="nobr">$a_0 = 1,$</span> <span class="nobr">$a_1 = -1,$</span> <span class="nobr">$a_2 = 1,$</span> <span class="nobr">$a_3 = -1,$</span> <span class="nobr">$a_4 = 1,$</span> $\dots$<br>
                         <em>Behavior:</em> Bounces infinitely back and forth between $1$ and $-1$. It never settles down to a single number!
                     </li>
-                    <li><strong>The Prime Sequence:</strong> $p_n$ where $p_n$ is the $n$-th prime number <span class="nobr">($n \ge 1$).</span><br>
-                        Explicit terms: <span class="nobr">$p_1 = 2,$</span> <span class="nobr">$p_2 = 3,$</span> <span class="nobr">$p_3 = 5,$</span> <span class="nobr">$p_4 = 7,$</span> <span class="nobr">$p_5 = 11,$</span> $\dots$<br>
+                    <li>
+                        <strong>The Prime Sequence:</strong> <span class="nobr">$p_n$</span> where $p_n$ is the $n$-th prime number <span class="nobr">($n \ge 1$).</span><br>
+                        <em>Explicit terms:</em> <span class="nobr">$p_1 = 2,$</span> <span class="nobr">$p_2 = 3,$</span> <span class="nobr">$p_3 = 5,$</span> <span class="nobr">$p_4 = 7,$</span> <span class="nobr">$p_5 = 11,$</span> $\dots$<br>
                         <em>Behavior:</em> This sequence has no simple algebraic formula, yet it is completely well-defined because every natural index $n$ determines a unique prime.
                     </li>
                 </ol>
@@ -1458,7 +1466,7 @@ def execute_git(args: list[str]) -> subprocess.CompletedProcess:
 
 def main() -> None:
     TARGET_HTML.write_text(WEEK1_LECTURE3_HTML, encoding="utf-8")
-    print(f"Successfully generated {TARGET_HTML.name} with reinstated definitions and expanded prose.")
+    print(f"Successfully generated {TARGET_HTML.name} with unboxed intro and examples list.")
 
     execute_git(["git", "rev-parse", "--is-inside-work-tree"])
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
@@ -1468,10 +1476,10 @@ def main() -> None:
         print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Restore progression definition boxes and expand textual narrative prose"
+    commit_subject = "Remove card wrapper from Finding Your Footing introductory section"
     commit_body = (
-        "Reinstate arithmetic and geometric definition and notation boxes,\n"
-        "expand surrounding explanatory prose for deep student intuition,\n"
+        "Convert orientation intro block from boxed card into clean flowing prose,\n"
+        "convert Section 2 examples list into unboxed typography,\n"
         "and stage updated week1-lecture3.html alongside update.py."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
