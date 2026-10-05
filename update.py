@@ -2,9 +2,10 @@
 """
 update.py
 
-Injects standalone biography boxes for Hippasus, Eudoxus, Weierstrass,
-and Dedekind into week1-lecture2.html matching the exact biography-box
-format of Lecture 1, then stages both the HTML and this script.
+Injects historical biography boxes for Hippasus, Eudoxus, Weierstrass,
+and Dedekind into week1-lecture2.html using the exact lavender .biography-box
+styling, then stages both the HTML file and update.py before committing
+and pushing upstream.
 """
 
 from pathlib import Path
@@ -53,7 +54,7 @@ EUDOXUS_BOX = r"""            <!-- HISTORICAL CONTEXT: EUDOXUS -->
                             <strong>The Theory of Proportions:</strong> Preserved in Book V of Euclid's <em><a href="https://en.wikipedia.org/wiki/Euclid%27s_Elements" target="_blank" rel="noopener noreferrer" style="color: #4f46e5; font-style: italic; text-decoration: underline;">Elements</a></em>, Eudoxus formulated a rigorous definition of proportion that applied equally to rational and incommensurable magnitudes. Crucially, he established what we now know as the <strong>Archimedean Property</strong>: any two positive quantities can exceed one another if either is added to itself a sufficient number of times.
                         </p>
                         <p style="color: #334155; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0;">
-                            In modern analysis, this guarantees that the real line contains no non-zero "infinitely small" ghosts. No matter how small an interval $\epsilon > 0$ is chosen, taking enough discrete steps of size $\epsilon$ will eventually outrun any finite number, establishing an essential bridge between discrete counting and continuous space.
+                            In modern analysis, this guarantees that the real line contains no non-zero "infinitely small" ghosts. No matter how small an interval $\epsilon > 0$ is chosen, taking enough discrete steps of size $\epsilon$ will inevitably outrun any finite number, establishing an essential bridge between discrete counting and continuous space.
                         </p>
                     </div>
                 </div>
@@ -106,7 +107,7 @@ DEDEKIND_BOX = r"""            <!-- HISTORICAL CONTEXT: DEDEKIND -->
 def run_git(args: list[str]) -> subprocess.CompletedProcess:
     result = subprocess.run(args, capture_output=True, text=True)
     if result.returncode != 0:
-        print(f"Git command failed: {' '.join(args)}", file=sys.stderr)
+        print(f"Git execution error: {' '.join(args)}", file=sys.stderr)
         print(result.stderr.strip(), file=sys.stderr)
         sys.exit(result.returncode)
     return result
@@ -119,7 +120,7 @@ def main() -> None:
     content = TARGET_HTML.read_text(encoding="utf-8")
     original = content
 
-    # Clean out any old/card-wrapped snippets so they don't leave artifacts
+    # Clean out any previous biographical injections cleanly
     content = re.sub(
         r'<!-- HISTORICAL (?:CARD|CONTEXT): HIPPASUS -->.*?(?=\s*<h2 id="field-order">)',
         '',
@@ -188,11 +189,11 @@ def main() -> None:
         print("No staged changes detected. Working tree is clean.")
         return
 
-    commit_subject = "Format Lecture 2 biography boxes matching Lecture 1 style"
+    commit_subject = "Add Lecture 2 lavender history cards and version update.py"
     commit_body = (
-        "Revert outer card containers and use direct biography-box elements\n"
-        "for Hippasus, Eudoxus, Weierstrass, and Dedekind, using raw strings\n"
-        "for KaTeX math and staging update.py alongside the HTML page."
+        "Add Hippasus, Eudoxus, Weierstrass, and Dedekind history cards to\n"
+        "week1-lecture2.html using the lavender biography-box style, and\n"
+        "stage update.py alongside the modified HTML document."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
 
