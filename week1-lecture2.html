@@ -51,7 +51,11 @@
         .lecture-card:hover { transform: translateY(-2px); box-shadow: 0 6px 12px -2px rgba(0,0,0,0.08); border-color: var(--accent); }
         .lecture-card h3 { margin-top: 0; color: #0f172a; }
         .lecture-badge { display: inline-block; background: var(--accent); color: white; padding: 0.2rem 0.55rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem; }
-    
+
+        .biography-box { background: #f5f3ff; border: 1px solid #ddd6fe; border-left: 5px solid #6366f1; padding: 1.25rem 1.5rem; margin: 2rem 0; border-radius: 0 6px 6px 0; }
+        .biography-box h4 { margin-top: 0; color: #3730a3; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; }
+        .biography-box p, .biography-box li { color: #0f172a !important; }
+
         /* Mobile-first layout adjustment for phones / smaller viewports */
         @media (max-width: 768px) {
             /* Allow long formulas to scroll horizontally on small viewports */
@@ -83,7 +87,7 @@
                 padding-bottom: 0.75rem;
                 margin-bottom: 1.25rem;
             }
-        
+
             /* Full-width responsive biography cards on mobile */
             .biography-box {
                 padding: 1.25rem 1rem !important;
@@ -111,14 +115,14 @@
                 min-width: 0 !important;
             }
 
-        
+
             /* Tighten list indentation exclusively on mobile */
             ol, ul {
                 padding-left: 1.25rem !important;
                 margin-left: 0 !important;
             }
 
-        
+
             /* Keep header and footer navigation buttons side-by-side on mobile */
             .header > div:last-child,
             .nav-btn-group {
@@ -141,7 +145,6 @@
                 text-overflow: ellipsis !important;
             }
 
-        
             /* Prevent long math text or expressions from overflowing mobile screens */
             p, div, li, blockquote {
                 word-break: break-word;
@@ -152,7 +155,6 @@
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
             }
-
         }
     </style>
 </head>
@@ -738,13 +740,8 @@
             </div>
 
             <!-- SECTION 4 -->
-                        
 
-                        
-
-                        
-
-                        <!-- HISTORICAL CONTEXT: HIPPASUS -->
+            <!-- HISTORICAL CONTEXT: HIPPASUS -->
             <div class="biography-box" style="margin-top: 2rem;">
                 <h4>🏛️ The Scandal of Incommensurability: Hippasus of Metapontum</h4>
                 <div style="display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap; margin-top: 0.75rem;">
@@ -995,11 +992,11 @@
             </div>
 
             <!-- SECTION 5 -->
-                        
 
-                        
 
-                        
+
+
+
 
                         <!-- HISTORICAL CONTEXT: EUDOXUS -->
             <div class="biography-box" style="margin-top: 2rem;">
@@ -1335,11 +1332,11 @@
             </div>
 
             <!-- SECTION 6 -->
-                        
 
-                        
 
-                        
+
+
+
 
                         <!-- HISTORICAL CONTEXT: WEIERSTRASS -->
             <div class="biography-box" style="margin-top: 2rem;">
@@ -1627,11 +1624,11 @@
                 By defining the real numbers $\mathbb{R}$ as a <strong>complete ordered field</strong>, we have constructed an unbroken, flawless stage. Next week, when we let sequences run along this continuum, we can be completely confident that wherever they converge, a real number will always be waiting to catch them.
             </p>
 
-                        
 
-                        
 
-                        
+
+
+
 
                         <!-- HISTORICAL CONTEXT: DEDEKIND -->
             <div class="biography-box" style="margin-top: 2rem;">
