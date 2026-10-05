@@ -2,11 +2,13 @@
 r"""
 update.py
 
-Generates week1-lecture3.html with:
-1. Reassurance text placed naturally under the Section 3 notation reference.
-2. Step-by-step arithmetic vs geometric walkthroughs and detective tests.
-3. Fully worked examples for both progressions.
-4. Unwrappable .nobr protection on formulas and trailing punctuation.
+Generates week1-lecture3.html with full curriculum coverage from MTHS120 Notes:
+- Section 3: Arithmetic & Geometric progressions with detailed parameter guides.
+- Progression characterizations: c_n' = a (arithmetic iff derived is constant)
+  and c_n' = a(q-1)q^n (geometric derived sequence, with q=2 invariance).
+- Inverting the difference operator: a_n = c + sum(b_nu) as discrete integration.
+- Exact derivations of the Gaussian sum n(n+1)/2 and geometric sum (1-q^n)/(1-q).
+- Unbreakable .nobr formatting on all parenthesized math and punctuation.
 
 Stages week1-lecture3.html and update.py, commits, and pushes to Git.
 """
@@ -69,11 +71,6 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
         .worked-example-box h4 { margin-top: 0; color: #047857; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
         .worked-example-box p, .worked-example-box li { color: #0f172a !important; }
 
-        .biography-box { background: #f5f3ff; border: 1px solid #ddd6fe; border-left: 5px solid #6366f1; padding: 1.25rem 1.5rem; margin: 2rem 0; border-radius: 0 6px 6px 0; }
-        .biography-box h4 { margin-top: 0; color: #3730a3; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; }
-        .biography-box p, .biography-box li { color: #0f172a !important; }
-
-        /* Ensure math with parentheses and punctuation never splits across lines */
         .nobr { white-space: nowrap !important; word-break: keep-all !important; display: inline; }
         .katex { white-space: nowrap !important; }
 
@@ -82,15 +79,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
             .container { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
             .module-content { background: transparent !important; padding: 0 !important; border: none !important; border-radius: 0 !important; box-shadow: none !important; margin-bottom: 1rem !important; }
             .header { padding-bottom: 0.75rem !important; margin-bottom: 1.25rem !important; }
-
-            .biography-box { padding: 1.25rem 1rem !important; }
-            .biography-box > div { flex-direction: column !important; align-items: stretch !important; gap: 1.25rem !important; }
-            .biography-box > div > div:first-child { flex: 0 0 100% !important; width: 100% !important; max-width: 100% !important; margin: 0 0 0.5rem 0 !important; }
-            .biography-box > div > div:first-child img { width: 100% !important; max-height: 380px !important; object-fit: cover !important; border-radius: 6px !important; display: block !important; }
-            .biography-box > div > div:last-child { width: 100% !important; min-width: 0 !important; }
-
             ol, ul { padding-left: 1.25rem !important; margin-left: 0 !important; }
-
             .header > div:last-child, .nav-btn-group, .footer-nav {
                 display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; width: 100% !important; gap: 0.5rem !important;
             }
@@ -98,7 +87,6 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 flex: 1 1 0 !important; min-width: 0 !important; text-align: center !important; padding: 0.55rem 0.4rem !important;
                 font-size: 0.84rem !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
             }
-
             p, li, .definition-box { overflow-wrap: anywhere; word-break: normal; }
             .katex-display {
                 overflow-x: auto !important; overflow-y: hidden !important; -webkit-overflow-scrolling: touch !important;
@@ -151,11 +139,12 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 <ul class="toc-grid">
                     <li><a href="#sequences-intro">1. What is a Sequence? (From Numbered Lockers to Formal Mappings)</a></li>
                     <li><a href="#catalogue-sequences">2. A Gallery of Fundamental Sequences</a></li>
-                    <li><a href="#arithmetic-geometric">3. Arithmetic and Geometric Sequences</a></li>
+                    <li><a href="#arithmetic-geometric">3. Arithmetic and Geometric Progressions (Deep Dive)</a></li>
                     <li><a href="#sequence-properties">4. Classifying Behavior: Monotonicity and Bounds</a></li>
                     <li><a href="#algebra-of-sequences">5. The Algebra of Sequences (Scaling and Sums)</a></li>
                     <li><a href="#derived-sequences">6. Discrete Calculus: The Derived Sequence (<span class="nobr">$a_n'$</span>)</a></li>
-                    <li><a href="#grand-arc">7. The Grand Arc: From Discrete Rungs to the Continuum</a></li>
+                    <li><a href="#discrete-integration">7. Reversing the Difference: Partial Sums and Series</a></li>
+                    <li><a href="#grand-arc">8. The Grand Arc: From Discrete Rungs to the Continuum</a></li>
                 </ul>
             </div>
 
@@ -274,7 +263,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
             </div>
 
             <!-- SECTION 3 -->
-            <h2 id="arithmetic-geometric">3. Arithmetic and Geometric Sequences</h2>
+            <h2 id="arithmetic-geometric">3. Arithmetic and Geometric Progressions (Deep Dive)</h2>
 
             <div class="infobox">
                 <h4>📖 Notation Reference: Progression Parameters</h4>
@@ -284,7 +273,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 <div class="notation-grid">
                     <div class="notation-item"><span class="notation-sym"><span class="nobr">$c_n = an + b$</span></span><span class="notation-desc">Arithmetic formula: start at baseline $b$, take $n$ strides of size $a$</span></div>
                     <div class="notation-item"><span class="notation-sym"><span class="nobr">$c_{n+1} - c_n = a$</span></span><span class="notation-desc">Common difference: the fixed stride size added at every single step</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$c_n = a \cdot q^n$</span></span><span class="notation-desc">Geometric formula: start at scale $a$, multiply $n$ times by ratio $q$</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$c_n = a \cdot q^n$</span></span><span class="notation-desc">Geometric formula: start at scale factor $a$, multiply $n$ times by ratio $q$</span></div>
                     <div class="notation-item"><span class="notation-sym"><span class="nobr">$\frac{c_{n+1}}{c_n} = q$</span></span><span class="notation-desc">Common ratio: the constant scaling factor between adjacent terms</span></div>
                 </div>
             </div>
@@ -368,7 +357,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
             <div class="aside-box">
                 <h4>💡 Why Do We Exclude $a = 0$ and $q \in \{0, 1\}$ in Geometric Sequences?</h4>
                 <p style="margin-top: 0; margin-bottom: 0.5rem; font-size: 0.95rem;">
-                    Students often wonder why textbooks include fine-print restrictions like <span class="nobr">$a \ne 0$</span> and <span class="nobr">$q \ne 0, 1$.</span> The reason is not to be annoying; it is simply to prevent the sequence from "breaking" into a boring, trivial list:
+                    Students often wonder why textbooks include fine-print restrictions like <span class="nobr">$a \ne 0$</span> and <span class="nobr">$q \ne 0, 1$.</span> The reason is simply to prevent the sequence from "breaking" into a trivial, uninteresting list:
                 </p>
                 <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.92rem; line-height: 1.6;">
                     <li>If <span class="nobr">$a = 0$,</span> then <span class="nobr">$c_n = 0 \cdot q^n = 0$</span> for every term. The sequence is permanently frozen at zero.</li>
@@ -387,7 +376,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </p>
                 <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
                     <li><strong>Identify the parameters:</strong><br>
-                        • Base starting amount: <span class="nobr">$b = 10$</span> (this is the value in Locker 0: <span class="nobr">$c_0 = 10$</span>).<br>
+                        • Base starting amount: <span class="nobr">$b = 10$</span> (the value in Locker 0: <span class="nobr">$c_0 = 10$</span>).<br>
                         • Step size added daily: <span class="nobr">$a = 3$</span> (common difference).
                     </li>
                     <li><strong>Write the general formula:</strong><br>
@@ -415,7 +404,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </p>
                 <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
                     <li><strong>Identify the parameters:</strong><br>
-                        • Starting factor: <span class="nobr">$a = 80$</span> (this is the value in Locker 0: <span class="nobr">$c_0 = 80$</span>).<br>
+                        • Starting factor: <span class="nobr">$a = 80$</span> (the value in Locker 0: <span class="nobr">$c_0 = 80$</span>).<br>
                         • Multiplier at each hour: <span class="nobr">$q = \frac{1}{2}$</span> (common ratio).
                     </li>
                     <li><strong>Write the general formula:</strong><br>
@@ -504,7 +493,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n'$</span> <span style="font-weight: 400; color: #64748b;">or</span> <span class="nobr">$\Delta a_n$</span></span><span class="notation-desc">Derived sequence: difference between consecutive terms <span class="nobr">$a_{n+1} - a_n$</span></span></div>
                     <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n' > 0$</span></span><span class="notation-desc">Indicates the original sequence is strictly increasing at step $n$</span></div>
                     <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n' = 0$</span></span><span class="notation-desc">Indicates no change between step $n$ and step $n+1$</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n' = c$</span></span><span class="notation-desc">Constant rate of change (identifies an arithmetic sequence)</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n' = c$</span></span><span class="notation-desc">Constant rate of change (characterizes an arithmetic sequence)</span></div>
                 </div>
             </div>
 
@@ -566,26 +555,129 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </svg>
             </div>
 
-            <div class="worked-example-box">
-                <h4>🎯 Worked Example: Deriving Sequences</h4>
+            <!-- PROPOSITIONS FROM LECTURE NOTES -->
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">Characterizing Behavior Through the Derived Sequence</h3>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
+                In the MTHS120 course notes, Proposition 4 establishes three fundamental connections between a sequence and its derived differences:
+            </p>
+            <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem;">
+                <li><strong>Constant Sequences:</strong> A sequence $(a_n)$ is constant if and only if its derived sequence is identically zero: <span class="nobr">$a_n' = 0$</span> for all $n$.</li>
+                <li><strong>Increasing Sequences:</strong> A sequence is (strictly) increasing if and only if its derived sequence is non-negative (strictly positive): <span class="nobr">$a_n' \ge 0$</span> (or <span class="nobr">$a_n' > 0$</span>).</li>
+                <li><strong>Decreasing Sequences:</strong> A sequence is (strictly) decreasing if and only if its derived sequence is non-positive (strictly negative): <span class="nobr">$a_n' \le 0$</span> (or <span class="nobr">$a_n' < 0$</span>).</li>
+            </ul>
+
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">The Derived Sequence of Progressions</h3>
+            <div class="definition-box">
+                <strong>Progressions Through the Lens of Differences:</strong>
                 <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
-                    <li><strong>Arithmetic Sequence:</strong> Let <span class="nobr">$a_n = 5n + 3$.</span>
-                        <div style="text-align: center; margin: 0.4rem 0;">
-                            $$a_n' = a_{n+1} - a_n = [5(n+1) + 3] - [5n + 3] = 5n + 8 - 5n - 3 = 5$$
+                    <li><strong>Arithmetic Progression Characterization:</strong> Let <span class="nobr">$c_n = an + b$.</span>
+                        <div style="margin: 0.25rem 0;">
+                            $$c_n' = c_{n+1} - c_n = [a(n+1) + b] - [an + b] = a$$
                         </div>
-                        <em>Observation:</em> The derived sequence of an arithmetic progression is a constant sequence ($a_n' = 5$). This mirrors continuous calculus, where the derivative of a linear function $f(x) = 5x + 3$ is the constant $f'(x) = 5$!
+                        <em>Core Theorem:</em> A sequence is an arithmetic progression <strong>if and only if</strong> its derived sequence is constant!
                     </li>
-                    <li><strong>Quadratic Sequence:</strong> Let <span class="nobr">$a_n = n^2$.</span>
-                        <div style="text-align: center; margin: 0.4rem 0;">
-                            $$a_n' = (n+1)^2 - n^2 = (n^2 + 2n + 1) - n^2 = 2n + 1$$
+                    <li style="margin-top: 0.75rem;"><strong>Geometric Progression Difference:</strong> Let <span class="nobr">$c_n = aq^n$.</span>
+                        <div style="margin: 0.25rem 0;">
+                            $$c_n' = c_{n+1} - c_n = aq^{n+1} - aq^n = aq^n(q - 1) = a(q - 1)q^n$$
                         </div>
-                        <em>Observation:</em> The derived sequence is the arithmetic sequence of odd numbers $(1, 3, 5, 7, \dots)$. Notice how close $2n+1$ is to the continuous derivative $\frac{d}{dn}(n^2) = 2n$!
+                        <em>Observation:</em> The derived sequence of a geometric progression is <em>another</em> geometric progression with the exact same ratio $q$, scaled by $(q-1)$.
+                    </li>
+                    <li style="margin-top: 0.75rem;"><strong>The Invariant Case ($q = 2$):</strong>
+                        When the common ratio is <span class="nobr">$q = 2$,</span> the factor becomes <span class="nobr">$(q - 1) = (2 - 1) = 1$.</span> Therefore:
+                        <div style="margin: 0.25rem 0;">
+                            $$c_n' = a(2 - 1)2^n = a2^n = c_n$$
+                        </div>
+                        Powers of 2 reproduce their own discrete derivative! This is the discrete precursor to the celebrated continuous derivative property: <span class="nobr">$\frac{d}{dx}e^x = e^x$.</span>
+                    </li>
+                    <li style="margin-top: 0.75rem;"><strong>Polynomials and the Binomial Theorem:</strong>
+                        For any power sequence <span class="nobr">$a_n = n^p$</span> (where $p$ is a positive integer):
+                        <div style="margin: 0.25rem 0;">
+                            $$a_n' = (n+1)^p - n^p = \sum_{k=0}^{p-1}\binom{p}{k}n^k = pn^{p-1} + \dots$$
+                        </div>
+                        The derived sequence drops the polynomial degree from $p$ down to $p-1$ with leading coefficient $p$, mirroring the continuous power rule <span class="nobr">$\frac{d}{dx}x^p = px^{p-1}$.</span>
                     </li>
                 </ol>
             </div>
 
             <!-- SECTION 7 -->
-            <h2 id="grand-arc">7. The Grand Arc: From Discrete Rungs to the Continuum</h2>
+            <h2 id="discrete-integration">7. Reversing the Difference: Partial Sums and Series</h2>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
+                What happens if we know the difference sequence $(b_n)$ and want to <strong>reconstruct the original sequence $(a_n)$</strong>?
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
+                In the MTHS120 course notes, this is shown to be the discrete equivalent of <strong>integration</strong>:
+            </p>
+            <div style="text-align: center; margin: 1rem 0; font-size: 1.05rem;">
+                $$a_0 = c, \quad a_1 = c + b_0, \quad a_2 = c + b_0 + b_1, \quad \dots, \quad a_n = c + \sum_{\nu=0}^{n-1} b_\nu$$
+            </div>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
+                Notice that the starting value <span class="nobr">$c = a_0$</span> is arbitrary—just like the constant of integration $+C$ in continuous calculus!
+            </p>
+
+            <div class="definition-box">
+                <strong>Partial Sums Sequence ($s_n$):</strong><br>
+                For any sequence $(b_n)$, the sequence of <strong>partial sums</strong> $(s_n)$ is defined by accumulating terms:
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.05rem;">
+                    $$s_n = \sum_{\nu=0}^n b_\nu = b_0 + b_1 + b_2 + \dots + b_n$$
+                </div>
+            </div>
+
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">Computing Sums Using Discrete Calculus</h3>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
+                Just as continuous integrals can be evaluated using antiderivatives via the Fundamental Theorem of Calculus, discrete sums can be evaluated by identifying which sequence has the given sequence as its derived difference!
+            </p>
+
+            <div class="worked-example-box">
+                <h4>🎯 Derivation 1: The Gaussian Sum $\sum_{k=1}^n k$</h4>
+                <p style="margin-top: 0; font-size: 0.98rem; line-height: 1.7;">
+                    We want to find a closed-form formula for adding the first $n$ integers: <span class="nobr">$1 + 2 + 3 + \dots + n$.</span>
+                </p>
+                <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
+                    <li>The derived sequence of <span class="nobr">$(n^2)$</span> is: <span class="nobr">$(n+1)^2 - n^2 = 2n + 1$.</span></li>
+                    <li>The derived sequence of <span class="nobr">$(n)$</span> is: <span class="nobr">$(n+1) - n = 1$.</span></li>
+                    <li>Subtracting the two: the derived sequence of <span class="nobr">$(n^2 - n)$</span> is:
+                        <div style="margin: 0.25rem 0;">
+                            $$(2n + 1) - 1 = 2n$$
+                        </div>
+                    </li>
+                    <li>Dividing by 2: the derived sequence of <span class="nobr">$\frac{n^2 - n}{2} = \frac{n(n-1)}{2}$</span> is simply <span class="nobr">$n$!</span></li>
+                    <li>Because <span class="nobr">$\frac{n(n-1)}{2}$</span> has derived differences equal to the counting indices, its values reproduce the partial sums of the integers. Shifting the index by 1 gives the famous <strong>Gaussian summation formula</strong>:
+                        <div style="text-align: center; margin: 0.5rem 0; font-size: 1.1rem; color: #065f46;">
+                            $$s_n = 1 + 2 + 3 + \dots + n = \sum_{k=1}^n k = \frac{n(n+1)}{2}$$
+                        </div>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="worked-example-box" style="margin-top: 1.5rem;">
+                <h4>🎯 Derivation 2: The Geometric Series Sum $\sum_{\nu=0}^{n-1} q^\nu$</h4>
+                <p style="margin-top: 0; font-size: 0.98rem; line-height: 1.7;">
+                    We want to find a formula for the sum of the first $n$ terms of a geometric sequence:
+                    <span class="nobr">$$s_{n-1} = 1 + q + q^2 + q^3 + \dots + q^{n-1} = \sum_{\nu=0}^{n-1} q^\nu$$</span>
+                </p>
+                <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
+                    <li>From Section 6, the derived sequence of <span class="nobr">$(q^n)$</span> is <span class="nobr">$(q - 1)q^n$.</span></li>
+                    <li>Dividing by the constant scalar <span class="nobr">$(q - 1)$</span> (assuming $q \ne 1$): the derived sequence of <span class="nobr">$\frac{q^n}{q - 1}$</span> is exactly <span class="nobr">$q^n$.</span></li>
+                    <li>Therefore, the partial sum must have the form:
+                        <div style="margin: 0.25rem 0;">
+                            $$s_{n-1} = \frac{q^n}{q - 1} + c$$
+                        </div>
+                    </li>
+                    <li>Determine the constant $c$: At $n=1$, the sum is just the first term: <span class="nobr">$s_0 = q^0 = 1$.</span>
+                        <div style="margin: 0.25rem 0;">
+                            $$1 = \frac{q^1}{q - 1} + c \implies c = 1 - \frac{q}{q - 1} = \frac{(q - 1) - q}{q - 1} = -\frac{1}{q - 1}$$
+                        </div>
+                    </li>
+                    <li>Substitute $c$ back into the formula to arrive at the foundational <strong>Geometric Series Identity</strong>:
+                        <div style="text-align: center; margin: 0.5rem 0; font-size: 1.1rem; color: #065f46;">
+                            $$\sum_{\nu=0}^{n-1} q^\nu = \frac{q^n - 1}{q - 1} = \frac{1 - q^n}{1 - q}$$
+                        </div>
+                    </li>
+                </ol>
+            </div>
+
+            <!-- SECTION 8 -->
+            <h2 id="grand-arc">8. The Grand Arc: From Discrete Rungs to the Continuum</h2>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1.25rem;">
                 As we close out Week 1, take a step back and examine the magnificent mathematical edifice we have assembled across these first three lectures. What initially appeared to be separate, abstract topics is actually an interconnected three-part symphony:
             </p>
@@ -598,7 +690,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                     <strong>Lecture 2 built the Continuum Stage:</strong> We demonstrated that integer fractions $\mathbb{Q}$ leave gaping holes <span class="nobr">($\sqrt{2} \notin \mathbb{Q}$),</span> created measuring tapes with absolute value metrics $|x - y|$, and sealed the number line into an unbreakable continuum $\mathbb{R}$ using the Axiom of Completeness and Suprema.
                 </li>
                 <li style="margin-bottom: 0.75rem;">
-                    <strong>Lecture 3 set Objects in Motion:</strong> Today, we unified both worlds. By taking the discrete counting rungs of $\mathbb{N}$ and mapping them into the continuous stage of $\mathbb{R}$, we invented <strong>sequences</strong>. We measured their discrete speed of change using the <strong>derived sequence</strong> <span class="nobr">($a_n' = a_{n+1} - a_n$),</span> proving that discrete calculus directly mirrors the continuous rates of change of high school calculus.
+                    <strong>Lecture 3 set Objects in Motion:</strong> Today, we unified both worlds. By taking the discrete counting rungs of $\mathbb{N}$ and mapping them into the continuous stage of $\mathbb{R}$, we invented <strong>sequences</strong>. We measured their discrete speed of change using the <strong>derived sequence</strong> <span class="nobr">($a_n' = a_{n+1} - a_n$),</span> proved that arithmetic and geometric progressions possess elegant discrete derivatives, and showed how reversing the difference operator recovers partial sums like Gauss's formula and geometric series!
                 </li>
             </ol>
 
@@ -631,7 +723,7 @@ def execute_git(args: list[str]) -> subprocess.CompletedProcess:
 
 def main() -> None:
     TARGET_HTML.write_text(WEEK1_LECTURE3_HTML, encoding="utf-8")
-    print(f"Successfully generated {TARGET_HTML.name} with natural prose reassurance.")
+    print(f"Successfully generated {TARGET_HTML.name} with complete MTHS120 curriculum coverage.")
 
     execute_git(["git", "rev-parse", "--is-inside-work-tree"])
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
@@ -641,11 +733,11 @@ def main() -> None:
         print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Relocate Section 3 reassurance text directly under notation box"
+    commit_subject = "Align Lecture 3 with course notes on discrete sums and derivatives"
     commit_body = (
-        "Remove card styling from progression reassurance text,\n"
-        "place reassurance text as natural prose beneath notation reference,\n"
-        "and stage updated week1-lecture3.html alongside update.py."
+        "Add progression characterization theorems for arithmetic and geometric forms,\n"
+        "detail the discrete rate formula c_n' = a(q-1)q^n with q=2 invariance,\n"
+        "and add derivations of the Gaussian sum and geometric series sum."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
 
