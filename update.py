@@ -2,10 +2,14 @@
 r"""
 update.py
 
-Generates week1-lecture3.html with:
-1. Complete MTHS120 curriculum coverage (progressions, derived sequences, sums).
-2. The Detective Test in action: diagnosing arithmetic, geometric, and trap sequences.
-3. All formulas and trailing punctuation protected by non-breaking .nobr spans.
+Generates week1-lecture3.html with an extensively scaffolded, beginner-friendly
+treatment of Section 4 (Monotonicity and Bounds):
+- Intuitive framing: one-way conveyor belts vs bounding fences.
+- Weak vs. strict inequality clarification.
+- Concrete proving methods: Difference Test and Ratio Test.
+- Bridge back to Suprema/Infima from Lecture 2.
+- Fully worked diagnostic step-by-step example.
+- All inline math and punctuation protected by non-breaking .nobr spans.
 
 Stages week1-lecture3.html and update.py, commits, and pushes to Git.
 """
@@ -275,7 +279,6 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </div>
             </div>
 
-            <!-- REASSURANCE PLACED NATURALLY UNDER NOTATION REFERENCE -->
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-top: 1.25rem;">
                 If you have ever found arithmetic and geometric progressions confusing or hard to keep straight, take reassurance: that experience is widespread. Traditional courses often rush to introduce <span class="nobr">$c_n = an + b$</span> and <span class="nobr">$c_n = a q^n$</span> as abstract algebraic recipes to memorize, obscuring the simple concrete patterns underneath.
             </p>
@@ -466,28 +469,124 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
 
             <!-- SECTION 4 -->
             <h2 id="sequence-properties">4. Classifying Behavior: Monotonicity and Bounds</h2>
+
             <div class="infobox">
                 <h4>📖 Notation Reference: Monotonicity &amp; Boundedness</h4>
                 <div class="infobox-intro">
-                    <strong>Describing directional motion:</strong> Sequences are classified by whether their values march in one direction or stay trapped within fences.
+                    <strong>Describing directional motion:</strong> Sequences are classified by whether their terms march in one direction (monotonicity) or remain trapped between physical barriers (boundedness).
                 </div>
                 <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_{n+1} \ge a_n$</span></span><span class="notation-desc">Increasing sequence (each term is greater than or equal to previous)</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_{n+1} > a_n$</span></span><span class="notation-desc">Strictly increasing sequence (values strictly grow)</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_{n+1} \le a_n$</span></span><span class="notation-desc">Decreasing sequence (each term is smaller than or equal to previous)</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n \le M$</span></span><span class="notation-desc">Bounded above by real number $M$ <span class="nobr">($\forall n \in \mathbb{N}$).</span></span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_{n+1} \ge a_n$</span></span><span class="notation-desc">Increasing sequence: each term is greater than or equal to the predecessor</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_{n+1} > a_n$</span></span><span class="notation-desc">Strictly increasing: every new step climbs strictly higher</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_{n+1} \le a_n$</span></span><span class="notation-desc">Decreasing sequence: each term is less than or equal to the predecessor</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_{n+1} < a_n$</span></span><span class="notation-desc">Strictly decreasing: every new step falls strictly lower</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$m \le a_n \le M$</span></span><span class="notation-desc">Bounded sequence: trapped between lower bound $m$ and upper bound $M$</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$|a_n| \le K$</span></span><span class="notation-desc">Equivalent compact boundedness: trapped in symmetric interval $[-K, K]$</span></div>
                 </div>
             </div>
 
-            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
-                To analyze where an infinite sequence travels, we use standardized vocabulary:
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">1. Monotonicity: The One-Way Conveyor Belt</h3>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
+                In plain English, a sequence is <strong>monotonic</strong> if it picks a direction along the real number line and sticks to it. It is not allowed to turn around or oscillate back and forth.
             </p>
-            <ul style="font-size: 0.98rem; line-height: 1.7; color: #334155; padding-left: 1.25rem;">
-                <li><strong>Constant:</strong> $a_n = c$ for all <span class="nobr">$n \in \mathbb{N}$.</span> The sequence never changes value.</li>
-                <li><strong>Positive / Negative:</strong> $a_n > 0$ for all $n$ (positive), or $a_n < 0$ for all $n$ (negative).</li>
-                <li><strong>Monotonic:</strong> A sequence that moves in one direction only (either non-decreasing for all $n$, or non-increasing for all $n$).</li>
-                <li><strong>Bounded:</strong> A sequence <span class="nobr">$(a_n)$</span> is bounded if there exists a number $M > 0$ such that <span class="nobr">$|a_n| \le M$</span> for every index $n$. Its points are trapped inside a finite interval $[-M, M]$.</li>
+            <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem;">
+                <li><strong>Weak vs. Strict Inequality:</strong> Notice the crucial difference between <span class="nobr">$a_{n+1} \ge a_n$</span> and <span class="nobr">$a_{n+1} > a_n$.</span> If a sequence pauses at the same value—like <span class="nobr">$(2, 2, 3, 3, 4, 4, \dots)$</span>—it is still considered <strong>increasing</strong> because it never moves backward! If it climbs at every single step with no pauses, like <span class="nobr">$(1, 2, 3, 4, \dots)$,</span> it is <strong>strictly increasing</strong>.</li>
+                <li><strong>Oscillating (Non-Monotonic):</strong> The alternating sequence <span class="nobr">$a_n = (-1)^n = (1, -1, 1, -1, \dots)$</span> is neither increasing nor decreasing. It bounces across the origin forever.</li>
             </ul>
+
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">2. Two Tool-Box Tests: How to Prove Monotonicity</h3>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
+                When an assignment asks you to prove that a sequence is monotonic, do not just list the first four numbers! Listing terms only proves what happens at the start; it does not prove what happens all the way to infinity. Use one of these two reliable algebraic methods:
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.5rem; margin: 1.5rem 0;">
+                <!-- DIFFERENCE TEST -->
+                <div style="background: #ffffff; border: 1px solid var(--border); border-left: 4px solid #0284c7; border-radius: 6px; padding: 1.25rem;">
+                    <h4 style="margin-top: 0; color: #0369a1; font-size: 1.05rem;">Method A: The Difference Test (Subtract)</h4>
+                    <p style="font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                        Compute the discrete difference <span class="nobr">$a_{n+1} - a_n$</span> and inspect its sign:
+                    </p>
+                    <ul style="font-size: 0.9rem; color: #334155; padding-left: 1.25rem; line-height: 1.6; margin: 0;">
+                        <li>If <span class="nobr">$a_{n+1} - a_n \ge 0$</span> for all $n$, the sequence is <strong>increasing</strong>.</li>
+                        <li>If <span class="nobr">$a_{n+1} - a_n \le 0$</span> for all $n$, the sequence is <strong>decreasing</strong>.</li>
+                        <li><em>Best used for:</em> Algebraic polynomials, arithmetic sequences, and sums.</li>
+                    </ul>
+                </div>
+
+                <!-- RATIO TEST -->
+                <div style="background: #ffffff; border: 1px solid var(--border); border-left: 4px solid #10b981; border-radius: 6px; padding: 1.25rem;">
+                    <h4 style="margin-top: 0; color: #047857; font-size: 1.05rem;">Method B: The Ratio Test (Divide)</h4>
+                    <p style="font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                        For sequences with <strong>strictly positive terms</strong> (<span class="nobr">$a_n > 0$</span>), compute the quotient <span class="nobr">$\frac{a_{n+1}}{a_n}$:</span>
+                    </p>
+                    <ul style="font-size: 0.9rem; color: #334155; padding-left: 1.25rem; line-height: 1.6; margin: 0;">
+                        <li>If <span class="nobr">$\frac{a_{n+1}}{a_n} \ge 1$,</span> then <span class="nobr">$a_{n+1} \ge a_n$</span> (<strong>increasing</strong>).</li>
+                        <li>If <span class="nobr">$\frac{a_{n+1}}{a_n} \le 1$,</span> then <span class="nobr">$a_{n+1} \le a_n$</span> (<strong>decreasing</strong>).</li>
+                        <li><em>Best used for:</em> Factorials ($n!$), powers ($q^n$), and exponential terms.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">3. Boundedness: Building Fences Around the Infinite List</h3>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
+                An infinite sequence has an endless number of terms, but that does not mean its values must fly off to infinity!
+            </p>
+            <div class="definition-box">
+                <strong>Formal Definitions of Bounds:</strong>
+                <ul style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
+                    <li><strong>Bounded Above:</strong> There exists a real number $M$ such that <span class="nobr">$a_n \le M$</span> for all <span class="nobr">$n \in \mathbb{N}$.</span> (An impenetrable ceiling).</li>
+                    <li><strong>Bounded Below:</strong> There exists a real number $m$ such that <span class="nobr">$a_n \ge m$</span> for all <span class="nobr">$n \in \mathbb{N}$.</span> (An unbreakable floor).</li>
+                    <li><strong>Bounded:</strong> A sequence is bounded if it is bounded <em>both</em> above and below: <span class="nobr">$$m \le a_n \le M \quad \forall n \in \mathbb{N}$$</span>
+                    Equivalently, taking <span class="nobr">$K = \max(|m|, |M|)$,</span> all terms lie trapped in the symmetric interval: <span class="nobr">$|a_n| \le K$.</span></li>
+                </ul>
+            </div>
+
+            <div class="aside-box">
+                <h4>🔗 The Bridge to Lecture 2: Sequences and Suprema</h4>
+                <p style="margin-top: 0; margin-bottom: 0.5rem; font-size: 0.95rem;">
+                    Notice how this connects directly to the <strong>Axiom of Completeness</strong> from Lecture 2!
+                </p>
+                <p style="margin: 0; font-size: 0.93rem; line-height: 1.65;">
+                    If an infinite sequence <span class="nobr">$(a_n)$</span> is bounded above, then its collection of outputs forms a non-empty set of real numbers that is bounded above. Therefore, by the completeness of $\mathbb{R}$, that sequence is guaranteed to possess an exact least upper bound: a <strong>supremum</strong> <span class="nobr">$\alpha = \sup\{a_n \mid n \in \mathbb{N}\}$.</span> This fundamental bridge will power our convergence theorems in Week 2!
+                </p>
+            </div>
+
+            <!-- COMPREHENSIVE WORKED EXAMPLE: TESTING MONOTONICITY AND BOUNDS -->
+            <div class="worked-example-box" style="margin-top: 1.5rem;">
+                <h4>🎯 Worked Example: Testing Monotonicity and Bounds by Hand</h4>
+                <p style="margin-top: 0; font-size: 0.98rem; line-height: 1.7;">
+                    Consider the sequence <span class="nobr">$a_n = \frac{n}{n+1}$</span> for <span class="nobr">$n \ge 0$:</span>
+                    <span class="nobr">$$\left(0, \; \frac{1}{2}, \; \frac{2}{3}, \; \frac{3}{4}, \; \frac{4}{5}, \; \dots\right)$$</span>
+                </p>
+                <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
+                    <li style="margin-bottom: 0.75rem;">
+                        <strong>Step 1: Test Monotonicity using the Difference Method.</strong><br>
+                        Form the difference <span class="nobr">$a_{n+1} - a_n$:</span>
+                        <div style="margin: 0.25rem 0;">
+                            $$a_{n+1} - a_n = \frac{n+1}{(n+1)+1} - \frac{n}{n+1} = \frac{n+1}{n+2} - \frac{n}{n+1}$$
+                        </div>
+                        Find a common denominator:
+                        <div style="margin: 0.25rem 0;">
+                            $$a_{n+1} - a_n = \frac{(n+1)^2 - n(n+2)}{(n+2)(n+1)} = \frac{(n^2 + 2n + 1) - (n^2 + 2n)}{(n+2)(n+1)} = \frac{1}{(n+2)(n+1)}$$
+                        </div>
+                        Since $n \ge 0$, the numerator is $1 > 0$ and the denominator is strictly positive. Therefore:
+                        <div style="margin: 0.25rem 0; font-weight: 600; color: #065f46;">
+                            $$a_{n+1} - a_n > 0 \quad \text{for all } n \in \mathbb{N}$$
+                        </div>
+                        <em>Conclusion:</em> The sequence is <strong>strictly increasing</strong>.
+                    </li>
+                    <li>
+                        <strong>Step 2: Establish Bounds.</strong><br>
+                        • <em>Lower Bound:</em> Because the sequence is strictly increasing, its very first term is its minimum: <span class="nobr">$a_0 = \frac{0}{0+1} = 0$.</span> Thus, <span class="nobr">$a_n \ge 0$</span> for all $n$ (bounded below by $0$).<br>
+                        • <em>Upper Bound:</em> For every natural number $n$, the numerator $n$ is strictly less than the denominator $n+1$. Therefore:
+                        <div style="margin: 0.25rem 0;">
+                            $$a_n = \frac{n}{n+1} < 1 \quad \text{for all } n$$
+                        </div>
+                        Thus, the sequence is bounded above by $1$.<br>
+                        <em>Conclusion:</em> The sequence is <strong>bounded</strong> because all infinite terms live trapped inside <span class="nobr">$$0 \le a_n < 1$$</span>
+                    </li>
+                </ol>
+            </div>
 
             <!-- SECTION 5 -->
             <h2 id="algebra-of-sequences">5. The Algebra of Sequences (Scaling and Sums)</h2>
@@ -763,7 +862,7 @@ def execute_git(args: list[str]) -> subprocess.CompletedProcess:
 
 def main() -> None:
     TARGET_HTML.write_text(WEEK1_LECTURE3_HTML, encoding="utf-8")
-    print(f"Successfully generated {TARGET_HTML.name} with detective mystery worked example.")
+    print(f"Successfully generated {TARGET_HTML.name} with deep Section 4 scaffolding.")
 
     execute_git(["git", "rev-parse", "--is-inside-work-tree"])
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
@@ -773,10 +872,12 @@ def main() -> None:
         print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Add raw sequence diagnostic worked example to Lecture 3"
+    commit_subject = "Expand Section 4 with tests, bounds bridges, and worked examples"
     commit_body = (
-        "Add three-part diagnostic worked walkthrough in Section 3,\n"
-        "demonstrating difference test, quotient test, and harmonic trap,\n"
+        "Add physical intuition for monotonic conveyor belts and bounding fences,\n"
+        "distinguish weak vs strict monotonicity with intuitive counterexamples,\n"
+        "add Difference and Ratio test recipes for proving monotonicity,\n"
+        "connect sequence upper bounds directly to Lecture 2 suprema,\n"
         "and stage updated week1-lecture3.html alongside update.py."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
