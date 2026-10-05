@@ -2,12 +2,13 @@
 r"""
 update.py
 
-Generates week1-lecture3.html with an expanded Section 5, Subsection 3
-exploring the interaction between a linear climb and a discrete sine wave:
-- Details the real-world intuition of smooth waves riding linear trends.
-- Analyzes the tug-of-war between linear slope and wave amplitude.
-- Embeds a 2-panel SVG contrasting undulating monotonic climbing with
-  wave-induced troughs that break monotonicity.
+Generates week1-lecture3.html with an enhanced visual decomposition in
+Section 5, Subsection 3:
+- Plots the individual linear stride line and isolated sine wave curve
+  in each panel alongside the combined sum sequence.
+- Shows that stride 2 > wave drop 1.73 in Panel 1 (strictly increasing).
+- Shows that wave drop 2.17 > stride 1 in Panel 2 (monotonicity broken).
+- Adds detailed explanatory prose breaking down the tug-of-war arithmetic.
 - Enforces strict .nobr wrapping on all inline math and punctuation.
 
 Stages week1-lecture3.html and update.py, commits, and pushes upstream.
@@ -414,7 +415,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <text x="215" y="128" font-size="9" font-weight="600" fill="#4338ca" text-anchor="middle">5</text>
                         <line x1="275" y1="195" x2="275" y2="111" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="275" cy="111" r="4.5" fill="#6366f1" />
-                        <text x="275" y="104" font-size="9" font-weight="600" fill="#4338ca" text-anchor="middle">7</text>
+                        <text x="275" y="104" font-size="9.5" font-weight="600" fill="#4338ca" text-anchor="middle">7</text>
                         <line x1="335" y1="195" x2="335" y2="63" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="335" cy="63" r="4.5" fill="#6366f1" />
                         <text x="335" y="56" font-size="9" font-weight="600" fill="#4338ca" text-anchor="middle">11</text>
@@ -1212,7 +1213,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                             <td style="padding: 0.6rem 0.75rem; color: #0369a1;"><span class="nobr">$11$</span></td>
                             <td style="padding: 0.6rem 0.75rem; color: #b45309;"><span class="nobr">$-1$</span></td>
                             <td style="padding: 0.6rem 0.75rem; font-weight: 700; color: #047857;"><span class="nobr">$10$</span></td>
-                            <td style="padding: 0.6rem 0.75rem; text-align: left; font-weight: 600; color: #166534;">⏸️️ Flat plateau: <span class="nobr">$-1$</span> cancels climb (<span class="nobr">$c_5 = c_4$</span>)</td>
+                            <td style="padding: 0.6rem 0.75rem; text-align: left; font-weight: 600; color: #166534;">⏸ Flat plateau: <span class="nobr">$-1$</span> cancels climb (<span class="nobr">$c_5 = c_4$</span>)</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1313,132 +1314,177 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </svg>
             </div>
 
-            <!-- SUBSECTION 3: LINEAR CLIMB + SINE WAVE -->
+            <!-- SUBSECTION 3: LINEAR CLIMB + SINE WAVE WITH DECOMPOSED VISUALIZATION -->
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 2rem;">3. What If the Oscillation Is a Smooth Sine Wave?</h3>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
                 Once you see how the alternating sequence <span class="nobr">$(-1)^n$</span> adds a sharp, digital bounce to a linear walk, a natural question arises: <strong>what happens if we replace the abrupt bounce with a smooth, continuous wave, like a sine function?</strong>
             </p>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                Suppose our first sequence is a steady linear climb <span class="nobr">$a_n = \alpha n$</span> and our second sequence is a discrete sinusoidal wave <span class="nobr">$b_n = A \sin(\omega n)$.</span> When we add them pointwise into <span class="nobr">$c_n = a_n + b_n = \alpha n + A \sin(\omega n)$,</span> we model a phenomenon that appears constantly across science and engineering:
+                Suppose our first sequence is a steady linear climb <span class="nobr">$a_n = \alpha n$</span> and our second sequence is a discrete sinusoidal wave <span class="nobr">$b_n = A \sin(\omega n)$.</span> Adding them pointwise into <span class="nobr">$c_n = a_n + b_n = \alpha n + A \sin(\omega n)$</span> models real-world phenomena found across science and engineering:
             </p>
             <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem; margin-bottom: 1.25rem;">
                 <li style="margin-bottom: 0.65rem;">
                     <strong>Climate and Meteorology:</strong> A seasonal sinusoidal temperature cycle (summer peaks and winter troughs) riding on top of a subtle long-term climate drift.
                 </li>
                 <li style="margin-bottom: 0.65rem;">
-                    <strong>Economics and Retail:</strong> Predictable quarterly sales surges and slumps (holiday shopping spikes) superimposed onto a company's steady year-over-year revenue expansion.
+                    <strong>Economics and Retail:</strong> Quarterly holiday shopping surges and winter slumps superimposed onto a company's steady multi-year revenue growth.
                 </li>
                 <li>
-                    <strong>Physics and Signal Processing:</strong> A high-frequency radio signal or acoustic vibration riding atop a low-frequency carrier drift.
+                    <strong>Acoustics and Signals:</strong> A high-frequency vibration riding on a low-frequency carrier wave.
                 </li>
             </ul>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                Instead of the abrupt, flat resting ledges produced by <span class="nobr">$(-1)^n$,</span> a sine wave produces <strong>curving ripples that undulate smoothly above and below the diagonal linear trendline</strong>.
+                Instead of flat, abrupt resting ledges, the sine wave creates <strong>curving ripples that weave smoothly above and below the diagonal linear trend</strong>.
             </p>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1.25rem;">
-                Crucially, whether the combined sequence continues marching strictly uphill depends on a direct tug-of-war between the <strong>stride of the climb (<span class="nobr">$\alpha$</span>)</strong> and the <strong>height of the wave (<span class="nobr">$A$</span>)</strong>:
+                To understand whether the combined sequence continues climbing monotonically, look at the two constituent lines independently on the graph below. It comes down to a direct test between two opposing forces: <strong>is the forward stride of the line greater than the steepest downward plunge of the wave?</strong>
             </p>
-            <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem; margin-bottom: 1.25rem;">
-                <li style="margin-bottom: 0.65rem;">
-                    <strong>When the Climb Dominates (<span class="nobr">$\alpha$ is large relative to $A$</span>):</strong> The linear forward momentum is so strong that the wave's downward pull cannot reverse it. At the bottom of a wave trough, the sequence slows down, but every new step is still strictly higher than the previous one (<span class="nobr">$c_{n+1} > c_n$</span>). The sequence remains <strong>strictly increasing</strong>, merely advancing with an undulating rhythm.
-                </li>
-                <li>
-                    <strong>When the Wave Dominates (<span class="nobr">$A$ is large relative to $\alpha$</span>):</strong> The plunge of the wave's downward slope overpowers the forward linear stride. As the sine wave crashes into a trough, the sequence actually steps backward (<span class="nobr">$c_{n+1} < c_n$</span>). It forms crests and valleys, and <strong>monotonicity is broken completely</strong>!
-                </li>
-            </ul>
 
-            <!-- VISUALIZATION: LINEAR + SINE WAVE -->
+            <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem;">
+                <h4 style="margin-top: 0; color: #0f172a; font-size: 1rem;">The Arithmetic of the Contest (Frequency $\omega = \pi/3$)</h4>
+                <p style="font-size: 0.95rem; line-height: 1.7; color: #334155; margin-bottom: 0.75rem;">
+                    For frequency <span class="nobr">$\omega = \frac{\pi}{3}$,</span> the sine wave takes its steepest downward plunge between step <span class="nobr">$n = 2$</span> and step <span class="nobr">$n = 3$:</span>
+                    <span class="nobr">$$\sin\left(\frac{2\pi}{3}\right) = \frac{\sqrt{3}}{2} \approx 0.866 \quad \longrightarrow \quad \sin(\pi) = 0$$</span>
+                    This means the wave drops by approximately <span class="nobr">$0.866 \times A$</span> units in a single step!
+                </p>
+                <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.93rem; line-height: 1.7; color: #334155;">
+                    <li style="margin-bottom: 0.5rem;">
+                        <strong>Panel 1 ($c_n = 2n + 2\sin\frac{\pi n}{3}$): Line Stride ($+2$) &gt; Wave Drop ($1.73$)</strong><br>
+                        The line climbs by <span class="nobr">$+2$</span> at every step, while the wave drops by at most <span class="nobr">$2 \times 0.866 \approx 1.73$.</span> Because the line's upward stride is strictly greater than the wave's downward plunge (<span class="nobr">$2 > 1.73$</span>), the line wins everywhere. The green sum points undulate, but every step is strictly higher than the previous one (<span class="nobr">$c_{n+1} > c_n$</span>). The sequence remains <strong>strictly increasing</strong>!
+                    </li>
+                    <li>
+                        <strong>Panel 2 ($c_n = n + 2.5\sin\frac{\pi n}{3}$): Wave Drop ($2.17$) &gt; Line Stride ($+1$)</strong><br>
+                        The line only advances by <span class="nobr">$+1$</span> per step, but the wave plunges downward by <span class="nobr">$2.5 \times 0.866 \approx 2.17$</span> between <span class="nobr">$n=2$</span> and <span class="nobr">$n=3$.</span> Because the wave's drop is greater than the line's step (<span class="nobr">$2.17 > 1$</span>), the wave overpowers the climb, pulling the combined red sequence into a valley (<span class="nobr">$c_3 = 3 < c_2 \approx 4.17$</span>) and <strong>breaking monotonicity</strong>!
+                    </li>
+                </ul>
+            </div>
+
+            <!-- VISUALIZATION: LINEAR AND SINE DECOMPOSITION -->
             <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; text-align: center;">
                 <p style="font-size: 0.95rem; font-weight: 700; color: #1e293b; margin-top: 0; margin-bottom: 0.35rem;">
-                    VISUALIZING LINEAR + SINE: Undulating Monotonicity vs. Wave-Induced Dips
+                    VISUALIZING LINEAR + SINE: Comparing the Linear Line vs. the Wave Line
                 </p>
                 <p style="font-size: 0.88rem; color: #64748b; margin-top: 0; margin-bottom: 1.25rem; max-width: 780px; display: inline-block; line-height: 1.5;">
-                    Adding a sinusoidal wave to a linear climb produces smooth ripples around the linear trend. If the climb is steep, the sequence remains strictly increasing. If the wave is tall, it pulls terms downward and destroys monotonicity.
+                    Each panel plots the linear ramp (blue), the isolated sine wave (amber), and the combined sum (green or red). Watch how the relationship between the line's slope and the wave's drop decides whether the sequence can preserve monotonicity.
                 </p>
-                <svg viewBox="0 0 840 260" style="width: 100%; max-width: 820px; height: auto; display: inline-block;">
-                    <!-- PANEL 1: DOMINANT CLIMB (STRICTLY INCREASING) -->
+                <svg viewBox="0 0 840 310" style="width: 100%; max-width: 820px; height: auto; display: inline-block;">
+                    <!-- PANEL 1: 2n > 2 sin(pi n / 3) -->
                     <g transform="translate(10, 10)">
-                        <rect x="0" y="0" width="395" height="235" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
-                        <text x="20" y="24" font-size="11.5" font-weight="bold" fill="#047857">1. Dominant Climb: cₙ = 2n + 2 sin(πn/3)</text>
-                        <text x="20" y="38" font-size="10" fill="#64748b">Climb overpowers wave: strictly increasing throughout</text>
+                        <rect x="0" y="0" width="395" height="285" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
+                        <text x="20" y="24" font-size="11.5" font-weight="bold" fill="#047857">1. Line Stride Dominates: 2 > 1.73</text>
+                        <text x="20" y="38" font-size="10" fill="#64748b">Line climbs (+2) faster than wave can drop (-1.73)</text>
 
-                        <!-- Axes: Origin at (70, 205) -->
-                        <line x1="65" y1="205" x2="370" y2="205" stroke="#0f172a" stroke-width="1.5" />
-                        <line x1="70" y1="210" x2="70" y2="55" stroke="#0f172a" stroke-width="1.5" />
-                        <text x="375" y="209" font-size="11" font-weight="bold" fill="#0f172a">n</text>
-                        <text x="66" y="48" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">cₙ</text>
+                        <!-- Legend -->
+                        <line x1="20" y1="52" x2="42" y2="52" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="3,2" />
+                        <text x="46" y="55" font-size="8.5" fill="#0284c7">Line: 2n</text>
+                        <path d="M 100 52 Q 106 47 112 52 T 124 52" fill="none" stroke="#d97706" stroke-width="1.8" />
+                        <text x="128" y="55" font-size="8.5" fill="#d97706">Wave: 2 sin(πn/3)</text>
+                        <circle cx="218" cy="52" r="3.5" fill="#059669" />
+                        <text x="226" y="55" font-size="8.5" font-weight="bold" fill="#047857">Sum cₙ (Climbs!)</text>
 
-                        <!-- Ticks -->
-                        <text x="90" y="218" font-size="9" fill="#475569" text-anchor="middle">0</text>
-                        <text x="135" y="218" font-size="9" fill="#475569" text-anchor="middle">1</text>
-                        <text x="180" y="218" font-size="9" fill="#475569" text-anchor="middle">2</text>
-                        <text x="225" y="218" font-size="9" fill="#475569" text-anchor="middle">3</text>
-                        <text x="270" y="218" font-size="9" fill="#475569" text-anchor="middle">4</text>
-                        <text x="315" y="218" font-size="9" fill="#475569" text-anchor="middle">5</text>
-                        <text x="360" y="218" font-size="9" fill="#475569" text-anchor="middle">6</text>
+                        <!-- Axes: Origin at (70, 230) -->
+                        <line x1="65" y1="230" x2="370" y2="230" stroke="#0f172a" stroke-width="1.5" />
+                        <line x1="70" y1="260" x2="70" y2="65" stroke="#0f172a" stroke-width="1.5" />
+                        <text x="375" y="234" font-size="11" font-weight="bold" fill="#0f172a">n</text>
+                        <text x="66" y="60" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">val</text>
 
-                        <!-- Dashed linear centerline y = 2n -->
-                        <line x1="90" y1="205" x2="360" y2="70" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,3" />
-                        <text x="360" y="62" font-size="8.5" fill="#64748b" text-anchor="end">trend: 2n</text>
+                        <!-- Zero reference dashed line for wave -->
+                        <line x1="70" y1="230" x2="370" y2="230" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2,2" />
 
-                        <!-- Points: n=0..6 -->
-                        <circle cx="90" cy="205" r="4" fill="#059669" />
-                        <circle cx="135" cy="163" r="4" fill="#059669" />
-                        <circle cx="180" cy="140" r="4" fill="#059669" />
-                        <circle cx="225" cy="137" r="4" fill="#059669" />
-                        <circle cx="270" cy="134" r="4" fill="#059669" />
-                        <circle cx="315" cy="112" r="4" fill="#059669" />
-                        <circle cx="360" cy="70" r="4" fill="#059669" />
+                        <!-- Ticks on n-axis -->
+                        <text x="85" y="243" font-size="9" fill="#475569" text-anchor="middle">0</text>
+                        <text x="130" y="243" font-size="9" fill="#475569" text-anchor="middle">1</text>
+                        <text x="175" y="243" font-size="9" fill="#475569" text-anchor="middle">2</text>
+                        <text x="220" y="243" font-size="9" fill="#475569" text-anchor="middle">3</text>
+                        <text x="265" y="243" font-size="9" fill="#475569" text-anchor="middle">4</text>
+                        <text x="310" y="243" font-size="9" fill="#475569" text-anchor="middle">5</text>
+                        <text x="355" y="243" font-size="9" fill="#475569" text-anchor="middle">6</text>
 
-                        <!-- Connecting trajectory line -->
-                        <path d="M 90 205 Q 112 180 135 163 T 180 140 T 225 137 T 270 134 T 315 112 T 360 70" fill="none" stroke="#059669" stroke-width="1.8" opacity="0.6" />
+                        <!-- LINE: 2n (Scale: 1 unit = 11.5px. Origin 0 = 230) -->
+                        <!-- n=0: 230, n=6: 230 - 138 = 92 -->
+                        <line x1="85" y1="230" x2="355" y2="92" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="4,3" />
 
-                        <rect x="180" y="172" width="165" height="18" rx="4" fill="#ecfdf5" stroke="#a7f3d0" />
-                        <text x="262" y="184" font-size="8.5" font-weight="bold" fill="#047857" text-anchor="middle">✓ Always climbs: cₙ₊₁ &gt; cₙ</text>
+                        <!-- WAVE: 2 sin(πn/3) (Centered at y=230) -->
+                        <!-- Values: 0, 1.732, 1.732, 0, -1.732, -1.732, 0 -->
+                        <!-- y: 230, 210, 210, 230, 250, 250, 230 -->
+                        <path d="M 85 230 Q 107 202 130 210 T 175 210 T 220 230 T 265 250 T 310 250 T 355 230" fill="none" stroke="#d97706" stroke-width="1.8" />
+
+                        <!-- SUM: c_n = 2n + 2 sin(πn/3) -->
+                        <!-- Values: 0, 3.73, 5.73, 6.0, 6.27, 8.27, 12.0 -->
+                        <!-- y: 230, 187, 164, 161, 158, 135, 92 -->
+                        <path d="M 85 230 L 130 187 L 175 164 L 220 161 L 265 158 L 310 135 L 355 92" fill="none" stroke="#059669" stroke-width="2" />
+                        <circle cx="85" cy="230" r="4" fill="#059669" />
+                        <circle cx="130" cy="187" r="4" fill="#059669" />
+                        <circle cx="175" cy="164" r="4" fill="#059669" />
+                        <circle cx="220" cy="161" r="4" fill="#059669" />
+                        <circle cx="265" cy="158" r="4" fill="#059669" />
+                        <circle cx="310" cy="135" r="4" fill="#059669" />
+                        <circle cx="355" cy="92" r="4" fill="#059669" />
+
+                        <!-- Banner Badge -->
+                        <rect x="135" y="100" width="220" height="18" rx="4" fill="#ecfdf5" stroke="#a7f3d0" />
+                        <text x="245" y="112" font-size="8.5" font-weight="bold" fill="#047857" text-anchor="middle">Stride (+2) &gt; Max Wave Drop (1.73) ✓</text>
                     </g>
 
-                    <!-- PANEL 2: DOMINANT WAVE (MONOTONICITY BROKEN) -->
+                    <!-- PANEL 2: n < 2.5 sin(pi n / 3) -->
                     <g transform="translate(435, 10)">
-                        <rect x="0" y="0" width="395" height="235" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
-                        <text x="20" y="24" font-size="11.5" font-weight="bold" fill="#b91c1c">2. Dominant Wave: cₙ = n + 2.5 sin(πn/3)</text>
-                        <text x="20" y="38" font-size="10" fill="#64748b">Wave trough plunges: dips backward, breaks monotonicity</text>
+                        <rect x="0" y="0" width="395" height="285" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
+                        <text x="20" y="24" font-size="11.5" font-weight="bold" fill="#b91c1c">2. Wave Drop Dominates: 2.17 > 1</text>
+                        <text x="20" y="38" font-size="10" fill="#64748b">Wave drops (-2.17) faster than line climbs (+1)</text>
+
+                        <!-- Legend -->
+                        <line x1="20" y1="52" x2="42" y2="52" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="3,2" />
+                        <text x="46" y="55" font-size="8.5" fill="#0284c7">Line: n</text>
+                        <path d="M 100 52 Q 106 47 112 52 T 124 52" fill="none" stroke="#d97706" stroke-width="1.8" />
+                        <text x="128" y="55" font-size="8.5" fill="#d97706">Wave: 2.5 sin(πn/3)</text>
+                        <circle cx="225" cy="52" r="3.5" fill="#dc2626" />
+                        <text x="233" y="55" font-size="8.5" font-weight="bold" fill="#b91c1c">Sum cₙ (Dips!)</text>
 
                         <!-- Axes: Origin at (70, 205) -->
                         <line x1="65" y1="205" x2="370" y2="205" stroke="#0f172a" stroke-width="1.5" />
-                        <line x1="70" y1="210" x2="70" y2="55" stroke="#0f172a" stroke-width="1.5" />
+                        <line x1="70" y1="250" x2="70" y2="65" stroke="#0f172a" stroke-width="1.5" />
                         <text x="375" y="209" font-size="11" font-weight="bold" fill="#0f172a">n</text>
-                        <text x="66" y="48" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">cₙ</text>
+                        <text x="66" y="60" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">val</text>
 
-                        <!-- Ticks -->
-                        <text x="90" y="218" font-size="9" fill="#475569" text-anchor="middle">0</text>
-                        <text x="135" y="218" font-size="9" fill="#475569" text-anchor="middle">1</text>
-                        <text x="180" y="218" font-size="9" fill="#475569" text-anchor="middle">2</text>
-                        <text x="225" y="218" font-size="9" fill="#475569" text-anchor="middle">3</text>
-                        <text x="270" y="218" font-size="9" fill="#475569" text-anchor="middle">4</text>
-                        <text x="315" y="218" font-size="9" fill="#475569" text-anchor="middle">5</text>
-                        <text x="360" y="218" font-size="9" fill="#475569" text-anchor="middle">6</text>
+                        <!-- Zero reference dashed line for wave -->
+                        <line x1="70" y1="205" x2="370" y2="205" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2,2" />
 
-                        <!-- Dashed linear centerline y = n -->
-                        <line x1="90" y1="205" x2="360" y2="89" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,3" />
-                        <text x="360" y="81" font-size="8.5" fill="#64748b" text-anchor="end">trend: n</text>
+                        <!-- Ticks on n-axis -->
+                        <text x="85" y="218" font-size="9" fill="#475569" text-anchor="middle">0</text>
+                        <text x="130" y="218" font-size="9" fill="#475569" text-anchor="middle">1</text>
+                        <text x="175" y="218" font-size="9" fill="#475569" text-anchor="middle">2</text>
+                        <text x="220" y="218" font-size="9" fill="#475569" text-anchor="middle">3</text>
+                        <text x="265" y="218" font-size="9" fill="#475569" text-anchor="middle">4</text>
+                        <text x="310" y="218" font-size="9" fill="#475569" text-anchor="middle">5</text>
+                        <text x="355" y="218" font-size="9" fill="#475569" text-anchor="middle">6</text>
 
-                        <!-- Points: n=0..6 -->
-                        <circle cx="90" cy="205" r="4" fill="#dc2626" />
-                        <circle cx="135" cy="144" r="4" fill="#dc2626" />
-                        <circle cx="180" cy="125" r="4.5" fill="#dc2626" stroke="#b91c1c" stroke-width="1.5" />
-                        <!-- Highlighted dip points -->
-                        <circle cx="225" cy="147" r="4.5" fill="#dc2626" stroke="#b91c1c" stroke-width="1.5" />
-                        <circle cx="270" cy="170" r="4.5" fill="#dc2626" stroke="#b91c1c" stroke-width="1.5" />
-                        <circle cx="315" cy="150" r="4" fill="#dc2626" />
-                        <circle cx="360" cy="89" r="4" fill="#dc2626" />
+                        <!-- LINE: n (Scale: 1 unit = 16px. Origin 0 = 205) -->
+                        <!-- n=0: 205, n=6: 205 - 96 = 109 -->
+                        <line x1="85" y1="205" x2="355" y2="109" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="4,3" />
 
-                        <!-- Connecting trajectory line showing trough -->
-                        <path d="M 90 205 Q 112 165 135 144 T 180 125 T 225 147 T 270 170 T 315 150 T 360 89" fill="none" stroke="#dc2626" stroke-width="1.8" opacity="0.6" />
+                        <!-- WAVE: 2.5 sin(πn/3) (Centered at y=205) -->
+                        <!-- Values: 0, 2.165, 2.165, 0, -2.165, -2.165, 0 -->
+                        <!-- y: 205, 170, 170, 205, 240, 240, 205 -->
+                        <path d="M 85 205 Q 107 160 130 170 T 175 170 T 220 205 T 265 240 T 310 240 T 355 205" fill="none" stroke="#d97706" stroke-width="1.8" />
 
-                        <!-- Backward step indicator -->
-                        <line x1="180" y1="125" x2="270" y2="170" stroke="#b91c1c" stroke-width="1.8" stroke-dasharray="2,2" />
-                        <rect x="200" y="98" width="165" height="18" rx="4" fill="#fef2f2" stroke="#fecaca" />
-                        <text x="282" y="110" font-size="8.5" font-weight="bold" fill="#b91c1c" text-anchor="middle">✗ Dips backward: c₄ &lt; c₂</text>
+                        <!-- SUM: c_n = n + 2.5 sin(πn/3) -->
+                        <!-- Values: 0, 3.165, 4.165, 3.0, 1.835, 2.835, 6.0 -->
+                        <!-- y: 205, 154, 138, 157, 176, 160, 109 -->
+                        <path d="M 85 205 L 130 154 L 175 138 L 220 157 L 265 176 L 310 160 L 355 109" fill="none" stroke="#dc2626" stroke-width="2" />
+                        <circle cx="85" cy="205" r="4" fill="#dc2626" />
+                        <circle cx="130" cy="154" r="4" fill="#dc2626" />
+                        <circle cx="175" cy="138" r="4.5" fill="#dc2626" stroke="#b91c1c" stroke-width="1.5" />
+                        <circle cx="220" cy="157" r="4.5" fill="#dc2626" stroke="#b91c1c" stroke-width="1.5" />
+                        <circle cx="265" cy="176" r="4.5" fill="#dc2626" stroke="#b91c1c" stroke-width="1.5" />
+                        <circle cx="310" cy="160" r="4" fill="#dc2626" />
+                        <circle cx="355" cy="109" r="4" fill="#dc2626" />
+
+                        <!-- Backward step indicator line -->
+                        <line x1="175" y1="138" x2="265" y2="176" stroke="#b91c1c" stroke-width="1.5" stroke-dasharray="2,2" />
+
+                        <!-- Banner Badge -->
+                        <rect x="135" y="85" width="220" height="18" rx="4" fill="#fef2f2" stroke="#fecaca" />
+                        <text x="245" y="97" font-size="8.5" font-weight="bold" fill="#b91c1c" text-anchor="middle">Max Wave Drop (2.17) &gt; Stride (+1) ✗ Dip!</text>
                     </g>
                 </svg>
             </div>
@@ -1895,7 +1941,7 @@ def execute_git(args: list[str]) -> subprocess.CompletedProcess:
 
 def main() -> None:
     TARGET_HTML.write_text(WEEK1_LECTURE3_HTML, encoding="utf-8")
-    print(f"Successfully generated {TARGET_HTML.name} with linear + sine wave section.")
+    print(f"Successfully generated {TARGET_HTML.name} with linear and sine wave decomposition lines.")
 
     execute_git(["git", "rev-parse", "--is-inside-work-tree"])
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
@@ -1905,12 +1951,12 @@ def main() -> None:
         print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Add linear plus sinusoidal sequence synthesis and monotonicity visual"
+    commit_subject = "Add linear and sine decomposition lines to Section 5 visual"
     commit_body = (
-        "Add Subsection 3 to Section 5 exploring linear climb plus sine wave,\n"
-        "explain real-world modulation in meteorology, sales, and acoustics,\n"
-        "contrast dominant climb monotonicity with wave-induced troughs,\n"
-        "embed 2-panel SVG illustrating undulating climb vs backward dips,\n"
+        "Plot independent linear and sine wave lines alongside combined sums,\n"
+        "show stride 2 > wave drop 1.73 for 2n + 2 sin(pi*n/3),\n"
+        "show wave drop 2.17 > stride 1 for n + 2.5 sin(pi*n/3),\n"
+        "add text explaining the stride vs wave plunge tug-of-war,\n"
         "and stage updated week1-lecture3.html alongside update.py."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
