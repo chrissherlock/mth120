@@ -2,13 +2,13 @@
 """
 update.py
 
-Injects historical biography boxes for Hippasus, Eudoxus, Weierstrass,
-and Dedekind into week1-lecture2.html matching the week1-lecture1 format,
-corrects image paths, uses raw strings to prevent KaTeX escape warnings,
-and stages both the HTML and this script before committing and pushing.
+Injects standalone biography boxes for Hippasus, Eudoxus, Weierstrass,
+and Dedekind into week1-lecture2.html matching the exact biography-box
+format of Lecture 1, then stages both the HTML and this script.
 """
 
 from pathlib import Path
+import re
 import subprocess
 import sys
 
@@ -39,7 +39,7 @@ HIPPASUS_BOX = r"""            <!-- HISTORICAL CONTEXT: HIPPASUS -->
 
 EUDOXUS_BOX = r"""            <!-- HISTORICAL CONTEXT: EUDOXUS -->
             <div class="biography-box" style="margin-top: 2rem;">
-                <h4>🏛️️ Banishment of the Infinitesimal: Eudoxus of Cnidus</h4>
+                <h4>🏛️ Banishment of the Infinitesimal: Eudoxus of Cnidus</h4>
                 <div style="display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap; margin-top: 0.75rem;">
                     <div style="flex: 0 0 135px; max-width: 135px;">
                         <img src="images/eudoxus.jpg" alt="Eudoxus of Cnidus" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.06); display: block;">
@@ -53,7 +53,7 @@ EUDOXUS_BOX = r"""            <!-- HISTORICAL CONTEXT: EUDOXUS -->
                             <strong>The Theory of Proportions:</strong> Preserved in Book V of Euclid's <em><a href="https://en.wikipedia.org/wiki/Euclid%27s_Elements" target="_blank" rel="noopener noreferrer" style="color: #4f46e5; font-style: italic; text-decoration: underline;">Elements</a></em>, Eudoxus formulated a rigorous definition of proportion that applied equally to rational and incommensurable magnitudes. Crucially, he established what we now know as the <strong>Archimedean Property</strong>: any two positive quantities can exceed one another if either is added to itself a sufficient number of times.
                         </p>
                         <p style="color: #334155; line-height: 1.65; font-size: 0.96rem; margin-bottom: 0;">
-                            In modern analysis, this guarantees that the real line contains no non-zero "infinitely small" ghosts. No matter how small an interval $\epsilon > 0$ is chosen, taking enough discrete steps of size $\epsilon$ will inevitably outrun any finite number, establishing an essential bridge between discrete counting and continuous space.
+                            In modern analysis, this guarantees that the real line contains no non-zero "infinitely small" ghosts. No matter how small an interval $\epsilon > 0$ is chosen, taking enough discrete steps of size $\epsilon$ will eventually outrun any finite number, establishing an essential bridge between discrete counting and continuous space.
                         </p>
                     </div>
                 </div>
@@ -103,13 +103,13 @@ DEDEKIND_BOX = r"""            <!-- HISTORICAL CONTEXT: DEDEKIND -->
                 </div>
             </div>"""
 
-def run_git_command(args: list[str]) -> subprocess.CompletedProcess:
-    res = subprocess.run(args, capture_output=True, text=True)
-    if res.returncode != 0:
-        print(f"Git execution error: {' '.join(args)}", file=sys.stderr)
-        print(res.stderr.strip(), file=sys.stderr)
-        sys.exit(res.returncode)
-    return res
+def run_git(args: list[str]) -> subprocess.CompletedProcess:
+    result = subprocess.run(args, capture_output=True, text=True)
+    if result.returncode != 0:
+        print(f"Git command failed: {' '.join(args)}", file=sys.stderr)
+        print(result.stderr.strip(), file=sys.stderr)
+        sys.exit(result.returncode)
+    return result
 
 def main() -> None:
     if not TARGET_HTML.exists():
@@ -119,28 +119,27 @@ def main() -> None:
     content = TARGET_HTML.read_text(encoding="utf-8")
     original = content
 
-    # Clean out any previously injected bio boxes if present to update cleanly
-    import re
+    # Clean out any old/card-wrapped snippets so they don't leave artifacts
     content = re.sub(
-        r'<!-- HISTORICAL CONTEXT: HIPPASUS -->.*?</div>\s*</div>\s*</div>',
+        r'<!-- HISTORICAL (?:CARD|CONTEXT): HIPPASUS -->.*?(?=\s*<h2 id="field-order">)',
         '',
         content,
         flags=re.DOTALL
     )
     content = re.sub(
-        r'<!-- HISTORICAL CONTEXT: EUDOXUS -->.*?</div>\s*</div>\s*</div>',
+        r'<!-- HISTORICAL (?:CARD|CONTEXT): EUDOXUS -->.*?(?=\s*<h2 id="absolute-value">)',
         '',
         content,
         flags=re.DOTALL
     )
     content = re.sub(
-        r'<!-- HISTORICAL CONTEXT: WEIERSTRASS -->.*?</div>\s*</div>\s*</div>',
+        r'<!-- HISTORICAL (?:CARD|CONTEXT): WEIERSTRASS -->.*?(?=\s*<h2 id="completeness-bounds">)',
         '',
         content,
         flags=re.DOTALL
     )
     content = re.sub(
-        r'<!-- HISTORICAL CONTEXT: DEDEKIND -->.*?</div>\s*</div>\s*</div>',
+        r'<!-- HISTORICAL (?:CARD|CONTEXT): DEDEKIND -->.*?(?=\s*<!-- FOOTER NAVIGATION -->)',
         '',
         content,
         flags=re.DOTALL
@@ -178,30 +177,30 @@ def main() -> None:
         TARGET_HTML.write_text(content, encoding="utf-8")
         print(f"Updated biography boxes in {TARGET_HTML.name}.")
     else:
-        print(f"{TARGET_HTML.name} content is unchanged.")
+        print(f"{TARGET_HTML.name} is already up to date.")
 
     # Git workflow: stage both week1-lecture2.html and update.py
-    run_git_command(["git", "rev-parse", "--is-inside-work-tree"])
-    run_git_command(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
+    run_git(["git", "rev-parse", "--is-inside-work-tree"])
+    run_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
 
     diff_check = subprocess.run(["git", "diff", "--cached", "--quiet"])
     if diff_check.returncode == 0:
-        print("No staged changes. Working tree is clean.")
+        print("No staged changes detected. Working tree is clean.")
         return
 
-    commit_subject = "Align Lecture 2 bio box format and fix asset paths"
+    commit_subject = "Format Lecture 2 biography boxes matching Lecture 1 style"
     commit_body = (
-        "Standardize biography card styling and Wikipedia reference links\n"
-        "to match Lecture 1, correct Hippasus image extension to .png, use\n"
-        "raw string literals for KaTeX formulas, and stage update.py."
+        "Revert outer card containers and use direct biography-box elements\n"
+        "for Hippasus, Eudoxus, Weierstrass, and Dedekind, using raw strings\n"
+        "for KaTeX math and staging update.py alongside the HTML page."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
 
-    run_git_command(["git", "commit", "-m", full_message])
+    run_git(["git", "commit", "-m", full_message])
     print("Committed successfully.")
 
     print("Pushing to remote repository...")
-    run_git_command(["git", "push"])
+    run_git(["git", "push"])
     print("Push complete.")
 
 if __name__ == "__main__":
