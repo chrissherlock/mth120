@@ -3,9 +3,9 @@ r"""
 update.py
 
 Generates week1-lecture3.html with an expanded, student-centered, reassuring
-prose explanation in Section 4, Subsection 1 (The Geometry of Monotonicity).
-- Breaks down directional preservation, strict climbs, and flat plateaus.
-- Connects directly to the 2x2 coordinate plot visual grid.
+prose introduction in Section 3 (Arithmetic and Geometric Progressions).
+- Details the physical intuition of equal strides vs. exponential zoom.
+- Positions the expanded prose directly before the progression cards and stepper.
 - Enforces strict .nobr wrapping on all inline math and trailing punctuation.
 
 Stages week1-lecture3.html and update.py, commits, and pushes upstream.
@@ -425,17 +425,22 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </div>
             </div>
 
-            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-top: 1.25rem;">
-                If you have ever found arithmetic and geometric progressions confusing or hard to keep straight, take reassurance: that experience is widespread. Traditional courses often rush to introduce <span class="nobr">$c_n = an + b$</span> and <span class="nobr">$c_n = a q^n$</span> as abstract algebraic recipes to memorize, obscuring the simple concrete patterns underneath.
+            <!-- REASSURED & EXPANDED PROSE FOR SECTION 3 -->
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.25rem;">1. Unpacking the Two Great Motions: Strides vs. Zoom</h3>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                If you have ever stared at formulas like <span class="nobr">$c_n = an + b$</span> and <span class="nobr">$c_n = a q^n$</span> and wondered why one has $n$ multiplied as a coefficient while the other pops up as an exponent, take heart. Traditional mathematics courses often present these two equations as arbitrary algebraic recipes to memorize for exams.
             </p>
-            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1.5rem;">
-                In reality, only <strong>two fundamental operations</strong> govern these sequences. You are either choosing a fixed step and <em>repeatedly adding it</em>, or choosing a fixed factor and <em>repeatedly multiplying by it</em>. Keeping that stepping picture in mind removes the guesswork from the algebra.
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                In reality, arithmetic and geometric progressions describe two distinct, tangible physical motions along our infinite locker corridor:
             </p>
-
-            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">1. The Intuition: Walking with Strides vs. Multiplying by Zoom</h3>
-            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
-                Picture our infinite locker corridor. We want to place numbers inside each locker so that every step follows a rhythmic, predictable beat. There are two natural ways to do this:
-            </p>
+            <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem; margin-bottom: 1.5rem;">
+                <li style="margin-bottom: 0.65rem;">
+                    <strong>The Arithmetic Walker (Constant Strides):</strong> Imagine starting at baseline position <span class="nobr">$b$</span> in front of Locker 0. To move from any locker to the next, you take a rigid, identical step forward of length <span class="nobr">$a$.</span> Because every single step is an identical addition of $+a$, taking $n$ steps means you have added $a$ exactly $n$ times. By basic multiplication, $n$ additions of $a$ equals <span class="nobr">$an$.</span> Adding that to your starting baseline $b$ gives <span class="nobr">$c_n = an + b$.</span>
+                </li>
+                <li>
+                    <strong>The Geometric Multiplier (Exponential Zoom):</strong> Imagine Locker 0 holds an initial seed quantity <span class="nobr">$a$.</span> Instead of taking additive steps, every single time you cross to a new locker, your current holdings are <em>multiplied</em> by a zoom factor <span class="nobr">$q$.</span> Moving from Locker 0 to Locker 1 multiplies by $q$ once (<span class="nobr">$aq$</span>). Moving to Locker 2 multiplies by $q$ again (<span class="nobr">$aq^2$</span>). By the time you reach Locker $n$, you have multiplied by $q$ precisely $n$ successive times, which naturally groups into the exponent <span class="nobr">$q^n$,</span> yielding <span class="nobr">$c_n = a q^n$.</span>
+                </li>
+            </ul>
 
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.5rem; margin: 1.5rem 0;">
                 <!-- ARITHMETIC -->
@@ -479,7 +484,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </div>
             </div>
 
-            <!-- INTERACTIVE PEDAGOGICAL AID: PROGRESSION STEPPING SIMULATOR (POSITIONED TO DEMONSTRATE THE INTUITION) -->
+            <!-- INTERACTIVE PEDAGOGICAL AID: PROGRESSION STEPPING SIMULATOR -->
             <div id="progression-stepper-widget" style="margin: 2.25rem 0; background: #ffffff; border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); overflow: hidden;">
                 <!-- HEADER & COMPARATIVE TOGGLES -->
                 <div style="background: #f8fafc; border-bottom: 1px solid var(--border); padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
@@ -698,7 +703,7 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </div>
             </div>
 
-            <!-- SUBSECTION 1: THE GEOMETRY OF MONOTONICITY (EXPANDED DETAILED REASSURING PROSE) -->
+            <!-- SUBSECTION 1: THE GEOMETRY OF MONOTONICITY -->
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">1. The Geometry of Monotonicity: Preserving Direction</h3>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
                 The word <em>monotonic</em> comes from Greek roots meaning <em>"one single tone"</em> or <em>"one single style."</em> When mathematicians apply this term to an infinite sequence, don't let the formal notation intimidate you. The concept is deeply intuitive: <strong>a sequence is monotonic if it picks a single direction along the real line and commits to it forever.</strong>
@@ -783,7 +788,6 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
                         <text x="46" y="50" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
 
-                        <!-- Points with plateau at n=1 and n=2 -->
                         <line x1="80" y1="180" x2="80" y2="150" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="80" cy="150" r="4.5" fill="#059669" />
                         <text x="80" y="195" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
@@ -796,7 +800,6 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <circle cx="200" cy="115" r="4.5" fill="#059669" />
                         <text x="200" y="195" font-size="9.5" fill="#475569" text-anchor="middle">2</text>
 
-                        <!-- Plateau visual highlight -->
                         <line x1="140" y1="115" x2="200" y2="115" stroke="#10b981" stroke-width="2.5" />
                         <text x="170" y="104" font-size="9.5" font-weight="bold" fill="#047857" text-anchor="middle">Flat Plateau: a₁ = a₂</text>
 
@@ -822,7 +825,6 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
                         <text x="46" y="50" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
 
-                        <!-- Points -->
                         <line x1="80" y1="180" x2="80" y2="60" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="80" cy="60" r="4.5" fill="#d97706" />
                         <text x="80" y="195" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
@@ -857,7 +859,6 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                         <text x="375" y="184" font-size="11" font-weight="bold" fill="#0f172a">n</text>
                         <text x="46" y="50" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
 
-                        <!-- Points zigzagging -->
                         <line x1="80" y1="180" x2="80" y2="140" stroke="#94a3b8" stroke-dasharray="2,2" />
                         <circle cx="80" cy="140" r="4.5" fill="#ef4444" />
                         <text x="80" y="195" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
@@ -1444,7 +1445,7 @@ def execute_git(args: list[str]) -> subprocess.CompletedProcess:
 
 def main() -> None:
     TARGET_HTML.write_text(WEEK1_LECTURE3_HTML, encoding="utf-8")
-    print(f"Successfully generated {TARGET_HTML.name} with expanded monotonicity prose.")
+    print(f"Successfully generated {TARGET_HTML.name} with expanded progression prose.")
 
     execute_git(["git", "rev-parse", "--is-inside-work-tree"])
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
@@ -1454,11 +1455,11 @@ def main() -> None:
         print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Expand monotonicity prose with reassuring geometric breakdown"
+    commit_subject = "Expand Section 3 progression prose with walking and zoom intuition"
     commit_body = (
-        "Enhance Section 4 Subsection 1 with friendly, detailed intuition,\n"
-        "contrast strict elevation changes with non-decreasing plateaus,\n"
-        "place expanded prose immediately before 2x2 monotonicity visual grid,\n"
+        "Enhance Section 3 introductory prose with friendly, reassuring breakdown,\n"
+        "contrast additive stride walking with multiplicative exponential zoom,\n"
+        "place expanded prose immediately before progression cards and stepper,\n"
         "and stage updated week1-lecture3.html alongside update.py."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
