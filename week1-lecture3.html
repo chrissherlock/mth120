@@ -478,9 +478,9 @@
                     </div>
                     <!-- Dedicated Inline Preview Panel -->
                     <div style="background: #ffffff; border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 6px; padding: 0.6rem 0.9rem;">
-                        <span style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: #64748b; display: block;">Step Mission Preview</span>
+                        <span style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: #64748b; display: block;">Step Walkthrough Preview</span>
                         <p id="inline-preview-text" style="margin: 0; font-size: 0.88rem; line-height: 1.45; color: #1e293b;">
-                            Establishing position at Locker 0. Reading baseline contents before any steps are taken.
+                            Standing in front of Locker 0. Inspecting the baseline contents before any steps are taken.
                         </p>
                     </div>
                 </div>
@@ -493,7 +493,7 @@
                             <span>⚙️</span> What Is Happening (Mechanics)
                         </h5>
                         <div id="pane-what" style="font-size: 0.9rem; line-height: 1.55; color: #14532d;">
-                            The rover is stationed at locker index 0. Value is initialized to the base constant b = 2.
+                            The index pointer is stationed at Locker 0. The value is initialized to the base constant b = 2.
                         </div>
                     </div>
 
@@ -503,7 +503,7 @@
                             <span>💡</span> Why The System Does This (Rationale)
                         </h5>
                         <div id="pane-why" style="font-size: 0.9rem; line-height: 1.55; color: #1e3a8a;">
-                            Locker 0 represents state before iteration begins. Because no step difference has been added yet, the step counter is n = 0, leaving only the pure baseline b.
+                            Locker 0 represents the state before iteration begins. Because no step difference has been added yet, the step counter is n = 0, leaving only the pure baseline b.
                         </div>
                     </div>
                 </div>
@@ -1082,12 +1082,12 @@
                 minVal: 0,
                 maxVal: 20,
                 steps: [
-                    { n: 0, val: 2, op: "Initial Base", formula: "b = 2", preview: "Stationed at Locker 0. Reading baseline parameter b before any strides are taken.", what: "Rover initializes at position c₀ = 2. Zero strides of size a = 3 have occurred.", why: "In an arithmetic model cₙ = an + b, the term an vanishes when n = 0, leaving pure baseline b." },
-                    { n: 1, val: 5, op: "Added +3", formula: "2 + 3 = 5", preview: "Taking first stride. Advancing from Locker 0 to Locker 1 by adding fixed difference a = 3.", what: "Rover moves from 2 to 5 by adding stride a = 3. One hop executed.", why: "Discrete stepping advances by constant addition: c₁ = c₀ + a = 2 + 3." },
-                    { n: 2, val: 8, op: "Added +3", formula: "2 + 3(2) = 8", preview: "Taking second stride. Stacking another stride of size 3 to reach Locker 2.", what: "Rover advances to position 8. Two strides of size 3 have now accumulated.", why: "Repeated addition compresses into multiplication by index n: 2 + 3 + 3 = 2 + 3(2)." },
-                    { n: 3, val: 11, op: "Added +3", formula: "2 + 3(3) = 11", preview: "Taking third stride. Marching along the line at an exact steady, rhythmic pace.", what: "Rover advances to 11. Stride length remains identically 3 units.", why: "Notice the rate of change is constant: cₙ' = cₙ₊₁ - cₙ = 3 everywhere." },
-                    { n: 4, val: 14, op: "Added +3", formula: "2 + 3(4) = 14", preview: "Taking fourth stride. Leaping directly forward without changing stride width.", what: "Rover advances to position 14. Four identical intervals of 3 have been traversed.", why: "Direct calculation c₄ = 3(4) + 2 = 14 matches the 4-step walk identically." },
-                    { n: 5, val: 17, op: "Added +3", formula: "2 + 3(5) = 17", preview: "Reaching fifth waypoint. Verifying linear progression along the locker corridor.", what: "Rover arrives at final station c₅ = 17. Total distance gained is 5 × 3 = 15 units.", why: "Linear growth has no surprises: every single gap across the corridor is congruent." }
+                    { n: 0, val: 2, op: "Initial Base", formula: "b = 2", preview: "Standing in front of Locker 0. Reading baseline parameter b before any strides are taken.", what: "The sequence initializes at position c₀ = 2. Zero strides of size a = 3 have occurred.", why: "In an arithmetic model cₙ = an + b, the term an vanishes when n = 0, leaving pure baseline b." },
+                    { n: 1, val: 5, op: "Added +3", formula: "2 + 3 = 5", preview: "Taking first stride. Advancing from Locker 0 to Locker 1 by adding fixed difference a = 3.", what: "The value moves from 2 to 5 by adding stride a = 3. One step executed.", why: "Discrete stepping advances by constant addition: c₁ = c₀ + a = 2 + 3." },
+                    { n: 2, val: 8, op: "Added +3", formula: "2 + 3(2) = 8", preview: "Taking second stride. Stacking another stride of size 3 to reach Locker 2.", what: "The position advances to 8. Two strides of size 3 have now accumulated.", why: "Repeated addition compresses into multiplication by index n: 2 + 3 + 3 = 2 + 3(2)." },
+                    { n: 3, val: 11, op: "Added +3", formula: "2 + 3(3) = 11", preview: "Taking third stride. Marching along the line at an exact steady, rhythmic pace.", what: "The position advances to 11. Stride length remains identically 3 units.", why: "Notice the rate of change is constant: cₙ' = cₙ₊₁ - cₙ = 3 everywhere." },
+                    { n: 4, val: 14, op: "Added +3", formula: "2 + 3(4) = 14", preview: "Taking fourth stride. Leaping directly forward without changing stride width.", what: "The position advances to 14. Four identical intervals of 3 have been traversed.", why: "Direct calculation c₄ = 3(4) + 2 = 14 matches the 4-step walk identically." },
+                    { n: 5, val: 17, op: "Added +3", formula: "2 + 3(5) = 17", preview: "Reaching fifth waypoint. Verifying linear progression along the locker corridor.", what: "We arrive at Locker 5 with c₅ = 17. Total distance gained is 5 × 3 = 15 units.", why: "Linear growth has no surprises: every single gap across the corridor is congruent." }
                 ]
             },
             geom_growth: {
@@ -1096,12 +1096,12 @@
                 minVal: 0,
                 maxVal: 68,
                 steps: [
-                    { n: 0, val: 2, op: "Initial Base", formula: "a · q⁰ = 2", preview: "Stationed at Locker 0. Base scale factor initialized to a = 2.", what: "Quantity starts at c₀ = 2. Zero zoom multiplications have taken place.", why: "Because q⁰ = 1 for any non-zero ratio, c₀ = a · 1 = a." },
+                    { n: 0, val: 2, op: "Initial Base", formula: "a · q⁰ = 2", preview: "Standing in front of Locker 0. Base scale factor initialized to a = 2.", what: "Quantity starts at c₀ = 2. Zero zoom multiplications have taken place.", why: "Because q⁰ = 1 for any non-zero ratio, c₀ = a · 1 = a." },
                     { n: 1, val: 4, op: "Scaled ×2", formula: "2 · 2¹ = 4", preview: "Applying first scaling factor. Doubling contents of Locker 0 to fill Locker 1.", what: "Current value 2 is multiplied by common ratio q = 2, reaching 4.", why: "Geometric steps advance by ratio multiplication: c₁ = c₀ · q = 2 · 2." },
                     { n: 2, val: 8, op: "Scaled ×2", formula: "2 · 2² = 8", preview: "Applying second doubling. Stride length between lockers visibly doubles.", what: "Value jumps from 4 to 8. Notice the jump distance (4) is already twice the first jump (2).", why: "Repeated multiplication creates exponents: c₂ = a · q · q = a · q²." },
                     { n: 3, val: 16, op: "Scaled ×2", formula: "2 · 2³ = 16", preview: "Third doubling step. Observe the stride beginning to stretch aggressively across the canvas.", what: "Value jumps from 8 to 16. Jump span is 8 units.", why: "Each step difference is itself growing: cₙ' = a(q - 1)qⁿ = 2(1)2ⁿ = cₙ." },
-                    { n: 4, val: 32, op: "Scaled ×2", formula: "2 · 2⁴ = 32", preview: "Fourth doubling step. The gap expands past all previous milestones combined.", what: "Value explodes from 16 to 32. One single jump covers more ground than the whole prior journey.", why: "Exponential acceleration: powers of 2 outpace any linear stride after few steps." },
-                    { n: 5, val: 64, op: "Scaled ×2", formula: "2 · 2⁵ = 64", preview: "Final station reached. Total magnification reaches 32-fold over Locker 0.", what: "Rover terminates at c₅ = 64. Initial quantity 2 has multiplied by 2⁵ = 32.", why: "In geometric growth, index n determines how many times ratio q multiplies itself." }
+                    { n: 4, val: 32, op: "Scaled ×2", formula: "2 · 2⁴ = 32", preview: "Fourth doubling step. The gap expands past all previous milestones combined.", what: "Value grows from 16 to 32. One single jump covers more ground than the whole prior journey.", why: "Exponential acceleration: powers of 2 outpace any linear stride after few steps." },
+                    { n: 5, val: 64, op: "Scaled ×2", formula: "2 · 2⁵ = 64", preview: "Final station reached. Total magnification reaches 32-fold over Locker 0.", what: "We reach Locker 5 with c₅ = 64. Initial quantity 2 has multiplied by 2⁵ = 32.", why: "In geometric growth, index n determines how many times ratio q multiplies itself." }
                 ]
             },
             geom_decay: {
@@ -1110,12 +1110,12 @@
                 minVal: 0,
                 maxVal: 68,
                 steps: [
-                    { n: 0, val: 64, op: "Initial Base", formula: "64 · (½)⁰ = 64", preview: "Stationed at Locker 0. High initial concentration starting at mass 64.", what: "Sample starts at full magnitude c₀ = 64. Zero decay intervals elapsed.", why: "Initial term corresponds to zero multiplications: c₀ = 64 · 1 = 64." },
-                    { n: 1, val: 32, op: "Scaled ×0.5", formula: "64 · (½)¹ = 32", preview: "First half-life interval. Halving mass from 64 down to 32.", what: "Value drops by 32 units, arriving at position 32.", why: "Ratio q = ½ causes contraction: c₁ = 64 · ½ = 32." },
-                    { n: 2, val: 16, op: "Scaled ×0.5", formula: "64 · (½)² = 16", preview: "Second half-life interval. Stride drops to 16 units as values contract.", what: "Value drops from 32 to 16. The step size itself has been cut in half.", why: "Successive steps compress: c₂ = 64 · (½)² = 64 · ¼ = 16." },
+                    { n: 0, val: 64, op: "Initial Base", formula: "64 · (½)⁰ = 64", preview: "Standing in front of Locker 0. Initial level starting at 64.", what: "Sample starts at magnitude c₀ = 64. Zero decay intervals elapsed.", why: "Initial term corresponds to zero multiplications: c₀ = 64 · 1 = 64." },
+                    { n: 1, val: 32, op: "Scaled ×0.5", formula: "64 · (½)¹ = 32", preview: "First half-step interval. Halving value from 64 down to 32.", what: "Value drops by 32 units, arriving at position 32.", why: "Ratio q = ½ causes contraction: c₁ = 64 · ½ = 32." },
+                    { n: 2, val: 16, op: "Scaled ×0.5", formula: "64 · (½)² = 16", preview: "Second half-step interval. Stride drops to 16 units as values contract.", what: "Value drops from 32 to 16. The step size itself has been cut in half.", why: "Successive steps compress: c₂ = 64 · (½)² = 64 · ¼ = 16." },
                     { n: 3, val: 8, op: "Scaled ×0.5", formula: "64 · (½)³ = 8", preview: "Third interval. Steps grow progressively tighter as value nears zero floor.", what: "Value contracts to 8. Jump size is now only 8 units.", why: "Differences become smaller and smaller: decay naturally decelerates toward zero." },
                     { n: 4, val: 4, op: "Scaled ×0.5", formula: "64 · (½)⁴ = 4", preview: "Fourth interval. Approaching zero asymptotically without crossing it.", what: "Value drops to 4. All terms remain strictly positive (cₙ > 0).", why: "Multiplying positive numbers by positive fractions can never produce a negative." },
-                    { n: 5, val: 2, op: "Scaled ×0.5", formula: "64 · (½)⁵ = 2", preview: "Fifth interval. Massive initial stock has reduced to a sliver of baseline.", what: "Rover finishes at c₅ = 2. Value has shrunk by a factor of (½)⁵ = 1/32.", why: "Geometric decay models half-life, depreciation, and asymptotic convergence." }
+                    { n: 5, val: 2, op: "Scaled ×0.5", formula: "64 · (½)⁵ = 2", preview: "Fifth interval. Initial value has reduced to a small fraction of baseline.", what: "We reach Locker 5 with c₅ = 2. The value has shrunk by a factor of (½)⁵ = 1/32.", why: "Geometric decay models half-life, depreciation, and asymptotic convergence." }
                 ]
             }
         };
@@ -1178,7 +1178,7 @@
                 }
             }
 
-            // Rover active point
+            // Active Position Marker
             const curX = scaleX(stepData.val);
             html += `<circle cx="${curX}" cy="${axisY}" r="7" fill="${mode.color}" stroke="#ffffff" stroke-width="2.5" />`;
             html += `<circle cx="${curX}" cy="${axisY}" r="13" fill="${mode.color}" opacity="0.25" />`;
@@ -1258,7 +1258,6 @@
         };
 
         document.addEventListener('DOMContentLoaded', updateDisplay);
-        // Fallback for direct script placement
         if (document.readyState === 'complete' || document.readyState === 'interactive') {
             updateDisplay();
         }
