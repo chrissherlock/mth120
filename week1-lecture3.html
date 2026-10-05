@@ -256,89 +256,164 @@
             <!-- SECTION 3 -->
             <h2 id="arithmetic-geometric">3. Arithmetic and Geometric Sequences</h2>
 
+            <!-- EMPATHETIC BEGINNER ORIENTATION -->
+            <div style="background: #fdf4ff; border: 1px solid #f5d0fe; border-left: 5px solid #a855f7; border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                <h4 style="margin: 0 0 0.5rem 0; color: #7e22ce; font-size: 1.05rem;">🌱 Finding Your Confidence: Demystifying Progression Formulas</h4>
+                <p style="margin: 0 0 0.75rem 0; font-size: 0.98rem; line-height: 1.7; color: #3b0764;">
+                    If you have ever felt confused or intimidated by arithmetic and geometric sequences, please take comfort in knowing that <strong>almost everyone feels this way at first</strong>. High school math often presents these as mysterious formulas to memorize (<span class="nobr">$c_n = an + b$</span> and <span class="nobr">$c_n = a q^n$</span>) without ever explaining the simple physical engine under the hood.
+                </p>
+                <p style="margin: 0; font-size: 0.98rem; line-height: 1.7; color: #3b0764;">
+                    Here is the secret: there are only <strong>two fundamental operations</strong> happening. You are either taking a fixed step and <em>adding it over and over</em>, or you are taking a fixed multiplier and <em>multiplying by it over and over</em>. Once you see the step-by-step ladder, you will never get lost in the algebra again.
+                </p>
+            </div>
+
             <div class="infobox">
                 <h4>📖 Notation Reference: Progression Parameters</h4>
                 <div class="infobox-intro">
-                    <strong>Tracking steps vs. ratios:</strong> Note that here $a, b,$ and $q$ represent fixed constant real numbers, while $n$ remains our discrete step counter.
+                    <strong>Notice the parameter names:</strong> In these formulas, $a, b,$ and $q$ are fixed numbers that define the rule, while $n$ is simply the locker door counter <span class="nobr">($0, 1, 2, 3, \dots$).</span>
                 </div>
                 <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$c_n = an + b$</span></span><span class="notation-desc">Arithmetic sequence: baseline offset $b$, growing by constant stride $a$</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$c_{n+1} - c_n = a$</span></span><span class="notation-desc">Common difference: constant subtraction gap between successive terms</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$c_n = a \cdot q^n$</span></span><span class="notation-desc">Geometric sequence: initial scale factor $a$, multiplied each step by ratio $q$</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$\frac{c_{n+1}}{c_n} = q$</span></span><span class="notation-desc">Common ratio: constant quotient when dividing consecutive terms ($c_n \ne 0$)</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$c_n = an + b$</span></span><span class="notation-desc">Arithmetic formula: start at baseline $b$, take $n$ strides of size $a$</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$c_{n+1} - c_n = a$</span></span><span class="notation-desc">Common difference: the fixed stride size added at every single step</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$c_n = a \cdot q^n$</span></span><span class="notation-desc">Geometric formula: start at scale $a$, multiply $n$ times by ratio $q$</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$\frac{c_{n+1}}{c_n} = q$</span></span><span class="notation-desc">Common ratio: the constant scaling factor between adjacent terms</span></div>
                 </div>
             </div>
 
-            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
-                Among all possible sequences, two fundamental families appear everywhere across mathematics, physical systems, and financial modeling: sequences driven by <strong>constant addition</strong> (walking with equal strides), and sequences driven by <strong>constant multiplication</strong> (scaling by a fixed factor at each rung).
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">1. The Intuition: Walking with Strides vs. Multiplying by Zoom</h3>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
+                Picture our infinite locker corridor. We want to place numbers inside each locker so that every step follows a rhythmic, predictable beat. There are two natural ways to do this:
             </p>
 
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.5rem; margin: 1.5rem 0;">
                 <!-- ARITHMETIC -->
                 <div style="background: #ffffff; border: 1px solid var(--border); border-left: 4px solid #0284c7; border-radius: 6px; padding: 1.25rem;">
-                    <h3 style="margin-top: 0; color: #0369a1; font-size: 1.1rem;">Arithmetic Sequences (Additive Strides)</h3>
+                    <h3 style="margin-top: 0; color: #0369a1; font-size: 1.1rem;">Arithmetic Sequences: The Equal-Stride Walker</h3>
                     <p style="font-size: 0.95rem; color: #334155; line-height: 1.6;">
-                        Start at a base value <span class="nobr">$b$,</span> then add the exact same fixed step size <span class="nobr">$a$</span> at every single turn:
+                        Imagine standing at position <span class="nobr">$b$</span> in front of Locker 0. To reach the next locker, you take a fixed stride forward of length <span class="nobr">$a$.</span>
                     </p>
                     <div class="definition-box" style="border-left-color: #0284c7; margin: 0.5rem 0;">
                         $$c_n = an + b \quad (n \ge 0)$$
                     </div>
-                    <ul style="font-size: 0.9rem; color: #334155; padding-left: 1.25rem; line-height: 1.6;">
-                        <li><strong>Starting term ($n=0$):</strong> <span class="nobr">$c_0 = a(0) + b = b$</span></li>
-                        <li><strong>Next term ($n=1$):</strong> <span class="nobr">$c_1 = a(1) + b = b + a$</span></li>
-                        <li><strong>Constant step:</strong> <span class="nobr">$c_{n+1} - c_n = a$</span></li>
+                    <p style="font-size: 0.92rem; color: #334155; line-height: 1.6; margin-bottom: 0.5rem;">
+                        <strong>Why does this formula make sense?</strong>
+                    </p>
+                    <ul style="font-size: 0.9rem; color: #334155; padding-left: 1.25rem; line-height: 1.6; margin: 0;">
+                        <li>Locker 0: You haven't taken any steps yet: <span class="nobr">$c_0 = a(0) + b = b$.</span></li>
+                        <li>Locker 1: You take 1 stride: <span class="nobr">$c_1 = b + a$.</span></li>
+                        <li>Locker 2: You take 2 strides: <span class="nobr">$c_2 = b + a + a = 2a + b$.</span></li>
+                        <li>Locker $n$: You take $n$ strides: <span class="nobr">$c_n = an + b$.</span></li>
                     </ul>
                 </div>
 
                 <!-- GEOMETRIC -->
                 <div style="background: #ffffff; border: 1px solid var(--border); border-left: 4px solid #10b981; border-radius: 6px; padding: 1.25rem;">
-                    <h3 style="margin-top: 0; color: #047857; font-size: 1.1rem;">Geometric Sequences (Multiplicative Scaling)</h3>
+                    <h3 style="margin-top: 0; color: #047857; font-size: 1.1rem;">Geometric Sequences: The Exponential Multiplier</h3>
                     <p style="font-size: 0.95rem; color: #334155; line-height: 1.6;">
-                        Start at a non-zero scale factor <span class="nobr">$a$,</span> then multiply by a fixed ratio <span class="nobr">$q$</span> at each successive step:
+                        Imagine Locker 0 starts with quantity <span class="nobr">$a$.</span> At every subsequent locker, the quantity is multiplied by a zoom factor <span class="nobr">$q$.</span>
                     </p>
                     <div class="definition-box" style="border-left-color: #10b981; margin: 0.5rem 0;">
                         $$c_n = a \cdot q^n \quad (n \ge 0)$$
                     </div>
-                    <ul style="font-size: 0.9rem; color: #334155; padding-left: 1.25rem; line-height: 1.6;">
-                        <li><strong>Starting term ($n=0$):</strong> <span class="nobr">$c_0 = a \cdot q^0 = a$</span></li>
-                        <li><strong>Next term ($n=1$):</strong> <span class="nobr">$c_1 = a \cdot q^1 = aq$</span></li>
-                        <li><strong>Constant ratio:</strong> <span class="nobr">$\frac{c_{n+1}}{c_n} = q$</span> (for $a \ne 0, q \ne 0, 1$)</li>
+                    <p style="font-size: 0.92rem; color: #334155; line-height: 1.6; margin-bottom: 0.5rem;">
+                        <strong>Why does this formula make sense?</strong>
+                    </p>
+                    <ul style="font-size: 0.9rem; color: #334155; padding-left: 1.25rem; line-height: 1.6; margin: 0;">
+                        <li>Locker 0: Multiplied 0 times (<span class="nobr">$q^0 = 1$</span>): <span class="nobr">$c_0 = a \cdot 1 = a$.</span></li>
+                        <li>Locker 1: Multiplied once: <span class="nobr">$c_1 = a \cdot q$.</span></li>
+                        <li>Locker 2: Multiplied twice: <span class="nobr">$c_2 = a \cdot q \cdot q = aq^2$.</span></li>
+                        <li>Locker $n$: Multiplied $n$ times: <span class="nobr">$c_n = a \cdot q^n$.</span></li>
                     </ul>
                 </div>
             </div>
 
+            <!-- THE DETECTIVE WALKTHROUGH -->
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 2rem;">2. The Detective Test: How to Diagnose Any Mystery Sequence</h3>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
+                Suppose someone hands you a raw list of numbers and asks: <em>"Is this arithmetic, geometric, or neither?"</em> Don't guess! Run this simple 2-step diagnostic:
+            </p>
+
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.25rem 0;">
+                <ol style="margin: 0; padding-left: 1.25rem; font-size: 0.98rem; line-height: 1.75; color: #334155;">
+                    <li style="margin-bottom: 0.75rem;">
+                        <strong>Test 1: Subtraction (Checking for Constant Stride).</strong><br>
+                        Subtract each term from its successor: <span class="nobr">$c_1 - c_0$,</span> then <span class="nobr">$c_2 - c_1$,</span> then <span class="nobr">$c_3 - c_2$.</span><br>
+                        • If all the differences equal the exact same number <span class="nobr">$a$,</span> you have an <strong>arithmetic sequence</strong> with common difference <span class="nobr">$a$!</span>
+                    </li>
+                    <li>
+                        <strong>Test 2: Division (Checking for Constant Ratio).</strong><br>
+                        Divide each term by its predecessor: <span class="nobr">$c_1 / c_0$,</span> then <span class="nobr">$c_2 / c_1$,</span> then <span class="nobr">$c_3 / c_2$.</span><br>
+                        • If all the quotients equal the exact same number <span class="nobr">$q$,</span> you have a <strong>geometric sequence</strong> with common ratio <span class="nobr">$q$!</span>
+                    </li>
+                </ol>
+            </div>
+
             <div class="aside-box">
-                <h4>💡 Why Do We Restrict $a \ne 0$ and $q \ne 0, 1$ in Geometric Sequences?</h4>
+                <h4>💡 Why Do We Exclude $a = 0$ and $q \in \{0, 1\}$ in Geometric Sequences?</h4>
                 <p style="margin-top: 0; margin-bottom: 0.5rem; font-size: 0.95rem;">
-                    Mathematicians exclude these values to prevent trivial "collapses":
+                    Students often wonder why textbooks include fine-print restrictions like <span class="nobr">$a \ne 0$</span> and <span class="nobr">$q \ne 0, 1$.</span> The reason is not to be annoying; it is simply to prevent the sequence from "breaking" into a boring, trivial list:
                 </p>
                 <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.92rem; line-height: 1.6;">
-                    <li>If <span class="nobr">$a = 0$,</span> every term collapses to <span class="nobr">$0 \cdot q^n = 0$</span> (a flat constant zero sequence).</li>
-                    <li>If <span class="nobr">$q = 0$,</span> the sequence becomes <span class="nobr">$(a, 0, 0, 0, \dots)$,</span> losing all multiplicative scaling after the first step.</li>
-                    <li>If <span class="nobr">$q = 1$,</span> then <span class="nobr">$q^n = 1^n = 1$,</span> so the sequence is permanently frozen at <span class="nobr">$(a, a, a, \dots)$.</span></li>
+                    <li>If <span class="nobr">$a = 0$,</span> then <span class="nobr">$c_n = 0 \cdot q^n = 0$</span> for every term. The sequence is permanently frozen at zero.</li>
+                    <li>If <span class="nobr">$q = 0$,</span> then <span class="nobr">$c_0 = a$,</span> but every subsequent term becomes <span class="nobr">$a \cdot 0^n = 0$.</span> It falls off a cliff immediately.</li>
+                    <li>If <span class="nobr">$q = 1$,</span> then <span class="nobr">$1^n = 1$,</span> so the sequence is permanently <span class="nobr">$(a, a, a, a, \dots)$.</span> Nothing is actually scaling!</li>
                 </ul>
             </div>
 
+            <!-- TWO FULLY WORKED EXAMPLES -->
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 2rem;">3. Fully Worked Step-by-Step Examples</h3>
+
             <div class="worked-example-box">
-                <h4>🎯 Worked Example: Constructing Both Progressions Step-by-Step</h4>
+                <h4>🎯 Worked Example A: The Daily Savings Account (Arithmetic Progression)</h4>
+                <p style="margin-top: 0; font-size: 0.98rem; line-height: 1.7;">
+                    <strong>Scenario:</strong> You start with $\$10$ in a piggy bank on Day 0. Every day thereafter, you deposit $\$3$. Let <span class="nobr">$c_n$</span> be your savings on Day <span class="nobr">$n$.</span>
+                </p>
                 <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
-                    <li><strong>Arithmetic Example (Odd Numbers):</strong> Let baseline <span class="nobr">$b = 1$</span> and step size <span class="nobr">$a = 2$.</span>
-                        <div style="margin: 0.35rem 0;">
-                            Formula: <span class="nobr">$c_n = 2n + 1$</span> for <span class="nobr">$n \ge 0$.</span>
-                        </div>
-                        • Step 0: <span class="nobr">$c_0 = 2(0) + 1 = 1$</span><br>
-                        • Step 1: <span class="nobr">$c_1 = 2(1) + 1 = 3$</span> (added 2)<br>
-                        • Step 2: <span class="nobr">$c_2 = 2(2) + 1 = 5$</span> (added 2)<br>
-                        Resulting list: <span class="nobr">$(1, 3, 5, 7, 9, \dots)$.</span> The step difference is constant: <span class="nobr">$c_{n+1} - c_n = 2$.</span>
+                    <li><strong>Identify the parameters:</strong><br>
+                        • Base starting amount: <span class="nobr">$b = 10$</span> (this is the value in Locker 0: <span class="nobr">$c_0 = 10$</span>).<br>
+                        • Step size added daily: <span class="nobr">$a = 3$</span> (common difference).
                     </li>
-                    <li style="margin-top: 0.75rem;"><strong>Geometric Example (Repeated Doubling):</strong> Let base factor <span class="nobr">$a = 1$</span> and ratio <span class="nobr">$q = 2$.</span>
-                        <div style="margin: 0.35rem 0;">
-                            Formula: <span class="nobr">$c_n = 1 \cdot 2^n$</span> for <span class="nobr">$n \ge 0$.</span>
-                        </div>
-                        • Step 0: <span class="nobr">$c_0 = 1 \cdot 2^0 = 1$</span><br>
-                        • Step 1: <span class="nobr">$c_1 = 1 \cdot 2^1 = 2$</span> (multiplied by 2)<br>
-                        • Step 2: <span class="nobr">$c_2 = 1 \cdot 2^2 = 4$</span> (multiplied by 2)<br>
-                        Resulting list: <span class="nobr">$(1, 2, 4, 8, 16, 32, \dots)$.</span> The ratio between terms is constant: <span class="nobr">$\frac{c_{n+1}}{c_n} = 2$.</span>
+                    <li><strong>Write the general formula:</strong><br>
+                        <span class="nobr">$$c_n = an + b = 3n + 10$$</span>
+                    </li>
+                    <li><strong>Compute the first few terms by hand:</strong><br>
+                        • Day 0: <span class="nobr">$c_0 = 3(0) + 10 = 10$</span><br>
+                        • Day 1: <span class="nobr">$c_1 = 3(1) + 10 = 13$</span> (notice: $10 + 3 = 13$)<br>
+                        • Day 2: <span class="nobr">$c_2 = 3(2) + 10 = 16$</span> (notice: $13 + 3 = 16$)<br>
+                        • Day 3: <span class="nobr">$c_3 = 3(3) + 10 = 19$</span><br>
+                        The sequence is <span class="nobr">$(10, 13, 16, 19, \dots)$.</span>
+                    </li>
+                    <li><strong>Jump directly to the future without counting step-by-step:</strong><br>
+                        How much money will you have on Day 50?<br>
+                        You don't need to add 3 fifty times! Just plug in <span class="nobr">$n = 50$:</span><br>
+                        <span class="nobr">$$c_{50} = 3(50) + 10 = 150 + 10 = \$160$$</span>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="worked-example-box" style="margin-top: 1.5rem;">
+                <h4>🎯 Worked Example B: Half-Life Decay (Geometric Progression)</h4>
+                <p style="margin-top: 0; font-size: 0.98rem; line-height: 1.7;">
+                    <strong>Scenario:</strong> A sample contains $80\text{ grams}$ of a substance. Each hour, exactly half of the remaining substance decays. Let <span class="nobr">$c_n$</span> be the mass remaining after <span class="nobr">$n$</span> hours.
+                </p>
+                <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
+                    <li><strong>Identify the parameters:</strong><br>
+                        • Starting factor: <span class="nobr">$a = 80$</span> (this is the value in Locker 0: <span class="nobr">$c_0 = 80$</span>).<br>
+                        • Multiplier at each hour: <span class="nobr">$q = \frac{1}{2}$</span> (common ratio).
+                    </li>
+                    <li><strong>Write the general formula:</strong><br>
+                        <span class="nobr">$$c_n = a \cdot q^n = 80 \cdot \left(\frac{1}{2}\right)^n$$</span>
+                    </li>
+                    <li><strong>Compute the first few terms by hand:</strong><br>
+                        • Hour 0: <span class="nobr">$c_0 = 80 \cdot (1/2)^0 = 80 \cdot 1 = 80\text{ g}$</span><br>
+                        • Hour 1: <span class="nobr">$c_1 = 80 \cdot (1/2)^1 = 40\text{ g}$</span> (halved once)<br>
+                        • Hour 2: <span class="nobr">$c_2 = 80 \cdot (1/2)^2 = 80 \cdot \frac{1}{4} = 20\text{ g}$</span> (halved again)<br>
+                        • Hour 3: <span class="nobr">$c_3 = 80 \cdot (1/2)^3 = 80 \cdot \frac{1}{8} = 10\text{ g}$</span><br>
+                        The sequence is <span class="nobr">$(80, 40, 20, 10, 5, \dots)$.</span>
+                    </li>
+                    <li><strong>Jump directly to Hour 6:</strong><br>
+                        How much remains after 6 hours?<br>
+                        <span class="nobr">$$c_6 = 80 \cdot \left(\frac{1}{2}\right)^6 = 80 \cdot \frac{1}{64} = \frac{80}{64} = \frac{5}{4} = 1.25\text{ g}$$</span>
                     </li>
                 </ol>
             </div>
