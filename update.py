@@ -2,9 +2,10 @@
 """
 update.py
 
-Generates week1-lecture3.html with reassuring student orientation,
-notation glossaries, SVG diagrams, worked examples for discrete calculus,
-and a Grand Arc synthesis, then stages both files and pushes to Git.
+Generates week1-lecture3.html with the standard hero image container,
+reassuring student orientation, notation glossaries, SVG diagrams,
+worked examples for discrete calculus, and a Grand Arc synthesis,
+then stages both files and pushes to Git.
 """
 
 from pathlib import Path
@@ -114,6 +115,11 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
         </div>
 
         <div class="module-content">
+            <!-- HERO IMAGE -->
+            <div style="margin-bottom: 2rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);">
+                <img src="images/chapter1-hero.jpg" alt="Week 1: Sets, Numbers, and Sequences - UNE Campus Discovery Trail" style="width: 100%; height: auto; display: block;">
+            </div>
+
             <div class="intro-lead">
                 Welcome to Lecture 3. Having built the grammatical machinery of sets and functions (Lecture 1) and solidified the continuous real line $\mathbb{R}$ with completeness (Lecture 2), we now introduce motion and dynamics into our universe. Here we study <strong>sequences</strong>—the fundamental vehicles of convergence, infinite approximation, and discrete calculus.
             </div>
@@ -495,7 +501,7 @@ def execute_git(args: list[str]) -> subprocess.CompletedProcess:
 
 def main() -> None:
     TARGET_HTML.write_text(WEEK1_LECTURE3_HTML, encoding="utf-8")
-    print(f"Successfully wrote {TARGET_HTML.name}.")
+    print(f"Successfully generated {TARGET_HTML.name} with hero image container.")
 
     execute_git(["git", "rev-parse", "--is-inside-work-tree"])
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
@@ -505,11 +511,11 @@ def main() -> None:
         print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Expand Week 1 Lecture 3 with discrete calculus and diagrams"
+    commit_subject = "Add hero image card and align structure for Week 1 Lecture 3"
     commit_body = (
-        "Rebuild week1-lecture3.html with reassuring beginner explanations,\n"
-        "SVG sequence mapping diagrams, worked examples for derived sequences,\n"
-        "and a Grand Arc synthesis linking sets, reals, and sequences."
+        "Rebuild week1-lecture3.html with the standard hero image container,\n"
+        "reassuring student orientation, SVG sequence mapping diagrams, worked\n"
+        "examples for discrete calculus, and Grand Arc course synthesis."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
 
