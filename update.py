@@ -2,13 +2,14 @@
 r"""
 update.py
 
-Generates week1-lecture3.html with:
-1. Trailing punctuation bound inside .nobr spans (preventing dangling commas).
-2. Upgraded scaffolding in Section 2 (explicit formulas vs descriptive rules).
-3. Image infinite-lockers.png under the hallway analogy.
-4. Comprehensive notation tables, SVG derivative step diagram, and Grand Arc.
+Generates week1-lecture3.html with upgraded Section 3 scaffolding:
+1. Progression parameter notation infobox.
+2. Step-by-step arithmetic vs geometric card breakdowns.
+3. Aside box explaining parameter restrictions (a != 0, q != 0, 1).
+4. Step-by-step worked construction examples.
+5. All inline math and punctuation bound inside .nobr spans.
 
-Then stages both files and pushes to Git.
+Stages week1-lecture3.html and update.py, commits, and pushes upstream.
 """
 
 from pathlib import Path
@@ -275,42 +276,92 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
 
             <!-- SECTION 3 -->
             <h2 id="arithmetic-geometric">3. Arithmetic and Geometric Sequences</h2>
+
+            <div class="infobox">
+                <h4>📖 Notation Reference: Progression Parameters</h4>
+                <div class="infobox-intro">
+                    <strong>Tracking steps vs. ratios:</strong> Note that here $a, b,$ and $q$ represent fixed constant real numbers, while $n$ remains our discrete step counter.
+                </div>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$c_n = an + b$</span></span><span class="notation-desc">Arithmetic sequence: baseline offset $b$, growing by constant stride $a$</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$c_{n+1} - c_n = a$</span></span><span class="notation-desc">Common difference: constant subtraction gap between successive terms</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$c_n = a \cdot q^n$</span></span><span class="notation-desc">Geometric sequence: initial scale factor $a$, multiplied each step by ratio $q$</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$\frac{c_{n+1}}{c_n} = q$</span></span><span class="notation-desc">Common ratio: constant quotient when dividing consecutive terms ($c_n \ne 0$)</span></div>
+                </div>
+            </div>
+
             <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
-                Two families of sequences occur constantly across algebra, discrete mathematics, and finance: sequences that grow by <strong>repeated addition</strong>, and sequences that grow by <strong>repeated multiplication</strong>.
+                Among all possible sequences, two fundamental families appear everywhere across mathematics, physical systems, and financial modeling: sequences driven by <strong>constant addition</strong> (walking with equal strides), and sequences driven by <strong>constant multiplication</strong> (scaling by a fixed factor at each rung).
             </p>
 
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.5rem; margin: 1.5rem 0;">
                 <!-- ARITHMETIC -->
                 <div style="background: #ffffff; border: 1px solid var(--border); border-left: 4px solid #0284c7; border-radius: 6px; padding: 1.25rem;">
-                    <h3 style="margin-top: 0; color: #0369a1; font-size: 1.1rem;">Arithmetic Sequences (Additive Growth)</h3>
+                    <h3 style="margin-top: 0; color: #0369a1; font-size: 1.1rem;">Arithmetic Sequences (Additive Strides)</h3>
                     <p style="font-size: 0.95rem; color: #334155; line-height: 1.6;">
-                        An <strong>arithmetic sequence</strong> adds a constant difference $a$ at each successive step:
+                        Start at a base value <span class="nobr">$b$,</span> then add the exact same fixed step size <span class="nobr">$a$</span> at every single turn:
                     </p>
                     <div class="definition-box" style="border-left-color: #0284c7; margin: 0.5rem 0;">
                         $$c_n = an + b \quad (n \ge 0)$$
                     </div>
                     <ul style="font-size: 0.9rem; color: #334155; padding-left: 1.25rem; line-height: 1.6;">
-                        <li><strong>Starting value:</strong> $c_0 = b$</li>
-                        <li><strong>Step difference:</strong> <span class="nobr">$c_{n+1} - c_n = a$</span></li>
-                        <li><strong>Example:</strong> Odd numbers starting at $1$: <span class="nobr">$c_n = 2n + 1 \implies (1, 3, 5, 7, \dots)$.</span></li>
+                        <li><strong>Starting term ($n=0$):</strong> <span class="nobr">$c_0 = a(0) + b = b$</span></li>
+                        <li><strong>Next term ($n=1$):</strong> <span class="nobr">$c_1 = a(1) + b = b + a$</span></li>
+                        <li><strong>Constant step:</strong> <span class="nobr">$c_{n+1} - c_n = a$</span></li>
                     </ul>
                 </div>
 
                 <!-- GEOMETRIC -->
                 <div style="background: #ffffff; border: 1px solid var(--border); border-left: 4px solid #10b981; border-radius: 6px; padding: 1.25rem;">
-                    <h3 style="margin-top: 0; color: #047857; font-size: 1.1rem;">Geometric Sequences (Multiplicative Growth)</h3>
+                    <h3 style="margin-top: 0; color: #047857; font-size: 1.1rem;">Geometric Sequences (Multiplicative Scaling)</h3>
                     <p style="font-size: 0.95rem; color: #334155; line-height: 1.6;">
-                        A <strong>geometric sequence</strong> scales the previous term by a constant ratio $q$ at each step:
+                        Start at a non-zero scale factor <span class="nobr">$a$,</span> then multiply by a fixed ratio <span class="nobr">$q$</span> at each successive step:
                     </p>
                     <div class="definition-box" style="border-left-color: #10b981; margin: 0.5rem 0;">
                         $$c_n = a \cdot q^n \quad (n \ge 0)$$
                     </div>
                     <ul style="font-size: 0.9rem; color: #334155; padding-left: 1.25rem; line-height: 1.6;">
-                        <li><strong>Base factor:</strong> $a \ne 0$</li>
-                        <li><strong>Common ratio:</strong> $q \ne 0, 1$</li>
-                        <li><strong>Example:</strong> Powers of 2: <span class="nobr">$c_n = 1 \cdot 2^n \implies (1, 2, 4, 8, 16, \dots)$.</span></li>
+                        <li><strong>Starting term ($n=0$):</strong> <span class="nobr">$c_0 = a \cdot q^0 = a$</span></li>
+                        <li><strong>Next term ($n=1$):</strong> <span class="nobr">$c_1 = a \cdot q^1 = aq$</span></li>
+                        <li><strong>Constant ratio:</strong> <span class="nobr">$\frac{c_{n+1}}{c_n} = q$</span> (for $a \ne 0, q \ne 0, 1$)</li>
                     </ul>
                 </div>
+            </div>
+
+            <div class="aside-box">
+                <h4>💡 Why Do We Restrict $a \ne 0$ and $q \ne 0, 1$ in Geometric Sequences?</h4>
+                <p style="margin-top: 0; margin-bottom: 0.5rem; font-size: 0.95rem;">
+                    Mathematicians exclude these values to prevent trivial "collapses":
+                </p>
+                <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.92rem; line-height: 1.6;">
+                    <li>If <span class="nobr">$a = 0$,</span> every term collapses to <span class="nobr">$0 \cdot q^n = 0$</span> (a flat constant zero sequence).</li>
+                    <li>If <span class="nobr">$q = 0$,</span> the sequence becomes <span class="nobr">$(a, 0, 0, 0, \dots)$,</span> losing all multiplicative scaling after the first step.</li>
+                    <li>If <span class="nobr">$q = 1$,</span> then <span class="nobr">$q^n = 1^n = 1$,</span> so the sequence is permanently frozen at <span class="nobr">$(a, a, a, \dots)$.</span></li>
+                </ul>
+            </div>
+
+            <div class="worked-example-box">
+                <h4>🎯 Worked Example: Constructing Both Progressions Step-by-Step</h4>
+                <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
+                    <li><strong>Arithmetic Example (Odd Numbers):</strong> Let baseline <span class="nobr">$b = 1$</span> and step size <span class="nobr">$a = 2$.</span>
+                        <div style="margin: 0.35rem 0;">
+                            Formula: <span class="nobr">$c_n = 2n + 1$</span> for <span class="nobr">$n \ge 0$.</span>
+                        </div>
+                        • Step 0: <span class="nobr">$c_0 = 2(0) + 1 = 1$</span><br>
+                        • Step 1: <span class="nobr">$c_1 = 2(1) + 1 = 3$</span> (added 2)<br>
+                        • Step 2: <span class="nobr">$c_2 = 2(2) + 1 = 5$</span> (added 2)<br>
+                        Resulting list: <span class="nobr">$(1, 3, 5, 7, 9, \dots)$.</span> The step difference is constant: <span class="nobr">$c_{n+1} - c_n = 2$.</span>
+                    </li>
+                    <li style="margin-top: 0.75rem;"><strong>Geometric Example (Repeated Doubling):</strong> Let base factor <span class="nobr">$a = 1$</span> and ratio <span class="nobr">$q = 2$.</span>
+                        <div style="margin: 0.35rem 0;">
+                            Formula: <span class="nobr">$c_n = 1 \cdot 2^n$</span> for <span class="nobr">$n \ge 0$.</span>
+                        </div>
+                        • Step 0: <span class="nobr">$c_0 = 1 \cdot 2^0 = 1$</span><br>
+                        • Step 1: <span class="nobr">$c_1 = 1 \cdot 2^1 = 2$</span> (multiplied by 2)<br>
+                        • Step 2: <span class="nobr">$c_2 = 1 \cdot 2^2 = 4$</span> (multiplied by 2)<br>
+                        Resulting list: <span class="nobr">$(1, 2, 4, 8, 16, 32, \dots)$.</span> The ratio between terms is constant: <span class="nobr">$\frac{c_{n+1}}{c_n} = 2$.</span>
+                    </li>
+                </ol>
             </div>
 
             <!-- SECTION 4 -->
@@ -509,7 +560,7 @@ def execute_git(args: list[str]) -> subprocess.CompletedProcess:
 
 def main() -> None:
     TARGET_HTML.write_text(WEEK1_LECTURE3_HTML, encoding="utf-8")
-    print(f"Successfully generated {TARGET_HTML.name} with bound formula punctuation.")
+    print(f"Successfully generated {TARGET_HTML.name} with scaffolded Section 3.")
 
     execute_git(["git", "rev-parse", "--is-inside-work-tree"])
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
@@ -519,10 +570,11 @@ def main() -> None:
         print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Bind trailing punctuation on formulas and scaffold Section 2"
+    commit_subject = "Expand Section 3 with parameter notation, bounds aside, and examples"
     commit_body = (
-        "Wrap formula-punctuation pairs like a(n), in nobr spans to stop wrap,\n"
-        "expand Section 2 intro with explicit formula vs rule scaffolding,\n"
+        "Add progression parameters infobox for arithmetic and geometric forms,\n"
+        "add aside box explaining why degenerate ratio/scale values are excluded,\n"
+        "add step-by-step worked construction examples for both progressions,\n"
         "and stage updated week1-lecture3.html alongside update.py."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
