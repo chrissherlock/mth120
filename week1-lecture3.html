@@ -104,23 +104,20 @@
             </div>
 
             <div class="intro-lead">
-                Welcome to Lecture 3. Having built the grammatical machinery of sets and functions (Lecture 1) and solidified the continuous real line $\mathbb{R}$ with completeness (Lecture 2), we now introduce motion and dynamics into our universe. Here we study <strong>sequences</strong>—the fundamental vehicles of convergence, infinite approximation, and discrete calculus.
+                Welcome to Lecture 3. Having built the grammatical machinery of sets and functions (Lecture 1) and solidified the continuous real line $\mathbb{R}$ with completeness (Lecture 2), we now introduce motion into our universe. Here we study <strong>sequences</strong>—the fundamental vehicles of convergence, approximation, and discrete calculus.
             </div>
 
             <!-- REASSURING STUDENT ORIENTATION -->
             <div style="margin: 2rem 0 2.25rem 0;">
-                <h3 style="margin-top: 0; color: #0f172a; font-size: 1.25rem;">Finding Your Footing: Why Think of a Sequence as a Function?</h3>
+                <h3 style="margin-top: 0; color: #0f172a; font-size: 1.25rem;">Finding Your Footing: Welcome to Discrete Dynamics</h3>
                 <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                    Almost everyone has seen sequences before in school: they are presented casually as an ordered row of numbers with commas, like $2, 4, 6, 8, \dots$, or a puzzle where you find "the next pattern." When university analysis begins, mathematicians suddenly replace this casual list with formal functional notation: $a: \mathbb{N} \to \mathbb{R}$.
+                    If you have studied calculus in secondary school, functions have almost always meant continuous curves: drawing a parabola $y = x^2$ with an unbroken pencil line, sliding along a smooth curve, or taking the tangent line at any arbitrary decimal value like $x = 1.414$.
                 </p>
                 <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                    You might wonder: <em>"Why overcomplicate something as simple as a list of numbers?"</em>
-                </p>
-                <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                    The reason is that casual lists cannot be analyzed rigorously when they become infinite. If you simply write down dots ($\dots$), you have not defined a rule. But when you treat a sequence as a <strong>function whose domain is the natural numbers $\mathbb{N}$</strong>, every term $a_n$ is anchored to an exact index $n$. This allows us to use all the algebraic machinery of functions, composition, and bounds that we built in Lectures 1 and 2.
+                    In this lecture, we step back from smooth slides and instead examine <strong>stepping stones</strong>. Rather than gliding smoothly across all real numbers, we take discrete integer steps: step 0, step 1, step 2, step 3... This is the world of <strong>sequences</strong>.
                 </p>
                 <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 0;">
-                    In this lecture, we will also explore how sequences can change over time. By looking at the difference between consecutive terms ($a_{n+1} - a_n$), we discover <strong>discrete calculus</strong>—the stepping-stone that leads directly into continuous derivatives in later weeks. Don't worry if the subscript indices look busy; take them step-by-step!
+                    At first glance, some of the notation—such as subscripts $a_n$, index ranges, and differences between terms—can look intimidatingly formal. Rest assured: every symbol is simply a compact way to label an item in an infinite list. Take your time, picture the lockers and steps, and enjoy seeing how discrete arithmetic lays the foundation for continuous calculus!
                 </p>
             </div>
 
@@ -128,7 +125,7 @@
             <div class="toc-box">
                 <h4>📌 Lecture 3 Topics</h4>
                 <ul class="toc-grid">
-                    <li><a href="#sequences-as-functions">1. Sequences Defined as Functions ($f: \mathbb{N} \to \mathbb{R}$)</a></li>
+                    <li><a href="#sequences-intro">1. What is a Sequence? (From Numbered Lockers to Formal Mappings)</a></li>
                     <li><a href="#catalogue-sequences">2. A Gallery of Fundamental Sequences</a></li>
                     <li><a href="#arithmetic-geometric">3. Arithmetic and Geometric Sequences</a></li>
                     <li><a href="#sequence-properties">4. Classifying Behavior: Monotonicity and Bounds</a></li>
@@ -139,37 +136,57 @@
             </div>
 
             <!-- SECTION 1 -->
-            <h2 id="sequences-as-functions">1. Sequences Defined as Functions ($f: \mathbb{N} \to \mathbb{R}$)</h2>
+            <h2 id="sequences-intro">1. What is a Sequence? (From Numbered Lockers to Formal Mappings)</h2>
             <div class="infobox">
                 <h4>📖 Notation Reference: Sequences &amp; Index Notation</h4>
                 <div class="infobox-intro">
-                    <strong>Lists through functional eyes:</strong> Instead of writing inputs inside parentheses like $f(n)$, sequences use subscript notation $a_n$ to represent the $n$-th value.
+                    <strong>Lists through functional eyes:</strong> Instead of writing inputs inside parentheses like $f(n)$, sequences use subscript notation $a_n$ to represent the $n$-th value in the list.
                 </div>
                 <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$a: \mathbb{N} \to \mathbb{R}$</span><span class="notation-desc">A sequence as a function mapping index $n$ to real output $a(n)$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$a_n$</span><span class="notation-desc">Index shorthand for $a(n)$ (the $n$-th term of the sequence)</span></div>
-                    <div class="notation-item"><span class="notation-sym">$(a_n)_{n=0}^\infty$</span><span class="notation-desc">The complete infinite ordered sequence $(a_0, a_1, a_2, \dots)$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$(a_n)_{n=1}^\infty$</span><span class="notation-desc">Sequence starting at index $1$ when $n=0$ is undefined (e.g. $1/n$)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$a_n$</span><span class="notation-desc">The $n$-th term of the sequence (the value stored at position $n$)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$(a_n)_{n=0}^\infty$</span><span class="notation-desc">The complete infinite ordered sequence $(a_0, a_1, a_2, a_3, \dots)$</span></div>
+                    <div class="notation-item"><span class="notation-sym">$(a_n)_{n=1}^\infty$</span><span class="notation-desc">Sequence starting at index $1$ when $n=0$ is undefined (e.g. $a_n = 1/n$)</span></div>
+                    <div class="notation-item"><span class="notation-sym">$a: \mathbb{N} \to \mathbb{R}$</span><span class="notation-desc">Formal definition: a function assigning each natural index $n$ to a real number $a_n$</span></div>
                 </div>
             </div>
 
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.25rem;">The Intuitive Picture: An Infinite Hallway of Numbered Lockers</h3>
             <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
-                In everyday language, an infinite sequence of real numbers is simply an ordered list:
+                Before writing down any abstract symbols, think of a sequence as an infinite hallway lined with numbered school lockers:
             </p>
-            <div style="text-align: center; margin: 1rem 0; font-size: 1.05rem;">
-                $$a_0, \; a_1, \; a_2, \; a_3, \; \dots, \; a_n, \; \dots$$
+            <ul style="font-size: 0.98rem; line-height: 1.7; color: #334155; padding-left: 1.25rem; margin-bottom: 1.25rem;">
+                <li>The <strong>locker door</strong> is labeled with a natural counting number: Locker $0$, Locker $1$, Locker $2$, Locker $3$, and so on. We call this whole number the <strong>index</strong> ($n \in \mathbb{N}$).</li>
+                <li>When you open door $n$, there is a slip of paper inside with an actual real number written on it. We call that stored number the <strong>$n$-th term</strong> ($a_n \in \mathbb{R}$).</li>
+            </ul>
+
+            <div style="text-align: center; margin: 1.25rem 0; font-size: 1.1rem; background: #f8fafc; padding: 1rem; border-radius: 6px; border: 1px solid var(--border);">
+                $$(a_n)_{n=0}^\infty = \Big(\underbrace{a_0}_{\text{Locker } 0}, \; \underbrace{a_1}_{\text{Locker } 1}, \; \underbrace{a_2}_{\text{Locker } 2}, \; \underbrace{a_3}_{\text{Locker } 3}, \; \dots, \; \underbrace{a_n}_{\text{Locker } n}, \; \dots\Big)$$
             </div>
+
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">The Aha! Moment: Why a Sequence is Actually a Function</h3>
             <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
-                Formally, however, we define a <strong>sequence</strong> as a function $a$ whose domain is the set of natural numbers $\mathbb{N}$ (or $\mathbb{N} \setminus \{0\} = \{1, 2, 3, \dots\}$) and whose codomain is the set of real numbers $\mathbb{R}$. We denote the output of the function at input $n$ using a subscript:
+                Why do pure mathematicians insist on calling this simple list of lockers a <strong>function</strong>?
             </p>
-            <div style="text-align: center; margin: 0.5rem 0; font-size: 1.05rem;">
-                $$a(n) \equiv a_n$$
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                Think back to our definition of a function in Lecture 1: a rule that takes every input from a starting set (the domain) and assigns it to exactly one output in a target set (the codomain). That is <em>exactly</em> what our locker hallway does!
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                You give the system a locker number ($n \in \mathbb{N}$), and it returns the single real number inside that locker ($a_n \in \mathbb{R}$). Therefore:
+            </p>
+
+            <div class="definition-box">
+                <strong>Formal Definition of a Real Sequence:</strong><br>
+                A <strong>sequence of real numbers</strong> is a function $a: \mathbb{N} \to \mathbb{R}$ whose domain is the set of natural numbers $\mathbb{N}$ and whose codomain is the set of real numbers $\mathbb{R}$.<br><br>
+                Instead of writing function parentheses like $a(n)$, we write the input as a lower subscript:
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.05rem;">
+                    $$a(n) \equiv a_n$$
+                </div>
             </div>
 
             <!-- VISUAL DIAGRAM: SEQUENCE AS A MAPPING -->
             <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; text-align: center;">
                 <p style="font-size: 0.88rem; font-weight: 700; color: #475569; margin-top: 0; margin-bottom: 0.75rem;">
-                    VISUALIZATION: The Sequence Mapping $a: \mathbb{N} \to \mathbb{R}$
+                    VISUALIZATION: Discrete Index Inputs $\mathbb{N}$ Mapping to the Continuous Stage $\mathbb{R}$
                 </p>
                 <svg viewBox="0 0 680 220" style="width: 100%; max-width: 650px; height: auto; display: inline-block;">
                     <defs>
@@ -179,30 +196,30 @@
                     </defs>
 
                     <!-- Domain N (Discrete Integers) -->
-                    <rect x="50" y="30" width="160" height="150" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
-                    <text x="130" y="55" font-family="sans-serif" font-size="13" font-weight="bold" fill="#0f172a" text-anchor="middle">Domain ℕ (Discrete)</text>
+                    <rect x="50" y="30" width="170" height="150" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
+                    <text x="135" y="55" font-family="sans-serif" font-size="13" font-weight="bold" fill="#0f172a" text-anchor="middle">Locker Index n ∈ ℕ</text>
 
-                    <circle cx="130" cy="80" r="4.5" fill="#0284c7"/><text x="115" y="84" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0369a1" text-anchor="end">0</text>
-                    <circle cx="130" cy="110" r="4.5" fill="#0284c7"/><text x="115" y="114" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0369a1" text-anchor="end">1</text>
-                    <circle cx="130" cy="140" r="4.5" fill="#0284c7"/><text x="115" y="144" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0369a1" text-anchor="end">2</text>
-                    <circle cx="130" cy="165" r="2" fill="#64748b"/><circle cx="130" cy="170" r="2" fill="#64748b"/><circle cx="130" cy="175" r="2" fill="#64748b"/>
+                    <circle cx="135" cy="80" r="4.5" fill="#0284c7"/><text x="120" y="84" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0369a1" text-anchor="end">Locker 0</text>
+                    <circle cx="135" cy="110" r="4.5" fill="#0284c7"/><text x="120" y="114" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0369a1" text-anchor="end">Locker 1</text>
+                    <circle cx="135" cy="140" r="4.5" fill="#0284c7"/><text x="120" y="144" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0369a1" text-anchor="end">Locker 2</text>
+                    <circle cx="135" cy="165" r="2" fill="#64748b"/><circle cx="135" cy="170" r="2" fill="#64748b"/><circle cx="135" cy="175" r="2" fill="#64748b"/>
 
                     <!-- Codomain R (Continuous Real Line) -->
-                    <rect x="470" y="30" width="160" height="150" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
-                    <text x="550" y="55" font-family="sans-serif" font-size="13" font-weight="bold" fill="#0f172a" text-anchor="middle">Codomain ℝ (Continuous)</text>
-                    <line x1="550" y1="70" x2="550" y2="165" stroke="#cbd5e1" stroke-width="2"/>
+                    <rect x="460" y="30" width="170" height="150" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
+                    <text x="545" y="55" font-family="sans-serif" font-size="13" font-weight="bold" fill="#0f172a" text-anchor="middle">Value Inside aₙ ∈ ℝ</text>
+                    <line x1="545" y1="70" x2="545" y2="165" stroke="#cbd5e1" stroke-width="2"/>
 
-                    <circle cx="550" cy="80" r="4.5" fill="#d97706"/><text x="565" y="84" font-family="sans-serif" font-size="12" font-weight="bold" fill="#92400e" text-anchor="start">a₀ = a(0)</text>
-                    <circle cx="550" cy="120" r="4.5" fill="#d97706"/><text x="565" y="124" font-family="sans-serif" font-size="12" font-weight="bold" fill="#92400e" text-anchor="start">a₁ = a(1)</text>
-                    <circle cx="550" cy="150" r="4.5" fill="#d97706"/><text x="565" y="154" font-family="sans-serif" font-size="12" font-weight="bold" fill="#92400e" text-anchor="start">a₂ = a(2)</text>
+                    <circle cx="545" cy="80" r="4.5" fill="#d97706"/><text x="560" y="84" font-family="sans-serif" font-size="12" font-weight="bold" fill="#92400e" text-anchor="start">a₀ = a(0)</text>
+                    <circle cx="545" cy="120" r="4.5" fill="#d97706"/><text x="560" y="124" font-family="sans-serif" font-size="12" font-weight="bold" fill="#92400e" text-anchor="start">a₁ = a(1)</text>
+                    <circle cx="545" cy="150" r="4.5" fill="#d97706"/><text x="560" y="154" font-family="sans-serif" font-size="12" font-weight="bold" fill="#92400e" text-anchor="start">a₂ = a(2)</text>
 
                     <!-- Mapping Paths -->
-                    <path d="M 136 80 C 260 40, 380 60, 540 78" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#seq-arrow)"/>
-                    <path d="M 136 110 C 260 90, 380 110, 540 118" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#seq-arrow)"/>
-                    <path d="M 136 140 C 260 140, 380 140, 540 148" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#seq-arrow)"/>
+                    <path d="M 141 80 C 260 40, 380 60, 535 78" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#seq-arrow)"/>
+                    <path d="M 141 110 C 260 90, 380 110, 535 118" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#seq-arrow)"/>
+                    <path d="M 141 140 C 260 140, 380 140, 535 148" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#seq-arrow)"/>
 
-                    <text x="340" y="105" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0284c7" text-anchor="middle">Mapping: n ↦ aₙ</text>
-                    <text x="340" y="205" font-family="sans-serif" font-size="11" fill="#64748b" text-anchor="middle">Every natural index n is coupled to an exact point on the continuous line ℝ.</text>
+                    <text x="340" y="105" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0284c7" text-anchor="middle">Step: n ↦ aₙ</text>
+                    <text x="340" y="205" font-family="sans-serif" font-size="11" fill="#64748b" text-anchor="middle">Inputs are strictly whole steps (0, 1, 2...), but outputs can land anywhere on the continuous line ℝ.</text>
                 </svg>
             </div>
 
