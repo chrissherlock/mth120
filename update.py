@@ -2,12 +2,12 @@
 r"""
 update.py
 
-Generates week1-lecture3.html with an expanded, reassuring, student-centered
-opening orientation ("Finding Your Footing: Welcome to Discrete Dynamics"):
-- Bridges continuous secondary calculus with discrete undergraduate analysis.
-- Frames sequences as stepping stones mapping counting numbers to real values.
-- Previews the analytical journey ahead into Week 2 limits and convergence.
-- Enforces strict .nobr wrapping on all inline math and trailing punctuation.
+Generates week1-lecture3.html with both formal progression definitions
+reinstated and rich, expansive prose explaining the arithmetic and geometric
+mechanics in Section 3.
+- Restores structure and definition boxes for clarity.
+- Adds comprehensive textual explanations before and around the stepper.
+- Enforces strict .nobr wrapping on all inline math and punctuation.
 
 Stages week1-lecture3.html and update.py, commits, and pushes upstream.
 """
@@ -431,66 +431,76 @@ WEEK1_LECTURE3_HTML = r"""<!DOCTYPE html>
                 </div>
             </div>
 
-            <!-- REASSURED & EXPANDED PROSE FOR SECTION 3 -->
+            <!-- EXPANDED TEXTUAL PROSE FOR SECTION 3 (WITH DEFINITIONS REINSTATED) -->
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.25rem;">1. Unpacking the Two Great Motions: Strides vs. Zoom</h3>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                If you have ever stared at formulas like <span class="nobr">$c_n = an + b$</span> and <span class="nobr">$c_n = a q^n$</span> and wondered why one has $n$ multiplied as a coefficient while the other pops up as an exponent, take heart. Traditional mathematics courses often present these two equations as arbitrary algebraic recipes to memorize for exams.
+                If you have ever stared at formulas like <span class="nobr">$c_n = an + b$</span> and <span class="nobr">$c_n = a q^n$</span> and wondered why one has $n$ multiplied as a coefficient while the other pops up as an exponent, take heart. Traditional mathematics courses often present these two equations as arbitrary algebraic recipes to memorize for exams, obscuring the simple physical rhythm underneath.
             </p>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                In reality, arithmetic and geometric progressions describe two distinct, tangible physical motions along our infinite locker corridor:
+                In reality, arithmetic and geometric progressions describe two distinct, tangible motions along our infinite locker corridor. Let us examine each in detail to see why their algebraic structures take the shapes they do.
             </p>
-            <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem; margin-bottom: 1.5rem;">
-                <li style="margin-bottom: 0.65rem;">
-                    <strong>The Arithmetic Walker (Constant Strides):</strong> Imagine starting at baseline position <span class="nobr">$b$</span> in front of Locker 0. To move from any locker to the next, you take a rigid, identical step forward of length <span class="nobr">$a$.</span> Because every single step is an identical addition of $+a$, taking $n$ steps means you have added $a$ exactly $n$ times. By basic multiplication, $n$ additions of $a$ equals <span class="nobr">$an$.</span> Adding that to your starting baseline $b$ gives <span class="nobr">$c_n = an + b$.</span>
-                </li>
-                <li>
-                    <strong>The Geometric Multiplier (Exponential Zoom):</strong> Imagine Locker 0 holds an initial seed quantity <span class="nobr">$a$.</span> Instead of taking additive steps, every single time you cross to a new locker, your current holdings are <em>multiplied</em> by a zoom factor <span class="nobr">$q$.</span> Moving from Locker 0 to Locker 1 multiplies by $q$ once (<span class="nobr">$aq$</span>). Moving to Locker 2 multiplies by $q$ again (<span class="nobr">$aq^2$</span>). By the time you reach Locker $n$, you have multiplied by $q$ precisely $n$ successive times, which naturally groups into the exponent <span class="nobr">$q^n$,</span> yielding <span class="nobr">$c_n = a q^n$.</span>
-                </li>
+
+            <h4 style="color: #1e293b; margin-top: 1.5rem;">The Arithmetic Progression: Walking with Constant Strides</h4>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                Imagine standing at position <span class="nobr">$b$</span> right in front of Locker 0. To travel down the corridor, you decide that every single time you move from one locker to the next, you will take a rigid, identical stride forward of length <span class="nobr">$a$.</span>
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                Let's trace your position step-by-step:
+            </p>
+            <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem; margin-bottom: 1.25rem;">
+                <li>At <strong>Locker 0</strong>, you haven't taken any steps yet, so your position is just your starting baseline: <span class="nobr">$c_0 = b$.</span></li>
+                <li>At <strong>Locker 1</strong>, you have taken 1 stride forward: <span class="nobr">$c_1 = b + a$.</span></li>
+                <li>At <strong>Locker 2</strong>, you have taken 2 strides forward: <span class="nobr">$c_2 = b + a + a = b + 2a$.</span></li>
+                <li>At <strong>Locker $n$</strong>, you have taken $n$ identical strides forward from your baseline. By basic multiplication, adding $a$ to itself $n$ times gives <span class="nobr">$an$.</span></li>
             </ul>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                This gives us the defining formal definition of an arithmetic sequence:
+            </p>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.5rem; margin: 1.5rem 0;">
-                <!-- ARITHMETIC -->
-                <div style="background: #ffffff; border: 1px solid var(--border); border-left: 4px solid #0284c7; border-radius: 6px; padding: 1.25rem;">
-                    <h3 style="margin-top: 0; color: #0369a1; font-size: 1.1rem;">Arithmetic Sequences: The Equal-Stride Walker</h3>
-                    <p style="font-size: 0.95rem; color: #334155; line-height: 1.6;">
-                        Imagine standing at position <span class="nobr">$b$</span> in front of Locker 0. To reach the next locker, you take a fixed stride forward of length <span class="nobr">$a$.</span>
-                    </p>
-                    <div class="definition-box" style="border-left-color: #0284c7; margin: 0.5rem 0;">
-                        $$c_n = an + b \quad (n \ge 0)$$
-                    </div>
-                    <p style="font-size: 0.92rem; color: #334155; line-height: 1.6; margin-bottom: 0.5rem;">
-                        <strong>Why does this formula make sense?</strong>
-                    </p>
-                    <ul style="font-size: 0.9rem; color: #334155; padding-left: 1.25rem; line-height: 1.6; margin: 0;">
-                        <li>Locker 0: You haven't taken any steps yet: <span class="nobr">$c_0 = a(0) + b = b$.</span></li>
-                        <li>Locker 1: You take 1 stride: <span class="nobr">$c_1 = b + a$.</span></li>
-                        <li>Locker 2: You take 2 strides: <span class="nobr">$c_2 = b + a + a = 2a + b$.</span></li>
-                        <li>Locker $n$: You take $n$ strides: <span class="nobr">$c_n = an + b$.</span></li>
-                    </ul>
+            <div class="definition-box">
+                <strong>Formal Definition: Arithmetic Progression</strong><br>
+                A sequence $(c_n)_{n=0}^\infty$ is an <strong>arithmetic progression</strong> if each term is obtained by adding a constant difference $a$ to the preceding term:
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.05rem;">
+                    $$c_{n+1} - c_n = a \quad \text{for all } n \ge 0$$
                 </div>
-
-                <!-- GEOMETRIC -->
-                <div style="background: #ffffff; border: 1px solid var(--border); border-left: 4px solid #10b981; border-radius: 6px; padding: 1.25rem;">
-                    <h3 style="margin-top: 0; color: #047857; font-size: 1.1rem;">Geometric Sequences: The Exponential Multiplier</h3>
-                    <p style="font-size: 0.95rem; color: #334155; line-height: 1.6;">
-                        Imagine Locker 0 starts with quantity <span class="nobr">$a$.</span> At every subsequent locker, the quantity is multiplied by a zoom factor <span class="nobr">$q$.</span>
-                    </p>
-                    <div class="definition-box" style="border-left-color: #10b981; margin: 0.5rem 0;">
-                        $$c_n = a \cdot q^n \quad (n \ge 0)$$
-                    </div>
-                    <p style="font-size: 0.92rem; color: #334155; line-height: 1.6; margin-bottom: 0.5rem;">
-                        <strong>Why does this formula make sense?</strong>
-                    </p>
-                    <ul style="font-size: 0.9rem; color: #334155; padding-left: 1.25rem; line-height: 1.6; margin: 0;">
-                        <li>Locker 0: Multiplied 0 times (<span class="nobr">$q^0 = 1$</span>): <span class="nobr">$c_0 = a \cdot 1 = a$.</span></li>
-                        <li>Locker 1: Multiplied once: <span class="nobr">$c_1 = a \cdot q$.</span></li>
-                        <li>Locker 2: Multiplied twice: <span class="nobr">$c_2 = a \cdot q \cdot q = aq^2$.</span></li>
-                        <li>Locker $n$: Multiplied $n$ times: <span class="nobr">$c_n = a \cdot q^n$.</span></li>
-                    </ul>
+                Its explicit closed-form formula for any index $n$ is:
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.05rem; font-weight: 600; color: #0284c7;">
+                    $$c_n = an + b$$
                 </div>
+                where $b = c_0$ is the initial baseline value at Locker 0, and $a$ is the common difference.
             </div>
 
-            <!-- INTERACTIVE PEDAGOGICAL AID: PROGRESSION STEPPING SIMULATOR (POSITIONED TO DEMONSTRATE THE INTUITION) -->
+            <h4 style="color: #1e293b; margin-top: 1.75rem;">The Geometric Progression: The Exponential Multiplier</h4>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                Now imagine a completely different mode of travel along the locker corridor. Instead of taking additive strides, suppose Locker 0 starts with an initial seed quantity <span class="nobr">$a$,</span> and every single time you cross from one locker to the next, your current holdings are <em>multiplied</em> by a zoom factor <span class="nobr">$q$.</span>
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                Let's trace how this compounding magnification unfolds:
+            </p>
+            <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem; margin-bottom: 1.25rem;">
+                <li>At <strong>Locker 0</strong>, you have multiplied by $q$ zero times: <span class="nobr">$c_0 = a \cdot q^0 = a \cdot 1 = a$.</span></li>
+                <div>At <strong>Locker 1</strong>, you have multiplied your seed quantity by $q$ once: <span class="nobr">$c_1 = a \cdot q$.</span></div>
+                <li>At <strong>Locker 2</strong>, you have multiplied by $q$ twice: <span class="nobr">$c_2 = (a \cdot q) \cdot q = a \cdot q^2$.</span></li>
+                <li>At <strong>Locker $n$</strong>, you have applied the multiplicative zoom factor $q$ exactly $n$ successive times, which naturally groups into the exponent <span class="nobr">$q^n$.</span></li>
+            </ul>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                This gives us the defining formal definition of a geometric sequence:
+            </p>
+
+            <div class="definition-box" style="border-left-color: #10b981;">
+                <strong>Formal Definition: Geometric Progression</strong><br>
+                A sequence $(c_n)_{n=0}^\infty$ is a <strong>geometric progression</strong> if each term is obtained by multiplying the preceding term by a constant ratio $q$:
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.05rem;">
+                    $$\frac{c_{n+1}}{c_n} = q \quad \text{for all } n \ge 0 \quad (c_n \ne 0)$$
+                </div>
+                Its explicit closed-form formula for any index $n$ is:
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.05rem; font-weight: 600; color: #047857;">
+                    $$c_n = a \cdot q^n$$
+                </div>
+                where $a = c_0$ is the starting scale factor at Locker 0, and $q$ is the common ratio.
+            </div>
+
+            <!-- INTERACTIVE PEDAGOGICAL AID: PROGRESSION STEPPING SIMULATOR -->
             <div id="progression-stepper-widget" style="margin: 2.25rem 0; background: #ffffff; border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); overflow: hidden;">
                 <!-- HEADER & COMPARATIVE TOGGLES -->
                 <div style="background: #f8fafc; border-bottom: 1px solid var(--border); padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
@@ -1451,7 +1461,7 @@ def execute_git(args: list[str]) -> subprocess.CompletedProcess:
 
 def main() -> None:
     TARGET_HTML.write_text(WEEK1_LECTURE3_HTML, encoding="utf-8")
-    print(f"Successfully generated {TARGET_HTML.name} with expanded Section 3 progression prose.")
+    print(f"Successfully generated {TARGET_HTML.name} with reinstated definitions and expanded prose.")
 
     execute_git(["git", "rev-parse", "--is-inside-work-tree"])
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
@@ -1461,11 +1471,10 @@ def main() -> None:
         print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Expand Section 3 progression prose with walking and zoom intuition"
+    commit_subject = "Restore progression definition boxes and expand textual narrative prose"
     commit_body = (
-        "Enhance Section 3 introductory prose with friendly, reassuring breakdown,\n"
-        "contrast additive stride walking with multiplicative exponential zoom,\n"
-        "place expanded prose immediately before progression cards and stepper,\n"
+        "Reinstate arithmetic and geometric definition and notation boxes,\n"
+        "expand surrounding explanatory prose for deep student intuition,\n"
         "and stage updated week1-lecture3.html alongside update.py."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
