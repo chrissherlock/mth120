@@ -147,16 +147,15 @@
 </head>
 <body>
     <div class="container">
-
         <!-- TOP NAVIGATION HEADER -->
-        <div class="header" style="border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: nowrap; gap: 1rem;">
-            <div style="flex: 1 1 auto; min-width: 0;">
-                <h1 style="margin: 0; line-height: 1.3; font-size: 1.5rem;">Week 2, Lecture 4: Formal Convergence and Limit Laws</h1>
-            </div>
-            <div class="nav-btn-group" style="display: flex; gap: 0.5rem; align-items: center; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end;">
+        <div class="header" style="border-bottom: 2px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.25rem;">
+            <div class="nav-btn-group" style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; width: 100%;">
                 <a href="week1-lecture3.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&larr; Lecture 3</a>
                 <a href="week2.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&uarr; Week 2 Hub</a>
-                <a href="week2-lecture5.html" style="background: var(--accent); color: white; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">Lecture 5 &rarr;</a>
+                <a href="week2-lecture5.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">Lecture 5 &rarr;</a>
+            </div>
+            <div style="text-align: center; width: 100%; min-width: 0;">
+                <h1 style="margin: 0; line-height: 1.3; font-size: 1.5rem;">Week 2, Lecture 4: Formal Convergence and Limit Laws</h1>
             </div>
         </div>
 
@@ -466,170 +465,13 @@
                 </ul>
                 <p style="margin-top: 0.5rem; margin-bottom: 0;">In both cases, terms oscillate outside the $\epsilon = 1$ band for arbitrarily large $n$. Thus, no limit $L$ exists.</p>
             </div>
-
             <!-- FOOTER NAVIGATION -->
             <div class="footer-nav" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
                 <a href="week1-lecture3.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&larr; Lecture 3</a>
                 <a href="week2.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&uarr; Week 2 Hub</a>
-                <a href="week2-lecture5.html" style="background: var(--accent); color: white; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">Lecture 5 &rarr;</a>
+                <a href="week2-lecture5.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">Lecture 5 &rarr;</a>
             </div>
         </div>
     </div>
-
-    <!-- SCRIPT LOGIC FOR STEPPER AND CHALLENGE WIDGET -->
-    <script>
-        const formulaState = { step: 0 };
-        const formulaClauses = [
-            {
-                clauseTitle: "1. The Challenge (∀ϵ > 0)", quantifier: "Universal (∀)", role: "Given tolerance", scope: "Arbitrary positive real",
-                summary: "<strong>Step 1: Establishing tolerance.</strong> Consider any arbitrary positive distance $\epsilon > 0$.",
-                what: "<p>We are given an arbitrary positive distance $\epsilon > 0$, forming a symmetric neighborhood $(L - \epsilon, L + \epsilon)$ around the target limit $L$.</p>",
-                why: "<p>Demanding the condition holds for every $\epsilon > 0$ ensures the sequence cannot settle at or bounce toward any other value.</p>"
-            },
-            {
-                clauseTitle: "2. The Response (∃N ∈ ℕ)", quantifier: "Existential (∃)", role: "Cutoff index", scope: "Dependent on ϵ",
-                summary: "<strong>Step 2: Identifying cutoff index N.</strong> An integer $N$ exists past which terms remain trapped.",
-                what: "<p>We determine an integer index $N$ based on $\epsilon$. For example, with $a_n = 1/n$, choosing $N = \\lceil 1/\\epsilon \\rceil$ ensures $1/N \\le \\epsilon$.</p>",
-                why: "<p>Because $N$ is chosen after $\epsilon$, it can push as far out down the sequence tail as necessary to satisfy tiny tolerances.</p>"
-            },
-            {
-                clauseTitle: "3. The Tail Scope (∀n > N)", quantifier: "Universal (∀)", role: "Tail evaluation", scope: "All indices past N",
-                summary: "<strong>Step 3: Examining all terms past N.</strong> Every subsequent index $n > N$ is evaluated.",
-                what: "<p>We evaluate the infinite tail: all terms $a_n$ where $n \\in \\{N+1, N+2, N+3, \\dots\\}$.</p>",
-                why: "<p>Convergence is strictly a long-term asymptotic property. A sequence may fluctuate wildly for early terms, provided the tail stays bounded.</p>"
-            },
-            {
-                clauseTitle: "4. The Distance Condition (|aₙ - L| < ϵ)", quantifier: "Inequality (<)", role: "Proximity condition", scope: "Distance within band",
-                summary: "<strong>Step 4: Confirming distance constraint.</strong> For all $n > N$, $|a_n - L| < \\epsilon$.",
-                what: "<p>Every term $a_n$ with index $n > N$ lies strictly inside the open interval $(L - \\epsilon, L + \\epsilon)$.</p>",
-                why: "<p>This guarantees that the entire infinite tail stays trapped within the tolerance window without ever escaping.</p>"
-            }
-        ];
-
-        function setFormulaStep(stepIdx) { formulaState.step = stepIdx; updateFormulaUI(); }
-        function stepFormula(dir) {
-            formulaState.step += dir;
-            if (formulaState.step < 0) formulaState.step = 0;
-            if (formulaState.step > 3) formulaState.step = 3;
-            updateFormulaUI();
-        }
-        function updateFormulaUI() {
-            const idx = formulaState.step;
-            const current = formulaClauses[idx];
-            for (let i = 0; i < 4; i++) {
-                const el = document.getElementById(`chunk-${i}`);
-                el.classList.remove('active', 'completed');
-                if (i === idx) el.classList.add('active');
-                else if (i < idx) el.classList.add('completed');
-            }
-            document.getElementById('fw-tel-clause').innerText = current.clauseTitle;
-            document.getElementById('fw-tel-quant').innerText = current.quantifier;
-            document.getElementById('fw-tel-role').innerText = current.role;
-            document.getElementById('fw-tel-scope').innerText = current.scope;
-            document.getElementById('btn-fw-prev').disabled = (idx === 0);
-            document.getElementById('btn-fw-next').disabled = (idx === 3);
-            document.getElementById('fw-step-summary').innerHTML = current.summary;
-            document.getElementById('fw-pane-what').innerHTML = current.what;
-            document.getElementById('fw-pane-why').innerHTML = current.why;
-            if (window.renderMathInElement) {
-                renderMathInElement(document.getElementById('definition-walkthrough'), { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });
-            }
-            updateFormulaCanvas(idx);
-        }
-        function updateFormulaCanvas(step) {
-            const epsBand = document.getElementById('fw-svg-epsband');
-            const nLine = document.getElementById('fw-svg-nline');
-            const nLbl = document.getElementById('fw-svg-nlbl');
-            epsBand.setAttribute('opacity', step === 0 ? '0.6' : '0.35');
-            nLine.setAttribute('opacity', step >= 1 ? '1' : '0.2');
-            nLbl.setAttribute('opacity', step >= 1 ? '1' : '0.2');
-        }
-
-        const challengeState = { active: false, eps: 0.2, reqN: 5, currentDisplayN: 5 };
-        let challengeTimer = null;
-
-        function startChallenge(eps) {
-            if (challengeTimer) clearInterval(challengeTimer);
-            challengeState.active = true;
-            challengeState.eps = eps;
-            challengeState.reqN = Math.ceil(1 / eps);
-            challengeState.currentDisplayN = challengeState.reqN;
-            document.getElementById('step-controls').style.display = 'flex';
-            updateChallengeUI();
-
-            challengeTimer = setInterval(() => {
-                if (challengeState.currentDisplayN < 30) {
-                    advanceChallengeStep();
-                } else {
-                    clearInterval(challengeTimer);
-                }
-            }, 250);
-        }
-
-        function advanceChallengeStep() {
-            challengeState.currentDisplayN++;
-            if (challengeState.currentDisplayN > 30) challengeState.currentDisplayN = 30;
-            updateChallengeUI();
-        }
-
-        function resetChallenge() {
-            if (challengeTimer) clearInterval(challengeTimer);
-            challengeState.active = false;
-            document.getElementById('step-controls').style.display = 'none';
-            document.getElementById('cg-tel-eps').innerText = 'Select below';
-            document.getElementById('cg-tel-reqn').innerText = '—';
-            document.getElementById('cg-tel-val').innerText = '—';
-            document.getElementById('cg-tel-status').innerText = 'Standby';
-            renderGameSVG(null, 0, 0);
-        }
-
-        function updateChallengeUI() {
-            const eps = challengeState.eps;
-            const reqN = challengeState.reqN;
-            const curN = challengeState.currentDisplayN;
-            const atTerm = (1 / curN);
-            document.getElementById('cg-tel-eps').innerHTML = `$${eps}$`;
-            document.getElementById('cg-tel-reqn').innerHTML = `$N = ${reqN}$`;
-            document.getElementById('cg-tel-val').innerHTML = `$a_{${curN}} = ${atTerm.toFixed(3)}$`;
-            document.getElementById('cg-tel-status').innerHTML = curN > reqN ? `Inside (+${(eps - atTerm).toFixed(3)})` : `Boundary/Outside`;
-            if (window.renderMathInElement) {
-                renderMathInElement(document.getElementById('game-telemetry'), { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });
-            }
-            renderGameSVG(eps, reqN, curN);
-        }
-
-        function renderGameSVG(eps, reqN, curN) {
-            const svg = document.getElementById('game-plot');
-            const originX = 90, originY = 130, maxXScale = 610;
-            let svgContent = `<line x1="${originX}" y1="${originY}" x2="${originX + maxXScale}" y2="${originY}" stroke="#64748b" stroke-width="1.0"/><text x="${originX - 35}" y="${originY + 5}" font-family="sans-serif" font-size="12" font-weight="700" fill="#64748b">L=0</text><line x1="${originX}" y1="240" x2="${originX}" y2="25" stroke="#64748b" stroke-width="1.0"/><line x1="${originX}" y1="${originY}" x2="715" y2="${originY}" stroke="#64748b" stroke-width="1.0"/>`;
-            if (eps === null) {
-                svg.innerHTML = svgContent + `<text x="260" y="130" font-family="sans-serif" font-size="14" fill="#64748b">Select an &epsilon; budget above to illustrate the sample.</text>`;
-                return;
-            }
-            const maxN = Math.max(14, reqN + 4);
-            const scaleFactor = eps <= 0.05 ? 900 : (eps <= 0.1 ? 550 : 220);
-            const topY = originY - (eps * scaleFactor), bottomY = originY + (eps * scaleFactor);
-            svgContent += `<rect x="${originX}" y="${topY}" width="${maxXScale}" height="${bottomY - topY}" fill="#fef3c7" opacity="0.8"/><line x1="${originX}" y1="${topY}" x2="${originX + maxXScale}" y2="${topY}" stroke="#d97706" stroke-dasharray="4"/><line x1="${originX}" y1="${bottomY}" x2="${originX + maxXScale}" y2="${bottomY}" stroke="#d97706" stroke-dasharray="4"/>`;
-            svgContent += `
-                <text x="${originX - 65}" y="${topY + 4}" font-family="sans-serif" font-size="11" font-weight="bold" fill="#d97706">L+&epsilon;</text>
-                <line x1="${originX - 35}" y1="${topY}" x2="${originX - 6}" y2="${topY}" stroke="#d97706" stroke-width="1.5"/>
-                <polygon points="${originX - 2},${topY} ${originX - 8},${topY - 3.5} ${originX - 8},${topY + 3.5}" fill="#d97706"/>
-                <text x="${originX - 63}" y="${bottomY + 4}" font-family="sans-serif" font-size="11" font-weight="bold" fill="#d97706">L-&epsilon;</text>
-                <line x1="${originX - 35}" y1="${bottomY}" x2="${originX - 6}" y2="${bottomY}" stroke="#d97706" stroke-width="1.5"/>
-                <polygon points="${originX - 2},${bottomY} ${originX - 8},${bottomY - 3.5} ${originX - 8},${bottomY + 3.5}" fill="#d97706"/>
-            `;
-            for (let n = 1; n <= curN; n++) {
-                const val = 1 / n, cx = originX + (n * (maxXScale / maxN)), cy = originY - (val * scaleFactor);
-                const inside = n > reqN;
-                svgContent += `<circle cx="${cx}" cy="${cy}" r="${inside ? 7 : 5}" fill="${inside ? '#10b981' : '#d97706'}"/>`;
-            }
-            const thresholdX = originX + (reqN * (maxXScale / maxN));
-            svgContent += `<line x1="${thresholdX}" y1="20" x2="${thresholdX}" y2="240" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="4"/><text x="${thresholdX + 6}" y="32" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ef4444">N = ${reqN}</text>`;
-            svg.innerHTML = svgContent;
-        }
-
-        setFormulaStep(0);
-        renderGameSVG(null, 0, 0);
-    </script>
 </body>
 </html>
