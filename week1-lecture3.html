@@ -996,143 +996,89 @@
                 </ul>
             </div>
 
-            <!-- 2-PANEL VISUALIZATION FOR BOUNDEDNESS (FIXED COORDINATES) -->
+            <!-- 2-PANEL RESPONSIVE VISUALIZATION FOR BOUNDEDNESS -->
             <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; text-align: center;">
-                <p style="font-size: 0.95rem; font-weight: 700; color: #1e293b; margin-top: 0; margin-bottom: 0.35rem;">
+                <p style="font-size: 1.05rem; font-weight: 700; color: #1e293b; margin-top: 0; margin-bottom: 0.35rem;">
                     VISUALIZING BOUNDS: Shaded Corridors vs. Unbounded Escapes
                 </p>
-                <p style="font-size: 0.88rem; color: #64748b; margin-top: 0; margin-bottom: 1.25rem; max-width: 780px; display: inline-block; line-height: 1.5;">
+                <p style="font-size: 0.92rem; color: #64748b; margin-top: 0; margin-bottom: 1.5rem; max-width: 780px; display: inline-block; line-height: 1.6;">
                     A sequence is bounded if all infinitely many terms live trapped inside a horizontal corridor between ceiling $M$ and floor $m$. If terms eventually punch through every horizontal ceiling, the sequence is unbounded.
                 </p>
-                <svg viewBox="0 0 840 260" style="width: 100%; max-width: 820px; height: auto; display: inline-block;">
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; text-align: left;">
                     <!-- PANEL 1: BOUNDED CORRIDOR -->
-                    <g transform="translate(10, 10)">
-                        <rect x="0" y="0" width="395" height="235" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
-                        <text x="20" y="24" font-size="11.5" font-weight="bold" fill="#047857">1. Bounded Sequence: m &le; aₙ &le; M</text>
-                        <text x="20" y="38" font-size="10" fill="#64748b">Trapped forever inside a horizontal corridor</text>
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1.25rem;">
+                        <span style="font-size: 0.95rem; font-weight: 700; color: #047857; display: block; margin-bottom: 0.2rem;">
+                            1. Bounded Sequence: m &le; aₙ &le; M
+                        </span>
+                        <span style="font-size: 0.85rem; color: #64748b; display: block; margin-bottom: 1rem;">
+                            Trapped forever inside a horizontal corridor
+                        </span>
+                        <svg viewBox="0 0 420 240" style="width: 100%; height: auto; display: block; overflow: visible;">
+                            <!-- Shaded Corridor between y=70 (M) and y=165 (m) -->
+                            <rect x="75" y="70" width="315" height="95" fill="#ecfdf5" rx="4" opacity="0.9" />
 
-                        <!-- Shaded Corridor between y=80 (M) and y=175 (m) -->
-                        <rect x="80" y="80" width="290" height="95" fill="#ecfdf5" opacity="0.8" />
+                            <!-- Axes -->
+                            <line x1="70" y1="205" x2="395" y2="205" stroke="#0f172a" stroke-width="2" />
+                            <line x1="75" y1="210" x2="75" y2="45" stroke="#0f172a" stroke-width="2" />
+                            <text x="400" y="210" font-size="14" font-weight="bold" fill="#0f172a">n</text>
+                            <text x="75" y="35" font-size="14" font-weight="bold" fill="#0f172a" text-anchor="middle">aₙ</text>
 
-                        <!-- Axes: Origin at (80, 205) -->
-                        <line x1="75" y1="205" x2="370" y2="205" stroke="#0f172a" stroke-width="1.5" />
-                        <line x1="80" y1="210" x2="80" y2="62" stroke="#0f172a" stroke-width="1.5" />
-                        <text x="375" y="209" font-size="11" font-weight="bold" fill="#0f172a">n</text>
-                        <text x="76" y="56" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">aₙ</text>
+                            <!-- Ceiling M line -->
+                            <line x1="75" y1="70" x2="390" y2="70" stroke="#059669" stroke-width="2" stroke-dasharray="5,4" />
+                            <text x="68" y="75" font-size="13" font-weight="bold" fill="#047857" text-anchor="end">Ceiling M</text>
 
-                        <!-- Upper Bound Ceiling M -->
-                        <line x1="80" y1="80" x2="370" y2="80" stroke="#10b981" stroke-width="1.8" stroke-dasharray="4,3" />
-                        <text x="74" y="84" font-size="10" font-weight="bold" fill="#047857" text-anchor="end">Ceiling M</text>
+                            <!-- Floor m line -->
+                            <line x1="75" y1="165" x2="390" y2="165" stroke="#059669" stroke-width="2" stroke-dasharray="5,4" />
+                            <text x="68" y="170" font-size="13" font-weight="bold" fill="#047857" text-anchor="end">Floor m</text>
 
-                        <!-- Lower Bound Floor m -->
-                        <line x1="80" y1="175" x2="370" y2="175" stroke="#10b981" stroke-width="1.8" stroke-dasharray="4,3" />
-                        <text x="74" y="179" font-size="10" font-weight="bold" fill="#047857" text-anchor="end">Floor m</text>
+                            <!-- Trapped Points -->
+                            <circle cx="110" cy="145" r="5.5" fill="#059669" />
+                            <circle cx="150" cy="85" r="5.5" fill="#059669" />
+                            <circle cx="190" cy="135" r="5.5" fill="#059669" />
+                            <circle cx="230" cy="100" r="5.5" fill="#059669" />
+                            <circle cx="270" cy="130" r="5.5" fill="#059669" />
+                            <circle cx="310" cy="110" r="5.5" fill="#059669" />
+                            <circle cx="350" cy="120" r="5.5" fill="#059669" />
 
-                        <!-- Trapped Points -->
-                        <circle cx="110" cy="155" r="4" fill="#059669" />
-                        <circle cx="145" cy="95" r="4" fill="#059669" />
-                        <circle cx="180" cy="145" r="4" fill="#059669" />
-                        <circle cx="215" cy="110" r="4" fill="#059669" />
-                        <circle cx="250" cy="140" r="4" fill="#059669" />
-                        <circle cx="285" cy="118" r="4" fill="#059669" />
-                        <circle cx="320" cy="132" r="4" fill="#059669" />
-                        <circle cx="355" cy="125" r="4" fill="#059669" />
-
-                        <text x="235" y="102" font-size="9" font-weight="bold" fill="#065f46" text-anchor="middle">|aₙ| &le; K (Trapped inside corridor)</text>
-                    </g>
+                            <text x="235" y="118" font-size="12" font-weight="bold" fill="#065f46" text-anchor="middle">|aₙ| &le; K (Trapped inside corridor)</text>
+                        </svg>
+                    </div>
 
                     <!-- PANEL 2: UNBOUNDED ESCAPE -->
-                    <g transform="translate(435, 10)">
-                        <rect x="0" y="0" width="395" height="235" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
-                        <text x="20" y="24" font-size="11.5" font-weight="bold" fill="#b91c1c">2. Unbounded Sequence (Escape)</text>
-                        <text x="20" y="38" font-size="10" fill="#64748b">Punches through any proposed ceiling M</text>
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1.25rem;">
+                        <span style="font-size: 0.95rem; font-weight: 700; color: #b91c1c; display: block; margin-bottom: 0.2rem;">
+                            2. Unbounded Sequence (Escape)
+                        </span>
+                        <span style="font-size: 0.85rem; color: #64748b; display: block; margin-bottom: 1rem;">
+                            Punches through any proposed ceiling M
+                        </span>
+                        <svg viewBox="0 0 420 240" style="width: 100%; height: auto; display: block; overflow: visible;">
+                            <!-- Axes -->
+                            <line x1="70" y1="205" x2="395" y2="205" stroke="#0f172a" stroke-width="2" />
+                            <line x1="75" y1="210" x2="75" y2="45" stroke="#0f172a" stroke-width="2" />
+                            <text x="400" y="210" font-size="14" font-weight="bold" fill="#0f172a">n</text>
+                            <text x="75" y="35" font-size="14" font-weight="bold" fill="#0f172a" text-anchor="middle">aₙ</text>
 
-                        <!-- Axes: Origin at (80, 205) -->
-                        <line x1="75" y1="205" x2="370" y2="205" stroke="#0f172a" stroke-width="1.5" />
-                        <line x1="80" y1="210" x2="80" y2="62" stroke="#0f172a" stroke-width="1.5" />
-                        <text x="375" y="209" font-size="11" font-weight="bold" fill="#0f172a">n</text>
-                        <text x="76" y="56" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">aₙ</text>
+                            <!-- Proposed Ceiling M -->
+                            <line x1="75" y1="125" x2="390" y2="125" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,4" />
+                            <text x="68" y="130" font-size="13" font-weight="bold" fill="#b91c1c" text-anchor="end">Ceiling M</text>
 
-                        <!-- Attempted Ceiling M -->
-                        <line x1="80" y1="120" x2="370" y2="120" stroke="#ef4444" stroke-width="1.8" stroke-dasharray="4,3" />
-                        <text x="74" y="124" font-size="10" font-weight="bold" fill="#b91c1c" text-anchor="end">Ceiling M</text>
+                            <!-- Escaping Points -->
+                            <circle cx="105" cy="190" r="5.5" fill="#dc2626" />
+                            <circle cx="145" cy="170" r="5.5" fill="#dc2626" />
+                            <circle cx="195" cy="145" r="5.5" fill="#dc2626" />
+                            <circle cx="245" cy="120" r="5.5" fill="#dc2626" />
+                            <circle cx="295" cy="85" r="6.5" fill="#dc2626" stroke="#991b1b" stroke-width="2" />
+                            <circle cx="345" cy="45" r="6.5" fill="#dc2626" stroke="#991b1b" stroke-width="2" />
 
-                        <!-- Points Escaping Upward -->
-                        <circle cx="110" cy="190" r="4" fill="#dc2626" />
-                        <circle cx="150" cy="170" r="4" fill="#dc2626" />
-                        <circle cx="195" cy="145" r="4" fill="#dc2626" />
-                        <circle cx="240" cy="115" r="4" fill="#dc2626" />
-                        <circle cx="285" cy="80" r="5" fill="#dc2626" stroke="#b91c1c" stroke-width="1.5" />
-                        <circle cx="330" cy="40" r="5" fill="#dc2626" stroke="#b91c1c" stroke-width="1.5" />
-
-                        <!-- Indicator arrow -->
-                        <line x1="285" y1="108" x2="285" y2="88" stroke="#dc2626" stroke-width="1.5" />
-                        <text x="302" y="98" font-size="8.5" font-weight="bold" fill="#b91c1c">Breaks ceiling!</text>
-                    </g>
-                </svg>
-            </div>
-
-            <div class="aside-box">
-                <h4>🔗 The Bridge to Lecture 2: Sequences and Suprema</h4>
-                <p style="margin-top: 0; margin-bottom: 0.5rem; font-size: 0.95rem;">
-                    Notice how this connects directly to the <strong>Axiom of Completeness</strong> from Lecture 2!
-                </p>
-                <p style="margin: 0; font-size: 0.93rem; line-height: 1.65;">
-                    If an infinite sequence <span class="nobr">$(a_n)$</span> is bounded above, then its collection of outputs forms a non-empty set of real numbers that is bounded above. Therefore, by the completeness of $\mathbb{R}$, that sequence is guaranteed to possess an exact least upper bound: a <strong>supremum</strong> <span class="nobr">$\alpha = \sup\{a_n \mid n \in \mathbb{N}\}$.</span> This fundamental bridge will power our convergence theorems in Week 2!
-                </p>
-            </div>
-
-            <!-- COMPREHENSIVE WORKED EXAMPLE: TESTING MONOTONICITY AND BOUNDS -->
-            <div class="worked-example-box" style="margin-top: 1.5rem;">
-                <h4>🎯 Worked Example: Testing Monotonicity and Bounds by Hand</h4>
-                <p style="margin-top: 0; font-size: 0.98rem; line-height: 1.7;">
-                    Consider the sequence <span class="nobr">$a_n = \frac{n}{n+1}$</span> for <span class="nobr">$n \ge 0$:</span>
-                    <span class="nobr">$$\left(0, \; \frac{1}{2}, \; \frac{2}{3}, \; \frac{3}{4}, \; \frac{4}{5}, \; \dots\right)$$</span>
-                </p>
-                <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
-                    <li style="margin-bottom: 0.75rem;">
-                        <strong>Step 1: Test Monotonicity using the Difference Method.</strong><br>
-                        Form the difference <span class="nobr">$a_{n+1} - a_n$:</span>
-                        <div style="margin: 0.25rem 0;">
-                            $$a_{n+1} - a_n = \frac{n+1}{(n+1)+1} - \frac{n}{n+1} = \frac{n+1}{n+2} - \frac{n}{n+1}$$
-                        </div>
-                        Find a common denominator:
-                        <div style="margin: 0.25rem 0;">
-                            $$a_{n+1} - a_n = \frac{(n+1)^2 - n(n+2)}{(n+2)(n+1)} = \frac{(n^2 + 2n + 1) - (n^2 + 2n)}{(n+2)(n+1)} = \frac{1}{(n+2)(n+1)}$$
-                        </div>
-                        Since $n \ge 0$, the numerator is $1 > 0$ and the denominator is strictly positive. Therefore:
-                        <div style="margin: 0.25rem 0; font-weight: 600; color: #065f46;">
-                            $$a_{n+1} - a_n > 0 \quad \text{for all } n \in \mathbb{N}$$
-                        </div>
-                        <em>Conclusion:</em> The sequence is <strong>strictly increasing</strong>.
-                    </li>
-                    <li>
-                        <strong>Step 2: Establish Bounds.</strong><br>
-                        • <em>Lower Bound:</em> Because the sequence is strictly increasing, its very first term is its minimum: <span class="nobr">$a_0 = \frac{0}{0+1} = 0$.</span> Thus, <span class="nobr">$a_n \ge 0$</span> for all $n$ (bounded below by $0$).<br>
-                        • <em>Upper Bound:</em> For every natural number $n$, the numerator $n$ is strictly less than the denominator $n+1$. Therefore:
-                        <div style="margin: 0.25rem 0;">
-                            $$a_n = \frac{n}{n+1} < 1 \quad \text{for all } n$$
-                        </div>
-                        Thus, the sequence is bounded above by $1$.<br>
-                        <em>Conclusion:</em> The sequence is <strong>bounded</strong> because all infinite terms live trapped inside <span class="nobr">$$0 \le a_n < 1$$</span>
-                    </li>
-                </ol>
-            </div>
-
-            <!-- SECTION 5 -->
-            <h2 id="algebra-of-sequences">5. The Algebra of Sequences (Scaling and Sums)</h2>
-
-            <div class="infobox">
-                <h4>📖 Notation Reference: Sequence Operations &amp; Linear Combinations</h4>
-                <div class="infobox-intro">
-                    <strong>Locker-by-locker arithmetic:</strong> Algebraic operations on sequences are performed term-by-term. Each new sequence is built by evaluating the operation independently at each index <span class="nobr">$n \in \mathbb{N}$.</span>
+                            <!-- Break indicator -->
+                            <line x1="295" y1="115" x2="295" y2="95" stroke="#dc2626" stroke-width="1.8" />
+                            <text x="305" y="105" font-size="11.5" font-weight="bold" fill="#b91c1c">Breaks ceiling!</text>
+                        </svg>
+                    </div>
                 </div>
-                <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$(\lambda a)_n = \lambda a_n$</span></span><span class="notation-desc">Scalar multiplication: every stored locker value is scaled by real number $\lambda$</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$(a + b)_n = a_n + b_n$</span></span><span class="notation-desc">Sum sequence: locker $n$ contains the sum of terms at matching door index $n$</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$(a \cdot b)_n = a_n b_n$</span></span><span class="notation-desc">Product sequence: term-by-term multiplication at matching door index $n$</span></div>
-                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$(a / b)_n = a_n / b_n$</span></span><span class="notation-desc">Quotient sequence: term-by-term division (valid when <span class="nobr">$b_n \ne 0$</span> for all $n$)</span></div>
-                </div>
+            </div>
             </div>
 
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">1. Two Hallways Running Side-by-Side: Pointwise Operations</h3>

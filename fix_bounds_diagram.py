@@ -1,4 +1,3 @@
-cat << 'EOF' > fix_bounds_diagram.py
 #!/usr/bin/env python3
 r"""
 fix_bounds_diagram.py
@@ -151,6 +150,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-EOF
-chmod +x fix_bounds_diagram.py
-./fix_bounds_diagram.py
