@@ -1,4 +1,3 @@
-cat << 'EOF' > update_lecture2_podcast.py
 #!/usr/bin/env python3
 r"""
 update_lecture2_podcast.py
@@ -101,6 +100,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-EOF
-chmod +x update_lecture2_podcast.py
-./update_lecture2_podcast.py
