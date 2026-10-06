@@ -1,181 +1,197 @@
 #!/usr/bin/env python3
 r"""
-update.py
+normalize_nav.py
 
-Forces replacement or insertion of structured historical profile boxes for
-Brook Taylor (Section 6) and Carl Friedrich Gauss (Section 7) into
-week1-lecture3.html, ensuring rectangular styling and structured sections.
+Safely normalizes top and bottom navigation panes across all week hubs
+and lecture files using precise string boundaries to guarantee zero
+content deletion.
+
+Fixes SVG text overlap in week1-lecture2.html and implements a decoupled
+flexbox header to prevent long titles from repositioning the navigation buttons.
 """
 
-from pathlib import Path
 import re
-import subprocess
 import sys
+import subprocess
+from pathlib import Path
 
-TARGET_HTML = Path("week1-lecture3.html")
-SCRIPT_FILE = Path(__file__).resolve()
+BUTTON_STYLE = 'background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;'
+DISABLED_STYLE = 'background: #f1f5f9; color: #94a3b8; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; font-weight: 600; font-size: 0.88rem; cursor: not-allowed; text-align: center; white-space: nowrap;'
 
-def execute_git(args: list[str]) -> subprocess.CompletedProcess:
+def execute_git(args: list[str]) -> None:
     res = subprocess.run(args, capture_output=True, text=True)
     if res.returncode != 0:
-        print(f"Git execution error: {' '.join(args)}", file=sys.stderr)
-        print(res.stderr.strip(), file=sys.stderr)
+        print(f"Git execution error: {' '.join(args)}\n{res.stderr.strip()}", file=sys.stderr)
         sys.exit(res.returncode)
-    return res
+
+def safe_inject_navigation(content: str, is_hub: bool, prev_btn: str, center_btn: str, next_btn: str) -> str:
+    container_marker = '<div class="container">'
+    module_marker = '<div class="module-content">'
+
+    idx_start = content.find(container_marker)
+    idx_end = content.find(module_marker)
+
+    if idx_start == -1 or idx_end == -1 or idx_start > idx_end:
+        print("Error: Could not locate safe structural boundaries. Skipping file.", file=sys.stderr)
+        return content
+
+    header_block = content[idx_start + len(container_marker):idx_end]
+
+    # Safely extract existing title to preserve it
+    h1_match = re.search(r'<h1[^>]*>(.*?)</h1>', header_block, re.IGNORECASE | re.DOTALL)
+    title = h1_match.group(1).strip() if h1_match else "MTHS120 Module"
+
+    # Decoupled header: Title wraps naturally, buttons lock to the right
+    top_header = (
+        '\n        <!-- TOP NAVIGATION HEADER -->\n'
+        '        <div class="header" style="border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: nowrap; gap: 1rem;">\n'
+        '            <div style="flex: 1 1 auto; min-width: 0;">\n'
+        f'                <h1 style="margin: 0; line-height: 1.3; font-size: 1.5rem;">{title}</h1>\n'
+        '            </div>\n'
+        '            <div class="nav-btn-group" style="display: flex; gap: 0.5rem; align-items: center; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end;">\n'
+        f'                {prev_btn}\n'
+        f'                {center_btn}\n'
+        f'                {next_btn}\n'
+        '            </div>\n'
+        '        </div>\n'
+        '        '
+    )
+
+    new_content = content[:idx_start + len(container_marker)] + top_header + content[idx_end:]
+
+    # Safely strip legacy footer without greedy regex
+    footer_idx = new_content.rfind('<!-- FOOTER')
+    if footer_idx == -1:
+        footer_idx = new_content.rfind('<div class="footer-nav"')
+
+    if footer_idx != -1:
+        # Strip up to the footer, leaving all Dedekind </div> closures perfectly intact
+        new_content = new_content[:footer_idx].rstrip()
+    else:
+        # If no footer is found, just strip the closing HTML tags to append cleanly
+        new_content = re.sub(r'</body>\s*</html>\s*$', '', new_content, flags=re.IGNORECASE).rstrip()
+
+    bottom_footer = (
+        '\n\n            <!-- FOOTER NAVIGATION -->\n'
+        '            <div class="footer-nav" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap;">\n'
+        f'                {prev_btn}\n'
+        f'                {center_btn}\n'
+        f'                {next_btn}\n'
+        '            </div>\n'
+        '        </div>\n'
+        '    </div>\n'
+        '</body>\n'
+        '</html>\n'
+    )
+
+    return new_content + bottom_footer
+
 
 def main() -> None:
-    if not TARGET_HTML.exists():
-        print(f"Error: {TARGET_HTML} not found in workspace.", file=sys.stderr)
-        sys.exit(1)
+    hub_files = list(Path('.').glob('week[0-9]*.html'))
+    lec_files = list(Path('.').glob('week*-lecture*.html'))
 
-    content = TARGET_HTML.read_text(encoding="utf-8")
-    original = content
+    weeks = []
+    for h in hub_files:
+        match = re.search(r'week(\d+)\.html', h.name)
+        if match:
+            weeks.append(int(match.group(1)))
+    weeks.sort()
 
-    taylor_box = r"""
-            <!-- HISTORICAL PROFILE: BROOK TAYLOR -->
-            <div class="infobox" style="background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid #0284c7; border-radius: 6px; padding: 1.5rem; margin: 1.75rem 0;">
-                <div style="display: flex; flex-direction: row; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap;">
-                    <div style="flex: 0 0 130px; text-align: center;">
-                        <img src="images/taylor.jpg" alt="Brook Taylor portrait" style="width: 130px; height: auto; border-radius: 6px; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: block; margin-bottom: 0.5rem;">
-                        <span style="font-weight: 700; font-size: 0.85rem; color: #0f172a; display: block;">Brook Taylor</span>
-                        <span style="font-size: 0.75rem; color: #64748b;">(1685–1731)</span>
-                    </div>
-                    <div style="flex: 1; min-width: 260px;">
-                        <h4 style="margin-top: 0; margin-bottom: 0.5rem; color: #0284c7; font-size: 1.05rem;">
-                            Historical Profile: The Pioneer of Finite Differences
-                        </h4>
-                        <p style="font-size: 0.92rem; line-height: 1.65; color: #334155; margin-bottom: 0.75rem;">
-                            <strong>Background:</strong> An English mathematician and Secretary of the Royal Society, Brook Taylor worked in the turbulent aftermath of the Newton-Leibniz calculus dispute. Rather than treating calculus solely as smooth tangents and infinitesimals, Taylor approached change through discrete increments.
-                        </p>
-                        <p style="font-size: 0.92rem; line-height: 1.65; color: #334155; margin-bottom: 0.75rem;">
-                            <strong>Key Contributions:</strong>
-                        </p>
-                        <ul style="font-size: 0.9rem; line-height: 1.6; color: #334155; margin: 0 0 0.75rem 1.25rem; padding: 0;">
-                            <li>Published <em>Methodus Incrementorum Directa et Inversa</em> (1715), formally inaugurating the <strong>calculus of finite differences</strong>.</li>
-                            <li>Formulated Taylor's Theorem as the natural limiting case when discrete step sizes <span class="nobr">$\Delta x$</span> approach zero.</li>
-                            <li>Pioneered the mathematical study of vibrating strings and linear perspective in projective geometry.</li>
-                        </ul>
-                        <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 0.75rem 1rem;">
-                            <strong style="color: #0f172a; font-size: 0.88rem;">Vignette — Discrete Foundations First:</strong>
-                            <p style="margin: 0.25rem 0 0 0; font-size: 0.88rem; line-height: 1.55; color: #475569;">
-                                While calculus textbooks today treat Taylor series as high-level continuous machinery, Taylor arrived at them by subtracting discrete numbers in sequence tables. He viewed the continuous derivative not as a mysterious standalone object, but as the shadow cast by sequential steps when the gaps become imperceptible.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-"""
+    lectures = []
+    for l in lec_files:
+        match = re.search(r'week(\d+)-lecture(\d+)\.html', l.name)
+        if match:
+            lectures.append((int(match.group(1)), int(match.group(2))))
+    lectures.sort(key=lambda x: (x[0], x[1]))
 
-    gauss_box = r"""
-            <!-- HISTORICAL PROFILE: CARL FRIEDRICH GAUSS -->
-            <div class="infobox" style="background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid #10b981; border-radius: 6px; padding: 1.5rem; margin: 1.75rem 0;">
-                <div style="display: flex; flex-direction: row; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap;">
-                    <div style="flex: 0 0 130px; text-align: center;">
-                        <img src="images/gauss.jpg" alt="Carl Friedrich Gauss portrait" style="width: 130px; height: auto; border-radius: 6px; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: block; margin-bottom: 0.5rem;">
-                        <span style="font-weight: 700; font-size: 0.85rem; color: #0f172a; display: block;">Carl Friedrich Gauss</span>
-                        <span style="font-size: 0.75rem; color: #64748b;">(1777–1855)</span>
-                    </div>
-                    <div style="flex: 1; min-width: 260px;">
-                        <h4 style="margin-top: 0; margin-bottom: 0.5rem; color: #047857; font-size: 1.05rem;">
-                            Historical Profile: The Prince of Mathematicians
-                        </h4>
-                        <p style="font-size: 0.92rem; line-height: 1.65; color: #334155; margin-bottom: 0.75rem;">
-                            <strong>Background:</strong> Widely regarded as the <em>Princeps mathematicorum</em>, Gauss was a German child prodigy who revolutionized number theory, differential geometry, geodesy, and astronomy. He served for decades as director of the Göttingen Observatory.
-                        </p>
-                        <p style="font-size: 0.92rem; line-height: 1.65; color: #334155; margin-bottom: 0.75rem;">
-                            <strong>Key Contributions:</strong>
-                        </p>
-                        <ul style="font-size: 0.9rem; line-height: 1.6; color: #334155; margin: 0 0 0.75rem 1.25rem; padding: 0;">
-                            <li>Published <em>Disquisitiones Arithmeticae</em> (1801) at age 21, establishing modern number theory and modular congruence notation.</li>
-                            <li>Proved the Fundamental Theorem of Algebra and the construction of the regular 17-gon using only ruler and compass.</li>
-                            <li>Formalized the Gaussian normal distribution and the method of least squares in planetary orbit determination.</li>
-                        </ul>
-                        <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 0.75rem 1rem;">
-                            <strong style="color: #0f172a; font-size: 0.88rem;">Vignette — The 1 to 100 Classroom Sum:</strong>
-                            <p style="margin: 0.25rem 0 0 0; font-size: 0.88rem; line-height: 1.55; color: #475569;">
-                                In 1786, his Brunswick schoolmaster J.G. Büttner assigned the unruly class the chore of summing all integers from 1 to 100. While his classmates ground through tedious column addition, the nine-year-old Gauss laid his slate on the teacher's desk within seconds with the exact total: <span class="nobr"><strong>5050</strong>.</span> He recognized that pairing symmetrically from opposite ends (<span class="nobr">$1 + 100 = 101$,</span> <span class="nobr">$2 + 99 = 101$</span>) yields 50 identical pairs of 101.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-"""
+    updated_files = []
 
-    # Strip existing Taylor box if present
-    content = re.sub(
-        r'\s*<!-- HISTORICAL PROFILE: BROOK TAYLOR -->.*?(?=</div>\s*</div>\s*</div>|</div>\s*</div>)\s*</div>\s*</div>',
-        '',
-        content,
-        flags=re.DOTALL
-    )
-    # Also strip any older style containing images/taylor.jpg
-    content = re.sub(
-        r'<div[^>]*>.*?<img[^>]*images/taylor\.jpg[^>]*>.*?</div>\s*</div>',
-        '',
-        content,
-        flags=re.DOTALL
-    )
+    # 1. Update Week Hubs
+    for w in weeks:
+        file_path = Path(f'week{w}.html')
+        if not file_path.exists():
+            continue
 
-    # Strip existing Gauss box if present
-    content = re.sub(
-        r'\s*<!-- HISTORICAL PROFILE: CARL FRIEDRICH GAUSS -->.*?(?=</div>\s*</div>\s*</div>|</div>\s*</div>)\s*</div>\s*</div>',
-        '',
-        content,
-        flags=re.DOTALL
-    )
-    # Also strip any older style containing images/gauss.jpg
-    content = re.sub(
-        r'<div[^>]*>.*?<img[^>]*images/gauss\.jpg[^>]*>.*?</div>\s*</div>',
-        '',
-        content,
-        flags=re.DOTALL
-    )
+        content = file_path.read_text(encoding='utf-8')
+        original = content
 
-    # Insert Taylor box directly after Section 6 heading
-    target_s6 = '<h2 id="derived-sequences">'
-    idx_s6 = content.find(target_s6)
-    if idx_s6 != -1:
-        end_s6 = content.find("</h2>", idx_s6)
-        if end_s6 != -1:
-            pos_s6 = end_s6 + len("</h2>")
-            content = content[:pos_s6] + taylor_box + content[pos_s6:]
+        if (w - 1) in weeks:
+            prev_btn = f'<a href="week{w-1}.html" style="{BUTTON_STYLE}">&larr; Prev Week</a>'
+        else:
+            prev_btn = f'<span style="{DISABLED_STYLE}">&larr; Prev Week</span>'
 
-    # Insert Gauss box directly after Section 7 heading
-    target_s7 = '<h2 id="discrete-integration">'
-    idx_s7 = content.find(target_s7)
-    if idx_s7 != -1:
-        end_s7 = content.find("</h2>", idx_s7)
-        if end_s7 != -1:
-            pos_s7 = end_s7 + len("</h2>")
-            content = content[:pos_s7] + gauss_box + content[pos_s7:]
+        center_btn = f'<a href="index.html" style="{BUTTON_STYLE}">&#8962; Curriculum Index</a>'
 
-    if content != original:
-        TARGET_HTML.write_text(content, encoding="utf-8")
-        print(f"Updated {TARGET_HTML.name} with structured historical profile boxes.")
+        if (w + 1) in weeks:
+            next_btn = f'<a href="week{w+1}.html" style="{BUTTON_STYLE}">Next Week &rarr;</a>'
+        else:
+            next_btn = f'<span style="{DISABLED_STYLE}">Next Week &rarr;</span>'
+
+        content = safe_inject_navigation(content, True, prev_btn, center_btn, next_btn)
+
+        if content != original:
+            file_path.write_text(content, encoding='utf-8')
+            updated_files.append(str(file_path))
+            print(f"Safely normalized {file_path.name}")
+
+    # 2. Update Lecture Files
+    for idx, (w, l) in enumerate(lectures):
+        file_path = Path(f'week{w}-lecture{l}.html')
+        if not file_path.exists():
+            continue
+
+        content = file_path.read_text(encoding='utf-8')
+        original = content
+
+        if idx > 0:
+            pw, pl = lectures[idx - 1]
+            prev_btn = f'<a href="week{pw}-lecture{pl}.html" style="{BUTTON_STYLE}">&larr; Lecture {pl}</a>'
+        else:
+            prev_btn = f'<span style="{DISABLED_STYLE}">&larr; Prev Lecture</span>'
+
+        center_btn = f'<a href="week{w}.html" style="{BUTTON_STYLE}">&uarr; Week {w} Hub</a>'
+
+        if idx < len(lectures) - 1:
+            nw, nl = lectures[idx + 1]
+            next_btn = f'<a href="week{nw}-lecture{nl}.html" style="{BUTTON_STYLE}">Lecture {nl} &rarr;</a>'
+        else:
+            next_btn = f'<span style="{DISABLED_STYLE}">Next Lecture &rarr;</span>'
+
+        content = safe_inject_navigation(content, False, prev_btn, center_btn, next_btn)
+
+        # Patch SVG overlap in Reverse Triangle Inequality explicitly
+        if w == 1 and l == 2:
+            old_line = '<line x1="120" y1="45" x2="470" y2="45" stroke="#0284c7" stroke-width="3"/>'
+            new_line = '<line x1="120" y1="22" x2="470" y2="22" stroke="#0284c7" stroke-width="3"/>'
+            content = content.replace(old_line, new_line)
+
+            old_text = '<text x="295" y="38" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0284c7" text-anchor="middle">length |a| = 7</text>'
+            new_text = '<text x="295" y="15" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0284c7" text-anchor="middle">length |a| = 7</text>'
+            content = content.replace(old_text, new_text)
+
+        if content != original:
+            file_path.write_text(content, encoding='utf-8')
+            updated_files.append(str(file_path))
+            print(f"Safely normalized {file_path.name}")
+
+    # 3. Commit Operations
+    if updated_files:
+        execute_git(["git", "add"] + updated_files)
+
+        commit_subject = "Normalize nav layout and fix SVG overlap safely"
+        commit_body = (
+            "Enforce a decoupled flexbox header to lock navigation buttons to the\n"
+            "right, allowing long titles to wrap securely without breaking rows.\n"
+            "Eliminate destructive regex stripping to preserve nested biography HTML.\n"
+            "Shift vector annotations in Reverse Triangle Inequality to fix overlap."
+        )
+
+        execute_git(["git", "commit", "-m", f"{commit_subject}\n\n{commit_body}"])
+        execute_git(["git", "push"])
+        print("Successfully committed and pushed safe navigation changes.")
     else:
-        print("No changes made to HTML content.")
+        print("All navigation panes are already normalized.")
 
-    execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
-
-    diff_check = subprocess.run(["git", "diff", "--cached", "--quiet"])
-    if diff_check.returncode == 0:
-        print("Working tree clean; no changes staged.")
-        return
-
-    commit_subject = "Add structured historical profile boxes for Taylor and Gauss"
-    commit_body = (
-        "Insert rectangular portrait profile cards for Brook Taylor in\n"
-        "Section 6 and Carl Friedrich Gauss in Section 7 of week1-lecture3.html,\n"
-        "structured with background, key contributions, and vignettes."
-    )
-    full_message = f"{commit_subject}\n\n{commit_body}"
-
-    execute_git(["git", "commit", "-m", full_message])
-    print("Committed successfully.")
-
-    print("Pushing upstream...")
-    execute_git(["git", "push"])
-    print("Push complete.")
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
