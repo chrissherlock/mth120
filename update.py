@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 r"""
-normalize_nav.py
+update.py
 
 Safely normalizes top and bottom navigation panes across all week hubs
-and lecture files using precise string boundaries to guarantee zero
-content deletion.
+and lecture files using a self-healing structural tag balancer.
 
-Fixes SVG text overlap in week1-lecture2.html and implements a decoupled
-flexbox header to prevent long titles from repositioning the navigation buttons.
+Implements a stacked header layout (buttons centered on top of the title)
+to guarantee mobile responsiveness regardless of title length.
 """
 
 import re
@@ -32,47 +31,59 @@ def safe_inject_navigation(content: str, is_hub: bool, prev_btn: str, center_btn
     idx_end = content.find(module_marker)
 
     if idx_start == -1 or idx_end == -1 or idx_start > idx_end:
-        print("Error: Could not locate safe structural boundaries. Skipping file.", file=sys.stderr)
+        print("Error: Could not locate safe structural boundaries. Skipping.", file=sys.stderr)
         return content
 
-    header_block = content[idx_start + len(container_marker):idx_end]
+    header_block = content[idx_start:idx_end]
 
     # Safely extract existing title to preserve it
     h1_match = re.search(r'<h1[^>]*>(.*?)</h1>', header_block, re.IGNORECASE | re.DOTALL)
     title = h1_match.group(1).strip() if h1_match else "MTHS120 Module"
 
-    # Decoupled header: Title wraps naturally, buttons lock to the right
+    # Stacked Header: Buttons on top (centered), Title below (centered)
     top_header = (
-        '\n        <!-- TOP NAVIGATION HEADER -->\n'
-        '        <div class="header" style="border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: nowrap; gap: 1rem;">\n'
-        '            <div style="flex: 1 1 auto; min-width: 0;">\n'
-        f'                <h1 style="margin: 0; line-height: 1.3; font-size: 1.5rem;">{title}</h1>\n'
-        '            </div>\n'
-        '            <div class="nav-btn-group" style="display: flex; gap: 0.5rem; align-items: center; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end;">\n'
+        '<div class="container">\n'
+        '        <!-- TOP NAVIGATION HEADER -->\n'
+        '        <div class="header" style="border-bottom: 2px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.25rem;">\n'
+        '            <div class="nav-btn-group" style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; width: 100%;">\n'
         f'                {prev_btn}\n'
         f'                {center_btn}\n'
         f'                {next_btn}\n'
         '            </div>\n'
-        '        </div>\n'
-        '        '
+        '            <div style="text-align: center; width: 100%; min-width: 0;">\n'
+        f'                <h1 style="margin: 0; line-height: 1.3; font-size: 1.5rem;">{title}</h1>\n'
+        '            </div>\n'
+        '        </div>\n\n        '
     )
 
-    new_content = content[:idx_start + len(container_marker)] + top_header + content[idx_end:]
+    new_content = content[:idx_start] + top_header + content[idx_end:]
 
-    # Safely strip legacy footer without greedy regex
-    footer_idx = new_content.rfind('<!-- FOOTER')
-    if footer_idx == -1:
-        footer_idx = new_content.rfind('<div class="footer-nav"')
+    # --- SELF-HEALING TAG BALANCER ---
+    # 1. Strip out the entire footer area and any trailing closures completely
+    new_content = re.sub(r'<!-- FOOTER NAVIGATION -->.*', '', new_content, flags=re.DOTALL | re.IGNORECASE)
+    new_content = re.sub(r'<!-- BOTTOM NAVIGATION FOOTER -->.*', '', new_content, flags=re.DOTALL | re.IGNORECASE)
+    new_content = re.sub(r'<div class="footer-nav".*', '', new_content, flags=re.DOTALL | re.IGNORECASE)
+    new_content = re.sub(r'</body>\s*</html>\s*$', '', new_content, flags=re.DOTALL | re.IGNORECASE).rstrip()
 
-    if footer_idx != -1:
-        # Strip up to the footer, leaving all Dedekind </div> closures perfectly intact
-        new_content = new_content[:footer_idx].rstrip()
-    else:
-        # If no footer is found, just strip the closing HTML tags to append cleanly
-        new_content = re.sub(r'</body>\s*</html>\s*$', '', new_content, flags=re.IGNORECASE).rstrip()
+    # 2. Count <div> and </div> tags to see how many were left unclosed
+    body_idx = new_content.find(container_marker)
+    if body_idx == -1:
+        body_idx = 0
+
+    body_content = new_content[body_idx:]
+    body_content_no_svg = re.sub(r'<svg.*?</svg>', '', body_content, flags=re.DOTALL | re.IGNORECASE)
+
+    open_divs = len(re.findall(r'<div\b[^>]*>', body_content_no_svg, flags=re.IGNORECASE))
+    close_divs = len(re.findall(r'</div>', body_content_no_svg, flags=re.IGNORECASE))
+
+    missing_divs = open_divs - close_divs
+    divs_to_close_before_footer = missing_divs - 2
+
+    if divs_to_close_before_footer > 0:
+        new_content += '\n' + '                    </div>\n' * divs_to_close_before_footer
 
     bottom_footer = (
-        '\n\n            <!-- FOOTER NAVIGATION -->\n'
+        '\n            <!-- FOOTER NAVIGATION -->\n'
         '            <div class="footer-nav" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap;">\n'
         f'                {prev_btn}\n'
         f'                {center_btn}\n'
@@ -160,7 +171,7 @@ def main() -> None:
 
         content = safe_inject_navigation(content, False, prev_btn, center_btn, next_btn)
 
-        # Patch SVG overlap in Reverse Triangle Inequality explicitly
+        # 3. Patch SVG overlap in Reverse Triangle Inequality explicitly
         if w == 1 and l == 2:
             old_line = '<line x1="120" y1="45" x2="470" y2="45" stroke="#0284c7" stroke-width="3"/>'
             new_line = '<line x1="120" y1="22" x2="470" y2="22" stroke="#0284c7" stroke-width="3"/>'
@@ -172,24 +183,24 @@ def main() -> None:
 
         if content != original:
             file_path.write_text(content, encoding='utf-8')
-            updated_files.append(str(file_path))
-            print(f"Safely normalized {file_path.name}")
+            if str(file_path) not in updated_files:
+                updated_files.append(str(file_path))
+            print(f"Safely normalized & healed {file_path.name}")
 
-    # 3. Commit Operations
+    # 4. Commit Operations
     if updated_files:
         execute_git(["git", "add"] + updated_files)
 
-        commit_subject = "Normalize nav layout and fix SVG overlap safely"
+        commit_subject = "Stack and center header navigation for mobile"
         commit_body = (
-            "Enforce a decoupled flexbox header to lock navigation buttons to the\n"
-            "right, allowing long titles to wrap securely without breaking rows.\n"
-            "Eliminate destructive regex stripping to preserve nested biography HTML.\n"
-            "Shift vector annotations in Reverse Triangle Inequality to fix overlap."
+            "Change header flexbox layout from row to column to ensure long titles\n"
+            "never break on mobile devices. Navigation buttons are now centered\n"
+            "directly above the centered <h1> title."
         )
 
         execute_git(["git", "commit", "-m", f"{commit_subject}\n\n{commit_body}"])
         execute_git(["git", "push"])
-        print("Successfully committed and pushed safe navigation changes.")
+        print("Successfully committed and pushed stacked navigation changes.")
     else:
         print("All navigation panes are already normalized.")
 
