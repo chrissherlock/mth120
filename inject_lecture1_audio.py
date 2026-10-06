@@ -1,4 +1,3 @@
-cat << 'EOF' > inject_lecture1_audio.py
 #!/usr/bin/env python3
 r"""
 inject_lecture1_audio.py
@@ -150,6 +149,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-EOF
-chmod +x inject_lecture1_audio.py
-./inject_lecture1_audio.py
