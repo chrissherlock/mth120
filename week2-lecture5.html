@@ -15,9 +15,11 @@
             --accent: #d97706; --accent-hover: #b45309;
             --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { max-width: 100%; overflow-x: hidden; }
         body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
-        .container { max-width: 1200px; margin: 0 auto; }
-        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .container { max-width: 1200px; margin: 0 auto; width: 100%; }
+        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: nowrap; gap: 1rem; }
         .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
 
         .intro-lead { font-size: 1.1rem; color: #1e293b; line-height: 1.7; margin-bottom: 1.5rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); border: 1px solid var(--border); border-left-width: 4px; }
@@ -33,6 +35,10 @@
 
         .infobox { background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.25rem 0 1.75rem 0; }
         .infobox h4 { margin: 0 0 0.85rem 0; color: #0f172a; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-ui); }
+        .notation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 0.85rem 1.75rem; font-size: 0.95rem; }
+        .notation-item { display: grid; grid-template-columns: minmax(130px, max-content) 1fr; gap: 0.75rem; align-items: center; }
+        .notation-sym { font-weight: 600; color: var(--accent); white-space: nowrap; display: flex; justify-content: center; align-items: center; text-align: center; }
+        .notation-desc { min-width: 0; word-break: break-word; line-height: 1.5; color: #334155; }
         .infobox-intro { font-size: 0.93rem; color: #475569; line-height: 1.6; margin: 0 0 1.25rem 0; padding-bottom: 0.85rem; border-bottom: 1px solid #e2e8f0; }
 
         .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; border: 1px solid var(--border); border-left-width: 4px; }
@@ -43,10 +49,18 @@
         .worked-example-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
         .worked-example-box h4 { margin-top: 0; color: #047857; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
         .worked-example-box p, .worked-example-box li { color: #0f172a !important; }
-    
+
+        .lecture-card { background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+        .lecture-card:hover { transform: translateY(-2px); box-shadow: 0 6px 12px -2px rgba(0,0,0,0.08); border-color: var(--accent); }
+        .lecture-card h3 { margin-top: 0; color: #0f172a; }
+        .lecture-badge { display: inline-block; background: var(--accent); color: white; padding: 0.2rem 0.55rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem; }
+
+        .biography-box { background: #f5f3ff; border: 1px solid #ddd6fe; border-left: 5px solid #6366f1; padding: 1.25rem 1.5rem; margin: 2rem 0; border-radius: 0 6px 6px 0; }
+        .biography-box h4 { margin-top: 0; color: #3730a3; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; }
+        .biography-box p, .biography-box li { color: #0f172a !important; }
+
         /* Mobile-first layout adjustment for phones / smaller viewports */
         @media (max-width: 768px) {
-            /* Allow long formulas to scroll horizontally on small viewports */
             .katex-display {
                 overflow-x: auto !important;
                 overflow-y: hidden !important;
@@ -55,96 +69,30 @@
                 padding: 0.25rem 0 !important;
             }
 
-            body {
-                background: #ffffff;
-                padding: 1rem 0.75rem;
-            }
-            .container {
-                max-width: 100%;
-                margin: 0;
-            }
-            .module-content {
-                background: transparent;
-                padding: 0;
-                border: none;
-                border-radius: 0;
-                box-shadow: none;
-                margin-bottom: 1rem;
-            }
-            .header {
-                padding-bottom: 0.75rem;
-                margin-bottom: 1.25rem;
-            }
-        
-            /* Full-width responsive biography cards on mobile */
-            .biography-box {
-                padding: 1.25rem 1rem !important;
-            }
-            .biography-box > div {
-                flex-direction: column !important;
-                align-items: stretch !important;
-                gap: 1.25rem !important;
-            }
-            .biography-box > div > div:first-child {
-                flex: 0 0 100% !important;
-                width: 100% !important;
-                max-width: 100% !important;
-                margin: 0 0 0.5rem 0 !important;
-            }
-            .biography-box > div > div:first-child img {
-                width: 100% !important;
-                max-height: 380px !important;
-                object-fit: cover !important;
-                border-radius: 6px !important;
-                display: block !important;
-            }
-            .biography-box > div > div:last-child {
-                width: 100% !important;
-                min-width: 0 !important;
+            body { background: #ffffff; padding: 1rem 0.75rem; }
+            .container { max-width: 100%; margin: 0; }
+            .module-content { background: transparent; padding: 0; border: none; border-radius: 0; box-shadow: none; margin-bottom: 1rem; }
+            .header { padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+
+            .biography-box { padding: 1.25rem 1rem !important; }
+            .biography-box > div { flex-direction: column !important; align-items: stretch !important; gap: 1.25rem !important; }
+            .biography-box > div > div:first-child { flex: 0 0 100% !important; width: 100% !important; max-width: 100% !important; margin: 0 0 0.5rem 0 !important; }
+            .biography-box > div > div:first-child img { width: 100% !important; max-height: 380px !important; object-fit: cover !important; border-radius: 6px !important; display: block !important; }
+            .biography-box > div > div:last-child { width: 100% !important; min-width: 0 !important; }
+
+            ol, ul { padding-left: 1.25rem !important; margin-left: 0 !important; }
+
+            .header > .nav-btn-group, .footer-nav {
+                display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; width: 100% !important; gap: 0.5rem !important;
             }
 
-        
-            /* Tighten list indentation exclusively on mobile */
-            ol, ul {
-                padding-left: 1.25rem !important;
-                margin-left: 0 !important;
+            .header > .nav-btn-group a, .header > .nav-btn-group span, .footer-nav a, .footer-nav span {
+                flex: 1 1 0 !important; min-width: 0 !important; text-align: center !important; padding: 0.55rem 0.4rem !important;
+                font-size: 0.82rem !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
             }
 
-        
-            /* Keep header and footer navigation buttons side-by-side on mobile */
-            .header > div:last-child,
-            .nav-btn-group {
-                display: flex !important;
-                flex-direction: row !important;
-                flex-wrap: nowrap !important;
-                width: 100% !important;
-                gap: 0.5rem !important;
-            }
-
-            .header > div:last-child a,
-            .nav-btn-group a {
-                flex: 1 1 0 !important;
-                min-width: 0 !important;
-                text-align: center !important;
-                padding: 0.55rem 0.4rem !important;
-                font-size: 0.82rem !important;
-                white-space: nowrap !important;
-                overflow: hidden !important;
-                text-overflow: ellipsis !important;
-            }
-
-        
-            /* Prevent long math text or expressions from overflowing mobile screens */
-            p, div, li, blockquote {
-                word-break: break-word;
-                overflow-wrap: break-word;
-            }
-            .math-overflow-fix, div[style*="text-align: center"] {
-                max-width: 100%;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-
+            p, div, li, blockquote { word-break: break-word; overflow-wrap: break-word; }
+            .math-overflow-fix, div[style*="text-align: center"] { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
         }
     </style>
 </head>
@@ -161,6 +109,7 @@
                 <a href="week2-lecture6.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">Lecture 6 &rarr;</a>
             </div>
         </div>
+
         <div class="module-content">
             <!-- HERO IMAGE -->
             <div style="margin-bottom: 2rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);">
@@ -312,7 +261,8 @@
                             <circle cx="708" cy="140" r="4.5" fill="#059669"/><circle cx="730" cy="140" r="4.5" fill="#059669"/>
                         </g>
                     </svg>
-            <!-- FOOTER NAVIGATION -->
+                </div> <!-- END SVG CONTAINER FIX -->
+            </div> <!-- END ASIDE-BOX FIX -->
 
             <!-- FOOTER NAVIGATION -->
             <div class="footer-nav" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap;">

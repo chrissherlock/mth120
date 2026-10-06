@@ -17,7 +17,7 @@
         }
         body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
         .container { max-width: 1200px; margin: 0 auto; }
-        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: nowrap; gap: 1rem; }
         .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
 
         .intro-lead { font-size: 1.1rem; color: #1e293b; line-height: 1.7; margin-bottom: 1.5rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); border: 1px solid var(--border); border-left-width: 4px; }
@@ -58,7 +58,6 @@
 
         /* Mobile-first layout adjustment for phones / smaller viewports */
         @media (max-width: 768px) {
-            /* Allow long formulas to scroll horizontally on small viewports */
             .katex-display {
                 overflow-x: auto !important;
                 overflow-y: hidden !important;
@@ -67,94 +66,30 @@
                 padding: 0.25rem 0 !important;
             }
 
-            body {
-                background: #ffffff;
-                padding: 1rem 0.75rem;
-            }
-            .container {
-                max-width: 100%;
-                margin: 0;
-            }
-            .module-content {
-                background: transparent;
-                padding: 0;
-                border: none;
-                border-radius: 0;
-                box-shadow: none;
-                margin-bottom: 1rem;
-            }
-            .header {
-                padding-bottom: 0.75rem;
-                margin-bottom: 1.25rem;
+            body { background: #ffffff; padding: 1rem 0.75rem; }
+            .container { max-width: 100%; margin: 0; }
+            .module-content { background: transparent; padding: 0; border: none; border-radius: 0; box-shadow: none; margin-bottom: 1rem; }
+            .header { padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+
+            .biography-box { padding: 1.25rem 1rem !important; }
+            .biography-box > div { flex-direction: column !important; align-items: stretch !important; gap: 1.25rem !important; }
+            .biography-box > div > div:first-child { flex: 0 0 100% !important; width: 100% !important; max-width: 100% !important; margin: 0 0 0.5rem 0 !important; }
+            .biography-box > div > div:first-child img { width: 100% !important; max-height: 380px !important; object-fit: cover !important; border-radius: 6px !important; display: block !important; }
+            .biography-box > div > div:last-child { width: 100% !important; min-width: 0 !important; }
+
+            ol, ul { padding-left: 1.25rem !important; margin-left: 0 !important; }
+
+            .header > .nav-btn-group, .footer-nav {
+                display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; width: 100% !important; gap: 0.5rem !important;
             }
 
-            /* Full-width responsive biography cards on mobile */
-            .biography-box {
-                padding: 1.25rem 1rem !important;
-            }
-            .biography-box > div {
-                flex-direction: column !important;
-                align-items: stretch !important;
-                gap: 1.25rem !important;
-            }
-            .biography-box > div > div:first-child {
-                flex: 0 0 100% !important;
-                width: 100% !important;
-                max-width: 100% !important;
-                margin: 0 0 0.5rem 0 !important;
-            }
-            .biography-box > div > div:first-child img {
-                width: 100% !important;
-                max-height: 380px !important;
-                object-fit: cover !important;
-                border-radius: 6px !important;
-                display: block !important;
-            }
-            .biography-box > div > div:last-child {
-                width: 100% !important;
-                min-width: 0 !important;
+            .header > .nav-btn-group a, .header > .nav-btn-group span, .footer-nav a, .footer-nav span {
+                flex: 1 1 0 !important; min-width: 0 !important; text-align: center !important; padding: 0.55rem 0.4rem !important;
+                font-size: 0.82rem !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
             }
 
-
-            /* Tighten list indentation exclusively on mobile */
-            ol, ul {
-                padding-left: 1.25rem !important;
-                margin-left: 0 !important;
-            }
-
-
-            /* Keep header and footer navigation buttons side-by-side on mobile */
-            .header > div:last-child,
-            .nav-btn-group {
-                display: flex !important;
-                flex-direction: row !important;
-                flex-wrap: nowrap !important;
-                width: 100% !important;
-                gap: 0.5rem !important;
-            }
-
-            .header > div:last-child a,
-            .nav-btn-group a {
-                flex: 1 1 0 !important;
-                min-width: 0 !important;
-                text-align: center !important;
-                padding: 0.55rem 0.4rem !important;
-                font-size: 0.82rem !important;
-                white-space: nowrap !important;
-                overflow: hidden !important;
-                text-overflow: ellipsis !important;
-            }
-
-            /* Prevent long math text or expressions from overflowing mobile screens */
-            p, div, li, blockquote {
-                word-break: break-word;
-                overflow-wrap: break-word;
-            }
-            .math-overflow-fix, div[style*="text-align: center"] {
-                max-width: 100%;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
+            p, div, li, blockquote { word-break: break-word; overflow-wrap: break-word; }
+            .math-overflow-fix, div[style*="text-align: center"] { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
         }
     </style>
 </head>
@@ -171,6 +106,7 @@
                 <a href="week1-lecture3.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">Lecture 3 &rarr;</a>
             </div>
         </div>
+
         <div class="module-content">
             <!-- HERO IMAGE -->
             <div style="margin-bottom: 2rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);">
@@ -1648,7 +1584,8 @@
                             When slicing the rational numbers $\mathbb{Q}$ at $\sqrt{2}$, however, the knife passes through nothing: the left set has no maximum, and the right set has no minimum. Dedekind showed that by defining irrational numbers as the <em>cuts themselves</em>, we fill every microscopic pinprick hole in $\mathbb{Q}$, guaranteeing that every bounded set has a supremum and completing the continuum $\mathbb{R}$.
                         </p>
                     </div>
-            <!-- FOOTER NAVIGATION -->
+                </div>
+            </div>
 
             <!-- FOOTER NAVIGATION -->
             <div class="footer-nav" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
