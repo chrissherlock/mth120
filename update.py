@@ -2,13 +2,13 @@
 r"""
 update.py
 
-Inserts comprehensive historical profile boxes for Brook Taylor (Section 6)
-and Carl Friedrich Gauss (Section 7) into week1-lecture3.html.
-Uses structured sections (Background, Key Contributions, Vignette) and
-standard rectangular portrait formatting.
+Forces replacement or insertion of structured historical profile boxes for
+Brook Taylor (Section 6) and Carl Friedrich Gauss (Section 7) into
+week1-lecture3.html, ensuring rectangular styling and structured sections.
 """
 
 from pathlib import Path
+import re
 import subprocess
 import sys
 
@@ -31,7 +31,6 @@ def main() -> None:
     content = TARGET_HTML.read_text(encoding="utf-8")
     original = content
 
-    # 1. Brook Taylor Card (Section 6)
     taylor_box = r"""
             <!-- HISTORICAL PROFILE: BROOK TAYLOR -->
             <div class="infobox" style="background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid #0284c7; border-radius: 6px; padding: 1.5rem; margin: 1.75rem 0;">
@@ -67,7 +66,6 @@ def main() -> None:
             </div>
 """
 
-    # 2. Carl Friedrich Gauss Card (Section 7)
     gauss_box = r"""
             <!-- HISTORICAL PROFILE: CARL FRIEDRICH GAUSS -->
             <div class="infobox" style="background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid #10b981; border-radius: 6px; padding: 1.5rem; margin: 1.75rem 0;">
@@ -103,43 +101,72 @@ def main() -> None:
             </div>
 """
 
-    # Replace or insert Taylor box in Section 6
-    if "images/taylor.jpg" not in content:
-        target_s6 = '<h2 id="derived-sequences">'
-        idx_s6 = content.find(target_s6)
-        if idx_s6 != -1:
-            end_s6 = content.find("</h2>", idx_s6)
-            if end_s6 != -1:
-                pos_s6 = end_s6 + len("</h2>")
-                content = content[:pos_s6] + taylor_box + content[pos_s6:]
+    # Strip existing Taylor box if present
+    content = re.sub(
+        r'\s*<!-- HISTORICAL PROFILE: BROOK TAYLOR -->.*?(?=</div>\s*</div>\s*</div>|</div>\s*</div>)\s*</div>\s*</div>',
+        '',
+        content,
+        flags=re.DOTALL
+    )
+    # Also strip any older style containing images/taylor.jpg
+    content = re.sub(
+        r'<div[^>]*>.*?<img[^>]*images/taylor\.jpg[^>]*>.*?</div>\s*</div>',
+        '',
+        content,
+        flags=re.DOTALL
+    )
 
-    # Replace or insert Gauss box in Section 7
-    if "images/gauss.jpg" not in content:
-        target_s7 = '<h2 id="discrete-integration">'
-        idx_s7 = content.find(target_s7)
-        if idx_s7 != -1:
-            end_s7 = content.find("</h2>", idx_s7)
-            if end_s7 != -1:
-                pos_s7 = end_s7 + len("</h2>")
-                content = content[:pos_s7] + gauss_box + content[pos_s7:]
+    # Strip existing Gauss box if present
+    content = re.sub(
+        r'\s*<!-- HISTORICAL PROFILE: CARL FRIEDRICH GAUSS -->.*?(?=</div>\s*</div>\s*</div>|</div>\s*</div>)\s*</div>\s*</div>',
+        '',
+        content,
+        flags=re.DOTALL
+    )
+    # Also strip any older style containing images/gauss.jpg
+    content = re.sub(
+        r'<div[^>]*>.*?<img[^>]*images/gauss\.jpg[^>]*>.*?</div>\s*</div>',
+        '',
+        content,
+        flags=re.DOTALL
+    )
+
+    # Insert Taylor box directly after Section 6 heading
+    target_s6 = '<h2 id="derived-sequences">'
+    idx_s6 = content.find(target_s6)
+    if idx_s6 != -1:
+        end_s6 = content.find("</h2>", idx_s6)
+        if end_s6 != -1:
+            pos_s6 = end_s6 + len("</h2>")
+            content = content[:pos_s6] + taylor_box + content[pos_s6:]
+
+    # Insert Gauss box directly after Section 7 heading
+    target_s7 = '<h2 id="discrete-integration">'
+    idx_s7 = content.find(target_s7)
+    if idx_s7 != -1:
+        end_s7 = content.find("</h2>", idx_s7)
+        if end_s7 != -1:
+            pos_s7 = end_s7 + len("</h2>")
+            content = content[:pos_s7] + gauss_box + content[pos_s7:]
 
     if content != original:
         TARGET_HTML.write_text(content, encoding="utf-8")
-        print(f"Updated historical profile cards in {TARGET_HTML.name}.")
+        print(f"Updated {TARGET_HTML.name} with structured historical profile boxes.")
+    else:
+        print("No changes made to HTML content.")
 
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
 
     diff_check = subprocess.run(["git", "diff", "--cached", "--quiet"])
     if diff_check.returncode == 0:
-        print("No staged changes detected. Working tree clean.")
+        print("Working tree clean; no changes staged.")
         return
 
     commit_subject = "Add structured historical profile boxes for Taylor and Gauss"
     commit_body = (
-        "Add rectangular portrait cards for Brook Taylor in Section 6 and\n"
-        "Carl Friedrich Gauss in Section 7 of week1-lecture3.html.\n"
-        "Structure biographical content into background, key contributions,\n"
-        "and vignettes to match existing lecture profile formatting."
+        "Insert rectangular portrait profile cards for Brook Taylor in\n"
+        "Section 6 and Carl Friedrich Gauss in Section 7 of week1-lecture3.html,\n"
+        "structured with background, key contributions, and vignettes."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
 
