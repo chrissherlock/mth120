@@ -74,15 +74,44 @@
             .stepper-analytical-grid { grid-template-columns: 1fr !important; }
         }
     
+        
+
         /* Full-width responsive biography cards on mobile */
         @media (max-width: 768px) {
-            .biography-box { padding: 1.25rem 1rem !important; }
-            .biography-box > div { flex-direction: column !important; align-items: stretch !important; gap: 1.25rem !important; }
-            .biography-box > div > div:first-child { flex: 0 0 100% !important; width: 100% !important; max-width: 100% !important; margin: 0 0 0.5rem 0 !important; }
-            .biography-box > div > div:first-child img { width: 100% !important; max-height: 380px !important; object-fit: cover !important; border-radius: 6px !important; display: block !important; }
-            .biography-box > div > div:last-child { width: 100% !important; min-width: 0 !important; }
+            .biography-box, [class*="biography"], [class*="profile"] {
+                padding: 1.25rem 1rem !important;
+            }
+            .biography-box > div, [class*="biography"] > div {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 1.25rem !important;
+            }
+            .biography-box div:has(> img),
+            .biography-box > div > div:first-child,
+            [class*="biography"] div:has(> img) {
+                flex: 0 0 100% !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 0 0.5rem 0 !important;
+            }
+            .biography-box img,
+            [class*="biography"] img {
+                width: 100% !important;
+                max-width: 100% !important;
+                max-height: 380px !important;
+                object-fit: cover !important;
+                border-radius: 6px !important;
+                display: block !important;
+            }
+            .biography-box > div > div:last-child,
+            [class*="biography"] > div > div:last-child {
+                width: 100% !important;
+                min-width: 0 !important;
+            }
         }
-    </style>
+
+    </style>    </style>
 </head>
 <body>
     <div class="container">

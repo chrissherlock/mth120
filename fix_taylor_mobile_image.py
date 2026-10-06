@@ -1,4 +1,3 @@
-cat << 'EOF' > fix_taylor_mobile_image.py
 #!/usr/bin/env python3
 r"""
 fix_taylor_mobile_image.py
@@ -111,6 +110,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-EOF
-chmod +x fix_taylor_mobile_image.py
-./fix_taylor_mobile_image.py
