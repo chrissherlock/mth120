@@ -1,4 +1,3 @@
-cat << 'EOF' > fix_stepping_table.py
 #!/usr/bin/env python3
 r"""
 fix_stepping_table.py
@@ -291,6 +290,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-EOF
-chmod +x fix_stepping_table.py
-./fix_stepping_table.py
