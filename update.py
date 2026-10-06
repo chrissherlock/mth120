@@ -2,11 +2,10 @@
 r"""
 update.py
 
-Inserts historical portrait callout boxes for Brook Taylor (Section 6) and
-Carl Friedrich Gauss (Section 7) into week1-lecture3.html, integrating
-images/taylor.jpg and images/gauss.jpg.
-
-Stages week1-lecture3.html and update.py, commits, and pushes upstream.
+Inserts comprehensive historical profile boxes for Brook Taylor (Section 6)
+and Carl Friedrich Gauss (Section 7) into week1-lecture3.html.
+Uses structured sections (Background, Key Contributions, Vignette) and
+standard rectangular portrait formatting.
 """
 
 from pathlib import Path
@@ -32,63 +31,101 @@ def main() -> None:
     content = TARGET_HTML.read_text(encoding="utf-8")
     original = content
 
-    # 1. Taylor Injection into Section 6
+    # 1. Brook Taylor Card (Section 6)
     taylor_box = r"""
             <!-- HISTORICAL PROFILE: BROOK TAYLOR -->
-            <div style="background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid #0284c7; border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.5rem 0; display: flex; flex-wrap: wrap; gap: 1.25rem; align-items: center;">
-                <div style="flex: 0 0 110px; text-align: center;">
-                    <img src="images/taylor.jpg" alt="Brook Taylor" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 2px solid var(--border); display: block; margin: 0 auto 0.4rem auto;">
-                    <span style="font-size: 0.78rem; font-weight: 700; color: #0284c7;">Brook Taylor</span>
-                    <span style="font-size: 0.72rem; color: #64748b; display: block;">(1685–1731)</span>
-                </div>
-                <div style="flex: 1; min-width: 240px;">
-                    <h4 style="margin: 0 0 0.5rem 0; color: #0f172a; font-size: 1rem;">Historical Insight: The Calculus of Finite Differences</h4>
-                    <p style="margin: 0; font-size: 0.93rem; line-height: 1.65; color: #334155;">
-                        While Brook Taylor is famously remembered today for continuous polynomial expansions, his seminal 1715 work <em>Methodus Incrementorum Directa et Inversa</em> was entirely focused on finite differences and discrete sequences. Taylor treated the difference operator <span class="nobr">$\Delta a_n = a_{n+1} - a_n$</span> as the primary foundation of mathematics, viewing continuous calculus as merely a smooth limiting case of discrete step-by-step arithmetic.
-                    </p>
+            <div class="infobox" style="background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid #0284c7; border-radius: 6px; padding: 1.5rem; margin: 1.75rem 0;">
+                <div style="display: flex; flex-direction: row; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap;">
+                    <div style="flex: 0 0 130px; text-align: center;">
+                        <img src="images/taylor.jpg" alt="Brook Taylor portrait" style="width: 130px; height: auto; border-radius: 6px; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: block; margin-bottom: 0.5rem;">
+                        <span style="font-weight: 700; font-size: 0.85rem; color: #0f172a; display: block;">Brook Taylor</span>
+                        <span style="font-size: 0.75rem; color: #64748b;">(1685–1731)</span>
+                    </div>
+                    <div style="flex: 1; min-width: 260px;">
+                        <h4 style="margin-top: 0; margin-bottom: 0.5rem; color: #0284c7; font-size: 1.05rem;">
+                            Historical Profile: The Pioneer of Finite Differences
+                        </h4>
+                        <p style="font-size: 0.92rem; line-height: 1.65; color: #334155; margin-bottom: 0.75rem;">
+                            <strong>Background:</strong> An English mathematician and Secretary of the Royal Society, Brook Taylor worked in the turbulent aftermath of the Newton-Leibniz calculus dispute. Rather than treating calculus solely as smooth tangents and infinitesimals, Taylor approached change through discrete increments.
+                        </p>
+                        <p style="font-size: 0.92rem; line-height: 1.65; color: #334155; margin-bottom: 0.75rem;">
+                            <strong>Key Contributions:</strong>
+                        </p>
+                        <ul style="font-size: 0.9rem; line-height: 1.6; color: #334155; margin: 0 0 0.75rem 1.25rem; padding: 0;">
+                            <li>Published <em>Methodus Incrementorum Directa et Inversa</em> (1715), formally inaugurating the <strong>calculus of finite differences</strong>.</li>
+                            <li>Formulated Taylor's Theorem as the natural limiting case when discrete step sizes <span class="nobr">$\Delta x$</span> approach zero.</li>
+                            <li>Pioneered the mathematical study of vibrating strings and linear perspective in projective geometry.</li>
+                        </ul>
+                        <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 0.75rem 1rem;">
+                            <strong style="color: #0f172a; font-size: 0.88rem;">Vignette — Discrete Foundations First:</strong>
+                            <p style="margin: 0.25rem 0 0 0; font-size: 0.88rem; line-height: 1.55; color: #475569;">
+                                While calculus textbooks today treat Taylor series as high-level continuous machinery, Taylor arrived at them by subtracting discrete numbers in sequence tables. He viewed the continuous derivative not as a mysterious standalone object, but as the shadow cast by sequential steps when the gaps become imperceptible.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
 """
 
+    # 2. Carl Friedrich Gauss Card (Section 7)
+    gauss_box = r"""
+            <!-- HISTORICAL PROFILE: CARL FRIEDRICH GAUSS -->
+            <div class="infobox" style="background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid #10b981; border-radius: 6px; padding: 1.5rem; margin: 1.75rem 0;">
+                <div style="display: flex; flex-direction: row; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap;">
+                    <div style="flex: 0 0 130px; text-align: center;">
+                        <img src="images/gauss.jpg" alt="Carl Friedrich Gauss portrait" style="width: 130px; height: auto; border-radius: 6px; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: block; margin-bottom: 0.5rem;">
+                        <span style="font-weight: 700; font-size: 0.85rem; color: #0f172a; display: block;">Carl Friedrich Gauss</span>
+                        <span style="font-size: 0.75rem; color: #64748b;">(1777–1855)</span>
+                    </div>
+                    <div style="flex: 1; min-width: 260px;">
+                        <h4 style="margin-top: 0; margin-bottom: 0.5rem; color: #047857; font-size: 1.05rem;">
+                            Historical Profile: The Prince of Mathematicians
+                        </h4>
+                        <p style="font-size: 0.92rem; line-height: 1.65; color: #334155; margin-bottom: 0.75rem;">
+                            <strong>Background:</strong> Widely regarded as the <em>Princeps mathematicorum</em>, Gauss was a German child prodigy who revolutionized number theory, differential geometry, geodesy, and astronomy. He served for decades as director of the Göttingen Observatory.
+                        </p>
+                        <p style="font-size: 0.92rem; line-height: 1.65; color: #334155; margin-bottom: 0.75rem;">
+                            <strong>Key Contributions:</strong>
+                        </p>
+                        <ul style="font-size: 0.9rem; line-height: 1.6; color: #334155; margin: 0 0 0.75rem 1.25rem; padding: 0;">
+                            <li>Published <em>Disquisitiones Arithmeticae</em> (1801) at age 21, establishing modern number theory and modular congruence notation.</li>
+                            <li>Proved the Fundamental Theorem of Algebra and the construction of the regular 17-gon using only ruler and compass.</li>
+                            <li>Formalized the Gaussian normal distribution and the method of least squares in planetary orbit determination.</li>
+                        </ul>
+                        <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 0.75rem 1rem;">
+                            <strong style="color: #0f172a; font-size: 0.88rem;">Vignette — The 1 to 100 Classroom Sum:</strong>
+                            <p style="margin: 0.25rem 0 0 0; font-size: 0.88rem; line-height: 1.55; color: #475569;">
+                                In 1786, his Brunswick schoolmaster J.G. Büttner assigned the unruly class the chore of summing all integers from 1 to 100. While his classmates ground through tedious column addition, the nine-year-old Gauss laid his slate on the teacher's desk within seconds with the exact total: <span class="nobr"><strong>5050</strong>.</span> He recognized that pairing symmetrically from opposite ends (<span class="nobr">$1 + 100 = 101$,</span> <span class="nobr">$2 + 99 = 101$</span>) yields 50 identical pairs of 101.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+"""
+
+    # Replace or insert Taylor box in Section 6
     if "images/taylor.jpg" not in content:
         target_s6 = '<h2 id="derived-sequences">'
         idx_s6 = content.find(target_s6)
         if idx_s6 != -1:
             end_s6 = content.find("</h2>", idx_s6)
             if end_s6 != -1:
-                insertion_pos = end_s6 + len("</h2>")
-                content = content[:insertion_pos] + taylor_box + content[insertion_pos:]
+                pos_s6 = end_s6 + len("</h2>")
+                content = content[:pos_s6] + taylor_box + content[pos_s6:]
 
-    # 2. Gauss Injection into Section 7
-    gauss_box = r"""
-            <!-- HISTORICAL PROFILE: CARL FRIEDRICH GAUSS -->
-            <div style="background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid #10b981; border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.5rem 0; display: flex; flex-wrap: wrap; gap: 1.25rem; align-items: center;">
-                <div style="flex: 0 0 110px; text-align: center;">
-                    <img src="images/gauss.jpg" alt="Carl Friedrich Gauss" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 2px solid var(--border); display: block; margin: 0 auto 0.4rem auto;">
-                    <span style="font-size: 0.78rem; font-weight: 700; color: #047857;">Carl Friedrich Gauss</span>
-                    <span style="font-size: 0.72rem; color: #64748b; display: block;">(1777–1855)</span>
-                </div>
-                <div style="flex: 1; min-width: 240px;">
-                    <h4 style="margin: 0 0 0.5rem 0; color: #0f172a; font-size: 1rem;">Historical Insight: The Prince of Mathematicians at School</h4>
-                    <p style="margin: 0; font-size: 0.93rem; line-height: 1.65; color: #334155;">
-                        As the legend goes, when young Gauss was roughly nine years old, his schoolteacher tried to keep the class busy by asking them to sum all integers from 1 to 100. To the teacher's astonishment, Gauss wrote the correct answer down almost instantly by pairing opposite ends (<span class="nobr">$1 + 100$,</span> <span class="nobr">$2 + 99$,</span> etc.). Our telescoping proof reveals the underlying calculus mechanism: summing integers is simply the discrete anti-difference of quadratic polynomials!
-                    </p>
-                </div>
-            </div>
-"""
-
+    # Replace or insert Gauss box in Section 7
     if "images/gauss.jpg" not in content:
         target_s7 = '<h2 id="discrete-integration">'
         idx_s7 = content.find(target_s7)
         if idx_s7 != -1:
             end_s7 = content.find("</h2>", idx_s7)
             if end_s7 != -1:
-                insertion_pos = end_s7 + len("</h2>")
-                content = content[:insertion_pos] + gauss_box + content[insertion_pos:]
+                pos_s7 = end_s7 + len("</h2>")
+                content = content[:pos_s7] + gauss_box + content[pos_s7:]
 
     if content != original:
         TARGET_HTML.write_text(content, encoding="utf-8")
-        print(f"Successfully embedded Taylor and Gauss profiles into {TARGET_HTML.name}.")
+        print(f"Updated historical profile cards in {TARGET_HTML.name}.")
 
     execute_git(["git", "add", str(TARGET_HTML), str(SCRIPT_FILE)])
 
@@ -97,20 +134,19 @@ def main() -> None:
         print("No staged changes detected. Working tree clean.")
         return
 
-    commit_subject = "Add historical profile callout boxes for Taylor and Gauss"
+    commit_subject = "Add structured historical profile boxes for Taylor and Gauss"
     commit_body = (
-        "Embed Brook Taylor profile and portrait in Section 6 to highlight\n"
-        "finite differences, and add Carl Friedrich Gauss profile and portrait\n"
-        "in Section 7 to connect the legendary 100-integer summation anecdote\n"
-        "with underlying telescoping mechanics.\n"
-        "Stage and commit updated week1-lecture3.html alongside update.py."
+        "Add rectangular portrait cards for Brook Taylor in Section 6 and\n"
+        "Carl Friedrich Gauss in Section 7 of week1-lecture3.html.\n"
+        "Structure biographical content into background, key contributions,\n"
+        "and vignettes to match existing lecture profile formatting."
     )
     full_message = f"{commit_subject}\n\n{commit_body}"
 
     execute_git(["git", "commit", "-m", full_message])
     print("Committed successfully.")
 
-    print("Pushing to remote repository...")
+    print("Pushing upstream...")
     execute_git(["git", "push"])
     print("Push complete.")
 
