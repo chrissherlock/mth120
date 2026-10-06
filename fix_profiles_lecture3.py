@@ -1,4 +1,3 @@
-cat << 'EOF' > fix_profiles_lecture3.py
 #!/usr/bin/env python3
 r"""
 fix_profiles_lecture3.py
@@ -136,6 +135,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-EOF
-chmod +x fix_profiles_lecture3.py
-./fix_profiles_lecture3.py

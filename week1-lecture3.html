@@ -76,42 +76,42 @@
     
         
 
+        
+
+    
+        .biography-box { background: #f5f3ff; border: 1px solid #ddd6fe; border-left: 5px solid #6366f1; padding: 1.25rem 1.5rem; margin: 2rem 0; border-radius: 0 6px 6px 0; }
+        .biography-box h4 { margin-top: 0; color: #3730a3; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; }
+        .biography-box p, .biography-box li { color: #0f172a !important; }
+
         /* Full-width responsive biography cards on mobile */
         @media (max-width: 768px) {
-            .biography-box, [class*="biography"], [class*="profile"] {
+            .biography-box {
                 padding: 1.25rem 1rem !important;
             }
-            .biography-box > div, [class*="biography"] > div {
-                display: flex !important;
+            .biography-box > div {
                 flex-direction: column !important;
                 align-items: stretch !important;
                 gap: 1.25rem !important;
             }
-            .biography-box div:has(> img),
-            .biography-box > div > div:first-child,
-            [class*="biography"] div:has(> img) {
+            .biography-box > div > div:first-child {
                 flex: 0 0 100% !important;
                 width: 100% !important;
                 max-width: 100% !important;
                 margin: 0 0 0.5rem 0 !important;
             }
-            .biography-box img,
-            [class*="biography"] img {
+            .biography-box > div > div:first-child img {
                 width: 100% !important;
-                max-width: 100% !important;
                 max-height: 380px !important;
                 object-fit: cover !important;
                 border-radius: 6px !important;
                 display: block !important;
             }
-            .biography-box > div > div:last-child,
-            [class*="biography"] > div > div:last-child {
+            .biography-box > div > div:last-child {
                 width: 100% !important;
                 min-width: 0 !important;
             }
         }
-
-    </style>    </style>
+    </style>
 </head>
 <body>
     <div class="container">
@@ -1498,10 +1498,10 @@
             <!-- SECTION 6 (REFRAMED: RISE OVER RUN BETWEEN LOCKERS) -->
             <h2 id="derived-sequences">6. Discrete Calculus: The Derived Sequence (<span class="nobr">$a_n'$</span>)</h2>
             <!-- HISTORICAL PROFILE: BROOK TAYLOR -->
-            <div class="infobox" style="background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid #0284c7; border-radius: 6px; padding: 1.5rem; margin: 1.75rem 0;">
+            <div class="biography-box" style="margin-top: 2rem;">
                 <div style="display: flex; flex-direction: row; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap;">
-                    <div style="flex: 0 0 130px; text-align: center;">
-                        <img src="images/taylor.jpg" alt="Brook Taylor portrait" style="width: 130px; height: auto; border-radius: 6px; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: block; margin-bottom: 0.5rem;">
+                    <div style="flex: 0 0 135px; max-width: 135px;">
+                        <img src="images/taylor.jpg" alt="Brook Taylor portrait" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: block; margin-bottom: 0.5rem;">
                         <span style="font-weight: 700; font-size: 0.85rem; color: #0f172a; display: block;">Brook Taylor</span>
                         <span style="font-size: 0.75rem; color: #64748b;">(1685–1731)</span>
                     </div>
@@ -1688,10 +1688,10 @@
             <!-- SECTION 7 (UPDATED WITH TELESCOPING SEQUENCES) -->
             <h2 id="discrete-integration">7. Reversing the Difference: Partial Sums and Series</h2>
             <!-- HISTORICAL PROFILE: CARL FRIEDRICH GAUSS -->
-            <div class="infobox" style="background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid #10b981; border-radius: 6px; padding: 1.5rem; margin: 1.75rem 0;">
+            <div class="biography-box" style="margin-top: 2rem;">
                 <div style="display: flex; flex-direction: row; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap;">
-                    <div style="flex: 0 0 130px; text-align: center;">
-                        <img src="images/gauss.jpg" alt="Carl Friedrich Gauss portrait" style="width: 130px; height: auto; border-radius: 6px; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: block; margin-bottom: 0.5rem;">
+                    <div style="flex: 0 0 135px; max-width: 135px;">
+                        <img src="images/gauss.jpg" alt="Carl Friedrich Gauss portrait" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: block; margin-bottom: 0.5rem;">
                         <span style="font-weight: 700; font-size: 0.85rem; color: #0f172a; display: block;">Carl Friedrich Gauss</span>
                         <span style="font-size: 0.75rem; color: #64748b;">(1777–1855)</span>
                     </div>
