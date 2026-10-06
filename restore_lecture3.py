@@ -1,4 +1,16 @@
-<!DOCTYPE html>
+#!/usr/bin/env python3
+r"""
+restore_lecture3.py
+
+Writes the completely repaired, uncorrupted, and fully responsive
+week1-lecture3.html file to disk and commits the change to git.
+"""
+
+import sys
+import subprocess
+from pathlib import Path
+
+CLEAN_HTML = r"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -1144,3 +1156,36 @@
     </script>
 </body>
 </html>
+"""
+
+def execute_git(args: list[str]) -> None:
+    res = subprocess.run(args, capture_output=True, text=True)
+    if res.returncode != 0:
+        print(f"Git execution error: {' '.join(args)}\n{res.stderr.strip()}", file=sys.stderr)
+        sys.exit(res.returncode)
+
+def main() -> None:
+    target = Path("week1-lecture3.html")
+    target.write_text(CLEAN_HTML.strip() + "\n", encoding="utf-8")
+    print(f"Successfully regenerated clean {target.name}")
+
+    py_files = [str(p) for p in Path(".").glob("*.py")]
+    stage_targets = list(set([str(target)] + py_files))
+
+    execute_git(["git", "add"] + stage_targets)
+    diff_status = subprocess.run(["git", "diff", "--cached", "--quiet"])
+    if diff_status.returncode != 0:
+        commit_subject = "Regenerate clean, fully responsive Week 1 Lecture 3"
+        commit_body = (
+            "Restore complete week1-lecture3.html document. Resolves broken\n"
+            "DOM boundaries, fixes duplicate style blocks, standardizes\n"
+            "biography cards, and restores legible mobile SVG diagrams."
+        )
+        execute_git(["git", "commit", "-m", f"{commit_subject}\n\n{commit_body}"])
+        execute_git(["git", "push"])
+        print("Successfully committed and pushed regenerated lecture document.")
+    else:
+        print("No staged changes detected to commit.")
+
+if __name__ == "__main__":
+    main()
