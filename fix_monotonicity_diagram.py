@@ -1,4 +1,3 @@
-cat << 'EOF' > fix_monotonicity_diagram.py
 #!/usr/bin/env python3
 r"""
 fix_monotonicity_diagram.py
@@ -236,6 +235,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-EOF
-chmod +x fix_monotonicity_diagram.py
-./fix_monotonicity_diagram.py
