@@ -1,4 +1,3 @@
-cat << 'EOF' > add_scale_hallway_image.py
 #!/usr/bin/env python3
 r"""
 add_scale_hallway_image.py
@@ -88,6 +87,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-EOF
-chmod +x add_scale_hallway_image.py
-./add_scale_hallway_image.py
