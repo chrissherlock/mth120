@@ -1,4 +1,3 @@
-cat << 'EOF' > restore_master_lecture3.py
 #!/usr/bin/env python3
 r"""
 restore_master_lecture3.py
@@ -2087,6 +2086,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-EOF
-chmod +x restore_master_lecture3.py
-./restore_master_lecture3.py
