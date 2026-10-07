@@ -1,4 +1,3 @@
-cat << 'EOF' > add_prototypes_diagrams.py
 #!/usr/bin/env python3
 r"""
 add_prototypes_diagrams.py
@@ -308,6 +307,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-EOF
-chmod +x add_prototypes_diagrams.py
-./add_prototypes_diagrams.py
