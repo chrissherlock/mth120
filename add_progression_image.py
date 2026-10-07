@@ -1,4 +1,3 @@
-cat << 'EOF' > add_progression_image.py
 #!/usr/bin/env python3
 r"""
 add_progression_image.py
@@ -83,6 +82,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-EOF
-chmod +x add_progression_image.py
-./add_progression_image.py
