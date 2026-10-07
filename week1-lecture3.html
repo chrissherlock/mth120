@@ -2287,6 +2287,16 @@
                 Because dividing by $1$ leaves the numerator unchanged, the discrete rate of change collapses into <strong>plain neighbor subtraction</strong>! There are no fractions left to simplify and no limits to calculate.
             </p>
 
+            <!-- VISUALIZATION: RATE OF CHANGE WITHOUT FRACTIONS -->
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; margin: 1.75rem 0; text-align: center;">
+                <figure style="margin: 0;">
+                    <img src="images/change-in-lockers.png" alt="The Discrete Rate of Change visualized through adjacent lockers showing rise over run reducing to neighbour subtraction"[cite: 1] style="width: 100%; max-width: 850px; height: auto; border-radius: 6px; border: 1px solid #cbd5e1; display: inline-block;" />
+                    <figcaption style="font-size: 0.9rem; color: #475569; margin-top: 0.75rem; line-height: 1.5;">
+                        <strong>Figure:</strong> Visualizing the discrete rate of change between adjacent lockers. Because the input step ($\Delta \text{Input}$) is always exactly $1$, the traditional rise-over-run fraction collapses into plain neighbour subtraction: $a_{n+1} - a_n$.
+                    </figcaption>
+                </figure>
+            </div>
+
             <div class="definition-box">
                 <strong>Formal Definition: The Derived Sequence (<span class="nobr">$a_n'$</span>):</strong><br>
                 Given a sequence <span class="nobr">$(a_n)_{n=0}^\infty$,</span> the <strong>derived sequence</strong> <span class="nobr">$(a_n')_{n=0}^\infty$</span> is defined by the step-by-step difference between consecutive terms:
