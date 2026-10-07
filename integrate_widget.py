@@ -1,4 +1,3 @@
-cat << 'EOF' > integrate_widget.py
 #!/usr/bin/env python3
 import sys
 import subprocess
@@ -210,6 +209,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-EOF
-chmod +x integrate_widget.py
-./integrate_widget.py
