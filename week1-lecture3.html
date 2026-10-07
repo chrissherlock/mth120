@@ -1565,8 +1565,34 @@
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
                 It is vital to distinguish between an <strong>infinite domain</strong> (we never run out of counting numbers $n \in \mathbb{N}$) and the <strong>range of outputs</strong> inside the lockers. For example, consider the sequence of perfect squares <span class="nobr">$a_n = n^2 = (0, 1, 4, 9, 16, \dots)$.</span> Here, the values truly do grow without bound; as $n$ marches toward infinity, the outputs explode upward toward infinity.
             </p>
+<!-- UPDATED TEXT & PROSE: UNCOUPLING BOUNDS FROM CONVERGENCE -->
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
                 However, many infinite sequences do the exact opposite. Look at our earlier harmonic prototype, <span class="nobr">$a_n = \frac{n}{n+1} = (0, \frac{1}{2}, \frac{2}{3}, \frac{3}{4}, \dots)$.</span> This list contains infinitely many terms, yet every single value is strictly trapped between $0$ and $1$. As $n$ grows larger and larger, the terms crowd closer and closer to $1$, but they never cross it.
+            </p>
+
+            <!-- CLARIFICATION WARNING: BOUNDS VS. LIMITS -->
+            <div style="background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #d97706; border-radius: 6px; padding: 1.25rem; margin: 1.25rem 0;">
+                <h4 style="margin-top: 0; color: #b45309; font-size: 1.02rem;">
+                    ⚠️ Crucial Distinction: Boundedness $\neq$ Convergence
+                </h4>
+                <p style="font-size: 0.95rem; line-height: 1.7; color: #334155; margin-bottom: 0.75rem;">
+                    Before we define formal bounds, beware of a major student trap: <strong>boundedness has nothing to do with where a sequence is heading (its limit).</strong>
+                </p>
+                <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.93rem; line-height: 1.65; color: #334155;">
+                    <li style="margin-bottom: 0.4rem;">
+                        <strong>The Fence vs. The Destination:</strong> A bound is just an impenetrable fence ($m$ or $M$) that encloses <em>every single term</em> in the entire infinite list. It does not need to be the value the sequence crowds toward.
+                    </li>
+                    <li style="margin-bottom: 0.4rem;">
+                        <strong>Unbounded Limits:</strong> A sequence can have a strict upper ceiling even if it never settles down (like our bouncing alternating sequence $d_n = (-1)^n$, which is trapped safely between $-1$ and $1$ forever without ever converging).
+                    </li>
+                    <li>
+                        <strong>Over-reaching Bounds:</strong> Any number that successfully traps the terms is a valid bound. If all terms are $\le 1$, then $M = 1$ is a valid ceiling—but so is $M = 100$ or $M = 1,000$.
+                    </li>
+                </ul>
+            </div>
+
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1.25rem;">
+                To capture this restriction mathematically, we construct <strong>bounds</strong>—impenetrable floors and ceilings that enclose the entire infinite list:
             </p>
 
             <!-- VISUALIZATION: BOUNDED CROWDING (HARMONIC VARIANT) -->
