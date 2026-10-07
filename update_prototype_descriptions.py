@@ -1,4 +1,3 @@
-cat << 'EOF' > update_prototype_descriptions.py
 #!/usr/bin/env python3
 r"""
 update_prototype_descriptions.py
@@ -319,6 +318,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-EOF
-chmod +x update_prototype_descriptions.py
-./update_prototype_descriptions.py
