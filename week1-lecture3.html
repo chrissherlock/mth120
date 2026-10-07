@@ -1371,6 +1371,118 @@
                         <path d="M 110 55 L 180 125 L 250 55 L 320 125 L 390 55" fill="none" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.6" />
                     </svg>
                 </div>
+
+                <!-- EXAMPLE 5: COMPLEX PLATEAU-WAVE SEQUENCE -->
+                <p style="margin-top: 1.5rem; font-size: 0.98rem; line-height: 1.7;">
+                    <strong>Example 5 (Proving Non-Monotonicity with Periodic Plateaus):</strong> Consider the sequence $(f_n)_{n=0}^\infty$ defined by a repeating 6-step pattern: starting at $f_0 = 0$, it climbs $+1$, holds a flat plateau for two steps, drops $-1$, and holds a flat plateau for two steps, repeating ad infinitum. Prove whether this sequence is monotonic.
+                </p>
+                <ol style="margin: 0.5rem 0 1rem 1.25rem; font-size: 0.95rem; line-height: 1.75;">
+                    <li><strong>Write out the explicit terms of the sequence:</strong><br>
+                        Tracing the cycle step-by-step from $n = 0$ to $n = 7$:
+                        <div style="font-family: ui-monospace, monospace; font-size: 0.9rem; background: #f8fafc; padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 4px; text-align: center; margin: 0.35rem 0;">
+                            $f_0 = 0, \quad f_1 = 1, \quad f_2 = 1, \quad f_3 = 1, \quad f_4 = 0, \quad f_5 = 0, \quad f_6 = 0, \quad f_7 = 1$
+                        </div>
+                    </li>
+                    <li><strong>Compute the derived difference sequence <span class="nobr">$f_n' = f_{n+1} - f_n$</span>:</strong><br>
+                        Evaluate the change across each consecutive pair of lockers in the first cycle:
+                        <div style="margin: 0.25rem 0; font-size: 0.92rem; line-height: 1.6;">
+                            • From $n=0$ to $1$: $f_1 - f_0 = 1 - 0 = \mathbf{+1}$ (Climb)<br>
+                            • From $n=1$ to $2$: $f_2 - f_1 = 1 - 1 = \mathbf{0}$ (Plateau step 1)<br>
+                            • From $n=2$ to $3$: $f_3 - f_2 = 1 - 1 = \mathbf{0}$ (Plateau step 2)<br>
+                            • From $n=3$ to $4$: $f_4 - f_3 = 0 - 1 = \mathbf{-1}$ (Drop)<br>
+                            • From $n=4$ to $5$: $f_5 - f_4 = 0 - 0 = \mathbf{0}$ (Plateau step 1)<br>
+                            • From $n=5$ to $6$: $f_6 - f_5 = 0 - 0 = \mathbf{0}$ (Plateau step 2)
+                        </div>
+                    </li>
+                    <li><strong>Analyze the sign pattern across infinity (Periodicity):</strong><br>
+                        The derived differences form a repeating cycle: $f_n' \in \{+1, 0, 0, -1, 0, 0\}$.
+                        <ul style="margin: 0.35rem 0 0 1.25rem; padding: 0;">
+                            <li>Because the difference hits <strong>$0$</strong>, the sequence contains flat resting plateaus (ruling out <em>strict</em> monotonicity).</li>
+                            <li>Because the differences include <strong>both positive ($+1$) and negative ($-1$) values</strong>, the sequence actively reverses direction.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Conclusion:</strong><br>
+                        Because the derived differences do not maintain a single global sign ($\ge 0$ everywhere or $\le 0$ everywhere), the sequence fails the monotonicity test. It is strictly <strong>non-monotonic</strong> with periodic flat plateaus.
+                    </li>
+                </ol>
+
+                <!-- SVG Graph for Example 5 -->
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1rem; margin-bottom: 1.5rem; text-align: center;">
+                    <p style="font-size: 0.85rem; font-weight: 700; color: #4338ca; margin-top: 0; margin-bottom: 0.5rem;">
+                        Visual Profile: Periodic Plateau-Wave (Climbs +1, plateaus 2 steps, drops -1, plateaus 2 steps)
+                    </p>
+                    <svg viewBox="0 0 540 180" style="width: 100%; max-width: 500px; height: auto; display: inline-block; overflow: visible;">
+                        <!-- Axes -->
+                        <line x1="40" y1="130" x2="510" y2="130" stroke="#0f172a" stroke-width="1.5" />
+                        <line x1="50" y1="145" x2="50" y2="25" stroke="#0f172a" stroke-width="1.5" />
+                        <text x="515" y="134" font-size="11" font-weight="bold" fill="#0f172a">n</text>
+                        <text x="46" y="20" font-size="11" font-weight="bold" fill="#0f172a">fₙ</text>
+
+                        <!-- Guide Rails for Level 0 and Level 1 -->
+                        <line x1="50" y1="50" x2="490" y2="50" stroke="#c7d2fe" stroke-width="1.5" stroke-dasharray="3,3" />
+                        <text x="42" y="54" font-size="9.5" font-weight="bold" fill="#4338ca" text-anchor="end">1</text>
+                        <line x1="50" y1="110" x2="490" y2="110" stroke="#c7d2fe" stroke-width="1.5" stroke-dasharray="3,3" />
+                        <text x="42" y="114" font-size="9.5" font-weight="bold" fill="#4338ca" text-anchor="end">0</text>
+
+                        <!-- Points for n=0 to 7 -->
+                        <!-- n=0, f_0=0 -> (90, 110) -->
+                        <circle cx="90" cy="110" r="4.5" fill="#6366f1" />
+                        <text x="90" y="145" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
+
+                        <!-- n=1, f_1=1 -> (145, 50) -->
+                        <circle cx="145" cy="50" r="4.5" fill="#6366f1" />
+                        <text x="145" y="145" font-size="9.5" fill="#475569" text-anchor="middle">1</text>
+                        <line x1="90" y1="110" x2="145" y2="50" stroke="#6366f1" stroke-width="2" /> <!-- Climb -->
+
+                        <!-- n=2, f_2=1 -> (200, 50) [Plateau 1] -->
+                        <circle cx="200" cy="50" r="4.5" fill="#6366f1" />
+                        <text x="200" y="145" font-size="9.5" fill="#475569" text-anchor="middle">2</text>
+                        <line x1="145" y1="50" x2="200" y2="50" stroke="#10b981" stroke-width="2.5" /> <!-- Plateau bar -->
+
+                        <!-- n=3, f_3=1 -> (255, 50) [Plateau 2] -->
+                        <circle cx="255" cy="50" r="4.5" fill="#6366f1" />
+                        <text x="255" y="145" font-size="9.5" fill="#475569" text-anchor="middle">3</text>
+                        <line x1="200" y1="50" x2="255" y2="50" stroke="#10b981" stroke-width="2.5" /> <!-- Plateau bar -->
+
+                        <!-- n=4, f_4=0 -> (310, 110) [Drop] -->
+                        <circle cx="310" cy="110" r="4.5" fill="#6366f1" />
+                        <text x="310" y="145" font-size="9.5" fill="#475569" text-anchor="middle">4</text>
+                        <line x1="255" y1="50" x2="310" y2="110" stroke="#ef4444" stroke-width="2" /> <!-- Drop -->
+
+                        <!-- n=5, f_5=0 -> (365, 110) [Plateau 1] -->
+                        <circle cx="365" cy="110" r="4.5" fill="#6366f1" />
+                        <text x="365" y="145" font-size="9.5" fill="#475569" text-anchor="middle">5</text>
+                        <line x1="310" y1="110" x2="365" y2="110" stroke="#10b981" stroke-width="2.5" /> <!-- Plateau bar -->
+
+                        <!-- n=6, f_6=0 -> (420, 110) [Plateau 2] -->
+                        <circle cx="420" cy="110" r="4.5" fill="#6366f1" />
+                        <text x="420" y="145" font-size="9.5" fill="#475569" text-anchor="middle">6</text>
+                        <line x1="365" y1="110" x2="420" y2="110" stroke="#10b981" stroke-width="2.5" /> <!-- Plateau bar -->
+
+                        <!-- n=7, f_7=1 -> (475, 50) [Climb restart] -->
+                        <circle cx="475" cy="50" r="4.5" fill="#6366f1" />
+                        <text x="475" y="145" font-size="9.5" fill="#475569" text-anchor="middle">7</text>
+                        <line x1="420" y1="110" x2="475" y2="50" stroke="#6366f1" stroke-width="2" /> <!-- Climb -->
+                    </svg>
+                </div>
+
+                <div class="infobox" style="margin: 1.5rem 0;">
+                    <h4>🕵️ Detective Technique: How Do We Know It's a Six-Step Pattern?</h4>
+                    <div class="infobox-intro">
+                        <strong>Unmasking hidden rhythms:</strong> When faced with a complex sequence, how do we determine its cycle length without guessing?
+                    </div>
+                    <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.93rem; line-height: 1.65; color: #334155;">
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>Look at the Steps, Not the Values:</strong> Instead of analyzing the raw numbers ($f_n$), compute the derived differences ($f_n' = f_{n+1} - f_n$). The sequence of step changes is much easier to decode than the raw values themselves.
+                        </li>
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>Find the Fingerprint:</strong> Scan the derived differences for a repeating block of changes. In our example, the changes repeat as <span class="nobr">$(+1, 0, 0, -1, 0, 0)$</span>, giving a total block length of <strong>6 steps</strong>.
+                        </li>
+                        <li>
+                            <strong>Lock It Down with Modulo Arithmetic:</strong> Once the period is found, you can use clock arithmetic ($n \pmod 6$) to predict the behavior at any arbitrary index $n$ (like $n = 10^9$) without having to walk through every single locker by hand.
+                        </li>
+                    </ul>
+                </div>
             </div>
 
             <!-- UNIFIED DETECTIVE GUIDE: PLATEAUS VS. OSCILLATIONS -->
