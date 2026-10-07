@@ -815,28 +815,29 @@
 
             <!-- SUBSECTION 1: THE GEOMETRY OF MONOTONICITY -->
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">1. The Geometry of Monotonicity: Preserving Direction</h3>
+
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
                 The word <em>monotonic</em> comes from Greek roots meaning <em>"one single tone"</em> or <em>"one single style."</em> When mathematicians apply this term to an infinite sequence, don't let the formal notation intimidate you. The concept is deeply intuitive: <strong>a sequence is monotonic if it picks a single direction along the real line and commits to it forever.</strong>
             </p>
-
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                Imagine walking along a trail in mountainous terrain where your position at each minute is recorded:
+                Imagine walking down our infinite locker hallway, where the number inside each consecutive locker records your position step by step:
             </p>
+
             <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem; margin-bottom: 1.25rem;">
                 <li style="margin-bottom: 0.65rem;">
-                    <strong>Strictly Increasing (<span class="nobr">$a_{n+1} > a_n$</span>):</strong> Every step you take gains elevation. You are strictly climbing up the mountain. You are not allowed to step downward, and you are not allowed to stand still. Every locker holds a number strictly greater than the locker before it:
+                    <strong>Strictly Increasing (<span class="nobr">$a_{n+1} > a_n$</span>):</strong> Every step down the hallway opens a locker holding a strictly larger number than the one before it. You are stepping toward larger values without any flat pauses or backward dips:
                     <div style="text-align: center; margin: 0.35rem 0; font-weight: 600; color: #0284c7;">
                         $$a_0 < a_1 < a_2 < a_3 < \dots < a_n < a_{n+1} < \dots$$
                     </div>
                 </li>
                 <li style="margin-bottom: 0.65rem;">
-                    <strong>Weakly Increasing or "Non-Decreasing" (<span class="nobr">$a_{n+1} \ge a_n$</span>):</strong> You are hiking upward, but you encounter a flat horizontal plateau (a ridge). You might pause at elevation $100\text{ meters}$ for three steps: <span class="nobr">$(80, 95, 100, 100, 100, 115, \dots)$.</span> Notice that you have <em>never stepped down</em>. In higher mathematics, this is still classified as <strong>increasing</strong>! If an instructor wants to guarantee there are no flat plateaus, they will explicitly specify <strong>strictly increasing</strong>.
+                    <strong>Weakly Increasing or "Non-Decreasing" (<span class="nobr">$a_{n+1} \ge a_n$</span>):</strong> The numbers inside the lockers generally grow larger, but you might encounter consecutive lockers holding the exact same value for a few steps: <span class="nobr">$(80, 95, 100, 100, 100, 115, \dots)$.</span> Notice that the values <em>never drop backward</em>. In higher mathematics, this flat resting phase is still classified as <strong>increasing</strong>.
                 </li>
                 <li style="margin-bottom: 0.65rem;">
-                    <strong>Strictly Decreasing (<span class="nobr">$a_{n+1} < a_n$</span>) and Weakly Decreasing (<span class="nobr">$a_{n+1} \le a_n$</span>):</strong> The exact mirror image. Every step either descends into a valley or crosses a flat stretch, but you are strictly forbidden from taking a single step uphill.
+                    <strong>Strictly Decreasing (<span class="nobr">$a_{n+1} < a_n$</span>) and Weakly Decreasing (<span class="nobr">$a_{n+1} \le a_n$</span>):</strong> The exact mirror image. Each successive locker holds a number smaller than or equal to its predecessor, strictly forbidding any steps upward.
                 </li>
                 <li>
-                    <strong>Non-Monotonic (Oscillation / Direction Changes):</strong> What if you hike up two steps, drop down one step, and hike up three more? That sequence has changed direction. It fails the test. Prototype sequences like <span class="nobr">$a_n = (-1)^n = (1, -1, 1, -1, \dots)$</span> or <span class="nobr">$a_n = \sin(n)$</span> bounce endlessly up and down, making them non-monotonic.
+                    <strong>Non-Monotonic (Oscillation / Direction Changes):</strong> What if Locker 1 holds a larger number than Locker 0, but Locker 2 drops lower than Locker 1? That sequence has changed direction. Prototype sequences like <span class="nobr">$a_n = (-1)^n = (1, -1, 1, -1, \dots)$</span> bounce endlessly up and down between values, making them non-monotonic.
                 </li>
             </ul>
 
