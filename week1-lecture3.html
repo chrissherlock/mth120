@@ -2511,15 +2511,23 @@
             <div style="text-align: center; margin: 1rem 0; font-size: 1.08rem; background: #f8fafc; padding: 1rem; border-radius: 6px; border: 1px solid var(--border);">
                 $$\sum_{k=0}^{n-1} a_k' = (a_1 - a_0) + (a_2 - a_1) + (a_3 - a_2) + \dots + (a_n - a_{n-1})$$
             </div>
+
+            <!-- TELESCOPING TELESCOPE & FINAL RESULT -->
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
                 Look closely at what happens when you remove the parentheses and regroup:
             </p>
             <div style="text-align: center; margin: 1rem 0; font-size: 1.08rem;">
-                $$\sum_{k=0}^{n-1} a_k' = -a_0 + \underbrace{(a_1 - a_1)}_{0} + \underbrace{(a_2 - a_2)}_{0} + \dots + \underbrace{(a_{n-1} - a_{n-1})}_{0} + a_n$$
+                $$ \sum_{k=0}^{n-1} a_k' = -a_0 + \underbrace{(a_1 - a_1)}_{0} + \underbrace{(a_2 - a_2)}_{0} + \dots + \underbrace{(a_{n-1} - a_{n-1})}_{0} + a_n $$
             </div>
-            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1.25rem;">
-                Every single intermediate value cancels itself out completely! Just like an old brass nautical pocket telescope whose inner cylinders slide and collapse into one another, the entire infinite sum collapses inward, leaving only the front and back terms:
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                Every single intermediate value cancels itself out completely! Just like an old brass nautical pocket telescope whose inner cylinders slide and collapse into one another, the entire sum collapses inward, leaving only the boundary terms:
             </p>
+            <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid #22c55e; border-radius: 6px; padding: 1.25rem; margin: 1.25rem 0; text-align: center;">
+                <strong style="color: #15803d; font-size: 1.05rem;">The Telescoping Sum Identity:</strong>
+                <div style="margin: 0.5rem 0 0 0; font-size: 1.15rem; font-weight: 600; color: #166534;">
+                    $$ \sum_{k=0}^{n-1} a_k' = a_n - a_0 $$
+                </div>
+            </div>
 
             <div class="definition-box" style="border-left-color: #0284c7;">
                 <strong>The Discrete Fundamental Theorem of Calculus (Telescoping Identity):</strong><br>
