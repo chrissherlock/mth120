@@ -1017,23 +1017,40 @@
                 </div>
             </div>
 
-            <!-- SUBSECTION 2: PROVING MONOTONICITY -->
+            <!-- SUBSECTION 2: PROVING MONOTONICITY (EXPANDED & DETAILED) -->
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">2. Two Tool-Box Tests: How to Prove Monotonicity</h3>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
-                When an assignment asks you to prove that a sequence is monotonic, do not just list the first four numbers! Listing terms only proves what happens at the start; it does not prove what happens all the way to infinity. Use one of these two reliable algebraic methods:
+                When an exam or assignment asks you to prove that a sequence is monotonic, <strong>never rely on listing the first few terms!</strong> Listing terms only proves what happens at the very beginning of the infinite corridor; it does not prove what happens as $n$ marches all the way to infinity. Instead, you must use one of these two rigorous algebraic tool-box methods:
             </p>
+
+            <!-- THE FINITE TRAP WARNING BOX -->
+            <div class="aside-box" style="border-left-color: #dc2626; background: #fef2f2; margin: 1.5rem 0;">
+                <h4 style="color: #991b1b; margin-top: 0;">⚠️ The Finite Trap: Why Checking the First Few Terms Fails</h4>
+                <p style="font-size: 0.95rem; line-height: 1.7; color: #334155; margin-bottom: 0.75rem;">
+                    Students frequently lose full marks on analysis assignments because they fall into the <strong>finite observation trap</strong>: calculating $a_0, a_1, a_2$, seeing that the numbers get larger, and writing <em>"Therefore, the sequence is increasing."</em>
+                </p>
+                <p style="font-size: 0.95rem; line-height: 1.7; color: #334155; margin-bottom: 0.75rem;">
+                    <strong>Why examiners reject this:</strong> An infinite sequence has infinitely many terms. Checking the first four or five lockers only proves what happens at the very entrance of the corridor; it tells you nothing about what happens as $n$ marches toward a million, a billion, or infinity.
+                </p>
+                <p style="font-size: 0.95rem; line-height: 1.7; color: #334155; margin-bottom: 0.5rem;">
+                    For example, consider the sequence <span class="nobr">$a_n = n^2 - 10n + 100$.</span> If you check the first few terms, it might look like it's behaving one way, but functions can have hidden turning points, peaks, or behavioral shifts further down the line.
+                </p>
+                <p style="font-size: 0.95rem; line-height: 1.7; color: #334155; margin: 0;">
+                    <strong>The Academic Standard:</strong> You must use algebraic inequalities involving the general variable $n$ so your proof holds true for <em>every single natural number simultaneously</em>, without exception.
+                </p>
+            </div>
 
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.5rem; margin: 1.5rem 0;">
                 <!-- DIFFERENCE TEST -->
                 <div style="background: #ffffff; border: 1px solid var(--border); border-left: 4px solid #0284c7; border-radius: 6px; padding: 1.25rem;">
                     <h4 style="margin-top: 0; color: #0369a1; font-size: 1.05rem;">Method A: The Difference Test (Subtract)</h4>
                     <p style="font-size: 0.95rem; color: #334155; line-height: 1.6;">
-                        Compute the discrete difference <span class="nobr">$a_{n+1} - a_n$</span> and inspect its sign:
+                        Form the consecutive difference <span class="nobr">$a_{n+1} - a_n$</span> and simplify the algebraic expression for all <span class="nobr">$n \ge 0$:</span>
                     </p>
                     <ul style="font-size: 0.9rem; color: #334155; padding-left: 1.25rem; line-height: 1.6; margin: 0;">
                         <li>If <span class="nobr">$a_{n+1} - a_n \ge 0$</span> for all $n$, the sequence is <strong>increasing</strong>.</li>
                         <li>If <span class="nobr">$a_{n+1} - a_n \le 0$</span> for all $n$, the sequence is <strong>decreasing</strong>.</li>
-                        <li><em>Best used for:</em> Algebraic polynomials, arithmetic sequences, and sums.</li>
+                        <li><em>Best used for:</em> Rational functions, algebraic polynomials, fractions, and square roots.</li>
                     </ul>
                 </div>
 
@@ -1041,13 +1058,390 @@
                 <div style="background: #ffffff; border: 1px solid var(--border); border-left: 4px solid #10b981; border-radius: 6px; padding: 1.25rem;">
                     <h4 style="margin-top: 0; color: #047857; font-size: 1.05rem;">Method B: The Ratio Test (Divide)</h4>
                     <p style="font-size: 0.95rem; color: #334155; line-height: 1.6;">
-                        For sequences with <strong>strictly positive terms</strong> (<span class="nobr">$a_n > 0$</span>), compute the quotient <span class="nobr">$\frac{a_{n+1}}{a_n}$:</span>
+                        For sequences with <strong>strictly positive terms</strong> (<span class="nobr">$a_n > 0$</span>), form the quotient <span class="nobr">$\frac{a_{n+1}}{a_n}$</span> and compare it to $1$:
                     </p>
                     <ul style="font-size: 0.9rem; color: #334155; padding-left: 1.25rem; line-height: 1.6; margin: 0;">
                         <li>If <span class="nobr">$\frac{a_{n+1}}{a_n} \ge 1$,</span> then <span class="nobr">$a_{n+1} \ge a_n$</span> (<strong>increasing</strong>).</li>
                         <li>If <span class="nobr">$\frac{a_{n+1}}{a_n} \le 1$,</span> then <span class="nobr">$a_{n+1} \le a_n$</span> (<strong>decreasing</strong>).</li>
-                        <li><em>Best used for:</em> Factorials ($n!$), powers ($q^n$), and exponential terms.</li>
+                        <li><em>Best used for:</em> Exponential powers ($q^n$), factorials ($n!$), and product terms.</li>
                     </ul>
+                </div>
+            </div>
+
+            <!-- EXAM-STYLE WORKED EXAMPLES WITH GRAPHS -->
+            <div class="worked-example-box" style="margin-top: 1.5rem;">
+                <h4>🎯 Exam-Style Worked Examples: Proving Monotonicity Step-by-Step</h4>
+
+                <!-- EXAMPLE 1 -->
+                <p style="margin-top: 0; font-size: 0.98rem; line-height: 1.7;">
+                    <strong>Example 1 (Using the Difference Test):</strong> Prove whether the sequence <span class="nobr">$a_n = \frac{n}{n + 2}$</span> for <span class="nobr">$n \ge 0$</span> is monotonic.
+                </p>
+                <ol style="margin: 0.5rem 0 1rem 1.25rem; font-size: 0.95rem; line-height: 1.75;">
+                    <li><strong>Set up the difference <span class="nobr">$a_{n+1} - a_n$</span>:</strong><br>
+                        Substitute $(n+1)$ everywhere you see $n$:
+                        <div style="margin: 0.25rem 0;">
+                            $$a_{n+1} - a_n = \frac{(n+1)}{(n+1) + 2} - \frac{n}{n + 2} = \frac{n+1}{n+3} - \frac{n}{n+2}$$
+                        </div>
+                    </li>
+                    <li><strong>Find a common denominator and combine:</strong><br>
+                        The common denominator is $(n+3)(n+2)$:
+                        <div style="margin: 0.25rem 0;">
+                            $$a_{n+1} - a_n = \frac{(n+1)(n+2) - n(n+3)}{(n+3)(n+2)}$$
+                        </div>
+                        Expand the numerators:
+                        <div style="margin: 0.25rem 0;">
+                            $$= \frac{(n^2 + 3n + 2) - (n^2 + 3n)}{(n+3)(n+2)} = \frac{2}{(n+3)(n+2)}$$
+                        </div>
+                    </li>
+                    <li><strong>Analyze the sign of the result:</strong><br>
+                        Since $n \ge 0$, both factors in the denominator are strictly positive, and the numerator is a positive constant ($2 > 0$). Therefore:
+                        <div style="margin: 0.25rem 0; font-weight: 600; color: #065f46;">
+                            $$a_{n+1} - a_n > 0 \quad \text{for all } n \ge 0$$
+                        </div>
+                        <em>Conclusion:</em> Because the difference is strictly greater than zero, <span class="nobr">$a_{n+1} > a_n$.</span> The sequence is <strong>strictly increasing</strong>.
+                    </li>
+                </ol>
+
+                <!-- SVG Graph for Example 1 -->
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1rem; margin-bottom: 1.5rem; text-align: center;">
+                    <p style="font-size: 0.85rem; font-weight: 700; color: #047857; margin-top: 0; margin-bottom: 0.5rem;">
+                        Visual Profile: Strictly Increasing (<span class="nobr">$\frac{n}{n+2}$</span> approaching horizontal asymptote $1$)
+                    </p>
+                    <svg viewBox="0 0 500 180" style="width: 100%; max-width: 460px; height: auto; display: inline-block; overflow: visible;">
+                        <!-- Axes -->
+                        <line x1="50" y1="140" x2="450" y2="140" stroke="#0f172a" stroke-width="1.5" />
+                        <line x1="60" y1="150" x2="60" y2="20" stroke="#0f172a" stroke-width="1.5" />
+                        <text x="455" y="144" font-size="11" font-weight="bold" fill="#0f172a">n</text>
+                        <text x="56" y="15" font-size="11" font-weight="bold" fill="#0f172a">aₙ</text>
+
+                        <!-- Asymptote y=1 (mapped near y=45) -->
+                        <line x1="60" y1="45" x2="430" y2="45" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4,3" />
+                        <text x="425" y="38" font-size="9" font-weight="bold" fill="#047857" text-anchor="end">Asymptote = 1</text>
+
+                        <!-- Ticks & Points for n=0, 1, 2, 3, 4 -->
+                        <!-- n=0, val=0/2 = 0 -> y=140 -->
+                        <line x1="100" y1="140" x2="100" y2="140" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="100" cy="140" r="4.5" fill="#059669" />
+                        <text x="100" y="155" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
+
+                        <!-- n=1, val=1/3 ≈ 0.33 -> y=108 -->
+                        <line x1="170" y1="140" x2="170" y2="108" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="170" cy="108" r="4.5" fill="#059669" />
+                        <text x="170" y="155" font-size="9.5" fill="#475569" text-anchor="middle">1</text>
+
+                        <!-- n=2, val=2/4 = 0.5 -> y=92 -->
+                        <line x1="240" y1="140" x2="240" y2="92" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="240" cy="92" r="4.5" fill="#059669" />
+                        <text x="240" y="155" font-size="9.5" fill="#475569" text-anchor="middle">2</text>
+
+                        <!-- n=3, val=3/5 = 0.6 -> y=82 -->
+                        <line x1="310" y1="140" x2="310" y2="82" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="310" cy="82" r="4.5" fill="#059669" />
+                        <text x="310" y="155" font-size="9.5" fill="#475569" text-anchor="middle">3</text>
+
+                        <!-- n=4, val=4/6 ≈ 0.66 -> y=74 -->
+                        <line x1="380" y1="140" x2="380" y2="74" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="380" cy="74" r="4.5" fill="#059669" />
+                        <text x="380" y="155" font-size="9.5" fill="#475569" text-anchor="middle">4</text>
+
+                        <!-- Trend Curve -->
+                        <path d="M 100 140 Q 200 95 380 74" fill="none" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.5" />
+                    </svg>
+                </div>
+
+                <!-- EXAMPLE 2 (CORRECTED) -->
+                <p style="margin-top: 1rem; font-size: 0.98rem; line-height: 1.7;">
+                    <strong>Example 2 (Using the Ratio Test):</strong> Prove whether the sequence <span class="nobr">$b_n = \frac{2^n}{n!}$</span> is monotonic for <span class="nobr">$n \ge 1$.</span>
+                </p>
+                <ol style="margin: 0.5rem 0 1rem 1.25rem; font-size: 0.95rem; line-height: 1.75;">
+                    <li><strong>Verify positivity:</strong><br>
+                        For all integers $n \ge 1$, both $2^n > 0$ and $n! > 0$, so <span class="nobr">$b_n > 0$</span> (meaning the Ratio Test is safe to apply).
+                    </li>
+                    <li><strong>Set up the ratio <span class="nobr">$\frac{b_{n+1}}{b_n}$</span>:</strong><br>
+                        <div style="margin: 0.25rem 0;">
+                            $$\frac{b_{n+1}}{b_n} = \frac{\frac{2^{n+1}}{(n+1)!}}{\frac{2^n}{n!}} = \frac{2^{n+1}}{(n+1)!} \cdot \frac{n!}{2^n}$$
+                        </div>
+                    </li>
+                    <li><strong>Simplify using exponents and factorials:</strong><br>
+                        Note that <span class="nobr">$2^{n+1} = 2^n \cdot 2$</span> and <span class="nobr">$(n+1)! = (n+1) \cdot n!$:</span>
+                        <div style="margin: 0.25rem 0;">
+                            $$\frac{b_{n+1}}{b_n} = \frac{2^n \cdot 2}{(n+1) \cdot n!} \cdot \frac{n!}{2^n} = \frac{2}{n+1}$$
+                        </div>
+                    </li>
+                    <li><strong>Compare the quotient to $1$:</strong><br>
+                        • When <span class="nobr">$n = 1$:</span> <span class="nobr">$\frac{2}{1+1} = 1$</span>, which means <span class="nobr">$b_2 = b_1$</span> (a flat plateau).<br>
+                        • For all <span class="nobr">$n \ge 2$:</span> <span class="nobr">$\frac{2}{n+1} < 1$</span>, which means <span class="nobr">$b_{n+1} < b_n$</span> (strict decrease).<br>
+                        <em>Conclusion:</em> Because the terms do not strictly drop on the very first step ($b_1 = b_2 = 2$), the sequence is technically <strong>weakly decreasing</strong> (or non-increasing) for $n \ge 1$, and <em>strictly decreasing</em> for $n \ge 2$.
+                    </li>
+                </ol>
+
+                <!-- SVG Graph for Example 2 -->
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1rem; text-align: center;">
+                    <p style="font-size: 0.85rem; font-weight: 700; color: #b45309; margin-top: 0; margin-bottom: 0.5rem;">
+                        Visual Profile: Weakly Decreasing for $n \ge 1$ (Flat plateau at $b_1 = b_2$, then strict cascade)
+                    </p>
+                    <svg viewBox="0 0 500 180" style="width: 100%; max-width: 460px; height: auto; display: inline-block; overflow: visible;">
+                        <!-- Axes -->
+                        <line x1="50" y1="140" x2="450" y2="140" stroke="#0f172a" stroke-width="1.5" />
+                        <line x1="60" y1="150" x2="60" y2="20" stroke="#0f172a" stroke-width="1.5" />
+                        <text x="455" y="144" font-size="11" font-weight="bold" fill="#0f172a">n</text>
+                        <text x="56" y="15" font-size="11" font-weight="bold" fill="#0f172a">bₙ</text>
+
+                        <!-- Limit line y=0 -->
+                        <line x1="60" y1="140" x2="430" y2="140" stroke="#d97706" stroke-width="1.5" stroke-dasharray="4,3" />
+                        <text x="425" y="132" font-size="9" font-weight="bold" fill="#b45309" text-anchor="end">Limit = 0</text>
+
+                        <!-- Ticks & Points for n=1, 2, 3, 4, 5 -->
+                        <!-- n=1, val=2/1 = 2 -> y=40 -->
+                        <line x1="110" y1="140" x2="110" y2="40" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="110" cy="40" r="4.5" fill="#d97706" />
+                        <text x="110" y="155" font-size="9.5" fill="#475569" text-anchor="middle">1</text>
+                        <text x="110" y="32" font-size="9" font-weight="bold" fill="#b45309" text-anchor="middle">2</text>
+
+                        <!-- n=2, val=4/2 = 2 -> y=40 (Plateau connector) -->
+                        <line x1="180" y1="140" x2="180" y2="40" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="180" cy="40" r="4.5" fill="#d97706" />
+                        <text x="180" y="155" font-size="9.5" fill="#475569" text-anchor="middle">2</text>
+                        <text x="180" y="32" font-size="9" font-weight="bold" fill="#b45309" text-anchor="middle">2</text>
+                        <!-- Flat plateau bar -->
+                        <line x1="110" y1="40" x2="180" y2="40" stroke="#10b981" stroke-width="2.5" />
+
+                        <!-- n=3, val=8/6 ≈ 1.33 -> y=75 -->
+                        <line x1="250" y1="140" x2="250" y2="75" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="250" cy="75" r="4.5" fill="#d97706" />
+                        <text x="250" y="155" font-size="9.5" fill="#475569" text-anchor="middle">3</text>
+
+                        <!-- n=4, val=16/24 ≈ 0.66 -> y=105 -->
+                        <line x1="320" y1="140" x2="320" y2="105" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="320" cy="105" r="4.5" fill="#d97706" />
+                        <text x="320" y="155" font-size="9.5" fill="#475569" text-anchor="middle">4</text>
+
+                        <!-- n=5, val=32/120 ≈ 0.26 -> y=128 -->
+                        <line x1="390" y1="140" x2="390" y2="128" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="390" cy="128" r="4.5" fill="#d97706" />
+                        <text x="390" y="155" font-size="9.5" fill="#475569" text-anchor="middle">5</text>
+
+                        <!-- Trend Curve -->
+                        <path d="M 180 40 Q 285 105 390 128" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.5" />
+                    </svg>
+                </div>
+                <!-- EXAMPLE 3: STRICTLY DECREASING -->
+                <p style="margin-top: 1.5rem; font-size: 0.98rem; line-height: 1.7;">
+                    <strong>Example 3 (Strictly Decreasing via Difference Test):</strong> Prove whether the sequence <span class="nobr">$c_n = \frac{1}{n + 1}$</span> for <span class="nobr">$n \ge 0$</span> is monotonic.
+                </p>
+                <ol style="margin: 0.5rem 0 1rem 1.25rem; font-size: 0.95rem; line-height: 1.75;">
+                    <li><strong>Set up the difference <span class="nobr">$c_{n+1} - c_n$</span>:</strong><br>
+                        Substitute $(n+1)$ everywhere you see $n$:
+                        <div style="margin: 0.25rem 0;">
+                            $$c_{n+1} - c_n = \frac{1}{(n+1) + 1} - \frac{1}{n + 1} = \frac{1}{n+2} - \frac{1}{n+1}$$
+                        </div>
+                    </li>
+                    <li><strong>Find a common denominator and combine:</strong><br>
+                        The common denominator is $(n+2)(n+1)$:
+                        <div style="margin: 0.25rem 0;">
+                            $$c_{n+1} - c_n = \frac{(n+1) - (n+2)}{(n+2)(n+1)} = \frac{n + 1 - n - 2}{(n+2)(n+1)} = \frac{-1}{(n+2)(n+1)}$$
+                        </div>
+                    </li>
+                    <li><strong>Analyze the sign of the result:</strong><br>
+                        Since $n \ge 0$, the denominator is strictly positive, but the numerator is a negative constant ($-1 < 0$). Therefore:
+                        <div style="margin: 0.25rem 0; font-weight: 600; color: #b91c1c;">
+                            $$c_{n+1} - c_n < 0 \quad \text{for all } n \ge 0$$
+                        </div>
+                        <em>Conclusion:</em> Because the difference is strictly less than zero, <span class="nobr">$c_{n+1} < c_n$.</span> The sequence is <strong>strictly decreasing</strong>.
+                    </li>
+                </ol>
+
+                <!-- SVG Graph for Example 3 -->
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1rem; margin-bottom: 1.5rem; text-align: center;">
+                    <p style="font-size: 0.85rem; font-weight: 700; color: #d97706; margin-top: 0; margin-bottom: 0.5rem;">
+                        Visual Profile: Strictly Decreasing (<span class="nobr">$\frac{1}{n+1}$</span> cascading down toward horizontal asymptote $0$)
+                    </p>
+                    <svg viewBox="0 0 500 180" style="width: 100%; max-width: 460px; height: auto; display: inline-block; overflow: visible;">
+                        <!-- Axes -->
+                        <line x1="50" y1="140" x2="450" y2="140" stroke="#0f172a" stroke-width="1.5" />
+                        <line x1="60" y1="150" x2="60" y2="20" stroke="#0f172a" stroke-width="1.5" />
+                        <text x="455" y="144" font-size="11" font-weight="bold" fill="#0f172a">n</text>
+                        <text x="56" y="15" font-size="11" font-weight="bold" fill="#0f172a">cₙ</text>
+
+                        <!-- Asymptote y=0 -->
+                        <line x1="60" y1="140" x2="430" y2="140" stroke="#d97706" stroke-width="1.5" stroke-dasharray="4,3" />
+                        <text x="425" y="132" font-size="9" font-weight="bold" fill="#b45309" text-anchor="end">Asymptote = 0</text>
+
+                        <!-- Ticks & Points for n=0, 1, 2, 3, 4 -->
+                        <!-- n=0, val=1/1 = 1 -> y=40 -->
+                        <line x1="100" y1="140" x2="100" y2="40" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="100" cy="40" r="4.5" fill="#d97706" />
+                        <text x="100" y="155" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
+                        <text x="100" y="32" font-size="9" font-weight="bold" fill="#b45309" text-anchor="middle">1</text>
+
+                        <!-- n=1, val=1/2 = 0.5 -> y=90 -->
+                        <line x1="170" y1="140" x2="170" y2="90" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="170" cy="90" r="4.5" fill="#d97706" />
+                        <text x="170" y="155" font-size="9.5" fill="#475569" text-anchor="middle">1</text>
+                        <text x="170" y="82" font-size="9" font-weight="bold" fill="#b45309" text-anchor="middle">½</text>
+
+                        <!-- n=2, val=1/3 ≈ 0.33 -> y=107 -->
+                        <line x1="240" y1="140" x2="240" y2="107" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="240" cy="107" r="4.5" fill="#d97706" />
+                        <text x="240" y="155" font-size="9.5" fill="#475569" text-anchor="middle">2</text>
+                        <text x="240" y="99" font-size="9" font-weight="bold" fill="#b45309" text-anchor="middle">⅓</text>
+
+                        <!-- n=3, val=1/4 = 0.25 -> y=115 -->
+                        <line x1="310" y1="140" x2="310" y2="115" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="310" cy="115" r="4.5" fill="#d97706" />
+                        <text x="310" y="155" font-size="9.5" fill="#475569" text-anchor="middle">3</text>
+                        <text x="310" y="107" font-size="9" font-weight="bold" fill="#b45309" text-anchor="middle">¼</text>
+
+                        <!-- n=4, val=1/5 = 0.2 -> y=120 -->
+                        <line x1="380" y1="140" x2="380" y2="120" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="380" cy="120" r="4.5" fill="#d97706" />
+                        <text x="380" y="155" font-size="9.5" fill="#475569" text-anchor="middle">4</text>
+
+                        <!-- Trend Curve -->
+                        <path d="M 100 40 Q 200 115 380 120" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.5" />
+                    </svg>
+                </div>
+
+                <!-- EXAMPLE 4: NON-MONOTONIC -->
+                <p style="margin-top: 1.5rem; font-size: 0.98rem; line-height: 1.7;">
+                    <strong>Example 4 (Proving Non-Monotonicity):</strong> Show that the alternating sequence <span class="nobr">$d_n = (-1)^n$</span> for <span class="nobr">$n \ge 0$</span> is <strong>not monotonic</strong>.
+                </p>
+                <ol style="margin: 0.5rem 0 1rem 1.25rem; font-size: 0.95rem; line-height: 1.75;">
+                    <li><strong>Examine consecutive differences across steps:</strong><br>
+                        Compute the difference <span class="nobr">$d_{n+1} - d_n$</span> for the first few index steps:
+                        <div style="margin: 0.25rem 0;">
+                            • From $n=0$ to $n=1$: <span class="nobr">$d_1 - d_0 = (-1)^1 - (-1)^0 = -1 - 1 = \mathbf{-2}$</span> (Negative: goes down)<br>
+                            • From $n=1$ to $n=2$: <span class="nobr">$d_2 - d_1 = (-1)^2 - (-1)^1 = 1 - (-1) = \mathbf{+2}$</span> (Positive: goes up)
+                        </div>
+                    </li>
+                    <li><strong>Test the condition across all $n$:</strong><br>
+                        For a sequence to be monotonic, the derived difference $d_{n+1} - d_n$ must maintain the <em>same sign</em> (either always $\ge 0$ or always $\le 0$) for every single $n$.
+                    </li>
+                    <li><strong>Analyze the conclusion:</strong><br>
+                        Because the sign switches back and forth infinitely between negative ($–2$) and positive ($+2$), no single inequality holds for all $n$.<br>
+                        <em>Conclusion:</em> The sequence changes direction continuously, proving it is <strong>non-monotonic</strong>.
+                    </li>
+                </ol>
+
+                <!-- SVG Graph for Example 4 -->
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1rem; text-align: center;">
+                    <p style="font-size: 0.85rem; font-weight: 700; color: #dc2626; margin-top: 0; margin-bottom: 0.5rem;">
+                        Visual Profile: Non-Monotonic / Oscillating (<span class="nobr">$(-1)^n$</span> alternating between $+1$ and $-1$)
+                    </p>
+                    <svg viewBox="0 0 500 180" style="width: 100%; max-width: 460px; height: auto; display: inline-block; overflow: visible;">
+                        <!-- Axes -->
+                        <line x1="50" y1="90" x2="450" y2="90" stroke="#0f172a" stroke-width="1.5" />
+                        <line x1="60" y1="150" x2="60" y2="30" stroke="#0f172a" stroke-width="1.5" />
+                        <text x="455" y="94" font-size="11" font-weight="bold" fill="#0f172a">n</text>
+                        <text x="56" y="25" font-size="11" font-weight="bold" fill="#0f172a">dₙ</text>
+
+                        <!-- Guide Rails for +1 and -1 -->
+                        <line x1="60" y1="55" x2="430" y2="55" stroke="#fde68a" stroke-width="1.5" stroke-dasharray="3,3" />
+                        <text x="52" y="59" font-size="9.5" font-weight="bold" fill="#b45309" text-anchor="end">+1</text>
+                        <line x1="60" y1="125" x2="430" y2="125" stroke="#fde68a" stroke-width="1.5" stroke-dasharray="3,3" />
+                        <text x="52" y="129" font-size="9.5" font-weight="bold" fill="#b45309" text-anchor="end">-1</text>
+
+                        <!-- Ticks & Points for n=0, 1, 2, 3, 4 -->
+                        <!-- n=0, val=1 -> y=55 -->
+                        <line x1="110" y1="90" x2="110" y2="55" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="110" cy="55" r="4.5" fill="#ef4444" />
+                        <text x="110" y="105" font-size="9.5" fill="#475569" text-anchor="middle">0</text>
+
+                        <!-- n=1, val=-1 -> y=125 -->
+                        <line x1="180" y1="90" x2="180" y2="125" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="180" cy="125" r="4.5" fill="#ef4444" />
+                        <text x="180" y="105" font-size="9.5" fill="#475569" text-anchor="middle">1</text>
+
+                        <!-- n=2, val=1 -> y=55 -->
+                        <line x1="250" y1="90" x2="250" y2="55" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="250" cy="55" r="4.5" fill="#ef4444" />
+                        <text x="250" y="105" font-size="9.5" fill="#475569" text-anchor="middle">2</text>
+
+                        <!-- n=3, val=-1 -> y=125 -->
+                        <line x1="320" y1="90" x2="320" y2="125" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="320" cy="125" r="4.5" fill="#ef4444" />
+                        <text x="320" y="105" font-size="9.5" fill="#475569" text-anchor="middle">3</text>
+
+                        <!-- n=4, val=1 -> y=55 -->
+                        <line x1="390" y1="90" x2="390" y2="55" stroke="#94a3b8" stroke-dasharray="2,2" />
+                        <circle cx="390" cy="55" r="4.5" fill="#ef4444" />
+                        <text x="390" y="105" font-size="9.5" fill="#475569" text-anchor="middle">4</text>
+
+                        <!-- Zigzag Connector Line -->
+                        <path d="M 110 55 L 180 125 L 250 55 L 320 125 L 390 55" fill="none" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.6" />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- UNIFIED DETECTIVE GUIDE: PLATEAUS VS. OSCILLATIONS -->
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.75rem; margin: 2rem 0;">
+                <h4 style="margin-top: 0; color: #0f172a; font-size: 1.15rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>🔍</span> Detective Guide: How to Spot Plateaus vs. Oscillations
+                </h4>
+                <p style="font-size: 0.96rem; line-height: 1.7; color: #334155; margin-bottom: 1.25rem;">
+                    When analyzing the behavior of an infinite sequence, the derived difference ($a_n' = a_{n+1} - a_n$) tells you everything you need to know. Here is how to logically distinguish between a <strong>flat resting plateau</strong> and a <strong>wild oscillation</strong>.
+                </p>
+
+                <!-- 1. FLAT PLATEAU GUIDE -->
+                <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem;">
+                    <h4 style="margin-top: 0; color: #0284c7; font-size: 1.05rem;">
+                        📏 Logical Guide: How to Detect a Flat Plateau
+                    </h4>
+                    <p style="font-size: 0.96rem; line-height: 1.7; color: #334155; margin-bottom: 1rem;">
+                        A <strong>plateau</strong> is a flat resting step where the sequence neither climbs nor drops. Logically, you can find plateaus by looking at the <strong>derived sequence of differences ($a_n'$)</strong>.
+                    </p>
+
+                    <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; margin-bottom: 1rem;">
+                        <strong style="color: #0284c7; font-size: 0.95rem;">Case Study: The Staircase Sequence <span class="nobr">$c_n = \lfloor \frac{n}{2} \rfloor$</span></strong>
+                        <p style="font-size: 0.92rem; line-height: 1.6; color: #334155; margin: 0.5rem 0;">
+                            Let's write out the first few terms (where $\lfloor x \rfloor$ rounds down to the nearest integer):
+                        </p>
+                        <div style="font-family: ui-monospace, monospace; font-size: 0.9rem; background: #ffffff; padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 4px; text-align: center; margin-bottom: 0.75rem;">
+                            $c_0 = 0, \quad c_1 = 0, \quad c_2 = 1, \quad c_3 = 1, \quad c_4 = 2, \quad c_5 = 2$
+                        </div>
+                        <p style="font-size: 0.92rem; line-height: 1.6; color: #334155; margin: 0;">
+                            Notice how the values stay flat in pairs ($0 \to 0$, then $1 \to 1$). How do we prove this logically using our tool-box? We compute the derived difference $c_n' = c_{n+1} - c_n$:
+                        </p>
+                        <ul style="margin: 0.5rem 0 0 1.25rem; font-size: 0.92rem; line-height: 1.6; color: #334155;">
+                            <li>When $n$ is even (e.g., $n=0$), $c_0 = 0$ and $c_1 = 0 \implies \mathbf{0\text{ difference}}$ (<strong>Plateau!</strong>)</li>
+                            <li>When $n$ is odd (e.g., $n=1$), $c_1 = 0$ and $c_2 = 1 \implies \mathbf{+1\text{ step}}$ (<strong>Climb!</strong>)</li>
+                        </ul>
+                    </div>
+
+                    <p style="font-size: 0.94rem; line-height: 1.65; color: #334155; margin: 0;">
+                        <strong>The Golden Rule for Plateaus:</strong> Whenever your difference test yields <strong>$a_n' = 0$</strong> at a specific index $n$, you have mathematically located a flat plateau. If the difference is $\ge 0$ everywhere but hits $0$ at certain points, the sequence is <em>weakly</em> (not strictly) monotonic.
+                    </p>
+                </div>
+
+                <!-- 2. OSCILLATION GUIDE -->
+                <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem;">
+                    <h4 style="margin-top: 0; color: #dc2626; font-size: 1.05rem;">
+                        🌊 Logical Guide: How to Detect an Oscillation
+                    </h4>
+                    <p style="font-size: 0.96rem; line-height: 1.7; color: #334155; margin-bottom: 1rem;">
+                        An <strong>oscillation</strong> happens when a sequence repeatedly flips directions—climbing for a step, then plunging downward, then climbing again. Logically, you can spot oscillations by examining whether the <strong>derived difference ($a_n'$) changes signs</strong>.
+                    </p>
+
+                    <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; margin-bottom: 1rem;">
+                        <strong style="color: #dc2626; font-size: 0.95rem;">Case Study: The Alternating Sequence <span class="nobr">$d_n = (-1)^n$</span></strong>
+                        <p style="font-size: 0.92rem; line-height: 1.6; color: #334155; margin: 0.5rem 0;">
+                            Let's review the first few terms:
+                        </p>
+                        <div style="font-family: ui-monospace, monospace; font-size: 0.9rem; background: #ffffff; padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 4px; text-align: center; margin-bottom: 0.75rem;">
+                            $d_0 = 1, \quad d_1 = -1, \quad d_2 = 1, \quad d_3 = -1, \quad d_4 = 1$
+                        </div>
+                        <p style="font-size: 0.92rem; line-height: 1.6; color: #334155; margin: 0;">
+                            Notice how the values bounce back and forth across zero. How do we prove this lacks a single direction? We compute the derived difference $d_n' = d_{n+1} - d_n$:
+                        </p>
+                        <ul style="margin: 0.5rem 0 0 1.25rem; font-size: 0.92rem; line-height: 1.6; color: #334155;">
+                            <li>From $n=0$ to $n=1$: $d_1 - d_0 = -1 - 1 = \mathbf{-2}$ (<strong>Downward step!</strong>)</li>
+                            <li>From $n=1$ to $n=2$: $d_2 - d_1 = 1 - (-1) = \mathbf{+2}$ (<strong>Upward step!</strong>)</li>
+                        </ul>
+                    </div>
+
+                    <p style="font-size: 0.94rem; line-height: 1.65; color: #334155; margin: 0;">
+                        <strong>The Golden Rule for Oscillations:</strong> Whenever your difference test yields signs that <strong>flicker between positive and negative</strong> ($a_n' > 0$ for some steps and $a_n' < 0$ for others), the sequence is actively reversing direction, proving it is strictly <strong>non-monotonic</strong>.
+                    </p>
                 </div>
             </div>
 
