@@ -199,7 +199,13 @@
 
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">The Aha! Moment: Why a Sequence is Actually a Function</h3>
             <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
-                Think back to our definition of a function in Lecture 1: a rule that takes every input from a starting set (the domain) and assigns it to exactly one output in a target set (the codomain). That is <em>exactly</em> what our locker hallway does! You give the system a locker number <span class="nobr">($n \in \mathbb{N}$),</span> and it returns the single real number inside that locker <span class="nobr">($a_n \in \mathbb{R}$).</span>
+                Why do pure mathematicians insist on calling this simple list of lockers a <strong>function</strong>?
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                Think back to our definition of a function in Lecture 1: a rule that takes every input from a starting set (the domain) and assigns it to exactly one output in a target set (the codomain). That is <em>exactly</em> what our locker hallway does!
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
+                You give the system a locker number <span class="nobr">($n \in \mathbb{N}$),</span> and it returns the single real number inside that locker <span class="nobr">($a_n \in \mathbb{R}$).</span> Therefore:
             </p>
 
             <div class="definition-box">
@@ -217,7 +223,7 @@
                     In mathematics, whether the natural numbers $\mathbb{N}$ include $0$ depends on context and convenience:
                 </p>
                 <ul style="margin: 0; padding-left: 1.25rem;">
-                    <li>When modeling sets, counting dominoes, or building polynomials, starting at $n=0$ is standard.</li>
+                    <li>When modeling sets, counting dominoes, or building polynomial terms ($c_0 + c_1 x + \dots$), starting at $n=0$ is standard.</li>
                     <li>When dealing with fractions like $a_n = \frac{1}{n}$, dividing by zero is undefined, so we start at $n=1$.</li>
                 </ul>
                 <p style="margin: 0.5rem 0 0 0;">
@@ -241,10 +247,11 @@
                     </li>
                 </ul>
                 <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1.5rem;">
-                    Below are four foundational prototypes encountered throughout real analysis, each paired with an intuitive beginner breakdown and its discrete graphical profile:
+                    Below are four foundational prototypes encountered throughout real analysis, each paired with its discrete graphical profile:
                 </p>
             </div>
 
+            <!-- PROTOTYPES WITH INLINE DIAGRAMS -->
             <!-- PROTOTYPES WITH INLINE DIAGRAMS -->
             <div style="display: flex; flex-direction: column; gap: 2rem; margin: 1.5rem 0 2.5rem 0;">
                 <!-- 1. PERFECT SQUARES -->
@@ -713,7 +720,6 @@
                             <circle cx="80" cy="150" r="5.5" fill="#059669" />
                             <text x="80" y="198" font-size="12" fill="#475569" text-anchor="middle">0</text>
 
-                            <!-- Plateau at n=1 and n=2 -->
                             <line x1="140" y1="180" x2="140" y2="115" stroke="#94a3b8" stroke-dasharray="3,3" />
                             <circle cx="140" cy="115" r="5.5" fill="#059669" />
                             <text x="140" y="198" font-size="12" fill="#475569" text-anchor="middle">1</text>
