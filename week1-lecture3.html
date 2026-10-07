@@ -199,13 +199,7 @@
 
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">The Aha! Moment: Why a Sequence is Actually a Function</h3>
             <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
-                Why do pure mathematicians insist on calling this simple list of lockers a <strong>function</strong>?
-            </p>
-            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
-                Think back to our definition of a function in Lecture 1: a rule that takes every input from a starting set (the domain) and assigns it to exactly one output in a target set (the codomain). That is <em>exactly</em> what our locker hallway does!
-            </p>
-            <p style="font-size: 1.02rem; line-height: 1.7; color: #334155;">
-                You give the system a locker number <span class="nobr">($n \in \mathbb{N}$),</span> and it returns the single real number inside that locker <span class="nobr">($a_n \in \mathbb{R}$).</span> Therefore:
+                Think back to our definition of a function in Lecture 1: a rule that takes every input from a starting set (the domain) and assigns it to exactly one output in a target set (the codomain). That is <em>exactly</em> what our locker hallway does! You give the system a locker number <span class="nobr">($n \in \mathbb{N}$),</span> and it returns the single real number inside that locker <span class="nobr">($a_n \in \mathbb{R}$).</span>
             </p>
 
             <div class="definition-box">
@@ -223,7 +217,7 @@
                     In mathematics, whether the natural numbers $\mathbb{N}$ include $0$ depends on context and convenience:
                 </p>
                 <ul style="margin: 0; padding-left: 1.25rem;">
-                    <li>When modeling sets, counting dominoes, or building polynomial terms ($c_0 + c_1 x + \dots$), starting at $n=0$ is standard.</li>
+                    <li>When modeling sets, counting dominoes, or building polynomials, starting at $n=0$ is standard.</li>
                     <li>When dealing with fractions like $a_n = \frac{1}{n}$, dividing by zero is undefined, so we start at $n=1$.</li>
                 </ul>
                 <p style="margin: 0.5rem 0 0 0;">
@@ -247,11 +241,10 @@
                     </li>
                 </ul>
                 <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1.5rem;">
-                    Below are four foundational prototypes encountered throughout real analysis, each paired with its discrete graphical profile:
+                    Below are four foundational prototypes encountered throughout real analysis, each paired with an intuitive beginner breakdown and its discrete graphical profile:
                 </p>
             </div>
 
-            <!-- PROTOTYPES WITH INLINE DIAGRAMS -->
             <!-- PROTOTYPES WITH INLINE DIAGRAMS -->
             <div style="display: flex; flex-direction: column; gap: 2rem; margin: 1.5rem 0 2.5rem 0;">
                 <!-- 1. PERFECT SQUARES -->
@@ -546,7 +539,7 @@
                 <li>At <strong>Locker 0</strong>, you haven't taken any steps yet, so your position is just your starting baseline: <span class="nobr">$c_0 = b$.</span></li>
                 <li>At <strong>Locker 1</strong>, you have taken 1 stride forward: <span class="nobr">$c_1 = b + a$.</span></li>
                 <li>At <strong>Locker 2</strong>, you have taken 2 strides forward: <span class="nobr">$c_2 = b + a + a = b + 2a$.</span></li>
-                <li>At <strong>Locker $n$</strong>, you have taken $n$ identical strides forward from your baseline: <span class="nobr">$c_n = an + b$.</span></li>
+                <li>At <strong>Locker $n$</strong>, you have taken $n$ identical strides forward from your baseline. By basic multiplication, adding $a$ to itself $n$ times gives <span class="nobr">$an$.</span></li>
             </ul>
 
             <div class="definition-box">
@@ -566,6 +559,13 @@
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
                 Now imagine a completely different mode of travel along the locker corridor. Instead of taking additive strides, suppose Locker 0 starts with an initial seed quantity <span class="nobr">$a$,</span> and every single time you cross from one locker to the next, your current holdings are <em>multiplied</em> by a zoom factor <span class="nobr">$q$.</span>
             </p>
+            <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem; margin-bottom: 1.25rem;">
+                <li>At <strong>Locker 0</strong>, you have multiplied by $q$ zero times: <span class="nobr">$c_0 = a \cdot q^0 = a \cdot 1 = a$.</span></li>
+                <li>At <strong>Locker 1</strong>, you have multiplied your seed quantity by $q$ once: <span class="nobr">$c_1 = a \cdot q$.</span></li>
+                <li>At <strong>Locker 2</strong>, you have multiplied by $q$ twice: <span class="nobr">$c_2 = (a \cdot q) \cdot q = a \cdot q^2$.</span></li>
+                <li>At <strong>Locker $n$</strong>, you have applied the zoom factor $q$ exactly $n$ times: <span class="nobr">$c_n = a \cdot q^n$.</span></li>
+            </ul>
+
             <div class="definition-box" style="border-left-color: #10b981;">
                 <strong>Formal Definition: Geometric Progression</strong><br>
                 A sequence $(c_n)_{n=0}^\infty$ is a <strong>geometric progression</strong> if each term is obtained by multiplying the preceding term by a constant ratio $q$:
@@ -632,6 +632,138 @@
                 </div>
             </div>
 
+            <!-- THE DETECTIVE WALKTHROUGH -->
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 2rem;">2. The Detective Test: How to Diagnose Any Mystery Sequence</h3>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
+                Suppose someone hands you a raw list of numbers and asks: <em>"Is this arithmetic, geometric, or neither?"</em> Don't guess! Run this simple 2-step diagnostic:
+            </p>
+
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.25rem 0;">
+                <ol style="margin: 0; padding-left: 1.25rem; font-size: 0.98rem; line-height: 1.75; color: #334155;">
+                    <li style="margin-bottom: 0.75rem;">
+                        <strong>Test 1: Subtraction (Checking for Constant Stride).</strong><br>
+                        Subtract each term from its successor: <span class="nobr">$c_1 - c_0$,</span> then <span class="nobr">$c_2 - c_1$,</span> then <span class="nobr">$c_3 - c_2$.</span><br>
+                        • If all the differences equal the exact same number <span class="nobr">$a$,</span> you have an <strong>arithmetic sequence</strong> with common difference <span class="nobr">$a$!</span>
+                    </li>
+                    <li>
+                        <strong>Test 2: Division (Checking for Constant Ratio).</strong><br>
+                        Divide each term by its predecessor: <span class="nobr">$c_1 / c_0$,</span> then <span class="nobr">$c_2 / c_1$,</span> then <span class="nobr">$c_3 / c_2$.</span><br>
+                        • If all the quotients equal the exact same number <span class="nobr">$q$,</span> you have a <strong>geometric sequence</strong> with common ratio <span class="nobr">$q$!</span>
+                    </li>
+                </ol>
+            </div>
+
+            <!-- WORKED EXAMPLE: DIAGNOSING THREE MYSTERY SEQUENCES -->
+            <div class="worked-example-box" style="margin-top: 1.5rem;">
+                <h4>🔍 Worked Example: Diagnosing Three Mystery Sequences From Raw Terms</h4>
+                <p style="margin-top: 0; font-size: 0.98rem; line-height: 1.7;">
+                    Suppose you are handed three raw lists on an exam and asked to identify their type and determine their closed-form formula for Locker <span class="nobr">$n$:</span>
+                </p>
+                <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
+                    <li style="margin-bottom: 1rem;">
+                        <strong>Mystery Sequence A:</strong> <span class="nobr">$(7, 11, 15, 19, 23, \dots)$</span><br>
+                        • <em>Step 1 (Check Differences):</em><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="nobr">$c_1 - c_0 = 11 - 7 = 4$</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="nobr">$c_2 - c_1 = 15 - 11 = 4$</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="nobr">$c_3 - c_2 = 19 - 15 = 4$</span><br>
+                        • <em>Diagnosis:</em> The difference is constant (<span class="nobr">$a = 4$</span>). This is an <strong>Arithmetic Progression</strong>.<br>
+                        • <em>Construct the Formula:</em> Baseline at Locker 0 is <span class="nobr">$b = 7$.</span> The general term is:
+                        <div style="margin: 0.25rem 0; font-weight: 600; color: #065f46;">
+                            $$c_n = an + b = 4n + 7 \quad (n \ge 0)$$
+                        </div>
+                    </li>
+                    <li style="margin-bottom: 1rem;">
+                        <strong>Mystery Sequence B:</strong> <span class="nobr">$(48, -24, 12, -6, 3, \dots)$</span><br>
+                        • <em>Step 1 (Check Differences):</em><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="nobr">$c_1 - c_0 = -24 - 48 = -72$</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="nobr">$c_2 - c_1 = 12 - (-24) = 36$</span> (Not constant! Not arithmetic.)<br>
+                        • <em>Step 2 (Check Quotients):</em><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="nobr">$\frac{c_1}{c_0} = \frac{-24}{48} = -\frac{1}{2}$</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="nobr">$\frac{c_2}{c_1} = \frac{12}{-24} = -\frac{1}{2}$</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="nobr">$\frac{c_3}{c_2} = \frac{-6}{12} = -\frac{1}{2}$</span><br>
+                        • <em>Diagnosis:</em> The quotient is constant (<span class="nobr">$q = -\frac{1}{2}$</span>). This is a <strong>Geometric Progression</strong>.<br>
+                        • <em>Construct the Formula:</em> Starting factor at Locker 0 is <span class="nobr">$a = 48$.</span> The general term is:
+                        <div style="margin: 0.25rem 0; font-weight: 600; color: #065f46;">
+                            $$c_n = a \cdot q^n = 48 \cdot \left(-\frac{1}{2}\right)^n \quad (n \ge 0)$$
+                        </div>
+                    </li>
+                    <li>
+                        <strong>Mystery Sequence C (The Trap):</strong> <span class="nobr">$(1, \frac{1}{2}, \frac{1}{3}, \frac{1}{4}, \dots)$</span><br>
+                        • <em>Step 1 (Differences):</em> <span class="nobr">$\frac{1}{2} - 1 = -\frac{1}{2}$,</span> but <span class="nobr">$\frac{1}{3} - \frac{1}{2} = -\frac{1}{6}$.</span> (Fails arithmetic test.)<br>
+                        • <em>Step 2 (Quotients):</em> <span class="nobr">$\frac{1/2}{1} = \frac{1}{2}$,</span> but <span class="nobr">$\frac{1/3}{1/2} = \frac{2}{3}$.</span> (Fails geometric test.)<br>
+                        • <em>Diagnosis:</em> <strong>Neither!</strong> This is the harmonic sequence <span class="nobr">$c_n = \frac{1}{n+1}$</span> (or <span class="nobr">$1/n$</span> for <span class="nobr">$n \ge 1$</span>). Knowing when to say "neither" prevents you from forcing the wrong formula onto a problem!
+                    </li>
+                </ol>
+            </div>
+
+            <div class="aside-box">
+                <h4>💡 Why Do We Exclude $a = 0$ and $q \in \{0, 1\}$ in Geometric Sequences?</h4>
+                <p style="margin-top: 0; margin-bottom: 0.5rem; font-size: 0.95rem;">
+                    Students often wonder why textbooks include fine-print restrictions like <span class="nobr">$a \ne 0$</span> and <span class="nobr">$q \ne 0, 1$.</span> The reason is simply to prevent the sequence from "breaking" into a trivial list:
+                </p>
+                <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.92rem; line-height: 1.6;">
+                    <li>If <span class="nobr">$a = 0$,</span> then <span class="nobr">$c_n = 0 \cdot q^n = 0$</span> for every term. The sequence is permanently frozen at zero.</li>
+                    <li>If <span class="nobr">$q = 0$,</span> then <span class="nobr">$c_0 = a$,</span> but every subsequent term becomes <span class="nobr">$a \cdot 0^n = 0$.</span> It falls off a cliff immediately.</li>
+                    <li>If <span class="nobr">$q = 1$,</span> then <span class="nobr">$1^n = 1$,</span> so the sequence is permanently <span class="nobr">$(a, a, a, a, \dots)$.</span> Nothing is actually scaling!</li>
+                </ul>
+            </div>
+
+            <!-- TWO FULLY WORKED REAL-WORLD APPLICATIONS -->
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 2rem;">3. Fully Worked Application Scenarios</h3>
+
+            <div class="worked-example-box">
+                <h4>🎯 Worked Example A: The Daily Savings Account (Arithmetic Progression)</h4>
+                <p style="margin-top: 0; font-size: 0.98rem; line-height: 1.7;">
+                    <strong>Scenario:</strong> You start with $\$10$ in a piggy bank on Day 0. Every day thereafter, you deposit $\$3$. Let <span class="nobr">$c_n$</span> be your savings on Day <span class="nobr">$n$.</span>
+                </p>
+                <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
+                    <li><strong>Identify the parameters:</strong><br>
+                        • Base starting amount: <span class="nobr">$b = 10$</span> (the value in Locker 0: <span class="nobr">$c_0 = 10$</span>).<br>
+                        • Step size added daily: <span class="nobr">$a = 3$</span> (common difference).
+                    </li>
+                    <li><strong>Write the general formula:</strong><br>
+                        <span class="nobr">$$c_n = an + b = 3n + 10$$</span>
+                    </li>
+                    <li><strong>Compute the first few terms by hand:</strong><br>
+                        • Day 0: <span class="nobr">$c_0 = 3(0) + 10 = 10$</span><br>
+                        • Day 1: <span class="nobr">$c_1 = 3(1) + 10 = 13$</span> (notice: $10 + 3 = 13$)<br>
+                        • Day 2: <span class="nobr">$c_2 = 3(2) + 10 = 16$</span> (notice: $13 + 3 = 16$)<br>
+                        • Day 3: <span class="nobr">$c_3 = 3(3) + 10 = 19$</span><br>
+                        The sequence is <span class="nobr">$(10, 13, 16, 19, \dots)$.</span>
+                    </li>
+                    <li><strong>Jump directly to Day 50:</strong><br>
+                        You don't need to add 3 fifty times! Just plug in <span class="nobr">$n = 50$:</span><br>
+                        <span class="nobr">$$c_{50} = 3(50) + 10 = 150 + 10 = \$160$$</span>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="worked-example-box" style="margin-top: 1.5rem;">
+                <h4>🎯 Worked Example B: Half-Life Decay (Geometric Progression)</h4>
+                <p style="margin-top: 0; font-size: 0.98rem; line-height: 1.7;">
+                    <strong>Scenario:</strong> A sample contains $80\text{ grams}$ of a substance. Each hour, exactly half of the remaining substance decays. Let <span class="nobr">$c_n$</span> be the mass remaining after <span class="nobr">$n$</span> hours.
+                </p>
+                <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
+                    <li><strong>Identify the parameters:</strong><br>
+                        • Starting factor: <span class="nobr">$a = 80$</span> (the value in Locker 0: <span class="nobr">$c_0 = 80$</span>).<br>
+                        • Multiplier at each hour: <span class="nobr">$q = \frac{1}{2}$</span> (common ratio).
+                    </li>
+                    <li><strong>Write the general formula:</strong><br>
+                        <span class="nobr">$$c_n = a \cdot q^n = 80 \cdot \left(\frac{1}{2}\right)^n$$</span>
+                    </li>
+                    <li><strong>Compute the first few terms by hand:</strong><br>
+                        • Hour 0: <span class="nobr">$c_0 = 80 \cdot (1/2)^0 = 80 \cdot 1 = 80\text{ g}$</span><br>
+                        • Hour 1: <span class="nobr">$c_1 = 80 \cdot (1/2)^1 = 40\text{ g}$</span> (halved once)<br>
+                        • Hour 2: <span class="nobr">$c_2 = 80 \cdot (1/2)^2 = 80 \cdot 1/4 = 20\text{ g}$</span> (halved again)<br>
+                        • Hour 3: <span class="nobr">$c_3 = 80 \cdot (1/2)^3 = 80 \cdot 1/8 = 10\text{ g}$</span><br>
+                        The sequence is <span class="nobr">$(80, 40, 20, 10, 5, \dots)$.</span>
+                    </li>
+                    <li><strong>Jump directly to Hour 6:</strong><br>
+                        <span class="nobr">$$c_6 = 80 \cdot \left(\frac{1}{2}\right)^6 = 80 \cdot \frac{1}{64} = \frac{80}{64} = \frac{5}{4} = 1.25\text{ g}$$</span>
+                    </li>
+                </ol>
+            </div>
+
             <!-- SECTION 4 -->
             <h2 id="sequence-properties">4. Classifying Behavior: Monotonicity and Bounds</h2>
             <div class="infobox">
@@ -651,8 +783,22 @@
 
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">1. The Geometry of Monotonicity: Preserving Direction</h3>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                A sequence is monotonic if it picks a single direction along the real line and commits to it forever. Look at the four discrete profiles below:
+                The word <em>monotonic</em> comes from Greek roots meaning <em>"one single tone"</em> or <em>"one single style."</em> When mathematicians apply this term to an infinite sequence, the concept is deeply intuitive: <strong>a sequence is monotonic if it picks a single direction along the real line and commits to it forever.</strong>
             </p>
+            <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem; margin-bottom: 1.25rem;">
+                <li style="margin-bottom: 0.65rem;">
+                    <strong>Strictly Increasing (<span class="nobr">$a_{n+1} > a_n$</span>):</strong> Every step gains elevation. You are strictly climbing up the mountain without pauses or dips: <span class="nobr">$a_0 < a_1 < a_2 < \dots < a_n < a_{n+1}$.</span>
+                </li>
+                <li style="margin-bottom: 0.65rem;">
+                    <strong>Increasing / Weakly Increasing (<span class="nobr">$a_{n+1} \ge a_n$</span>):</strong> You are hiking upward, but flat horizontal plateaus are permitted: <span class="nobr">$(80, 95, 100, 100, 100, 115, \dots)$.</span> Notice that you have <em>never stepped down</em>.
+                </li>
+                <li style="margin-bottom: 0.65rem;">
+                    <strong>Strictly Decreasing (<span class="nobr">$a_{n+1} < a_n$</span>) and Weakly Decreasing (<span class="nobr">$a_{n+1} \le a_n$</span>):</strong> Every step descends into a valley or crosses a flat plateau; uphill steps are strictly forbidden.
+                </li>
+                <li>
+                    <strong>Non-Monotonic (Oscillation):</strong> Sequences like <span class="nobr">$a_n = (-1)^n = (1, -1, 1, -1, \dots)$</span> bounce up and down, changing direction endlessly.
+                </li>
+            </ul>
 
             <!-- 4-PANEL RESPONSIVE VISUALIZATION FOR MONOTONICITY -->
             <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; text-align: center;">
@@ -720,6 +866,7 @@
                             <circle cx="80" cy="150" r="5.5" fill="#059669" />
                             <text x="80" y="198" font-size="12" fill="#475569" text-anchor="middle">0</text>
 
+                            <!-- Plateau at n=1 and n=2 -->
                             <line x1="140" y1="180" x2="140" y2="115" stroke="#94a3b8" stroke-dasharray="3,3" />
                             <circle cx="140" cy="115" r="5.5" fill="#059669" />
                             <text x="140" y="198" font-size="12" fill="#475569" text-anchor="middle">1</text>
@@ -821,17 +968,53 @@
                 </div>
             </div>
 
+            <!-- SUBSECTION 2: PROVING MONOTONICITY -->
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">2. Two Tool-Box Tests: How to Prove Monotonicity</h3>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155;">
+                When an assignment asks you to prove that a sequence is monotonic, do not just list the first four numbers! Listing terms only proves what happens at the start; it does not prove what happens all the way to infinity. Use one of these two reliable algebraic methods:
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.5rem; margin: 1.5rem 0;">
+                <div style="background: #ffffff; border: 1px solid var(--border); border-left: 4px solid #0284c7; border-radius: 6px; padding: 1.25rem;">
+                    <h4 style="margin-top: 0; color: #0369a1; font-size: 1.05rem;">Method A: The Difference Test (Subtract)</h4>
+                    <p style="font-size: 0.95rem; color: #334155; line-height: 1.6;">Compute the discrete difference <span class="nobr">$a_{n+1} - a_n$</span> and inspect its sign:</p>
+                    <ul style="font-size: 0.9rem; color: #334155; padding-left: 1.25rem; line-height: 1.6; margin: 0;">
+                        <li>If <span class="nobr">$a_{n+1} - a_n \ge 0$</span> for all $n$, the sequence is <strong>increasing</strong>.</li>
+                        <li>If <span class="nobr">$a_{n+1} - a_n \le 0$</span> for all $n$, the sequence is <strong>decreasing</strong>.</li>
+                        <li><em>Best used for:</em> Algebraic polynomials, arithmetic sequences, and sums.</li>
+                    </ul>
+                </div>
+                <div style="background: #ffffff; border: 1px solid var(--border); border-left: 4px solid #10b981; border-radius: 6px; padding: 1.25rem;">
+                    <h4 style="margin-top: 0; color: #047857; font-size: 1.05rem;">Method B: The Ratio Test (Divide)</h4>
+                    <p style="font-size: 0.95rem; color: #334155; line-height: 1.6;">For sequences with <strong>strictly positive terms</strong> (<span class="nobr">$a_n > 0$</span>), compute quotient <span class="nobr">$\frac{a_{n+1}}{a_n}$:</span></p>
+                    <ul style="font-size: 0.9rem; color: #334155; padding-left: 1.25rem; line-height: 1.6; margin: 0;">
+                        <li>If <span class="nobr">$\frac{a_{n+1}}{a_n} \ge 1$,</span> then <span class="nobr">$a_{n+1} \ge a_n$</span> (<strong>increasing</strong>).</li>
+                        <li>If <span class="nobr">$\frac{a_{n+1}}{a_n} \le 1$,</span> then <span class="nobr">$a_{n+1} \le a_n$</span> (<strong>decreasing</strong>).</li>
+                        <li><em>Best used for:</em> Factorials ($n!$), powers ($q^n$), and exponential terms.</li>
+                    </ul>
+                </div>
+            </div>
+
             <!-- SUBSECTION 3: BOUNDEDNESS -->
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">3. Boundedness: Building Fences Around the Infinite List</h3>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                A sequence is bounded if all infinitely many terms live trapped between an impenetrable floor $m$ and ceiling $M$:
+                One of the most common misconceptions when beginning real analysis is assuming that because an infinite sequence contains an endless number of terms, its values must inevitably grow larger and larger until they fly off to infinity.
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                It is vital to distinguish between an <strong>infinite domain</strong> (we never run out of counting numbers $n \in \mathbb{N}$) and the <strong>range of outputs</strong> inside the lockers. For example, consider the sequence of perfect squares <span class="nobr">$a_n = n^2 = (0, 1, 4, 9, 16, \dots)$.</span> Here, the values truly do grow without bound; as $n$ marches toward infinity, the outputs explode upward toward infinity.
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                However, many infinite sequences do the exact opposite. Look at our earlier harmonic prototype, <span class="nobr">$a_n = \frac{n}{n+1} = (0, \frac{1}{2}, \frac{2}{3}, \frac{3}{4}, \dots)$.</span> This list contains infinitely many terms, yet every single value is strictly trapped between $0$ and $1$. As $n$ grows larger and larger, the terms crowd closer and closer to $1$, but they never cross it.
+            </p>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1.25rem;">
+                To capture this restriction mathematically, we construct <strong>bounds</strong>—impenetrable floors and ceilings that enclose the entire infinite list:
             </p>
 
             <div class="definition-box">
                 <strong>Formal Definitions of Bounds:</strong>
                 <ul style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
-                    <li><strong>Bounded Above:</strong> There exists a real number $M$ such that <span class="nobr">$a_n \le M$</span> for all <span class="nobr">$n \in \mathbb{N}$.</span></li>
-                    <li><strong>Bounded Below:</strong> There exists a real number $m$ such that <span class="nobr">$a_n \ge m$</span> for all <span class="nobr">$n \in \mathbb{N}$.</span></li>
+                    <li><strong>Bounded Above:</strong> There exists a real number $M$ such that <span class="nobr">$a_n \le M$</span> for all <span class="nobr">$n \in \mathbb{N}$.</span> (An impenetrable ceiling).</li>
+                    <li><strong>Bounded Below:</strong> There exists a real number $m$ such that <span class="nobr">$a_n \ge m$</span> for all <span class="nobr">$n \in \mathbb{N}$.</span> (An unbreakable floor).</li>
                     <li><strong>Bounded:</strong> A sequence is bounded if it is bounded <em>both</em> above and below: <span class="nobr">$$m \le a_n \le M \quad \forall n \in \mathbb{N}$$</span>
                     Equivalently, taking <span class="nobr">$K = \max(|m|, |M|)$,</span> all terms lie trapped in the symmetric interval: <span class="nobr">$|a_n| \le K$.</span></li>
                 </ul>
@@ -911,6 +1094,53 @@
                 </div>
             </div>
 
+            <div class="aside-box">
+                <h4>🔗 The Bridge to Lecture 2: Sequences and Suprema</h4>
+                <p style="margin-top: 0; margin-bottom: 0.5rem; font-size: 0.95rem;">
+                    Notice how this connects directly to the <strong>Axiom of Completeness</strong> from Lecture 2!
+                </p>
+                <p style="margin: 0; font-size: 0.93rem; line-height: 1.65;">
+                    If an infinite sequence <span class="nobr">$(a_n)$</span> is bounded above, then its collection of outputs forms a non-empty set of real numbers that is bounded above. Therefore, by the completeness of $\mathbb{R}$, that sequence is guaranteed to possess an exact least upper bound: a <strong>supremum</strong> <span class="nobr">$\alpha = \sup\{a_n \mid n \in \mathbb{N}\}$.</span> This fundamental bridge will power our convergence theorems in Week 2!
+                </p>
+            </div>
+
+            <!-- COMPREHENSIVE WORKED EXAMPLE: TESTING MONOTONICITY AND BOUNDS -->
+            <div class="worked-example-box" style="margin-top: 1.5rem;">
+                <h4>🎯 Worked Example: Testing Monotonicity and Bounds by Hand</h4>
+                <p style="margin-top: 0; font-size: 0.98rem; line-height: 1.7;">
+                    Consider the sequence <span class="nobr">$a_n = \frac{n}{n+1}$</span> for <span class="nobr">$n \ge 0$:</span>
+                    <span class="nobr">$$\left(0, \; \frac{1}{2}, \; \frac{2}{3}, \; \frac{3}{4}, \; \frac{4}{5}, \; \dots\right)$$</span>
+                </p>
+                <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
+                    <li style="margin-bottom: 0.75rem;">
+                        <strong>Step 1: Test Monotonicity using the Difference Method.</strong><br>
+                        Form the difference <span class="nobr">$a_{n+1} - a_n$:</span>
+                        <div style="margin: 0.25rem 0;">
+                            $$a_{n+1} - a_n = \frac{n+1}{(n+1)+1} - \frac{n}{n+1} = \frac{n+1}{n+2} - \frac{n}{n+1}$$
+                        </div>
+                        Find a common denominator:
+                        <div style="margin: 0.25rem 0;">
+                            $$a_{n+1} - a_n = \frac{(n+1)^2 - n(n+2)}{(n+2)(n+1)} = \frac{(n^2 + 2n + 1) - (n^2 + 2n)}{(n+2)(n+1)} = \frac{1}{(n+2)(n+1)}$$
+                        </div>
+                        Since $n \ge 0$, the numerator is $1 > 0$ and the denominator is strictly positive. Therefore:
+                        <div style="margin: 0.25rem 0; font-weight: 600; color: #065f46;">
+                            $$a_{n+1} - a_n > 0 \quad \text{for all } n \in \mathbb{N}$$
+                        </div>
+                        <em>Conclusion:</em> The sequence is <strong>strictly increasing</strong>.
+                    </li>
+                    <li>
+                        <strong>Step 2: Establish Bounds.</strong><br>
+                        • <em>Lower Bound:</em> Because the sequence is strictly increasing, its very first term is its minimum: <span class="nobr">$a_0 = \frac{0}{0+1} = 0$.</span> Thus, <span class="nobr">$a_n \ge 0$</span> for all $n$ (bounded below by $0$).<br>
+                        • <em>Upper Bound:</em> For every natural number $n$, the numerator $n$ is strictly less than the denominator $n+1$. Therefore:
+                        <div style="margin: 0.25rem 0;">
+                            $$a_n = \frac{n}{n+1} < 1 \quad \text{for all } n$$
+                        </div>
+                        Thus, the sequence is bounded above by $1$.<br>
+                        <em>Conclusion:</em> The sequence is <strong>bounded</strong> because all infinite terms live trapped inside <span class="nobr">$$0 \le a_n < 1$$</span>
+                    </li>
+                </ol>
+            </div>
+
             <!-- SECTION 5 -->
             <h2 id="algebra-of-sequences">5. The Algebra of Sequences (Scaling and Sums)</h2>
             <div class="infobox">
@@ -926,15 +1156,48 @@
                 </div>
             </div>
 
-            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">1. Pointwise Operations: Hallways in Parallel</h3>
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">1. Two Hallways Running Side-by-Side: Pointwise Operations</h3>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                In sequence algebra, we are not summing across the lockers of a single hallway. Instead, picture <strong>two parallel locker hallways running side-by-side</strong>: Hallway $A$ and Hallway $B$. Operations happen index-by-index in complete independence.
+                When you first see symbols like <span class="nobr">$(a + b)_n = a_n + b_n$</span> or <span class="nobr">$(\lambda a)_n = \lambda a_n$,</span> it can be easy to confuse them with adding all the numbers inside a sequence together (which is a <em>series</em>, as we will explore in Section 7).
             </p>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                In sequence algebra, we are not summing across the lockers of a single hallway. Instead, picture <strong>two parallel locker hallways running side-by-side</strong>: Hallway $A$ and Hallway $B$.
+            </p>
+            <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem; margin-bottom: 1.25rem;">
+                <li style="margin-bottom: 0.65rem;">
+                    To build the new <strong>Sum Hallway</strong> <span class="nobr">$(a + b)$,</span> you walk up to Door $n$, open Locker $n$ in Hallway $A$ to read $a_n$, open Locker $n$ in Hallway $B$ to read $b_n$, add those two numbers together, and store the result <span class="nobr">$a_n + b_n$</span> into Locker $n$ of the new hallway.
+                </li>
+                <li style="margin-bottom: 0.65rem;">
+                    To build the <strong>Scaled Hallway</strong> <span class="nobr">$(\lambda a)$,</span> you take every slip of paper in Hallway $A$ and multiply its value by a fixed scalar multiplier $\lambda$.
+                </li>
+                <li>
+                    Notice that each index $n$ operates in total independence from every other locker. Mathematicians describe this as <strong>pointwise</strong> or <strong>term-by-term</strong> arithmetic.
+                </li>
+            </ul>
+
+            <div class="definition-box">
+                <strong>Formal Definitions of Sequence Operations:</strong><br>
+                Let <span class="nobr">$(a_n)_{n=0}^\infty$</span> and <span class="nobr">$(b_n)_{n=0}^\infty$</span> be two real sequences, and let <span class="nobr">$\lambda \in \mathbb{R}$</span> be a real scalar.
+                <ul style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
+                    <li><strong>Scalar Multiplication:</strong> <span class="nobr">$(\lambda a)_n = \lambda \cdot a_n$</span> for all <span class="nobr">$n \in \mathbb{N}$.</span></li>
+                    <li><strong>Sum of Sequences:</strong> <span class="nobr">$(a + b)_n = a_n + b_n$</span> for all <span class="nobr">$n \in \mathbb{N}$.</span></li>
+                    <li><strong>Product of Sequences:</strong> <span class="nobr">$(a \cdot b)_n = a_n \cdot b_n$</span> for all <span class="nobr">$n \in \mathbb{N}$.</span></li>
+                    <li><strong>Quotient of Sequences:</strong> <span class="nobr">$\left(\frac{a}{b}\right)_n = \frac{a_n}{b_n}$</span> for all <span class="nobr">$n \in \mathbb{N}$,</span> provided <span class="nobr">$b_n \ne 0$</span> for every $n$.</li>
+                </ul>
+            </div>
 
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.75rem;">2. Combining Simple Sequences to Create New Patterns</h3>
             <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
-                Adding the linear climb $a_n = 2n + 1$ term-by-term to the alternating oscillation $b_n = (-1)^n$ synthesizes an emergent staircase featuring resting plateaus:
+                One of the most useful features of sequence algebra is how adding two simple sequences can produce a brand-new stepping behavior that neither parent sequence had on its own.
             </p>
+            <ul style="font-size: 0.98rem; line-height: 1.75; color: #334155; padding-left: 1.25rem; margin-bottom: 1.25rem;">
+                <li style="margin-bottom: 0.65rem;">
+                    <strong>The First Ingredient (A Steady Linear Climb):</strong> Consider <span class="nobr">$a_n = 2n + 1 = (1, 3, 5, 7, 9, 11, \dots)$.</span> This sequence marches strictly uphill. It gains 2 units at every single step, never pauses, and has zero flat spots.
+                </li>
+                <li style="margin-bottom: 0.65rem;">
+                    <strong>The Second Ingredient (A Pure Alternating Bounce):</strong> Consider <span class="nobr">$b_n = (-1)^n = (1, -1, 1, -1, 1, -1, \dots)$.</span> This sequence never climbs and never descends. It bounces back and forth across zero, caught in permanent oscillation without making any forward progress.
+                </li>
+            </ul>
 
             <!-- RESPONSIVE COMPARATIVE STEPPING DISPLAY -->
             <div class="stepping-table-container">
@@ -1103,6 +1366,57 @@
                 </div>
             </div>
 
+            <!-- ENRICHMENT ASIDE: LINEAR CLIMB + SINE WAVE -->
+            <div class="aside-box" style="margin-top: 2rem;">
+                <h4>💡 Exploration: What If the Oscillation Is a Smooth Sine Wave?</h4>
+                <p style="margin-top: 0; font-size: 0.98rem; line-height: 1.7; color: #1e293b;">
+                    Once you see how the alternating sequence <span class="nobr">$(-1)^n$</span> adds a digital bounce to a linear walk, you might wonder what happens if we replace the abrupt bounce with a smooth, continuous wave, like a sine function: <span class="nobr">$c_n = \alpha n + A \sin(\omega n)$.</span>
+                </p>
+                <p style="font-size: 0.95rem; line-height: 1.7; color: #334155; margin-bottom: 0.75rem;">
+                    This composite model describes real-world dynamics across science:
+                </p>
+                <ul style="margin: 0 0 1rem 0; padding-left: 1.25rem; font-size: 0.92rem; line-height: 1.65; color: #334155;">
+                    <li><strong>Climate &amp; Meteorology:</strong> A seasonal temperature wave (summer peaks, winter troughs) riding on a long-term climate drift.</li>
+                    <li><strong>Retail &amp; Economics:</strong> Quarterly holiday sales surges superimposed on a company's steady year-over-year revenue climb.</li>
+                    <li><strong>Signal Processing:</strong> High-frequency vibrations riding along a low-frequency carrier wave.</li>
+                </ul>
+                <p style="font-size: 0.95rem; line-height: 1.7; color: #334155; margin-bottom: 1rem;">
+                    Whether the combined sequence continues marching strictly uphill comes down to a direct tug-of-war between two opposing forces: <strong>is the forward stride of the line greater than the steepest downward plunge of the wave?</strong>
+                </p>
+
+                <!-- ARITHMETIC BOX INSIDE ASIDE -->
+                <div style="background: #ffffff; border: 1px solid #fde68a; border-radius: 6px; padding: 1rem 1.25rem; margin-bottom: 1.25rem;">
+                    <strong style="color: #92400e; font-size: 0.95rem; display: block; margin-bottom: 0.4rem;">The Arithmetic of the Contest (Frequency $\omega = \pi/3$):</strong>
+                    <p style="font-size: 0.91rem; line-height: 1.65; color: #334155; margin: 0 0 0.5rem 0;">
+                        Between step <span class="nobr">$n = 2$</span> and <span class="nobr">$n = 3$,</span> the wave plunges from <span class="nobr">$\sin(2\pi/3) \approx 0.866$</span> down to <span class="nobr">$\sin(\pi) = 0$,</span> a single-step drop of approximately <span class="nobr">$0.866 \times A$</span> units.
+                    </p>
+                    <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.91rem; line-height: 1.65; color: #334155;">
+                        <li><strong>Line Stride Dominates (<span class="nobr">$2n + 2\sin(\pi n/3)$</span>):</strong> Stride <span class="nobr">$+2$</span> is strictly greater than the maximum wave drop <span class="nobr">$2 \times 0.866 \approx 1.73$.</span> The line wins everywhere, preserving <strong>strict monotonicity</strong> (<span class="nobr">$c_{n+1} > c_n$</span>).</li>
+                        <li><strong>Wave Drop Dominates (<span class="nobr">$n + 2.5\sin(\pi n/3)$</span>):</strong> The wave drop <span class="nobr">$2.5 \times 0.866 \approx 2.17$</span> exceeds the stride of <span class="nobr">$+1$.</span> The wave overpowers the climb, pulling terms into a valley (<span class="nobr">$c_3 < c_2$</span>) and <strong>breaking monotonicity</strong>!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- DISTINCT WORKED EXAMPLE: SCALING AND DIFFERENCE -->
+            <div class="worked-example-box" style="margin-top: 1.5rem;">
+                <h4>🎯 Worked Example: Scaling and Difference</h4>
+                <p style="margin-top: 0; font-size: 0.98rem; line-height: 1.7;">
+                    Suppose you want to scale a sequence by a constant factor and subtract another sequence from it. Let <span class="nobr">$u_n = n + 2$</span> and <span class="nobr">$v_n = 2n$</span> for <span class="nobr">$n \ge 0$.</span> Find the general formula and the first four terms of <span class="nobr">$w_n = (3u - v)_n$:</span>
+                </p>
+                <ol style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.75;">
+                    <li><strong>Apply scalar multiplication and subtraction pointwise:</strong><br>
+                        <span class="nobr">$$w_n = 3u_n - v_n = 3(n + 2) - 2n = 3n + 6 - 2n = n + 6$$</span>
+                    </li>
+                    <li><strong>Compute the first few terms by hand:</strong><br>
+                        • At <span class="nobr">$n = 0$:</span> <span class="nobr">$w_0 = 3(2) - 0 = 6$</span><br>
+                        • At <span class="nobr">$n = 1$:</span> <span class="nobr">$w_1 = 3(3) - 2 = 7$</span><br>
+                        • At <span class="nobr">$n = 2$:</span> <span class="nobr">$w_2 = 3(4) - 4 = 8$</span><br>
+                        • At <span class="nobr">$n = 3$:</span> <span class="nobr">$w_3 = 3(5) - 6 = 9$</span><br>
+                        <em>Result:</em> <span class="nobr">$w = (6, 7, 8, 9, \dots)$.</span> Notice how the linear combination of two arithmetic sequences yields another arithmetic sequence with common difference <span class="nobr">$a = 1$.</span>
+                    </li>
+                </ol>
+            </div>
+
             <!-- SECTION 6 -->
             <h2 id="derived-sequences">6. Discrete Calculus: The Derived Sequence (<span class="nobr">$a_n'$</span>)</h2>
             <!-- HISTORICAL PROFILE: BROOK TAYLOR -->
@@ -1118,14 +1432,36 @@
                             Historical Profile: The Pioneer of Finite Differences
                         </h4>
                         <p style="font-size: 0.92rem; line-height: 1.65; color: #334155; margin-bottom: 0.75rem;">
-                            <strong>Background:</strong> An English mathematician and Secretary of the Royal Society, Brook Taylor approached change through discrete increments.
+                            <strong>Background:</strong> An English mathematician and Secretary of the Royal Society, Brook Taylor worked in the turbulent aftermath of the Newton-Leibniz calculus dispute. Rather than treating calculus solely as smooth tangents and infinitesimals, Taylor approached change through discrete increments.
                         </p>
                         <ul style="font-size: 0.9rem; line-height: 1.6; color: #334155; margin: 0 0 0.75rem 1.25rem; padding: 0;">
                             <li>Published <em>Methodus Incrementorum Directa et Inversa</em> (1715), formally inaugurating the <strong>calculus of finite differences</strong>.</li>
-                            <li>Formulated Taylor's Theorem as the natural limiting case when discrete step sizes approach zero.</li>
+                            <li>Formulated Taylor's Theorem as the natural limiting case when discrete step sizes <span class="nobr">$\Delta x$</span> approach zero.</li>
+                            <li>Pioneered the mathematical study of vibrating strings and linear perspective in projective geometry.</li>
                         </ul>
                     </div>
                 </div>
+            </div>
+
+            <div class="infobox">
+                <h4>📖 Notation Reference: The Derived Sequence</h4>
+                <div class="infobox-intro">
+                    <strong>Measuring discrete step-by-step changes:</strong> The difference between consecutive elements measures how much the sequence grows or drops from one locker to the next.
+                </div>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n'$</span> <span style="font-weight: 400; color: #64748b;">or</span> <span class="nobr">$\Delta a_n$</span></span><span class="notation-desc">Derived sequence: difference between adjacent terms <span class="nobr">$a_{n+1} - a_n$</span></span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n' > 0$</span></span><span class="notation-desc">Step climbed uphill: term <span class="nobr">$a_{n+1}$</span> is strictly larger than <span class="nobr">$a_n$</span></span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n' = 0$</span></span><span class="notation-desc">Flat step: no change between locker <span class="nobr">$n$</span> and locker <span class="nobr">$n+1$</span></span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n' = c$</span></span><span class="notation-desc">Constant step size (characterizes an arithmetic progression)</span></div>
+                </div>
+            </div>
+
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.25rem;">1. Rate of Change Without Fractions: Rise Over Run Between Lockers</h3>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                When students first see the prime symbol <span class="nobr">$a_n'$</span> or hear the term <em>"discrete calculus,"</em> they often brace for complicated derivative machinery. But here, there are no continuous limits or infinitesimals to worry about. Any rate of change is simply <strong>rise over run</strong>:
+            </p>
+            <div style="text-align: center; margin: 1rem 0; font-size: 1.05rem; background: #f8fafc; padding: 0.85rem; border-radius: 6px; border: 1px solid var(--border); font-weight: 500;">
+                $$\text{Rate of Change} = \frac{\Delta \text{Value}}{\Delta \text{Input}} = \frac{a_{n+1} - a_n}{(n+1) - n} = \frac{a_{n+1} - a_n}{1} = a_{n+1} - a_n$$
             </div>
 
             <div class="definition-box">
@@ -1134,6 +1470,46 @@
                 <div style="text-align: center; margin: 0.5rem 0; font-size: 1.05rem;">
                     $$a_n' = a_{n+1} - a_n \quad (n \ge 0)$$
                 </div>
+            </div>
+
+            <!-- VISUAL DIAGRAM: DISCRETE DERIVATIVE -->
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; text-align: center;">
+                <p style="font-size: 0.88rem; font-weight: 700; color: #475569; margin-top: 0; margin-bottom: 0.75rem;">
+                    VISUALIZATION: Discrete Rate of Change <span class="nobr">($a_n' = a_{n+1} - a_n$)</span>
+                </p>
+                <svg viewBox="0 0 600 240" style="width: 100%; max-width: 600px; height: auto; display: inline-block;">
+                    <line x1="60" y1="210" x2="560" y2="210" stroke="#0f172a" stroke-width="2"/>
+                    <line x1="60" y1="210" x2="60" y2="20" stroke="#0f172a" stroke-width="2"/>
+                    <text x="570" y="215" font-family="sans-serif" font-size="14" font-weight="bold" fill="#0f172a">n</text>
+                    <text x="56" y="15" font-family="sans-serif" font-size="14" font-weight="bold" fill="#0f172a">aₙ</text>
+
+                    <circle cx="120" cy="180" r="5" fill="#0284c7"/>
+                    <text x="120" y="230" font-family="sans-serif" font-size="13" fill="#475569" text-anchor="middle">0</text>
+
+                    <circle cx="240" cy="140" r="5" fill="#0284c7"/>
+                    <text x="240" y="230" font-family="sans-serif" font-size="13" fill="#475569" text-anchor="middle">1</text>
+
+                    <circle cx="360" cy="90" r="5" fill="#0284c7"/>
+                    <text x="360" y="230" font-family="sans-serif" font-size="13" fill="#475569" text-anchor="middle">2</text>
+
+                    <circle cx="480" cy="30" r="5" fill="#0284c7"/>
+                    <text x="480" y="230" font-family="sans-serif" font-size="13" fill="#475569" text-anchor="middle">3</text>
+
+                    <line x1="120" y1="180" x2="240" y2="180" stroke="#94a3b8" stroke-dasharray="4,3" stroke-width="1.5"/>
+                    <line x1="240" y1="180" x2="240" y2="140" stroke="#d97706" stroke-width="3"/>
+                    <text x="180" y="174" font-family="sans-serif" font-size="12" fill="#64748b" text-anchor="middle">ΔInput = 1</text>
+                    <text x="250" y="165" font-family="sans-serif" font-size="13" font-weight="bold" fill="#d97706">a₀' = a₁ - a₀</text>
+
+                    <line x1="240" y1="140" x2="360" y2="140" stroke="#94a3b8" stroke-dasharray="4,3" stroke-width="1.5"/>
+                    <line x1="360" y1="140" x2="360" y2="90" stroke="#d97706" stroke-width="3"/>
+                    <text x="300" y="134" font-family="sans-serif" font-size="12" fill="#64748b" text-anchor="middle">ΔInput = 1</text>
+                    <text x="370" y="120" font-family="sans-serif" font-size="13" font-weight="bold" fill="#d97706">a₁' = a₂ - a₁</text>
+
+                    <line x1="360" y1="90" x2="480" y2="90" stroke="#94a3b8" stroke-dasharray="4,3" stroke-width="1.5"/>
+                    <line x1="480" y1="90" x2="480" y2="30" stroke="#d97706" stroke-width="3"/>
+                    <text x="420" y="84" font-family="sans-serif" font-size="12" fill="#64748b" text-anchor="middle">ΔInput = 1</text>
+                    <text x="490" y="65" font-family="sans-serif" font-size="13" font-weight="bold" fill="#d97706">a₂' = a₃ - a₂</text>
+                </svg>
             </div>
 
             <!-- SECTION 7 -->
@@ -1156,10 +1532,35 @@
                         <ul style="font-size: 0.9rem; line-height: 1.6; color: #334155; margin: 0 0 0.75rem 1.25rem; padding: 0;">
                             <li>Published <em>Disquisitiones Arithmeticae</em> (1801), founding modern number theory.</li>
                             <li>Formalized the famous summation identity: <span class="nobr">$\sum_{k=1}^n k = \frac{n(n+1)}{2}$.</span></li>
+                            <li>Formalized least squares optimization and the Gaussian normal distribution.</li>
                         </ul>
                     </div>
                 </div>
             </div>
+
+            <div class="infobox">
+                <h4>📖 Notation Reference: Sums and the Telescoping Mechanism</h4>
+                <div class="infobox-intro">
+                    <strong>Reconstructing values from step sizes:</strong> If we know the step size between every pair of lockers, we can find our position at Locker $n$ by accumulating all the steps taken from Locker $0$.
+                </div>
+                <div class="notation-grid">
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$s_n = \sum_{k=0}^n b_k$</span></span><span class="notation-desc">Partial sum: accumulation of the first $n+1$ terms from $k = 0$ to $k = n$</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$\sum_{k=0}^{n-1} a_k'$</span></span><span class="notation-desc">Sum of step differences from Locker $0$ up to Locker $n$</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n - a_0$</span></span><span class="notation-desc">Net displacement: the total change in value across the entire journey</span></div>
+                    <div class="notation-item"><span class="notation-sym"><span class="nobr">$a_n = a_0 + \sum_{k=0}^{n-1} a_k'$</span></span><span class="notation-desc">Discrete Fundamental Theorem of Calculus: reconstruct any term from its differences</span></div>
+                </div>
+            </div>
+
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 1.25rem;">1. The Collapsing Pocket Telescope: How Differences Cancel</h3>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1rem;">
+                Suppose you stand at Locker $0$ with value $a_0$. To reach Locker $n$, you must add up every step taken along the hallway:
+            </p>
+            <div style="text-align: center; margin: 1rem 0; font-size: 1.08rem; background: #f8fafc; padding: 1rem; border-radius: 6px; border: 1px solid var(--border);">
+                $$\sum_{k=0}^{n-1} a_k' = (a_1 - a_0) + (a_2 - a_1) + (a_3 - a_2) + \dots + (a_n - a_{n-1}) = a_n - a_0$$
+            </div>
+            <p style="font-size: 1.02rem; line-height: 1.75; color: #334155; margin-bottom: 1.25rem;">
+                Every single intermediate value cancels itself out completely! Just like an old brass nautical pocket telescope whose inner cylinders slide and collapse into one another, the entire infinite sum collapses inward, leaving only the front and back terms.
+            </p>
 
             <div class="definition-box" style="border-left-color: #0284c7;">
                 <strong>The Discrete Fundamental Theorem of Calculus (Telescoping Identity):</strong><br>
@@ -1170,6 +1571,50 @@
                 Reconstructing any future term from its steps:
                 <div style="text-align: center; margin: 0.5rem 0; font-size: 1.1rem; color: #047857;">
                     $$a_n = a_0 + \sum_{k=0}^{n-1} a_k'$$
+                </div>
+            </div>
+
+            <!-- VISUAL CANCELLATION DIAGRAM -->
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; text-align: center;">
+                <p style="font-size: 0.95rem; font-weight: 700; color: #1e293b; margin-top: 0; margin-bottom: 0.35rem;">
+                    VISUALIZING THE TELESCOPIC COLLAPSE
+                </p>
+                <svg viewBox="0 0 760 140" style="width: 100%; max-width: 740px; height: auto; display: inline-block;">
+                    <text x="50" y="75" font-family="ui-monospace, monospace" font-size="16" font-weight="bold" fill="#b91c1c" text-anchor="middle">-a₀</text>
+                    <text x="95" y="75" font-family="ui-monospace, monospace" font-size="16" fill="#64748b" text-anchor="middle">+</text>
+
+                    <text x="140" y="75" font-family="ui-monospace, monospace" font-size="16" font-weight="bold" fill="#0284c7" text-anchor="middle">a₁</text>
+                    <text x="185" y="75" font-family="ui-monospace, monospace" font-size="16" fill="#64748b" text-anchor="middle">-</text>
+                    <text x="230" y="75" font-family="ui-monospace, monospace" font-size="16" font-weight="bold" fill="#0284c7" text-anchor="middle">a₁</text>
+                    <path d="M 140 55 Q 185 25 230 55" fill="none" stroke="#0284c7" stroke-width="2" stroke-dasharray="3,2" />
+                    <text x="185" y="28" font-size="10" font-weight="bold" fill="#0284c7" text-anchor="middle">cancels (= 0)</text>
+
+                    <text x="275" y="75" font-family="ui-monospace, monospace" font-size="16" fill="#64748b" text-anchor="middle">+</text>
+
+                    <text x="320" y="75" font-family="ui-monospace, monospace" font-size="16" font-weight="bold" fill="#d97706" text-anchor="middle">a₂</text>
+                    <text x="365" y="75" font-family="ui-monospace, monospace" font-size="16" fill="#64748b" text-anchor="middle">-</text>
+                    <text x="410" y="75" font-family="ui-monospace, monospace" font-size="16" font-weight="bold" fill="#d97706" text-anchor="middle">a₂</text>
+                    <path d="M 320 55 Q 365 25 410 55" fill="none" stroke="#d97706" stroke-width="2" stroke-dasharray="3,2" />
+                    <text x="365" y="28" font-size="10" font-weight="bold" fill="#d97706" text-anchor="middle">cancels (= 0)</text>
+
+                    <text x="455" y="75" font-family="ui-monospace, monospace" font-size="16" fill="#64748b" text-anchor="middle">+</text>
+                    <text x="510" y="75" font-family="ui-monospace, monospace" font-size="16" fill="#94a3b8" text-anchor="middle">&middot; &middot; &middot;</text>
+                    <text x="565" y="75" font-family="ui-monospace, monospace" font-size="16" fill="#64748b" text-anchor="middle">+</text>
+
+                    <text x="620" y="75" font-family="ui-monospace, monospace" font-size="16" font-weight="bold" fill="#059669" text-anchor="middle">aₙ</text>
+
+                    <line x1="50" y1="95" x2="620" y2="95" stroke="#cbd5e1" stroke-width="1.5" />
+                    <text x="335" y="125" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">Net Surviving Terms = aₙ - a₀</text>
+                </svg>
+            </div>
+
+            <div class="worked-example-box" style="margin-top: 1.5rem;">
+                <h4>🎯 Derivation: The Gaussian Sum $\sum_{k=1}^n k$ via Telescoping</h4>
+                <p style="margin-top: 0; font-size: 0.98rem; line-height: 1.7;">
+                    Let <span class="nobr">$a_k = \frac{k(k-1)}{2}$.</span> Its difference is <span class="nobr">$a_k' = a_{k+1} - a_k = k$.</span> Telescoping yields:
+                </p>
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.15rem; color: #065f46; font-weight: 600;">
+                    $$\sum_{k=1}^n k = a_{n+1} - a_1 = \frac{(n+1)n}{2} - 0 = \frac{n(n+1)}{2}$$
                 </div>
             </div>
 
