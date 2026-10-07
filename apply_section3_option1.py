@@ -1,4 +1,3 @@
-cat << 'EOF' > apply_section3_option1.py
 #!/usr/bin/env python3
 r"""
 apply_section3_option1.py
@@ -76,6 +75,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-EOF
-chmod +x apply_section3_option1.py
-./apply_section3_option1.py
