@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Update week2-lecture4.html with an unboxed, flowing orientation introduction
-and full interactive widgets, stage both target and script, and push to remote.
+Update week2-lecture4.html with an unboxed, deeply detailed Section 1,
+stage both the HTML file and this script, commit, and push to remote.
 """
 
 from pathlib import Path
@@ -11,12 +11,14 @@ import sys
 TARGET_FILE = Path("week2-lecture4.html")
 SCRIPT_FILE = Path(__file__).resolve()
 
-COMMIT_SUBJECT = "Unbox Lecture 4 orientation section into flowing prose"
+COMMIT_SUBJECT = (
+    "Expand Lecture 4 Section 1 with detailed, unboxed explanations"
+)
 COMMIT_BODY = (
-    "Remove the card container, borders, and background shading from the\n"
-    "orientation section in week2-lecture4.html. Transition the empathetic\n"
-    "intro into unboxed, flowing prose to ensure an inviting reading flow\n"
-    "for students beginning epsilon-N analysis."
+    "Unbox Section 1 of week2-lecture4.html into a detailed narrative guide\n"
+    "for beginning real analysis students. Explain why calculus intuition\n"
+    "fails, unpack absolute difference as metric distance, and break down\n"
+    "the epsilon-N definition clause by clause in flowing prose."
 )
 
 HTML_CONTENT = r"""<!DOCTYPE html>
@@ -38,28 +40,21 @@ HTML_CONTENT = r"""<!DOCTYPE html>
         }
         *, *::before, *::after { box-sizing: border-box; }
         html, body { max-width: 100%; overflow-x: hidden; }
-        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.65; margin: 0; padding: 2rem; }
         .container { max-width: 1200px; margin: 0 auto; width: 100%; }
         .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-        .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
+        .module-content { background: var(--card); padding: 2.25rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
 
-        .toc-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.75rem; margin: 1.75rem 0 2.5rem 0; }
+        .toc-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.75rem; margin: 2rem 0 2.5rem 0; }
         .toc-box h4 { margin: 0 0 0.75rem 0; color: #92400e; font-size: 1.05rem; }
         .toc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.5rem 1.5rem; margin: 0; padding-left: 1.25rem; }
         .toc-grid li { margin-bottom: 0.35rem; font-size: 0.95rem; }
         .toc-grid a { color: #b45309; text-decoration: none; font-weight: 500; }
         .toc-grid a:hover { text-decoration: underline; color: var(--accent-hover); }
 
-        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; font-family: var(--font-ui); scroll-margin-top: 2rem; }
-        h3 { color: #1e293b; margin-top: 1.5rem; font-family: var(--font-ui); scroll-margin-top: 2rem; }
-
-        .infobox { background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.25rem 0 1.75rem 0; }
-        .infobox h4 { margin: 0 0 0.85rem 0; color: #0f172a; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-ui); }
-        .notation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 0.85rem 1.75rem; font-size: 0.95rem; }
-        .notation-item { display: grid; grid-template-columns: minmax(130px, max-content) 1fr; gap: 0.75rem; align-items: center; }
-        .notation-sym { font-weight: 600; color: var(--accent); white-space: nowrap; display: flex; justify-content: center; align-items: center; text-align: center; }
-        .notation-desc { min-width: 0; word-break: break-word; line-height: 1.5; color: #334155; }
-        .infobox-intro { font-size: 0.93rem; color: #475569; line-height: 1.6; margin: 0 0 1.25rem 0; padding-bottom: 0.85rem; border-bottom: 1px solid #e2e8f0; }
+        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 3rem; color: #0f172a; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+        h3 { color: #1e293b; margin-top: 1.75rem; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+        h4 { color: #334155; margin-top: 1.25rem; font-family: var(--font-ui); }
 
         .scoping-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.5rem; margin: 1.75rem 0; }
         .scoping-box h4 { margin-top: 0; color: #92400e; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; }
@@ -112,7 +107,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
         .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; border: 1px solid var(--border); border-left-width: 4px; }
         .aside-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #b45309; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
         .aside-box h4 { margin-top: 0; color: #b45309; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
-        .aside-box p, .aside-box li, .infobox p, .infobox li { color: #0f172a !important; }
+        .aside-box p, .aside-box li { color: #0f172a !important; }
 
         .worked-example-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
         .worked-example-box h4 { margin-top: 0; color: #047857; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
@@ -234,59 +229,121 @@ HTML_CONTENT = r"""<!DOCTYPE html>
                 </ul>
             </div>
 
-            <!-- SECTION 1 -->
+            <!-- SECTION 1: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->
             <h2 id="section-epsilon-n">1. Formal $\epsilon\text{-}N$ Convergence</h2>
-            <div class="infobox">
-                <h4>📖 Notation Reference: Sequences &amp; Limits</h4>
-                <div class="infobox-intro">
-                    <strong>Don't be intimidated by the symbols!</strong> Universal quantifiers ($\forall$), existential quantifiers ($\exists$), and floor/ceiling brackets ($\lceil \dots \rceil$) are simply mathematicians' shorthand for exact logical instructions.
+
+            <h3 style="color: #0f172a; margin-top: 1.5rem;">Why Calculus Intuition Leaves Us Wanting</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                In introductory calculus, we are taught to describe a limit with kinetic language: <em>"as $n$ gets larger and larger, the sequence terms $a_n$ get closer and closer to $L$."</em> For computing derivatives of basic functions, this image works well. But in pure mathematics, this informal description hides subtle logical cracks:
+            </p>
+            <ul style="margin: 0.5rem 0 1.25rem 1.25rem; color: #334155; line-height: 1.7; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.5rem;">
+                    <strong>Does "closer and closer" mean terms must never move away?</strong> What if a sequence oscillates, jumping back and forth across $L$, or takes three steps closer and one step backward?
+                </li>
+                <li style="margin-bottom: 0.5rem;">
+                    <strong>How close is close enough?</strong> If $a_n = 1 + 1/n$, the terms get closer and closer to $0$, but $0$ is certainly not the limit! They also get closer to $1/2$, but that isn't the limit either.
+                </li>
+                <li>
+                    <strong>Can we prove uniqueness?</strong> Without an exact measurement of distance, we cannot defend why a sequence cannot converge to two different numbers simultaneously.
+                </li>
+            </ul>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                To resolve this ambiguity, nineteenth-century mathematicians replaced the fuzzy idea of motion with an ironclad guarantee of <strong>metric distance</strong>. Instead of asking how a sequence travels, we establish an exact distance test that must hold permanently.
+            </p>
+
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">Understanding Absolute Value as Physical Distance</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Before reading the formal sentence, remember what absolute value actually means geometrically. On the real number line, the distance between any two numbers $x$ and $y$ is simply $|x - y|$.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                When we write $|a_n - L| < \epsilon$, we are making a very simple statement: <strong>the straight-line distance between the sequence value $a_n$ and the target number $L$ is strictly smaller than $\epsilon$</strong>. Expanding that inequality without absolute value bars reveals its spatial meaning:
+            </p>
+            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
+                $$|a_n - L| < \epsilon \iff -\epsilon < a_n - L < \epsilon \iff L - \epsilon < a_n < L + \epsilon$$
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Geometrically, $|a_n - L| < \epsilon$ simply means that $a_n$ lands safely inside an open corridor of width $2\epsilon$ centered exactly at $L$.
+            </p>
+
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">The Formal Definition</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Here is the definition that serves as the foundation of all real analysis. Don't rush past it—read every symbol slowly:
+            </p>
+            <div style="padding: 1.25rem 1.5rem; margin: 1.5rem 0; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; text-align: center;">
+                <span style="font-size: 1.1rem; color: #0f172a; font-weight: 600; display: block; margin-bottom: 0.5rem;">
+                    Definition: Convergence of a Sequence
+                </span>
+                <span style="font-size: 1.15rem; color: #0f172a;">
+                    A sequence $(a_n)_{n=0}^\infty$ converges to a real limit $L \in \mathbb{R}$ (written $\lim_{n\to\infty} a_n = L$ or $a_n \to L$) if and only if:
+                </span>
+                <p style="margin: 1rem 0 0.5rem 0; font-size: 1.25rem;">
+                    $$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad n > N \implies |a_n - L| < \epsilon$$
+                </p>
+            </div>
+
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">Breaking Down Every Piece of the Formula</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Let's unpack each component of this sentence so that nothing feels like a secret code:
+            </p>
+            <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.85rem;">
+                    <strong>$\forall \epsilon > 0$ ("For every epsilon greater than zero"):</strong><br>
+                    The Greek letter $\epsilon$ (epsilon) is traditionally used because it stands for <em>error</em>. Think of $\epsilon$ as the challenge tolerance. The universal quantifier ($\forall$) means this test must hold for <em>any</em> positive tolerance anyone could ever name—whether they challenge you with $\epsilon = 1$, $\epsilon = 0.001$, or $\epsilon = 10^{-100}$. You cannot negotiate a larger error margin; you must be prepared to satisfy any tolerance, no matter how microscopically tight.
+                </li>
+                <li style="margin-bottom: 0.85rem;">
+                    <strong>$\exists N \in \mathbb{N}$ ("There exists a natural number cutoff $N$"):</strong><br>
+                    This is your response to the challenge. In response to the given $\epsilon$, you identify a specific milestone index $N$. Crucially, you get to inspect $\epsilon$ <em>first</em> before you choose $N$. If the skeptic gives you a loose tolerance ($\epsilon = 0.5$), you might only need $N = 2$. If they challenge you with an extremely tight tolerance ($\epsilon = 0.0001$), you will have to walk much further down the sequence to find a larger $N$.
+                </li>
+                <li style="margin-bottom: 0.85rem;">
+                    <strong>$\forall n > N$ ("For all indices $n$ strictly past the cutoff"):</strong><br>
+                    This defines the <em>infinite tail</em> of the sequence. Real analysis teaches us a liberating truth: <strong>initial terms do not matter</strong>. The first ten, hundred, or million terms of a sequence can jump around chaotically, take excursions into negative numbers, or violate the tolerance. What matters is that past your chosen milestone $N$, every single subsequent term settles down.
+                </li>
+                <li>
+                    <strong>$\implies |a_n - L| < \epsilon$ ("The terms remain permanently trapped"):</strong><br>
+                    Once you pass milestone $N$, every term $a_n$ is within distance $\epsilon$ of $L$. It is not enough for one term to enter the window and bounce back out. Once $n > N$, <em>no term is ever allowed to leave the target corridor again</em>.
+                </li>
+            </ul>
+
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">The Mental Model: The Two-Player Archery Game</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                If you ever feel lost in the algebraic symbols, picture this scenario as a friendly game of archery between two people:
+            </p>
+            <div style="display: flex; gap: 2rem; align-items: center; margin: 1.5rem 0; flex-wrap: wrap;">
+                <div style="flex: 0 0 280px; margin: 0 auto;">
+                    <svg viewBox="0 0 260 160" style="width: 100%; height: auto; display: block;">
+                        <circle cx="130" cy="80" r="68" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="2.5"/>
+                        <circle cx="130" cy="80" r="48" fill="#fef3c7" stroke="#f59e0b" stroke-width="2.5"/>
+                        <text x="130" y="47" font-family="sans-serif" font-size="10" font-weight="bold" fill="#78350f" text-anchor="middle">&plusmn;&epsilon; Tolerance</text>
+                        <circle cx="130" cy="80" r="22" fill="#fee2e2" stroke="#ef4444" stroke-width="2.5"/>
+                        <circle cx="130" cy="80" r="7" fill="#ef4444"/>
+                        <text x="130" y="84" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">L</text>
+                        <line x1="35" y1="22" x2="123" y2="74" stroke="#0f172a" stroke-width="3.5" stroke-linecap="round"/>
+                        <polygon points="123,74 111,68 116,61" fill="#0f172a"/>
+                        <line x1="35" y1="22" x2="25" y2="16" stroke="#b45309" stroke-width="2.5"/>
+                        <line x1="41" y1="28" x2="31" y2="22" stroke="#b45309" stroke-width="2.5"/>
+                    </svg>
                 </div>
-                <div class="notation-grid">
-                    <div class="notation-item"><span class="notation-sym">$\forall$</span><span class="notation-desc">Universal quantifier: "for all" or "for every"</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\exists$</span><span class="notation-desc">Existential quantifier: "there exists"</span></div>
-                    <div class="notation-item"><span class="notation-sym">$(a_n)$</span><span class="notation-desc">Sequence: an ordered list $(a_1, a_2, a_3, \dots)$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\lim_{n\to\infty} a_n = L$</span><span class="notation-desc">The sequence $a_n$ converges to limit $L$</span></div>
-                    <div class="notation-item"><span class="notation-sym">$\epsilon > 0$</span><span class="notation-desc">Arbitrary positive distance tolerance</span></div>
-                    <div class="notation-item"><span class="notation-sym">$N \in \mathbb{N}$</span><span class="notation-desc">Cutoff index past which $|a_n - L| < \epsilon$</span></div>
+                <div style="flex: 1; min-width: 280px;">
+                    <ol style="margin: 0; padding-left: 1.25rem; color: #334155; line-height: 1.7; font-size: 0.98rem;">
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>Player 1 (The Skeptic) sets the target:</strong> They paint a target ring of radius $\epsilon$ around the bullseye $L$. They can make this ring as impossibly tiny as they want.
+                        </li>
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>Player 2 (You, the Defender) finds the cutoff:</strong> You inspect their ring and announce a milestone index $N$.
+                        </li>
+                        <li>
+                            <strong>The Test:</strong> Every arrow shot after turn $N$ (that is, $a_{N+1}, a_{N+2}, a_{N+3}, \dots$) must land securely inside the target ring.
+                        </li>
+                    </ol>
+                    <p style="margin: 0.75rem 0 0 0; color: #334155; font-size: 0.95rem;">
+                        If you have a reliable rule to produce a valid $N$ for <em>any</em> positive $\epsilon$ the skeptic throws at you, you win the game—and the sequence converges to $L$!
+                    </p>
                 </div>
             </div>
 
-            <p>Saying a sequence converges to $L$ means that if you look far enough down the list, every subsequent term gets arbitrarily close to $L$ and stays there forever.</p>
-
-            <div class="definition-box">
-                <p><strong>Formal Definition of Convergence:</strong> A sequence $(a_n)_{n=0}^\infty$ converges to a real limit $L \in \mathbb{R}$, written $\lim_{n\to\infty} a_n = L$ or $a_n \to L$, if:</p>
-                <p style="text-align: center; margin: 0.75rem 0;">$$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad n > N \implies |a_n - L| < \epsilon$$</p>
-            </div>
-
-            <!-- ARCHERY BREAKDOWN -->
-            <div class="aside-box" style="margin-top: 1.5rem;">
-                <h4>💡 The Archery Game Analogy</h4>
-                <div style="margin-top: 0.75rem; display: flex; align-items: center; gap: 2rem; flex-wrap: nowrap;">
-                    <div style="flex: 0 0 290px; background: #ffffff; border: 1px solid #fde68a; border-radius: 8px; padding: 1.25rem; box-sizing: border-box; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
-                        <svg viewBox="0 0 260 160" style="width: 100%; height: auto; display: block;">
-                            <circle cx="130" cy="80" r="68" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="2.5"/>
-                            <circle cx="130" cy="80" r="48" fill="#fef3c7" stroke="#f59e0b" stroke-width="2.5"/>
-                            <text x="130" y="47" font-family="sans-serif" font-size="10" font-weight="bold" fill="#78350f" text-anchor="middle">&plusmn;&epsilon; Tolerance</text>
-                            <circle cx="130" cy="80" r="22" fill="#fee2e2" stroke="#ef4444" stroke-width="2.5"/>
-                            <circle cx="130" cy="80" r="7" fill="#ef4444"/>
-                            <text x="130" y="84" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">L</text>
-                            <line x1="35" y1="22" x2="123" y2="74" stroke="#0f172a" stroke-width="3.5" stroke-linecap="round"/>
-                            <polygon points="123,74 111,68 116,61" fill="#0f172a"/>
-                            <line x1="35" y1="22" x2="25" y2="16" stroke="#b45309" stroke-width="2.5"/>
-                            <line x1="41" y1="28" x2="31" y2="22" stroke="#b45309" stroke-width="2.5"/>
-                        </svg>
-                    </div>
-                    <div style="flex: 1; min-width: 0;">
-                        <p style="margin-top: 0;">Think of the definition as a game between two players:</p>
-                        <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
-                            <li style="margin-bottom: 0.4rem;"><strong>1. The Challenger sets tolerance ($\epsilon$):</strong> Your opponent hands you a tiny positive distance $\epsilon$, drawing a narrow target band around $L$.</li>
-                            <li style="margin-bottom: 0.4rem;"><strong>2. You find a cutoff step ($N$):</strong> You determine how far down the list to walk—past index $N$—so everything settles inside the band.</li>
-                            <li style="margin-bottom: 0.4rem;"><strong>3. The Tail Test ($\vert{}a_n - L\vert{} < \epsilon$):</strong> The absolute distance between $a_n$ and $L$ stays strictly smaller than $\epsilon$ for <em>every step</em> past $N$.</li>
-                        </ol>
-                        <p style="margin-top: 0.5rem; margin-bottom: 0;">If you can respond with a valid $N$ no matter how tiny your opponent makes $\epsilon$, the sequence converges to $L$!</p>
-                    </div>
-                </div>
-            </div>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-top: 1.5rem;">
+                Use the interactive tool below to step through each clause of this definition in order. Notice how the internal telemetry updates, the visual diagram highlights the active region, and the mechanical and logical explanations synchronize with each step:
+            </p>
 
             <!-- CLAUSE STEPPER -->
             <div class="stepper-walkthrough" id="definition-walkthrough">
@@ -462,9 +519,9 @@ HTML_CONTENT = r"""<!DOCTYPE html>
             <h2 id="section-theorems">5. Algebraic Limit Laws and Proofs (Theorem 1)</h2>
             <p>Evaluating limits directly with $\epsilon\text{-}N$ proofs for every function is tedious. The Algebraic Limit Laws allow us to compute limits compositionally.</p>
 
-            <div class="infobox">
-                <h4>📐 Algebraic Limit Laws (Theorem 1)</h4>
-                <div class="infobox-intro">
+            <div class="infobox" style="background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.25rem 0 1.75rem 0;">
+                <h4 style="margin: 0 0 0.85rem 0; color: #0f172a; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem;">📐 Algebraic Limit Laws (Theorem 1)</h4>
+                <div style="font-size: 0.93rem; color: #475569; line-height: 1.6; margin: 0 0 1.25rem 0; padding-bottom: 0.85rem; border-bottom: 1px solid #e2e8f0;">
                     Suppose $\lim_{n\to\infty} a_n = K$ and $\lim_{n\to\infty} b_n = L$, and let $c \in \mathbb{R}$ be a constant. Then:
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.95rem;">
