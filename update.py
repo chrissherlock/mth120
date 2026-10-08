@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """
-Update week2-lecture4.html with mobile viewport optimizations, unboxed detailed
-sections 1, 2, 4, 5, and 6, and complete interactive engine. Stage both target
-file and this script, commit, and push to remote.
+Update week2-lecture4.html with Uniqueness, Tail Invariance, and Order Limit theorems,
+stage both the HTML file and this script, commit, and push to the remote repo.
 """
 
 from pathlib import Path
@@ -12,11 +11,14 @@ import sys
 TARGET_FILE = Path("week2-lecture4.html")
 SCRIPT_FILE = Path(__file__).resolve()
 
-COMMIT_SUBJECT = "Optimize Lecture 4 layout and SVGs for mobile viewports"
+COMMIT_SUBJECT = (
+    "Add Uniqueness, Tail Invariance, and Order Theorems to Lecture 4"
+)
 COMMIT_BODY = (
-    "Add mobile CSS rules to week2-lecture4.html to reclaim horizontal space\n"
-    "in canvas containers, optimize telemetry grid columns, and scale SVG text\n"
-    "for improved legibility on smaller mobile screens."
+    "Expand week2-lecture4.html with detailed, unboxed proofs for foundational\n"
+    "sequence theorems. Include the Uniqueness of Limits proof using the epsilon-half\n"
+    "strategy, the Tail Invariance shift theorem, and the Order Limit Theorem\n"
+    "highlighting inequality preservation and strict limit convergence traps."
 )
 
 HTML_CONTENT = r"""<!DOCTYPE html>
@@ -229,7 +231,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
                     <li><a href="#section-epsilon-n">1. Formal $\epsilon\text{-}N$ Convergence</a></li>
                     <li><a href="#section-quantifiers">2. Quantifier Order, Scope, and Dependencies</a></li>
                     <li><a href="#section-interactive-widget">3. Interactive Epsilon Challenge Simulator</a></li>
-                    <li><a href="#section-prop5">4. Properties of Convergent Sequences (Proposition 5)</a></li>
+                    <li><a href="#section-prop5">4. Properties of Convergent Sequences (Proposition 5) &amp; Foundational Theorems</a></li>
                     <li><a href="#section-theorems">5. Algebraic Limit Laws and Proofs (Theorem 1)</a></li>
                     <li><a href="#section-divergence-test">6. Proving Non-Existence of Limits</a></li>
                 </ul>
@@ -558,105 +560,72 @@ HTML_CONTENT = r"""<!DOCTYPE html>
             </div>
 
             <!-- SECTION 4: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->
-            <h2 id="section-prop5">4. Properties of Convergent Sequences (Proposition 5)</h2>
+            <h2 id="section-prop5">4. Properties of Convergent Sequences (Proposition 5) &amp; Foundational Theorems</h2>
 
             <h3 style="color: #0f172a; margin-top: 1.5rem;">Structural Guarantees: The Free Gifts of Convergence</h3>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Writing an $\epsilon\text{-}N$ proof from scratch every time you encounter a new sequence would be exhausting. Mathematicians don't rebuild every argument from raw definitions; instead, they prove <strong>structural theorems</strong>. These are universal guarantees: once you know a sequence converges, you automatically inherit three powerful properties for free, without ever needing to guess a cutoff index again.
+                Writing an $\epsilon\text{-}N$ proof from scratch every time you encounter a new sequence would be exhausting. Mathematicians don't rebuild every argument from raw definitions; instead, they prove <strong>structural theorems</strong>. These are universal guarantees: once you know a sequence converges, you automatically inherit powerful properties for free, without ever needing to guess a cutoff index again.
             </p>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                In the course curriculum, these three guarantees are collected together in <strong>Proposition 5</strong>. Let's explore each one carefully, unpack the intuition behind why it must be true, and see how mathematicians construct their proofs.
+                In this section, we explore Proposition 5 along with three foundational theorems that solidify the logical architecture of limits: Uniqueness, Tail Invariance, and the Order Limit Theorem.
             </p>
 
-            <h3 style="color: #0f172a; margin-top: 1.75rem;">Property 1: Absolute Value Stabilization ($a_n \to L \implies \vert{}a_n\vert{} \to \vert{}L\vert{}$)</h3>
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">Theorem: Uniqueness of Limits</h3>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                The first property says that if a sequence of numbers settles down to a limit $L$, then taking the absolute values of those numbers causes them to settle down to $|L|$.
+                Before writing $\lim a_n = L$, we must guarantee that a sequence cannot have two different limits. If a sequence settles down, its destination is uniquely determined.
             </p>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>Why does this make intuitive sense?</strong> Remember our geometric picture: absolute value measures distance from the origin $0$. If the points $a_n$ are crowding closer and closer to $L$, their distance from zero must naturally crowd closer and closer to $L$'s distance from zero.
+                <strong>The Theorem:</strong> If a sequence $(a_n)$ converges to $L$ and also converges to $M$, then $L = M$.
             </p>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>The Rigorous Proof:</strong> The proof relies on a handy tool known as the <em>Reverse Triangle Inequality</em>, which states that for any real numbers $x$ and $y$:
+                <strong>The Proof Strategy (The $\epsilon/2$ Technique):</strong><br>
+                Let $\epsilon > 0$ be given. Because $a_n \to L$, there is a cutoff $N_1$ where $|a_n - L| < \epsilon/2$. Because $a_n \to M$, there is a cutoff $N_2$ where $|a_n - M| < \epsilon/2$. Let $N = \max(N_1, N_2)$. For any index $n > N$, both inequalities hold. Using the triangle inequality on the fixed distance $|L - M|$:
             </p>
             <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$\big| |x| - |y| \big| \le |x - y|$$
+                $$\begin{aligned}
+                |L - M| &= |(L - a_n) + (a_n - M)| \\
+                &\le |a_n - L| + |a_n - M| \\
+                &< \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon
+                \end{aligned}$$
             </p>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Notice what this inequality tells us: the distance between $|a_n|$ and $|L|$ is <em>always smaller than or equal to</em> the distance between $a_n$ and $L$. Therefore, whenever we choose an index $N$ such that $|a_n - L| < \epsilon$, we automatically get:
+                We have shown that the non-negative real number $|L - M|$ is strictly smaller than *every* positive number $\epsilon$. The only number with that property is zero. Thus, $|L - M| = 0$, which means $L = M$. $\blacksquare$
             </p>
-            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$\big| |a_n| - |L| \big| \le |a_n - L| < \epsilon$$
+
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">Theorem: Tail Invariance (Shift Theorem)</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Real analysis teaches us a liberating truth: <strong>initial terms do not matter</strong> for convergence.
             </p>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                The exact same cutoff index $N$ that worked for $a_n$ works immediately for $|a_n|$!
+                <strong>The Theorem:</strong> Let $(a_n)$ and $(b_n)$ be sequences. If there exists an index $N_0 \in \mathbb{N}$ such that $a_n = b_n$ for all $n > N_0$, then either both converge to the exact same limit or both diverge.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                <strong>Why it matters:</strong> Shifting indices, dropping the first hundred terms, or altering the starting values of a sequence has zero impact on its long-term asymptotic destination.
+            </p>
+
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">Theorem: Order Limit Theorem (Inequality Preservation)</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                If two sequences are ordered relative to each other, their limits preserve that order.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                <strong>The Theorem:</strong> If $a_n \le b_n$ for all $n$ past some index, and both $\lim a_n = K$ and $\lim b_n = L$ exist, then $K \le L$.
             </p>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem; background: #fffbeb; border-left: 4px solid var(--accent); padding: 0.85rem 1.15rem; border-radius: 4px;">
-                ⚠️ <strong>A Classic Beginner Trap (The Converse Fails!):</strong> Does $|a_n| \to |L|$ imply that $a_n \to L$? <em>No!</em> Consider the sequence $a_n = (-1)^n = (-1, 1, -1, 1, \dots)$. Taking absolute values gives $|a_n| = 1$, which obviously converges to $1$. But the sequence $a_n$ itself never converges because it permanently oscillates. The only exception where the converse works is when the limit is zero: $|a_n| \to 0 \iff a_n \to 0$.
+                ⚠️ <strong>Crucial Caveat (Strict Inequalities Become Non-Strict):</strong> Even if strict inequality holds for every single term ($a_n < b_n$), the limit is only guaranteed to be non-strict ($K \le L$). For example, let $a_n = 0$ and $b_n = 1/n$. Every term satisfies $0 < 1/n$, yet both converge to the same limit $0$ (so $0 \le 0$).
             </p>
 
-            <h3 style="color: #0f172a; margin-top: 1.75rem;">Property 2: Convergence Implies Boundedness (The Prefix vs. Tail Strategy)</h3>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                The second property is one of the most celebrated cornerstones of analysis:
-            </p>
-            <p style="text-align: center; margin: 1rem 0; font-size: 1.15rem; font-weight: 600; color: #0f172a;">
-                Every convergent sequence is bounded.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                That is, there exists some positive real number $M > 0$ such that $|a_n| \le M$ for every single index $n \in \mathbb{N}$. In other words, a sequence that converges can never run off to $+\infty$ or $-\infty$.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>The Conceptual Dilemma:</strong> An infinite sequence has infinitely many terms. How could we possibly build a single finite fence $[-M, M]$ that holds infinitely many numbers, especially when earlier terms might have jumped around wildly?
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>The Proof Strategy (Divide and Conquer):</strong> Mathematicians solve this using a beautiful two-step technique: we split the sequence into a <em>finite prefix</em> and an <em>infinite tail</em>.
-            </p>
-            <ol style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">Proposition 5: Fundamental Sequence Properties</h3>
+            <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
                 <li style="margin-bottom: 0.75rem;">
-                    <strong>Trapping the Infinite Tail:</strong> Because $a_n \to L$, we can choose <em>any</em> tolerance we like. Let's make our lives easy and simply pick $\epsilon = 1$. By the definition of convergence, there exists some cutoff index $N$ such that:
-                    $$n > N \implies |a_n - L| < 1$$
-                    Applying the triangle inequality gives $|a_n| = |(a_n - L) + L| \le |a_n - L| + |L| < 1 + |L|$. Look at what we've accomplished: <em>all infinitely many terms past index $N$ are trapped below the number $|L| + 1$!</em>
+                    <strong>1. Absolute Values:</strong> If $a_n \to L$, then $|a_n| \to |L|$ (proven via the Reverse Triangle Inequality $\big| |a_n| - |L| \big| \le |a_n - L|$).
                 </li>
                 <li style="margin-bottom: 0.75rem;">
-                    <strong>Checking the Finite Prefix:</strong> What about the terms before the cutoff: $\{a_0, a_1, a_2, \dots, a_N\}$? There are only finitely many of them! Any finite list of real numbers has a guaranteed largest absolute value.
+                    <strong>2. Boundedness:</strong> Every convergent sequence is bounded (proven by splitting the sequence into a finite prefix and an infinite tail trapped with $\epsilon = 1$).
                 </li>
                 <li>
-                    <strong>Building the Global Fence ($M$):</strong> We simply take the maximum over the finite prefix and our tail bound:
-                    $$M = \max\Big(|a_0|, |a_1|, |a_2|, \dots, |a_N|, |L| + 1\Big)$$
-                    Because every term in the prefix is $\le M$ by definition of a maximum, and every term in the tail is $< |L| + 1 \le M$, the number $M$ bounds the entire infinite sequence. $\blacksquare$
+                    <strong>3. Preservation of Sign:</strong> If $L > 0$, then eventually $a_n > L/2 > 0$, building an impenetrable moat around zero to safeguard future quotient operations.
                 </li>
-            </ol>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>Does the converse hold?</strong> Again, ask yourself: if a sequence is bounded, does it have to converge? No! Boundedness is a <em>necessary</em> condition for convergence, but not a <em>sufficient</em> one. The sequence $a_n = (-1)^n$ is safely trapped inside $[-1, 1]$, yet it never converges.
-            </p>
-
-            <h3 style="color: #0f172a; margin-top: 1.75rem;">Property 3: Preservation of Sign (The Buffer Zone)</h3>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                The third property provides peace of mind when working with signs:
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                If a sequence converges to a strictly positive limit ($L > 0$), then eventually all of its terms must become strictly positive and stay bounded away from zero. Specifically, there is an index $N_0$ such that:
-            </p>
-            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$a_n > \frac{L}{2} > 0 \quad \text{for all } n > N_0$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                (Likewise, if $L < 0$, then eventually $a_n < \frac{L}{2} < 0$).
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>Why do we care so much about this?</strong> Think ahead to the Algebraic Limit Laws in the next section. When we want to prove that $\lim \frac{a_n}{b_n} = \frac{K}{L}$, we need to divide by $b_n$. But you cannot divide by zero! Even worse, if the numbers $b_n$ got closer and closer to zero, $1/b_n$ would explode to infinity. The preservation of sign property guarantees that if $L \neq 0$, the terms $b_n$ eventually build an impenetrable moat of width $L/2$ between themselves and zero.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>The Geometric Proof:</strong> If $L > 0$, the distance from $L$ to zero is exactly $L$. Since we can choose any positive $\epsilon$ in the definition of convergence, let's deliberately choose a tolerance that doesn't reach zero: set $\epsilon = \frac{L}{2}$.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                By the definition of convergence, there is an index $N_0$ such that for all $n > N_0$, we have $|a_n - L| < \frac{L}{2}$. Unpacking the absolute value bars:
-            </p>
-            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$-\frac{L}{2} < a_n - L < \frac{L}{2} \implies L - \frac{L}{2} < a_n < L + \frac{L}{2} \implies \frac{L}{2} < a_n < \frac{3L}{2}$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Look at the left-hand inequality: $a_n > \frac{L}{2}$. Because $L > 0$, $\frac{L}{2}$ is strictly positive. Every term in the tail is trapped above $\frac{L}{2}$ forever, completely insulated from zero!
-            </p>
+            </ul>
 
             <!-- SECTION 5: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->
             <h2 id="section-theorems">5. Algebraic Limit Laws and Proofs (Theorem 1)</h2>
