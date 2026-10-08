@@ -617,48 +617,204 @@
                 Look at the left-hand inequality: $a_n > \frac{L}{2}$. Because $L > 0$, $\frac{L}{2}$ is strictly positive. Every term in the tail is trapped above $\frac{L}{2}$ forever, completely insulated from zero!
             </p>
 
-            <!-- SECTION 5 -->
+            <!-- SECTION 5: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->
             <h2 id="section-theorems">5. Algebraic Limit Laws and Proofs (Theorem 1)</h2>
-            <p>Evaluating limits directly with $\epsilon\text{-}N$ proofs for every function is tedious. The Algebraic Limit Laws allow us to compute limits compositionally.</p>
 
-            <div class="infobox" style="background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.25rem 0 1.75rem 0;">
-                <h4 style="margin: 0 0 0.85rem 0; color: #0f172a; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem;">📐 Algebraic Limit Laws (Theorem 1)</h4>
-                <div style="font-size: 0.93rem; color: #475569; line-height: 1.6; margin: 0 0 1.25rem 0; padding-bottom: 0.85rem; border-bottom: 1px solid #e2e8f0;">
-                    Suppose $\lim_{n\to\infty} a_n = K$ and $\lim_{n\to\infty} b_n = L$, and let $c \in \mathbb{R}$ be a constant. Then:
-                </div>
-                <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.95rem;">
-                    <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">
-                        <strong>1. Constant Rule:</strong> <span>$\lim_{n\to\infty} c = c$</span>
-                    </div>
-                    <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">
-                        <strong>2. Scalar Multiple:</strong> <span>$\lim_{n\to\infty} (c \cdot a_n) = c \cdot K$</span>
-                    </div>
-                    <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">
-                        <strong>3. Sum / Difference:</strong> <span>$\lim_{n\to\infty} (a_n \pm b_n) = K \pm L$</span>
-                    </div>
-                    <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">
-                        <strong>4. Product Rule:</strong> <span>$\lim_{n\to\infty} (a_n \cdot b_n) = K \cdot L$</span>
-                    </div>
-                    <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">
-                        <strong>5. Quotient Rule:</strong> <span>$\lim_{n\to\infty} \left(\frac{a_n}{b_n}\right) = \frac{K}{L}$, provided $L \neq 0$ and $b_n \neq 0$</span>
-                    </div>
-                    <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1rem;">
-                        <strong>6. Power Rule:</strong> <span>$\lim_{n\to\infty} (a_n)^p = K^p$</span>
-                    </div>
-                </div>
-            </div>
+            <h3 style="color: #0f172a; margin-top: 1.5rem;">The Architecture of Compositionality</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Take a moment to appreciate where we are in our journey. In Section 1 and Section 3, we learned how to prove limits from first principles using the $\epsilon\text{-}N$ definition. While that fundamental machinery gives pure mathematics its rock-solid rigor, using it directly on every single function would be painfully slow.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Consider an expression like $\lim_{n\to\infty} \frac{5n^3 - 2n + 7}{3n^3 + 4}$. Writing a raw $\epsilon\text{-}N$ scratchpad proof for that rational expression would involve taming messy cubic polynomials and estimating complex cross-terms.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                This is where mathematical maturity steps in. Analysis doesn't ask us to suffer through tedious algebra for every problem. Instead, we establish <strong>Theorem 1: The Algebraic Limit Laws</strong>. This theorem proves that limits respect all standard arithmetic operations: addition, subtraction, multiplication, scalar scaling, division, and integer powers. Once we prove these laws once and for all, we can calculate complicated limits compositionally—simply by breaking them down into familiar building blocks like $\lim 1/n = 0$ and $\lim c = c$.
+            </p>
 
-            <div class="worked-example-box">
-                <h4>🎯 Rigorous Proof of the Sum Law</h4>
-                <p>We prove that $\lim (a_n + b_n) = K + L$. Let $\epsilon > 0$.</p>
-                <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
-                    <li>Since $a_n \to K$, $\exists N_1$ such that $n > N_1 \implies |a_n - K| < \frac{\epsilon}{2}$.</li>
-                    <li>Since $b_n \to L$, $\exists N_2$ such that $n > N_2 \implies |b_n - L| < \frac{\epsilon}{2}$.</li>
-                    <li>Let $N = \max(N_1, N_2)$. For any $n > N$, applying the Triangle Inequality yields:
-                        $$|(a_n + b_n) - (K + L)| = |(a_n - K) + (b_n - L)| \le |a_n - K| + |b_n - L| < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon$$
-                    </li>
-                </ol>
-            </div>
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">Theorem 1: The Algebraic Limit Laws</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Suppose $(a_n)$ and $(b_n)$ are convergent sequences with limits $K, L \in \mathbb{R}$:
+            </p>
+            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
+                $$\lim_{n\to\infty} a_n = K \quad \text{and} \quad \lim_{n\to\infty} b_n = L$$
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Let $c \in \mathbb{R}$ be any fixed constant. Then the following algebraic rules hold:
+            </p>
+            <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>1. The Constant Rule:</strong> $\lim_{n\to\infty} c = c$<br>
+                    A sequence that never changes remains permanently at its starting value.
+                </li>
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>2. The Scalar Multiple Rule:</strong> $\lim_{n\to\infty} (c \cdot a_n) = c \cdot K$<br>
+                    Constants pull cleanly out of the limit operator.
+                </li>
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>3. The Sum and Difference Rule:</strong> $\lim_{n\to\infty} (a_n \pm b_n) = K \pm L$<br>
+                    The limit of a sum is the sum of the individual limits.
+                </li>
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>4. The Product Rule:</strong> $\lim_{n\to\infty} (a_n \cdot b_n) = K \cdot L$<br>
+                    The limit of a product is the product of the individual limits.
+                </li>
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>5. The Quotient Rule:</strong> $\lim_{n\to\infty} \left(\frac{a_n}{b_n}\right) = \frac{K}{L}$<br>
+                    Provided that $L \neq 0$ and $b_n \neq 0$ for all $n$.
+                </li>
+                <li>
+                    <strong>6. The Power Rule:</strong> $\lim_{n\to\infty} (a_n)^p = K^p$ for any integer exponent $p \in \mathbb{N}$.
+                </li>
+            </ul>
+
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">The "$\epsilon/2$ Trick" and the Sum Law Proof</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Let's study the proof of the Sum Law ($\lim (a_n + b_n) = K + L$). This is the very first time an analysis student encounters the famous <strong>$\epsilon/2$ strategy</strong>—an elegant technique that you will use constantly throughout your mathematics degree.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                <strong>The Mental Model (The Shared Error Budget):</strong><br>
+                A challenger hands you an overall target error $\epsilon > 0$. You want to ensure that:
+            </p>
+            <p style="text-align: center; margin: 1rem 0; font-size: 1.15rem;">
+                $$|(a_n + b_n) - (K + L)| < \epsilon$$
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Notice that you are dealing with two separate moving parts: $a_n$ is wobbling around $K$, and $b_n$ is wobbling around $L$. If both sequences are permitted to wobble by almost $\epsilon$, their combined sum could drift by nearly $2\epsilon$, failing the skeptic's test!
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                The solution is simple: <strong>split the error budget in half</strong>. We demand that $a_n$ stay within $\epsilon/2$ of $K$, and $b_n$ stay within $\epsilon/2$ of $L$. When we add them together:
+            </p>
+            <p style="text-align: center; margin: 1rem 0; font-size: 1.15rem;">
+                $$\frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon$$
+            </p>
+
+            <h4 style="color: #0f172a; margin-top: 1.5rem;">The Synchronization Problem: Why We Take $N = \max(N_1, N_2)$</h4>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Here is a subtle hurdle that every beginner wonders about:
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Because $a_n \to K$, we can find a cutoff $N_1$ so that $|a_n - K| < \epsilon/2$ for all $n > N_1$. Separately, because $b_n \to L$, we can find a cutoff $N_2$ so that $|b_n - L| < \epsilon/2$ for all $n > N_2$.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                What if $N_1 = 10$, but $N_2 = 500$? At step $n = 50$, sequence $a_n$ has settled down nicely, but sequence $b_n$ is still wandering around wildly!
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                To solve this, we define a master cutoff:
+            </p>
+            <p style="text-align: center; margin: 1rem 0; font-size: 1.15rem;">
+                $$N = \max(N_1, N_2)$$
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                For any index $n$ strictly past $N$, we are guaranteed that $n > N_1$ <em>and</em> $n > N_2$ simultaneously. Both sequences are synchronized and locked inside their respective $\epsilon/2$ cages!
+            </p>
+
+            <h4 style="color: #0f172a; margin-top: 1.5rem;">The Formal Proof of the Sum Law</h4>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Now we assemble the complete deductive argument:
+            </p>
+            <ol style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.6rem;">
+                    Let $\epsilon > 0$ be arbitrary. Then $\frac{\epsilon}{2} > 0$.
+                </li>
+                <li style="margin-bottom: 0.6rem;">
+                    Since $\lim a_n = K$, there exists $N_1 \in \mathbb{N}$ such that $n > N_1 \implies |a_n - K| < \frac{\epsilon}{2}$.
+                </li>
+                <li style="margin-bottom: 0.6rem;">
+                    Since $\lim b_n = L$, there exists $N_2 \in \mathbb{N}$ such that $n > N_2 \implies |b_n - L| < \frac{\epsilon}{2}$.
+                </li>
+                <li style="margin-bottom: 0.6rem;">
+                    Set $N = \max(N_1, N_2)$. For any index $n > N$, both inequalities hold at the same time.
+                </li>
+                <li>
+                    We now measure the total distance between $(a_n + b_n)$ and $(K + L)$. Regrouping terms and applying the Triangle Inequality yields:
+                    $$\begin{aligned}
+                    |(a_n + b_n) - (K + L)| &= |(a_n - K) + (b_n - L)| \\
+                    &\le |a_n - K| + |b_n - L| \\
+                    &< \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon. \quad \blacksquare
+                    \end{aligned}$$
+                </li>
+            </ol>
+
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">The "Add-and-Subtract Bridge": Proving the Product Law</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Why is the Product Law ($\lim (a_n \cdot b_n) = K \cdot L$) trickier than the Sum Law?
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                When we look at the difference $|a_n b_n - K L|$, the terms do not naturally group into $(a_n - K)$ and $(b_n - L)$. If you try to expand $(a_n - K)(b_n - L)$, you get $a_n b_n - a_n L - b_n K + K L$, which has unwanted middle terms.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                To bridge this gap, analysis uses one of its most famous creative maneuvers: <strong>we add zero in the form of $+a_n L - a_n L$</strong>.
+            </p>
+            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
+                $$\begin{aligned}
+                a_n b_n - K L &= a_n b_n \mathbf{- a_n L + a_n L} - K L \\
+                &= a_n (b_n - L) + L (a_n - K)
+                \end{aligned}$$
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Applying the triangle inequality to this bridged expression gives:
+            </p>
+            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
+                $$|a_n b_n - K L| \le |a_n| |b_n - L| + |L| |a_n - K|$$
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Now observe the brilliance of this decomposition:
+            </p>
+            <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.6rem;">
+                    $|b_n - L|$ can be made arbitrarily tiny because $b_n \to L$.
+                </li>
+                <li style="margin-bottom: 0.6rem;">
+                    $|a_n - K|$ can be made arbitrarily tiny because $a_n \to K$.
+                </li>
+                <li>
+                    $|L|$ is just a fixed constant number.
+                </li>
+            </ul>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                <strong>Where Boundedness Saves the Day:</strong> What about that lone factor of $|a_n|$? It is not a fixed constant—it changes with every step $n$! If $a_n$ could grow without bound, it could multiply $|b_n - L|$ by huge numbers and ruin our proof.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                But remember <strong>Proposition 5 from Section 4</strong>! We proved that every convergent sequence is bounded: there is a constant $M > 0$ such that $|a_n| \le M$ for all $n$. Therefore:
+            </p>
+            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
+                $$|a_n b_n - K L| \le M |b_n - L| + |L| |a_n - K|$$
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                By demanding that $|b_n - L| < \frac{\epsilon}{2M}$ and $|a_n - K| < \frac{\epsilon}{2(|L| + 1)}$, both pieces stay under $\epsilon/2$, and their sum stays strictly less than $\epsilon$. The Product Law is proven!
+            </p>
+
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">Guarding the Denominator: The Quotient Law</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Finally, we consider the Quotient Law: $\lim \left(\frac{a_n}{b_n}\right) = \frac{K}{L}$.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Because $\frac{a_n}{b_n} = a_n \cdot \frac{1}{b_n}$, we can combine the Product Law with a simpler rule: proving that $\lim \frac{1}{b_n} = \frac{1}{L}$ whenever $L \neq 0$.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Investigating the distance:
+            </p>
+            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
+                $$\left|\frac{1}{b_n} - \frac{1}{L}\right| = \left|\frac{L - b_n}{b_n L}\right| = \frac{|b_n - L|}{|b_n| |L|}$$
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Notice the danger lurking in the denominator: $|b_n|$. If terms $b_n$ were allowed to flirt with zero, the fraction $\frac{1}{|b_n|}$ would blow up to infinity!
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Here again, Section 4 comes to our rescue. By the <strong>Preservation of Sign property</strong>, because $L \neq 0$, there exists an index $N_0$ past which $|b_n| > \frac{|L|}{2}$. Inverting this inequality flips the direction:
+            </p>
+            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
+                $$\frac{1}{|b_n|} < \frac{2}{|L|}$$
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                The dangerous denominator is now securely capped by a fixed constant! We substitute this bound into our expression:
+            </p>
+            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
+                $$\left|\frac{1}{b_n} - \frac{1}{L}\right| < \frac{2}{|L|^2} |b_n - L|$$
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Because $|b_n - L|$ can be made arbitrarily small, the entire distance collapses below $\epsilon$. The Algebraic Limit Laws form an airtight, beautiful system: each theorem rests securely on the foundational properties we established in the sections before it.
+            </p>
 
             <!-- SECTION 6 -->
             <h2 id="section-divergence-test">6. Proving Non-Existence of Limits</h2>
