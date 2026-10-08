@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-Update week2-lecture4.html with unboxed, deeply detailed Sections 1, 2, 4, 5, and 6,
-stage both the HTML file and this script, commit, and push to the remote repo.
+Update week2-lecture4.html with mobile viewport optimizations, unboxed detailed
+sections 1, 2, 4, 5, and 6, and complete interactive engine. Stage both target
+file and this script, commit, and push to remote.
 """
 
 from pathlib import Path
@@ -11,15 +12,11 @@ import sys
 TARGET_FILE = Path("week2-lecture4.html")
 SCRIPT_FILE = Path(__file__).resolve()
 
-COMMIT_SUBJECT = (
-    "Unbox and expand limit non-existence and negation in Lecture 4"
-)
+COMMIT_SUBJECT = "Optimize Lecture 4 layout and SVGs for mobile viewports"
 COMMIT_BODY = (
-    "Convert Section 6 of week2-lecture4.html from a boxed card into\n"
-    "flowing, detailed prose for beginning real analysis students.\n"
-    "Deconstruct quantifier negation step by step, explain the universal\n"
-    "scope over candidate limits, and detail the geometric separation\n"
-    "intuition behind the divergence proof for alternating sequences."
+    "Add mobile CSS rules to week2-lecture4.html to reclaim horizontal space\n"
+    "in canvas containers, optimize telemetry grid columns, and scale SVG text\n"
+    "for improved legibility on smaller mobile screens."
 )
 
 HTML_CONTENT = r"""<!DOCTYPE html>
@@ -145,7 +142,27 @@ HTML_CONTENT = r"""<!DOCTYPE html>
             .math-overflow-fix, div[style*="text-align: center"] { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             .analysis-panes { grid-template-columns: 1fr !important; }
             .controls-pane { flex-direction: column; }
-            .telemetry-grid { grid-template-columns: 1fr 1fr; }
+
+            /* Mobile canvas padding and SVG scaling optimizations */
+            .canvas-container,
+            .game-canvas-wrap {
+                padding: 0.75rem 0.5rem !important;
+            }
+            .telemetry-grid {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 0.5rem !important;
+                padding: 0.65rem 0.75rem !important;
+            }
+            .telemetry-badge {
+                font-size: 0.82rem !important;
+            }
+            .telemetry-label {
+                font-size: 0.65rem !important;
+            }
+            #fw-canvas text,
+            #game-plot text {
+                font-size: 13px !important;
+            }
         }
     </style>
 </head>
