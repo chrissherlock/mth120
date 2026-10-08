@@ -33,13 +33,6 @@
         h3 { color: #1e293b; margin-top: 1.75rem; font-family: var(--font-ui); scroll-margin-top: 2rem; }
         h4 { color: #334155; margin-top: 1.25rem; font-family: var(--font-ui); }
 
-        .scoping-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.5rem; margin: 1.75rem 0; }
-        .scoping-box h4 { margin-top: 0; color: #92400e; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; }
-        .scoping-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.92rem; }
-        .scoping-table th, .scoping-table td { border: 1px solid #fed7aa; padding: 0.6rem 0.85rem; text-align: left; }
-        .scoping-table th { background: #fef3c7; color: #92400e; font-weight: 600; }
-        .scoping-table td { background: #ffffff; color: #1e293b; }
-
         .widget-instructions { background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 2rem 0 1rem 0; }
         .widget-instructions h4 { margin: 0 0 0.65rem 0; color: #0f172a; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; }
         .widget-instructions ol { margin: 0.5rem 0 0.85rem 1.25rem; padding: 0; }
@@ -385,39 +378,93 @@
                 </div>
             </div>
 
-            <!-- SECTION 2 -->
+            <!-- SECTION 2: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->
             <h2 id="section-quantifiers">2. Quantifier Order, Scope, and Dependencies</h2>
-            <div class="scoping-box">
-                <h4>💡 Quantifier Order, Scope, and Dependency</h4>
-                <p>In formal analysis, statements often string together multiple quantifiers: $\forall \epsilon > 0 \quad \exists N \in \mathbb{N} \quad \forall n > N \dots$ To parse these without getting lost, think of them as <strong>nested scopes</strong> and <strong>sequential turns in a game</strong>.</p>
 
-                <div style="background: #ffffff; border: 1px solid #fed7aa; border-radius: 6px; padding: 1rem 1.25rem; margin-bottom: 1.25rem;">
-                    <h5 style="margin: 0 0 0.65rem 0; color: #92400e; font-size: 0.98rem;">⚙️ How Chained Quantifiers Actually Work</h5>
-                    <ol style="margin: 0 0 0 1.25rem; padding: 0; font-size: 0.92rem; line-height: 1.6; color: #1e293b;">
-                        <li style="margin-bottom: 0.5rem;"><strong>Left-to-Right Evaluation Order:</strong> Quantifiers execute strictly from left to right. Inner variables can react to and depend on outer variables.</li>
-                        <li style="margin-bottom: 0.5rem;"><strong>Lexical Scope &amp; Function Dependency:</strong> Because $N$ is nested inside $\forall \epsilon > 0$, $N$ is mathematically a function of $\epsilon$: $N = N(\epsilon)$.</li>
-                        <li><strong>The Commutativity Rule:</strong> Quantifiers of the same type commute ($\forall x \forall y \equiv \forall y \forall x$). However, <strong>alternating quantifiers ($\forall \exists$ vs $\exists \forall$) cannot be swapped</strong>!</li>
-                    </ol>
-                </div>
+            <h3 style="color: #0f172a; margin-top: 1.5rem;">The Grammar of Analysis: Why Order Matters</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                In everyday English, word order can be remarkably forgiving. You can say <em>"Everyone loves someone"</em> or <em>"There is someone whom everyone loves,"</em> and listeners usually piece together what you mean. But in formal mathematical analysis, the order of quantifiers is not stylistic—it is the entire logical backbone of the argument. Changing the order of two quantifiers doesn't tweak the sentence; it completely alters the reality being described.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                When you see a long chain of symbols like:
+            </p>
+            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.2rem;">
+                $$\forall \epsilon > 0 \quad \exists N \in \mathbb{N} \quad \forall n > N, \quad |a_n - L| < \epsilon$$
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                the golden rule is to <strong>read strictly from left to right</strong>. Each quantifier establishes a "turn" in a conversation or a nested scope in a computer program. A variable introduced further to the right is allowed to look back and depend on variables to its left, but variables to the left can never look ahead to what hasn't been chosen yet.
+            </p>
 
-                <table class="scoping-table">
-                    <thead>
-                        <tr><th>Variable</th><th>Scope</th><th>Dependency Rule</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><strong>$\epsilon$</strong></td><td>$\forall \epsilon > 0$</td><td>Outer scope. Chosen independently of everything that follows.</td></tr>
-                        <tr><td><strong>$N$</strong></td><td>$\exists N \in \mathbb{N}$</td><td>Inner to $\epsilon$. Chosen <em>after</em> inspecting $\epsilon$ ($N = N(\epsilon)$).</td></tr>
-                        <tr><td><strong>$n$</strong></td><td>$\forall n > N$</td><td>Inner to both $\epsilon$ and $N$. Runs over all indices strictly past cutoff $N$.</td></tr>
-                    </tbody>
-                </table>
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">Lexical Scope: The "Who Knows What" Rule</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                To see why $N$ depends on $\epsilon$, let's trace the visibility of information through the three variables:
+            </p>
+            <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.85rem;">
+                    <strong>The Outer Scope ($\forall \epsilon > 0$):</strong><br>
+                    $\epsilon$ is chosen first. Because it sits at the very outside of the statement, it is chosen in complete isolation. Whoever picks $\epsilon$ knows nothing about $N$ and doesn't care what $N$ will be. They can pick $\epsilon = 1$, $\epsilon = 0.05$, or $\epsilon = 10^{-12}$.
+                </li>
+                <li style="margin-bottom: 0.85rem;">
+                    <strong>The Inner Scope ($\exists N \in \mathbb{N}$):</strong><br>
+                    Now it is our turn to pick $N$. Because $\exists N$ is written <em>after</em> $\forall \epsilon$, $N$ is chosen with full knowledge of $\epsilon$. In other words, $N$ is mathematically a function of $\epsilon$: we write $N = N(\epsilon)$. If the challenger changes $\epsilon$ from $0.1$ to $0.001$, we are entirely free to change our choice of $N$ to a much larger integer.
+                </li>
+                <li>
+                    <strong>The Innermost Scope ($\forall n > N$):</strong><br>
+                    Finally, the index $n$ is tested. Because $n$ sits inside the scope of both $\epsilon$ and $N$, it evaluates only for indices that are strictly greater than the cutoff $N$ we just selected.
+                </li>
+            </ul>
 
-                <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px dashed #fed7aa;">
-                    <h5 style="margin: 0 0 0.5rem 0; color: #92400e; font-size: 0.98rem;">⚠️ The Fatal Quantifier Swap ($\exists N \; \forall \epsilon$)</h5>
-                    <p style="margin: 0; font-size: 0.9rem; color: #475569; line-height: 1.5;">
-                        If you swap to $\exists N \in \mathbb{N} \; \forall \epsilon > 0 \; \forall n > N, |a_n - L| < \epsilon$, a single cutoff $N$ must satisfy <em>all</em> tolerances at once. The only distance smaller than every positive $\epsilon$ is zero, which forces $a_n = L$ for all $n > N$. This invalid swap accidentally restricts limits only to sequences that become <strong>permanently constant</strong>!
-                    </p>
-                </div>
-            </div>
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">When Can You Swap Quantifiers? (The Commutativity Rule)</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                A helpful rule of thumb to keep in mind is:
+            </p>
+            <ul style="margin: 0.5rem 0 1.25rem 1.25rem; color: #334155; line-height: 1.7; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.5rem;">
+                    <strong>Quantifiers of the same type always commute:</strong> You can safely swap two universal quantifiers ($\forall x \, \forall y \iff \forall y \, \forall x$) or two existential quantifiers ($\exists x \, \exists y \iff \exists y \, \exists x$) without changing the mathematical meaning.
+                </li>
+                <li>
+                    <strong>Alternating quantifiers NEVER commute:</strong> Swapping a $\forall$ with an $\exists$ radically changes what the statement demands. In analysis, $\forall \epsilon \, \exists N$ and $\exists N \, \forall \epsilon$ describe two completely different universes.
+                </li>
+            </ul>
+
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">The Fatal Quantifier Swap: Why $\exists N \; \forall \epsilon$ Breaks Mathematics</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                To see the power of quantifier order firsthand, let's conduct a thought experiment. What would happen if a student accidentally reversed the first two quantifiers in an exam and wrote:
+            </p>
+            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem; color: #b91c1c;">
+                $$\exists N \in \mathbb{N} \quad \forall \epsilon > 0 \quad \forall n > N, \quad |a_n - L| < \epsilon \quad \text{?}$$
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Read it from left to right using our "who knows what" rule:
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                The statement now opens with $\exists N \in \mathbb{N}$. That means a single milestone number $N$ must be chosen <em>first</em>, before anyone has named $\epsilon$. Then, that same fixed $N$ must satisfy $|a_n - L| < \epsilon$ for <strong>every single positive $\epsilon$ simultaneously</strong>!
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Think about what that requires. If $|a_n - L| < \epsilon$ for every $\epsilon > 0$, what non-negative real number is strictly smaller than every positive number? Only zero! The only distance smaller than every positive tolerance is exactly zero:
+            </p>
+            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
+                $$|a_n - L| = 0 \implies a_n = L \quad \text{for all } n > N$$
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                By accidentally swapping those two words, the definition no longer describes sequences that approach a limit. It only describes sequences that literally <strong>freeze and become permanently constant</strong> after step $N$ (like $3, 7, 2, 5, 5, 5, 5, \dots$). A sequence like $a_n = 1/n$, which never equals $0$ but clearly converges to $0$, would fail this broken test!
+            </p>
+
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">A Practical Mental Checklist for Reading Proofs</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Whenever you sit down to write or read an $\epsilon\text{-}N$ proof, keep this internal dialogue running:
+            </p>
+            <ol style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.6rem;">
+                    <strong>When you see $\forall \epsilon > 0$:</strong> Remind yourself, <em>"I do not choose $\epsilon$. Someone hands it to me. I must treat $\epsilon$ as an arbitrary positive constant throughout my proof."</em>
+                </li>
+                <li style="margin-bottom: 0.6rem;">
+                    <strong>When you see $\exists N \in \mathbb{N}$:</strong> Say to yourself, <em>"Now it's my turn. I must find a formula for $N$ that uses $\epsilon$. It is completely fine if $N$ gets huge when $\epsilon$ is tiny."</em>
+                </li>
+                <li>
+                    <strong>When you see $\forall n > N$:</strong> Say to yourself, <em>"Now I verify my work. I let $n$ be an arbitrary index past $N$ and prove that the distance inequality $|a_n - L| < \epsilon$ holds algebraically."</em>
+                </li>
+            </ol>
 
             <!-- SECTION 3 -->
             <h2 id="section-interactive-widget">3. Interactive Epsilon Challenge Simulator</h2>
