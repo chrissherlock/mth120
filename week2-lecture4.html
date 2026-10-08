@@ -816,22 +816,141 @@
                 Because $|b_n - L|$ can be made arbitrarily small, the entire distance collapses below $\epsilon$. The Algebraic Limit Laws form an airtight, beautiful system: each theorem rests securely on the foundational properties we established in the sections before it.
             </p>
 
-            <!-- SECTION 6 -->
+            <!-- SECTION 6: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->
             <h2 id="section-divergence-test">6. Proving Non-Existence of Limits</h2>
-            <p>To show that a sequence $(a_n)$ does not converge to any limit, we must prove that every possible candidate $L \in \mathbb{R}$ fails the $\epsilon\text{-}N$ definition:</p>
-            <div style="text-align: center; margin: 0.75rem 0;">
-                $$\forall L \in \mathbb{R}, \quad \exists \epsilon > 0 \quad \text{such that} \quad \forall N \in \mathbb{N}, \quad \exists n > N \quad \text{with} \quad |a_n - L| \ge \epsilon$$
-            </div>
 
-            <div class="worked-example-box">
-                <h4>🎯 Proof: $a_n = (-1)^n$ Has No Limit</h4>
-                <p>Consider the alternating sequence $(1, -1, 1, -1, \dots)$. Fix any $L \in \mathbb{R}$ and set $\epsilon = 1$.</p>
-                <ul style="margin: 0.35rem 0 0 1.25rem;">
-                    <li><strong>Case 1 ($\vert{}L - 1\vert{} < 1$):</strong> In this case $L > 0$. For any odd index $n$, $a_n = -1$, giving $|a_n - L| = |-1 - L| = 1 + L > 1 = \epsilon$.</li>
-                    <li><strong>Case 2 ($\vert{}L - 1\vert{} \ge 1$):</strong> For any even index $n$, $a_n = 1$, giving $|a_n - L| = |1 - L| \ge 1 = \epsilon$.</li>
-                </ul>
-                <p style="margin-top: 0.5rem; margin-bottom: 0;">In both cases, terms oscillate outside the $\epsilon = 1$ band for arbitrarily large $n$. Thus, no limit $L$ exists.</p>
+            <h3 style="color: #0f172a; margin-top: 1.5rem;">The Flip Side: Defeating the Target Game</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                So far, we have focused entirely on proving that limits exist. But what happens when a sequence simply refuses to settle down? How do you prove that a sequence like $a_n = (-1)^n = (-1, 1, -1, 1, \dots)$ does <em>not</em> converge?
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                For beginning students, this often triggers immediate anxiety: <em>"How could I possibly prove that a limit doesn't exist? There are infinitely many real numbers! Do I have to test every single number on the real line and show none of them work?"</em>
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                The answer is yes in spirit, but no in practice. You don't test numbers one by one. Instead, you employ the power of <strong>formal logical negation</strong> combined with <strong>geometric separation</strong>. Once you understand how to negate an $\epsilon\text{-}N$ statement, proving divergence becomes just as structured and predictable as proving convergence.
+            </p>
+
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">The Anatomy of Negation: Flipping the Quantifiers</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Let's recall what it means for a sequence to converge to a specific candidate limit $L$:
+            </p>
+            <p style="text-align: center; margin: 1rem 0; font-size: 1.15rem;">
+                $$\forall \epsilon > 0 \quad \exists N \in \mathbb{N} \quad \forall n > N, \quad |a_n - L| < \epsilon$$
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                In the rules of formal logic, whenever you negate a statement, every universal quantifier ($\forall$) turns into an existential quantifier ($\exists$), every existential quantifier ($\exists$) turns into a universal quantifier ($\forall$), and the final condition is replaced by its logical opposite ($< \epsilon$ becomes $\ge \epsilon$).
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Let's walk through that transformation step by step from left to right:
+            </p>
+            <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>Original:</strong> <em>"For all tolerances $\epsilon > 0$..."</em><br>
+                    <strong>Negation ($\exists \epsilon > 0$):</strong> To show the claim fails, we don't have to win for every tolerance. We only need to find <strong>one stubborn tolerance</strong> $\epsilon_0 > 0$ where the sequence breaks down.
+                </li>
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>Original:</strong> <em>"...there exists a cutoff milestone $N$..."</em><br>
+                    <strong>Negation ($\forall N \in \mathbb{N}$):</strong> We must show that <strong>every conceivable cutoff $N$ fails</strong>. No matter how huge of a number someone chooses—whether $N = 100$, $N = 10^6$, or $N = 10^{99}$—it will never be far enough down the line.
+                </li>
+                <li>
+                    <strong>Original:</strong> <em>"...such that for all $n > N$, $|a_n - L| < \epsilon$."</em><br>
+                    <strong>Negation ($\exists n > N \text{ with } \vert{}a_n - L\vert{} \ge \epsilon$):</strong> We prove that somewhere past that proposed cutoff $N$, there is <strong>always an index $n > N$ that escapes</strong> the target corridor, landing at a distance of at least $\epsilon$ away from $L$.
+                </li>
+            </ul>
+
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">Disproving Every Real Candidate at Once ($\forall L \in \mathbb{R}$)</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Saying that a sequence <em>diverges</em> means it does not converge to <em>any</em> real number. Therefore, we quantify over all candidate limits:
+            </p>
+            <div style="padding: 1.25rem 1.5rem; margin: 1.5rem 0; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; text-align: center;">
+                <span style="font-size: 1.1rem; color: #0f172a; font-weight: 600; display: block; margin-bottom: 0.5rem;">
+                    Formal Definition: Non-Convergence (Divergence)
+                </span>
+                <span style="font-size: 1.05rem; color: #0f172a;">
+                    A sequence $(a_n)$ does not converge to any limit in $\mathbb{R}$ if and only if:
+                </span>
+                <p style="margin: 1rem 0 0.5rem 0; font-size: 1.2rem;">
+                    $$\forall L \in \mathbb{R}, \quad \exists \epsilon > 0 \quad \text{such that} \quad \forall N \in \mathbb{N}, \quad \exists n > N \quad \text{with} \quad |a_n - L| \ge \epsilon$$
+                </p>
             </div>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                In the game analogy, the roles have swapped:
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                A believer claims, <em>"I bet the sequence converges to $L$!"</em> Your job as the skeptic is to produce a tolerance $\epsilon > 0$ such that no matter what cutoff $N$ the believer proposes, the sequence perpetually breaks out of their target window.
+            </p>
+
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">A Detailed Walkthrough: Proving That $a_n = (-1)^n$ Has No Limit</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Consider the classic alternating sequence $a_n = (-1)^n$:
+            </p>
+            <p style="text-align: center; margin: 1rem 0; font-size: 1.15rem;">
+                $$(a_n) = (-1, 1, -1, 1, -1, 1, \dots)$$
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Intuitively, this sequence cannot converge because it bounces indefinitely between $-1$ and $+1$. But how do we turn that intuition into an airtight mathematical proof?
+            </p>
+
+            <h4 style="color: #0f172a; margin-top: 1.5rem;">The Geometric Insight (The Impossible Choice of $L$)</h4>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Notice that the distance between the two values the sequence visits is:
+            </p>
+            <p style="text-align: center; margin: 1rem 0; font-size: 1.15rem;">
+                $$|1 - (-1)| = 2$$
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Now think about what happens if someone proposes a candidate limit $L$. By the Triangle Inequality, the total distance between $1$ and $-1$ cannot exceed the distance from $1$ to $L$ plus the distance from $L$ to $-1$:
+            </p>
+            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
+                $$2 = |1 - (-1)| = |(1 - L) + (L - (-1))| \le |1 - L| + |-1 - L|$$
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Look at what that inequality says: <strong>the sum of the two distances must be at least 2</strong>! It is physically impossible for a single point $L$ to be within distance $\epsilon = 1$ of both numbers simultaneously. If $L$ is close to $+1$, it is far from $-1$. If $L$ is close to $-1$, it is far from $+1$. And if $L = 0$, it is distance 1 from both!
+            </p>
+
+            <h4 style="color: #0f172a; margin-top: 1.5rem;">The Formal Case Analysis</h4>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Let $L \in \mathbb{R}$ be an arbitrary candidate limit. We set our lethal tolerance to $\epsilon = 1$. Let $N \in \mathbb{N}$ be any cutoff index proposed by our opponent.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                We now examine the two possibilities for where $L$ might sit on the number line:
+            </p>
+            <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.85rem;">
+                    <strong>Case 1 ($L \le 0$):</strong><br>
+                    Suppose the candidate limit is zero or negative. We simply pick any <strong>even</strong> integer $n > N$ (for instance, $n = 2N + 2$). For this even index, $a_n = 1$. The distance is:
+                    $$|a_n - L| = |1 - L| = 1 - L \ge 1 = \epsilon$$
+                    Because $L \le 0$, the distance between $a_n$ and $L$ is at least 1. The even terms escape the tolerance band!
+                </li>
+                <li>
+                    <strong>Case 2 ($L > 0$):</strong><br>
+                    Suppose the candidate limit is strictly positive. We simply pick any <strong>odd</strong> integer $n > N$ (for instance, $n = 2N + 1$). For this odd index, $a_n = -1$. The distance is:
+                    $$|a_n - L| = |-1 - L| = |-(1 + L)| = 1 + L > 1 = \epsilon$$
+                    Because $L > 0$, the distance between $a_n$ and $L$ is strictly greater than 1. The odd terms escape the tolerance band!
+                </li>
+            </ul>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                <strong>The Conclusion:</strong> In both cases, past any proposed cutoff $N$, there are always subsequent indices where the sequence lies at a distance of at least $\epsilon = 1$ from $L$. Because $L$ was arbitrary, no real number can serve as a limit. Therefore, $a_n = (-1)^n$ diverges. $\blacksquare$
+            </p>
+
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">Summary Checklist: How to Disprove a Limit</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Whenever a homework or exam problem asks you to show that a sequence does not converge, remember this 4-step blueprint:
+            </p>
+            <ol style="margin: 0.5rem 0 1.75rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.6rem;">
+                    <strong>State that $L \in \mathbb{R}$ is arbitrary:</strong> Never fix a specific candidate like $L = 0$ unless the problem specifically asks you to disprove that particular number.
+                </li>
+                <li style="margin-bottom: 0.6rem;">
+                    <strong>Identify the oscillation gap:</strong> Look at the values the sequence alternates between (e.g., $A$ and $B$). Choose $\epsilon$ to be half the distance between them: $\epsilon = \frac{|A - B|}{2}$.
+                </li>
+                <li style="margin-bottom: 0.6rem;">
+                    <strong>Let $N \in \mathbb{N}$ be arbitrary:</strong> You must defeat every proposed cutoff milestone.
+                </li>
+                <li>
+                    <strong>Find the breakout index:</strong> Select an index $n > N$ (often depending on whether $n$ is even or odd) that forces $|a_n - L| \ge \epsilon$, demonstrating asymptotic instability.
+                </li>
+            </ol>
 
             <!-- FOOTER NAVIGATION -->
             <div class="footer-nav" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
