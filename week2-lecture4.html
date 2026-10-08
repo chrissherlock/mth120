@@ -21,7 +21,6 @@
         .container { max-width: 1200px; margin: 0 auto; width: 100%; }
         .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
         .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
-        .intro-lead { font-size: 1.05rem; color: #1e293b; line-height: 1.75; margin-bottom: 2rem; background: #f8fafc; padding: 1.75rem; border-radius: 8px; border: 1px solid var(--border); border-left: 5px solid var(--accent); }
 
         .toc-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.75rem; margin: 1.75rem 0 2.5rem 0; }
         .toc-box h4 { margin: 0 0 0.75rem 0; color: #92400e; font-size: 1.05rem; }
@@ -165,38 +164,38 @@
                 <img src="images/chapter2-hero.jpg" alt="Week 2: Limits of Sequences - UNE Campus Discovery Trail" style="width: 100%; height: auto; display: block;">
             </div>
 
-            <!-- EMPATHETIC ORIENTATION LEAD -->
-            <div class="intro-lead">
-                <h3 style="margin-top: 0; margin-bottom: 0.75rem; color: #0f172a; font-size: 1.25rem;">
+            <!-- UNBOXED FLOWING ORIENTATION -->
+            <div style="margin: 2.25rem 0 2.5rem 0;">
+                <h3 style="margin-top: 0; color: #0f172a; font-size: 1.3rem;">
                     Welcome to Lecture 4: Taking the Fear Out of $\epsilon\text{-}N$
                 </h3>
-                <p style="margin: 0 0 1rem 0; color: #334155; line-height: 1.75; font-size: 1rem;">
+                <p style="margin: 0 0 1.15rem 0; color: #334155; line-height: 1.75; font-size: 1rem;">
                     For almost every mathematics student, this lecture marks the exact moment where the landscape changes. Up until now, calculus has largely been about calculation: finding derivatives, computing integrals, or asking what number an expression "approaches." Today, we ask a fundamentally different question: <em>how do we construct an unshakeable logical guarantee that an infinite sequence arrives at its destination and stays there?</em>
                 </p>
-                <p style="margin: 0 0 1rem 0; color: #334155; line-height: 1.75; font-size: 1rem;">
+                <p style="margin: 0 0 1.15rem 0; color: #334155; line-height: 1.75; font-size: 1rem;">
                     When you first see the definition with its string of Greek letters and quantifiers—$\forall \epsilon > 0 \; \exists N \in \mathbb{N} \dots$—it can feel forbidding, cold, or backwards. That reaction is entirely normal. The secret is that this definition is not an obstacle course; it is simply a game of target practice between two players. Once you see the picture, the algebra becomes a predictable, step-by-step craft.
                 </p>
-                <p style="margin: 0; color: #334155; line-height: 1.75; font-size: 1rem;">
+                <p style="margin: 0 0 0.75rem 0; color: #334155; line-height: 1.75; font-size: 1rem;">
                     Here is the path we will walk together in this lecture:
                 </p>
-                <ul style="margin: 0.75rem 0 1rem 1.25rem; padding: 0; color: #334155; line-height: 1.7; font-size: 0.98rem;">
-                    <li style="margin-bottom: 0.5rem;">
+                <ul style="margin: 0 0 1.5rem 1.25rem; padding: 0; color: #334155; line-height: 1.7; font-size: 0.98rem;">
+                    <li style="margin-bottom: 0.6rem;">
                         <strong>The Target Game (Sections 1 &amp; 3):</strong> We translate the formal $\epsilon\text{-}N$ definition into an intuitive two-player challenge. A skeptic hands you an arbitrarily tight error tolerance ($\epsilon$), and you demonstrate that beyond a certain cutoff point in the sequence ($N$), every single term lands safely inside that target window forever.
                     </li>
-                    <li style="margin-bottom: 0.5rem;">
+                    <li style="margin-bottom: 0.6rem;">
                         <strong>The Rules of the Game (Section 2):</strong> We inspect why the order of words and quantifiers matters so deeply. We will see why $N$ depends directly on $\epsilon$, and discover the comical catastrophe that happens if you accidentally swap their order.
                     </li>
-                    <li style="margin-bottom: 0.5rem;">
+                    <li style="margin-bottom: 0.6rem;">
                         <strong>The Scratchpad Method (Section 3):</strong> We share the practical trade secret of analysis proofs: how mathematicians work backwards on scrap paper to discover the cutoff $N$, and then write the final deductive proof cleanly forward.
                     </li>
-                    <li style="margin-bottom: 0.5rem;">
+                    <li style="margin-bottom: 0.6rem;">
                         <strong>Structural Guarantees (Sections 4 &amp; 5):</strong> We prove that any sequence that converges cannot escape to infinity (it is bounded), and build the algebraic limit laws—including the elegant "$\epsilon/2$" strategy—so you don't have to rebuild proofs from scratch every time.
                     </li>
                     <li>
                         <strong>When Things Fall Apart (Section 6):</strong> We learn how to formally prove that a sequence does <em>not</em> converge by carefully negating our definition and exposing persistent oscillation.
                     </li>
                 </ul>
-                <div style="background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid var(--accent); border-radius: 6px; padding: 0.85rem 1.15rem; font-size: 0.93rem; color: #92400e; margin-top: 1rem; line-height: 1.6;">
+                <div style="background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid var(--accent); border-radius: 6px; padding: 0.85rem 1.15rem; font-size: 0.93rem; color: #92400e; line-height: 1.6;">
                     🌱 <strong>Advice for Today:</strong> Take your time. Don't worry if you need to read an argument twice or step away for a breath. Proving limits is a skill that builds muscle memory, and by the end of this lecture, you'll have the exact tools needed to construct these proofs with confidence.
                 </div>
             </div>
@@ -445,7 +444,7 @@
             <div class="infobox">
                 <h4>📐 Algebraic Limit Laws (Theorem 1)</h4>
                 <div class="infobox-intro">
-                    Suppose $\lim_{n\to\infty} a_n = K$ and $\lim_{n\to\infty} b_n = L$, and let $c \in \mathbb{reals}$ be a constant. Then:
+                    Suppose $\lim_{n\to\infty} a_n = K$ and $\lim_{n\to\infty} b_n = L$, and let $c \in \mathbb{R}$ be a constant. Then:
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.95rem;">
                     <div style="display: grid; grid-template-columns: 200px 1fr; gap: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">
