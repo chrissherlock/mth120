@@ -1,4 +1,15 @@
-<!DOCTYPE html>
+#!/usr/bin/env python3
+"""
+Write out the updated week2.html page with a grounded, empathetic introduction
+and a clean, prose-driven roadmap without redundant cards.
+"""
+
+from pathlib import Path
+import sys
+
+TARGET_FILE = Path("week2.html")
+
+HTML_CONTENT = r"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -158,3 +169,17 @@
     </div>
 </body>
 </html>
+"""
+
+
+def write_week2_hub(file_path: Path) -> None:
+    file_path.write_text(HTML_CONTENT, encoding="utf-8")
+    print(f"Successfully written to {file_path}")
+
+
+if __name__ == "__main__":
+    try:
+        write_week2_hub(TARGET_FILE)
+    except OSError as err:
+        print(f"Error: {err}", file=sys.stderr)
+        sys.exit(1)
