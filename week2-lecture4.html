@@ -208,7 +208,7 @@
                     <li><a href="#section-epsilon-n">1. Formal $\epsilon\text{-}N$ Convergence</a></li>
                     <li><a href="#section-quantifiers">2. Quantifier Order, Timing, and Dependencies</a></li>
                     <li><a href="#section-interactive-widget">3. Interactive Epsilon Challenge Simulator</a></li>
-                    <li><a href="#section-prop5">4. Properties of Convergent Sequences (Proposition 5) &amp; Foundational Theorems</a></li>
+                    <li><a href="#section-prop5">4. Properties of Convergent Sequences &amp; Foundational Theorems</a></li>
                     <li><a href="#section-theorems">5. Algebraic Limit Laws and Proofs (Theorem 1)</a></li>
                     <li><a href="#section-divergence-test">6. Proving Non-Existence of Limits</a></li>
                 </ul>
@@ -537,7 +537,7 @@
             </div>
 
             <!-- SECTION 4: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->
-            <h2 id="section-prop5">4. Properties of Convergent Sequences (Proposition 5) &amp; Foundational Theorems</h2>
+            <h2 id="section-prop5">4. Properties of Convergent Sequences &amp; Foundational Theorems</h2>
 
             <h3 style="color: #0f172a; margin-top: 1.5rem;">Structural Guarantees: The Free Gifts of Convergence</h3>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
@@ -569,16 +569,65 @@
                 We have shown that the non-negative real number $|L - M|$ is strictly smaller than *every* positive number $\epsilon$. The only number with that property is zero. Thus, $|L - M| = 0$, which means $L = M$. $\blacksquare$
             </p>
 
-            <h3 style="color: #0f172a; margin-top: 1.75rem;">Theorem: Tail Invariance (Shift Theorem)</h3>
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">Theorem: Tail Invariance (The Shift &amp; Truncation Theorem)</h3>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Real analysis teaches us a liberating truth: <strong>initial terms do not matter</strong> for convergence.
+                Real analysis teaches us an empowering truth: <strong>initial terms do not matter</strong> for convergence. If you are ever worried about a sequence having a few messy starting terms, this theorem provides absolute peace of mind.
             </p>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>The Theorem:</strong> Let $(a_n)$ and $(b_n)$ be sequences. If there exists an index $N_0 \in \mathbb{N}$ such that $a_n = b_n$ for all $n > N_0$, then either both converge to the exact same limit or both diverge.
+                There are two common ways mathematicians state this principle:
             </p>
+            <ul style="margin: 0.5rem 0 1.25rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.6rem;">
+                    <strong>1. The Finite Modification Form:</strong> Let $(a_n)$ and $(b_n)$ be two sequences. If there exists some cutoff index $N_0 \in \mathbb{N}$ such that $a_n = b_n$ for all $n > N_0$, then either both sequences converge to the exact same limit, or both diverge:
+                    $$\lim_{n\to\infty} a_n = \lim_{n\to\infty} b_n$$
+                </li>
+                <li>
+                    <strong>2. The Index Shift Form:</strong> Let $(a_n)_{n=0}^\infty$ be a sequence, and let $k \in \mathbb{N}$ be any fixed integer shift. Then $(a_n)$ converges to $L$ if and only if the shifted sequence $(a_{n+k})_{n=0}^\infty$ converges to $L$:
+                    $$\lim_{n\to\infty} a_n = L \iff \lim_{n\to\infty} a_{n+k} = L$$
+                </li>
+            </ul>
+
+            <h4 style="color: #0f172a; margin-top: 1.5rem;">The Proof of the Finite Modification Form</h4>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>Why it matters:</strong> Shifting indices, dropping the first hundred terms, or altering the starting values of a sequence has zero impact on its long-term asymptotic destination.
+                Suppose $(a_n)$ converges to limit $L$. We want to prove that $(b_n)$ also converges to $L$.
             </p>
+            <ol style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.6rem;">
+                    Let $\epsilon > 0$ be arbitrary.
+                </li>
+                <li style="margin-bottom: 0.6rem;">
+                    Because $a_n \to L$, the definition of convergence provides a cutoff $N_a \in \mathbb{N}$ such that:
+                    $$n > N_a \implies |a_n - L| < \epsilon$$
+                </li>
+                <li style="margin-bottom: 0.6rem;">
+                    We are given that $a_n = b_n$ for all $n > N_0$. Now, choose the master cutoff:
+                    $$N = \max(N_a, N_0)$$
+                </li>
+                <li>
+                    For any index $n > N$, both conditions hold simultaneously:
+                    $$\begin{aligned}
+                    n > N_0 &\implies b_n = a_n \\
+                    n > N_a &\implies |a_n - L| < \epsilon
+                    \end{aligned}$$
+                    Substituting $b_n$ for $a_n$ yields $|b_n - L| = |a_n - L| < \epsilon$. Therefore, $(b_n)$ converges to $L$. By symmetry, if $(b_n)$ converges to $L$, then $(a_n)$ must converge to $L$. $\blacksquare$
+                </li>
+            </ol>
+
+            <h4 style="color: #0f172a; margin-top: 1.5rem;">Why Tail Invariance Is a Superpower for Beginners</h4>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                This theorem gives you three practical mathematical liberties:
+            </p>
+            <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.6rem;">
+                    <strong>Early Singularities Don't Matter:</strong> Consider $a_n = \frac{n}{n-2}$. At $n=2$, this formula divides by zero and is undefined! But for all $n \ge 3$, it is perfectly well-behaved. The Tail Invariance Theorem tells us we can simply define the sequence starting at $n=3$ without altering its limit in any way.
+                </li>
+                <li style="margin-bottom: 0.6rem;">
+                    <strong>Starting Indices Don't Matter:</strong> Whether a lecturer writes $(a_n)_{n=0}^\infty$, $(a_n)_{n=1}^\infty$, or $(a_n)_{n=100}^\infty$, the limit is identical. You never need to worry about index shifting changing the convergence.
+                </li>
+                <li>
+                    <strong>Chaotic Warmups Can Be Discarded:</strong> A sequence could jump wildly between $-10^6$ and $+10^6$ for the first million terms. As long as it eventually settles down into an $\epsilon$-corridor, those initial terms are discarded as finite history.
+                </li>
+            </ul>
 
             <h3 style="color: #0f172a; margin-top: 1.75rem;">Theorem: Order Limit Theorem (Inequality Preservation)</h3>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
@@ -727,7 +776,7 @@
                 Why is the Product Law ($\lim (a_n \cdot b_n) = K \cdot L$) trickier than the Sum Law?
             </p>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                When we look at the difference $|a_n b_n - K L|$, the terms do not naturally group into $(a_n - K)$ and $(b_n - L)$. If you try to expand $(a_n - K)(b_n - L)$, you get $a_n b_n - a_n L - b_n K + K L$, which has unwanted middle terms.
+                When we look at the difference $|a_n b_n - K L|$, the terms do not naturally group into $(a_n - K)$ and $(b_n - L)$. If you try to expand $(a_n - K)(b_n - L)$, you get $a_n b_n - a_n L - b_n指示 K + K L$, which has unwanted middle terms.
             </p>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
                 To bridge this gap, analysis uses one of its most famous creative maneuvers: <strong>we add zero in the form of $+a_n L - a_n L$</strong>.
