@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-Update week2-lecture4.html with Uniqueness, Tail Invariance, and Order Limit theorems,
-stage both the HTML file and this script, commit, and push to the remote repo.
+Update week2-lecture4.html to replace CS lexical scoping terminology with
+intuitive mathematical information-order phrasing, stage both the HTML file
+and this script, commit, and push to the remote repository.
 """
 
 from pathlib import Path
@@ -12,13 +13,14 @@ TARGET_FILE = Path("week2-lecture4.html")
 SCRIPT_FILE = Path(__file__).resolve()
 
 COMMIT_SUBJECT = (
-    "Add Uniqueness, Tail Invariance, and Order Theorems to Lecture 4"
+    "Replace CS lexical scope jargon with information order in Lecture 4"
 )
 COMMIT_BODY = (
-    "Expand week2-lecture4.html with detailed, unboxed proofs for foundational\n"
-    "sequence theorems. Include the Uniqueness of Limits proof using the epsilon-half\n"
-    "strategy, the Tail Invariance shift theorem, and the Order Limit Theorem\n"
-    "highlighting inequality preservation and strict limit convergence traps."
+    "Replace computer science jargon (\"lexical scope\") in Section 2 of\n"
+    "week2-lecture4.html with mathematical timing and information order.\n"
+    "Frame quantifier dependency around turns in a dialogue (\"The First\n"
+    "Move\", \"The Response\", \"The Final Verification\") to reduce cognitive\n"
+    "load for beginning real analysis students."
 )
 
 HTML_CONTENT = r"""<!DOCTYPE html>
@@ -229,7 +231,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
                 <h4>📌 Lecture 4 Topics</h4>
                 <ul class="toc-grid">
                     <li><a href="#section-epsilon-n">1. Formal $\epsilon\text{-}N$ Convergence</a></li>
-                    <li><a href="#section-quantifiers">2. Quantifier Order, Scope, and Dependencies</a></li>
+                    <li><a href="#section-quantifiers">2. Quantifier Order, Timing, and Dependencies</a></li>
                     <li><a href="#section-interactive-widget">3. Interactive Epsilon Challenge Simulator</a></li>
                     <li><a href="#section-prop5">4. Properties of Convergent Sequences (Proposition 5) &amp; Foundational Theorems</a></li>
                     <li><a href="#section-theorems">5. Algebraic Limit Laws and Proofs (Theorem 1)</a></li>
@@ -417,7 +419,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
             </div>
 
             <!-- SECTION 2: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->
-            <h2 id="section-quantifiers">2. Quantifier Order, Scope, and Dependencies</h2>
+            <h2 id="section-quantifiers">2. Quantifier Order, Timing, and Dependencies</h2>
 
             <h3 style="color: #0f172a; margin-top: 1.5rem;">The Grammar of Analysis: Why Order Matters</h3>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
@@ -430,25 +432,25 @@ HTML_CONTENT = r"""<!DOCTYPE html>
                 $$\forall \epsilon > 0 \quad \exists N \in \mathbb{N} \quad \forall n > N, \quad |a_n - L| < \epsilon$$
             </p>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                the golden rule is to <strong>read strictly from left to right</strong>. Each quantifier establishes a "turn" in a conversation or a nested scope in a computer program. A variable introduced further to the right is allowed to look back and depend on variables to its left, but variables to the left can never look ahead to what hasn't been chosen yet.
+                the golden rule is to <strong>read strictly from left to right</strong>. Each quantifier establishes a distinct turn in a conversation or a sequential dialogue. A variable introduced further to the right is allowed to respond to and depend on variables to its left, but variables to the left can never look ahead to what hasn't been chosen yet.
             </p>
 
-            <h3 style="color: #0f172a; margin-top: 1.75rem;">Lexical Scope: The "Who Knows What" Rule</h3>
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">The "Who Knows What" Rule: Order of Information</h3>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                To see why $N$ depends on $\epsilon$, let's trace the visibility of information through the three variables:
+                To see why $N$ depends on $\epsilon$, let's trace the visibility of information through the three variables from left to right:
             </p>
             <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
                 <li style="margin-bottom: 0.85rem;">
-                    <strong>The Outer Scope ($\forall \epsilon > 0$):</strong><br>
-                    $\epsilon$ is chosen first. Because it sits at the very outside of the statement, it is chosen in complete isolation. Whoever picks $\epsilon$ knows nothing about $N$ and doesn't care what $N$ will be. They can pick $\epsilon = 1$, $\epsilon = 0.05$, or $\epsilon = 10^{-12}$.
+                    <strong>The First Move ($\forall \epsilon > 0$):</strong><br>
+                    $\epsilon$ is chosen first and in complete isolation. The person picking $\epsilon$ has no idea what $N$ will be, and they don't care. They can challenge you with $\epsilon = 1$, $\epsilon = 0.05$, or $\epsilon = 10^{-12}$.
                 </li>
                 <li style="margin-bottom: 0.85rem;">
-                    <strong>The Inner Scope ($\exists N \in \mathbb{N}$):</strong><br>
-                    Now it is our turn to pick $N$. Because $\exists N$ is written <em>after</em> $\forall \epsilon$, $N$ is chosen with full knowledge of $\epsilon$. In other words, $N$ is mathematically a function of $\epsilon$: we write $N = N(\epsilon)$. If the challenger changes $\epsilon$ from $0.1$ to $0.001$, we are entirely free to change our choice of $N$ to a much larger integer.
+                    <strong>The Response ($\exists N \in \mathbb{N}$):</strong><br>
+                    Now it is your turn to pick $N$. Because your move happens <em>after</em> $\epsilon$ has been announced, you make your choice with **full knowledge of $\epsilon$**. You are responding to their move. Mathematically, this means $N$ is a function of $\epsilon$—written $N = N(\epsilon)$. If the challenger changes $\epsilon$ to a tighter tolerance, you are completely free to pick a larger $N$.
                 </li>
                 <li>
-                    <strong>The Innermost Scope ($\forall n > N$):</strong><br>
-                    Finally, the index $n$ is tested. Because $n$ sits inside the scope of both $\epsilon$ and $N$, it evaluates only for indices that are strictly greater than the cutoff $N$ we just selected.
+                    <strong>The Final Verification ($\forall n > N$):</strong><br>
+                    Finally, we test the tail. The variable $n$ is evaluated only after both $\epsilon$ and $N$ are already locked into place, inspecting every single step strictly past your cutoff milestone to verify that distance stays strictly below $\epsilon$.
                 </li>
             </ul>
 
