@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Update week2-lecture4.html to resolve KaTeX visual leakage in widgets by converting
-dynamic UI text to native HTML and Unicode, stage both files, commit, and push.
+Update week2-lecture4.html to implement an engaging visual standby state
+for the 2D epsilon simulator, stage the files, commit, and push.
 """
 
 from pathlib import Path
@@ -11,15 +11,12 @@ import sys
 TARGET_FILE = Path("week2-lecture4.html")
 SCRIPT_FILE = Path(__file__).resolve()
 
-COMMIT_SUBJECT = (
-    "Fix KaTeX layout leakage by migrating UI widgets to native Unicode"
-)
+COMMIT_SUBJECT = "Enhance 2D epsilon simulator with visual standby state"
 COMMIT_BODY = (
-    "Strip LaTeX delimiters ($) from all interactive buttons, formula chunks,\n"
-    "and telemetry badges in week2-lecture4.html. Replace fragile dynamic\n"
-    "KaTeX rendering inside widgets with pure HTML (sub/sup) and Unicode\n"
-    "characters. Add overflow containment to telemetry cards to physically\n"
-    "prevent visual leakage on narrow viewports."
+    "Replace the plain text prompt in the 2D finite sample visualizer with\n"
+    "an engaging standby SVG plot. The new standby state renders the unannotated\n"
+    "sequence in a faded style overlaid with a friendly, target-themed\n"
+    "call-to-action pill, improving visual continuity and pedagogical onboarding."
 )
 
 HTML_CONTENT = r"""<!DOCTYPE html>
@@ -498,9 +495,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
                         <button class="game-btn" onclick="startChallenge(0.05)">Test ϵ = 0.05</button>
                     </div>
                     <div class="game-canvas-wrap">
-                        <svg id="game-plot" viewBox="0 0 740 260">
-                            <text x="260" y="130" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b">Select an &epsilon; budget above to illustrate the sample.</text>
-                        </svg>
+                        <svg id="game-plot" viewBox="0 0 740 260"></svg>
                     </div>
                     <div class="game-controls" id="step-controls" style="display: none;">
                         <button class="game-btn" style="background-color: #64748b;" onclick="resetChallenge()">Reset</button>
@@ -758,6 +753,48 @@ HTML_CONTENT = r"""<!DOCTYPE html>
         }
 
         // 2. 2D Interactive Epsilon Simulator Logic
+        function renderStandbyPlot() {
+            const svg = document.getElementById('game-plot');
+            if (!svg) return;
+
+            const width = 740, height = 260, padX = 50, padY = 30;
+            const plotW = width - padX - 40, plotH = height - padY - 40;
+            const maxN = 24;
+
+            const xPos = (n) => padX + ((n - 1) / (maxN - 1)) * plotW;
+            const yPos = (val) => padY + plotH - (val / 1.1) * plotH;
+            const zeroY = yPos(0);
+
+            let svgMarkup = `
+                <!-- Faded Grid line and zero axis -->
+                <line x1="${padX}" y1="${zeroY}" x2="${padX + plotW}" y2="${zeroY}" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4"/>
+                <text x="${padX + plotW + 8}" y="${zeroY + 4}" font-family="sans-serif" font-size="11" fill="#94a3b8" font-weight="bold">L = 0</text>
+            `;
+
+            // Draw points in a faded standby state
+            for (let n = 1; n <= maxN; n++) {
+                const val = 1 / n, cx = xPos(n), cy = yPos(val);
+                svgMarkup += `<circle cx="${cx}" cy="${cy}" r="4" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1.2"></circle>`;
+            }
+
+            // Engaging Overlay Call-to-Action
+            svgMarkup += `
+                <g transform="translate(370, 130)">
+                    <!-- Pill Background -->
+                    <rect x="-160" y="-24" width="320" height="48" rx="24" fill="#fffbeb" stroke="#fcd34d" stroke-width="2" />
+
+                    <!-- Target Icon -->
+                    <circle cx="-130" cy="0" r="10" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" />
+                    <circle cx="-130" cy="0" r="4" fill="#f59e0b" />
+
+                    <!-- Text -->
+                    <text x="-105" y="5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#b45309" font-weight="600">Select an ϵ tolerance above to begin</text>
+                </g>
+            `;
+
+            svg.innerHTML = svgMarkup;
+        }
+
         function renderChallengePlot(eps, nCutoff) {
             const svg = document.getElementById('game-plot');
             if (!svg) return;
@@ -826,14 +863,14 @@ HTML_CONTENT = r"""<!DOCTYPE html>
             const valBadge = document.getElementById('cg-tel-val');
             const statusBadge = document.getElementById('cg-tel-status');
             const ctrlPanel = document.getElementById('step-controls');
-            const svg = document.getElementById('game-plot');
 
             if (epsBadge) epsBadge.textContent = 'Select below';
             if (reqnBadge) reqnBadge.textContent = '—';
             if (valBadge) valBadge.textContent = '—';
             if (statusBadge) { statusBadge.textContent = 'Standby'; statusBadge.style.color = '#64748b'; }
             if (ctrlPanel) ctrlPanel.style.display = 'none';
-            if (svg) svg.innerHTML = '<text x="260" y="130" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b">Select an &epsilon; budget above to illustrate the sample.</text>';
+
+            renderStandbyPlot();
         }
 
         // 3. Three.js 3D Infinite Flight Corridor (Directed Narrative Stepper)
@@ -1092,6 +1129,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
         // Initialize state once DOM is loaded
         window.addEventListener('DOMContentLoaded', () => {
             renderFormulaState(0);
+            renderStandbyPlot();
             initThreeEngine();
         });
     </script>
