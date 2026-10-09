@@ -631,13 +631,80 @@
 
             <h3 style="color: #0f172a; margin-top: 1.75rem;">Theorem: Order Limit Theorem (Inequality Preservation)</h3>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                If two sequences are ordered relative to each other, their limits preserve that order.
+                One of the most comforting features of limits is that they respect relative order. If one sequence always stays below another on the number line, its eventual limit cannot leap ahead of the other sequence's limit.
             </p>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>The Theorem:</strong> If $a_n \le b_n$ for all $n$ past some index, and both $\lim a_n = K$ and $\lim b_n = L$ exist, then $K \le L$.
+                <strong>The Formal Statement:</strong> Let $(a_n)$ and $(b_n)$ be convergent sequences with limits $K, L \in \mathbb{R}$:
             </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem; background: #fffbeb; border-left: 4px solid var(--accent); padding: 0.85rem 1.15rem; border-radius: 4px;">
-                ⚠️ <strong>Crucial Caveat (Strict Inequalities Become Non-Strict):</strong> Even if strict inequality holds for every single term ($a_n < b_n$), the limit is only guaranteed to be non-strict ($K \le L$). For example, let $a_n = 0$ and $b_n = 1/n$. Every term satisfies $0 < 1/n$, yet both converge to the same limit $0$ (so $0 \le 0$).
+            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
+                $$\lim_{n\to\infty} a_n = K \quad \text{and} \quad \lim_{n\to\infty} b_n = L$$
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                If there exists an index $N_0 \in \mathbb{N}$ such that $a_n \le b_n$ for all $n > N_0$, then:
+            </p>
+            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
+                $$K \le L$$
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                <em>Special Single-Sequence Corollary:</em> If $a_n \ge 0$ for all $n > N_0$ and $\lim a_n = K$, then $K \ge 0$. A non-negative sequence cannot converge to a negative number.
+            </p>
+
+            <h4 style="color: #0f172a; margin-top: 1.5rem;">The Proof Strategy: Proof by Contradiction via the Midpoint Moat</h4>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                How do we prove this? Proving an inequality directly with $\epsilon\text{-}N$ can feel clumsy. Instead, mathematicians use <strong>Proof by Contradiction</strong>: we assume the opposite—that $K > L$—and watch the system contradict itself.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                <strong>The Geometric Picture:</strong> If $K > L$, there is a positive gap between them of width $K - L > 0$. If we choose a tolerance equal to half this gap, $\epsilon = \frac{K - L}{2}$, the target windows around $K$ and $L$ will never overlap! Their common boundary will be their exact midpoint, $M = \frac{K + L}{2}$.
+            </p>
+            <ol style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.6rem;">
+                    Assume, for contradiction, that $K > L$. Then $K - L > 0$.
+                </li>
+                <li style="margin-bottom: 0.6rem;">
+                    Set $\epsilon = \frac{K - L}{2} > 0$. Note that $L + \epsilon = \frac{K + L}{2} = K - \epsilon$.
+                </li>
+                <li style="margin-bottom: 0.6rem;">
+                    Since $a_n \to K$, there exists $N_1 \in \mathbb{N}$ such that for all $n > N_1$:
+                    $$|a_n - K| < \epsilon \implies a_n > K - \epsilon = \frac{K + L}{2}$$
+                </li>
+                <li style="margin-bottom: 0.6rem;">
+                    Since $b_n \to L$, there exists $N_2 \in \mathbb{N}$ such that for all $n > N_2$:
+                    $$|b_n - L| < \epsilon \implies b_n < L + \epsilon = \frac{K + L}{2}$$
+                </li>
+                <li>
+                    Now choose the master cutoff $N = \max(N_0, N_1, N_2)$. For any index $n > N$, all conditions hold at once:
+                    $$b_n < \frac{K + L}{2} < a_n \implies b_n < a_n$$
+                    This directly contradicts our hypothesis that $a_n \le b_n$ for all $n > N_0$!
+                    Therefore, our assumption that $K > L$ must be false. We conclude that $K \le L$. $\blacksquare$
+                </li>
+            </ol>
+
+            <h4 style="color: #0f172a; margin-top: 1.5rem;">⚠️ The Classic Trap: Why Strict Inequalities Become Non-Strict</h4>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                There is one critical warning every beginner must know, because exam questions love testing it:
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem; font-weight: 600; color: #b91c1c;">
+                Strict inequalities between terms are NOT preserved in the limit!
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                If $a_n < b_n$ strictly for every single term in the sequence, you can only conclude that $\lim a_n \le \lim b_n$. You <strong>cannot</strong> claim that $\lim a_n < \lim b_n$.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                <strong>Why does this happen? The "Pinch Point" Phenomenon:</strong><br>
+                Two sequences can maintain a strict gap between themselves at every finite step, but as they travel to infinity, that gap can shrink down to zero. The limits can "touch" at infinity even though no finite pair of terms ever touches.
+            </p>
+            <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.6rem;">
+                    <strong>Counterexample 1:</strong> Let $a_n = 0$ and $b_n = \frac{1}{n}$. Clearly, $0 < \frac{1}{n}$ strictly holds for every $n \in \mathbb{N}^+$. Yet in the limit:
+                    $$\lim_{n\to\infty} 0 = 0 \quad \text{and} \quad \lim_{n\to\infty} \frac{1}{n} = 0 \implies 0 \le 0$$
+                    The strict inequality has collapsed into equality!
+                </li>
+                <li>
+                    <strong>Counterexample 2:</strong> Let $a_n = -\frac{1}{n}$ and $b_n = \frac{1}{n}$. At every finite index $n$, $a_n$ is strictly negative and $b_n$ is strictly positive ($-\frac{1}{n} < \frac{1}{n}$). Yet both meet at the exact same limit: $0 = 0$.
+                </li>
+            </ul>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Keep this in mind: limits weaken strict bounds into non-strict bounds ($<$ becomes $\le$, and $>$ becomes $\ge$). This property is the direct precursor to the famous <strong>Squeeze Theorem</strong>, which we will explore in Lecture 5!
             </p>
 
             <h3 style="color: #0f172a; margin-top: 1.75rem;">Proposition 5: Fundamental Sequence Properties</h3>
@@ -776,7 +843,7 @@
                 Why is the Product Law ($\lim (a_n \cdot b_n) = K \cdot L$) trickier than the Sum Law?
             </p>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                When we look at the difference $|a_n b_n - K L|$, the terms do not naturally group into $(a_n - K)$ and $(b_n - L)$. If you try to expand $(a_n - K)(b_n - L)$, you get $a_n b_n - a_n L - b_n指示 K + K L$, which has unwanted middle terms.
+                When we look at the difference $|a_n b_n - K L|$, the terms do not naturally group into $(a_n - K)$ and $(b_n - L)$. If you try to expand $(a_n - K)(b_n - L)$, you get $a_n b_n - a_n L - b_n K + K L$, which has unwanted middle terms.
             </p>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
                 To bridge this gap, analysis uses one of its most famous creative maneuvers: <strong>we add zero in the form of $+a_n L - a_n L$</strong>.
