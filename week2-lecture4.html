@@ -253,6 +253,144 @@
                     <strong>Can we prove uniqueness?</strong> Without an exact measurement of distance, we cannot defend why a sequence cannot converge to two different numbers simultaneously.
                 </li>
             </ul>
+
+            <style>
+              .history-aside {
+                margin: 2rem 0;
+                padding: 1.5rem;
+                background: #f8fafc;
+                border: 1px solid #cbd5e1;
+                border-left: 5px solid #0284c7;
+                border-radius: 8px;
+                font-family: system-ui, -apple-system, sans-serif;
+              }
+              .history-aside a.wiki-link {
+                color: #0f172a;
+                text-decoration: underline;
+                text-decoration-color: #94a3b8;
+                text-underline-offset: 2px;
+                transition: color 0.15s ease, text-decoration-color 0.15s ease;
+              }
+              .history-aside a.wiki-link:hover {
+                color: #0284c7;
+                text-decoration-color: #0284c7;
+              }
+              .bio-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                gap: 1rem;
+                margin-bottom: 1.25rem;
+              }
+              .bio-card {
+                background: #ffffff;
+                border: 1px solid #e2e8f0;
+                border-radius: 6px;
+                padding: 1rem;
+                display: flex;
+                gap: 0.85rem;
+                align-items: flex-start;
+              }
+              .bio-portrait {
+                width: 52px;
+                height: 64px;
+                object-fit: cover;
+                border-radius: 4px;
+                border: 1px solid #cbd5e1;
+                flex-shrink: 0;
+              }
+              .bio-content {
+                flex: 1;
+              }
+            </style>
+
+            <!-- HISTORICAL BLOCK ASIDE: WHO & WHY -->
+            <aside class="history-aside" aria-labelledby="history-aside-title">
+              <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.75rem; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.5rem;">
+                <div>
+                  <span style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #0284c7; display: block; margin-bottom: 0.2rem;">
+                    Historical Context
+                  </span>
+                  <h4 id="history-aside-title" style="margin: 0; color: #0f172a; font-size: 1.2rem; font-weight: 700;">
+                    Who Created the ϵ-N Framework, and Why?
+                  </h4>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                  <span style="background: #e0f2fe; color: #0369a1; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 9999px;">19th-Century Analysis</span>
+                  <span style="background: #f1f5f9; color: #475569; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 9999px;">Arithmetization</span>
+                </div>
+              </div>
+
+              <!-- THE ARCHITECTS GRID -->
+              <div>
+                <h5 style="margin: 0 0 0.75rem 0; font-size: 0.92rem; font-weight: 700; color: #0f172a; text-transform: uppercase; letter-spacing: 0.04em;">
+                  The Architects
+                </h5>
+                <div class="bio-grid">
+                  <!-- BOLZANO -->
+                  <div class="bio-card">
+                    <img src="images/bolzano.jpg" alt="Bernard Bolzano" class="bio-portrait" loading="lazy">
+                    <div class="bio-content">
+                      <strong style="font-size: 0.92rem; display: block;">
+                        <a class="wiki-link" href="https://en.wikipedia.org/wiki/Bernard_Bolzano" target="_blank" rel="noopener noreferrer">Bernard Bolzano</a>
+                      </strong>
+                      <span style="color: #64748b; font-size: 0.78rem; display: block; margin-bottom: 0.35rem;">1817 (Prague)</span>
+                      <p style="margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.45;">
+                        The earliest pioneer of metric rigor. He rejected geometric motion and infinitesimals, defining continuity and convergence purely via difference bounds. Working in intellectual isolation, his foundational work was largely overlooked for decades.
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- CAUCHY -->
+                  <div class="bio-card">
+                    <img src="images/cauchy.jpg" alt="Augustin-Louis Cauchy" class="bio-portrait" loading="lazy">
+                    <div class="bio-content">
+                      <strong style="font-size: 0.92rem; display: block;">
+                        <a class="wiki-link" href="https://en.wikipedia.org/wiki/Augustin-Louis_Cauchy" target="_blank" rel="noopener noreferrer">Augustin-Louis Cauchy</a>
+                      </strong>
+                      <span style="color: #64748b; font-size: 0.78rem; display: block; margin-bottom: 0.35rem;">
+                        1821 (<a class="wiki-link" href="https://en.wikipedia.org/wiki/Cours_d%27Analyse" target="_blank" rel="noopener noreferrer"><em>Cours d'Analyse</em></a>)
+                      </span>
+                      <p style="margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.45;">
+                        Popularized analytical rigor across continental Europe. Cauchy introduced the symbol <em>ϵ</em> (standing for <em>erreur</em>) as a specified bound on error, though his proofs still relied on verbal phrasing rather than explicit quantifier order.
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- WEIERSTRASS -->
+                  <div class="bio-card">
+                    <img src="images/weierstrass.png" alt="Karl Weierstrass" class="bio-portrait" loading="lazy">
+                    <div class="bio-content">
+                      <strong style="font-size: 0.92rem; display: block;">
+                        <a class="wiki-link" href="https://en.wikipedia.org/wiki/Karl_Weierstrass" target="_blank" rel="noopener noreferrer">Karl Weierstrass</a>
+                      </strong>
+                      <span style="color: #64748b; font-size: 0.78rem; display: block; margin-bottom: 0.35rem;">1850s–1860s (Berlin Lectures)</span>
+                      <p style="margin: 0; font-size: 0.85rem; color: #334155; line-height: 1.45;">
+                        Established the definitive modern quantifier architecture (<em>∀ϵ &gt; 0, ∃N...</em>). He banished all kinetic metaphors ("approaching indefinitely"), reducing limits entirely to static arithmetic inequalities on real numbers.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- THE MOTIVATION -->
+              <div style="border-top: 1px solid #e2e8f0; padding-top: 1rem;">
+                <h5 style="margin: 0 0 0.5rem 0; font-size: 0.92rem; font-weight: 700; color: #0f172a; text-transform: uppercase; letter-spacing: 0.04em;">
+                  Why Intuition Failed: The Need for Rigor
+                </h5>
+                <ul style="margin: 0; padding-left: 1.25rem; color: #334155; font-size: 0.88rem; line-height: 1.6;">
+                  <li style="margin-bottom: 0.5rem;">
+                    <strong style="color: #0f172a;">The Infinitesimal Contradiction:</strong> Early calculus relied on "infinitely small" quantities that were treated as non-zero to divide out fractions, then arbitrarily set to zero at the final step—a flaw critics rightly termed logical nonsense.
+                  </li>
+                  <li style="margin-bottom: 0.5rem;">
+                    <strong style="color: #0f172a;">Pathological Series & Fourier's Shock:</strong> Operating without formal convergence criteria produced contradictions like <em>1 - 1 + 1 - 1 + ... = 1/2</em>. Later, Fourier series demonstrated that smooth functions could sum to jagged, discontinuous waves, breaking geometric intuition entirely.
+                  </li>
+                  <li>
+                    <strong style="color: #0f172a;">Static Inequalities vs. Physical Motion:</strong> Numbers on a line do not travel or flow through time. Rigorous analysis demanded replacing kinetic descriptions with invariant conditions of metric containment.
+                  </li>
+                </ul>
+              </div>
+            </aside>
+
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
                 To resolve this ambiguity, nineteenth-century mathematicians replaced the fuzzy idea of motion with an ironclad guarantee of <strong>metric distance</strong>. Instead of asking how a sequence travels, we establish an exact distance test that must hold permanently.
             </p>
