@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """
 Surgically restore all truncated analytical sections in week2-lecture4.html.
-Reintegrates foundational theorems (Uniqueness, Tail Invariance, Order Limits),
-complete Proposition 5 proofs, Algebraic Limit Laws, and Divergence negation.
+Reintegrates Sections 2, 4, 5, and 6 in full while preserving all widgets and SVGs.
 Uses callable replacements in re.sub to prevent regex template escape errors.
 """
 
@@ -19,12 +18,100 @@ COMMIT_SUBJECT = (
 )
 COMMIT_BODY = (
     "Reintegrate full analytical essays and unboxed proofs across Sections\n"
-    "4, 5, and 6 of week2-lecture4.html. Restore the Uniqueness of Limits\n"
+    "2, 4, 5, and 6 of week2-lecture4.html. Restore the Uniqueness of Limits\n"
     "epsilon-half proof, the Tail Invariance shift theorem and corollary,\n"
     "the Order Limit Theorem contradiction proof with midpoint buffers,\n"
     "the Proposition 5 structural guarantees, the Algebraic Limit Laws\n"
     "compositionality bridge, and the formal quantifier negation rules."
 )
+
+RESTORED_SECTION_2 = r"""            <!-- SECTION 2: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->
+            <h2 id="section-quantifiers">2. Quantifier Order, Timing, and Dependencies</h2>
+
+            <h3 style="color: #0f172a; margin-top: 1.5rem;">The Grammar of Analysis: Why Order Matters</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                In everyday English, word order can be remarkably forgiving. You can say <em>"Everyone loves someone"</em> or <em>"There is someone whom everyone loves,"</em> and listeners usually piece together what you mean. But in formal mathematical analysis, the order of quantifiers is not stylistic—it is the entire logical backbone of the argument. Changing the order of two quantifiers doesn't tweak the sentence; it completely alters the reality being described.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                When you see a long chain of symbols like:
+            </p>
+            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.2rem;">
+                $$\forall \epsilon > 0 \quad \exists N \in \mathbb{N} \quad \forall n > N, \quad |a_n - L| < \epsilon$$
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                the golden rule is to <strong>read strictly from left to right</strong>. Each quantifier establishes a distinct turn in a conversation or a sequential dialogue. A variable introduced further to the right is allowed to respond to and depend on variables to its left, but variables to the left can never look ahead to what hasn't been chosen yet.
+            </p>
+
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">The "Who Knows What" Rule: Order of Information</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                To see why $N$ depends on $\epsilon$, let's trace the visibility of information through the three variables from left to right:
+            </p>
+            <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.85rem;">
+                    <strong>The First Move ($\forall \epsilon > 0$):</strong><br>
+                    $\epsilon$ is chosen first and in complete isolation. The person picking $\epsilon$ has no idea what $N$ will be, and they don't care. They can challenge you with $\epsilon = 1$, $\epsilon = 0.05$, or $\epsilon = 10^{-12}$.
+                </li>
+                <li style="margin-bottom: 0.85rem;">
+                    <strong>The Response ($\exists N \in \mathbb{N}$):</strong><br>
+                    Now it is your turn to pick $N$. Because your move happens <em>after</em> $\epsilon$ has been announced, you make your choice with <strong>full knowledge of $\epsilon$</strong>. You are responding to their move. Mathematically, this means $N$ is a function of $\epsilon$—written $N = N(\epsilon)$. If the challenger changes $\epsilon$ to a tighter tolerance, you are completely free to pick a larger $N$.
+                </li>
+                <li>
+                    <strong>The Final Verification ($\forall n > N$):</strong><br>
+                    Finally, we test the tail. The variable $n$ is evaluated only after both $\epsilon$ and $N$ are already locked into place, inspecting every single step strictly past your cutoff milestone to verify that distance stays strictly below $\epsilon$.
+                </li>
+            </ul>
+
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">When Can You Swap Quantifiers? (The Commutativity Rule)</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                A helpful rule of thumb to keep in mind is:
+            </p>
+            <ul style="margin: 0.5rem 0 1.25rem 1.25rem; color: #334155; line-height: 1.7; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.5rem;">
+                    <strong>Quantifiers of the same type always commute:</strong> You can safely swap two universal quantifiers ($\forall x \, \forall y \iff \forall y \, \forall x$) or two existential quantifiers ($\exists x \, \exists y \iff \exists y \, \exists x$) without changing the mathematical meaning.
+                </li>
+                <li>
+                    <strong>Alternating quantifiers NEVER commute:</strong> Swapping a $\forall$ with an $\exists$ radically changes what the statement demands. In analysis, $\forall \epsilon \, \exists N$ and $\exists N \, \forall \epsilon$ describe two completely different universes.
+                </li>
+            </ul>
+
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">The Fatal Quantifier Swap: Why $\exists N \; \forall \epsilon$ Breaks Mathematics</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                To see the power of quantifier order firsthand, let's conduct a thought experiment. What would happen if a student accidentally reversed the first two quantifiers in an exam and wrote:
+            </p>
+            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem; color: #b91c1c;">
+                $$\exists N \in \mathbb{N} \quad \forall \epsilon > 0 \quad \forall n > N, \quad |a_n - L| < \epsilon \quad \text{?}$$
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Read it from left to right using our "who knows what" rule:
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                The statement now opens with $\exists N \in \mathbb{N}$. That means a single milestone number $N$ must be chosen <em>first</em>, before anyone has named $\epsilon$. Then, that same fixed $N$ must satisfy $|a_n - L| < \epsilon$ for <strong>every single positive $\epsilon$ simultaneously</strong>!
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Think about what that requires. If $|a_n - L| < \epsilon$ for every $\epsilon > 0$, what non-negative real number is strictly smaller than every positive number? Only zero! The only distance smaller than every positive tolerance is exactly zero:
+            </p>
+            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
+                $$|a_n - L| = 0 \implies a_n = L \quad \text{for all } n > N$$
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                By accidentally swapping those two words, the definition no longer describes sequences that approach a limit. It only describes sequences that literally <strong>freeze and become permanently constant</strong> after step $N$ (like $3, 7, 2, 5, 5, 5, 5, \dots$). A sequence like $a_n = 1/n$, which never equals $0$ but clearly converges to $0$, would fail this broken test!
+            </p>
+
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">A Practical Mental Checklist for Reading Proofs</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Whenever you sit down to write or read an $\epsilon\text{-}N$ proof, keep this internal dialogue running:
+            </p>
+            <ol style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.6rem;">
+                    <strong>When you see $\forall \epsilon > 0$:</strong> Remind yourself, <em>"I do not choose $\epsilon$. Someone hands it to me. I must treat $\epsilon$ as an arbitrary positive constant throughout my proof."</em>
+                </li>
+                <li style="margin-bottom: 0.6rem;">
+                    <strong>When you see $\exists N \in \mathbb{N}$:</strong> Say to yourself, <em>"Now it's my turn. I must find a formula for $N$ that uses $\epsilon$. It is completely fine if $N$ gets huge when $\epsilon$ is tiny."</em>
+                </li>
+                <li>
+                    <strong>When you see $\forall n > N$:</strong> Say to yourself, <em>"Now I verify my work. I let $n$ be an arbitrary index past $N$ and prove that the distance inequality $|a_n - L| < \epsilon$ holds algebraically."</em>
+                </li>
+            </ol>"""
 
 COMPLETE_SECTIONS_4_5_6 = r"""            <!-- SECTION 4: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->
             <h2 id="section-prop5">4. Properties of Convergent Sequences (Proposition 5) &amp; Foundational Theorems</h2>
@@ -733,21 +820,27 @@ COMPLETE_SECTIONS_4_5_6 = r"""            <!-- SECTION 4: UNBOXED, DETAILED, EMP
 
 
 def restore_lecture_content(content: str) -> str:
-    """Atomically restore Sections 4, 5, and 6 in week2-lecture4.html."""
-    pattern = re.compile(
+    """Atomically restore Sections 2, 4, 5, and 6 in week2-lecture4.html."""
+
+    # 1. Restore Section 2 (Quantifier Order, Timing, and Dependencies)
+    sec2_pattern = re.compile(
+        r'(?:<!-- SECTION 2: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->|<h2 id="section-quantifiers">).*?'
+        r'(?=<!-- SECTION 3)',
+        re.DOTALL
+    )
+    if sec2_pattern.search(content):
+        content = sec2_pattern.sub(lambda _: RESTORED_SECTION_2 + "\n\n            ", content)
+
+    # 2. Restore Sections 4, 5, and 6
+    sec4_to_end_pattern = re.compile(
         r'(?:<!-- SECTION 4: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->|<h2 id="section-prop5">).*?'
         r'(?=<!-- FOOTER NAVIGATION -->)',
         re.DOTALL
     )
+    if sec4_to_end_pattern.search(content):
+        content = sec4_to_end_pattern.sub(lambda _: COMPLETE_SECTIONS_4_5_6 + "\n            ", content)
 
-    if not pattern.search(content):
-        print(
-            "Error: Could not locate Section 4 through Section 6 boundary in target file.",
-            file=sys.stderr
-        )
-        sys.exit(1)
-
-    return pattern.sub(lambda _: COMPLETE_SECTIONS_4_5_6 + "\n            ", content)
+    return content
 
 
 def update_lecture_document(file_path: Path) -> None:
