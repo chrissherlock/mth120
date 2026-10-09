@@ -1436,6 +1436,589 @@
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
                 We have shown that the non-negative real number $|L - M|$ is strictly smaller than <em>every</em> positive number $\epsilon$. The only non-negative number with that property is zero. Thus, $|L - M| = 0$, which proves $L = M$. $\blacksquare$
             </p>
+<!-- ================================================================= -->
+                <!-- 2D INTERACTIVE AID: THEOREM - UNIQUENESS OF LIMITS (LIGHT THEME)  -->
+                <!-- ================================================================= -->
+                <section id="uniqueness-widget-2d" style="margin: 2.5rem 0; font-family: system-ui, -apple-system, sans-serif;">
+                    <style>
+                        #uniqueness-widget-2d {
+                            --uw-bg: #f8fafc;
+                            --uw-card-bg: #ffffff;
+                            --uw-border: #cbd5e1;
+                            --uw-text: #0f172a;
+                            --uw-text-muted: #64748b;
+                            --uw-primary: #0284c7;
+                            --uw-accent: #b45309;
+                            --uw-danger: #e11d48;
+                            --uw-success: #059669;
+                        }
+                        #uniqueness-widget-2d .widget-box {
+                            background: var(--uw-card-bg);
+                            border: 1px solid var(--uw-border);
+                            border-radius: 12px;
+                            overflow: hidden;
+                            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+                            color: var(--uw-text);
+                        }
+                        /* Header & Dimension Toggles */
+                        #uniqueness-widget-2d .widget-header {
+                            padding: 1.25rem 1.5rem;
+                            border-bottom: 1px solid #e2e8f0;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            flex-wrap: wrap;
+                            gap: 1rem;
+                            background: #ffffff;
+                        }
+                        #uniqueness-widget-2d .widget-title {
+                            font-size: 1.15rem;
+                            font-weight: 700;
+                            margin: 0;
+                            color: var(--uw-text);
+                        }
+                        #uniqueness-widget-2d .dim-toggles {
+                            display: flex;
+                            gap: 0.35rem;
+                            background: #f1f5f9;
+                            padding: 0.25rem;
+                            border-radius: 8px;
+                            border: 1px solid var(--uw-border);
+                        }
+                        #uniqueness-widget-2d .dim-btn {
+                            background: transparent;
+                            color: #475569;
+                            border: none;
+                            padding: 0.35rem 0.75rem;
+                            border-radius: 6px;
+                            cursor: pointer;
+                            font-size: 0.82rem;
+                            font-weight: 600;
+                            transition: all 0.2s ease;
+                        }
+                        #uniqueness-widget-2d .dim-btn.active {
+                            background: var(--uw-primary);
+                            color: #ffffff !important;
+                        }
+                        /* Telemetry Bar */
+                        #uniqueness-widget-2d .telemetry-grid {
+                            display: grid;
+                            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+                            gap: 0.5rem;
+                            background: #f8fafc;
+                            padding: 0.75rem 1.25rem;
+                            border-bottom: 1px solid #e2e8f0;
+                        }
+                        #uniqueness-widget-2d .telemetry-cell {
+                            display: flex;
+                            flex-direction: column;
+                        }
+                        #uniqueness-widget-2d .telemetry-label {
+                            font-size: 0.7rem;
+                            text-transform: uppercase;
+                            letter-spacing: 0.05em;
+                            color: var(--uw-text-muted);
+                            font-weight: 700;
+                        }
+                        #uniqueness-widget-2d .telemetry-val {
+                            font-family: monospace;
+                            font-size: 0.95rem;
+                            font-weight: 700;
+                            color: var(--uw-primary);
+                        }
+                        /* 2D Canvas Area */
+                        #uniqueness-widget-2d .canvas-wrap {
+                            width: 100%;
+                            background: #f8fafc;
+                            position: relative;
+                            border-bottom: 1px solid #e2e8f0;
+                        }
+                        #uniqueness-widget-2d svg {
+                            display: block;
+                            width: 100%;
+                            height: auto;
+                        }
+                        /* Navigation & Inline Preview */
+                        #uniqueness-widget-2d .nav-panel {
+                            display: grid;
+                            grid-template-columns: auto 1fr;
+                            gap: 1.25rem;
+                            padding: 1.25rem;
+                            border-bottom: 1px solid #e2e8f0;
+                            align-items: center;
+                            background: #ffffff;
+                        }
+                        @media (max-width: 680px) {
+                            #uniqueness-widget-2d .nav-panel {
+                                grid-template-columns: 1fr;
+                            }
+                        }
+                        #uniqueness-widget-2d .nav-buttons {
+                            display: flex;
+                            gap: 0.5rem;
+                            align-items: center;
+                        }
+                        #uniqueness-widget-2d .uw-btn {
+                            background: #f8fafc;
+                            color: #1e293b !important;
+                            border: 1px solid var(--uw-border);
+                            padding: 0.55rem 0.95rem;
+                            border-radius: 6px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            font-size: 0.85rem;
+                            transition: background 0.15s, border-color 0.15s;
+                        }
+                        #uniqueness-widget-2d .uw-btn:hover:not(:disabled) {
+                            background: #e2e8f0;
+                            border-color: #94a3b8;
+                        }
+                        #uniqueness-widget-2d .uw-btn:disabled {
+                            opacity: 0.45;
+                            cursor: not-allowed;
+                        }
+                        #uniqueness-widget-2d .uw-btn-primary {
+                            background: #0284c7;
+                            color: #ffffff !important;
+                            border-color: #0284c7;
+                        }
+                        #uniqueness-widget-2d .uw-btn-primary:hover:not(:disabled) {
+                            background: #0369a1;
+                            border-color: #0369a1;
+                        }
+                        #uniqueness-widget-2d .preview-desc {
+                            font-size: 0.92rem;
+                            color: #334155;
+                            border-left: 3px solid var(--uw-primary);
+                            padding-left: 0.85rem;
+                            margin: 0;
+                            line-height: 1.55;
+                        }
+                        /* Analytical Panes */
+                        #uniqueness-widget-2d .panes-grid {
+                            display: grid;
+                            grid-template-columns: 1fr 1fr;
+                            gap: 1rem;
+                            padding: 1.25rem;
+                            background: #ffffff;
+                        }
+                        @media (max-width: 768px) {
+                            #uniqueness-widget-2d .panes-grid {
+                                grid-template-columns: 1fr;
+                            }
+                        }
+                        #uniqueness-widget-2d .uw-pane {
+                            background: #f8fafc;
+                            border: 1px solid #e2e8f0;
+                            border-radius: 8px;
+                            padding: 1rem;
+                        }
+                        #uniqueness-widget-2d .uw-pane h4 {
+                            margin: 0 0 0.5rem 0;
+                            font-size: 0.85rem;
+                            text-transform: uppercase;
+                            letter-spacing: 0.05em;
+                        }
+                        #uniqueness-widget-2d .uw-pane-what h4 { color: var(--uw-primary); }
+                        #uniqueness-widget-2d .uw-pane-why h4 { color: var(--uw-accent); }
+                        #uniqueness-widget-2d .uw-pane-body {
+                            font-size: 0.88rem;
+                            color: #334155;
+                            line-height: 1.6;
+                        }
+                    </style>
+
+                    <div class="widget-box">
+                        <!-- HEADER & DIMENSION TOGGLES -->
+                        <div class="widget-header">
+                            <h3 class="widget-title">Visual Proof: Geometric Impossibility of Dual Limits</h3>
+                            <div class="dim-toggles">
+                                <button class="dim-btn active" id="u2-dim-seq" onclick="switchDimension('seq')">Sequence Limits (aₙ → L)</button>
+                                <button class="dim-btn" id="u2-dim-fun" onclick="switchDimension('fun')">Function Limits (f(x) → L)</button>
+                            </div>
+                        </div>
+
+                        <!-- LIVE STATE TELEMETRY -->
+                        <div class="telemetry-grid">
+                            <div class="telemetry-cell">
+                                <span class="telemetry-label">Active Phase</span>
+                                <span class="telemetry-val" id="u2-tel-phase" style="color: #0284c7;">0: Dual Anchors</span>
+                            </div>
+                            <div class="telemetry-cell">
+                                <span class="telemetry-label">Distance |L₁ - L₂|</span>
+                                <span class="telemetry-val" id="u2-tel-dist">4.00</span>
+                            </div>
+                            <div class="telemetry-cell">
+                                <span class="telemetry-label">Tolerance ε</span>
+                                <span class="telemetry-val" id="u2-tel-eps">2.00</span>
+                            </div>
+                            <div class="telemetry-cell">
+                                <span class="telemetry-label" id="u2-tel-cut-lbl">Cutoffs N₁, N₂</span>
+                                <span class="telemetry-val" id="u2-tel-cutoffs">N₁=4, N₂=7</span>
+                            </div>
+                            <div class="telemetry-cell">
+                                <span class="telemetry-label" id="u2-tel-hor-lbl">Tail Horizon N*</span>
+                                <span class="telemetry-val" id="u2-tel-max">max(N₁,N₂) = 7</span>
+                            </div>
+                            <div class="telemetry-cell">
+                                <span class="telemetry-label">Corridor Overlap</span>
+                                <span class="telemetry-val" id="u2-tel-overlap" style="color: #b45309;">U(L₁) ∩ U(L₂) ≠ ∅</span>
+                            </div>
+                        </div>
+
+                        <!-- 2D SYNCHRONIZED VISUAL CANVAS (SVG) -->
+                        <div class="canvas-wrap">
+                            <svg id="u2-svg" viewBox="0 0 760 330" font-family="system-ui, -apple-system, sans-serif">
+                                <defs>
+                                    <marker id="u2-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                        <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748b"/>
+                                    </marker>
+                                </defs>
+
+                                <!-- Coordinate Grid Background -->
+                                <g stroke="#e2e8f0" stroke-width="1">
+                                    <line x1="60" y1="50" x2="720" y2="50"/>
+                                    <line x1="60" y1="100" x2="720" y2="100"/>
+                                    <line x1="60" y1="150" x2="720" y2="150"/>
+                                    <line x1="60" y1="200" x2="720" y2="200"/>
+                                    <line x1="60" y1="250" x2="720" y2="250"/>
+                                    <line x1="120" y1="20" x2="120" y2="280"/>
+                                    <line x1="180" y1="20" x2="180" y2="280"/>
+                                    <line x1="240" y1="20" x2="240" y2="280"/>
+                                    <line x1="300" y1="20" x2="300" y2="280"/>
+                                    <line x1="360" y1="20" x2="360" y2="280"/>
+                                    <line x1="420" y1="20" x2="420" y2="280"/>
+                                    <line x1="480" y1="20" x2="480" y2="280"/>
+                                    <line x1="540" y1="20" x2="540" y2="280"/>
+                                    <line x1="600" y1="20" x2="600" y2="280"/>
+                                    <line x1="660" y1="20" x2="660" y2="280"/>
+                                </g>
+
+                                <!-- Master Tail Zone Background (Steps 3 & 4) -->
+                                <rect id="u2-tail-rect" x="480" y="25" width="240" height="255" fill="#ffe4e6" fill-opacity="0.55" stroke="#fecdd3" stroke-width="1" style="display:none;"/>
+
+                                <!-- Corridors for L1 and L2 -->
+                                <!-- L1 Corridor: Base center y=85 -->
+                                <rect id="u2-band-l1" x="60" y="25" width="660" height="120" fill="#e0f2fe" fill-opacity="0.65" stroke="#0284c7" stroke-width="1.3" stroke-dasharray="4"/>
+                                <!-- L2 Corridor: Base center y=215 -->
+                                <rect id="u2-band-l2" x="60" y="155" width="660" height="120" fill="#fef3c7" fill-opacity="0.65" stroke="#d97706" stroke-width="1.3" stroke-dasharray="4"/>
+
+                                <!-- Centerlines for L1 and L2 -->
+                                <line x1="60" y1="85" x2="720" y2="85" stroke="#0284c7" stroke-width="1.8" stroke-dasharray="3"/>
+                                <text x="726" y="89" fill="#0369a1" font-size="12" font-weight="700">L₁ = +2</text>
+                                <line x1="60" y1="215" x2="720" y2="215" stroke="#d97706" stroke-width="1.8" stroke-dasharray="3"/>
+                                <text x="726" y="219" fill="#b45309" font-size="12" font-weight="700">L₂ = -2</text>
+
+                                <!-- Neutral Baseline (y=0) & Coordinate Axes -->
+                                <line x1="60" y1="150" x2="720" y2="150" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="2"/>
+                                <line x1="60" y1="280" x2="725" y2="280" stroke="#64748b" stroke-width="1.5" marker-end="url(#u2-arrow)"/>
+                                <text id="u2-axis-lbl" x="725" y="298" fill="#64748b" font-size="11" font-weight="600">Index n</text>
+                                <line x1="60" y1="280" x2="60" y2="15" stroke="#64748b" stroke-width="1.5" marker-end="url(#u2-arrow)"/>
+                                <text x="25" y="18" fill="#64748b" font-size="11" font-weight="600">Values</text>
+
+                                <!-- Distance Dimension Bracket |L1 - L2| = 4 -->
+                                <g id="u2-dist-bracket" stroke="#64748b" stroke-width="1.2">
+                                    <line x1="45" y1="85" x2="45" y2="215"/>
+                                    <line x1="40" y1="85" x2="48" y2="85"/>
+                                    <line x1="40" y1="215" x2="48" y2="215"/>
+                                    <text x="36" y="154" fill="#0f172a" font-size="11" font-weight="700" text-anchor="end">d = 4</text>
+                                </g>
+
+                                <!-- Cutoff Horizon Lines -->
+                                <g id="u2-cutoff-lines">
+                                    <!-- N1 = 4 (x = 300) -->
+                                    <line id="u2-line-n1" x1="300" y1="25" x2="300" y2="280" stroke="#0284c7" stroke-width="2" stroke-dasharray="5" style="display:none;"/>
+                                    <text id="u2-lbl-n1" x="300" y="296" fill="#0284c7" font-size="11" font-weight="700" text-anchor="middle" style="display:none;">N₁ = 4</text>
+
+                                    <!-- N2 = 7 (x = 480) -->
+                                    <line id="u2-line-n2" x1="480" y1="25" x2="480" y2="280" stroke="#d97706" stroke-width="2" stroke-dasharray="5" style="display:none;"/>
+                                    <text id="u2-lbl-n2" x="480" y="296" fill="#d97706" font-size="11" font-weight="700" text-anchor="middle" style="display:none;">N₂ = 7</text>
+
+                                    <!-- N* = max(4,7) = 7 (x = 480) -->
+                                    <line id="u2-line-nstar" x1="480" y1="20" x2="480" y2="280" stroke="#e11d48" stroke-width="2.5" style="display:none;"/>
+                                    <text id="u2-lbl-nstar" x="480" y="14" fill="#e11d48" font-size="12" font-weight="800" text-anchor="middle" style="display:none;">N* = max(N₁, N₂) = 7</text>
+                                </g>
+
+                                <!-- Sequence Trend Segments -->
+                                <polyline id="u2-seq-trail" points="120,40 180,250 240,65 300,230 360,75 420,222 480,80 540,150 600,82 660,218"
+                                                    fill="none" stroke="#94a3b8" stroke-width="1.3" stroke-dasharray="2"/>
+
+                                <!-- Plotted Sequence Data Points -->
+                                <g id="u2-pts">
+                                    <circle id="u2-pt-1" cx="120" cy="40" r="5" fill="#94a3b8"/>
+                                    <circle id="u2-pt-2" cx="180" cy="250" r="5" fill="#94a3b8"/>
+                                    <circle id="u2-pt-3" cx="240" cy="65" r="5" fill="#94a3b8"/>
+                                    <circle id="u2-pt-4" cx="300" cy="230" r="5" fill="#94a3b8"/>
+                                    <circle id="u2-pt-5" cx="360" cy="75" r="5.5" fill="#94a3b8"/>
+                                    <circle id="u2-pt-6" cx="420" cy="222" r="5.5" fill="#94a3b8"/>
+                                    <circle id="u2-pt-7" cx="480" cy="80" r="5.5" fill="#94a3b8"/>
+                                    <circle id="u2-pt-8" cx="540" cy="150" r="7" fill="#94a3b8"/>
+                                    <circle id="u2-pt-9" cx="600" cy="82" r="5.5" fill="#94a3b8"/>
+                                    <circle id="u2-pt-10" cx="660" cy="218" r="5.5" fill="#94a3b8"/>
+                                </g>
+
+                                <!-- Contradiction Tension Connector (Step 4) -->
+                                <g id="u2-contra-group" style="display:none;">
+                                    <line x1="540" y1="85" x2="540" y2="215" stroke="#e11d48" stroke-width="2.5" stroke-dasharray="4"/>
+                                    <line x1="534" y1="85" x2="546" y2="85" stroke="#e11d48" stroke-width="2"/>
+                                    <line x1="534" y1="215" x2="546" y2="215" stroke="#e11d48" stroke-width="2"/>
+                                    <!-- Conflict Callout Card -->
+                                    <rect x="555" y="125" width="185" height="52" rx="6" fill="#ffffff" stroke="#e11d48" stroke-width="1.5"/>
+                                    <text x="565" y="144" fill="#9f1239" font-size="11" font-weight="700">|L₁ - L₂| ≤ |L₁ - a₈| + |a₈ - L₂|</text>
+                                    <text x="565" y="162" fill="#e11d48" font-size="11" font-weight="800">4 &lt; 1 + 1 ⟹ 4 &lt; 2 (⊥)</text>
+                                </g>
+                            </svg>
+                        </div>
+
+                        <!-- NAVIGATION & INLINE PREVIEW -->
+                        <div class="nav-panel">
+                            <div class="nav-buttons">
+                                <button class="uw-btn" id="u2-btn-prev" onclick="advanceStep(-1)" disabled>Prev</button>
+                                <button class="uw-btn uw-btn-primary" id="u2-btn-next" onclick="advanceStep(1)">Next Step</button>
+                                <button class="uw-btn" onclick="restoreInitialStep()">Reset</button>
+                            </div>
+                            <p class="preview-desc" id="u2-preview-text">
+                                Suppose for contradiction that a sequence converges to two distinct limits L₁ ≠ L₂. We establish the two targets in metric space.
+                            </p>
+                        </div>
+
+                        <!-- PAIRED ANALYTICAL PANES -->
+                        <div class="panes-grid">
+                            <div class="uw-pane uw-pane-what">
+                                <h4>What Is Happening</h4>
+                                <div class="uw-pane-body" id="u2-pane-what">
+                                    Two candidate limits are set at y = 2.0 and y = -2.0 with metric gap d = |L₁ - L₂| = 4.0. An unrefined tolerance ε = 2.0 leaves the two corridors touching at y = 0, permitting shared space.
+                                </div>
+                            </div>
+                            <div class="uw-pane uw-pane-why">
+                                <h4>Why The System Does This</h4>
+                                <div class="uw-pane-body" id="u2-pane-why">
+                                    Proof by Contradiction. We provisionally grant the premise that L₁ ≠ L₂ to show that any positive distance enables the skeptic to construct completely disjoint open neighborhoods.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <script>
+                (function() {
+                    let activeStep = 0;
+                    let activeDim = 'seq';
+
+                    const stepsData = [
+                        {
+                            phase: "0: Dual Anchors",
+                            eps: "2.00 (Loose)",
+                            overlap: "U(L₁) ∩ U(L₂) ≠ ∅",
+                            overlapColor: "#b45309",
+                            summary: "Assume for contradiction that two limits exist: L₁ = +2 and L₂ = -2. With loose tolerances, the two target corridors overlap.",
+                            what: "Two candidate limit axes are fixed at y = 2 and y = -2 with metric gap d = |L₁ - L₂| = 4.0. An unrefined tolerance ε = 2.0 leaves the two corridors touching at the midpoint y = 0.",
+                            why: "Proof by Contradiction. We provisionally grant the premise that L₁ ≠ L₂ to show that any positive distance enables the skeptic to construct completely disjoint open neighborhoods."
+                        },
+                        {
+                            phase: "1: The Disjoint Partition",
+                            eps: "d/2 = 1.00 (Strict)",
+                            overlap: "U(L₁) ∩ U(L₂) = ∅ (Disjoint)",
+                            overlapColor: "#059669",
+                            summary: "The skeptic chooses ε = d/2 = 1.00. The two tolerance corridors shrink until they become completely disjoint, sharing zero common real numbers.",
+                            what: "The corridor tubes shrink to radius 1: U(L₁) = (1.0, 3.0) and U(L₂) = (-3.0, -1.0). The open gap separating the bands is exactly 2.0. The intersection U(L₁) ∩ U(L₂) is strictly empty (∅).",
+                            why: "The Hausdorff property of metric spaces: any two distinct points can be separated by mutually disjoint open neighborhoods. This geometric moat makes simultaneous containment impossible."
+                        },
+                        {
+                            phase: "2: Activating Cutoffs",
+                            eps: "1.00",
+                            overlap: "N₁ = 4, N₂ = 7 Active",
+                            overlapColor: "#0284c7",
+                            summary: "By the definition of convergence, there exists milestone N₁ for L₁, and milestone N₂ for L₂. Beyond their respective markers, points are claimed by each corridor.",
+                            what: "Vertical boundary walls appear at n = N₁ (index 4) and n = N₂ (index 7). The L₁ definition demands all terms past 4 land in the light blue tube. The L₂ definition demands all terms past 7 land in the amber tube.",
+                            why: "Universal quantification guarantees that a cutoff index must exist for any positive ε, no matter how small. Each limit makes an independent promise about its tail."
+                        },
+                        {
+                            phase: "3: The Unified Tail Horizon",
+                            eps: "1.00",
+                            overlap: "N* = max(4, 7) = 7",
+                            overlapColor: "#e11d48",
+                            summary: "We take the combined horizon N* = max(N₁, N₂) = 7. For every index n > N*, both convergence promises must hold simultaneously.",
+                            what: "The master cutoff line N* = 7 illuminates and shades the infinite tail zone. For all n > N*, the condition n > N₁ holds (forcing aₙ into the light blue tube) AND n > N₂ holds (forcing aₙ into the amber tube).",
+                            why: "Taking the maximum of finite natural numbers is valid and finite. Past N*, we enter the intersection of both infinite tails, forcing both inequalities to be true at once."
+                        },
+                        {
+                            phase: "4: The Spatial Contradiction",
+                            eps: "1.00",
+                            overlap: "⊥ Contradiction (|L₁ - L₂| < d)",
+                            overlapColor: "#e11d48",
+                            summary: "A term aₙ (n > N*) is evaluated: it must reside in the top tube AND the bottom tube simultaneously. Since they are disjoint, no such number can exist. Therefore, L₁ = L₂.",
+                            what: "The test point a₈ flashes in red. It must satisfy |a₈ - L₁| < 1 AND |a₈ - L₂| < 1. By the triangle inequality: 4 = |L₁ - L₂| ≤ |L₁ - a₈| + |a₈ - L₂| < 1 + 1 = 2, yielding 4 < 2, a logical impossibility.",
+                            why: "A single real value cannot occupy two disjoint open sets at the same coordinate. The initial premise that L₁ ≠ L₂ is false; limits in metric spaces are uniquely determined."
+                        }
+                    ];
+
+                    function refreshCanvasElements(idx) {
+                        const data = stepsData[idx];
+
+                        document.getElementById("u2-tel-phase").textContent = data.phase;
+                        document.getElementById("u2-tel-eps").textContent = data.eps;
+                        document.getElementById("u2-tel-overlap").textContent = data.overlap;
+                        document.getElementById("u2-tel-overlap").style.color = data.overlapColor;
+
+                        document.getElementById("u2-preview-text").textContent = data.summary;
+                        document.getElementById("u2-pane-what").textContent = data.what;
+                        document.getElementById("u2-pane-why").textContent = data.why;
+
+                        document.getElementById("u2-btn-prev").disabled = (idx === 0);
+                        document.getElementById("u2-btn-next").disabled = (idx === stepsData.length - 1);
+
+                        const bandL1 = document.getElementById("u2-band-l1");
+                        const bandL2 = document.getElementById("u2-band-l2");
+                        const lineN1 = document.getElementById("u2-line-n1");
+                        const lblN1 = document.getElementById("u2-lbl-n1");
+                        const lineN2 = document.getElementById("u2-line-n2");
+                        const lblN2 = document.getElementById("u2-lbl-n2");
+                        const lineNStar = document.getElementById("u2-line-nstar");
+                        const lblNStar = document.getElementById("u2-lbl-nstar");
+                        const tailRect = document.getElementById("u2-tail-rect");
+                        const contraGroup = document.getElementById("u2-contra-group");
+
+                        for (let i = 1; i <= 10; i++) {
+                            const pt = document.getElementById(`u2-pt-${i}`);
+                            pt.setAttribute("fill", "#94a3b8");
+                            pt.setAttribute("r", i === 8 ? "7" : "5.5");
+                        }
+
+                        if (idx === 0) {
+                            bandL1.setAttribute("y", "25");
+                            bandL1.setAttribute("height", "120");
+                            bandL2.setAttribute("y", "155");
+                            bandL2.setAttribute("height", "120");
+
+                            lineN1.style.display = "none";
+                            lblN1.style.display = "none";
+                            lineN2.style.display = "none";
+                            lblN2.style.display = "none";
+                            lineNStar.style.display = "none";
+                            lblNStar.style.display = "none";
+                            tailRect.style.display = "none";
+                            contraGroup.style.display = "none";
+                        } else if (idx === 1) {
+                            bandL1.setAttribute("y", "55");
+                            bandL1.setAttribute("height", "60");
+                            bandL2.setAttribute("y", "185");
+                            bandL2.setAttribute("height", "60");
+
+                            lineN1.style.display = "none";
+                            lblN1.style.display = "none";
+                            lineN2.style.display = "none";
+                            lblN2.style.display = "none";
+                            lineNStar.style.display = "none";
+                            lblNStar.style.display = "none";
+                            tailRect.style.display = "none";
+                            contraGroup.style.display = "none";
+                        } else if (idx === 2) {
+                            bandL1.setAttribute("y", "55");
+                            bandL1.setAttribute("height", "60");
+                            bandL2.setAttribute("y", "185");
+                            bandL2.setAttribute("height", "60");
+
+                            lineN1.style.display = "block";
+                            lblN1.style.display = "block";
+                            lineN2.style.display = "block";
+                            lblN2.style.display = "block";
+                            lineNStar.style.display = "none";
+                            lblNStar.style.display = "none";
+                            tailRect.style.display = "none";
+                            contraGroup.style.display = "none";
+
+                            document.getElementById("u2-pt-5").setAttribute("fill", "#0284c7");
+                            document.getElementById("u2-pt-6").setAttribute("fill", "#d97706");
+                            document.getElementById("u2-pt-7").setAttribute("fill", "#0284c7");
+                        } else if (idx === 3) {
+                            bandL1.setAttribute("y", "55");
+                            bandL1.setAttribute("height", "60");
+                            bandL2.setAttribute("y", "185");
+                            bandL2.setAttribute("height", "60");
+
+                            lineN1.style.display = "block";
+                            lblN1.style.display = "block";
+                            lineN2.style.display = "none";
+                            lblN2.style.display = "none";
+                            lineNStar.style.display = "block";
+                            lblNStar.style.display = "block";
+                            tailRect.style.display = "block";
+                            contraGroup.style.display = "none";
+
+                            document.getElementById("u2-pt-5").setAttribute("fill", "#0284c7");
+                            document.getElementById("u2-pt-6").setAttribute("fill", "#d97706");
+                            document.getElementById("u2-pt-7").setAttribute("fill", "#0284c7");
+                            document.getElementById("u2-pt-8").setAttribute("fill", "#e11d48");
+                            document.getElementById("u2-pt-9").setAttribute("fill", "#e11d48");
+                            document.getElementById("u2-pt-10").setAttribute("fill", "#e11d48");
+                        } else if (idx === 4) {
+                            bandL1.setAttribute("y", "55");
+                            bandL1.setAttribute("height", "60");
+                            bandL2.setAttribute("y", "185");
+                            bandL2.setAttribute("height", "60");
+
+                            lineN1.style.display = "none";
+                            lblN1.style.display = "none";
+                            lineN2.style.display = "none";
+                            lblN2.style.display = "none";
+                            lineNStar.style.display = "block";
+                            lblNStar.style.display = "block";
+                            tailRect.style.display = "block";
+                            contraGroup.style.display = "block";
+
+                            const p8 = document.getElementById("u2-pt-8");
+                            p8.setAttribute("fill", "#e11d48");
+                            p8.setAttribute("r", "8.5");
+                        }
+                    }
+
+                    window.advanceStep = function(delta) {
+                        activeStep = Math.max(0, Math.min(stepsData.length - 1, activeStep + delta));
+                        refreshCanvasElements(activeStep);
+                    };
+
+                    window.restoreInitialStep = function() {
+                        activeStep = 0;
+                        refreshCanvasElements(0);
+                    };
+
+                    window.switchDimension = function(mode) {
+                        activeDim = mode;
+                        document.getElementById("u2-dim-seq").classList.toggle("active", mode === 'seq');
+                        document.getElementById("u2-dim-fun").classList.toggle("active", mode === 'fun');
+
+                        if (mode === 'fun') {
+                            document.getElementById("u2-axis-lbl").textContent = "Input x (around c)";
+                            document.getElementById("u2-tel-cut-lbl").textContent = "Cutoffs δ₁, δ₂";
+                            document.getElementById("u2-tel-cutoffs").textContent = "δ₁=0.4, δ₂=0.2";
+                            document.getElementById("u2-tel-hor-lbl").textContent = "Punctured Radius δ*";
+                            document.getElementById("u2-tel-max").textContent = "min(δ₁, δ₂) = 0.2";
+                            document.getElementById("u2-lbl-n1").textContent = "δ₁ = 0.4";
+                            document.getElementById("u2-lbl-n2").textContent = "δ₂ = 0.2";
+                            document.getElementById("u2-lbl-nstar").textContent = "δ* = min(δ₁, δ₂) = 0.2";
+
+                            stepsData[2].summary = "For functions f(x) → L, we find punctured input radii δ₁ and δ₂ around limit point c.";
+                            stepsData[3].summary = "We select the tighter window δ* = min(δ₁, δ₂). For all 0 < |x - c| < δ*, f(x) must land in both tubes.";
+                        } else {
+                            document.getElementById("u2-axis-lbl").textContent = "Index n";
+                            document.getElementById("u2-tel-cut-lbl").textContent = "Cutoffs N₁, N₂";
+                            document.getElementById("u2-tel-cutoffs").textContent = "N₁=4, N₂=7";
+                            document.getElementById("u2-tel-hor-lbl").textContent = "Tail Horizon N*";
+                            document.getElementById("u2-tel-max").textContent = "max(N₁, N₂) = 7";
+                            document.getElementById("u2-lbl-n1").textContent = "N₁ = 4";
+                            document.getElementById("u2-lbl-n2").textContent = "N₂ = 7";
+                            document.getElementById("u2-lbl-nstar").textContent = "N* = max(N₁, N₂) = 7";
+
+                            stepsData[2].summary = "By definition of convergence, there exists milestone N₁ for L₁, and milestone N₂ for L₂.";
+                            stepsData[3].summary = "We take the combined horizon N* = max(N₁, N₂) = 7. Beyond N*, both conditions must hold simultaneously.";
+                        }
+                        refreshCanvasElements(activeStep);
+                    };
+
+                    refreshCanvasElements(0);
+                })();
+                </script>
 
             <h3 style="color: #0f172a; margin-top: 1.75rem;">Theorem: Tail Invariance (The Shift &amp; Truncation Theorem)</h3>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
