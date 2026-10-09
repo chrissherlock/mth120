@@ -303,6 +303,54 @@
                 <li style="margin-bottom: 0.85rem;">
                     <strong>$\forall n > N$ ("For all indices $n$ strictly past the cutoff"):</strong><br>
                     This defines the <em>infinite tail</em> of the sequence. Real analysis teaches us a liberating truth: <strong>initial terms do not matter</strong>. The first ten, hundred, or million terms of a sequence can jump around chaotically, take excursions into negative numbers, or violate the tolerance. What matters is that past your chosen milestone $N$, every single subsequent term settles down.
+                    <!-- DIAGRAM 3: WILD HEAD VS TRAPPED TAIL -->
+                    <figure style="margin: 1.25rem 0; padding: 1.25rem 1.5rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;">
+                        <figcaption style="font-size: 0.9rem; font-weight: 700; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">
+                            Figure 3: Finite Noise vs. Asymptotic Invariance
+                        </figcaption>
+                        <svg viewBox="0 0 740 210" style="width: 100%; height: auto; display: block;" font-family="system-ui, -apple-system, sans-serif">
+                            <!-- Background Halves -->
+                            <rect x="50" y="20" width="230" height="160" fill="#fee2e2" opacity="0.3"/>
+                            <rect x="280" y="20" width="420" height="160" fill="#d1fae5" opacity="0.35"/>
+
+                            <!-- Region Titles -->
+                            <text x="165" y="40" font-size="12" font-weight="700" fill="#b91c1c" text-anchor="middle">THE HEAD (n ≤ N): FINITE CHAOS</text>
+                            <text x="490" y="40" font-size="12" font-weight="700" fill="#047857" text-anchor="middle">THE TAIL (n &gt; N): PERMANENT LOCK-IN</text>
+
+                            <!-- Epsilon Corridor (Only in Tail Region) -->
+                            <rect x="280" y="70" width="420" height="60" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.2" stroke-dasharray="3"/>
+                            <line x1="50" y1="100" x2="700" y2="100" stroke="#64748b" stroke-dasharray="2" stroke-width="1.2"/>
+                            <text x="708" y="104" font-size="12" font-weight="bold" fill="#64748b">L</text>
+
+                            <!-- Cutoff Line N -->
+                            <line x1="280" y1="20" x2="280" y2="185" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="4"/>
+                            <text x="280" y="202" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">Milestone N</text>
+
+                            <!-- Wild Oscillating Head Points -->
+                            <circle cx="80" cy="35" r="5" fill="#ef4444"/>
+                            <circle cx="120" cy="165" r="5" fill="#ef4444"/>
+                            <circle cx="160" cy="45" r="5" fill="#ef4444"/>
+                            <circle cx="200" cy="150" r="5" fill="#ef4444"/>
+                            <circle cx="240" cy="65" r="5" fill="#ef4444"/>
+
+                            <!-- Connecting Trend Lines -->
+                            <polyline points="80,35 120,165 160,45 200,150 240,65 310,90 360,112 410,95 460,104 510,98 560,101 610,100"
+                                      fill="none" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="2"/>
+
+                            <!-- Settled Tail Points -->
+                            <circle cx="310" cy="90" r="5" fill="#10b981"/>
+                            <circle cx="360" cy="112" r="5" fill="#10b981"/>
+                            <circle cx="410" cy="95" r="5" fill="#10b981"/>
+                            <circle cx="460" cy="104" r="5" fill="#10b981"/>
+                            <circle cx="510" cy="98" r="5" fill="#10b981"/>
+                            <circle cx="560" cy="101" r="5" fill="#10b981"/>
+                            <circle cx="610" cy="100" r="5" fill="#10b981"/>
+                            <circle cx="660" cy="100" r="5" fill="#10b981"/>
+                        </svg>
+                        <p style="margin: 0.6rem 0 0 0; font-size: 0.88rem; color: #64748b; line-height: 1.5;">
+                            <strong>Pedagogical takeaway:</strong> A sequence does not need to march monotonically toward <code style="color:#0f172a;">L</code>. It can oscillate violently at the start—convergence is strictly an asymptotic statement about the infinite tail.
+                        </p>
+                    </figure>
                 </li>
                 <li>
                     <strong>$\implies |a_n - L| < \epsilon$ ("The terms remain permanently trapped"):</strong><br>
@@ -349,6 +397,72 @@
 
             <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-top: 1.5rem;">
                 Use the interactive tool below to step through each clause of this definition in order. Notice how the internal telemetry updates, the visual diagram highlights the active region, and the mechanical and logical explanations synchronize with each step:
+                <!-- DIAGRAM 4: CHALLENGE-RESPONSE SHRINKAGE COMPARISON -->
+                <figure style="margin: 1.75rem 0; padding: 1.25rem 1.5rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;">
+                    <figcaption style="font-size: 0.9rem; font-weight: 700; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">
+                        Figure 4: The Challenge–Response Game (N as an Explicit Function of ϵ)
+                    </figcaption>
+                    <svg viewBox="0 0 740 270" style="width: 100%; height: auto; display: block;" font-family="system-ui, -apple-system, sans-serif">
+                        <!-- FRAME A: LOOSE CHALLENGE -->
+                        <g transform="translate(0, 0)">
+                            <rect x="50" y="30" width="640" height="80" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+                            <text x="65" y="22" font-size="11" font-weight="700" fill="#0369a1">ROUND 1: SKEPTIC CHOOSES LOOSE ϵ₁ = 0.5</text>
+
+                            <!-- Wide corridor -->
+                            <rect x="50" y="46" width="640" height="48" fill="#fef3c7" opacity="0.6"/>
+                            <line x1="50" y1="70" x2="690" y2="70" stroke="#94a3b8" stroke-dasharray="2"/>
+                            <text x="695" y="73" font-size="11" fill="#64748b">L</text>
+
+                            <!-- Small Cutoff N1 -->
+                            <line x1="220" y1="30" x2="220" y2="110" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"/>
+                            <text x="220" y="123" font-size="11" font-weight="bold" fill="#ef4444" text-anchor="middle">N₁ = 3</text>
+
+                            <!-- Points -->
+                            <circle cx="100" cy="100" r="4" fill="#94a3b8"/>
+                            <circle cx="150" cy="40" r="4" fill="#94a3b8"/>
+                            <circle cx="200" cy="92" r="4" fill="#94a3b8"/>
+                            <circle cx="260" cy="78" r="4.5" fill="#10b981"/>
+                            <circle cx="330" cy="65" r="4.5" fill="#10b981"/>
+                            <circle cx="410" cy="73" r="4.5" fill="#10b981"/>
+                            <circle cx="500" cy="69" r="4.5" fill="#10b981"/>
+                            <circle cx="600" cy="70" r="4.5" fill="#10b981"/>
+                            <text x="450" y="60" font-size="11" font-weight="bold" fill="#047857">Early cutoff suffices for wide tolerance</text>
+                        </g>
+
+                        <!-- FRAME B: STRICT CHALLENGE -->
+                        <g transform="translate(0, 140)">
+                            <rect x="50" y="30" width="640" height="80" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+                            <text x="65" y="22" font-size="11" font-weight="700" fill="#b45309">ROUND 2: SKEPTIC TIGHTENS TO ϵ₂ = 0.15 (OLD CUTOFF FAILS!)</text>
+
+                            <!-- Narrow corridor -->
+                            <rect x="50" y="60" width="640" height="20" fill="#fef3c7" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3"/>
+                            <line x1="50" y1="70" x2="690" y2="70" stroke="#94a3b8" stroke-dasharray="2"/>
+                            <text x="695" y="73" font-size="11" fill="#64748b">L</text>
+
+                            <!-- Old N fails -->
+                            <line x1="220" y1="30" x2="220" y2="110" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="2"/>
+                            <text x="220" y="123" font-size="10" fill="#64748b" text-anchor="middle">Old N₁ fails</text>
+
+                            <!-- New Far Cutoff N2 -->
+                            <line x1="480" y1="30" x2="480" y2="110" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"/>
+                            <text x="480" y="123" font-size="11" font-weight="bold" fill="#ef4444" text-anchor="middle">N₂ = 8 (Forced Right)</text>
+
+                            <!-- Escaping points that broke old N -->
+                            <circle cx="260" cy="78" r="4" fill="#ef4444"/>
+                            <circle cx="330" cy="52" r="4" fill="#ef4444"/>
+                            <text x="330" y="44" font-size="9" font-weight="bold" fill="#ef4444" text-anchor="middle">Escapes corridor!</text>
+                            <circle cx="410" cy="82" r="4" fill="#ef4444"/>
+
+                            <!-- Points finally trapped after N2 -->
+                            <circle cx="520" cy="67" r="4.5" fill="#10b981"/>
+                            <circle cx="580" cy="72" r="4.5" fill="#10b981"/>
+                            <circle cx="640" cy="70" r="4.5" fill="#10b981"/>
+                        </g>
+                    </svg>
+                    <p style="margin: 0.6rem 0 0 0; font-size: 0.88rem; color: #64748b; line-height: 1.5;">
+                        <strong>Quantifier ordering in action:</strong> You must wait for the skeptic to name <code style="color:#b45309;">ϵ</code> <em>first</em> before you can commit to <code style="color:#ef4444;">N</code>. As <code style="color:#b45309;">ϵ → 0</code>, the required cutoff <code style="color:#ef4444;">N</code> is pushed arbitrarily far to the right.
+                    </p>
+                </figure>
             </p>
 
             <!-- CLAUSE STEPPER -->
@@ -414,6 +528,56 @@
                     </div>
                 </div>
             </div>
+
+            <!-- DIAGRAM 5: NEGATING CONVERGENCE (WHY DIVERGENCE FAILS) -->
+            <figure style="margin: 2rem 0 1.5rem 0; padding: 1.25rem 1.5rem; background: #fff1f2; border: 1px solid #fecdd3; border-radius: 8px;">
+                <figcaption style="font-size: 0.9rem; font-weight: 700; color: #9f1239; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">
+                    Figure 5: Logical Negation — Why an Oscillating Sequence Fails the ϵ-N Test
+                </figcaption>
+                <p style="margin: 0 0 0.85rem 0; font-size: 0.92rem; color: #4c0519; line-height: 1.6;">
+                    Consider testing candidate limit <strong>L = 1</strong> on the alternating sequence <em>aₙ = (-1)ⁿ</em>. If the skeptic issues challenge <strong>ϵ = 0.5</strong>, the corridor is <code style="background:#ffe4e6; padding: 2px 4px; border-radius:4px;">[0.5, 1.5]</code>.
+                </p>
+                <svg viewBox="0 0 740 210" style="width: 100%; height: auto; display: block;" font-family="system-ui, -apple-system, sans-serif">
+                    <!-- Target Corridor around L=1 -->
+                    <rect x="50" y="30" width="640" height="40" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.2" stroke-dasharray="3"/>
+                    <line x1="50" y1="50" x2="690" y2="50" stroke="#0f172a" stroke-width="1.5" stroke-dasharray="2"/>
+                    <text x="700" y="54" font-size="12" font-weight="bold" fill="#0f172a">Candidate L = 1</text>
+                    <text x="15" y="54" font-size="11" font-weight="bold" fill="#b45309">1 ± 0.5</text>
+
+                    <!-- Lower Value Line (-1) -->
+                    <line x1="50" y1="150" x2="690" y2="150" stroke="#94a3b8" stroke-dasharray="2"/>
+                    <text x="700" y="154" font-size="12" font-weight="bold" fill="#64748b">-1</text>
+
+                    <!-- Proposed Cutoff Horizon N1 -->
+                    <line x1="250" y1="20" x2="250" y2="175" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4"/>
+                    <text x="250" y="190" font-size="11" fill="#64748b" text-anchor="middle">Try N = 4</text>
+
+                    <!-- Proposed Even Larger Cutoff N2 -->
+                    <line x1="490" y1="20" x2="490" y2="175" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4"/>
+                    <text x="490" y="190" font-size="11" fill="#64748b" text-anchor="middle">Try N = 1000?</text>
+
+                    <!-- Alternating Points -->
+                    <!-- n=1 --> <circle cx="90" cy="150" r="4.5" fill="#ef4444"/>
+                    <!-- n=2 --> <circle cx="130" cy="50" r="4.5" fill="#10b981"/>
+                    <!-- n=3 --> <circle cx="170" cy="150" r="4.5" fill="#ef4444"/>
+                    <!-- n=4 --> <circle cx="210" cy="50" r="4.5" fill="#10b981"/>
+
+                    <!-- Violations after N=4 -->
+                    <!-- n=5 --> <circle cx="290" cy="150" r="5.5" fill="#e11d48" stroke="#881337" stroke-width="2"/>
+                    <text x="290" y="132" font-size="10" font-weight="bold" fill="#be123c" text-anchor="middle">Escapes!</text>
+                    <!-- n=6 --> <circle cx="340" cy="50" r="4.5" fill="#10b981"/>
+                    <!-- n=7 --> <circle cx="390" cy="150" r="5.5" fill="#e11d48" stroke="#881337" stroke-width="2"/>
+                    <!-- n=8 --> <circle cx="440" cy="50" r="4.5" fill="#10b981"/>
+
+                    <!-- Violations still happening after N=1000 -->
+                    <!-- n=1001 --> <circle cx="560" cy="150" r="5.5" fill="#e11d48" stroke="#881337" stroke-width="2"/>
+                    <text x="560" y="132" font-size="10" font-weight="bold" fill="#be123c" text-anchor="middle">Still escapes!</text>
+                    <!-- n=1002 --> <circle cx="620" cy="50" r="4.5" fill="#10b981"/>
+                </svg>
+                <p style="margin: 0.6rem 0 0 0; font-size: 0.88rem; color: #881337; line-height: 1.5;">
+                    <strong>The formal negation demonstrated:</strong> <code style="font-weight:700;">∃ϵ &gt; 0 such that ∀N ∈ ℕ, ∃n &gt; N with |aₙ - L| ≥ ϵ</code>. No matter how enormous a cutoff index you propose, odd indices continually leak out of the corridor forever.
+                </p>
+            </figure>
 
                         <!-- SECTION 2: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->
             <h2 id="section-quantifiers">2. Quantifier Order, Timing, and Dependencies</h2>
