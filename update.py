@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
 Surgically restore all truncated analytical sections in week2-lecture4.html.
-Uses callable replacements in re.sub to prevent regex template escape errors
-with LaTeX backslashes.
+Reintegrates foundational theorems (Uniqueness, Tail Invariance, Order Limits),
+complete Proposition 5 proofs, Algebraic Limit Laws, and Divergence negation.
+Uses callable replacements in re.sub to prevent regex template escape errors.
 """
 
 from pathlib import Path
@@ -14,16 +15,224 @@ TARGET_FILE = Path("week2-lecture4.html")
 SCRIPT_FILE = Path(__file__).resolve()
 
 COMMIT_SUBJECT = (
-    "Fix regex replacement escape error and restore Lecture 4 prose"
+    "Restore foundational theorems, limit laws, and divergence proofs"
 )
 COMMIT_BODY = (
-    "Use callable lambda replacements in re.sub to prevent regex template\n"
-    "escape parsing errors with LaTeX backslashes. Switch multiline prose\n"
-    "blocks to raw strings to eliminate Python 3.14 invalid escape syntax\n"
-    "warnings, and fully restore the unboxed sections in Lecture 4."
+    "Reintegrate full analytical essays and unboxed proofs across Sections\n"
+    "4, 5, and 6 of week2-lecture4.html. Restore the Uniqueness of Limits\n"
+    "epsilon-half proof, the Tail Invariance shift theorem and corollary,\n"
+    "the Order Limit Theorem contradiction proof with midpoint buffers,\n"
+    "the Proposition 5 structural guarantees, the Algebraic Limit Laws\n"
+    "compositionality bridge, and the formal quantifier negation rules."
 )
 
-RESTORED_PROP5_BLOCK = r"""
+COMPLETE_SECTIONS_4_5_6 = r"""            <!-- SECTION 4: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->
+            <h2 id="section-prop5">4. Properties of Convergent Sequences (Proposition 5) &amp; Foundational Theorems</h2>
+
+            <h3 style="color: #0f172a; margin-top: 1.5rem;">Structural Guarantees: The Free Gifts of Convergence</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Writing an $\epsilon\text{-}N$ proof from scratch every time you encounter a new sequence would be exhausting. Mathematicians don't rebuild every argument from raw definitions; instead, they prove <strong>structural theorems</strong>. These are universal guarantees: once you know a sequence converges, you automatically inherit powerful properties for free, without ever needing to guess a cutoff index again.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                In this section, we explore Proposition 5 along with three foundational theorems that solidify the logical architecture of limits: Uniqueness, Tail Invariance, and the Order Limit Theorem.
+            </p>
+
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">Theorem: Uniqueness of Limits</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Before writing $\lim a_n = L$, we must guarantee that a sequence cannot have two different limits. If a sequence settles down, its destination is uniquely determined.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                <strong>The Theorem:</strong> If a sequence $(a_n)$ converges to $L$ and also converges to $M$, then $L = M$.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                <strong>The Proof Strategy (The $\epsilon/2$ Technique):</strong><br>
+                Let $\epsilon > 0$ be given. Because $a_n \to L$, there is a cutoff $N_1$ where $|a_n - L| < \epsilon/2$. Because $a_n \to M$, there is a cutoff $N_2$ where $|a_n - M| < \epsilon/2$. Let $N = \max(N_1, N_2)$. For any index $n > N$, both inequalities hold. Using the triangle inequality on the fixed distance $|L - M|$:
+            </p>
+            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
+                $$\begin{aligned}
+                |L - M| &= |(L - a_n) + (a_n - M)| \\
+                &\le |a_n - L| + |a_n - M| \\
+                &< \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon
+                \end{aligned}$$
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                We have shown that the non-negative real number $|L - M|$ is strictly smaller than <em>every</em> positive number $\epsilon$. The only non-negative number with that property is zero. Thus, $|L - M| = 0$, which proves $L = M$. $\blacksquare$
+            </p>
+
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">Theorem: Tail Invariance (The Shift &amp; Truncation Theorem)</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Real analysis teaches us an empowering truth: <strong>initial terms do not matter</strong> for convergence. If you are ever worried about a sequence having a few messy starting terms, this theorem provides absolute peace of mind.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                There are two common ways mathematicians state this principle:
+            </p>
+            <ul style="margin: 0.5rem 0 1.25rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.6rem;">
+                    <strong>1. The Finite Modification Form:</strong> Let $(a_n)$ and $(b_n)$ be two sequences. If there exists some cutoff index $N_0 \in \mathbb{N}$ such that $a_n = b_n$ for all $n > N_0$, then either both sequences converge to the exact same limit, or both diverge:
+                    $$\lim_{n\to\infty} a_n = \lim_{n\to\infty} b_n$$
+                </li>
+                <li>
+                    <strong>2. The Index Shift Form:</strong> Let $(a_n)_{n=0}^\infty$ be a sequence, and let $k \in \mathbb{N}$ be any fixed integer shift. Then $(a_n)$ converges to $L$ if and only if the shifted sequence $(a_{n+k})_{n=0}^\infty$ converges to $L$:
+                    $$\lim_{n\to\infty} a_n = L \iff \lim_{n\to\infty} a_{n+k} = L$$
+                </li>
+            </ul>
+
+            <h4 style="color: #0f172a; margin-top: 1.5rem;">The Proof of the Finite Modification Form</h4>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Suppose $(a_n)$ converges to limit $L$. We want to prove that $(b_n)$ also converges to $L$.
+            </p>
+            <ol style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.6rem;">
+                    Let $\epsilon > 0$ be arbitrary.
+                </li>
+                <li style="margin-bottom: 0.6rem;">
+                    Because $a_n \to L$, the definition of convergence provides a cutoff $N_a \in \mathbb{N}$ such that:
+                    $$n > N_a \implies |a_n - L| < \epsilon$$
+                </li>
+                <li style="margin-bottom: 0.6rem;">
+                    We are given that $a_n = b_n$ for all $n > N_0$. Now, choose the master cutoff:
+                    $$N = \max(N_a, N_0)$$
+                </li>
+                <li>
+                    For any index $n > N$, both conditions hold simultaneously:
+                    $$\begin{aligned}
+                    n > N_0 &\implies b_n = a_n \\
+                    n > N_a &\implies |a_n - L| < \epsilon
+                    \end{aligned}$$
+                    Substituting $b_n$ for $a_n$ yields $|b_n - L| = |a_n - L| < \epsilon$. Therefore, $(b_n)$ converges to $L$. By symmetry, if $(b_n)$ converges to $L$, then $(a_n)$ must converge to $L$. $\blacksquare$
+                </li>
+            </ol>
+
+            <h4 style="color: #0f172a; margin-top: 1.5rem;">Why Tail Invariance Is a Superpower for Beginners</h4>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                This theorem gives you three practical mathematical liberties:
+            </p>
+            <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.6rem;">
+                    <strong>Early Singularities Don't Matter:</strong> Consider $a_n = \frac{n}{n-2}$. At $n=2$, this formula divides by zero and is undefined! But for all $n \ge 3$, it is perfectly well-behaved. The Tail Invariance Theorem tells us we can simply define the sequence starting at $n=3$ without altering its limit in any way.
+                </li>
+                <li style="margin-bottom: 0.6rem;">
+                    <strong>Starting Indices Don't Matter:</strong> Whether a lecturer writes $(a_n)_{n=0}^\infty$, $(a_n)_{n=1}^\infty$, or $(a_n)_{n=100}^\infty$, the limit is identical. You never need to worry about index shifting changing the convergence.
+                </li>
+                <li>
+                    <strong>Chaotic Warmups Can Be Discarded:</strong> A sequence could jump wildly between $-10^6$ and $+10^6$ for the first million terms. As long as it eventually settles down into an $\epsilon$-corridor, those initial terms are discarded as finite history.
+                </li>
+            </ul>
+
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">Theorem: Order Limit Theorem (Inequality Preservation)</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                One of the most comforting features of limits is that they respect relative order. If one sequence always stays below another on the number line, its eventual limit cannot leap ahead of the other sequence's limit.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                <strong>The Formal Statement:</strong> Let $(a_n)$ and $(b_n)$ be convergent sequences with limits $K, L \in \mathbb{R}$:
+            </p>
+            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
+                $$\lim_{n\to\infty} a_n = K \quad \text{and} \quad \lim_{n\to\infty} b_n = L$$
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                If there exists an index $N_0 \in \mathbb{N}$ such that $a_n \le b_n$ for all $n > N_0$, then:
+            </p>
+            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
+                $$K \le L$$
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                <em>Special Single-Sequence Corollary:</em> If $a_n \ge 0$ for all $n > N_0$ and $\lim a_n = K$, then $K \ge 0$. A non-negative sequence cannot converge to a negative number.
+            </p>
+
+            <h4 style="color: #0f172a; margin-top: 1.5rem;">The Proof Strategy: Proof by Contradiction via the Midpoint Moat</h4>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                How do we prove this? Proving an inequality directly with $\epsilon\text{-}N$ can feel clumsy. Instead, mathematicians use <strong>Proof by Contradiction</strong>: we assume the opposite—that $K > L$—and watch the system contradict itself.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                <strong>The Geometric Picture:</strong> If $K > L$, there is a positive gap between them of width $K - L > 0$. If we choose a tolerance equal to half this gap, $\epsilon = \frac{K - L}{2}$, the target windows around $K$ and $L$ will never overlap! Their common boundary will be their exact midpoint, $M = \frac{K + L}{2}$.
+            </p>
+            <ol style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.6rem;">
+                    Assume, for contradiction, that $K > L$. Then $K - L > 0$.
+                </li>
+                <li style="margin-bottom: 0.6rem;">
+                    Set $\epsilon = \frac{K - L}{2} > 0$. Note that $L + \epsilon = \frac{K + L}{2} = K - \epsilon$.
+                </li>
+                <li style="margin-bottom: 0.6rem;">
+                    Since $a_n \to K$, there exists $N_1 \in \mathbb{N}$ such that for all $n > N_1$:
+                    $$|a_n - K| < \epsilon \implies a_n > K - \epsilon = \frac{K + L}{2}$$
+                </li>
+                <li style="margin-bottom: 0.6rem;">
+                    Since $b_n \to L$, there exists $N_2 \in \mathbb{N}$ such that for all $n > N_2$:
+                    $$|b_n - L| < \epsilon \implies b_n < L + \epsilon = \frac{K + L}{2}$$
+                </li>
+                <li>
+                    Now choose the master cutoff $N = \max(N_0, N_1, N_2)$. For any index $n > N$, all conditions hold at once:
+                    $$b_n < \frac{K + L}{2} < a_n \implies b_n < a_n$$
+                    This directly contradicts our hypothesis that $a_n \le b_n$ for all $n > N_0$!
+                    Therefore, our assumption that $K > L$ must be false. We conclude that $K \le L$. $\blacksquare$
+                </li>
+            </ol>
+
+            <h4 style="color: #0f172a; margin-top: 1.5rem;">⚠️ The Classic Trap: Why Strict Inequalities Become Non-Strict</h4>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                There is one critical warning every beginner must know, because exam questions love testing it:
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem; font-weight: 600; color: #b91c1c;">
+                Strict inequalities between terms are NOT preserved in the limit!
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                If $a_n < b_n$ strictly for every single term in the sequence, you can only conclude that $\lim a_n \le \lim b_n$. You <strong>cannot</strong> claim that $\lim a_n < \lim b_n$.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                <strong>Why does this happen? The "Pinch Point" Phenomenon:</strong><br>
+                Two sequences can maintain a strict gap between themselves at every finite step, but as they travel to infinity, that gap can shrink down to zero. The limits can "touch" at infinity even though no finite pair of terms ever touches.
+            </p>
+            <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.6rem;">
+                    <strong>Counterexample 1:</strong> Let $a_n = 0$ and $b_n = \frac{1}{n}$. Clearly, $0 < \frac{1}{n}$ strictly holds for every $n \in \mathbb{N}^+$. Yet in the limit:
+                    $$\lim_{n\to\infty} 0 = 0 \quad \text{and} \quad \lim_{n\to\infty} \frac{1}{n} = 0 \implies 0 \le 0$$
+                    The strict inequality has collapsed into equality!
+                </li>
+                <li>
+                    <strong>Counterexample 2:</strong> Let $a_n = -\frac{1}{n}$ and $b_n = \frac{1}{n}$. At every finite index $n$, $a_n$ is strictly negative and $b_n$ is strictly positive ($-\frac{1}{n} < \frac{1}{n}$). Yet both meet at the exact same limit: $0 = 0$.
+                </li>
+            </ul>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Keep this in mind: limits weaken strict bounds into non-strict bounds ($<$ becomes $\le$, and $>$ becomes $\ge$). This property is the direct precursor to the famous <strong>Squeeze Theorem</strong>, which we will explore in Lecture 5!
+            </p>
+
+            <!-- DIAGRAM: Order Limit Theorem -->
+            <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 8px; margin: 1.5rem 0; padding: 1.5rem;">
+                <h5 style="margin-top: 0; margin-bottom: 1rem; color: #334155; font-size: 0.95rem;">Visualization: Inequality Preservation ($a_n \le b_n \implies K \le L$)</h5>
+                <svg viewBox="0 0 740 180" style="width: 100%; height: auto;">
+                    <line x1="40" y1="150" x2="700" y2="150" stroke="#cbd5e1" stroke-width="1.5" />
+                    <!-- b_n converging to L -->
+                    <line x1="40" y1="50" x2="700" y2="50" stroke="#10b981" stroke-dasharray="4" />
+                    <text x="705" y="54" font-family="sans-serif" font-size="12" fill="#10b981" font-weight="bold">Limit L</text>
+                    <!-- a_n converging to K -->
+                    <line x1="40" y1="100" x2="700" y2="100" stroke="#3b82f6" stroke-dasharray="4" />
+                    <text x="705" y="104" font-family="sans-serif" font-size="12" fill="#3b82f6" font-weight="bold">Limit K</text>
+
+                    <!-- b_n points (top) -->
+                    <circle cx="80" cy="20" r="4" fill="#10b981" />
+                    <circle cx="160" cy="35" r="4" fill="#10b981" />
+                    <circle cx="240" cy="45" r="4" fill="#10b981" />
+                    <circle cx="320" cy="52" r="4" fill="#10b981" />
+                    <circle cx="400" cy="49" r="4" fill="#10b981" />
+                    <circle cx="480" cy="50.5" r="4" fill="#10b981" />
+
+                    <!-- a_n points (bottom) -->
+                    <circle cx="80" cy="140" r="4" fill="#3b82f6" />
+                    <circle cx="160" cy="120" r="4" fill="#3b82f6" />
+                    <circle cx="240" cy="108" r="4" fill="#3b82f6" />
+                    <circle cx="320" cy="98" r="4" fill="#3b82f6" />
+                    <circle cx="400" cy="101" r="4" fill="#3b82f6" />
+                    <circle cx="480" cy="99.5" r="4" fill="#3b82f6" />
+
+                    <!-- Vertical constraint lines -->
+                    <line x1="80" y1="28" x2="80" y2="132" stroke="#94a3b8" stroke-dasharray="2" />
+                    <line x1="160" y1="43" x2="160" y2="112" stroke="#94a3b8" stroke-dasharray="2" />
+                    <line x1="240" y1="53" x2="240" y2="100" stroke="#94a3b8" stroke-dasharray="2" />
+                    <text x="85" y="85" font-family="sans-serif" font-size="10" fill="#64748b">a₁ &le; b₁</text>
+                </svg>
+            </div>
+
             <h3 style="color: #0f172a; margin-top: 2rem;">Proposition 5: Fundamental Sequence Properties</h3>
 
             <h4 style="color: #0f172a; margin-top: 1.25rem;">Property 1: Absolute Value Stabilization ($a_n \to L \implies |a_n| \to |L|$)</h4>
@@ -85,9 +294,44 @@ RESTORED_PROP5_BLOCK = r"""
             </ol>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
                 <strong>Does the converse hold?</strong> Again, ask yourself: if a sequence is bounded, does it have to converge? No! Boundedness is a <em>necessary</em> condition for convergence, but not a <em>sufficient</em> one. The sequence $a_n = (-1)^n$ is safely trapped inside $[-1, 1]$, yet it never converges.
-            </p>"""
+            </p>
 
-RESTORED_SIGN_BLOCK = r"""
+            <!-- DIAGRAM: Boundedness -->
+            <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 8px; margin: 1.5rem 0; padding: 1.5rem;">
+                <h5 style="margin-top: 0; margin-bottom: 1rem; color: #334155; font-size: 0.95rem;">Visualization: Prefix/Tail Split for Bounded Sequences</h5>
+                <svg viewBox="0 0 740 200" style="width: 100%; height: auto;">
+                    <line x1="40" y1="160" x2="700" y2="160" stroke="#cbd5e1" stroke-width="1.5" />
+
+                    <!-- Limit L and Epsilon Band -->
+                    <rect x="260" y="80" width="440" height="40" fill="#fde68a" opacity="0.3" stroke="#f59e0b" stroke-dasharray="2" />
+                    <line x1="40" y1="100" x2="700" y2="100" stroke="#64748b" stroke-dasharray="4" />
+                    <text x="705" y="104" font-family="sans-serif" font-size="12" fill="#64748b">L</text>
+
+                    <!-- Master Fence M -->
+                    <line x1="40" y1="30" x2="700" y2="30" stroke="#ef4444" stroke-width="2" opacity="0.5" />
+                    <text x="705" y="34" font-family="sans-serif" font-size="12" fill="#ef4444" font-weight="bold">+M</text>
+
+                    <!-- N Cutoff -->
+                    <line x1="260" y1="20" x2="260" y2="160" stroke="#0f172a" stroke-dasharray="4" />
+                    <text x="265" y="155" font-family="sans-serif" font-size="11" fill="#0f172a">Cutoff N</text>
+
+                    <!-- Prefix Points -->
+                    <circle cx="80" cy="140" r="4" fill="#94a3b8" />
+                    <circle cx="140" cy="40" r="5" fill="#ef4444" />
+                    <text x="140" y="25" font-family="sans-serif" font-size="10" fill="#ef4444" text-anchor="middle">Max of Prefix</text>
+                    <circle cx="200" cy="120" r="4" fill="#94a3b8" />
+                    <!-- Tail Points -->
+                    <circle cx="300" cy="110" r="4" fill="#10b981" />
+                    <circle cx="360" cy="90" r="4" fill="#10b981" />
+                    <circle cx="420" cy="105" r="4" fill="#10b981" />
+                    <circle cx="480" cy="95" r="4" fill="#10b981" />
+
+                    <!-- Labels -->
+                    <text x="150" y="180" font-family="sans-serif" font-size="11" fill="#64748b" text-anchor="middle">Finite Prefix (Checked Manually)</text>
+                    <text x="480" y="180" font-family="sans-serif" font-size="11" fill="#10b981" text-anchor="middle">Infinite Tail (Trapped by ϵ=1)</text>
+                </svg>
+            </div>
+
             <h4 style="color: #0f172a; margin-top: 1.75rem;">Property 3: Preservation of Sign (The Buffer Zone)</h4>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
                 The third property provides peace of mind when working with signs:
@@ -115,9 +359,9 @@ RESTORED_SIGN_BLOCK = r"""
             </p>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
                 Look at the left-hand inequality: $a_n > \frac{L}{2}$. Because $L > 0$, $\frac{L}{2}$ is strictly positive. Every term in the tail is trapped above $\frac{L}{2}$ forever, completely insulated from zero! $\blacksquare$
-            </p>"""
+            </p>
 
-RESTORED_SECTION_5 = r"""            <!-- SECTION 5: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->
+            <!-- SECTION 5: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->
             <h2 id="section-theorems">5. Algebraic Limit Laws and Proofs (Theorem 1)</h2>
 
             <h3 style="color: #0f172a; margin-top: 1.5rem;">The Architecture of Compositionality</h3>
@@ -314,9 +558,9 @@ RESTORED_SECTION_5 = r"""            <!-- SECTION 5: UNBOXED, DETAILED, EMPATHET
             </p>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
                 Because $|b_n - L|$ can be made arbitrarily small, the entire distance collapses below $\epsilon$. The Algebraic Limit Laws form an airtight, beautiful system: each theorem rests securely on the foundational properties we established in the sections before it.
-            </p>"""
+            </p>
 
-RESTORED_SECTION_6_PREAMBLE = r"""            <!-- SECTION 6: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->
+            <!-- SECTION 6: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->
             <h2 id="section-divergence-test">6. Proving Non-Existence of Limits</h2>
 
             <h3 style="color: #0f172a; margin-top: 1.5rem;">The Flip Side: Defeating the Target Game</h3>
@@ -450,65 +694,83 @@ RESTORED_SECTION_6_PREAMBLE = r"""            <!-- SECTION 6: UNBOXED, DETAILED,
                 <li>
                     <strong>Find the breakout index:</strong> Select an index $n > N$ (often depending on whether $n$ is even or odd) that forces $|a_n - L| \ge \epsilon$, demonstrating asymptotic instability.
                 </li>
-            </ol>"""
+            </ol>
+
+            <!-- DIAGRAM: Divergence Oscillation -->
+            <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 8px; margin: 1.5rem 0; padding: 1.5rem;">
+                <h5 style="margin-top: 0; margin-bottom: 1rem; color: #334155; font-size: 0.95rem;">Visualization: Divergence of Alternating Sequence $(-1)^n$</h5>
+                <svg viewBox="0 0 740 220" style="width: 100%; height: auto;">
+                    <line x1="40" y1="110" x2="700" y2="110" stroke="#cbd5e1" stroke-width="1.5" />
+                    <text x="705" y="114" font-family="sans-serif" font-size="12" fill="#94a3b8">0</text>
+
+                    <line x1="40" y1="40" x2="700" y2="40" stroke="#cbd5e1" stroke-dasharray="2" />
+                    <text x="705" y="44" font-family="sans-serif" font-size="12" fill="#64748b">+1</text>
+
+                    <line x1="40" y1="180" x2="700" y2="180" stroke="#cbd5e1" stroke-dasharray="2" />
+                    <text x="705" y="184" font-family="sans-serif" font-size="12" fill="#64748b">-1</text>
+
+                    <!-- Candidate L = 0.3 (y=89) -->
+                    <line x1="40" y1="89" x2="700" y2="89" stroke="#b45309" stroke-width="1.5" />
+                    <text x="705" y="87" font-family="sans-serif" font-size="12" fill="#b45309" font-weight="bold">Candidate L</text>
+
+                    <!-- Epsilon = 1 band (height 140px, +/- 70px) -->
+                    <rect x="40" y="19" width="660" height="140" fill="#fef3c7" opacity="0.4" stroke="#f59e0b" stroke-dasharray="4" />
+
+                    <!-- Points -->
+                    <circle cx="100" cy="180" r="5" fill="#ef4444" stroke="#b91c1c" stroke-width="1.5" />
+                    <circle cx="180" cy="40" r="5" fill="#10b981" />
+                    <circle cx="260" cy="180" r="5" fill="#ef4444" stroke="#b91c1c" stroke-width="1.5" />
+                    <circle cx="340" cy="40" r="5" fill="#10b981" />
+                    <circle cx="420" cy="180" r="5" fill="#ef4444" stroke="#b91c1c" stroke-width="1.5" />
+                    <circle cx="500" cy="40" r="5" fill="#10b981" />
+
+                    <!-- Annotations -->
+                    <text x="260" y="200" font-family="sans-serif" font-size="11" fill="#ef4444" font-weight="bold" text-anchor="middle">Fails: Escapes ϵ-window!</text>
+                    <text x="180" y="25" font-family="sans-serif" font-size="11" fill="#10b981" font-weight="bold" text-anchor="middle">Captured</text>
+                </svg>
+            </div>
+"""
 
 
-def restore_sections_in_lecture4(content: str) -> str:
-    """Restores full explanatory prose and proofs across Sections 4, 5, and 6."""
+def restore_lecture_content(content: str) -> str:
+    """Atomically restore Sections 4, 5, and 6 in week2-lecture4.html."""
+    pattern = re.compile(
+        r'(?:<!-- SECTION 4: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->|<h2 id="section-prop5">).*?'
+        r'(?=<!-- FOOTER NAVIGATION -->)',
+        re.DOTALL
+    )
 
-    # 1. Restore Proposition 5 detailed proofs before the Boundedness SVG diagram
-    if "Reverse Triangle Inequality" not in content:
-        prop5_pattern = re.compile(
-            r'(<h3[^>]*>Proposition 5:[^<]*</h3>\s*<ul[^>]*>.*?</ul>)',
-            re.DOTALL
+    if not pattern.search(content):
+        print(
+            "Error: Could not locate Section 4 through Section 6 boundary in target file.",
+            file=sys.stderr
         )
-        content = prop5_pattern.sub(lambda _: RESTORED_PROP5_BLOCK, content, count=1)
+        sys.exit(1)
 
-    # 2. Restore Sign Preservation buffer zone proof after the Boundedness SVG diagram
-    if "Preservation of Sign (The Buffer Zone)" not in content:
-        match = re.search(r'(<!-- DIAGRAM: Boundedness -->.*?</svg>\s*</div>)', content, re.DOTALL)
-        if match:
-            content = content[:match.end()] + "\n" + RESTORED_SIGN_BLOCK + content[match.end():]
-
-    # 3. Restore Section 5 (Algebraic Limit Laws)
-    sec5_pattern = re.compile(
-        r'<!-- SECTION 5(?:.*?)-->\s*<h2 id="section-theorems">.*?</h2>.*?'
-        r'(?=<!-- SECTION 6)',
-        re.DOTALL
-    )
-    if sec5_pattern.search(content):
-        content = sec5_pattern.sub(lambda _: RESTORED_SECTION_5 + "\n\n", content)
-
-    # 4. Restore Section 6 (Proving Non-Existence / Negation)
-    sec6_pattern = re.compile(
-        r'<!-- SECTION 6(?:.*?)-->\s*<h2 id="section-divergence-test">.*?</h2>.*?'
-        r'(?=<!-- DIAGRAM: Divergence Oscillation -->)',
-        re.DOTALL
-    )
-    if sec6_pattern.search(content):
-        content = sec6_pattern.sub(lambda _: RESTORED_SECTION_6_PREAMBLE + "\n\n            ", content)
-
-    return content
+    return pattern.sub(lambda _: COMPLETE_SECTIONS_4_5_6 + "\n            ", content)
 
 
 def update_lecture_document(file_path: Path) -> None:
-    """Reads target HTML, applies full restoration, and writes back to disk."""
+    """Read target HTML, apply full restoration, and write back to disk."""
     if not file_path.exists():
         print(f"Error: Target file '{file_path}' does not exist.", file=sys.stderr)
         sys.exit(1)
 
     raw_text = file_path.read_text(encoding="utf-8")
-    updated_text = restore_sections_in_lecture4(raw_text)
+    updated_text = restore_lecture_content(raw_text)
 
     if raw_text == updated_text:
-        print("Notice: No changes applied. File may already contain restored sections.")
+        print("Notice: No changes needed; document is already fully up to date.")
         return
 
     lines_before = len(raw_text.splitlines())
     lines_after = len(updated_text.splitlines())
     file_path.write_text(updated_text, encoding="utf-8")
-    print(f"Successfully restored '{file_path.name}'.")
-    print(f"Lines before: {lines_before} -> Lines after: {lines_after} (+{lines_after - lines_before} lines).")
+    print(
+        f"Successfully restored '{file_path.name}'.\n"
+        f"Lines before: {lines_before} -> Lines after: {lines_after} "
+        f"(+{lines_after - lines_before} lines restored)."
+    )
 
 
 def check_staged_changes() -> bool:
