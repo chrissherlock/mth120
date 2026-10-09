@@ -717,7 +717,487 @@
                 </p>
             </figure>
 
-                        <!-- SECTION 2: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->
+            <!-- ================================================================= -->
+            <!-- THE EPSILON-DELTA CANON: 10 ARCHETYPAL LIMIT PROOFS               -->
+            <!-- ================================================================= -->
+            <section id="epsilon-delta-suite" style="margin: 3rem 0; font-family: system-ui, -apple-system, sans-serif;">
+                <style>
+                  /* Base styles */
+                  #epsilon-delta-suite button {
+                    color: #1e293b;
+                  }
+
+                  .suite-card {
+                    background: #ffffff;
+                    border: 1px solid #cbd5e1;
+                    border-radius: 10px;
+                    padding: 1.75rem;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+                  }
+
+                  /* Two-column layout on desktop, stacked on mobile */
+                  .suite-main-layout {
+                    display: grid;
+                    grid-template-columns: minmax(240px, 310px) 1fr;
+                    gap: 1.5rem;
+                    align-items: start;
+                  }
+
+                  .suite-selector-list {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.45rem;
+                    max-height: 540px;
+                    overflow-y: auto;
+                    padding-right: 0.35rem;
+                  }
+
+                  @media (max-width: 680px) {
+                    .suite-main-layout {
+                      grid-template-columns: 1fr;
+                    }
+                    .suite-selector-list {
+                      max-height: 200px; /* Keeps the active proof visible on small mobile screens */
+                    }
+                  }
+
+                  /* Category Filter Pills */
+                  .pill-btn {
+                    padding: 0.45rem 0.9rem;
+                    border-radius: 9999px;
+                    font-size: 0.85rem;
+                    font-weight: 600;
+                    cursor: pointer;
+                    border: 1px solid #cbd5e1;
+                    background: #f1f5f9;
+                    color: #334155 !important;
+                    transition: all 0.15s ease;
+                  }
+                  .pill-btn:hover {
+                    background: #e2e8f0;
+                    color: #0f172a !important;
+                    border-color: #94a3b8;
+                  }
+                  .pill-btn.active {
+                    background: #0284c7 !important;
+                    color: #ffffff !important;
+                    border-color: #0284c7 !important;
+                  }
+
+                  /* Example List Buttons */
+                  .ex-selector-btn {
+                    padding: 0.55rem 0.8rem;
+                    text-align: left;
+                    font-size: 0.85rem;
+                    border-radius: 6px;
+                    border: 1px solid #e2e8f0;
+                    background: #f8fafc;
+                    color: #0f172a !important;
+                    cursor: pointer;
+                    transition: all 0.15s ease;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                  }
+                  .ex-selector-btn:hover {
+                    background: #f1f5f9;
+                    border-color: #cbd5e1;
+                    color: #0f172a !important;
+                  }
+                  .ex-selector-btn.active {
+                    background: #e0f2fe !important;
+                    border-color: #38bdf8 !important;
+                    font-weight: 700;
+                    color: #0369a1 !important;
+                  }
+                  .ex-selector-btn .ex-tag {
+                    font-size: 0.75rem;
+                    color: #64748b;
+                    font-family: monospace;
+                  }
+                  .ex-selector-btn.active .ex-tag {
+                    color: #0284c7;
+                    font-weight: 700;
+                  }
+
+                  /* Proof Cards */
+                  .proof-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                    gap: 1rem;
+                    margin-top: 1.25rem;
+                  }
+                  .step-card {
+                    padding: 1rem;
+                    border-radius: 6px;
+                    border: 1px solid #e2e8f0;
+                    background: #f8fafc;
+                  }
+                  .step-card h5 {
+                    margin: 0 0 0.4rem 0;
+                    font-size: 0.85rem;
+                    font-weight: 800;
+                    text-transform: uppercase;
+                    letter-spacing: 0.05em;
+                  }
+                  .step-given { border-left: 4px solid #0284c7; }
+                  .step-given h5 { color: #0284c7; }
+                  .step-choose { border-left: 4px solid #d97706; }
+                  .step-choose h5 { color: #d97706; }
+                  .step-suppose { border-left: 4px solid #64748b; }
+                  .step-suppose h5 { color: #475569; }
+                  .step-check { border-left: 4px solid #10b981; }
+                  .step-check h5 { color: #047857; }
+                  .math-block {
+                    background: #ffffff;
+                    border: 1px solid #e2e8f0;
+                    border-radius: 4px;
+                    padding: 0.6rem 0.85rem;
+                    margin: 0.5rem 0;
+                    font-family: "Cambria Math", "Times New Roman", serif;
+                    font-size: 1.02rem;
+                    color: #0f172a;
+                  }
+                </style>
+
+              <div class="suite-card">
+                <div style="border-bottom: 1px solid #e2e8f0; padding-bottom: 1rem; margin-bottom: 1.5rem;">
+                  <span style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #0284c7; display: block; margin-bottom: 0.25rem;">
+                    Complete Master Suite
+                  </span>
+                  <h3 style="margin: 0 0 0.5rem 0; color: #0f172a; font-size: 1.5rem; font-weight: 700;">
+                    The 10 Canon ϵ-δ Limit Proofs
+                  </h3>
+                  <p style="margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.6;">
+                    Every rigorous functional limit proof follows the four-word structural spine:
+                    <strong style="color: #0284c7;">Given</strong>,
+                    <strong style="color: #d97706;">Choose</strong>,
+                    <strong style="color: #475569;">Suppose</strong>, and
+                    <strong style="color: #047857;">Check</strong>.
+                    Select an archetype below to explore the core algebraic obstacle and its formal resolution.
+                  </p>
+
+                  <!-- ATTRIBUTION & VIDEO RESOURCE FOOTER -->
+                    <div style="margin-top: 1.75rem; padding-top: 1rem; border-top: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; font-size: 0.85rem; color: #64748b;">
+                      <div style="display: flex; align-items: center; gap: 0.65rem;">
+                        <!-- YouTube Icon -->
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="#ef4444" style="flex-shrink: 0;" aria-hidden="true">
+                          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                        <span>
+                          Pedagogical structure & examples adapted from <strong>Steve Chow (blackpenredpen)</strong>:
+                          <a href="https://www.youtube.com/watch?v=Wf90YjhRTUA" target="_blank" rel="noopener noreferrer" style="color: #0284c7; text-decoration: underline; font-weight: 600; text-underline-offset: 2px;">
+                            epsilon-delta proof ultimate study guide
+                          </a>.
+                        </span>
+                      </div>
+                      <span style="font-size: 0.78rem; font-weight: 600; color: #475569; background: #f1f5f9; padding: 0.2rem 0.55rem; border-radius: 4px; border: 1px solid #e2e8f0;">
+                        bprp calculus basics
+                      </span>
+                    </div>
+                </div>
+
+                <!-- CATEGORY FILTER PILLS -->
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+                  <button class="pill-btn active" onclick="filterCategory('ALL', this)">All 10 Examples</button>
+                  <button class="pill-btn" onclick="filterCategory('LINEAR', this)">Linear (Direct Factoring)</button>
+                  <button class="pill-btn" onclick="filterCategory('RADICAL', this)">Radical (Conjugates)</button>
+                  <button class="pill-btn" onclick="filterCategory('POLYNOMIAL', this)">Polynomial (δ ≤ 1 Bounding)</button>
+                  <button class="pill-btn" onclick="filterCategory('RATIONAL', this)">Rational (Reciprocal Flipping)</button>
+                </div>
+
+                <!-- MAIN INTERFACE -->
+                <div class="suite-main-layout">
+                  <!-- SELECTOR LIST -->
+                  <div id="ex-selector-list" class="suite-selector-list">
+                    <!-- Populated via JavaScript -->
+                  </div>
+
+                  <!-- PROOF WORKSPACE VIEW -->
+                  <div id="proof-workspace" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem;">
+                    <!-- Dynamic Content Injected by displayExample() -->
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <script>
+              const limitExamples = [
+                {
+                  id: 0,
+                  cat: "LINEAR",
+                  title: "Ex 1: Standard Linear",
+                  limitText: "lim(x → 1) [6x - 2] = 4",
+                  a: "1",
+                  fx: "6x - 2",
+                  L: "4",
+                  obstacle: "Direct algebraic scaling",
+                  strategy: "Group terms into |6x - 6| and factor out 6 directly: 6|x - 1| < 6δ = ϵ.",
+                  delta: "ϵ / 6",
+                  given: "Given ϵ > 0.",
+                  choose: "Choose δ = ϵ / 6 (which is positive since ϵ > 0).",
+                  suppose: "Suppose 0 < |x - 1| < δ.",
+                  check: "|(6x - 2) - 4| = |6x - 6| = 6|x - 1| < 6δ = 6(ϵ / 6) = ϵ."
+                },
+                {
+                  id: 1,
+                  cat: "LINEAR",
+                  title: "Ex 2: Negative Target Point",
+                  limitText: "lim(x → -2) [2x + 7] = 3",
+                  a: "-2",
+                  fx: "2x + 7",
+                  L: "3",
+                  obstacle: "Handling signs around negative limit points",
+                  strategy: "Notice |x - (-2)| becomes |x + 2|. Factoring 2 yields 2|x + 2| < 2δ = ϵ.",
+                  delta: "ϵ / 2",
+                  given: "Given ϵ > 0.",
+                  choose: "Choose δ = ϵ / 2.",
+                  suppose: "Suppose 0 < |x - (-2)| < δ, meaning 0 < |x + 2| < δ.",
+                  check: "|(2x + 7) - 3| = |2x + 4| = 2|x + 2| < 2δ = 2(ϵ / 2) = ϵ."
+                },
+                {
+                  id: 2,
+                  cat: "LINEAR",
+                  title: "Ex 3: Fractional Slope",
+                  limitText: "lim(x → 3) [(2/3)x - 5] = -3",
+                  a: "3",
+                  fx: "(2/3)x - 5",
+                  L: "-3",
+                  obstacle: "Fractional coefficient isolation",
+                  strategy: "Factor 2/3 out of the difference: |(2/3)x - 2| = (2/3)|x - 3|. Invert coefficient for δ.",
+                  delta: "(3/2)ϵ",
+                  given: "Given ϵ > 0.",
+                  choose: "Choose δ = (3/2)ϵ.",
+                  suppose: "Suppose 0 < |x - 3| < δ.",
+                  check: "|((2/3)x - 5) - (-3)| = |(2/3)x - 2| = (2/3)|x - 3| < (2/3)δ = (2/3)((3/2)ϵ) = ϵ."
+                },
+                {
+                  id: 3,
+                  cat: "RADICAL",
+                  title: "Ex 4: Square Root",
+                  limitText: "lim(x → 4) √x = 2",
+                  a: "4",
+                  fx: "√x",
+                  L: "2",
+                  obstacle: "Radical difference cannot be factored cleanly",
+                  strategy: "Multiply by conjugate (√x + 2)/(√x + 2) to expose |x - 4|. Since √x + 2 > 1, dropping denominator preserves inequality.",
+                  delta: "ϵ",
+                  given: "Given ϵ > 0.",
+                  choose: "Choose δ = ϵ.",
+                  suppose: "Suppose 0 < |x - 4| < δ.",
+                  check: "|√x - 2| = |(√x - 2)(√x + 2)| / (√x + 2) = |x - 4| / (√x + 2) < |x - 4| / 1 < δ = ϵ (valid because √x + 2 > 1)."
+                },
+                {
+                  id: 4,
+                  cat: "RADICAL",
+                  title: "Ex 5: Linear Radical",
+                  limitText: "lim(x → 6) √(3x - 2) = 4",
+                  a: "6",
+                  fx: "√(3x - 2)",
+                  L: "4",
+                  obstacle: "Radical containing scaled argument",
+                  strategy: "Conjugate multiplication yields 3|x - 6| / (√(3x - 2) + 4). Bounding denominator by > 1 yields 3|x - 6| < 3δ.",
+                  delta: "ϵ / 3",
+                  given: "Given ϵ > 0.",
+                  choose: "Choose δ = ϵ / 3.",
+                  suppose: "Suppose 0 < |x - 6| < δ.",
+                  check: "|√(3x - 2) - 4| = |3x - 2 - 16| / (√(3x - 2) + 4) = 3|x - 6| / (√(3x - 2) + 4) < 3|x - 6| / 1 < 3δ = 3(ϵ / 3) = ϵ."
+                },
+                {
+                  id: 5,
+                  cat: "POLYNOMIAL",
+                  title: "Ex 6: Quadratic with Difference of Squares",
+                  limitText: "lim(x → 3) [2x² + 1] = 19",
+                  a: "3",
+                  fx: "2x² + 1",
+                  L: "19",
+                  obstacle: "Unbounded factor |x + 3| remains in product",
+                  strategy: "Factor as 2|x - 3||x + 3|. Enforce auxiliary ceiling δ ≤ 1: |x - 3| < 1 ⇒ 2 < x < 4 ⇒ |x + 3| < 7. Then 2(7)|x - 3| = 14|x - 3|.",
+                  delta: "min(1, ϵ / 14)",
+                  given: "Given ϵ > 0.",
+                  choose: "Choose δ = min(1, ϵ / 14).",
+                  suppose: "Suppose 0 < |x - 3| < δ.",
+                  check: "Since δ ≤ 1, |x - 3| < 1 ⇒ -1 < x - 3 < 1 ⇒ 5 < x + 3 < 7 ⇒ |x + 3| < 7. Then |(2x² + 1) - 19| = 2|x - 3||x + 3| < 2(δ)(7) = 14δ ≤ 14(ϵ / 14) = ϵ."
+                },
+                {
+                  id: 6,
+                  cat: "POLYNOMIAL",
+                  title: "Ex 7: Quadratic Trinomial",
+                  limitText: "lim(x → -2) [x² - 3x] = 10",
+                  a: "-2",
+                  fx: "x² - 3x",
+                  L: "10",
+                  obstacle: "Non-symmetric negative target bounding",
+                  strategy: "Factor as |x + 2||x - 5|. Constrain δ ≤ 1: |x + 2| < 1 ⇒ -1 < x + 2 < 1 ⇒ -8 < x - 5 < -6 ⇒ |x - 5| < 8.",
+                  delta: "min(1, ϵ / 8)",
+                  given: "Given ϵ > 0.",
+                  choose: "Choose δ = min(1, ϵ / 8).",
+                  suppose: "Suppose 0 < |x + 2| < δ.",
+                  check: "Because δ ≤ 1, |x + 2| < 1 ⇒ -3 < x < -1 ⇒ -8 < x - 5 < -6 ⇒ |x - 5| < 8. Hence |(x² - 3x) - 10| = |x + 2||x - 5| < δ(8) ≤ (ϵ / 8)(8) = ϵ."
+                },
+                {
+                  id: 7,
+                  cat: "POLYNOMIAL",
+                  title: "Ex 8: Cubic Polynomial",
+                  limitText: "lim(x → 2) x³ = 8",
+                  a: "2",
+                  fx: "x³",
+                  L: "8",
+                  obstacle: "Difference of cubes produces quadratic term |x² + 2x + 4|",
+                  strategy: "Factor |x - 2||x² + 2x + 4|. Set δ ≤ 1 ⇒ |x| < 3. Apply Triangle Inequality: |x² + 2x + 4| ≤ |x|² + 2|x| + 4 < 3² + 2(3) + 4 = 19.",
+                  delta: "min(1, ϵ / 19)",
+                  given: "Given ϵ > 0.",
+                  choose: "Choose δ = min(1, ϵ / 19).",
+                  suppose: "Suppose 0 < |x - 2| < δ.",
+                  check: "With δ ≤ 1, |x - 2| < 1 ⇒ 1 < x < 3 ⇒ |x| < 3. By triangle inequality, |x² + 2x + 4| ≤ |x|² + 2|x| + 4 < 9 + 6 + 4 = 19. Thus |x³ - 8| = |x - 2||x² + 2x + 4| < 19δ ≤ 19(ϵ / 19) = ϵ."
+                },
+                {
+                  id: 8,
+                  cat: "RATIONAL",
+                  title: "Ex 9: Basic Reciprocal",
+                  limitText: "lim(x → 2) (1/x) = 1/2",
+                  a: "2",
+                  fx: "1/x",
+                  L: "1/2",
+                  obstacle: "Variable x in denominator can grow arbitrarily close to singularity 0",
+                  strategy: "Algebra yields |x - 2| / (2|x|). Bound δ ≤ 1: |x - 2| < 1 ⇒ 1 < x < 3. Inverting gives 1/x < 1 ⇒ 1/(2|x|) < 1/2.",
+                  delta: "min(1, 2ϵ)",
+                  given: "Given ϵ > 0.",
+                  choose: "Choose δ = min(1, 2ϵ).",
+                  suppose: "Suppose 0 < |x - 2| < δ.",
+                  check: "Since δ ≤ 1, |x - 2| < 1 ⇒ 1 < x < 3. Taking reciprocals gives 1 > 1/x > 1/3 ⇒ 1/|x| < 1. Then |(1/x) - (1/2)| = |2 - x| / (2|x|) = |x - 2| / (2|x|) < (1/2)|x - 2| < (1/2)δ ≤ (1/2)(2ϵ) = ϵ."
+                },
+                {
+                  id: 9,
+                  cat: "RATIONAL",
+                  title: "Ex 10: Scaled Rational Expression",
+                  limitText: "lim(x → 1) [1 / (2x + 1)] = 1/3",
+                  a: "1",
+                  fx: "1 / (2x + 1)",
+                  L: "1/3",
+                  obstacle: "Fractional difference with affine denominator",
+                  strategy: "Difference simplifies to 2|x - 1| / [3|2x + 1|]. Impose δ ≤ 1: |x - 1| < 1 ⇒ 0 < x < 2 ⇒ 1 < 2x + 1 < 5 ⇒ 1/|2x + 1| < 1.",
+                  delta: "min(1, (3/2)ϵ)",
+                  given: "Given ϵ > 0.",
+                  choose: "Choose δ = min(1, (3/2)ϵ).",
+                  suppose: "Suppose 0 < |x - 1| < δ.",
+                  check: "Since δ ≤ 1, 0 < x < 2 ⇒ 1 < 2x + 1 < 5 ⇒ 1/|2x + 1| < 1. Then |1/(2x + 1) - 1/3| = 2|x - 1| / (3|2x + 1|) < (2/3)|x - 1| < (2/3)δ ≤ (2/3)((3/2)ϵ) = ϵ."
+                }
+              ];
+
+              let activeIndex = 0;
+              let activeFilter = "ALL";
+
+              function renderSelectorList() {
+                const listContainer = document.getElementById("ex-selector-list");
+                listContainer.innerHTML = "";
+
+                limitExamples.forEach((ex) => {
+                  if (activeFilter !== "ALL" && ex.cat !== activeFilter) {
+                    return;
+                  }
+
+                  const btn = document.createElement("button");
+                  btn.className = `ex-selector-btn ${ex.id === activeIndex ? "active" : ""}`;
+                  btn.onclick = () => selectExample(ex.id);
+                  btn.innerHTML = `
+                    <span>${ex.title}</span>
+                    <span class="ex-tag">${ex.cat}</span>
+                  `;
+                  listContainer.appendChild(btn);
+                });
+              }
+
+              function displayExample(index) {
+                activeIndex = index;
+                const ex = limitExamples[index];
+                const workspace = document.getElementById("proof-workspace");
+
+                workspace.innerHTML = `
+                  <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; border-bottom:1px solid #e2e8f0; padding-bottom:0.75rem; margin-bottom:1rem;">
+                    <div>
+                      <span style="background:#e0f2fe; color:#0369a1; font-size:0.75rem; font-weight:700; padding:0.2rem 0.5rem; border-radius:4px; text-transform:uppercase;">
+                        ${ex.cat} ARCHETYPE
+                      </span>
+                      <h4 style="margin:0.4rem 0 0 0; color:#0f172a; font-size:1.25rem; font-weight:700;">
+                        ${ex.limitText}
+                      </h4>
+                    </div>
+                    <div style="text-align:right;">
+                      <span style="font-size:0.78rem; color:#64748b; display:block;">Target Cutoff:</span>
+                      <code style="font-size:1rem; font-weight:800; color:#b45309; background:#fef3c7; padding:0.2rem 0.55rem; border-radius:4px; border:1px solid #fde68a;">
+                        δ = ${ex.delta}
+                      </code>
+                    </div>
+                  </div>
+
+                  <!-- STRATEGY INSIGHT CARD -->
+                  <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:0.85rem; margin-bottom:1rem;">
+                    <strong style="font-size:0.82rem; color:#0f172a; text-transform:uppercase; letter-spacing:0.04em; display:block; margin-bottom:0.25rem;">
+                      Core Obstacle & Scratchwork Key:
+                    </strong>
+                    <p style="margin:0; font-size:0.88rem; color:#334155; line-height:1.5;">
+                      ${ex.strategy}
+                    </p>
+                  </div>
+
+                  <!-- 4-STEP FORMAL PROOF GRID -->
+                  <div class="proof-grid">
+                    <div class="step-card step-given">
+                      <h5>1. Given</h5>
+                      <div class="math-block">${ex.given}</div>
+                      <span style="font-size:0.78rem; color:#64748b;">Opponent provides challenge error margin.</span>
+                    </div>
+
+                    <div class="step-card step-choose">
+                      <h5>2. Choose</h5>
+                      <div class="math-block">${ex.choose}</div>
+                      <span style="font-size:0.78rem; color:#64748b;">Constructed from reverse scratchwork.</span>
+                    </div>
+
+                    <div class="step-card step-suppose">
+                      <h5>3. Suppose</h5>
+                      <div class="math-block">${ex.suppose}</div>
+                      <span style="font-size:0.78rem; color:#64748b;">Assume domain radius constraint holds.</span>
+                    </div>
+
+                    <div class="step-card step-check">
+                      <h5>4. Check</h5>
+                      <div class="math-block" style="font-size:0.95rem;">${ex.check}</div>
+                      <span style="font-size:0.78rem; color:#64748b;">Chain of inequalities verifies |f(x) - L| &lt; ϵ.</span>
+                    </div>
+                  </div>
+                `;
+
+                renderSelectorList();
+              }
+
+              function selectExample(index) {
+                displayExample(index);
+              }
+
+              function filterCategory(category, buttonElement) {
+                activeFilter = category;
+
+                // Update active button state
+                const buttons = buttonElement.parentElement.querySelectorAll(".pill-btn");
+                buttons.forEach(btn => btn.classList.remove("active"));
+                buttonElement.classList.add("active");
+
+                // Default to the first example that matches this category
+                const match = limitExamples.find(ex => category === "ALL" || ex.cat === category);
+                if (match) {
+                  displayExample(match.id);
+                } else {
+                  renderSelectorList();
+                }
+              }
+
+              // Initialize display
+              displayExample(0);
+            </script>
+
+            <!-- SECTION 2: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->
             <h2 id="section-quantifiers">2. Quantifier Order, Timing, and Dependencies</h2>
 
             <h3 style="color: #0f172a; margin-top: 1.5rem;">The Grammar of Analysis: Why Order Matters</h3>
