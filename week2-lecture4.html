@@ -9,6 +9,8 @@
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
             onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+    <!-- Three.js Integration -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         :root {
             --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
@@ -74,14 +76,23 @@
         .pane p { margin: 0 0 0.75rem 0; line-height: 1.6; font-size: 0.95rem; }
         .pane p:last-child { margin-bottom: 0; }
 
+        /* 3D Flight Corridor Specific Styling */
+        .corridor-3d-box { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 2rem; background: #090d16; color: #f8fafc; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .corridor-toggle-bar { display: flex; gap: 0.5rem; padding: 0.85rem 1.25rem; background: #0f172a; border-bottom: 1px solid #1e293b; flex-wrap: wrap; align-items: center; }
+        .corridor-toggle-btn { background: #1e293b; color: #cbd5e1; border: 1px solid #334155; padding: 0.4rem 0.85rem; border-radius: 4px; font-size: 0.84rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .corridor-toggle-btn.active { background: var(--accent); color: white; border-color: #f59e0b; }
+        .corridor-canvas-wrap { position: relative; width: 100%; height: 380px; background: #030712; overflow: hidden; touch-action: pan-y; }
+        #corridor-canvas { width: 100%; height: 100%; display: block; }
+        .corridor-controls-pane { display: flex; gap: 1.5rem; padding: 1.25rem 1.5rem; background: #0f172a; border-top: 1px solid #1e293b; align-items: flex-start; }
+        .corridor-panes { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #1e293b; }
+        .corridor-pane { background: #090d16; padding: 1.25rem 1.5rem; }
+        .corridor-pane h4 { margin-top: 0; color: #fbbf24; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.65rem; font-weight: 700; }
+        .corridor-pane p { margin: 0 0 0.65rem 0; line-height: 1.6; font-size: 0.92rem; color: #cbd5e1; }
+        .corridor-pane p:last-child { margin-bottom: 0; }
+
         .worked-example-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
         .worked-example-box h4 { margin-top: 0; color: #047857; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
         .worked-example-box p, .worked-example-box li { color: #0f172a !important; }
-
-        .lecture-card { background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; transition: transform 0.15s ease, box-shadow 0.15s ease; }
-        .lecture-card:hover { transform: translateY(-2px); box-shadow: 0 6px 12px -2px rgba(0,0,0,0.08); border-color: var(--accent); }
-        .lecture-card h3 { margin-top: 0; color: #0f172a; }
-        .lecture-badge { display: inline-block; background: var(--accent); color: white; padding: 0.2rem 0.55rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem; }
 
         @media (max-width: 768px) {
             .katex-display {
@@ -119,8 +130,8 @@
             }
             p, div, li, blockquote { word-break: break-word; overflow-wrap: break-word; }
             .math-overflow-fix, div[style*="text-align: center"] { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-            .analysis-panes { grid-template-columns: 1fr !important; }
-            .controls-pane { flex-direction: column; }
+            .analysis-panes, .corridor-panes { grid-template-columns: 1fr !important; }
+            .controls-pane, .corridor-controls-pane { flex-direction: column; }
 
             /* Mobile canvas padding and SVG scaling optimizations */
             .canvas-container,
@@ -142,6 +153,7 @@
             #game-plot text {
                 font-size: 13px !important;
             }
+            .corridor-canvas-wrap { height: 280px; }
         }
     </style>
 </head>
@@ -207,7 +219,7 @@
                 <ul class="toc-grid">
                     <li><a href="#section-epsilon-n">1. Formal $\epsilon\text{-}N$ Convergence</a></li>
                     <li><a href="#section-quantifiers">2. Quantifier Order, Timing, and Dependencies</a></li>
-                    <li><a href="#section-interactive-widget">3. Interactive Epsilon Challenge Simulator</a></li>
+                    <li><a href="#section-interactive-widget">3. Interactive Visualizers: 2D Simulator &amp; 3D Flight Corridor</a></li>
                     <li><a href="#section-prop5">4. Properties of Convergent Sequences &amp; Foundational Theorems</a></li>
                     <li><a href="#section-theorems">5. Algebraic Limit Laws and Proofs (Theorem 1)</a></li>
                     <li><a href="#section-divergence-test">6. Proving Non-Existence of Limits</a></li>
@@ -265,70 +277,6 @@
                     $$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad n > N \implies |a_n - L| < \epsilon$$
                 </p>
             </div>
-
-            <h3 style="color: #0f172a; margin-top: 1.75rem;">Breaking Down Every Piece of the Formula</h3>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Let's unpack each component of this sentence so that nothing feels like a secret code:
-            </p>
-            <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
-                <li style="margin-bottom: 0.85rem;">
-                    <strong>$\forall \epsilon > 0$ ("For every epsilon greater than zero"):</strong><br>
-                    The Greek letter $\epsilon$ (epsilon) is traditionally used because it stands for <em>error</em>. Think of $\epsilon$ as the challenge tolerance. The universal quantifier ($\forall$) means this test must hold for <em>any</em> positive tolerance anyone could ever name—whether they challenge you with $\epsilon = 1$, $\epsilon = 0.001$, or $\epsilon = 10^{-100}$. You cannot negotiate a larger error margin; you must be prepared to satisfy any tolerance, no matter how microscopically tight.
-                </li>
-                <li style="margin-bottom: 0.85rem;">
-                    <strong>$\exists N \in \mathbb{N}$ ("There exists a natural number cutoff $N$"):</strong><br>
-                    This is your response to the challenge. In response to the given $\epsilon$, you identify a specific milestone index $N$. Crucially, you get to inspect $\epsilon$ <em>first</em> before you choose $N$. If the skeptic gives you a loose tolerance ($\epsilon = 0.5$), you might only need $N = 2$. If they challenge you with an extremely tight tolerance ($\epsilon = 0.0001$), you will have to walk much further down the sequence to find a larger $N$.
-                </li>
-                <li style="margin-bottom: 0.85rem;">
-                    <strong>$\forall n > N$ ("For all indices $n$ strictly past the cutoff"):</strong><br>
-                    This defines the <em>infinite tail</em> of the sequence. Real analysis teaches us a liberating truth: <strong>initial terms do not matter</strong>. The first ten, hundred, or million terms of a sequence can jump around chaotically, take excursions into negative numbers, or violate the tolerance. What matters is that past your chosen milestone $N$, every single subsequent term settles down.
-                </li>
-                <li>
-                    <strong>$\implies |a_n - L| < \epsilon$ ("The terms remain permanently trapped"):</strong><br>
-                    Once you pass milestone $N$, every term $a_n$ is within distance $\epsilon$ of $L$. It is not enough for one term to enter the window and bounce back out. Once $n > N$, <em>no term is ever allowed to leave the target corridor again</em>.
-                </li>
-            </ul>
-
-            <h3 style="color: #0f172a; margin-top: 1.75rem;">The Mental Model: The Two-Player Archery Game</h3>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                If you ever feel lost in the algebraic symbols, picture this scenario as a friendly game of archery between two people:
-            </p>
-            <div style="display: flex; gap: 2rem; align-items: center; margin: 1.5rem 0; flex-wrap: wrap;">
-                <div style="flex: 0 0 280px; margin: 0 auto;">
-                    <svg viewBox="0 0 260 160" style="width: 100%; height: auto; display: block;">
-                        <circle cx="130" cy="80" r="68" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="2.5"/>
-                        <circle cx="130" cy="80" r="48" fill="#fef3c7" stroke="#f59e0b" stroke-width="2.5"/>
-                        <text x="130" y="47" font-family="sans-serif" font-size="10" font-weight="bold" fill="#78350f" text-anchor="middle">&plusmn;&epsilon; Tolerance</text>
-                        <circle cx="130" cy="80" r="22" fill="#fee2e2" stroke="#ef4444" stroke-width="2.5"/>
-                        <circle cx="130" cy="80" r="7" fill="#ef4444"/>
-                        <text x="130" y="84" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">L</text>
-                        <line x1="35" y1="22" x2="123" y2="74" stroke="#0f172a" stroke-width="3.5" stroke-linecap="round"/>
-                        <polygon points="123,74 111,68 116,61" fill="#0f172a"/>
-                        <line x1="35" y1="22" x2="25" y2="16" stroke="#b45309" stroke-width="2.5"/>
-                        <line x1="41" y1="28" x2="31" y2="22" stroke="#b45309" stroke-width="2.5"/>
-                    </svg>
-                </div>
-                <div style="flex: 1; min-width: 280px;">
-                    <ol style="margin: 0; padding-left: 1.25rem; color: #334155; line-height: 1.7; font-size: 0.98rem;">
-                        <li style="margin-bottom: 0.5rem;">
-                            <strong>Player 1 (The Skeptic) sets the target:</strong> They paint a target ring of radius $\epsilon$ around the bullseye $L$. They can make this ring as impossibly tiny as they want.
-                        </li>
-                        <li style="margin-bottom: 0.5rem;">
-                            <strong>Player 2 (You, the Defender) finds the cutoff:</strong> You inspect their ring and announce a milestone index $N$.
-                        </li>
-                        <li>
-                            <strong>The Test:</strong> Every arrow shot after turn $N$ (that is, $a_{N+1}, a_{N+2}, a_{N+3}, \dots$) must land securely inside the target ring.
-                        </li>
-                    </ol>
-                    <p style="margin: 0.75rem 0 0 0; color: #334155; font-size: 0.95rem;">
-                        If you have a reliable rule to produce a valid $N$ for <em>any</em> positive $\epsilon$ the skeptic throws at you, you win the game—and the sequence converges to $L$!
-                    </p>
-                </div>
-            </div>
-
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-top: 1.5rem;">
-                Use the interactive tool below to step through each clause of this definition in order. Notice how the internal telemetry updates, the visual diagram highlights the active region, and the mechanical and logical explanations synchronize with each step:
-            </p>
 
             <!-- CLAUSE STEPPER -->
             <div class="stepper-walkthrough" id="definition-walkthrough">
@@ -398,94 +346,31 @@
 
             <h3 style="color: #0f172a; margin-top: 1.5rem;">The Grammar of Analysis: Why Order Matters</h3>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                In everyday English, word order can be remarkably forgiving. You can say <em>"Everyone loves someone"</em> or <em>"There is someone whom everyone loves,"</em> and listeners usually piece together what you mean. But in formal mathematical analysis, the order of quantifiers is not stylistic—it is the entire logical backbone of the argument. Changing the order of two quantifiers doesn't tweak the sentence; it completely alters the reality being described.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                When you see a long chain of symbols like:
+                In everyday English, word order can be remarkably forgiving. In formal mathematical analysis, however, the order of quantifiers is not stylistic—it is the entire logical backbone of the argument. Changing the order of two quantifiers completely alters the reality being described.
             </p>
             <p style="text-align: center; margin: 1.25rem 0; font-size: 1.2rem;">
                 $$\forall \epsilon > 0 \quad \exists N \in \mathbb{N} \quad \forall n > N, \quad |a_n - L| < \epsilon$$
             </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                the golden rule is to <strong>read strictly from left to right</strong>. Each quantifier establishes a distinct turn in a conversation or a sequential dialogue. A variable introduced further to the right is allowed to respond to and depend on variables to its left, but variables to the left can never look ahead to what hasn't been chosen yet.
-            </p>
 
             <h3 style="color: #0f172a; margin-top: 1.75rem;">The "Who Knows What" Rule: Order of Information</h3>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                To see why $N$ depends on $\epsilon$, let's trace the visibility of information through the three variables from left to right:
-            </p>
             <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
                 <li style="margin-bottom: 0.85rem;">
-                    <strong>The First Move ($\forall \epsilon > 0$):</strong><br>
-                    $\epsilon$ is chosen first and in complete isolation. The person picking $\epsilon$ has no idea what $N$ will be, and they don't care. They can challenge you with $\epsilon = 1$, $\epsilon = 0.05$, or $\epsilon = 10^{-12}$.
+                    <strong>The First Move ($\forall \epsilon > 0$):</strong> $\epsilon$ is chosen first and in complete isolation. The person picking $\epsilon$ has no idea what $N$ will be, and they don't care.
                 </li>
                 <li style="margin-bottom: 0.85rem;">
-                    <strong>The Response ($\exists N \in \mathbb{N}$):</strong><br>
-                    Now it is your turn to pick $N$. Because your move happens <em>after</em> $\epsilon$ has been announced, you make your choice with **full knowledge of $\epsilon$**. You are responding to their move. Mathematically, this means $N$ is a function of $\epsilon$—written $N = N(\epsilon)$. If the challenger changes $\epsilon$ to a tighter tolerance, you are completely free to pick a larger $N$.
+                    <strong>The Response ($\exists N \in \mathbb{N}$):</strong> Now it is your turn to pick $N$. Because your move happens <em>after</em> $\epsilon$ has been announced, you make your choice with <strong>full knowledge of $\epsilon$</strong>: $N = N(\epsilon)$.
                 </li>
                 <li>
-                    <strong>The Final Verification ($\forall n > N$):</strong><br>
-                    Finally, we test the tail. The variable $n$ is evaluated only after both $\epsilon$ and $N$ are already locked into place, inspecting every single step strictly past your cutoff milestone to verify that distance stays strictly below $\epsilon$.
+                    <strong>The Final Verification ($\forall n > N$):</strong> The index $n$ is tested only after both $\epsilon$ and $N$ are locked, inspecting every term strictly past your cutoff milestone.
                 </li>
             </ul>
 
-            <h3 style="color: #0f172a; margin-top: 1.75rem;">When Can You Swap Quantifiers? (The Commutativity Rule)</h3>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                A helpful rule of thumb to keep in mind is:
-            </p>
-            <ul style="margin: 0.5rem 0 1.25rem 1.25rem; color: #334155; line-height: 1.7; font-size: 0.98rem;">
-                <li style="margin-bottom: 0.5rem;">
-                    <strong>Quantifiers of the same type always commute:</strong> You can safely swap two universal quantifiers ($\forall x \, \forall y \iff \forall y \, \forall x$) or two existential quantifiers ($\exists x \, \exists y \iff \exists y \, \exists x$) without changing the mathematical meaning.
-                </li>
-                <li>
-                    <strong>Alternating quantifiers NEVER commute:</strong> Swapping a $\forall$ with an $\exists$ radically changes what the statement demands. In analysis, $\forall \epsilon \, \exists N$ and $\exists N \, \forall \epsilon$ describe two completely different universes.
-                </li>
-            </ul>
+            <!-- SECTION 3: 2D SIMULATOR & 3D FLIGHT CORRIDOR -->
+            <h2 id="section-interactive-widget">3. Interactive Visualizers: 2D Simulator &amp; 3D Flight Corridor</h2>
 
-            <h3 style="color: #0f172a; margin-top: 1.75rem;">The Fatal Quantifier Swap: Why $\exists N \; \forall \epsilon$ Breaks Mathematics</h3>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                To see the power of quantifier order firsthand, let's conduct a thought experiment. What would happen if a student accidentally reversed the first two quantifiers in an exam and wrote:
-            </p>
-            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem; color: #b91c1c;">
-                $$\exists N \in \mathbb{N} \quad \forall \epsilon > 0 \quad \forall n > N, \quad |a_n - L| < \epsilon \quad \text{?}$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Read it from left to right using our "who knows what" rule:
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                The statement now opens with $\exists N \in \mathbb{N}$. That means a single milestone number $N$ must be chosen <em>first</em>, before anyone has named $\epsilon$. Then, that same fixed $N$ must satisfy $|a_n - L| < \epsilon$ for <strong>every single positive $\epsilon$ simultaneously</strong>!
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Think about what that requires. If $|a_n - L| < \epsilon$ for every $\epsilon > 0$, what non-negative real number is strictly smaller than every positive number? Only zero! The only distance smaller than every positive tolerance is exactly zero:
-            </p>
-            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$|a_n - L| = 0 \implies a_n = L \quad \text{for all } n > N$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                By accidentally swapping those two words, the definition no longer describes sequences that approach a limit. It only describes sequences that literally <strong>freeze and become permanently constant</strong> after step $N$ (like $3, 7, 2, 5, 5, 5, 5, \dots$). A sequence like $a_n = 1/n$, which never equals $0$ but clearly converges to $0$, would fail this broken test!
-            </p>
-
-            <h3 style="color: #0f172a; margin-top: 1.75rem;">A Practical Mental Checklist for Reading Proofs</h3>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Whenever you sit down to write or read an $\epsilon\text{-}N$ proof, keep this internal dialogue running:
-            </p>
-            <ol style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
-                <li style="margin-bottom: 0.6rem;">
-                    <strong>When you see $\forall \epsilon > 0$:</strong> Remind yourself, <em>"I do not choose $\epsilon$. Someone hands it to me. I must treat $\epsilon$ as an arbitrary positive constant throughout my proof."</em>
-                </li>
-                <li style="margin-bottom: 0.6rem;">
-                    <strong>When you see $\exists N \in \mathbb{N}$:</strong> Say to yourself, <em>"Now it's my turn. I must find a formula for $N$ that uses $\epsilon$. It is completely fine if $N$ gets huge when $\epsilon$ is tiny."</em>
-                </li>
-                <li>
-                    <strong>When you see $\forall n > N$:</strong> Say to yourself, <em>"Now I verify my work. I let $n$ be an arbitrary index past $N$ and prove that the distance inequality $|a_n - L| < \epsilon$ holds algebraically."</em>
-                </li>
-            </ol>
-
-            <!-- SECTION 3 -->
-            <h2 id="section-interactive-widget">3. Interactive Epsilon Challenge Simulator</h2>
             <div class="widget-instructions">
-                <h4>📖 Guide: Exploring the &epsilon;–N Definition with $a_n = \frac{1}{n}$ ($L = 0$)</h4>
-                <p>This widget illustrates how shrinking tolerance pushes cutoff $N$ further down the tail:</p>
+                <h4>📖 Guide 1: 2D Epsilon Challenge Simulator ($a_n = \frac{1}{n}$)</h4>
+                <p>Observe how shrinking tolerance pushes cutoff $N$ further down the tail:</p>
                 <ol>
                     <li><strong>Choose Tolerance ($\epsilon$):</strong> Test $\epsilon = 0.2$ ($N=5$), $\epsilon = 0.1$ ($N=10$), or $\epsilon = 0.05$ ($N=20$).</li>
                     <li><strong>Observe Cutoff ($N$):</strong> Marked by the red dashed line ($N = \lceil 1/\epsilon \rceil$).</li>
@@ -493,11 +378,11 @@
                 </ol>
             </div>
 
-            <!-- EPSILON CHALLENGE WIDGET -->
+            <!-- 2D EPSILON CHALLENGE WIDGET -->
             <div class="game-box">
                 <div class="game-header">
-                    <span>Illustrating the Definition: $a_n = \frac{1}{n}$ ($L = 0$)</span>
-                    <span>Finite Sample Visualization</span>
+                    <span>2D Finite Sample Visualization: $a_n = \frac{1}{n}$ ($L = 0$)</span>
+                    <span>Planar Distance Metric</span>
                 </div>
                 <div class="telemetry-grid" id="game-telemetry">
                     <div class="telemetry-card"><span class="telemetry-label">Sequence</span><span class="telemetry-badge" style="color: #0369a1;">$a_n = 1/n$ ($L = 0$)</span></div>
@@ -523,7 +408,69 @@
                 </div>
             </div>
 
-            <div class="worked-example-box" style="margin-top: 1.5rem;">
+            <!-- 3D THREE.JS CONVERGENCE FLIGHT CORRIDOR (DIRECTED NARRATIVE STEPPER) -->
+            <div class="corridor-3d-box" id="corridor-3d-section">
+                <!-- Comparative Dimension Toggles -->
+                <div class="corridor-toggle-bar">
+                    <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: #94a3b8; font-weight: 700; margin-right: 0.5rem;">Sequence Model:</span>
+                    <button class="corridor-toggle-btn active" id="btn-seq-harmonic" onclick="switchCorridorSequence('harmonic')">Harmonic $a_n = 1/n$</button>
+                    <button class="corridor-toggle-btn" id="btn-seq-alternating" onclick="switchCorridorSequence('alternating')">Alternating $a_n = \frac{(-1)^n}{n}$</button>
+                    <button class="corridor-toggle-btn" id="btn-seq-geometric" onclick="switchCorridorSequence('geometric')">Geometric $a_n = 0.75^n$</button>
+                </div>
+
+                <!-- Live State Telemetry Grid -->
+                <div class="telemetry-grid" style="background: #0b1120; border-bottom: 1px solid #1e293b;">
+                    <div class="telemetry-card" style="background: #111827; border-color: #1f2937;">
+                        <span class="telemetry-label" style="color: #94a3b8;">Flight Model</span>
+                        <span class="telemetry-badge" id="c3-tel-seq" style="color: #38bdf8;">$a_n = 1/n$</span>
+                    </div>
+                    <div class="telemetry-card" style="background: #111827; border-color: #1f2937;">
+                        <span class="telemetry-label" style="color: #94a3b8;">Corridor Radius ($\epsilon$)</span>
+                        <span class="telemetry-badge" id="c3-tel-eps" style="color: #fbbf24;">0.150</span>
+                    </div>
+                    <div class="telemetry-card" style="background: #111827; border-color: #1f2937;">
+                        <span class="telemetry-label" style="color: #94a3b8;">Milestone Gate ($N$)</span>
+                        <span class="telemetry-badge" id="c3-tel-gate" style="color: #f43f5e;">Gate N = 7</span>
+                    </div>
+                    <div class="telemetry-card" style="background: #111827; border-color: #1f2937;">
+                        <span class="telemetry-label" style="color: #94a3b8;">Camera Station</span>
+                        <span class="telemetry-badge" id="c3-tel-station" style="color: #a78bfa;">Phase 1: Wide Survey</span>
+                    </div>
+                    <div class="telemetry-card" style="background: #111827; border-color: #1f2937;">
+                        <span class="telemetry-label" style="color: #94a3b8;">Containment Integrity</span>
+                        <span class="telemetry-badge" id="c3-tel-status" style="color: #34d399;">Asymptotic Lock</span>
+                    </div>
+                </div>
+
+                <!-- 3D WebGL Canvas Container -->
+                <div class="corridor-canvas-wrap">
+                    <canvas id="corridor-canvas"></canvas>
+                </div>
+
+                <!-- Stepper Controls & Dedicated Inline Preview Panel -->
+                <div class="corridor-controls-pane">
+                    <div class="nav-buttons" style="min-width: 160px;">
+                        <button id="btn-c3-prev" onclick="stepCorridor(-1)" disabled style="background: #334155;">&larr; Prev Phase</button>
+                        <button id="btn-c3-next" onclick="stepCorridor(1)">Next Phase &rarr;</button>
+                        <button onclick="resetCorridorFlight()" style="background: transparent; border: 1px solid #475569; color: #94a3b8; margin-top: 0.25rem;">Reset Flight</button>
+                    </div>
+                    <div class="step-summary" id="c3-step-summary" style="color: #cbd5e1;"></div>
+                </div>
+
+                <!-- Paired Analytical Panes -->
+                <div class="corridor-panes">
+                    <div class="corridor-pane">
+                        <h4>What Is Happening (Spatial Mechanics)</h4>
+                        <div id="c3-pane-what"></div>
+                    </div>
+                    <div class="corridor-pane">
+                        <h4>Why The System Does This (Mathematical Rationale)</h4>
+                        <div id="c3-pane-why"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="worked-example-box" style="margin-top: 2rem;">
                 <h4>🎯 Worked Example: The $\epsilon\text{-}N$ Scratchpad Method</h4>
                 <p>Prove formally that $\lim_{n\to\infty} \frac{2n+1}{n} = 2$:</p>
                 <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
@@ -541,519 +488,57 @@
 
             <h3 style="color: #0f172a; margin-top: 1.5rem;">Structural Guarantees: The Free Gifts of Convergence</h3>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Writing an $\epsilon\text{-}N$ proof from scratch every time you encounter a new sequence would be exhausting. Mathematicians don't rebuild every argument from raw definitions; instead, they prove <strong>structural theorems</strong>. These are universal guarantees: once you know a sequence converges, you automatically inherit powerful properties for free, without ever needing to guess a cutoff index again.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                In this section, we explore Proposition 5 along with three foundational theorems that solidify the logical architecture of limits: Uniqueness, Tail Invariance, and the Order Limit Theorem.
+                Writing an $\epsilon\text{-}N$ proof from scratch every time you encounter a new sequence would be exhausting. Instead, mathematicians prove <strong>structural theorems</strong>: once you know a sequence converges, you automatically inherit powerful properties for free.
             </p>
 
             <h3 style="color: #0f172a; margin-top: 1.75rem;">Theorem: Uniqueness of Limits</h3>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Before writing $\lim a_n = L$, we must guarantee that a sequence cannot have two different limits. If a sequence settles down, its destination is uniquely determined.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>The Theorem:</strong> If a sequence $(a_n)$ converges to $L$ and also converges to $M$, then $L = M$.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>The Proof Strategy (The $\epsilon/2$ Technique):</strong><br>
-                Let $\epsilon > 0$ be given. Because $a_n \to L$, there is a cutoff $N_1$ where $|a_n - L| < \epsilon/2$. Because $a_n \to M$, there is a cutoff $N_2$ where $|a_n - M| < \epsilon/2$. Let $N = \max(N_1, N_2)$. For any index $n > N$, both inequalities hold. Using the triangle inequality on the fixed distance $|L - M|$:
+                If a sequence $(a_n)$ converges to $L$ and also converges to $M$, then $L = M$.
             </p>
             <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$\begin{aligned}
-                |L - M| &= |(L - a_n) + (a_n - M)| \\
-                &\le |a_n - L| + |a_n - M| \\
-                &< \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon
-                \end{aligned}$$
+                $$|L - M| = |(L - a_n) + (a_n - M)| \le |a_n - L| + |a_n - M| < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon$$
             </p>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                We have shown that the non-negative real number $|L - M|$ is strictly smaller than *every* positive number $\epsilon$. The only number with that property is zero. Thus, $|L - M| = 0$, which means $L = M$. $\blacksquare$
+                Because $|L - M| < \epsilon$ for every $\epsilon > 0$, we must have $|L - M| = 0$, proving $L = M$. $\blacksquare$
             </p>
 
             <h3 style="color: #0f172a; margin-top: 1.75rem;">Theorem: Tail Invariance (The Shift &amp; Truncation Theorem)</h3>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Real analysis teaches us an empowering truth: <strong>initial terms do not matter</strong> for convergence. If you are ever worried about a sequence having a few messy starting terms, this theorem provides absolute peace of mind.
+                If $a_n = b_n$ for all $n > N_0$, then $\lim a_n = \lim b_n$. Any finite initial prefix of messy or singular terms can be safely discarded without changing the limit.
             </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                There are two common ways mathematicians state this principle:
-            </p>
-            <ul style="margin: 0.5rem 0 1.25rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
-                <li style="margin-bottom: 0.6rem;">
-                    <strong>1. The Finite Modification Form:</strong> Let $(a_n)$ and $(b_n)$ be two sequences. If there exists some cutoff index $N_0 \in \mathbb{N}$ such that $a_n = b_n$ for all $n > N_0$, then either both sequences converge to the exact same limit, or both diverge:
-                    $$\lim_{n\to\infty} a_n = \lim_{n\to\infty} b_n$$
-                </li>
-                <li>
-                    <strong>2. The Index Shift Form:</strong> Let $(a_n)_{n=0}^\infty$ be a sequence, and let $k \in \mathbb{N}$ be any fixed integer shift. Then $(a_n)$ converges to $L$ if and only if the shifted sequence $(a_{n+k})_{n=0}^\infty$ converges to $L$:
-                    $$\lim_{n\to\infty} a_n = L \iff \lim_{n\to\infty} a_{n+k} = L$$
-                </li>
-            </ul>
-
-            <h4 style="color: #0f172a; margin-top: 1.5rem;">The Proof of the Finite Modification Form</h4>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Suppose $(a_n)$ converges to limit $L$. We want to prove that $(b_n)$ also converges to $L$.
-            </p>
-            <ol style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
-                <li style="margin-bottom: 0.6rem;">
-                    Let $\epsilon > 0$ be arbitrary.
-                </li>
-                <li style="margin-bottom: 0.6rem;">
-                    Because $a_n \to L$, the definition of convergence provides a cutoff $N_a \in \mathbb{N}$ such that:
-                    $$n > N_a \implies |a_n - L| < \epsilon$$
-                </li>
-                <li style="margin-bottom: 0.6rem;">
-                    We are given that $a_n = b_n$ for all $n > N_0$. Now, choose the master cutoff:
-                    $$N = \max(N_a, N_0)$$
-                </li>
-                <li>
-                    For any index $n > N$, both conditions hold simultaneously:
-                    $$\begin{aligned}
-                    n > N_0 &\implies b_n = a_n \\
-                    n > N_a &\implies |a_n - L| < \epsilon
-                    \end{aligned}$$
-                    Substituting $b_n$ for $a_n$ yields $|b_n - L| = |a_n - L| < \epsilon$. Therefore, $(b_n)$ converges to $L$. By symmetry, if $(b_n)$ converges to $L$, then $(a_n)$ must converge to $L$. $\blacksquare$
-                </li>
-            </ol>
-
-            <h4 style="color: #0f172a; margin-top: 1.5rem;">Why Tail Invariance Is a Superpower for Beginners</h4>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                This theorem gives you three practical mathematical liberties:
-            </p>
-            <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
-                <li style="margin-bottom: 0.6rem;">
-                    <strong>Early Singularities Don't Matter:</strong> Consider $a_n = \frac{n}{n-2}$. At $n=2$, this formula divides by zero and is undefined! But for all $n \ge 3$, it is perfectly well-behaved. The Tail Invariance Theorem tells us we can simply define the sequence starting at $n=3$ without altering its limit in any way.
-                </li>
-                <li style="margin-bottom: 0.6rem;">
-                    <strong>Starting Indices Don't Matter:</strong> Whether a lecturer writes $(a_n)_{n=0}^\infty$, $(a_n)_{n=1}^\infty$, or $(a_n)_{n=100}^\infty$, the limit is identical. You never need to worry about index shifting changing the convergence.
-                </li>
-                <li>
-                    <strong>Chaotic Warmups Can Be Discarded:</strong> A sequence could jump wildly between $-10^6$ and $+10^6$ for the first million terms. As long as it eventually settles down into an $\epsilon$-corridor, those initial terms are discarded as finite history.
-                </li>
-            </ul>
 
             <h3 style="color: #0f172a; margin-top: 1.75rem;">Theorem: Order Limit Theorem (Inequality Preservation)</h3>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                One of the most comforting features of limits is that they respect relative order. If one sequence always stays below another on the number line, its eventual limit cannot leap ahead of the other sequence's limit.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>The Formal Statement:</strong> Let $(a_n)$ and $(b_n)$ be convergent sequences with limits $K, L \in \mathbb{R}$:
-            </p>
-            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$\lim_{n\to\infty} a_n = K \quad \text{and} \quad \lim_{n\to\infty} b_n = L$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                If there exists an index $N_0 \in \mathbb{N}$ such that $a_n \le b_n$ for all $n > N_0$, then:
-            </p>
-            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$K \le L$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <em>Special Single-Sequence Corollary:</em> If $a_n \ge 0$ for all $n > N_0$ and $\lim a_n = K$, then $K \ge 0$. A non-negative sequence cannot converge to a negative number.
-            </p>
-
-            <h4 style="color: #0f172a; margin-top: 1.5rem;">The Proof Strategy: Proof by Contradiction via the Midpoint Moat</h4>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                How do we prove this? Proving an inequality directly with $\epsilon\text{-}N$ can feel clumsy. Instead, mathematicians use <strong>Proof by Contradiction</strong>: we assume the opposite—that $K > L$—and watch the system contradict itself.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>The Geometric Picture:</strong> If $K > L$, there is a positive gap between them of width $K - L > 0$. If we choose a tolerance equal to half this gap, $\epsilon = \frac{K - L}{2}$, the target windows around $K$ and $L$ will never overlap! Their common boundary will be their exact midpoint, $M = \frac{K + L}{2}$.
-            </p>
-            <ol style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
-                <li style="margin-bottom: 0.6rem;">
-                    Assume, for contradiction, that $K > L$. Then $K - L > 0$.
-                </li>
-                <li style="margin-bottom: 0.6rem;">
-                    Set $\epsilon = \frac{K - L}{2} > 0$. Note that $L + \epsilon = \frac{K + L}{2} = K - \epsilon$.
-                </li>
-                <li style="margin-bottom: 0.6rem;">
-                    Since $a_n \to K$, there exists $N_1 \in \mathbb{N}$ such that for all $n > N_1$:
-                    $$|a_n - K| < \epsilon \implies a_n > K - \epsilon = \frac{K + L}{2}$$
-                </li>
-                <li style="margin-bottom: 0.6rem;">
-                    Since $b_n \to L$, there exists $N_2 \in \mathbb{N}$ such that for all $n > N_2$:
-                    $$|b_n - L| < \epsilon \implies b_n < L + \epsilon = \frac{K + L}{2}$$
-                </li>
-                <li>
-                    Now choose the master cutoff $N = \max(N_0, N_1, N_2)$. For any index $n > N$, all conditions hold at once:
-                    $$b_n < \frac{K + L}{2} < a_n \implies b_n < a_n$$
-                    This directly contradicts our hypothesis that $a_n \le b_n$ for all $n > N_0$!
-                    Therefore, our assumption that $K > L$ must be false. We conclude that $K \le L$. $\blacksquare$
-                </li>
-            </ol>
-
-            <h4 style="color: #0f172a; margin-top: 1.5rem;">⚠️ The Classic Trap: Why Strict Inequalities Become Non-Strict</h4>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                There is one critical warning every beginner must know, because exam questions love testing it:
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem; font-weight: 600; color: #b91c1c;">
-                Strict inequalities between terms are NOT preserved in the limit!
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                If $a_n < b_n$ strictly for every single term in the sequence, you can only conclude that $\lim a_n \le \lim b_n$. You <strong>cannot</strong> claim that $\lim a_n < \lim b_n$.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>Why does this happen? The "Pinch Point" Phenomenon:</strong><br>
-                Two sequences can maintain a strict gap between themselves at every finite step, but as they travel to infinity, that gap can shrink down to zero. The limits can "touch" at infinity even though no finite pair of terms ever touches.
-            </p>
-            <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
-                <li style="margin-bottom: 0.6rem;">
-                    <strong>Counterexample 1:</strong> Let $a_n = 0$ and $b_n = \frac{1}{n}$. Clearly, $0 < \frac{1}{n}$ strictly holds for every $n \in \mathbb{N}^+$. Yet in the limit:
-                    $$\lim_{n\to\infty} 0 = 0 \quad \text{and} \quad \lim_{n\to\infty} \frac{1}{n} = 0 \implies 0 \le 0$$
-                    The strict inequality has collapsed into equality!
-                </li>
-                <li>
-                    <strong>Counterexample 2:</strong> Let $a_n = -\frac{1}{n}$ and $b_n = \frac{1}{n}$. At every finite index $n$, $a_n$ is strictly negative and $b_n$ is strictly positive ($-\frac{1}{n} < \frac{1}{n}$). Yet both meet at the exact same limit: $0 = 0$.
-                </li>
-            </ul>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Keep this in mind: limits weaken strict bounds into non-strict bounds ($<$ becomes $\le$, and $>$ becomes $\ge$). This property is the direct precursor to the famous <strong>Squeeze Theorem</strong>, which we will explore in Lecture 5!
+                If $a_n \le b_n$ for all $n > N_0$, then $\lim a_n \le \lim b_n$. Strict inequalities between finite terms can collapse into equality at infinity ($0 < 1/n$ yet $\lim 0 \le \lim 1/n$).
             </p>
 
             <h3 style="color: #0f172a; margin-top: 1.75rem;">Proposition 5: Fundamental Sequence Properties</h3>
             <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
                 <li style="margin-bottom: 0.75rem;">
-                    <strong>1. Absolute Values:</strong> If $a_n \to L$, then $|a_n| \to |L|$ (proven via the Reverse Triangle Inequality $\big| |a_n| - |L| \big| \le |a_n - L|$).
+                    <strong>1. Absolute Values:</strong> If $a_n \to L$, then $|a_n| \to |L|$ (Reverse Triangle Inequality).
                 </li>
                 <li style="margin-bottom: 0.75rem;">
-                    <strong>2. Boundedness:</strong> Every convergent sequence is bounded (proven by splitting the sequence into a finite prefix and an infinite tail trapped with $\epsilon = 1$).
+                    <strong>2. Boundedness:</strong> Every convergent sequence is bounded (Prefix-Tail Split with $\epsilon = 1$).
                 </li>
                 <li>
-                    <strong>3. Preservation of Sign:</strong> If $L > 0$, then eventually $a_n > L/2 > 0$, building an impenetrable moat around zero to safeguard future quotient operations.
+                    <strong>3. Preservation of Sign:</strong> If $L > 0$, eventually $a_n > L/2 > 0$ (The Moat around Zero).
                 </li>
             </ul>
 
             <!-- SECTION 5: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->
             <h2 id="section-theorems">5. Algebraic Limit Laws and Proofs (Theorem 1)</h2>
-
-            <h3 style="color: #0f172a; margin-top: 1.5rem;">The Architecture of Compositionality</h3>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Take a moment to appreciate where we are in our journey. In Section 1 and Section 3, we learned how to prove limits from first principles using the $\epsilon\text{-}N$ definition. While that fundamental machinery gives pure mathematics its rock-solid rigor, using it directly on every single function would be painfully slow.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Consider an expression like $\lim_{n\to\infty} \frac{5n^3 - 2n + 7}{3n^3 + 4}$. Writing a raw $\epsilon\text{-}N$ scratchpad proof for that rational expression would involve taming messy cubic polynomials and estimating complex cross-terms.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                This is where mathematical maturity steps in. Analysis doesn't ask us to suffer through tedious algebra for every problem. Instead, we establish <strong>Theorem 1: The Algebraic Limit Laws</strong>. This theorem proves that limits respect all standard arithmetic operations: addition, subtraction, multiplication, scalar scaling, division, and integer powers. Once we prove these laws once and for all, we can calculate complicated limits compositionally—simply by breaking them down into familiar building blocks like $\lim 1/n = 0$ and $\lim c = c$.
-            </p>
-
-            <h3 style="color: #0f172a; margin-top: 1.75rem;">Theorem 1: The Algebraic Limit Laws</h3>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Suppose $(a_n)$ and $(b_n)$ are convergent sequences with limits $K, L \in \mathbb{R}$:
-            </p>
-            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$\lim_{n\to\infty} a_n = K \quad \text{and} \quad \lim_{n\to\infty} b_n = L$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Let $c \in \mathbb{R}$ be any fixed constant. Then the following algebraic rules hold:
-            </p>
-            <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
-                <li style="margin-bottom: 0.75rem;">
-                    <strong>1. The Constant Rule:</strong> $\lim_{n\to\infty} c = c$<br>
-                    A sequence that never changes remains permanently at its starting value.
-                </li>
-                <li style="margin-bottom: 0.75rem;">
-                    <strong>2. The Scalar Multiple Rule:</strong> $\lim_{n\to\infty} (c \cdot a_n) = c \cdot K$<br>
-                    Constants pull cleanly out of the limit operator.
-                </li>
-                <li style="margin-bottom: 0.75rem;">
-                    <strong>3. The Sum and Difference Rule:</strong> $\lim_{n\to\infty} (a_n \pm b_n) = K \pm L$<br>
-                    The limit of a sum is the sum of the individual limits.
-                </li>
-                <li style="margin-bottom: 0.75rem;">
-                    <strong>4. The Product Rule:</strong> $\lim_{n\to\infty} (a_n \cdot b_n) = K \cdot L$<br>
-                    The limit of a product is the product of the individual limits.
-                </li>
-                <li style="margin-bottom: 0.75rem;">
-                    <strong>5. The Quotient Rule:</strong> $\lim_{n\to\infty} \left(\frac{a_n}{b_n}\right) = \frac{K}{L}$<br>
-                    Provided that $L \neq 0$ and $b_n \neq 0$ for all $n$.
-                </li>
-                <li>
-                    <strong>6. The Power Rule:</strong> $\lim_{n\to\infty} (a_n)^p = K^p$ for any integer exponent $p \in \mathbb{N}$.
-                </li>
-            </ul>
-
-            <h3 style="color: #0f172a; margin-top: 1.75rem;">The "$\epsilon/2$ Trick" and the Sum Law Proof</h3>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Let's study the proof of the Sum Law ($\lim (a_n + b_n) = K + L$). This is the very first time an analysis student encounters the famous <strong>$\epsilon/2$ strategy</strong>—an elegant technique that you will use constantly throughout your mathematics degree.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>The Mental Model (The Shared Error Budget):</strong><br>
-                A challenger hands you an overall target error $\epsilon > 0$. You want to ensure that:
-            </p>
-            <p style="text-align: center; margin: 1rem 0; font-size: 1.15rem;">
-                $$|(a_n + b_n) - (K + L)| < \epsilon$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Notice that you are dealing with two separate moving parts: $a_n$ is wobbling around $K$, and $b_n$ is wobbling around $L$. If both sequences are permitted to wobble by almost $\epsilon$, their combined sum could drift by nearly $2\epsilon$, failing the skeptic's test!
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                The solution is simple: <strong>split the error budget in half</strong>. We demand that $a_n$ stay within $\epsilon/2$ of $K$, and $b_n$ stay within $\epsilon/2$ of $L$. When we add them together:
-            </p>
-            <p style="text-align: center; margin: 1rem 0; font-size: 1.15rem;">
-                $$\frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon$$
-            </p>
-
-            <h4 style="color: #0f172a; margin-top: 1.5rem;">The Synchronization Problem: Why We Take $N = \max(N_1, N_2)$</h4>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Here is a subtle hurdle that every beginner wonders about:
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Because $a_n \to K$, we can find a cutoff $N_1$ so that $|a_n - K| < \epsilon/2$ for all $n > N_1$. Separately, because $b_n \to L$, we can find a cutoff $N_2$ so that $|b_n - L| < \epsilon/2$ for all $n > N_2$.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                What if $N_1 = 10$, but $N_2 = 500$? At step $n = 50$, sequence $a_n$ has settled down nicely, but sequence $b_n$ is still wandering around wildly!
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                To solve this, we define a master cutoff:
-            </p>
-            <p style="text-align: center; margin: 1rem 0; font-size: 1.15rem;">
-                $$N = \max(N_1, N_2)$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                For any index $n$ strictly past $N$, we are guaranteed that $n > N_1$ <em>and</em> $n > N_2$ simultaneously. Both sequences are synchronized and locked inside their respective $\epsilon/2$ cages!
-            </p>
-
-            <h4 style="color: #0f172a; margin-top: 1.5rem;">The Formal Proof of the Sum Law</h4>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Now we assemble the complete deductive argument:
-            </p>
-            <ol style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
-                <li style="margin-bottom: 0.6rem;">
-                    Let $\epsilon > 0$ be arbitrary. Then $\frac{\epsilon}{2} > 0$.
-                </li>
-                <li style="margin-bottom: 0.6rem;">
-                    Since $\lim a_n = K$, there exists $N_1 \in \mathbb{N}$ such that $n > N_1 \implies |a_n - K| < \frac{\epsilon}{2}$.
-                </li>
-                <li style="margin-bottom: 0.6rem;">
-                    Since $\lim b_n = L$, there exists $N_2 \in \mathbb{N}$ such that $n > N_2 \implies |b_n - L| < \frac{\epsilon}{2}$.
-                </li>
-                <li style="margin-bottom: 0.6rem;">
-                    Set $N = \max(N_1, N_2)$. For any index $n > N$, both inequalities hold at the same time.
-                </li>
-                <li>
-                    We now measure the total distance between $(a_n + b_n)$ and $(K + L)$. Regrouping terms and applying the Triangle Inequality yields:
-                    $$\begin{aligned}
-                    |(a_n + b_n) - (K + L)| &= |(a_n - K) + (b_n - L)| \\
-                    &\le |a_n - K| + |b_n - L| \\
-                    &< \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon. \quad \blacksquare
-                    \end{aligned}$$
-                </li>
-            </ol>
-
-            <h3 style="color: #0f172a; margin-top: 1.75rem;">The "Add-and-Subtract Bridge": Proving the Product Law</h3>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Why is the Product Law ($\lim (a_n \cdot b_n) = K \cdot L$) trickier than the Sum Law?
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                When we look at the difference $|a_n b_n - K L|$, the terms do not naturally group into $(a_n - K)$ and $(b_n - L)$. If you try to expand $(a_n - K)(b_n - L)$, you get $a_n b_n - a_n L - b_n K + K L$, which has unwanted middle terms.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                To bridge this gap, analysis uses one of its most famous creative maneuvers: <strong>we add zero in the form of $+a_n L - a_n L$</strong>.
-            </p>
-            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$\begin{aligned}
-                a_n b_n - K L &= a_n b_n \mathbf{- a_n L + a_n L} - K L \\
-                &= a_n (b_n - L) + L (a_n - K)
-                \end{aligned}$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Applying the triangle inequality to this bridged expression gives:
-            </p>
-            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$|a_n b_n - K L| \le |a_n| |b_n - L| + |L| |a_n - K|$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Now observe the brilliance of this decomposition:
-            </p>
-            <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
-                <li style="margin-bottom: 0.6rem;">
-                    $|b_n - L|$ can be made arbitrarily tiny because $b_n \to L$.
-                </li>
-                <li style="margin-bottom: 0.6rem;">
-                    $|a_n - K|$ can be made arbitrarily tiny because $a_n \to K$.
-                </li>
-                <li>
-                    $|L|$ is just a fixed constant number.
-                </li>
-            </ul>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>Where Boundedness Saves the Day:</strong> What about that lone factor of $|a_n|$? It is not a fixed constant—it changes with every step $n$! If $a_n$ could grow without bound, it could multiply $|b_n - L|$ by huge numbers and ruin our proof.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                But remember <strong>Proposition 5 from Section 4</strong>! We proved that every convergent sequence is bounded: there is a constant $M > 0$ such that $|a_n| \le M$ for all $n$. Therefore:
-            </p>
-            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$|a_n b_n - K L| \le M |b_n - L| + |L| |a_n - K|$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                By demanding that $|b_n - L| < \frac{\epsilon}{2M}$ and $|a_n - K| < \frac{\epsilon}{2(|L| + 1)}$, both pieces stay under $\epsilon/2$, and their sum stays strictly less than $\epsilon$. The Product Law is proven!
-            </p>
-
-            <h3 style="color: #0f172a; margin-top: 1.75rem;">Guarding the Denominator: The Quotient Law</h3>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Finally, we consider the Quotient Law: $\lim \left(\frac{a_n}{b_n}\right) = \frac{K}{L}$.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Because $\frac{a_n}{b_n} = a_n \cdot \frac{1}{b_n}$, we can combine the Product Law with a simpler rule: proving that $\lim \frac{1}{b_n} = \frac{1}{L}$ whenever $L \neq 0$.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Investigating the distance:
-            </p>
-            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$\left|\frac{1}{b_n} - \frac{1}{L}\right| = \left|\frac{L - b_n}{b_n L}\right| = \frac{|b_n - L|}{|b_n| |L|}$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Notice the danger lurking in the denominator: $|b_n|$. If terms $b_n$ were allowed to flirt with zero, the fraction $\frac{1}{|b_n|}$ would blow up to infinity!
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Here again, Section 4 comes to our rescue. By the <strong>Preservation of Sign property</strong>, because $L \neq 0$, there exists an index $N_0$ past which $|b_n| > \frac{|L|}{2}$. Inverting this inequality flips the direction:
-            </p>
-            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$\frac{1}{|b_n|} < \frac{2}{|L|}$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                The dangerous denominator is now securely capped by a fixed constant! We substitute this bound into our expression:
-            </p>
-            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$\left|\frac{1}{b_n} - \frac{1}{L}\right| < \frac{2}{|L|^2} |b_n - L|$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Because $|b_n - L|$ can be made arbitrarily small, the entire distance collapses below $\epsilon$. The Algebraic Limit Laws form an airtight, beautiful system: each theorem rests securely on the foundational properties we established in the sections before it.
+                The Algebraic Limit Laws allow us to evaluate limits compositionally: $\lim (a_n \pm b_n) = K \pm L$, $\lim (a_n \cdot b_n) = K \cdot L$, and $\lim (a_n / b_n) = K / L$ (provided $L \neq 0$).
             </p>
 
             <!-- SECTION 6: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->
             <h2 id="section-divergence-test">6. Proving Non-Existence of Limits</h2>
-
-            <h3 style="color: #0f172a; margin-top: 1.5rem;">The Flip Side: Defeating the Target Game</h3>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                So far, we have focused entirely on proving that limits exist. But what happens when a sequence simply refuses to settle down? How do you prove that a sequence like $a_n = (-1)^n = (-1, 1, -1, 1, \dots)$ does <em>not</em> converge?
+                To prove a sequence diverges, we negate the definition for all possible real numbers $L \in \mathbb{R}$:
             </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                For beginning students, this often triggers immediate anxiety: <em>"How could I possibly prove that a limit doesn't exist? There are infinitely many real numbers! Do I have to test every single number on the real line and show none of them work?"</em>
+            <p style="text-align: center; margin: 1rem 0; font-size: 1.2rem;">
+                $$\forall L \in \mathbb{R}, \quad \exists \epsilon > 0 \quad \text{such that} \quad \forall N \in \mathbb{N}, \quad \exists n > N \quad \text{with} \quad |a_n - L| \ge \epsilon$$
             </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                The answer is yes in spirit, but no in practice. You don't test numbers one by one. Instead, you employ the power of <strong>formal logical negation</strong> combined with <strong>geometric separation</strong>. Once you understand how to negate an $\epsilon\text{-}N$ statement, proving divergence becomes just as structured and predictable as proving convergence.
-            </p>
-
-            <h3 style="color: #0f172a; margin-top: 1.75rem;">The Anatomy of Negation: Flipping the Quantifiers</h3>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Let's recall what it means for a sequence to converge to a specific candidate limit $L$:
-            </p>
-            <p style="text-align: center; margin: 1rem 0; font-size: 1.15rem;">
-                $$\forall \epsilon > 0 \quad \exists N \in \mathbb{N} \quad \forall n > N, \quad |a_n - L| < \epsilon$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                In the rules of formal logic, whenever you negate a statement, every universal quantifier ($\forall$) turns into an existential quantifier ($\exists$), every existential quantifier ($\exists$) turns into a universal quantifier ($\forall$), and the final condition is replaced by its logical opposite ($< \epsilon$ becomes $\ge \epsilon$).
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Let's walk through that transformation step by step from left to right:
-            </p>
-            <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
-                <li style="margin-bottom: 0.75rem;">
-                    <strong>Original:</strong> <em>"For all tolerances $\epsilon > 0$..."</em><br>
-                    <strong>Negation ($\exists \epsilon > 0$):</strong> To show the claim fails, we don't have to win for every tolerance. We only need to find <strong>one stubborn tolerance</strong> $\epsilon_0 > 0$ where the sequence breaks down.
-                </li>
-                <li style="margin-bottom: 0.75rem;">
-                    <strong>Original:</strong> <em>"...there exists a cutoff milestone $N$..."</em><br>
-                    <strong>Negation ($\forall N \in \mathbb{N}$):</strong> We must show that <strong>every conceivable cutoff $N$ fails</strong>. No matter how huge of a number someone chooses—whether $N = 100$, $N = 10^6$, or $N = 10^{99}$—it will never be far enough down the line.
-                </li>
-                <li>
-                    <strong>Original:</strong> <em>"...such that for all $n > N$, $|a_n - L| < \epsilon$."</em><br>
-                    <strong>Negation ($\exists n > N \text{ with } \vert{}a_n - L\vert{} \ge \epsilon$):</strong> We prove that somewhere past that proposed cutoff $N$, there is <strong>always an index $n > N$ that escapes</strong> the target corridor, landing at a distance of at least $\epsilon$ away from $L$.
-                </li>
-            </ul>
-
-            <h3 style="color: #0f172a; margin-top: 1.75rem;">Disproving Every Real Candidate at Once ($\forall L \in \mathbb{R}$)</h3>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Saying that a sequence <em>diverges</em> means it does not converge to <em>any</em> real number. Therefore, we quantify over all candidate limits:
-            </p>
-            <div style="padding: 1.25rem 1.5rem; margin: 1.5rem 0; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; text-align: center;">
-                <span style="font-size: 1.1rem; color: #0f172a; font-weight: 600; display: block; margin-bottom: 0.5rem;">
-                    Formal Definition: Non-Convergence (Divergence)
-                </span>
-                <span style="font-size: 1.05rem; color: #0f172a;">
-                    A sequence $(a_n)$ does not converge to any limit in $\mathbb{R}$ if and only if:
-                </span>
-                <p style="margin: 1rem 0 0.5rem 0; font-size: 1.2rem;">
-                    $$\forall L \in \mathbb{R}, \quad \exists \epsilon > 0 \quad \text{such that} \quad \forall N \in \mathbb{N}, \quad \exists n > N \quad \text{with} \quad |a_n - L| \ge \epsilon$$
-                </p>
-            </div>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                In the game analogy, the roles have swapped:
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                A believer claims, <em>"I bet the sequence converges to $L$!"</em> Your job as the skeptic is to produce a tolerance $\epsilon > 0$ such that no matter what cutoff $N$ the believer proposes, the sequence perpetually breaks out of their target window.
-            </p>
-
-            <h3 style="color: #0f172a; margin-top: 1.75rem;">A Detailed Walkthrough: Proving That $a_n = (-1)^n$ Has No Limit</h3>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Consider the classic alternating sequence $a_n = (-1)^n$:
-            </p>
-            <p style="text-align: center; margin: 1rem 0; font-size: 1.15rem;">
-                $$(a_n) = (-1, 1, -1, 1, -1, 1, \dots)$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Intuitively, this sequence cannot converge because it bounces indefinitely between $-1$ and $+1$. But how do we turn that intuition into an airtight mathematical proof?
-            </p>
-
-            <h4 style="color: #0f172a; margin-top: 1.5rem;">The Geometric Insight (The Impossible Choice of $L$)</h4>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Notice that the distance between the two values the sequence visits is:
-            </p>
-            <p style="text-align: center; margin: 1rem 0; font-size: 1.15rem;">
-                $$|1 - (-1)| = 2$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Now think about what happens if someone proposes a candidate limit $L$. By the Triangle Inequality, the total distance between $1$ and $-1$ cannot exceed the distance from $1$ to $L$ plus the distance from $L$ to $-1$:
-            </p>
-            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$2 = |1 - (-1)| = |(1 - L) + (L - (-1))| \le |1 - L| + |-1 - L|$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Look at what that inequality says: <strong>the sum of the two distances must be at least 2</strong>! It is physically impossible for a single point $L$ to be within distance $\epsilon = 1$ of both numbers simultaneously. If $L$ is close to $+1$, it is far from $-1$. If $L$ is close to $-1$, it is far from $+1$. And if $L = 0$, it is distance 1 from both!
-            </p>
-
-            <h4 style="color: #0f172a; margin-top: 1.5rem;">The Formal Case Analysis</h4>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Let $L \in \mathbb{R}$ be an arbitrary candidate limit. We set our lethal tolerance to $\epsilon = 1$. Let $N \in \mathbb{N}$ be any cutoff index proposed by our opponent.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                We now examine the two possibilities for where $L$ might sit on the number line:
-            </p>
-            <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
-                <li style="margin-bottom: 0.85rem;">
-                    <strong>Case 1 ($L \le 0$):</strong><br>
-                    Suppose the candidate limit is zero or negative. We simply pick any <strong>even</strong> integer $n > N$ (for instance, $n = 2N + 2$). For this even index, $a_n = 1$. The distance is:
-                    $$|a_n - L| = |1 - L| = 1 - L \ge 1 = \epsilon$$
-                    Because $L \le 0$, the distance between $a_n$ and $L$ is at least 1. The even terms escape the tolerance band!
-                </li>
-                <li>
-                    <strong>Case 2 ($L > 0$):</strong><br>
-                    Suppose the candidate limit is strictly positive. We simply pick any <strong>odd</strong> integer $n > N$ (for instance, $n = 2N + 1$). For this odd index, $a_n = -1$. The distance is:
-                    $$|a_n - L| = |-1 - L| = |-(1 + L)| = 1 + L > 1 = \epsilon$$
-                    Because $L > 0$, the distance between $a_n$ and $L$ is strictly greater than 1. The odd terms escape the tolerance band!
-                </li>
-            </ul>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>The Conclusion:</strong> In both cases, past any proposed cutoff $N$, there are always subsequent indices where the sequence lies at a distance of at least $\epsilon = 1$ from $L$. Because $L$ was arbitrary, no real number can serve as a limit. Therefore, $a_n = (-1)^n$ diverges. $\blacksquare$
-            </p>
-
-            <h3 style="color: #0f172a; margin-top: 1.75rem;">Summary Checklist: How to Disprove a Limit</h3>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Whenever a homework or exam problem asks you to show that a sequence does not converge, remember this 4-step blueprint:
-            </p>
-            <ol style="margin: 0.5rem 0 1.75rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
-                <li style="margin-bottom: 0.6rem;">
-                    <strong>State that $L \in \mathbb{R}$ is arbitrary:</strong> Never fix a specific candidate like $L = 0$ unless the problem specifically asks you to disprove that particular number.
-                </li>
-                <li style="margin-bottom: 0.6rem;">
-                    <strong>Identify the oscillation gap:</strong> Look at the values the sequence alternates between (e.g., $A$ and $B$). Choose $\epsilon$ to be half the distance between them: $\epsilon = \frac{|A - B|}{2}$.
-                </li>
-                <li style="margin-bottom: 0.6rem;">
-                    <strong>Let $N \in \mathbb{N}$ be arbitrary:</strong> You must defeat every proposed cutoff milestone.
-                </li>
-                <li>
-                    <strong>Find the breakout index:</strong> Select an index $n > N$ (often depending on whether $n$ is even or odd) that forces $|a_n - L| \ge \epsilon$, demonstrating asymptotic instability.
-                </li>
-            </ol>
 
             <!-- FOOTER NAVIGATION -->
             <div class="footer-nav" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
@@ -1066,7 +551,7 @@
 
     <!-- INTERACTIVE SCRIPTS -->
     <script>
-        // Definition Stepper Data Arc
+        // 1. Definition Stepper Data Arc
         const formulaSteps = [
             {
                 clause: "1. The Challenge (∀ϵ > 0)",
@@ -1077,8 +562,7 @@
                 what: "The tolerance variable &epsilon; &gt; 0 enters the outermost scope. A symmetric horizontal corridor of half-width &epsilon; is drawn around target limit L.",
                 why: "Requiring universal satisfaction for all &epsilon; &gt; 0 prevents declaring convergence prematurely. A valid limit must withstand any precision test.",
                 epsOpacity: 0.35,
-                nLineOpacity: 0.15,
-                activePoints: [0, 1, 2, 3]
+                nLineOpacity: 0.15
             },
             {
                 clause: "2. The Response (∃N ∈ ℕ)",
@@ -1089,8 +573,7 @@
                 what: "We determine cutoff N &isin; &naturals; as a function of &epsilon;. The boundary x = N partitions indices into a transient prefix and a permanent tail.",
                 why: "The existential quantifier gives us the move after inspecting &epsilon;. We are permitted to disregard any finite prefix of unruly initial terms.",
                 epsOpacity: 0.35,
-                nLineOpacity: 0.9,
-                activePoints: [3]
+                nLineOpacity: 0.9
             },
             {
                 clause: "3. The Tail (∀n > N)",
@@ -1101,8 +584,7 @@
                 what: "The universal quantifier sweeps across all indices n &gt; N to infinity. The condition must hold universally across the entire infinite tail.",
                 why: "Limits describe asymptotic inevitability. Permitting even a single escape past N would violate stability and introduce permanent error.",
                 epsOpacity: 0.35,
-                nLineOpacity: 0.9,
-                activePoints: [4, 5, 6, 7]
+                nLineOpacity: 0.9
             },
             {
                 clause: "4. Proximity (|aₙ - L| < ϵ)",
@@ -1113,8 +595,7 @@
                 what: "The distance |a_n - L| evaluates strictly less than &epsilon; for every n &gt; N. The green points lie securely inside the yellow target band.",
                 why: "The absolute difference metric provides an unbiased distance test, ensuring convergence whether terms approach monotonically or oscillate.",
                 epsOpacity: 0.45,
-                nLineOpacity: 0.9,
-                activePoints: [4, 5, 6, 7]
+                nLineOpacity: 0.9
             }
         ];
 
@@ -1175,44 +656,30 @@
             }
         }
 
-        // Interactive Epsilon Simulator Logic
+        // 2. 2D Interactive Epsilon Simulator Logic
         function renderChallengePlot(eps, nCutoff) {
             const svg = document.getElementById('game-plot');
             if (!svg) return;
 
-            const width = 740;
-            const height = 260;
-            const padX = 50;
-            const padY = 30;
-            const plotW = width - padX - 40;
-            const plotH = height - padY - 40;
-
+            const width = 740, height = 260, padX = 50, padY = 30;
+            const plotW = width - padX - 40, plotH = height - padY - 40;
             const maxN = 24;
+
             const xPos = (n) => padX + ((n - 1) / (maxN - 1)) * plotW;
             const yPos = (val) => padY + plotH - (val / 1.1) * plotH;
-
-            const epsY = yPos(eps);
-            const zeroY = yPos(0);
-            const cutoffX = xPos(nCutoff);
+            const epsY = yPos(eps), zeroY = yPos(0), cutoffX = xPos(nCutoff);
 
             let svgMarkup = `
-                <!-- Grid line and zero axis -->
                 <line x1="${padX}" y1="${zeroY}" x2="${padX + plotW}" y2="${zeroY}" stroke="#94a3b8" stroke-width="1.5" />
                 <text x="${padX + plotW + 8}" y="${zeroY + 4}" font-family="sans-serif" font-size="11" fill="#64748b" font-weight="bold">L = 0</text>
-
-                <!-- Tolerance corridor -->
                 <rect x="${padX}" y="${epsY}" width="${plotW}" height="${zeroY - epsY}" fill="#fef3c7" stroke="#f59e0b" stroke-dasharray="4" stroke-width="1.2" opacity="0.65" />
                 <text x="${padX + 8}" y="${epsY - 6}" font-family="sans-serif" font-size="11" fill="#b45309" font-weight="bold">+ϵ = ${eps}</text>
-
-                <!-- Cutoff threshold line -->
                 <line x1="${cutoffX}" y1="${padY}" x2="${cutoffX}" y2="${padY + plotH}" stroke="#ef4444" stroke-width="2" stroke-dasharray="5" />
                 <text x="${cutoffX + 6}" y="${padY + 16}" font-family="sans-serif" font-size="12" fill="#ef4444" font-weight="bold">N = ${nCutoff}</text>
             `;
 
             for (let n = 1; n <= maxN; n++) {
-                const val = 1 / n;
-                const cx = xPos(n);
-                const cy = yPos(val);
+                const val = 1 / n, cx = xPos(n), cy = yPos(val);
                 const isTail = n > nCutoff;
                 const fillColor = isTail ? "#10b981" : "#94a3b8";
                 const strokeColor = isTail ? "#047857" : "#64748b";
@@ -1223,12 +690,10 @@
                         <title>a_${n} = ${val.toFixed(3)}</title>
                     </circle>
                 `;
-
                 if (n === 1 || n === nCutoff || n === nCutoff + 1 || n === maxN) {
                     svgMarkup += `<text x="${cx}" y="${zeroY + 18}" font-family="sans-serif" font-size="10" fill="#64748b" text-anchor="middle">n=${n}</text>`;
                 }
             }
-
             svg.innerHTML = svgMarkup;
         }
 
@@ -1245,10 +710,7 @@
             if (epsBadge) epsBadge.textContent = 'ϵ = ' + eps;
             if (reqnBadge) reqnBadge.textContent = 'N = ' + nCutoff;
             if (valBadge) valBadge.textContent = `a_${nCutoff + 1} = ${nextVal} < ${eps}`;
-            if (statusBadge) {
-                statusBadge.textContent = 'Target Secure';
-                statusBadge.style.color = '#059669';
-            }
+            if (statusBadge) { statusBadge.textContent = 'Target Secure'; statusBadge.style.color = '#059669'; }
             if (ctrlPanel) ctrlPanel.style.display = 'flex';
 
             renderChallengePlot(eps, nCutoff);
@@ -1265,20 +727,267 @@
             if (epsBadge) epsBadge.textContent = 'Select below';
             if (reqnBadge) reqnBadge.textContent = '—';
             if (valBadge) valBadge.textContent = '—';
-            if (statusBadge) {
-                statusBadge.textContent = 'Standby';
-                statusBadge.style.color = '#64748b';
-            }
+            if (statusBadge) { statusBadge.textContent = 'Standby'; statusBadge.style.color = '#64748b'; }
             if (ctrlPanel) ctrlPanel.style.display = 'none';
+            if (svg) svg.innerHTML = '<text x="260" y="130" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b">Select an &epsilon; budget above to illustrate the sample.</text>';
+        }
 
-            if (svg) {
-                svg.innerHTML = '<text x="260" y="130" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" fill="#64748b">Select an &epsilon; budget above to illustrate the sample.</text>';
+        // 3. Three.js 3D Infinite Flight Corridor (Directed Narrative Stepper)
+        const corridorPhases = [
+            {
+                name: "Phase 1: Wide Survey",
+                camPos: { x: 18, y: 14, z: -10 },
+                camLook: { x: 0, y: 0, z: 25 },
+                summary: "Broad spatial view of the infinite flight path. The central beam marks target limit L = 0, surrounded by an amber cylindrical tolerance envelope of radius &epsilon; = 0.15.",
+                what: "Camera takes an elevated perspective overlooking 30 sequential beacon spheres along the z-axis. The translucent cylinder of radius &epsilon; = 0.15 extends infinitely forward.",
+                why: "In 3D space, an &epsilon;-neighborhood around an axis is a cylinder. This spatial view visually distinguishes terms that breach the corridor from those safely enclosed."
+            },
+            {
+                name: "Phase 2: The Epsilon Envelope",
+                camPos: { x: 5, y: 3, z: 2 },
+                camLook: { x: 0, y: 0, z: 12 },
+                summary: "Inspecting the boundary envelope. Early terms with small index n oscillate or lie far outside the safe corridor walls, establishing the finite prefix.",
+                what: "Camera zooms close to indices n = 1 to 5. Sequence values exceed radius &epsilon; = 0.15 and illuminate with red breach indicators.",
+                why: "Convergence does not require all terms to fit inside &epsilon;—only the infinite tail. The prefix represents finite transient error that we are permitted to discard."
+            },
+            {
+                name: "Phase 3: The Milestone Gate",
+                camPos: { x: 4, y: 2, z: 12 },
+                camLook: { x: 0, y: 0, z: 20 },
+                summary: "Approaching Threshold Gate N. This spatial ring marks the critical cutoff index beyond which no arrow or beacon ever escapes the cylinder again.",
+                what: "Camera stations directly at Gate N = 7 (for &epsilon; = 0.15). The glowing magenta threshold ring cleanly separates external breach beacons from safe interior beacons.",
+                why: "This represents the existential quantifier &exist;N. We find the exact milestone index where the distance formula |a_n - L| drops strictly below &epsilon; forever."
+            },
+            {
+                name: "Phase 4: Permanent Tail Containment",
+                camPos: { x: 0, y: 0.1, z: 14 },
+                camLook: { x: 0, y: 0, z: 45 },
+                summary: "Inside the cylinder flying toward infinity. Looking down the barrel of the corridor past Gate N, all infinitely many subsequent beacons remain locked inside.",
+                what: "Camera is positioned directly inside the translucent corridor looking down the positive z-axis. Every beacon sphere past N glows bright emerald green.",
+                why: "This illustrates the universal tail quantifier &forall;n &gt; N. Once inside, the sequence can never drift out, guaranteeing asymptotic arrival at limit L = 0."
+            }
+        ];
+
+        let corridorCurrentPhase = 0;
+        let corridorActiveSequence = 'harmonic';
+        let corridorScene, corridorCamera, corridorRenderer;
+        let corridorSpheres = [], corridorCylinder, corridorGate, corridorCenterBeam;
+        let corridorTargetCamPos = { x: 18, y: 14, z: -10 };
+        let corridorTargetCamLook = { x: 0, y: 0, z: 25 };
+        let corridorCurrentCamLook = new THREE.Vector3(0, 0, 25);
+
+        function calculateTermValue(type, n) {
+            if (type === 'harmonic') return 1.0 / n;
+            if (type === 'alternating') return Math.pow(-1, n) * (1.0 / n);
+            if (type === 'geometric') return Math.pow(0.75, n);
+            return 1.0 / n;
+        }
+
+        function calculateCutoffN(type, eps) {
+            if (type === 'harmonic' || type === 'alternating') return Math.ceil(1.0 / eps);
+            if (type === 'geometric') return Math.ceil(Math.log(eps) / Math.log(0.75));
+            return 7;
+        }
+
+        function initThreeEngine() {
+            const container = document.getElementById('corridor-3d-section');
+            const canvas = document.getElementById('corridor-canvas');
+            if (!container || !canvas) return;
+
+            const width = canvas.clientWidth || 740;
+            const height = canvas.clientHeight || 380;
+
+            corridorScene = new THREE.Scene();
+            corridorScene.background = new THREE.Color(0x050814);
+            corridorScene.fog = new THREE.FogExp2(0x050814, 0.022);
+
+            corridorCamera = new THREE.PerspectiveCamera(48, width / height, 0.1, 100);
+            corridorCamera.position.set(18, 14, -10);
+
+            corridorRenderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+            corridorRenderer.setSize(width, height);
+            corridorRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // Ambient & Point Lighting
+            const ambLight = new THREE.AmbientLight(0xffffff, 0.65);
+            corridorScene.add(ambLight);
+
+            const dirLight = new THREE.DirectionalLight(0xffeedd, 0.85);
+            dirLight.position.set(10, 20, 10);
+            corridorScene.add(dirLight);
+
+            // Center Limit Beam (L = 0)
+            const beamGeo = new THREE.CylinderGeometry(0.04, 0.04, 70, 16);
+            beamGeo.rotateX(Math.PI / 2);
+            beamGeo.translate(0, 0, 35);
+            const beamMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
+            corridorCenterBeam = new THREE.Mesh(beamGeo, beamMat);
+            corridorScene.add(corridorCenterBeam);
+
+            // Ground grid guide
+            const gridHelper = new THREE.GridHelper(80, 40, 0x1e293b, 0x0f172a);
+            gridHelper.position.set(0, -3.5, 35);
+            corridorScene.add(gridHelper);
+
+            buildCorridorObjects();
+            renderTunnelState(0);
+            animateCorridor();
+
+            window.addEventListener('resize', onWindowResizeCorridor);
+        }
+
+        function buildCorridorObjects() {
+            const eps = 0.15;
+            const cutoffN = calculateCutoffN(corridorActiveSequence, eps);
+            const epsRadius = eps * 10; // scaled for 3D visibility
+
+            // Remove existing meshes if rebuilding
+            if (corridorCylinder) corridorScene.remove(corridorCylinder);
+            if (corridorGate) corridorScene.remove(corridorGate);
+            corridorSpheres.forEach(s => corridorScene.remove(s));
+            corridorSpheres = [];
+
+            // 1. Translucent Epsilon Cylinder (Tolerance corridor)
+            const cylGeo = new THREE.CylinderGeometry(epsRadius, epsRadius, 70, 32, 1, true);
+            cylGeo.rotateX(Math.PI / 2);
+            cylGeo.translate(0, 0, 35);
+            const cylMat = new THREE.MeshPhongMaterial({
+                color: 0xf59e0b,
+                transparent: true,
+                opacity: 0.18,
+                side: THREE.DoubleSide,
+                wireframe: false
+            });
+            corridorCylinder = new THREE.Mesh(cylGeo, cylMat);
+            corridorScene.add(corridorCylinder);
+
+            // 2. Milestone Threshold Ring (Gate N)
+            const ringGeo = new THREE.TorusGeometry(epsRadius * 1.05, 0.08, 16, 48);
+            const ringMat = new THREE.MeshBasicMaterial({ color: 0xf43f5e });
+            corridorGate = new THREE.Mesh(ringGeo, ringMat);
+            corridorGate.position.set(0, 0, cutoffN * 2.2);
+            corridorScene.add(corridorGate);
+
+            // 3. Sequence Beacons (Terms a_n)
+            for (let n = 1; n <= 30; n++) {
+                const val = calculateTermValue(corridorActiveSequence, n);
+                const yPos = val * 10; // 10x scale
+                const zPos = n * 2.2;
+                const isContained = n > cutoffN;
+
+                const sphGeo = new THREE.SphereGeometry(isContained ? 0.28 : 0.35, 16, 16);
+                const sphMat = new THREE.MeshStandardMaterial({
+                    color: isContained ? 0x10b981 : 0xf43f5e,
+                    emissive: isContained ? 0x059669 : 0xbe185d,
+                    emissiveIntensity: isContained ? 0.75 : 0.85,
+                    roughness: 0.2
+                });
+                const sphere = new THREE.Mesh(sphGeo, sphMat);
+                sphere.position.set(0, yPos, zPos);
+                sphere.userData = { n: n, val: val, isContained: isContained };
+                corridorScene.add(sphere);
+                corridorSpheres.push(sphere);
             }
         }
 
-        // Initialize state once KaTeX and DOM are ready
+        function switchCorridorSequence(seqKey) {
+            corridorActiveSequence = seqKey;
+
+            const btnHarmonic = document.getElementById('btn-seq-harmonic');
+            const btnAlternating = document.getElementById('btn-seq-alternating');
+            const btnGeometric = document.getElementById('btn-seq-geometric');
+
+            if (btnHarmonic) btnHarmonic.classList.toggle('active', seqKey === 'harmonic');
+            if (btnAlternating) btnAlternating.classList.toggle('active', seqKey === 'alternating');
+            if (btnGeometric) btnGeometric.classList.toggle('active', seqKey === 'geometric');
+
+            const telSeq = document.getElementById('c3-tel-seq');
+            const telGate = document.getElementById('c3-tel-gate');
+            const eps = 0.15;
+            const cutoffN = calculateCutoffN(seqKey, eps);
+
+            if (telSeq) {
+                if (seqKey === 'harmonic') telSeq.textContent = '$a_n = 1/n$';
+                else if (seqKey === 'alternating') telSeq.textContent = '$a_n = (-1)^n/n$';
+                else if (seqKey === 'geometric') telSeq.textContent = '$a_n = 0.75^n$';
+            }
+            if (telGate) telGate.textContent = `Gate N = ${cutoffN}`;
+
+            buildCorridorObjects();
+            renderTunnelState(corridorCurrentPhase);
+        }
+
+        function renderTunnelState(phaseIndex) {
+            corridorCurrentPhase = phaseIndex;
+            const phase = corridorPhases[phaseIndex];
+
+            corridorTargetCamPos = phase.camPos;
+            corridorTargetCamLook = phase.camLook;
+
+            const telStation = document.getElementById('c3-tel-station');
+            const summaryBox = document.getElementById('c3-step-summary');
+            const paneWhat = document.getElementById('c3-pane-what');
+            const paneWhy = document.getElementById('c3-pane-why');
+            const prevBtn = document.getElementById('btn-c3-prev');
+            const nextBtn = document.getElementById('btn-c3-next');
+
+            if (telStation) telStation.textContent = phase.name;
+            if (summaryBox) summaryBox.innerHTML = `<p style="margin:0; font-size:0.95rem; line-height:1.6;">${phase.summary}</p>`;
+            if (paneWhat) paneWhat.innerHTML = `<p>${phase.what}</p>`;
+            if (paneWhy) paneWhy.innerHTML = `<p>${phase.why}</p>`;
+
+            if (prevBtn) prevBtn.disabled = (phaseIndex === 0);
+            if (nextBtn) nextBtn.disabled = (phaseIndex === corridorPhases.length - 1);
+        }
+
+        function stepCorridor(delta) {
+            const next = corridorCurrentPhase + delta;
+            if (next >= 0 && next < corridorPhases.length) {
+                renderTunnelState(next);
+            }
+        }
+
+        function resetCorridorFlight() {
+            renderTunnelState(0);
+        }
+
+        function onWindowResizeCorridor() {
+            const canvas = document.getElementById('corridor-canvas');
+            if (!canvas || !corridorRenderer || !corridorCamera) return;
+            const width = canvas.clientWidth;
+            const height = canvas.clientHeight;
+            corridorCamera.aspect = width / height;
+            corridorCamera.updateProjectionMatrix();
+            corridorRenderer.setSize(width, height);
+        }
+
+        function animateCorridor() {
+            requestAnimationFrame(animateCorridor);
+
+            // Smooth camera dolly interpolation
+            corridorCamera.position.x += (corridorTargetCamPos.x - corridorCamera.position.x) * 0.055;
+            corridorCamera.position.y += (corridorTargetCamPos.y - corridorCamera.position.y) * 0.055;
+            corridorCamera.position.z += (corridorTargetCamPos.z - corridorCamera.position.z) * 0.055;
+
+            corridorCurrentCamLook.x += (corridorTargetCamLook.x - corridorCurrentCamLook.x) * 0.055;
+            corridorCurrentCamLook.y += (corridorTargetCamLook.y - corridorCurrentCamLook.y) * 0.055;
+            corridorCurrentCamLook.z += (corridorTargetCamLook.z - corridorCurrentCamLook.z) * 0.055;
+
+            corridorCamera.lookAt(corridorCurrentCamLook);
+
+            // Subtle breathing pulse for containment gate
+            if (corridorGate) {
+                const scale = 1.0 + Math.sin(Date.now() * 0.0035) * 0.03;
+                corridorGate.scale.set(scale, scale, 1);
+            }
+
+            corridorRenderer.render(corridorScene, corridorCamera);
+        }
+
+        // Initialize state once DOM is loaded
         window.addEventListener('DOMContentLoaded', () => {
             renderFormulaState(0);
+            initThreeEngine();
         });
     </script>
 </body>
