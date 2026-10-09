@@ -1641,425 +1641,468 @@
                         }
                     </style>
                     <div class="widget-box">
-						<!-- HEADER & DIMENSION TOGGLES -->
-						<div class="widget-header">
-							<h3 class="widget-title">Proof of Limit Uniqueness: The Clashing Jurisdictions</h3>
-							<div class="dim-toggles">
-								<button id="u2-dim-seq" class="dim-btn active" onclick="switchDimension('seq')">Sequence Index (n)</button>
-								<button id="u2-dim-fun" class="dim-btn" onclick="switchDimension('fun')">Function Input (x)</button>
-							</div>
-						</div>
+                        <!-- HEADER & DIMENSION TOGGLES -->
+                        <div class="widget-header">
+                            <h3 class="widget-title">Proof of Limit Uniqueness: The Clashing Jurisdictions</h3>
+                            <div class="dim-toggles">
+                                <button id="u2-dim-seq" class="dim-btn active" onclick="switchDimension('seq')">Sequence Index (n)</button>
+                                <button id="u2-dim-fun" class="dim-btn" onclick="switchDimension('fun')">Function Input (x)</button>
+                            </div>
+                        </div>
 
-						<!-- LIVE STATE TELEMETRY -->
-						<div class="telemetry-grid">
-							<div class="telemetry-cell">
-								<span class="telemetry-label">Active Phase</span>
-								<span id="u2-tel-phase" class="telemetry-val">0: Established Limit vs Rival</span>
-							</div>
-							<div class="telemetry-cell">
-								<span class="telemetry-label">Distance |L₁ - L₂|</span>
-								<span id="u2-tel-dist" class="telemetry-val">4.00</span>
-							</div>
-							<div class="telemetry-cell">
-								<span class="telemetry-label">Tolerance ε</span>
-								<span id="u2-tel-eps" class="telemetry-val">2.00 (Loose)</span>
-							</div>
-							<div class="telemetry-cell">
-								<span id="u2-tel-cut-lbl" class="telemetry-label">Cutoffs N₁, N₂</span>
-								<span id="u2-tel-cutoffs" class="telemetry-val">N₁=4, N₂=7</span>
-							</div>
-							<div class="telemetry-cell">
-								<span id="u2-tel-hor-lbl" class="telemetry-label">Tail Horizon N*</span>
-								<span id="u2-tel-max" class="telemetry-val">max(N₁, N₂) = 7</span>
-							</div>
-							<div class="telemetry-cell">
-								<span class="telemetry-label">Corridor Status</span>
-								<span id="u2-tel-overlap" class="telemetry-val" style="color: #b45309;">U(L₁) ∩ U(L₂) meet at y = 0</span>
-							</div>
-						</div>
+                        <!-- LIVE STATE TELEMETRY -->
+                        <div class="telemetry-grid">
+                            <div class="telemetry-cell">
+                                <span class="telemetry-label">Active Phase</span>
+                                <span id="u2-tel-phase" class="telemetry-val">0: Established Limit vs Rival</span>
+                            </div>
+                            <div class="telemetry-cell">
+                                <span class="telemetry-label">Distance |L₁ - L₂|</span>
+                                <span id="u2-tel-dist" class="telemetry-val">4.00</span>
+                            </div>
+                            <div class="telemetry-cell">
+                                <span class="telemetry-label">Tolerance ε</span>
+                                <span id="u2-tel-eps" class="telemetry-val">2.00 (Loose)</span>
+                            </div>
+                            <div class="telemetry-cell">
+                                <span id="u2-tel-cut-lbl" class="telemetry-label">Cutoffs N₁, N₂</span>
+                                <span id="u2-tel-cutoffs" class="telemetry-val">N₁=4, N₂=7</span>
+                            </div>
+                            <div class="telemetry-cell">
+                                <span id="u2-tel-hor-lbl" class="telemetry-label">Tail Horizon N*</span>
+                                <span id="u2-tel-max" class="telemetry-val">max(N₁, N₂) = 7</span>
+                            </div>
+                            <div class="telemetry-cell">
+                                <span class="telemetry-label">Corridor Status</span>
+                                <span id="u2-tel-overlap" class="telemetry-val" style="color: #b45309;">U(L₁) ∩ U(L₂) meet at y = 0</span>
+                            </div>
+                        </div>
 
-						<!-- 2D SYNCHRONIZED VISUAL CANVAS (SVG - REFINED GAUGES) -->
-						<div class="canvas-wrap">
-							<svg id="u2-svg" viewBox="0 0 780 330" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
-								<defs>
-									<marker id="u2-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-										<path d="M 0 2 L 7 5 L 0 8 z" fill="#64748b"/>
-									</marker>
-								</defs>
+                        <!-- 2D SYNCHRONIZED VISUAL CANVAS (SVG - REFINED GAUGES) -->
+                        <div class="canvas-wrap">
+                            <svg id="u2-svg" viewBox="0 0 780 330" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+                                <defs>
+                                    <marker id="u2-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                        <path d="M 0 2 L 7 5 L 0 8 z" fill="#64748b"/>
+                                    </marker>
+                                </defs>
 
-								<!-- Subtle Coordinate Grid -->
-								<g stroke="#f1f5f9" stroke-width="0.75">
-									<line x1="60" y1="50" x2="690" y2="50"/>
-									<line x1="60" y1="100" x2="690" y2="100"/>
-									<line x1="60" y1="150" x2="690" y2="150"/>
-									<line x1="60" y1="200" x2="690" y2="200"/>
-									<line x1="60" y1="250" x2="690" y2="250"/>
-									<line x1="120" y1="20" x2="120" y2="280"/>
-									<line x1="180" y1="20" x2="180" y2="280"/>
-									<line x1="240" y1="20" x2="240" y2="280"/>
-									<line x1="300" y1="20" x2="300" y2="280"/>
-									<line x1="360" y1="20" x2="360" y2="280"/>
-									<line x1="420" y1="20" x2="420" y2="280"/>
-									<line x1="480" y1="20" x2="480" y2="280"/>
-									<line x1="540" y1="20" x2="540" y2="280"/>
-									<line x1="600" y1="20" x2="600" y2="280"/>
-									<line x1="660" y1="20" x2="660" y2="280"/>
-								</g>
+                                <!-- Subtle Coordinate Grid -->
+                                <g stroke="#f1f5f9" stroke-width="0.75">
+                                    <line x1="60" y1="50" x2="690" y2="50"/>
+                                    <line x1="60" y1="100" x2="690" y2="100"/>
+                                    <line x1="60" y1="150" x2="690" y2="150"/>
+                                    <line x1="60" y1="200" x2="690" y2="200"/>
+                                    <line x1="60" y1="250" x2="690" y2="250"/>
+                                    <line x1="120" y1="20" x2="120" y2="280"/>
+                                    <line x1="180" y1="20" x2="180" y2="280"/>
+                                    <line x1="240" y1="20" x2="240" y2="280"/>
+                                    <line x1="300" y1="20" x2="300" y2="280"/>
+                                    <line x1="360" y1="20" x2="360" y2="280"/>
+                                    <line x1="420" y1="20" x2="420" y2="280"/>
+                                    <line x1="480" y1="20" x2="480" y2="280"/>
+                                    <line x1="540" y1="20" x2="540" y2="280"/>
+                                    <line x1="600" y1="20" x2="600" y2="280"/>
+                                    <line x1="660" y1="20" x2="660" y2="280"/>
+                                </g>
 
-								<!-- Master Tail Horizon Tint (Steps 3 & 4) -->
-								<rect id="u2-tail-rect" x="480" y="20" width="210" height="260" fill="#ffe4e6" fill-opacity="0.45" stroke="#fecdd3" stroke-width="0.75" style="display:none;"/>
+                                <!-- Master Tail Horizon Tint (Steps 3 & 4) -->
+                                <rect id="u2-tail-rect" x="480" y="20" width="210" height="260" fill="#ffe4e6" fill-opacity="0.45" stroke="#fecdd3" stroke-width="0.75" style="display:none;"/>
 
-								<!-- Corridors for L1 and L2 -->
-								<rect id="u2-band-l1" x="60" y="20" width="630" height="130" fill="#f0f9ff" fill-opacity="0.75" stroke="#38bdf8" stroke-width="0.85" stroke-dasharray="3 3"/>
-								<rect id="u2-band-l2" x="60" y="150" width="630" height="130" fill="#fffbeb" fill-opacity="0.75" stroke="#f59e0b" stroke-width="0.85" stroke-dasharray="3 3"/>
+                                <!-- Corridors for L1 and L2 -->
+                                <rect id="u2-band-l1" x="60" y="20" width="630" height="130" fill="#f0f9ff" fill-opacity="0.75" stroke="#38bdf8" stroke-width="0.85" stroke-dasharray="3 3"/>
+                                <rect id="u2-band-l2" x="60" y="150" width="630" height="130" fill="#fffbeb" fill-opacity="0.75" stroke="#f59e0b" stroke-width="0.85" stroke-dasharray="3 3"/>
 
-								<!-- Centerlines & Target Labels -->
-								<line x1="60" y1="85" x2="690" y2="85" stroke="#0284c7" stroke-width="1.1" stroke-dasharray="4 3"/>
-								<text x="698" y="89" fill="#0369a1" font-size="11" font-weight="600">L₁ = +2</text>
-								<line x1="60" y1="215" x2="690" y2="215" stroke="#d97706" stroke-width="1.1" stroke-dasharray="4 3"/>
-								<text x="698" y="219" fill="#b45309" font-size="11" font-weight="600">L₂ = -2</text>
+                                <!-- Centerlines & Target Labels -->
+                                <line x1="60" y1="85" x2="690" y2="85" stroke="#0284c7" stroke-width="1.1" stroke-dasharray="4 3"/>
+                                <text x="698" y="89" fill="#0369a1" font-size="11" font-weight="600">L₁ = +2</text>
+                                <line x1="60" y1="215" x2="690" y2="215" stroke="#d97706" stroke-width="1.1" stroke-dasharray="4 3"/>
+                                <text x="698" y="219" fill="#b45309" font-size="11" font-weight="600">L₂ = -2</text>
 
-								<!-- Neutral Midline (y=0) & Coordinate Axes -->
-								<line x1="60" y1="150" x2="690" y2="150" stroke="#e2e8f0" stroke-width="0.8" stroke-dasharray="2 2"/>
-								<line x1="60" y1="280" x2="695" y2="280" stroke="#94a3b8" stroke-width="1" marker-end="url(#u2-arrow)"/>
-								<text id="u2-axis-lbl" x="704" y="284" fill="#64748b" font-size="10" font-weight="500">Index n</text>
-								<line x1="60" y1="280" x2="60" y2="18" stroke="#94a3b8" stroke-width="1" marker-end="url(#u2-arrow)"/>
-								<text x="32" y="18" fill="#64748b" font-size="10" font-weight="500">Values</text>
+                                <!-- Neutral Midline (y=0) & Coordinate Axes -->
+                                <line x1="60" y1="150" x2="690" y2="150" stroke="#e2e8f0" stroke-width="0.8" stroke-dasharray="2 2"/>
+                                <line x1="60" y1="280" x2="695" y2="280" stroke="#94a3b8" stroke-width="1" marker-end="url(#u2-arrow)"/>
+                                <text id="u2-axis-lbl" x="704" y="284" fill="#64748b" font-size="10" font-weight="500">Index n</text>
+                                <line x1="60" y1="280" x2="60" y2="18" stroke="#94a3b8" stroke-width="1" marker-end="url(#u2-arrow)"/>
+                                <text x="32" y="18" fill="#64748b" font-size="10" font-weight="500">Values</text>
 
-								<!-- Metric Distance Bracket d = 4 -->
-								<g id="u2-dist-bracket" stroke="#94a3b8" stroke-width="0.85">
-									<line x1="45" y1="85" x2="45" y2="215"/>
-									<line x1="41" y1="85" x2="49" y2="85"/>
-									<line x1="41" y1="215" x2="49" y2="215"/>
-									<text x="36" y="153" fill="#475569" font-size="10" font-weight="600" text-anchor="end">d = 4</text>
-								</g>
+                                <!-- Metric Distance Bracket d = 4 -->
+                                <g id="u2-dist-bracket" stroke="#94a3b8" stroke-width="0.85">
+                                    <line x1="45" y1="85" x2="45" y2="215"/>
+                                    <line x1="41" y1="85" x2="49" y2="85"/>
+                                    <line x1="41" y1="215" x2="49" y2="215"/>
+                                    <text x="36" y="153" fill="#475569" font-size="10" font-weight="600" text-anchor="end">d = 4</text>
+                                </g>
 
-								<!-- Cutoff Horizon Lines -->
-								<g id="u2-cutoff-lines">
-									<!-- N1 = 4 (x = 300) -->
-									<line id="u2-line-n1" x1="300" y1="20" x2="300" y2="280" stroke="#0284c7" stroke-width="1.2" stroke-dasharray="4 3" style="display:none;"/>
-									<text id="u2-lbl-n1" x="300" y="295" fill="#0284c7" font-size="10" font-weight="600" text-anchor="middle" style="display:none;">N₁ = 4</text>
+                                <!-- Cutoff Horizon Lines -->
+                                <g id="u2-cutoff-lines">
+                                    <!-- N1 = 4 (x = 300) -->
+                                    <line id="u2-line-n1" x1="300" y1="20" x2="300" y2="280" stroke="#0284c7" stroke-width="1.2" stroke-dasharray="4 3" style="display:none;"/>
+                                    <text id="u2-lbl-n1" x="300" y="295" fill="#0284c7" font-size="10" font-weight="600" text-anchor="middle" style="display:none;">N₁ = 4</text>
 
-									<!-- N2 = 7 (x = 480) -->
-									<line id="u2-line-n2" x1="480" y1="20" x2="480" y2="280" stroke="#d97706" stroke-width="1.2" stroke-dasharray="4 3" style="display:none;"/>
-									<text id="u2-lbl-n2" x="480" y="295" fill="#d97706" font-size="10" font-weight="600" text-anchor="middle" style="display:none;">N₂ = 7</text>
+                                    <!-- N2 = 7 (x = 480) -->
+                                    <line id="u2-line-n2" x1="480" y1="20" x2="480" y2="280" stroke="#d97706" stroke-width="1.2" stroke-dasharray="4 3" style="display:none;"/>
+                                    <text id="u2-lbl-n2" x="480" y="295" fill="#d97706" font-size="10" font-weight="600" text-anchor="middle" style="display:none;">N₂ = 7</text>
 
-									<!-- N* = max(4,7) = 7 (x = 480) -->
-									<line id="u2-line-nstar" x1="480" y1="20" x2="480" y2="280" stroke="#e11d48" stroke-width="1.4" style="display:none;"/>
-									<text id="u2-lbl-nstar" x="480" y="15" fill="#e11d48" font-size="10.5" font-weight="600" text-anchor="middle" style="display:none;">N* = max(N₁, N₂) = 7</text>
-								</g>
+                                    <!-- N* = max(4,7) = 7 (x = 480) -->
+                                    <line id="u2-line-nstar" x1="480" y1="20" x2="480" y2="280" stroke="#e11d48" stroke-width="1.4" style="display:none;"/>
+                                    <text id="u2-lbl-nstar" x="480" y="15" fill="#e11d48" font-size="10.5" font-weight="600" text-anchor="middle" style="display:none;">N* = max(N₁, N₂) = 7</text>
+                                </g>
 
-								<!-- Fine Dashed Connecting Polyline (Settles Permanently into Blue past N1=4) -->
-								<polyline id="u2-seq-trail" points="120,35 180,240 240,95 300,220 360,98 420,88 480,82 540,84 600,86 660,84"
-													fill="none" stroke="#cbd5e1" stroke-width="0.9" stroke-dasharray="3 2"/>
+                                <!-- Fine Dashed Connecting Polyline (Settles Permanently into Blue past N1=4) -->
+                                <polyline id="u2-seq-trail" points="120,35 180,240 240,95 300,220 360,98 420,88 480,82 540,84 600,86 660,84"
+                                                    fill="none" stroke="#cbd5e1" stroke-width="0.9" stroke-dasharray="3 2"/>
 
-								<!-- Precision Sequence Points -->
-								<g id="u2-pts">
-									<circle id="u2-pt-1" cx="120" cy="35" r="3.8" fill="#94a3b8"/>
-									<circle id="u2-pt-2" cx="180" cy="240" r="3.8" fill="#94a3b8"/>
-									<circle id="u2-pt-3" cx="240" cy="95" r="3.8" fill="#94a3b8"/>
-									<circle id="u2-pt-4" cx="300" cy="220" r="3.8" fill="#94a3b8"/>
-									<circle id="u2-pt-5" cx="360" cy="98" r="4.2" fill="#94a3b8"/>
-									<circle id="u2-pt-6" cx="420" cy="88" r="4.2" fill="#94a3b8"/>
-									<circle id="u2-pt-7" cx="480" cy="82" r="4.2" fill="#94a3b8"/>
-									<circle id="u2-pt-8" cx="540" cy="84" r="4.2" fill="#94a3b8"/>
-									<circle id="u2-pt-9" cx="600" cy="86" r="4.2" fill="#94a3b8"/>
-									<circle id="u2-pt-10" cx="660" cy="84" r="4.2" fill="#94a3b8"/>
-								</g>
+                                <!-- Precision Sequence Points -->
+                                <g id="u2-pts">
+                                    <circle id="u2-pt-1" cx="120" cy="35" r="3.8" fill="#94a3b8"/>
+                                    <circle id="u2-pt-2" cx="180" cy="240" r="3.8" fill="#94a3b8"/>
+                                    <circle id="u2-pt-3" cx="240" cy="95" r="3.8" fill="#94a3b8"/>
+                                    <circle id="u2-pt-4" cx="300" cy="220" r="3.8" fill="#94a3b8"/>
+                                    <circle id="u2-pt-5" cx="360" cy="98" r="4.2" fill="#94a3b8"/>
+                                    <circle id="u2-pt-6" cx="420" cy="88" r="4.2" fill="#94a3b8"/>
+                                    <circle id="u2-pt-7" cx="480" cy="82" r="4.2" fill="#94a3b8"/>
+                                    <circle id="u2-pt-8" cx="540" cy="84" r="4.2" fill="#94a3b8"/>
+                                    <circle id="u2-pt-9" cx="600" cy="86" r="4.2" fill="#94a3b8"/>
+                                    <circle id="u2-pt-10" cx="660" cy="84" r="4.2" fill="#94a3b8"/>
+                                </g>
 
-								<!-- Step 4 Rival Ghost Demand at n=8 -->
-								<g id="u2-pt-8-rival" style="display:none;">
-									<circle id="u2-pt-8-amber" cx="540" cy="215" r="4.2" fill="#d97706" stroke="#ffffff" stroke-width="1.5"/>
-									<text x="548" y="230" fill="#b45309" font-size="9.5" font-weight="600">a₈ (demanded by L₂)</text>
-									<text x="548" y="75" fill="#0284c7" font-size="9.5" font-weight="600">a₈ (settled in L₁)</text>
-								</g>
+                                <!-- Step 4 Rival Ghost Demand at n=8 -->
+                                <g id="u2-pt-8-rival" style="display:none;">
+                                    <circle id="u2-pt-8-amber" cx="540" cy="215" r="4.2" fill="#d97706" stroke="#ffffff" stroke-width="1.5"/>
+                                    <text x="548" y="230" fill="#b45309" font-size="9.5" font-weight="600">a₈ (demanded by L₂)</text>
+                                    <text x="548" y="75" fill="#0284c7" font-size="9.5" font-weight="600">a₈ (settled in L₁)</text>
+                                </g>
 
-								<!-- Contradiction Tension Line & Sleek Callout Card -->
-								<g id="u2-contra-group" style="display:none;">
-									<line x1="540" y1="84" x2="540" y2="215" stroke="#e11d48" stroke-width="1.2" stroke-dasharray="3 2"/>
-									<line x1="535" y1="84" x2="545" y2="84" stroke="#e11d48" stroke-width="1.2"/>
-									<line x1="535" y1="215" x2="545" y2="215" stroke="#e11d48" stroke-width="1.2"/>
-									<rect x="555" y="128" width="180" height="46" rx="5" fill="#ffffff" stroke="#fecdd3" stroke-width="1" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.04))"/>
-									<text x="564" y="145" fill="#9f1239" font-size="9.5" font-weight="500">|L₁ - L₂| ≤ |L₁ - a₈| + |a₈ - L₂|</text>
-									<text x="564" y="161" fill="#e11d48" font-size="10" font-weight="700">4 &lt; 1 + 1 ⟹ 4 &lt; 2 (⊥)</text>
-								</g>
-							</svg>
-						</div>
+                                <!-- Contradiction Tension Line & Sleek Callout Card -->
+                                <g id="u2-contra-group" style="display:none;">
+                                    <line x1="540" y1="84" x2="540" y2="215" stroke="#e11d48" stroke-width="1.2" stroke-dasharray="3 2"/>
+                                    <line x1="535" y1="84" x2="545" y2="84" stroke="#e11d48" stroke-width="1.2"/>
+                                    <line x1="535" y1="215" x2="545" y2="215" stroke="#e11d48" stroke-width="1.2"/>
+                                    <rect x="555" y="128" width="180" height="46" rx="5" fill="#ffffff" stroke="#fecdd3" stroke-width="1" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.04))"/>
+                                    <text x="564" y="145" fill="#9f1239" font-size="9.5" font-weight="500">|L₁ - L₂| ≤ |L₁ - a₈| + |a₈ - L₂|</text>
+                                    <text x="564" y="161" fill="#e11d48" font-size="10" font-weight="700">4 &lt; 1 + 1 ⟹ 4 &lt; 2 (⊥)</text>
+                                </g>
+                            </svg>
+                        </div>
 
-						<!-- NAVIGATION & INLINE PREVIEW -->
-						<div class="nav-panel">
-							<div class="nav-buttons">
-								<button id="u2-btn-prev" class="uw-btn" onclick="advanceStep(-1)" disabled>Previous</button>
-								<button id="u2-btn-next" class="uw-btn uw-btn-primary" onclick="advanceStep(1)">Next</button>
-								<button id="u2-btn-reset" class="uw-btn" onclick="restoreInitialStep()">Reset</button>
-							</div>
-							<p id="u2-preview-text" class="preview-desc">
-								A sequence settles toward limit L₁ = +2. A rival claimant asserts the exact same sequence also converges to L₂ = -2. With a loose tolerance (ε = 2.00 = d/2), their target corridors meet at y = 0, leaving the conflict unresolved.
-							</p>
-						</div>
+                        <!-- NAVIGATION & INLINE PREVIEW -->
+                        <div class="nav-panel">
+                            <div class="nav-buttons">
+                                <button id="u2-btn-prev" class="uw-btn" onclick="advanceStep(-1)" disabled>Previous</button>
+                                <button id="u2-btn-next" class="uw-btn uw-btn-primary" onclick="advanceStep(1)">Next</button>
+                                <button id="u2-btn-reset" class="uw-btn" onclick="restoreInitialStep()">Reset</button>
+                            </div>
+                            <p id="u2-preview-text" class="preview-desc">
+                                A sequence settles toward limit L₁ = +2. A rival claimant asserts the exact same sequence also converges to L₂ = -2. With a loose tolerance (ε = 2.00 = d/2), their target corridors meet at y = 0, leaving the conflict unresolved.
+                            </p>
+                        </div>
 
-						<!-- PAIRED ANALYTICAL PANES -->
-						<div class="panes-grid">
-							<div class="uw-pane uw-pane-what">
-								<h4>What Is Happening</h4>
-								<div id="u2-pane-what" class="uw-pane-body">
-									Two candidate target axes are fixed at y = +2 and y = -2 with metric gap d = 4.0. With loose tolerance ε = 2.00, the corridors U(L₁) = (0, 4) and U(L₂) = (-4, 0) touch along the neutral midline y = 0 without establishing an exclusionary boundary.
-								</div>
-							</div>
-							<div class="uw-pane uw-pane-why">
-								<h4>Why The System Does This</h4>
-								<div id="u2-pane-why" class="uw-pane-body">
-									Hypothetical Premise. A proof by contradiction temporarily entertains the rival claim that two distinct limits exist for the same sequence, showing that loose error margins fail to expose the impossibility.
-								</div>
-							</div>
-						</div>
-					</div>
+                        <!-- PAIRED ANALYTICAL PANES -->
+                        <div class="panes-grid">
+                            <div class="uw-pane uw-pane-what">
+                                <h4>What Is Happening</h4>
+                                <div id="u2-pane-what" class="uw-pane-body">
+                                    Two candidate target axes are fixed at y = +2 and y = -2 with metric gap d = 4.0. With loose tolerance ε = 2.00, the corridors U(L₁) = (0, 4) and U(L₂) = (-4, 0) touch along the neutral midline y = 0 without establishing an exclusionary boundary.
+                                </div>
+                            </div>
+                            <div class="uw-pane uw-pane-why">
+                                <h4>Why The System Does This</h4>
+                                <div id="u2-pane-why" class="uw-pane-body">
+                                    Hypothetical Premise. A proof by contradiction temporarily entertains the rival claim that two distinct limits exist for the same sequence, showing that loose error margins fail to expose the impossibility.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </section>
 
                 <script>
-				(function() {
-					let activeStep = 0;
-					let activeDim = 'seq';
+                (function() {
+                    let activeStep = 0;
+                    let activeDim = 'seq';
 
-					const stepsData = [
-						{
-							phase: "0: Established Limit vs Rival",
-							eps: "2.00 (Loose)",
-							overlap: "U(L₁) ∩ U(L₂) meet at y = 0",
-							overlapColor: "#b45309",
-							summary: "A sequence settles toward limit L₁ = +2. A rival claimant asserts the exact same sequence also converges to L₂ = -2. With a loose tolerance (ε = 2.00 = d/2), their target corridors meet at y = 0, leaving the conflict unresolved.",
-							what: "Two candidate target axes are fixed at y = +2 and y = -2 with metric gap d = 4.0. With loose tolerance ε = 2.00, the corridors U(L₁) = (0, 4) and U(L₂) = (-4, 0) touch along the midline y = 0, failing to establish an exclusionary boundary.",
-							why: "Hypothetical Premise. A proof by contradiction temporarily entertains the rival claim that two distinct limits exist for the same sequence, showing that loose error margins fail to separate the targets."
-						},
-						{
-							phase: "1: The Exclusionary Moat",
-							eps: "1.00 (Strict, < d/2)",
-							overlap: "U(L₁) ∩ U(L₂) = ∅ (Disjoint)",
-							overlapColor: "#059669",
-							summary: "The skeptic chooses a strict tolerance ε = 1.00 < d/2. Both corridors shrink symmetrically, opening an empty buffer of width 2 between them. The two targets cannot share a single real number.",
-							what: "The corridors shrink to radius 1: U(L₁) = (1.0, 3.0) and U(L₂) = (-3.0, -1.0). The open gap separating them is 2.0 units wide. The intersection U(L₁) ∩ U(L₂) is strictly empty (∅).",
-							why: "Hausdorff Separation. In any metric space, distinct points can be isolated inside mutually disjoint open sets. This geometric separation guarantees that if a term enters one corridor, it is physically barred from the other."
-						},
-						{
-							phase: "2: Established Tail vs Rival Claim",
-							eps: "1.00",
-							overlap: "L₁: n>4 | L₂ Claim: n>7",
-							overlapColor: "#0284c7",
-							summary: "The sequence settles permanently into the blue corridor past N₁ = 4. The rival claimant insists that past their own milestone N₂ = 7, the sequence will jump into the amber corridor.",
-							what: "Milestone lines appear at N₁ = 4 and N₂ = 7. For all n > 4, the sequence terms (a₅, a₆, a₇) are stably confined to the blue corridor. The rival claims that for all n > 7, terms must enter the amber corridor.",
-							why: "Independent Promises. The definition of convergence requires providing a finite cutoff index N past which all subsequent terms remain permanently trapped in that limit's neighborhood."
-						},
-						{
-							phase: "3: The Master Tail Horizon",
-							eps: "1.00",
-							overlap: "Both Claims Active (n ≥ 8)",
-							overlapColor: "#e11d48",
-							summary: "We take the combined horizon N* = max(N₁, N₂) = 7. Beyond index 7, both claims must apply simultaneously: terms are held in Blue by N₁ AND demanded in Amber by N₂.",
-							what: "The master cutoff line N* = 7 illuminates and shades the infinite tail zone (n ≥ 8). For every index n > N*, the condition n > N₁ holds (retaining aₙ in Blue) AND the condition n > N₂ holds (demanding aₙ in Amber).",
-							why: "Tail Intersection. The maximum of two finite integers is finite. Past N*, we enter the intersection of both infinite tails, forcing both claimants' universal quantifiers (∀n > N) to govern the exact same indices."
-						},
-						{
-							phase: "4: The Spatial Contradiction",
-							eps: "1.00",
-							overlap: "⊥ Contradiction (|L₁ - L₂| < d)",
-							overlapColor: "#e11d48",
-							summary: "At index n = 8, the rival claim collapses: a₈ is physically trapped in the Blue corridor, yet the rival demands it be in Amber. A single number cannot occupy two disjoint sets. Therefore, limits are unique.",
-							what: "The term a₈ sits at y ≈ 2.0 in the blue corridor, but the rival demands it appear at y ≈ -2.0 in the amber corridor. By the triangle inequality: 4 = |L₁ - L₂| ≤ |L₁ - a₈| + |a₈ - L₂| < 1 + 1 = 2, giving 4 < 2, a logical impossibility.",
-							why: "Mutual Exclusivity. A single real value cannot occupy two disjoint open sets at the same coordinate. Because the sequence has already converged to L₁, no rival limit L₂ ≠ L₁ can exist."
-						}
-					];
+                    const dimensionContent = {
+                        seq: [
+                            {
+                                phase: "0: Established Limit vs Rival",
+                                eps: "2.00 (Loose)",
+                                overlap: "U(L₁) ∩ U(L₂) meet at y = 0",
+                                overlapColor: "#b45309",
+                                summary: "A sequence settles toward limit L₁ = +2. A rival claimant asserts the exact same sequence also converges to L₂ = -2. With a loose tolerance (ε = 2.00 = d/2), their target corridors meet at y = 0, leaving the conflict unresolved.",
+                                what: "Two candidate target axes are fixed at y = +2 and y = -2 with metric gap d = 4.0. With loose tolerance ε = 2.00, the corridors U(L₁) = (0, 4) and U(L₂) = (-4, 0) touch along the midline y = 0, failing to establish an exclusionary boundary.",
+                                why: "Hypothetical Premise. A proof by contradiction temporarily entertains the rival claim that two distinct limits exist for the same sequence, showing that loose error margins fail to separate the targets."
+                            },
+                            {
+                                phase: "1: The Exclusionary Moat",
+                                eps: "1.00 (Strict, < d/2)",
+                                overlap: "U(L₁) ∩ U(L₂) = ∅ (Disjoint)",
+                                overlapColor: "#059669",
+                                summary: "The skeptic chooses a strict tolerance ε = 1.00 < d/2. Both corridors shrink symmetrically, opening an empty buffer of width 2 between them. The two targets cannot share a single real number.",
+                                what: "The corridors shrink to radius 1: U(L₁) = (1.0, 3.0) and U(L₂) = (-3.0, -1.0). The open gap separating them is 2.0 units wide. The intersection U(L₁) ∩ U(L₂) is strictly empty (∅).",
+                                why: "Hausdorff Separation. In any metric space, distinct points can be isolated inside mutually disjoint open sets. This geometric separation guarantees that if a term enters one corridor, it is physically barred from the other."
+                            },
+                            {
+                                phase: "2: Established Tail vs Rival Claim",
+                                eps: "1.00",
+                                overlap: "L₁: n>4 | L₂ Claim: n>7",
+                                overlapColor: "#0284c7",
+                                summary: "The sequence settles permanently into the blue corridor past N₁ = 4. The rival claimant insists that past their own milestone N₂ = 7, the sequence will jump into the amber corridor.",
+                                what: "Milestone lines appear at N₁ = 4 and N₂ = 7. For all n > 4, the sequence terms (a₅, a₆, a₇) are stably confined to the blue corridor. The rival claims that for all n > 7, terms must enter the amber corridor.",
+                                why: "Independent Promises. The definition of convergence requires providing a finite cutoff index N past which all subsequent terms remain permanently trapped in that limit's neighborhood."
+                            },
+                            {
+                                phase: "3: The Master Tail Horizon",
+                                eps: "1.00",
+                                overlap: "Both Claims Active (n ≥ 8)",
+                                overlapColor: "#e11d48",
+                                summary: "We take the combined horizon N* = max(N₁, N₂) = 7. Beyond index 7, both claims must apply simultaneously: terms are held in Blue by N₁ AND demanded in Amber by N₂.",
+                                what: "The master cutoff line N* = 7 illuminates and shades the infinite tail zone (n ≥ 8). For every index n > N*, the condition n > N₁ holds (retaining aₙ in Blue) AND the condition n > N₂ holds (demanding aₙ in Amber).",
+                                why: "Tail Intersection. The maximum of two finite integers is finite. Past N*, we enter the intersection of both infinite tails, forcing both claimants' universal quantifiers (∀n > N) to govern the exact same indices."
+                            },
+                            {
+                                phase: "4: The Spatial Contradiction",
+                                eps: "1.00",
+                                overlap: "⊥ Contradiction (|L₁ - L₂| < d)",
+                                overlapColor: "#e11d48",
+                                summary: "At index n = 8, the rival claim collapses: a₈ is physically trapped in the Blue corridor, yet the rival demands it be in Amber. A single number cannot occupy two disjoint sets. Therefore, limits are unique.",
+                                what: "The term a₈ sits at y ≈ 2.0 in the blue corridor, but the rival demands it appear at y ≈ -2.0 in the amber corridor. By the triangle inequality: 4 = |L₁ - L₂| ≤ |L₁ - a₈| + |a₈ - L₂| < 1 + 1 = 2, giving 4 < 2, a logical impossibility.",
+                                why: "Mutual Exclusivity. A single real value cannot occupy two disjoint open sets at the same coordinate. Because the sequence has already converged to L₁, no rival limit L₂ ≠ L₁ can exist."
+                            }
+                        ],
+                        fun: [
+                            {
+                                phase: "0: Established Limit vs Rival",
+                                eps: "2.00 (Loose)",
+                                overlap: "U(L₁) ∩ U(L₂) meet at y = 0",
+                                overlapColor: "#b45309",
+                                summary: "A function f(x) approaches L₁ = +2 as x → c. A rival asserts f(x) also approaches L₂ = -2. With loose tolerance (ε = 2.00 = d/2), the target corridors touch at y = 0, leaving the conflict unresolved.",
+                                what: "Two candidate target axes are fixed at y = +2 and y = -2 with metric gap d = 4.0. With loose tolerance ε = 2.00, the output corridors U(L₁) = (0, 4) and U(L₂) = (-4, 0) touch along the midline y = 0 without establishing an exclusionary boundary.",
+                                why: "Hypothetical Premise. A proof by contradiction temporarily entertains the rival claim that two distinct limits exist for the same function at c, showing that loose error margins fail to separate the targets."
+                            },
+                            {
+                                phase: "1: The Exclusionary Moat",
+                                eps: "1.00 (Strict, < d/2)",
+                                overlap: "U(L₁) ∩ U(L₂) = ∅ (Disjoint)",
+                                overlapColor: "#059669",
+                                summary: "The skeptic enforces strict tolerance ε = 1.00 < d/2. Both corridors shrink symmetrically, opening an empty buffer of width 2 between them. The two targets cannot share any output values.",
+                                what: "The corridors shrink to radius 1: U(L₁) = (1.0, 3.0) and U(L₂) = (-3.0, -1.0). The open gap separating them is 2.0 units wide. The intersection U(L₁) ∩ U(L₂) is strictly empty (∅).",
+                                why: "Hausdorff Separation. In any metric space, distinct points can be isolated inside mutually disjoint open sets. This geometric separation guarantees that if f(x) enters one corridor, it is physically barred from the other."
+                            },
+                            {
+                                phase: "2: Established Window vs Rival Claim",
+                                eps: "1.00",
+                                overlap: "L₁: δ₁=0.4 | L₂ Claim: δ₂=0.2",
+                                overlapColor: "#0284c7",
+                                summary: "For inputs within punctured radius δ₁ = 0.4 around c, f(x) is stably confined to Blue. The rival claims that within their own radius δ₂ = 0.2, f(x) must jump into Amber.",
+                                what: "Input threshold boundaries appear at radii δ₁ = 0.4 and δ₂ = 0.2 around limit point c. For all 0 < |x - c| < δ₁, f(x) is stably confined to the blue corridor. The rival claims that for all 0 < |x - c| < δ₂, f(x) must enter the amber corridor.",
+                                why: "Independent Punctured Windows. The definition of a function limit guarantees that for any ε > 0, there exists a radius δ > 0 confining all outputs within distance δ of c (excluding c itself) to the target corridor."
+                            },
+                            {
+                                phase: "3: The Punctured Window Horizon",
+                                eps: "1.00",
+                                overlap: "Both Claims Active (δ* = 0.2)",
+                                overlapColor: "#e11d48",
+                                summary: "We take the tighter input window δ* = min(δ₁, δ₂) = 0.2. For every input with 0 < |x - c| < δ*, both conditions apply simultaneously: f(x) is held in Blue by δ₁ AND demanded in Amber by δ₂.",
+                                what: "The master input window δ* = min(δ₁, δ₂) = 0.2 activates. Because |x - c| < δ* implies both |x - c| < δ₁ and |x - c| < δ₂, f(x) is simultaneously retained in the blue corridor and demanded in the amber corridor.",
+                                why: "Window Intersection. The minimum of two positive real numbers is strictly positive. Inside this common punctured neighborhood, both claimants' universal quantifiers (∀x with 0 < |x - c| < δ*) govern the exact same inputs."
+                            },
+                            {
+                                phase: "4: The Spatial Contradiction",
+                                eps: "1.00",
+                                overlap: "⊥ Contradiction (|L₁ - L₂| < d)",
+                                overlapColor: "#e11d48",
+                                summary: "For any test input x with 0 < |x - c| < δ*, the rival claim collapses: f(x) is trapped in Blue, yet demanded in Amber. A single real value cannot occupy two disjoint sets. Therefore, limits are unique.",
+                                what: "Evaluating f(x) at any input within the common window yields 4 = |L₁ - L₂| ≤ |L₁ - f(x)| + |f(x) - L₂| < 1 + 1 = 2, giving 4 < 2, a logical impossibility.",
+                                why: "Mutual Exclusivity. A single real output f(x) cannot occupy two disjoint open intervals. Because the function limit as x → c is uniquely L₁, no distinct limit L₂ ≠ L₁ can exist."
+                            }
+                        ]
+                    };
 
-					function refreshCanvasElements(idx) {
-						const data = stepsData[idx];
+                    function refreshCanvasElements(idx) {
+                        const data = dimensionContent[activeDim][idx];
 
-						// Update telemetry bar
-						document.getElementById("u2-tel-phase").textContent = data.phase;
-						document.getElementById("u2-tel-eps").textContent = data.eps;
-						document.getElementById("u2-tel-overlap").textContent = data.overlap;
-						document.getElementById("u2-tel-overlap").style.color = data.overlapColor;
+                        // Update telemetry bar
+                        document.getElementById("u2-tel-phase").textContent = data.phase;
+                        document.getElementById("u2-tel-eps").textContent = data.eps;
+                        document.getElementById("u2-tel-overlap").textContent = data.overlap;
+                        document.getElementById("u2-tel-overlap").style.color = data.overlapColor;
 
-						// Update narrative preview & paired analytical panes
-						document.getElementById("u2-preview-text").textContent = data.summary;
-						document.getElementById("u2-pane-what").textContent = data.what;
-						document.getElementById("u2-pane-why").textContent = data.why;
+                        // Update narrative preview & paired analytical panes
+                        document.getElementById("u2-preview-text").textContent = data.summary;
+                        document.getElementById("u2-pane-what").textContent = data.what;
+                        document.getElementById("u2-pane-why").textContent = data.why;
 
-						// Update navigation buttons
-						document.getElementById("u2-btn-prev").disabled = (idx === 0);
-						document.getElementById("u2-btn-next").disabled = (idx === stepsData.length - 1);
+                        // Update navigation buttons
+                        document.getElementById("u2-btn-prev").disabled = (idx === 0);
+                        document.getElementById("u2-btn-next").disabled = (idx === dimensionContent[activeDim].length - 1);
 
-						// SVG element hooks
-						const bandL1 = document.getElementById("u2-band-l1");
-						const bandL2 = document.getElementById("u2-band-l2");
-						const lineN1 = document.getElementById("u2-line-n1");
-						const lblN1 = document.getElementById("u2-lbl-n1");
-						const lineN2 = document.getElementById("u2-line-n2");
-						const lblN2 = document.getElementById("u2-lbl-n2");
-						const lineNStar = document.getElementById("u2-line-nstar");
-						const lblNStar = document.getElementById("u2-lbl-nstar");
-						const tailRect = document.getElementById("u2-tail-rect");
-						const rivalGroup = document.getElementById("u2-pt-8-rival");
-						const contraGroup = document.getElementById("u2-contra-group");
+                        // SVG element hooks
+                        const bandL1 = document.getElementById("u2-band-l1");
+                        const bandL2 = document.getElementById("u2-band-l2");
+                        const lineN1 = document.getElementById("u2-line-n1");
+                        const lblN1 = document.getElementById("u2-lbl-n1");
+                        const lineN2 = document.getElementById("u2-line-n2");
+                        const lblN2 = document.getElementById("u2-lbl-n2");
+                        const lineNStar = document.getElementById("u2-line-nstar");
+                        const lblNStar = document.getElementById("u2-lbl-nstar");
+                        const tailRect = document.getElementById("u2-tail-rect");
+                        const rivalGroup = document.getElementById("u2-pt-8-rival");
+                        const contraGroup = document.getElementById("u2-contra-group");
 
-						// Reset sequence points to neutral grey & refined radii
-						for (let i = 1; i <= 10; i++) {
-							const pt = document.getElementById(`u2-pt-${i}`);
-							pt.setAttribute("fill", "#94a3b8");
-							pt.setAttribute("r", (i >= 5) ? "4.2" : "3.8");
-						}
+                        // Reset sequence points to neutral grey & refined radii
+                        for (let i = 1; i <= 10; i++) {
+                            const pt = document.getElementById(`u2-pt-${i}`);
+                            pt.setAttribute("fill", "#94a3b8");
+                            pt.setAttribute("r", (i >= 5) ? "4.2" : "3.8");
+                        }
 
-						if (idx === 0) {
-							// Step 0: Meeting cleanly at midline y=150 (20 to 150, and 150 to 280)
-							bandL1.setAttribute("y", "20");
-							bandL1.setAttribute("height", "130");
-							bandL2.setAttribute("y", "150");
-							bandL2.setAttribute("height", "130");
+                        if (idx === 0) {
+                            // Step 0: Meeting cleanly at midline y=150 (20 to 150, and 150 to 280)
+                            bandL1.setAttribute("y", "20");
+                            bandL1.setAttribute("height", "130");
+                            bandL2.setAttribute("y", "150");
+                            bandL2.setAttribute("height", "130");
 
-							lineN1.style.display = "none";
-							lblN1.style.display = "none";
-							lineN2.style.display = "none";
-							lblN2.style.display = "none";
-							lineNStar.style.display = "none";
-							lblNStar.style.display = "none";
-							tailRect.style.display = "none";
-							rivalGroup.style.display = "none";
-							contraGroup.style.display = "none";
-						} else if (idx === 1) {
-							// Step 1: Disjoint corridors (height 66px each, 64px central buffer)
-							bandL1.setAttribute("y", "52");
-							bandL1.setAttribute("height", "66");
-							bandL2.setAttribute("y", "182");
-							bandL2.setAttribute("height", "66");
+                            lineN1.style.display = "none";
+                            lblN1.style.display = "none";
+                            lineN2.style.display = "none";
+                            lblN2.style.display = "none";
+                            lineNStar.style.display = "none";
+                            lblNStar.style.display = "none";
+                            tailRect.style.display = "none";
+                            rivalGroup.style.display = "none";
+                            contraGroup.style.display = "none";
+                        } else if (idx === 1) {
+                            // Step 1: Disjoint corridors (height 66px each, 64px central buffer)
+                            bandL1.setAttribute("y", "52");
+                            bandL1.setAttribute("height", "66");
+                            bandL2.setAttribute("y", "182");
+                            bandL2.setAttribute("height", "66");
 
-							lineN1.style.display = "none";
-							lblN1.style.display = "none";
-							lineN2.style.display = "none";
-							lblN2.style.display = "none";
-							lineNStar.style.display = "none";
-							lblNStar.style.display = "none";
-							tailRect.style.display = "none";
-							rivalGroup.style.display = "none";
-							contraGroup.style.display = "none";
-						} else if (idx === 2) {
-							// Step 2: Milestones N1 & N2 active, sequence settled in Blue
-							bandL1.setAttribute("y", "52");
-							bandL1.setAttribute("height", "66");
-							bandL2.setAttribute("y", "182");
-							bandL2.setAttribute("height", "66");
+                            lineN1.style.display = "none";
+                            lblN1.style.display = "none";
+                            lineN2.style.display = "none";
+                            lblN2.style.display = "none";
+                            lineNStar.style.display = "none";
+                            lblNStar.style.display = "none";
+                            tailRect.style.display = "none";
+                            rivalGroup.style.display = "none";
+                            contraGroup.style.display = "none";
+                        } else if (idx === 2) {
+                            // Step 2: Milestones active, sequence/function settled in Blue
+                            bandL1.setAttribute("y", "52");
+                            bandL1.setAttribute("height", "66");
+                            bandL2.setAttribute("y", "182");
+                            bandL2.setAttribute("height", "66");
 
-							lineN1.style.display = "block";
-							lblN1.style.display = "block";
-							lineN2.style.display = "block";
-							lblN2.style.display = "block";
-							lineNStar.style.display = "none";
-							lblNStar.style.display = "none";
-							tailRect.style.display = "none";
-							rivalGroup.style.display = "none";
-							contraGroup.style.display = "none";
+                            lineN1.style.display = "block";
+                            lblN1.style.display = "block";
+                            lineN2.style.display = "block";
+                            lblN2.style.display = "block";
+                            lineNStar.style.display = "none";
+                            lblNStar.style.display = "none";
+                            tailRect.style.display = "none";
+                            rivalGroup.style.display = "none";
+                            contraGroup.style.display = "none";
 
-							// Points past N1=4 are actively held in Blue
-							document.getElementById("u2-pt-5").setAttribute("fill", "#0284c7");
-							document.getElementById("u2-pt-6").setAttribute("fill", "#0284c7");
-							document.getElementById("u2-pt-7").setAttribute("fill", "#0284c7");
-						} else if (idx === 3) {
-							// Step 3: Master horizon N* active, shading the collision tail (n ≥ 8)
-							bandL1.setAttribute("y", "52");
-							bandL1.setAttribute("height", "66");
-							bandL2.setAttribute("y", "182");
-							bandL2.setAttribute("height", "66");
+                            // Points past milestone 1 are actively held in Blue
+                            document.getElementById("u2-pt-5").setAttribute("fill", "#0284c7");
+                            document.getElementById("u2-pt-6").setAttribute("fill", "#0284c7");
+                            document.getElementById("u2-pt-7").setAttribute("fill", "#0284c7");
+                        } else if (idx === 3) {
+                            // Step 3: Master horizon active, shading collision domain
+                            bandL1.setAttribute("y", "52");
+                            bandL1.setAttribute("height", "66");
+                            bandL2.setAttribute("y", "182");
+                            bandL2.setAttribute("height", "66");
 
-							lineN1.style.display = "block";
-							lblN1.style.display = "block";
-							lineN2.style.display = "none";
-							lblN2.style.display = "none";
-							lineNStar.style.display = "block";
-							lblNStar.style.display = "block";
-							tailRect.style.display = "block";
-							rivalGroup.style.display = "none";
-							contraGroup.style.display = "none";
+                            lineN1.style.display = "block";
+                            lblN1.style.display = "block";
+                            lineN2.style.display = "none";
+                            lblN2.style.display = "none";
+                            lineNStar.style.display = "block";
+                            lblNStar.style.display = "block";
+                            tailRect.style.display = "block";
+                            rivalGroup.style.display = "none";
+                            contraGroup.style.display = "none";
 
-							document.getElementById("u2-pt-5").setAttribute("fill", "#0284c7");
-							document.getElementById("u2-pt-6").setAttribute("fill", "#0284c7");
-							document.getElementById("u2-pt-7").setAttribute("fill", "#0284c7");
-							// Terms past N*=7 disputed by both claims
-							document.getElementById("u2-pt-8").setAttribute("fill", "#e11d48");
-							document.getElementById("u2-pt-9").setAttribute("fill", "#e11d48");
-							document.getElementById("u2-pt-10").setAttribute("fill", "#e11d48");
-						} else if (idx === 4) {
-							// Step 4: Contradiction callout on test point a8
-							bandL1.setAttribute("y", "52");
-							bandL1.setAttribute("height", "66");
-							bandL2.setAttribute("y", "182");
-							bandL2.setAttribute("height", "66");
+                            document.getElementById("u2-pt-5").setAttribute("fill", "#0284c7");
+                            document.getElementById("u2-pt-6").setAttribute("fill", "#0284c7");
+                            document.getElementById("u2-pt-7").setAttribute("fill", "#0284c7");
+                            // Terms past horizon disputed by both claims
+                            document.getElementById("u2-pt-8").setAttribute("fill", "#e11d48");
+                            document.getElementById("u2-pt-9").setAttribute("fill", "#e11d48");
+                            document.getElementById("u2-pt-10").setAttribute("fill", "#e11d48");
+                        } else if (idx === 4) {
+                            // Step 4: Contradiction callout on test point
+                            bandL1.setAttribute("y", "52");
+                            bandL1.setAttribute("height", "66");
+                            bandL2.setAttribute("y", "182");
+                            bandL2.setAttribute("height", "66");
 
-							lineN1.style.display = "none";
-							lblN1.style.display = "none";
-							lineN2.style.display = "none";
-							lblN2.style.display = "none";
-							lineNStar.style.display = "block";
-							lblNStar.style.display = "block";
-							tailRect.style.display = "block";
+                            lineN1.style.display = "none";
+                            lblN1.style.display = "none";
+                            lineN2.style.display = "none";
+                            lblN2.style.display = "none";
+                            lineNStar.style.display = "block";
+                            lblNStar.style.display = "block";
+                            tailRect.style.display = "block";
 
-							document.getElementById("u2-pt-5").setAttribute("fill", "#0284c7");
-							document.getElementById("u2-pt-6").setAttribute("fill", "#0284c7");
-							document.getElementById("u2-pt-7").setAttribute("fill", "#0284c7");
-							document.getElementById("u2-pt-9").setAttribute("fill", "#0284c7");
-							document.getElementById("u2-pt-10").setAttribute("fill", "#0284c7");
+                            document.getElementById("u2-pt-5").setAttribute("fill", "#0284c7");
+                            document.getElementById("u2-pt-6").setAttribute("fill", "#0284c7");
+                            document.getElementById("u2-pt-7").setAttribute("fill", "#0284c7");
+                            document.getElementById("u2-pt-9").setAttribute("fill", "#0284c7");
+                            document.getElementById("u2-pt-10").setAttribute("fill", "#0284c7");
 
-							const p8 = document.getElementById("u2-pt-8");
-							p8.setAttribute("fill", "#e11d48");
-							p8.setAttribute("r", "5.2");
+                            const p8 = document.getElementById("u2-pt-8");
+                            p8.setAttribute("fill", "#e11d48");
+                            p8.setAttribute("r", "5.2");
 
-							rivalGroup.style.display = "block";
-							contraGroup.style.display = "block";
-						}
-					}
+                            rivalGroup.style.display = "block";
+                            contraGroup.style.display = "block";
+                        }
+                    }
 
-					window.advanceStep = function(delta) {
-						activeStep = Math.max(0, Math.min(stepsData.length - 1, activeStep + delta));
-						refreshCanvasElements(activeStep);
-					};
+                    window.advanceStep = function(delta) {
+                        activeStep = Math.max(0, Math.min(dimensionContent[activeDim].length - 1, activeStep + delta));
+                        refreshCanvasElements(activeStep);
+                    };
 
-					window.restoreInitialStep = function() {
-						activeStep = 0;
-						refreshCanvasElements(0);
-					};
+                    window.restoreInitialStep = function() {
+                        activeStep = 0;
+                        refreshCanvasElements(0);
+                    };
 
-					window.switchDimension = function(mode) {
-						activeDim = mode;
-						document.getElementById("u2-dim-seq").classList.toggle("active", mode === 'seq');
-						document.getElementById("u2-dim-fun").classList.toggle("active", mode === 'fun');
+                    window.switchDimension = function(mode) {
+                        activeDim = mode;
+                        document.getElementById("u2-dim-seq").classList.toggle("active", mode === 'seq');
+                        document.getElementById("u2-dim-fun").classList.toggle("active", mode === 'fun');
 
-						if (mode === 'fun') {
-							document.getElementById("u2-axis-lbl").textContent = "Input x (around c)";
-							document.getElementById("u2-tel-cut-lbl").textContent = "Cutoffs δ₁, δ₂";
-							document.getElementById("u2-tel-cutoffs").textContent = "δ₁=0.4, δ₂=0.2";
-							document.getElementById("u2-tel-hor-lbl").textContent = "Punctured Radius δ*";
-							document.getElementById("u2-tel-max").textContent = "min(δ₁, δ₂) = 0.2";
-							document.getElementById("u2-lbl-n1").textContent = "δ₁ = 0.4";
-							document.getElementById("u2-lbl-n2").textContent = "δ₂ = 0.2";
-							document.getElementById("u2-lbl-nstar").textContent = "δ* = min(δ₁, δ₂) = 0.2";
+                        if (mode === 'fun') {
+                            document.getElementById("u2-axis-lbl").textContent = "Input x (around c)";
+                            document.getElementById("u2-tel-cut-lbl").textContent = "Cutoffs δ₁, δ₂";
+                            document.getElementById("u2-tel-cutoffs").textContent = "δ₁=0.4, δ₂=0.2";
+                            document.getElementById("u2-tel-hor-lbl").textContent = "Punctured Window δ*";
+                            document.getElementById("u2-tel-max").textContent = "min(δ₁, δ₂) = 0.2";
+                            document.getElementById("u2-lbl-n1").textContent = "δ₁ = 0.4";
+                            document.getElementById("u2-lbl-n2").textContent = "δ₂ = 0.2";
+                            document.getElementById("u2-lbl-nstar").textContent = "δ* = min(δ₁, δ₂) = 0.2";
+                        } else {
+                            document.getElementById("u2-axis-lbl").textContent = "Index n";
+                            document.getElementById("u2-tel-cut-lbl").textContent = "Cutoffs N₁, N₂";
+                            document.getElementById("u2-tel-cutoffs").textContent = "N₁=4, N₂=7";
+                            document.getElementById("u2-tel-hor-lbl").textContent = "Tail Horizon N*";
+                            document.getElementById("u2-tel-max").textContent = "max(N₁, N₂) = 7";
+                            document.getElementById("u2-lbl-n1").textContent = "N₁ = 4";
+                            document.getElementById("u2-lbl-n2").textContent = "N₂ = 7";
+                            document.getElementById("u2-lbl-nstar").textContent = "N* = max(N₁, N₂) = 7";
+                        }
+                        refreshCanvasElements(activeStep);
+                    };
 
-							stepsData[2].summary = "For functions f(x) → L, f(x) settles near L₁ inside punctured radius δ₁. A rival claims f(x) also enters L₂ within δ₂.";
-							stepsData[3].summary = "We select the tighter window δ* = min(δ₁, δ₂). For all 0 < |x - c| < δ*, f(x) is held in Blue but demanded in Amber.";
-						} else {
-							document.getElementById("u2-axis-lbl").textContent = "Index n";
-							document.getElementById("u2-tel-cut-lbl").textContent = "Cutoffs N₁, N₂";
-							document.getElementById("u2-tel-cutoffs").textContent = "N₁=4, N₂=7";
-							document.getElementById("u2-tel-hor-lbl").textContent = "Tail Horizon N*";
-							document.getElementById("u2-tel-max").textContent = "max(N₁, N₂) = 7";
-							document.getElementById("u2-lbl-n1").textContent = "N₁ = 4";
-							document.getElementById("u2-lbl-n2").textContent = "N₂ = 7";
-							document.getElementById("u2-lbl-nstar").textContent = "N* = max(N₁, N₂) = 7";
-
-							stepsData[2].summary = "The sequence settles permanently into the blue corridor past N₁ = 4. The rival claimant insists that past their own milestone N₂ = 7, the sequence will jump into the amber corridor.";
-							stepsData[3].summary = "We take the combined horizon N* = max(N₁, N₂) = 7. Beyond index 7, both claims must apply simultaneously: terms are held in Blue by N₁ AND demanded in Amber by N₂.";
-						}
-						refreshCanvasElements(activeStep);
-					};
-
-					refreshCanvasElements(0);
-				})();
-				</script>
+                    refreshCanvasElements(0);
+                })();
+                </script>
 
             <h3 style="color: #0f172a; margin-top: 1.75rem;">Theorem: Tail Invariance (The Shift &amp; Truncation Theorem)</h3>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
