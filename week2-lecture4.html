@@ -2121,6 +2121,33 @@
                     $$\lim_{n\to\infty} a_n = L \iff \lim_{n\to\infty} a_{n+k} = L$$
                 </li>
             </ul>
+
+            <h4 style="color: #0f172a; margin-top: 1.5rem;">The Proof of the Finite Modification Form</h4>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Suppose $(a_n)$ converges to limit $L$. We want to prove that $(b_n)$ also converges to $L$.
+            </p>
+            <ol style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.6rem;">
+                    Let $\epsilon > 0$ be arbitrary.
+                </li>
+                <li style="margin-bottom: 0.6rem;">
+                    Because $a_n \to L$, the definition of convergence provides a cutoff $N_a \in \mathbb{N}$ such that:
+                    $$n > N_a \implies |a_n - L| < \epsilon$$
+                </li>
+                <li style="margin-bottom: 0.6rem;">
+                    We are given that $a_n = b_n$ for all $n > N_0$. Now, choose the master cutoff:
+                    $$N = \max(N_a, N_0)$$
+                </li>
+                <li>
+                    For any index $n > N$, both conditions hold simultaneously:
+                    $$\begin{aligned}
+                    n > N_0 &\implies b_n = a_n \\
+                    n > N_a &\implies |a_n - L| < \epsilon
+                    \end{aligned}$$
+                    Substituting $b_n$ for $a_n$ yields $|b_n - L| = |a_n - L| < \epsilon$. Therefore, $(b_n)$ converges to $L$. By symmetry, if $(b_n)$ converges to $L$, then $(a_n)$ must converge to $L$. $\blacksquare$
+                </li>
+            </ol>
+
             <!-- ================================================================= -->
             <!-- 2D INTERACTIVE AID: THEOREM - TAIL INVARIANCE (LIGHT THEME)       -->
             <!-- ================================================================= -->
@@ -2847,31 +2874,6 @@
                 refreshTailCanvas(0);
             })();
             </script>
-            <h4 style="color: #0f172a; margin-top: 1.5rem;">The Proof of the Finite Modification Form</h4>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Suppose $(a_n)$ converges to limit $L$. We want to prove that $(b_n)$ also converges to $L$.
-            </p>
-            <ol style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
-                <li style="margin-bottom: 0.6rem;">
-                    Let $\epsilon > 0$ be arbitrary.
-                </li>
-                <li style="margin-bottom: 0.6rem;">
-                    Because $a_n \to L$, the definition of convergence provides a cutoff $N_a \in \mathbb{N}$ such that:
-                    $$n > N_a \implies |a_n - L| < \epsilon$$
-                </li>
-                <li style="margin-bottom: 0.6rem;">
-                    We are given that $a_n = b_n$ for all $n > N_0$. Now, choose the master cutoff:
-                    $$N = \max(N_a, N_0)$$
-                </li>
-                <li>
-                    For any index $n > N$, both conditions hold simultaneously:
-                    $$\begin{aligned}
-                    n > N_0 &\implies b_n = a_n \\
-                    n > N_a &\implies |a_n - L| < \epsilon
-                    \end{aligned}$$
-                    Substituting $b_n$ for $a_n$ yields $|b_n - L| = |a_n - L| < \epsilon$. Therefore, $(b_n)$ converges to $L$. By symmetry, if $(b_n)$ converges to $L$, then $(a_n)$ must converge to $L$. $\blacksquare$
-                </li>
-            </ol>
 
             <h4 style="color: #0f172a; margin-top: 1.5rem;">Why Tail Invariance Is a Superpower for Beginners</h4>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
