@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Update week2-lecture4.html with the 3D Infinite Flight Corridor Three.js simulator,
-stage both the HTML file and this script, commit, and push to the remote repo.
+Update week2-lecture4.html to resolve KaTeX visual leakage in widgets by converting
+dynamic UI text to native HTML and Unicode, stage both files, commit, and push.
 """
 
 from pathlib import Path
@@ -12,14 +12,14 @@ TARGET_FILE = Path("week2-lecture4.html")
 SCRIPT_FILE = Path(__file__).resolve()
 
 COMMIT_SUBJECT = (
-    "Add 3D Infinite Flight Corridor WebGL simulation to Lecture 4"
+    "Fix KaTeX layout leakage by migrating UI widgets to native Unicode"
 )
 COMMIT_BODY = (
-    "Integrate a Three.js 3D Directed Narrative Stepper simulator into\n"
-    "Section 3 of week2-lecture4.html. Model epsilon-N convergence as a 3D\n"
-    "cylindrical flight corridor with a milestone threshold gate. Include\n"
-    "comparative sequence toggles, interpolated camera telemetry, and paired\n"
-    "mechanics and rationale panels with mobile scroll protections."
+    "Strip LaTeX delimiters ($) from all interactive buttons, formula chunks,\n"
+    "and telemetry badges in week2-lecture4.html. Replace fragile dynamic\n"
+    "KaTeX rendering inside widgets with pure HTML (sub/sup) and Unicode\n"
+    "characters. Add overflow containment to telemetry cards to physically\n"
+    "prevent visual leakage on narrow viewports."
 )
 
 HTML_CONTENT = r"""<!DOCTYPE html>
@@ -66,24 +66,28 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 
         .game-box, .stepper-walkthrough { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 1.5rem; background: var(--card); box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .telemetry-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0.75rem; padding: 0.85rem 1.25rem; background: #f8fafc; border-bottom: 1px solid var(--border); }
-        .telemetry-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 0.55rem 0.85rem; display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
+
+        /* Contained Telemetry Cards to Prevent Leakage */
+        .telemetry-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 0.55rem 0.85rem; display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; overflow: hidden; }
         .telemetry-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #64748b; }
-        .telemetry-badge { font-size: 0.92rem; font-weight: 600; line-height: 1.3; font-variant-numeric: tabular-nums; }
+        .telemetry-badge { font-size: 0.92rem; font-weight: 600; line-height: 1.3; font-variant-numeric: tabular-nums; display: block; overflow-x: auto; white-space: nowrap; max-width: 100%; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+        .telemetry-badge::-webkit-scrollbar { display: none; }
 
         .game-header { background: #f8fafc; color: #b45309; padding: 1rem 1.5rem; font-size: 0.92rem; font-weight: 700; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
         .game-body { padding: 1.5rem; background: #ffffff; display: flex; flex-direction: column; gap: 1rem; border-bottom: 1px solid var(--border); }
         .game-controls { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
-        .game-btn { background: var(--accent); color: white; border: none; padding: 0.55rem 1.1rem; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.92rem; transition: background 0.2s; }
+        .game-btn { background: var(--accent); color: white; border: none; padding: 0.55rem 1.1rem; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.92rem; transition: background 0.2s; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .game-btn:hover { background: var(--accent-hover); }
         .game-canvas-wrap { background: #ffffff; border: 1px solid var(--border); border-radius: 6px; padding: 1.75rem; display: flex; justify-content: center; }
         .game-canvas-wrap svg { width: 100%; height: auto; display: block; }
 
-        .formula-stage-wrap { background: #f8fafc; padding: 1.25rem; border-bottom: 1px solid var(--border); display: flex; justify-content: center; }
-        .formula-display { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; justify-content: center; font-size: 1.25rem; font-weight: 500; }
-        .formula-chunk { padding: 0.45rem 0.85rem; border-radius: 6px; border: 2px solid #e2e8f0; color: #475569; background: #ffffff; transition: all 0.3s ease; cursor: pointer; user-select: none; white-space: nowrap; }
+        .formula-stage-wrap { background: #f8fafc; padding: 1.25rem; border-bottom: 1px solid var(--border); display: flex; justify-content: center; overflow-x: auto; scrollbar-width: none; }
+        .formula-stage-wrap::-webkit-scrollbar { display: none; }
+        .formula-display { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; justify-content: center; font-size: 1.25rem; font-weight: 500; font-family: "Georgia", serif; }
+        .formula-chunk { padding: 0.45rem 0.85rem; border-radius: 6px; border: 2px solid #e2e8f0; color: #475569; background: #ffffff; transition: all 0.3s ease; cursor: pointer; user-select: none; white-space: nowrap; font-style: italic; }
         .formula-chunk.active { border-color: #d97706; background: #fef3c7; color: #92400e; transform: translateY(-2px); }
         .formula-chunk.completed { border-color: #059669; color: #065f46; background: #ecfdf5; }
-        .formula-sep { color: #64748b; font-weight: 400; white-space: nowrap; }
+        .formula-sep { color: #64748b; font-weight: 400; white-space: nowrap; font-style: normal; }
 
         .canvas-container { padding: 2rem; background: #f1f5f9; display: flex; justify-content: center; border-bottom: 1px solid var(--border); }
         .canvas-container svg { width: 100%; height: auto; display: block; }
@@ -103,7 +107,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
         /* 3D Flight Corridor Specific Styling */
         .corridor-3d-box { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 2rem; background: #090d16; color: #f8fafc; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         .corridor-toggle-bar { display: flex; gap: 0.5rem; padding: 0.85rem 1.25rem; background: #0f172a; border-bottom: 1px solid #1e293b; flex-wrap: wrap; align-items: center; }
-        .corridor-toggle-btn { background: #1e293b; color: #cbd5e1; border: 1px solid #334155; padding: 0.4rem 0.85rem; border-radius: 4px; font-size: 0.84rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .corridor-toggle-btn { background: #1e293b; color: #cbd5e1; border: 1px solid #334155; padding: 0.4rem 0.85rem; border-radius: 4px; font-size: 0.84rem; font-weight: 600; cursor: pointer; transition: all 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
         .corridor-toggle-btn.active { background: var(--accent); color: white; border-color: #f59e0b; }
         .corridor-canvas-wrap { position: relative; width: 100%; height: 380px; background: #030712; overflow: hidden; touch-action: pan-y; }
         #corridor-canvas { width: 100%; height: 100%; display: block; }
@@ -117,6 +121,11 @@ HTML_CONTENT = r"""<!DOCTYPE html>
         .worked-example-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
         .worked-example-box h4 { margin-top: 0; color: #047857; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
         .worked-example-box p, .worked-example-box li { color: #0f172a !important; }
+
+        .lecture-card { background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+        .lecture-card:hover { transform: translateY(-2px); box-shadow: 0 6px 12px -2px rgba(0,0,0,0.08); border-color: var(--accent); }
+        .lecture-card h3 { margin-top: 0; color: #0f172a; }
+        .lecture-badge { display: inline-block; background: var(--accent); color: white; padding: 0.2rem 0.55rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem; }
 
         @media (max-width: 768px) {
             .katex-display {
@@ -302,6 +311,70 @@ HTML_CONTENT = r"""<!DOCTYPE html>
                 </p>
             </div>
 
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">Breaking Down Every Piece of the Formula</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Let's unpack each component of this sentence so that nothing feels like a secret code:
+            </p>
+            <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
+                <li style="margin-bottom: 0.85rem;">
+                    <strong>$\forall \epsilon > 0$ ("For every epsilon greater than zero"):</strong><br>
+                    The Greek letter $\epsilon$ (epsilon) is traditionally used because it stands for <em>error</em>. Think of $\epsilon$ as the challenge tolerance. The universal quantifier ($\forall$) means this test must hold for <em>any</em> positive tolerance anyone could ever name—whether they challenge you with $\epsilon = 1$, $\epsilon = 0.001$, or $\epsilon = 10^{-100}$. You cannot negotiate a larger error margin; you must be prepared to satisfy any tolerance, no matter how microscopically tight.
+                </li>
+                <li style="margin-bottom: 0.85rem;">
+                    <strong>$\exists N \in \mathbb{N}$ ("There exists a natural number cutoff $N$"):</strong><br>
+                    This is your response to the challenge. In response to the given $\epsilon$, you identify a specific milestone index $N$. Crucially, you get to inspect $\epsilon$ <em>first</em> before you choose $N$. If the skeptic gives you a loose tolerance ($\epsilon = 0.5$), you might only need $N = 2$. If they challenge you with an extremely tight tolerance ($\epsilon = 0.0001$), you will have to walk much further down the sequence to find a larger $N$.
+                </li>
+                <li style="margin-bottom: 0.85rem;">
+                    <strong>$\forall n > N$ ("For all indices $n$ strictly past the cutoff"):</strong><br>
+                    This defines the <em>infinite tail</em> of the sequence. Real analysis teaches us a liberating truth: <strong>initial terms do not matter</strong>. The first ten, hundred, or million terms of a sequence can jump around chaotically, take excursions into negative numbers, or violate the tolerance. What matters is that past your chosen milestone $N$, every single subsequent term settles down.
+                </li>
+                <li>
+                    <strong>$\implies |a_n - L| < \epsilon$ ("The terms remain permanently trapped"):</strong><br>
+                    Once you pass milestone $N$, every term $a_n$ is within distance $\epsilon$ of $L$. It is not enough for one term to enter the window and bounce back out. Once $n > N$, <em>no term is ever allowed to leave the target corridor again</em>.
+                </li>
+            </ul>
+
+            <h3 style="color: #0f172a; margin-top: 1.75rem;">The Mental Model: The Two-Player Archery Game</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                If you ever feel lost in the algebraic symbols, picture this scenario as a friendly game of archery between two people:
+            </p>
+            <div style="display: flex; gap: 2rem; align-items: center; margin: 1.5rem 0; flex-wrap: wrap;">
+                <div style="flex: 0 0 280px; margin: 0 auto;">
+                    <svg viewBox="0 0 260 160" style="width: 100%; height: auto; display: block;">
+                        <circle cx="130" cy="80" r="68" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="2.5"/>
+                        <circle cx="130" cy="80" r="48" fill="#fef3c7" stroke="#f59e0b" stroke-width="2.5"/>
+                        <text x="130" y="47" font-family="sans-serif" font-size="10" font-weight="bold" fill="#78350f" text-anchor="middle">&plusmn;&epsilon; Tolerance</text>
+                        <circle cx="130" cy="80" r="22" fill="#fee2e2" stroke="#ef4444" stroke-width="2.5"/>
+                        <circle cx="130" cy="80" r="7" fill="#ef4444"/>
+                        <text x="130" y="84" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">L</text>
+                        <line x1="35" y1="22" x2="123" y2="74" stroke="#0f172a" stroke-width="3.5" stroke-linecap="round"/>
+                        <polygon points="123,74 111,68 116,61" fill="#0f172a"/>
+                        <line x1="35" y1="22" x2="25" y2="16" stroke="#b45309" stroke-width="2.5"/>
+                        <line x1="41" y1="28" x2="31" y2="22" stroke="#b45309" stroke-width="2.5"/>
+                    </svg>
+                </div>
+                <div style="flex: 1; min-width: 280px;">
+                    <ol style="margin: 0; padding-left: 1.25rem; color: #334155; line-height: 1.7; font-size: 0.98rem;">
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>Player 1 (The Skeptic) sets the target:</strong> They paint a target ring of radius $\epsilon$ around the bullseye $L$. They can make this ring as impossibly tiny as they want.
+                        </li>
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>Player 2 (You, the Defender) finds the cutoff:</strong> You inspect their ring and announce a milestone index $N$.
+                        </li>
+                        <li>
+                            <strong>The Test:</strong> Every arrow shot after turn $N$ (that is, $a_{N+1}, a_{N+2}, a_{N+3}, \dots$) must land securely inside the target ring.
+                        </li>
+                    </ol>
+                    <p style="margin: 0.75rem 0 0 0; color: #334155; font-size: 0.95rem;">
+                        If you have a reliable rule to produce a valid $N$ for <em>any</em> positive $\epsilon$ the skeptic throws at you, you win the game—and the sequence converges to $L$!
+                    </p>
+                </div>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-top: 1.5rem;">
+                Use the interactive tool below to step through each clause of this definition in order. Notice how the internal telemetry updates, the visual diagram highlights the active region, and the mechanical and logical explanations synchronize with each step:
+            </p>
+
             <!-- CLAUSE STEPPER -->
             <div class="stepper-walkthrough" id="definition-walkthrough">
                 <div class="telemetry-grid">
@@ -313,13 +386,14 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 
                 <div class="formula-stage-wrap">
                     <div class="formula-display">
-                        <div class="formula-chunk active" id="chunk-0" onclick="setFormulaStep(0)">$\forall \epsilon > 0$</div>
+                        <!-- Converted KaTeX chunks to pure Unicode/HTML to prevent rendering leakage -->
+                        <div class="formula-chunk active" id="chunk-0" onclick="setFormulaStep(0)">∀ϵ > 0</div>
                         <span class="formula-sep">,</span>
-                        <div class="formula-chunk" id="chunk-1" onclick="setFormulaStep(1)">$\exists N \in \mathbb{N}$</div>
+                        <div class="formula-chunk" id="chunk-1" onclick="setFormulaStep(1)">∃N ∈ ℕ</div>
                         <span class="formula-sep" style="font-size: 0.95rem; margin: 0 0.2rem;">such that</span>
-                        <div class="formula-chunk" id="chunk-2" onclick="setFormulaStep(2)">$\forall n > N$</div>
+                        <div class="formula-chunk" id="chunk-2" onclick="setFormulaStep(2)">∀n > N</div>
                         <span class="formula-sep">,</span>
-                        <div class="formula-chunk" id="chunk-3" onclick="setFormulaStep(3)">$|a_n - L| < \epsilon$</div>
+                        <div class="formula-chunk" id="chunk-3" onclick="setFormulaStep(3)">|aₙ - L| &lt; ϵ</div>
                     </div>
                 </div>
 
@@ -393,7 +467,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
             <h2 id="section-interactive-widget">3. Interactive Visualizers: 2D Simulator &amp; 3D Flight Corridor</h2>
 
             <div class="widget-instructions">
-                <h4>📖 Guide 1: 2D Epsilon Challenge Simulator ($a_n = \frac{1}{n}$)</h4>
+                <h4>📖 Guide 1: 2D Epsilon Challenge Simulator (a<sub>n</sub> = 1/n)</h4>
                 <p>Observe how shrinking tolerance pushes cutoff $N$ further down the tail:</p>
                 <ol>
                     <li><strong>Choose Tolerance ($\epsilon$):</strong> Test $\epsilon = 0.2$ ($N=5$), $\epsilon = 0.1$ ($N=10$), or $\epsilon = 0.05$ ($N=20$).</li>
@@ -405,11 +479,12 @@ HTML_CONTENT = r"""<!DOCTYPE html>
             <!-- 2D EPSILON CHALLENGE WIDGET -->
             <div class="game-box">
                 <div class="game-header">
-                    <span>2D Finite Sample Visualization: $a_n = \frac{1}{n}$ ($L = 0$)</span>
+                    <span>2D Finite Sample Visualization: a<sub>n</sub> = 1/n (L = 0)</span>
                     <span>Planar Distance Metric</span>
                 </div>
                 <div class="telemetry-grid" id="game-telemetry">
-                    <div class="telemetry-card"><span class="telemetry-label">Sequence</span><span class="telemetry-badge" style="color: #0369a1;">$a_n = 1/n$ ($L = 0$)</span></div>
+                    <!-- Native HTML/Unicode telemetry to prevent KaTeX leakage -->
+                    <div class="telemetry-card"><span class="telemetry-label">Sequence</span><span class="telemetry-badge" style="color: #0369a1;">a<sub>n</sub> = 1/n (L = 0)</span></div>
                     <div class="telemetry-card"><span class="telemetry-label">Tolerance (ϵ)</span><span class="telemetry-badge" id="cg-tel-eps" style="color: #b45309;">Select below</span></div>
                     <div class="telemetry-card"><span class="telemetry-label">Suitable Cutoff (N)</span><span class="telemetry-badge" id="cg-tel-reqn" style="color: #be185d;">—</span></div>
                     <div class="telemetry-card"><span class="telemetry-label">Term Displayed</span><span class="telemetry-badge" id="cg-tel-val" style="color: #334155;">—</span></div>
@@ -417,9 +492,10 @@ HTML_CONTENT = r"""<!DOCTYPE html>
                 </div>
                 <div class="game-body">
                     <div class="game-controls">
-                        <button class="game-btn" onclick="startChallenge(0.2)">Test $\epsilon = 0.2$</button>
-                        <button class="game-btn" onclick="startChallenge(0.1)">Test $\epsilon = 0.1$</button>
-                        <button class="game-btn" onclick="startChallenge(0.05)">Test $\epsilon = 0.05$</button>
+                        <!-- Strip KaTeX $ from buttons to ensure mobile layout stability -->
+                        <button class="game-btn" onclick="startChallenge(0.2)">Test ϵ = 0.2</button>
+                        <button class="game-btn" onclick="startChallenge(0.1)">Test ϵ = 0.1</button>
+                        <button class="game-btn" onclick="startChallenge(0.05)">Test ϵ = 0.05</button>
                     </div>
                     <div class="game-canvas-wrap">
                         <svg id="game-plot" viewBox="0 0 740 260">
@@ -437,23 +513,24 @@ HTML_CONTENT = r"""<!DOCTYPE html>
                 <!-- Comparative Dimension Toggles -->
                 <div class="corridor-toggle-bar">
                     <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: #94a3b8; font-weight: 700; margin-right: 0.5rem;">Sequence Model:</span>
-                    <button class="corridor-toggle-btn active" id="btn-seq-harmonic" onclick="switchCorridorSequence('harmonic')">Harmonic $a_n = 1/n$</button>
-                    <button class="corridor-toggle-btn" id="btn-seq-alternating" onclick="switchCorridorSequence('alternating')">Alternating $a_n = \frac{(-1)^n}{n}$</button>
-                    <button class="corridor-toggle-btn" id="btn-seq-geometric" onclick="switchCorridorSequence('geometric')">Geometric $a_n = 0.75^n$</button>
+                    <!-- Strip KaTeX $ from buttons to prevent visual overflow leakage -->
+                    <button class="corridor-toggle-btn active" id="btn-seq-harmonic" onclick="switchCorridorSequence('harmonic')">Harmonic (1/n)</button>
+                    <button class="corridor-toggle-btn" id="btn-seq-alternating" onclick="switchCorridorSequence('alternating')">Alternating ((-1)ⁿ/n)</button>
+                    <button class="corridor-toggle-btn" id="btn-seq-geometric" onclick="switchCorridorSequence('geometric')">Geometric (0.75ⁿ)</button>
                 </div>
 
                 <!-- Live State Telemetry Grid -->
                 <div class="telemetry-grid" style="background: #0b1120; border-bottom: 1px solid #1e293b;">
                     <div class="telemetry-card" style="background: #111827; border-color: #1f2937;">
                         <span class="telemetry-label" style="color: #94a3b8;">Flight Model</span>
-                        <span class="telemetry-badge" id="c3-tel-seq" style="color: #38bdf8;">$a_n = 1/n$</span>
+                        <span class="telemetry-badge" id="c3-tel-seq" style="color: #38bdf8;"></span>
                     </div>
                     <div class="telemetry-card" style="background: #111827; border-color: #1f2937;">
-                        <span class="telemetry-label" style="color: #94a3b8;">Corridor Radius ($\epsilon$)</span>
+                        <span class="telemetry-label" style="color: #94a3b8;">Corridor Radius (ϵ)</span>
                         <span class="telemetry-badge" id="c3-tel-eps" style="color: #fbbf24;">0.150</span>
                     </div>
                     <div class="telemetry-card" style="background: #111827; border-color: #1f2937;">
-                        <span class="telemetry-label" style="color: #94a3b8;">Milestone Gate ($N$)</span>
+                        <span class="telemetry-label" style="color: #94a3b8;">Milestone Gate (N)</span>
                         <span class="telemetry-badge" id="c3-tel-gate" style="color: #f43f5e;">Gate N = 7</span>
                     </div>
                     <div class="telemetry-card" style="background: #111827; border-color: #1f2937;">
@@ -733,7 +810,10 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 
             if (epsBadge) epsBadge.textContent = 'ϵ = ' + eps;
             if (reqnBadge) reqnBadge.textContent = 'N = ' + nCutoff;
-            if (valBadge) valBadge.textContent = `a_${nCutoff + 1} = ${nextVal} < ${eps}`;
+
+            // Replaced KaTeX render with safe HTML parsing to prevent CSS leakage
+            if (valBadge) valBadge.innerHTML = `a<sub>${nCutoff + 1}</sub> = ${nextVal} &lt; ${eps}`;
+
             if (statusBadge) { statusBadge.textContent = 'Target Secure'; statusBadge.style.color = '#059669'; }
             if (ctrlPanel) ctrlPanel.style.display = 'flex';
 
@@ -853,10 +933,10 @@ HTML_CONTENT = r"""<!DOCTYPE html>
             gridHelper.position.set(0, -3.5, 35);
             corridorScene.add(gridHelper);
 
-            buildCorridorObjects();
-            renderTunnelState(0);
-            animateCorridor();
+            // Initializes the sequence to Harmonic and draws everything safely
+            switchCorridorSequence('harmonic');
 
+            animateCorridor();
             window.addEventListener('resize', onWindowResizeCorridor);
         }
 
@@ -930,10 +1010,11 @@ HTML_CONTENT = r"""<!DOCTYPE html>
             const eps = 0.15;
             const cutoffN = calculateCutoffN(seqKey, eps);
 
+            // Safely update telemetry via DOM text/HTML injection instead of KaTeX rendering
             if (telSeq) {
-                if (seqKey === 'harmonic') telSeq.textContent = '$a_n = 1/n$';
-                else if (seqKey === 'alternating') telSeq.textContent = '$a_n = (-1)^n/n$';
-                else if (seqKey === 'geometric') telSeq.textContent = '$a_n = 0.75^n$';
+                if (seqKey === 'harmonic') telSeq.innerHTML = 'a<sub>n</sub> = 1/n';
+                else if (seqKey === 'alternating') telSeq.innerHTML = 'a<sub>n</sub> = (-1)<sup>n</sup>/n';
+                else if (seqKey === 'geometric') telSeq.innerHTML = 'a<sub>n</sub> = 0.75<sup>n</sup>';
             }
             if (telGate) telGate.textContent = `Gate N = ${cutoffN}`;
 
