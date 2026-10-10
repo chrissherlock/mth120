@@ -567,7 +567,92 @@
                 Before reading the formal sentence, remember what absolute value actually means geometrically. On the real number line, the distance between any two numbers $x$ and $y$ is simply $|x - y|$.
             </p>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                When we write $|a_n - L| < \epsilon$, we are making a very simple statement: <strong>the straight-line distance between the sequence value $a_n$ and the target number $L$ is strictly smaller than $\epsilon$</strong>. Expanding that inequality without absolute value bars reveals its spatial meaning:
+                When we write $|a_n - L| < \epsilon$, we are making a very simple statement: <strong>the straight-line distance between the sequence value $a_n$ and the target number $L$ is strictly smaller than $\epsilon$</strong>.
+
+                <!-- ================================================================= -->
+                <!-- DIAGRAM: ABSOLUTE VALUE AS STRAIGHT-LINE DISTANCE (CURLY BRACES)  -->
+                <!-- ================================================================= -->
+                <figure style="margin: 2rem 0; padding: 1.5rem; background: #ffffff; border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+                    <figcaption style="font-size: 0.92rem; font-weight: 700; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem;">
+                        <span>Figure: Geometric Meaning of $|a_n - L| < \epsilon$ on the Number Line</span>
+                        <span style="font-size: 0.8rem; font-weight: 600; color: #64748b; text-transform: none;">Distance = Radius from Target $L$</span>
+                    </figcaption>
+
+                    <p style="margin: 0 0 1.25rem 0; color: #475569; font-size: 0.92rem; line-height: 1.55;">
+                        The target limit $L$ acts as the epicenter. An error tolerance $\epsilon$ carves out an open buffer of radius $\epsilon$ in both directions. Writing $|a_n - L| < \epsilon$ means the straight-line distance from $a_n$ to $L$ is strictly shorter than that radius.
+                    </p>
+
+                    <svg viewBox="0 0 760 185" style="width: 100%; height: auto; display: block;" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+                        <defs>
+                            <!-- Marker: Axis Arrowhead -->
+                            <marker id="axis-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                                <path d="M 0 2 L 6 5 L 0 8 z" fill="#64748b"/>
+                            </marker>
+                        </defs>
+
+                        <!-- Shaded Open Target Corridor (L - eps to L + eps) -->
+                        <rect x="180" y="52" width="360" height="56" rx="5" fill="#f0f9ff" fill-opacity="0.85" stroke="#38bdf8" stroke-width="0.75" stroke-dasharray="3 3"/>
+
+                        <!-- Real Number Line Axis -->
+                        <line x1="50" y1="80" x2="710" y2="80" stroke="#94a3b8" stroke-width="1" marker-end="url(#axis-arrow)"/>
+                        <text x="720" y="83" font-size="11" font-weight="600" fill="#64748b">ℝ</text>
+
+                        <!-- ================= CURLY BRACES (EPSILON RADII) ================= -->
+                        <!-- Left Radius Curly Brace: L - eps to L (180 to 360, peak at 270) -->
+                        <path d="M 180 50 Q 180 46.5 185 46.5 L 265 46.5 Q 270 46.5 270 43 Q 270 46.5 275 46.5 L 355 46.5 Q 360 46.5 360 50"
+                              fill="none" stroke="#0284c7" stroke-width="0.8"/>
+                        <text x="270" y="34" font-size="10.5" font-weight="700" fill="#0284c7" text-anchor="middle">Distance = ϵ</text>
+
+                        <!-- Right Radius Curly Brace: L to L + eps (360 to 540, peak at 450) -->
+                        <path d="M 360 50 Q 360 46.5 365 46.5 L 445 46.5 Q 450 46.5 450 43 Q 450 46.5 455 46.5 L 535 46.5 Q 540 46.5 540 50"
+                              fill="none" stroke="#0284c7" stroke-width="0.8"/>
+                        <text x="450" y="34" font-size="10.5" font-weight="700" fill="#0284c7" text-anchor="middle">Distance = ϵ</text>
+
+                        <!-- ================= CURLY BRACE: |a_n - L| DISTANCE ================= -->
+                        <!-- Distance Curly Brace: L to a_n (362 to 463, peak at 412.5) -->
+                        <path d="M 362 74 Q 362 71 366 71 L 408.5 71 Q 412.5 71 412.5 68 Q 412.5 71 416.5 71 L 459 71 Q 463 71 463 74"
+                              fill="none" stroke="#059669" stroke-width="0.8"/>
+                        <text x="412.5" y="62" font-size="9.5" font-weight="700" fill="#059669" text-anchor="middle">|aₙ - L| &lt; ϵ</text>
+
+                        <!-- ================= TICKS & BOUNDARY MARKERS ================= -->
+                        <!-- Corridor Boundary: L - eps -->
+                        <line x1="180" y1="74" x2="180" y2="86" stroke="#0284c7" stroke-width="1"/>
+                        <text x="175" y="84" font-size="15" font-weight="300" fill="#0284c7" text-anchor="end">(</text>
+                        <text x="180" y="102" font-size="11.5" font-weight="700" fill="#0284c7" text-anchor="middle">L - ϵ</text>
+                        <text x="180" y="116" font-size="9" fill="#64748b" text-anchor="middle">Lower Boundary</text>
+
+                        <!-- Center Epicenter: Target Limit L -->
+                        <line x1="360" y1="72" x2="360" y2="88" stroke="#0f172a" stroke-width="1.2"/>
+                        <circle cx="360" cy="80" r="3.2" fill="#0f172a"/>
+                        <text x="360" y="102" font-size="12" font-weight="800" fill="#0f172a" text-anchor="middle">Target L</text>
+                        <text x="360" y="116" font-size="9" font-weight="600" fill="#64748b" text-anchor="middle">Center Epicenter</text>
+
+                        <!-- Corridor Boundary: L + eps -->
+                        <line x1="540" y1="74" x2="540" y2="86" stroke="#0284c7" stroke-width="1"/>
+                        <text x="545" y="84" font-size="15" font-weight="300" fill="#0284c7" text-anchor="start">)</text>
+                        <text x="540" y="102" font-size="11.5" font-weight="700" fill="#0284c7" text-anchor="middle">L + ϵ</text>
+                        <text x="540" y="116" font-size="9" fill="#64748b" text-anchor="middle">Upper Boundary</text>
+
+                        <!-- ================= SEQUENCE POINTS ================= -->
+                        <!-- IN-BOUNDS SAMPLE POINT a_n -->
+                        <circle cx="465" cy="80" r="3.8" fill="#059669"/>
+                        <text x="465" y="102" font-size="11.5" font-weight="800" fill="#059669" text-anchor="middle">aₙ</text>
+                        <text x="465" y="116" font-size="9" font-weight="600" fill="#059669" text-anchor="middle">Inside Corridor ✓</text>
+
+                        <!-- OUT-OF-BOUNDS CONTRAST POINT a_k (BREACH) -->
+                        <circle cx="645" cy="80" r="3.8" fill="#e11d48"/>
+                        <text x="645" y="102" font-size="11.5" font-weight="800" fill="#e11d48" text-anchor="middle">aₖ</text>
+                        <text x="645" y="116" font-size="9" font-weight="600" fill="#e11d48" text-anchor="middle">|aₖ - L| ≥ ϵ (Breach ✗)</text>
+
+                        <!-- ================= BOTTOM LEGEND BANNER ================= -->
+                        <rect x="180" y="142" width="360" height="26" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="0.75"/>
+                        <text x="360" y="159" font-size="10.5" font-weight="600" fill="#334155" text-anchor="middle">
+                            |aₙ - L| &lt; ϵ &nbsp;⟺&nbsp; -ϵ &lt; aₙ - L &lt; ϵ &nbsp;⟺&nbsp; L - ϵ &lt; aₙ &lt; L + ϵ
+                        </text>
+                    </svg>
+                </figure>
+
+                Expanding that inequality without absolute value bars reveals its spatial meaning:
             </p>
             <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
                 $$|a_n - L| < \epsilon \iff -\epsilon < a_n - L < \epsilon \iff L - \epsilon < a_n < L + \epsilon$$
