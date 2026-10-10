@@ -4928,14 +4928,14 @@
                             Car A (blue) stays strictly behind Car B (orange) for the entire journey. As they brake toward the red light, the "daylight" separating them continuously shrinks. At the limit, they arrive bumper-to-bumper at the exact same marker. Strict inequalities ($<$) relax into weak inequalities ($\le$) at the limit.
                         </p>
 
-                        <svg viewBox="0 0 880 440" style="width: 100%; height: auto; display: block; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+                        <svg viewBox="0 0 880 540" style="width: 100%; height: auto; display: block; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
                             <defs>
                                 <!-- Arrowheads -->
                                 <marker id="vd-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
                                     <path d="M 0 2 L 7 5 L 0 8 z" fill="#64748b"/>
                                 </marker>
-                                <marker id="vd-arrow-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-                                    <path d="M 0 2 L 7 5 L 0 8 z" fill="#ef4444"/>
+                                <marker id="vd-arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                    <path d="M 0 2 L 7 5 L 0 8 z" fill="#10b981"/>
                                 </marker>
 
                                 <!-- CSS Animations -->
@@ -4961,6 +4961,14 @@
                                         animation: vd-pulse-glow 10s ease-in-out infinite;
                                     }
 
+                                    /* Car animations mapping graph coordinates to the road */
+                                    .vd-car-a {
+                                        animation: vd-drive-a 10s infinite;
+                                    }
+                                    .vd-car-b {
+                                        animation: vd-drive-b 10s infinite;
+                                    }
+
                                     @keyframes vd-reveal {
                                         0%, 10% { width: 0px; }
                                         80%, 90% { width: 640px; }
@@ -4984,6 +4992,18 @@
                                         0%, 70% { filter: drop-shadow(0 0 0px rgba(239,68,68,0)); }
                                         80%, 90% { filter: drop-shadow(0 0 6px rgba(239,68,68,0.8)); }
                                         100% { filter: drop-shadow(0 0 0px rgba(239,68,68,0)); }
+                                    }
+
+                                    @keyframes vd-drive-a {
+                                        0%, 11.9% { transform: translateX(120px); animation-timing-function: linear; }
+                                        12% { transform: translateX(120px); animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1); }
+                                        80%, 100% { transform: translateX(720px); }
+                                    }
+
+                                    @keyframes vd-drive-b {
+                                        0%, 11.9% { transform: translateX(520px); animation-timing-function: linear; }
+                                        12% { transform: translateX(520px); animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1); }
+                                        80%, 100% { transform: translateX(720px); }
                                     }
                                 </style>
 
@@ -5035,7 +5055,6 @@
                             <g clip-path="url(#vd-wipe-clip)">
 
                                 <!-- 1. The Vanishing Daylight (Yellow Area) -->
-                                <!-- Top Edge (Orange): 120,200 to 720,121. Bottom Edge (Blue): 720,124 to 120,360 -->
                                 <polygon points="
                                     120,200 180,171 240,152.5 300,140.7 360,133.2 420,128.4 480,125.4 540,123.4 600,122.2 660,121.4 720,120.9
                                     720,124.4 660,126.6 600,129.8 540,134.6 480,141.8 420,152.5 360,168.5 300,192.3 240,227.8 180,280.9 120,360
@@ -5091,26 +5110,20 @@
 
                             <!-- ================= SCANNER LINE ================= -->
                             <g class="vd-scanner">
-                                <!-- Vertical Laser -->
                                 <line x1="120" y1="80" x2="120" y2="400" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 2"/>
-
-                                <!-- Floating Indicator Box -->
                                 <rect x="110" y="60" width="20" height="20" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
                                 <text x="120" y="74" fill="#475569" font-size="12" font-weight="800" text-anchor="middle">n</text>
                             </g>
 
                             <!-- ================= STATIC ANNOTATIONS ================= -->
-                            <!-- Car B Annotation -->
                             <rect x="140" y="178" width="130" height="24" rx="4" fill="#ffffff" stroke="#fcd34d" stroke-width="1"/>
                             <text x="205" y="194" fill="#b45309" font-size="11" font-weight="700" text-anchor="middle">Car B (Orange) Ahead</text>
                             <path d="M 140 190 Q 125 190 125 195" fill="none" stroke="#fcd34d" stroke-width="1.5" marker-end="url(#vd-arrow)"/>
 
-                            <!-- Car A Annotation -->
                             <rect x="150" y="340" width="190" height="24" rx="4" fill="#ffffff" stroke="#7dd3fc" stroke-width="1"/>
                             <text x="245" y="356" fill="#0369a1" font-size="11" font-weight="700" text-anchor="middle">Car A (Blue) Strictly Behind (aₙ &lt; bₙ)</text>
                             <path d="M 150 352 Q 130 352 128 356" fill="none" stroke="#7dd3fc" stroke-width="1.5" marker-end="url(#vd-arrow)"/>
 
-                            <!-- Daylight Annotation -->
                             <rect x="330" y="225" width="165" height="36" rx="6" fill="#fef08a" stroke="#eab308" stroke-width="1.5"/>
                             <text x="412" y="240" fill="#a16207" font-size="10.5" font-weight="800" text-anchor="middle">THE "DAYLIGHT"</text>
                             <text x="412" y="254" fill="#a16207" font-size="9" font-weight="600" text-anchor="middle">Distance = bₙ - aₙ &gt; 0</text>
@@ -5121,9 +5134,62 @@
                                 <rect x="630" y="45" width="190" height="50" rx="8" fill="#ffffff" stroke="#10b981" stroke-width="2" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))"/>
                                 <text x="725" y="65" fill="#047857" font-size="11.5" font-weight="800" text-anchor="middle">BUMPER TO BUMPER!</text>
                                 <text x="725" y="82" fill="#059669" font-size="9.5" font-weight="600" text-anchor="middle">Gap ≈ 0, but aₙ never passed bₙ.</text>
-                                <!-- Pointer to the dot crash -->
                                 <path d="M 725 95 L 725 112" fill="none" stroke="#10b981" stroke-width="2" marker-end="url(#vd-arrow-green)"/>
                             </g>
+
+                            <!-- ================= ROAD & ANIMATED CARS ================= -->
+                            <g stroke-width="1">
+                                <!-- Road Asphalt -->
+                                <rect x="80" y="440" width="680" height="70" fill="#334155" rx="4"/>
+
+                                <!-- Dashed Lane Divider -->
+                                <line x1="100" y1="475" x2="700" y2="475" stroke="#94a3b8" stroke-width="2" stroke-dasharray="12 12"/>
+
+                                <!-- Stop Line -->
+                                <line x1="720" y1="440" x2="720" y2="510" stroke="#f8fafc" stroke-width="6"/>
+
+                                <!-- Start Line -->
+                                <line x1="120" y1="440" x2="120" y2="510" stroke="#f8fafc" stroke-width="2" stroke-dasharray="4 4"/>
+
+                                <!-- Traffic Light Pole & Box (Aligned with Stop Line) -->
+                                <rect x="726" y="415" width="4" height="25" fill="#64748b"/>
+                                <rect x="722" y="390" width="12" height="26" rx="2" fill="#1e293b"/>
+                                <circle cx="728" cy="397" r="3" fill="#ef4444" class="vd-glow"/>
+                                <circle cx="728" cy="405" r="3" fill="#475569"/>
+
+                                <!-- Ground Annotations -->
+                                <text x="720" y="528" fill="#ef4444" font-size="10.5" font-weight="800" text-anchor="middle">STOP LINE (Limit K=L)</text>
+                                <text x="120" y="528" fill="#64748b" font-size="10" font-weight="600" text-anchor="middle">START</text>
+                            </g>
+
+                            <!-- Top Lane: Car B (Orange - Starts closer to the light) -->
+                            <g class="vd-car-b">
+                                <!-- Chassis -->
+                                <rect x="-42" y="446" width="42" height="22" rx="4" fill="#f59e0b" stroke="#b45309" stroke-width="1.5"/>
+                                <!-- Headlights -->
+                                <rect x="-4" y="449" width="4" height="4" fill="#fef08a"/>
+                                <rect x="-4" y="461" width="4" height="4" fill="#fef08a"/>
+                                <!-- Windshields -->
+                                <rect x="-14" y="448" width="8" height="18" rx="2" fill="#1e293b"/>
+                                <rect x="-38" y="448" width="6" height="18" rx="1.5" fill="#1e293b"/>
+                                <!-- Roof Label -->
+                                <text x="-24" y="460" fill="#ffffff" font-size="10" font-weight="800" text-anchor="middle">B</text>
+                            </g>
+
+                            <!-- Bottom Lane: Car A (Blue - Starts further back, catching up) -->
+                            <g class="vd-car-a">
+                                <!-- Chassis -->
+                                <rect x="-42" y="482" width="42" height="22" rx="4" fill="#0ea5e9" stroke="#0369a1" stroke-width="1.5"/>
+                                <!-- Headlights -->
+                                <rect x="-4" y="485" width="4" height="4" fill="#fef08a"/>
+                                <rect x="-4" y="497" width="4" height="4" fill="#fef08a"/>
+                                <!-- Windshields -->
+                                <rect x="-14" y="484" width="8" height="18" rx="2" fill="#1e293b"/>
+                                <rect x="-38" y="484" width="6" height="18" rx="1.5" fill="#1e293b"/>
+                                <!-- Roof Label -->
+                                <text x="-24" y="496" fill="#ffffff" font-size="10" font-weight="800" text-anchor="middle">A</text>
+                            </g>
+
                         </svg>
                     </figure>
 
