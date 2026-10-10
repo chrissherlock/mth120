@@ -4024,22 +4024,79 @@
                     </p>
                 </div>
             </section>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Real analysis teaches us an empowering truth: <strong>initial terms do not matter</strong> for convergence. If you are ever worried about a sequence having a few messy starting terms, this theorem provides absolute peace of mind.
+
+            <!-- ================================================================= -->
+            <!-- CORE TEXT: THE TAIL PRINCIPLE (FREEDOM FROM INITIAL TERMS)        -->
+            <!-- ================================================================= -->
+            <h4 style="color: #0f172a; font-size: 1.2rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.75rem;">
+                The Amnesia Principle: Why the Beginning Never Matters
+            </h4>
+
+            <p>
+                Real analysis offers an immensely liberating rule: <strong>a sequence's destination is determined entirely by its infinite tail, not its opening steps</strong>.
             </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                There are two common ways mathematicians state this principle:
+
+            <p>
+                If the first ten—or the first ten million—terms of a sequence are wildly erratic, broken, or misbehaved, it has zero impact on whether the sequence converges, or what value it converges to. Infinity is so overwhelmingly large that any finite beginning is mathematically invisible at the finish line.
             </p>
-            <ul style="margin: 0.5rem 0 1.25rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
-                <li style="margin-bottom: 0.6rem;">
-                    <strong>1. The Finite Modification Form:</strong> Let $(a_n)$ and $(b_n)$ be two sequences. If there exists some cutoff index $N_0 \in \mathbb{N}$ such that $a_n = b_n$ for all $n > N_0$, then either both sequences converge to the exact same limit, or both diverge:
-                    $$\lim_{n\to\infty} a_n = \lim_{n\to\infty} b_n$$
-                </li>
-                <li>
-                    <strong>2. The Index Shift Form:</strong> Let $(a_n)_{n=0}^\infty$ be a sequence, and let $k \in \mathbb{N}$ be any fixed integer shift. Then $(a_n)$ converges to $L$ if and only if the shifted sequence $(a_{n+k})_{n=0}^\infty$ converges to $L$:
-                    $$\lim_{n\to\infty} a_n = L \iff \lim_{n\to\infty} a_{n+k} = L$$
-                </li>
-            </ul>
+
+            <p>
+                Textbooks express this single truth through two standard lenses:
+            </p>
+
+            <!-- DUAL FORM COMPARISON GRID -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin: 1.5rem 0;">
+
+                <!-- Form 1: Finite Modification -->
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-top: 4px solid #0284c7; border-radius: 8px; padding: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+                    <div style="font-weight: 800; font-size: 0.95rem; color: #0369a1; margin-bottom: 0.35rem;">
+                        1. The "Vandalism" Rule (Finite Modification)
+                    </div>
+                    <div style="font-size: 0.82rem; font-weight: 600; color: #64748b; margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em;">
+                        Rewriting the beginning
+                    </div>
+
+                    <p style="font-size: 0.9rem; color: #334155; line-height: 1.6; margin-bottom: 0.75rem;">
+                        <strong>The Idea:</strong> Take a convergent sequence and replace its first thousand terms with complete garbage (billion, zero, negative pi). As long as it eventually returns to the original track past some cutoff index $N_0$, the destination does not change.
+                    </p>
+
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 0.75rem; text-align: center; font-size: 0.95rem; color: #0f172a; margin-bottom: 0.75rem;">
+                        If $a_n = b_n$ for all $n > N_0$, then:<br>
+                        <strong style="color: #0284c7;">$\lim a_n = \lim b_n$</strong>
+                    </div>
+
+                    <p style="font-size: 0.85rem; color: #64748b; line-height: 1.5; margin: 0;">
+                        <em>Takeaway:</em> Two sequences that eventually agree share the exact same fate—they converge to the same point or diverge together.
+                    </p>
+                </div>
+
+                <!-- Form 2: Index Shift -->
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-top: 4px solid #d97706; border-radius: 8px; padding: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+                    <div style="font-weight: 800; font-size: 0.95rem; color: #b45309; margin-bottom: 0.35rem;">
+                        2. The "Fast-Forward" Rule (Index Shift)
+                    </div>
+                    <div style="font-size: 0.82rem; font-weight: 600; color: #64748b; margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em;">
+                        Skipping the prologue
+                    </div>
+
+                    <p style="font-size: 0.9rem; color: #334155; line-height: 1.6; margin-bottom: 0.75rem;">
+                        <strong>The Idea:</strong> Think of a sequence like a film. If you skip the first $k$ terms (starting at term $k+1$ instead of term $1$), the ending of the film does not alter. Fast-forwarding never changes the destination.
+                    </p>
+
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 0.75rem; text-align: center; font-size: 0.95rem; color: #0f172a; margin-bottom: 0.75rem;">
+                        For any fixed jump $k \in \mathbb{N}$:<br>
+                        <strong style="color: #d97706;">$\lim a_n = L \iff \lim a_{n+k} = L$</strong>
+                    </div>
+
+                    <p style="font-size: 0.85rem; color: #64748b; line-height: 1.5; margin: 0;">
+                        <em>Takeaway:</em> Slicing off the opening chapter of a sequence creates a new sequence with the identical limit.
+                    </p>
+                </div>
+            </div>
+
+            <p style="color: #334155; line-height: 1.65;">
+                <strong>Why this works mechanically:</strong> In the formal definition, convergence requires terms to stay inside the corridor for all $n > N$. If the first hundred terms are chaotic, you simply choose your threshold $N$ somewhere past $100$. All early turbulence is left behind in the discarded finite prefix.
+            </p>
 
             <h4 style="color: #0f172a; margin-top: 1.5rem;">The Proof of the Finite Modification Form</h4>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
@@ -4067,394 +4124,232 @@
                 </li>
             </ol>
 
+<!-- ================================================================= -->
+            <!-- WIDGET: TAIL INVARIANCE & TRUNCATION (DIRECTED NARRATIVE STEPPER) -->
             <!-- ================================================================= -->
-            <!-- 2D INTERACTIVE AID: THEOREM - TAIL INVARIANCE (LIGHT THEME)       -->
-            <!-- ================================================================= -->
-            <section id="tail-invariance-widget-2d" style="margin: 2.5rem 0; font-family: system-ui, -apple-system, sans-serif;">
+            <div class="widget-box" style="margin: 2.5rem 0; padding: 1.5rem; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
                 <style>
-                    #tail-invariance-widget-2d {
-                        --ti-bg: #f8fafc;
-                        --ti-card-bg: #ffffff;
-                        --ti-border: #cbd5e1;
-                        --ti-text: #0f172a;
-                        --ti-text-muted: #64748b;
-                        --ti-primary: #0284c7;
-                        --ti-accent: #b45309;
-                        --ti-danger: #e11d48;
-                        --ti-success: #059669;
-                    }
-                    #tail-invariance-widget-2d .widget-box {
-                        background: var(--ti-card-bg);
-                        border: 1px solid var(--ti-border);
-                        border-radius: 12px;
-                        overflow: hidden;
-                        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-                        color: var(--ti-text);
-                    }
-                    /* Header & Dimension Toggles */
-                    #tail-invariance-widget-2d .widget-header {
-                        padding: 1.25rem 1.5rem;
-                        border-bottom: 1px solid #e2e8f0;
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        flex-wrap: wrap;
-                        gap: 1rem;
-                        background: #ffffff;
-                    }
-                    #tail-invariance-widget-2d .widget-title {
-                        font-size: 1.15rem;
-                        font-weight: 700;
-                        margin: 0;
-                        color: var(--ti-text);
-                    }
-                    #tail-invariance-widget-2d .dim-toggles {
-                        display: flex;
-                        gap: 0.35rem;
-                        background: #f1f5f9;
-                        padding: 0.25rem;
-                        border-radius: 8px;
-                        border: 1px solid var(--ti-border);
-                    }
-                    #tail-invariance-widget-2d .dim-btn {
-                        background: transparent;
-                        color: #475569;
-                        border: none;
-                        padding: 0.35rem 0.75rem;
-                        border-radius: 6px;
-                        cursor: pointer;
-                        font-size: 0.82rem;
-                        font-weight: 600;
-                        transition: all 0.2s ease;
-                    }
-                    #tail-invariance-widget-2d .dim-btn.active {
-                        background: var(--ti-primary);
-                        color: #ffffff !important;
-                    }
-                    /* Telemetry Bar (Stabilized Height & Tabular Typography) */
-                    #tail-invariance-widget-2d .telemetry-grid {
-                        display: grid;
-                        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-                        gap: 0.5rem;
-                        background: #f8fafc;
-                        padding: 0.75rem 1.25rem;
-                        border-bottom: 1px solid #e2e8f0;
-                        box-sizing: border-box;
-                    }
-                    #tail-invariance-widget-2d .telemetry-cell {
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: flex-start;
-                    }
-                    #tail-invariance-widget-2d .telemetry-label {
-                        font-size: 0.68rem;
-                        text-transform: uppercase;
-                        letter-spacing: 0.06em;
-                        color: var(--ti-text-muted);
-                        font-weight: 700;
-                        margin-bottom: 0.25rem;
-                    }
-                    #tail-invariance-widget-2d .telemetry-val {
-                        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-                        font-variant-numeric: tabular-nums;
-                        letter-spacing: -0.01em;
-                        font-size: 0.92rem;
-                        line-height: 1.3;
-                        font-weight: 600;
-                        color: var(--ti-primary);
-                        display: block;
-                        min-height: 2.6em;
-                    }
-                    /* 2D Canvas Area */
-                    #tail-invariance-widget-2d .canvas-wrap {
-                        width: 100%;
-                        background: #f8fafc;
-                        position: relative;
-                        border-bottom: 1px solid #e2e8f0;
-                    }
-                    #tail-invariance-widget-2d svg {
-                        display: block;
-                        width: 100%;
-                        height: auto;
-                    }
-                    /* Navigation & Inline Preview (Pinned Coordinates) */
-                    #tail-invariance-widget-2d .nav-panel {
-                        display: grid;
-                        grid-template-columns: auto 1fr;
-                        gap: 1.25rem;
-                        padding: 1.25rem;
-                        border-bottom: 1px solid #e2e8f0;
-                        align-items: flex-start;
-                        background: #ffffff;
-                        min-height: 76px;
-                        box-sizing: border-box;
-                    }
-                    @media (max-width: 680px) {
-                        #tail-invariance-widget-2d .nav-panel {
-                            grid-template-columns: 1fr;
-                        }
-                    }
-                    #tail-invariance-widget-2d .nav-buttons {
-                        display: flex;
-                        gap: 0.5rem;
-                        align-items: center;
-                        flex-shrink: 0;
-                    }
-                    #tail-invariance-widget-2d .ti-btn {
-                        background: #f8fafc;
-                        color: #1e293b !important;
-                        border: 1px solid var(--ti-border);
-                        padding: 0.55rem 0.95rem;
-                        border-radius: 6px;
-                        font-weight: 600;
-                        cursor: pointer;
-                        font-size: 0.85rem;
-                        transition: background 0.15s, border-color 0.15s;
-                    }
-                    #tail-invariance-widget-2d .ti-btn:hover:not(:disabled) {
-                        background: #e2e8f0;
-                        border-color: #94a3b8;
-                    }
-                    #tail-invariance-widget-2d .ti-btn:disabled {
-                        opacity: 0.45;
-                        cursor: not-allowed;
-                    }
-                    #tail-invariance-widget-2d .ti-btn-primary {
-                        background: #0284c7;
-                        color: #ffffff !important;
-                        border-color: #0284c7;
-                    }
-                    #tail-invariance-widget-2d .ti-btn-primary:hover:not(:disabled) {
-                        background: #0369a1;
-                        border-color: #0369a1;
-                    }
-                    #tail-invariance-widget-2d .preview-desc {
-                        font-size: 0.92rem;
-                        color: #334155;
-                        border-left: 3px solid var(--ti-primary);
-                        padding-left: 0.85rem;
-                        margin: 0;
-                        line-height: 1.55;
-                        min-height: 2.85rem;
-                    }
-                    /* Analytical Panes */
-                    #tail-invariance-widget-2d .panes-grid {
-                        display: grid;
-                        grid-template-columns: 1fr 1fr;
-                        gap: 1rem;
-                        padding: 1.25rem;
-                        background: #ffffff;
-                    }
-                    @media (max-width: 768px) {
-                        #tail-invariance-widget-2d .panes-grid {
-                            grid-template-columns: 1fr;
-                        }
-                    }
-                    #tail-invariance-widget-2d .ti-pane {
-                        background: #f8fafc;
-                        border: 1px solid #e2e8f0;
-                        border-radius: 8px;
-                        padding: 1rem;
-                    }
-                    #tail-invariance-widget-2d .ti-pane h4 {
-                        margin: 0 0 0.5rem 0;
-                        font-size: 0.85rem;
-                        text-transform: uppercase;
-                        letter-spacing: 0.05em;
-                    }
-                    #tail-invariance-widget-2d .ti-pane-what h4 { color: var(--ti-primary); }
-                    #tail-invariance-widget-2d .ti-pane-why h4 { color: var(--ti-accent); }
-                    #tail-invariance-widget-2d .ti-pane-body {
-                        font-size: 0.88rem;
-                        color: #334155;
-                        line-height: 1.6;
-                        min-height: 5.6rem;
+                    .widget-box .widget-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.85rem; }
+                    .widget-box .widget-title { margin: 0; font-size: 1.15rem; font-weight: 800; color: #0f172a; letter-spacing: -0.01em; }
+                    .widget-box .dim-toggles { display: flex; gap: 0.5rem; }
+                    .widget-box .dim-btn { padding: 0.4rem 0.85rem; font-size: 0.82rem; font-weight: 600; border-radius: 6px; border: 1px solid #cbd5e1; background: #f8fafc; color: #475569; cursor: pointer; transition: all 0.2s ease; }
+                    .widget-box .dim-btn.active { background: #0284c7; color: #ffffff; border-color: #0284c7; box-shadow: 0 1px 2px rgba(2, 132, 199, 0.2); }
+                    .widget-box .telemetry-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.65rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.75rem; margin-bottom: 1.25rem; }
+                    .widget-box .telemetry-cell { display: flex; flex-direction: column; gap: 0.2rem; }
+                    .widget-box .telemetry-label { font-size: 0.72rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.04em; }
+                    .widget-box .telemetry-val { font-size: 0.88rem; font-weight: 700; color: #0f172a; font-variant-numeric: tabular-nums; }
+                    .widget-box .canvas-wrap { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; overflow: hidden; }
+
+                    /* STRICT SIDE-BY-SIDE NAVIGATION PANEL */
+                    .widget-box .nav-panel { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 1.25rem; background: #f1f5f9; border-radius: 8px; padding: 0.85rem 1.15rem; margin-bottom: 1.25rem; }
+                    .widget-box .nav-buttons { display: flex; gap: 0.5rem; flex-shrink: 0; white-space: nowrap; }
+                    .widget-box .ti-btn { padding: 0.45rem 0.9rem; font-size: 0.85rem; font-weight: 600; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #334155; cursor: pointer; transition: all 0.15s ease; }
+                    .widget-box .ti-btn:hover:not(:disabled) { background: #f8fafc; border-color: #94a3b8; }
+                    .widget-box .ti-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+                    .widget-box .ti-btn-primary { background: #0284c7; color: #ffffff; border-color: #0284c7; }
+                    .widget-box .ti-btn-primary:hover:not(:disabled) { background: #0369a1; border-color: #0369a1; }
+                    .widget-box .preview-desc { margin: 0; font-size: 0.9rem; line-height: 1.5; color: #334155; min-width: 0; }
+
+                    .widget-box .panes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+                    .widget-box .ti-pane { border-radius: 8px; padding: 1rem; border: 1px solid #e2e8f0; }
+                    .widget-box .ti-pane-what { background: #f0fdf4; border-color: #bbf7d0; border-left: 4px solid #16a34a; }
+                    .widget-box .ti-pane-why { background: #eff6ff; border-color: #bfdbfe; border-left: 4px solid #2563eb; }
+                    .widget-box .ti-pane h4 { margin: 0 0 0.4rem 0; font-size: 0.82rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
+                    .widget-box .ti-pane-what h4 { color: #15803d; }
+                    .widget-box .ti-pane-why h4 { color: #1d4ed8; }
+                    .widget-box .ti-pane-body { font-size: 0.88rem; line-height: 1.6; color: #1e293b; }
+
+                    /* HARDWARE-ACCELERATED TRANSLATION LAYER */
+                    #ti-pts-shift, #ti-shift-trail {
+                        will-change: transform;
                     }
                 </style>
 
-                <div class="widget-box">
-                    <!-- HEADER & DIMENSION TOGGLES -->
-                    <div class="widget-header">
-                        <h3 class="widget-title">Visual Proof: Tail Invariance & Truncation</h3>
-                        <div class="dim-toggles">
-                            <button id="ti-dim-shift" class="dim-btn active" onclick="switchTailDimension('shift')">Index Shift (aₙ₊ₖ)</button>
-                            <button id="ti-dim-corrupt" class="dim-btn" onclick="switchTailDimension('corrupt')">Prefix Alteration (bₙ)</button>
+                <!-- HEADER & COMPARATIVE DIMENSION TOGGLES -->
+                <div class="widget-header">
+                    <h3 class="widget-title">Visual Proof: Tail Invariance &amp; Truncation</h3>
+                    <div class="dim-toggles">
+                        <button id="ti-dim-shift" class="dim-btn active" onclick="switchTailDimension('shift')">Index Shift (aₙ₊ₖ)</button>
+                        <button id="ti-dim-corrupt" class="dim-btn" onclick="switchTailDimension('corrupt')">Prefix Alteration (bₙ)</button>
+                    </div>
+                </div>
+
+                <!-- LIVE STATE TELEMETRY -->
+                <div class="telemetry-grid">
+                    <div class="telemetry-cell">
+                        <span class="telemetry-label">Active Phase</span>
+                        <span id="ti-tel-phase" class="telemetry-val">0: Baseline Tail Capture</span>
+                    </div>
+                    <div class="telemetry-cell">
+                        <span id="ti-tel-param-lbl" class="telemetry-label">Offset Shift k</span>
+                        <span id="ti-tel-param" class="telemetry-val">k = 3</span>
+                    </div>
+                    <div class="telemetry-cell">
+                        <span class="telemetry-label">Tolerance ε</span>
+                        <span id="ti-tel-eps" class="telemetry-val">1.00</span>
+                    </div>
+                    <div class="telemetry-cell">
+                        <span class="telemetry-label">Original Cutoff N</span>
+                        <span id="ti-tel-n" class="telemetry-val">N = 4</span>
+                    </div>
+                    <div class="telemetry-cell">
+                        <span id="ti-tel-trans-lbl" class="telemetry-label">Recalibrated Cutoff N'</span>
+                        <span id="ti-tel-nprime" class="telemetry-val">N' = max(0, N - k) = 1</span>
+                    </div>
+                    <div class="telemetry-cell">
+                        <span class="telemetry-label">Limit Status</span>
+                        <span id="ti-tel-status" class="telemetry-val" style="color: #059669;">lim bₙ = lim aₙ = L</span>
+                    </div>
+                </div>
+
+                <!-- 2D SYNCHRONIZED VISUAL CANVAS (SVG) -->
+                <div class="canvas-wrap">
+                    <svg id="ti-svg" viewBox="0 0 780 330" style="width: 100%; height: auto; display: block;" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+                        <defs>
+                            <marker id="ti-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                <path d="M 0 2 L 7 5 L 0 8 z" fill="#64748b"/>
+                            </marker>
+                            <marker id="ti-arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                <path d="M 0 2 L 7 5 L 0 8 z" fill="#059669"/>
+                            </marker>
+                        </defs>
+
+                        <!-- Coordinate Grid -->
+                        <g stroke="#f1f5f9" stroke-width="0.75">
+                            <line x1="60" y1="50" x2="690" y2="50"/>
+                            <line x1="60" y1="90" x2="690" y2="90"/>
+                            <line x1="60" y1="130" x2="690" y2="130"/>
+                            <line x1="60" y1="170" x2="690" y2="170"/>
+                            <line x1="60" y1="210" x2="690" y2="210"/>
+                            <line x1="60" y1="250" x2="690" y2="250"/>
+                            <line x1="120" y1="20" x2="120" y2="280"/>
+                            <line x1="180" y1="20" x2="180" y2="280"/>
+                            <line x1="240" y1="20" x2="240" y2="280"/>
+                            <line x1="300" y1="20" x2="300" y2="280"/>
+                            <line x1="360" y1="20" x2="360" y2="280"/>
+                            <line x1="420" y1="20" x2="420" y2="280"/>
+                            <line x1="480" y1="20" x2="480" y2="280"/>
+                            <line x1="540" y1="20" x2="540" y2="280"/>
+                            <line x1="600" y1="20" x2="600" y2="280"/>
+                            <line x1="660" y1="20" x2="660" y2="280"/>
+                        </g>
+
+                        <!-- Master Tail Horizon Shading -->
+                        <rect id="ti-tail-rect" x="300" y="20" width="390" height="260" fill="#f0fdf4" fill-opacity="0.6" stroke="#bbf7d0" stroke-width="0.75"/>
+
+                        <!-- Discarded / Modified Prefix Zone Shading -->
+                        <rect id="ti-prefix-rect" x="60" y="20" width="180" height="260" fill="#fef2f2" fill-opacity="0.5" stroke="#fecdd3" stroke-width="0.75" style="display:none;"/>
+
+                        <!-- Target Corridor U_eps(L) -->
+                        <rect id="ti-band-l" x="60" y="90" width="630" height="80" fill="#f0f9ff" fill-opacity="0.75" stroke="#38bdf8" stroke-width="0.85" stroke-dasharray="3 3"/>
+
+                        <!-- Centerline & Target Label L = +2 -->
+                        <line x1="60" y1="130" x2="690" y2="130" stroke="#0284c7" stroke-width="1.1" stroke-dasharray="4 3"/>
+                        <text x="698" y="134" fill="#0369a1" font-size="11" font-weight="600">L = +2</text>
+
+                        <!-- Coordinate Axes -->
+                        <line x1="60" y1="210" x2="690" y2="210" stroke="#e2e8f0" stroke-width="0.8" stroke-dasharray="2 2"/>
+                        <line x1="60" y1="280" x2="695" y2="280" stroke="#94a3b8" stroke-width="1" marker-end="url(#ti-arrow)"/>
+                        <text id="ti-axis-lbl" x="704" y="284" fill="#64748b" font-size="10" font-weight="500">Index n</text>
+                        <line x1="60" y1="280" x2="60" y2="18" stroke="#94a3b8" stroke-width="1" marker-end="url(#ti-arrow)"/>
+                        <text x="32" y="18" fill="#64748b" font-size="10" font-weight="500">Values</text>
+
+                        <!-- Tolerance Bracket eps = 1 -->
+                        <g id="ti-eps-bracket" stroke="#94a3b8" stroke-width="0.85">
+                            <line x1="45" y1="90" x2="45" y2="170"/>
+                            <line x1="41" y1="90" x2="49" y2="90"/>
+                            <line x1="41" y1="170" x2="49" y2="170"/>
+                            <text x="36" y="133" fill="#475569" font-size="10" font-weight="600" text-anchor="end">ε = 1</text>
+                        </g>
+
+                        <!-- Cutoff Milestone: Original N = 4 (x = 300) -->
+                        <line id="ti-line-n" x1="300" y1="20" x2="300" y2="280" stroke="#0284c7" stroke-width="1.2" stroke-dasharray="4 3"/>
+                        <text id="ti-lbl-n" x="300" y="295" fill="#0284c7" font-size="10" font-weight="600" text-anchor="middle">N = 4</text>
+
+                        <!-- Cutoff Milestone: Shifted N' = 1 (x = 120) -->
+                        <line id="ti-line-nprime" x1="120" y1="20" x2="120" y2="280" stroke="#059669" stroke-width="1.3" stroke-dasharray="3 2" style="display:none;"/>
+                        <text id="ti-lbl-nprime" x="120" y="295" fill="#059669" font-size="10" font-weight="600" text-anchor="middle" style="display:none;">N' = 1</text>
+
+                        <!-- Original Trail Polyline -->
+                        <polyline id="ti-seq-trail" points="120,250 180,60 240,240 300,210 360,115 420,140 480,125 540,132 600,128 660,130"
+                                  fill="none" stroke="#cbd5e1" stroke-width="0.9" stroke-dasharray="3 2"/>
+
+                        <!-- Translated Shift Trail Polyline -->
+                        <polyline id="ti-shift-trail" points="120,210 180,115 240,140 300,125 360,132 420,128 480,130"
+                                  fill="none" stroke="#059669" stroke-width="1.2" stroke-dasharray="4 2" style="display:none;"/>
+
+                        <!-- Original Sequence Points (a_n) -->
+                        <g id="ti-pts-orig">
+                            <circle id="ti-pt-1" cx="120" cy="250" r="3.8" fill="#94a3b8"/>
+                            <circle id="ti-pt-2" cx="180" cy="60" r="3.8" fill="#94a3b8"/>
+                            <circle id="ti-pt-3" cx="240" cy="240" r="3.8" fill="#94a3b8"/>
+                            <circle id="ti-pt-4" cx="300" cy="210" r="3.8" fill="#94a3b8"/>
+                            <circle id="ti-pt-5" cx="360" cy="115" r="4.2" fill="#0284c7"/>
+                            <circle id="ti-pt-6" cx="420" cy="140" r="4.2" fill="#0284c7"/>
+                            <circle id="ti-pt-7" cx="480" cy="125" r="4.2" fill="#0284c7"/>
+                            <circle id="ti-pt-8" cx="540" cy="132" r="4.2" fill="#0284c7"/>
+                            <circle id="ti-pt-9" cx="600" cy="128" r="4.2" fill="#0284c7"/>
+                            <circle id="ti-pt-10" cx="660" cy="130" r="4.2" fill="#0284c7"/>
+                        </g>
+
+                        <!-- Shifted Sequence Points (b_n = a_{n+3}) -->
+                        <g id="ti-pts-shift" style="display:none;">
+                            <circle id="ti-spt-1" cx="120" cy="210" r="4.0" fill="#94a3b8"/>
+                            <circle id="ti-spt-2" cx="180" cy="115" r="4.4" fill="#059669"/>
+                            <circle id="ti-spt-3" cx="240" cy="140" r="4.4" fill="#059669"/>
+                            <circle id="ti-spt-4" cx="300" cy="125" r="4.4" fill="#059669"/>
+                            <circle id="ti-spt-5" cx="360" cy="132" r="4.4" fill="#059669"/>
+                            <circle id="ti-spt-6" cx="420" cy="128" r="4.4" fill="#059669"/>
+                            <circle id="ti-spt-7" cx="480" cy="130" r="4.4" fill="#059669"/>
+                        </g>
+
+                        <!-- Corrupted Prefix Overlay Points -->
+                        <g id="ti-pts-corrupt" style="display:none;">
+                            <circle cx="120" cy="40" r="4.5" fill="#e11d48"/>
+                            <circle cx="180" cy="270" r="4.5" fill="#e11d48"/>
+                            <circle cx="240" cy="35" r="4.5" fill="#e11d48"/>
+                            <text x="180" y="25" fill="#e11d48" font-size="9.5" font-weight="600" text-anchor="middle">Arbitrary Prefix Disruption</text>
+                        </g>
+
+                        <!-- Translation Vectors (Showing Left-Shift Index Sliding) -->
+                        <g id="ti-vectors" style="display:none;" stroke="#059669" stroke-width="1.1" marker-end="url(#ti-arrow-green)">
+                            <line x1="300" y1="210" x2="132" y2="210"/> <!-- a4 to b1 -->
+                            <line x1="360" y1="115" x2="192" y2="115"/> <!-- a5 to b2 -->
+                            <line x1="420" y1="140" x2="252" y2="140"/> <!-- a6 to b3 -->
+                            <line x1="480" y1="125" x2="312" y2="125"/> <!-- a7 to b4 -->
+                            <line x1="540" y1="132" x2="372" y2="132"/> <!-- a8 to b5 -->
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- NAVIGATION & INLINE PREVIEW PANEL (STRICTLY SIDE-BY-SIDE) -->
+                <div class="nav-panel">
+                    <div class="nav-buttons">
+                        <button id="ti-btn-prev" class="ti-btn" onclick="advanceTailStep(-1)" disabled>Previous</button>
+                        <button id="ti-btn-next" class="ti-btn ti-btn-primary" onclick="advanceTailStep(1)">Next</button>
+                        <button id="ti-btn-reset" class="ti-btn" onclick="restoreInitialTailStep()">Reset</button>
+                    </div>
+                    <p id="ti-preview-text" class="preview-desc">
+                        An initial sequence (aₙ) has established convergence to L = +2 past milestone N = 4. Terms inside the prefix oscillate wildly, but all terms for n &gt; 4 stay permanently confined to the ε = 1 corridor.
+                    </p>
+                </div>
+
+                <!-- PAIRED ANALYTICAL PANES -->
+                <div class="panes-grid">
+                    <div class="ti-pane ti-pane-what">
+                        <h4>What Is Happening</h4>
+                        <div id="ti-pane-what" class="ti-pane-body">
+                            The baseline sequence (aₙ) satisfies |aₙ - 2.0| &lt; 1.0 for all n &gt; 4. The initial terms {a₁, a₂, a₃, a₄} take unconstrained values, but once past N = 4, the infinite tail enters and remains inside the blue ε-corridor.
                         </div>
                     </div>
-
-                    <!-- LIVE STATE TELEMETRY -->
-                    <div class="telemetry-grid">
-                        <div class="telemetry-cell">
-                            <span class="telemetry-label">Active Phase</span>
-                            <span id="ti-tel-phase" class="telemetry-val">0: Baseline Tail Capture</span>
-                        </div>
-                        <div class="telemetry-cell">
-                            <span id="ti-tel-param-lbl" class="telemetry-label">Offset Shift k</span>
-                            <span id="ti-tel-param" class="telemetry-val">k = 3</span>
-                        </div>
-                        <div class="telemetry-cell">
-                            <span class="telemetry-label">Tolerance ε</span>
-                            <span id="ti-tel-eps" class="telemetry-val">1.00</span>
-                        </div>
-                        <div class="telemetry-cell">
-                            <span class="telemetry-label">Original Cutoff N</span>
-                            <span id="ti-tel-n" class="telemetry-val">N = 4</span>
-                        </div>
-                        <div class="telemetry-cell">
-                            <span id="ti-tel-trans-lbl" class="telemetry-label">Recalibrated Cutoff N'</span>
-                            <span id="ti-tel-nprime" class="telemetry-val">N' = max(0, N - k) = 1</span>
-                        </div>
-                        <div class="telemetry-cell">
-                            <span class="telemetry-label">Limit Status</span>
-                            <span id="ti-tel-status" class="telemetry-val" style="color: #059669;">lim bₙ = lim aₙ = L</span>
-                        </div>
-                    </div>
-
-                    <!-- 2D SYNCHRONIZED VISUAL CANVAS (SVG - REFINED GAUGES) -->
-                    <div class="canvas-wrap">
-                        <svg id="ti-svg" viewBox="0 0 780 330" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
-                            <defs>
-                                <marker id="ti-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-                                    <path d="M 0 2 L 7 5 L 0 8 z" fill="#64748b"/>
-                                </marker>
-                            </defs>
-
-                            <!-- Subtle Coordinate Grid -->
-                            <g stroke="#f1f5f9" stroke-width="0.75">
-                                <line x1="60" y1="50" x2="690" y2="50"/>
-                                <line x1="60" y1="90" x2="690" y2="90"/>
-                                <line x1="60" y1="130" x2="690" y2="130"/>
-                                <line x1="60" y1="170" x2="690" y2="170"/>
-                                <line x1="60" y1="210" x2="690" y2="210"/>
-                                <line x1="60" y1="250" x2="690" y2="250"/>
-                                <line x1="120" y1="20" x2="120" y2="280"/>
-                                <line x1="180" y1="20" x2="180" y2="280"/>
-                                <line x1="240" y1="20" x2="240" y2="280"/>
-                                <line x1="300" y1="20" x2="300" y2="280"/>
-                                <line x1="360" y1="20" x2="360" y2="280"/>
-                                <line x1="420" y1="20" x2="420" y2="280"/>
-                                <line x1="480" y1="20" x2="480" y2="280"/>
-                                <line x1="540" y1="20" x2="540" y2="280"/>
-                                <line x1="600" y1="20" x2="600" y2="280"/>
-                                <line x1="660" y1="20" x2="660" y2="280"/>
-                            </g>
-
-                            <!-- Master Tail Horizon Shading -->
-                            <rect id="ti-tail-rect" x="300" y="20" width="390" height="260" fill="#f0fdf4" fill-opacity="0.6" stroke="#bbf7d0" stroke-width="0.75"/>
-
-                            <!-- Discarded / Modified Prefix Zone Shading -->
-                            <rect id="ti-prefix-rect" x="60" y="20" width="180" height="260" fill="#fef2f2" fill-opacity="0.5" stroke="#fecdd3" stroke-width="0.75" style="display:none;"/>
-
-                            <!-- Target Neighborhood Corridor U_eps(L) -->
-                            <rect id="ti-band-l" x="60" y="90" width="630" height="80" fill="#f0f9ff" fill-opacity="0.75" stroke="#38bdf8" stroke-width="0.85" stroke-dasharray="3 3"/>
-
-                            <!-- Centerline & Target Label L = +2 -->
-                            <line x1="60" y1="130" x2="690" y2="130" stroke="#0284c7" stroke-width="1.1" stroke-dasharray="4 3"/>
-                            <text x="698" y="134" fill="#0369a1" font-size="11" font-weight="600">L = +2</text>
-
-                            <!-- Neutral Baseline (y=0) & Coordinate Axes -->
-                            <line x1="60" y1="210" x2="690" y2="210" stroke="#e2e8f0" stroke-width="0.8" stroke-dasharray="2 2"/>
-                            <line x1="60" y1="280" x2="695" y2="280" stroke="#94a3b8" stroke-width="1" marker-end="url(#ti-arrow)"/>
-                            <text id="ti-axis-lbl" x="704" y="284" fill="#64748b" font-size="10" font-weight="500">Index n</text>
-                            <line x1="60" y1="280" x2="60" y2="18" stroke="#94a3b8" stroke-width="1" marker-end="url(#ti-arrow)"/>
-                            <text x="32" y="18" fill="#64748b" font-size="10" font-weight="500">Values</text>
-
-                            <!-- Tolerance Bracket eps = 1 -->
-                            <g id="ti-eps-bracket" stroke="#94a3b8" stroke-width="0.85">
-                                <line x1="45" y1="90" x2="45" y2="170"/>
-                                <line x1="41" y1="90" x2="49" y2="90"/>
-                                <line x1="41" y1="170" x2="49" y2="170"/>
-                                <text x="36" y="133" fill="#475569" font-size="10" font-weight="600" text-anchor="end">ε = 1</text>
-                            </g>
-
-                            <!-- Cutoff Milestone Markers -->
-                            <!-- Original N = 4 (x = 300) -->
-                            <line id="ti-line-n" x1="300" y1="20" x2="300" y2="280" stroke="#0284c7" stroke-width="1.2" stroke-dasharray="4 3"/>
-                            <text id="ti-lbl-n" x="300" y="295" fill="#0284c7" font-size="10" font-weight="600" text-anchor="middle">N = 4</text>
-
-                            <!-- Shifted Milestone N' = 1 (x = 120) -->
-                            <line id="ti-line-nprime" x1="120" y1="20" x2="120" y2="280" stroke="#059669" stroke-width="1.3" stroke-dasharray="3 2" style="display:none;"/>
-                            <text id="ti-lbl-nprime" x="120" y="295" fill="#059669" font-size="10" font-weight="600" text-anchor="middle" style="display:none;">N' = 1</text>
-
-                            <!-- Original Trail Connecting Polyline -->
-                            <polyline id="ti-seq-trail" points="120,250 180,60 240,240 300,210 360,115 420,140 480,125 540,132 600,128 660,130"
-                                                fill="none" stroke="#cbd5e1" stroke-width="0.9" stroke-dasharray="3 2"/>
-
-                            <!-- Translated Trail (Shift Mode) -->
-                            <polyline id="ti-shift-trail" points="120,210 180,115 240,140 300,125 360,132 420,128 480,130 540,130 600,130 660,130"
-                                                fill="none" stroke="#059669" stroke-width="1.1" stroke-dasharray="4 2" style="display:none;"/>
-
-                            <!-- Original Sequence Points (a_n) -->
-                            <g id="ti-pts-orig">
-                                <circle id="ti-pt-1" cx="120" cy="250" r="3.8" fill="#94a3b8"/>
-                                <circle id="ti-pt-2" cx="180" cy="60" r="3.8" fill="#94a3b8"/>
-                                <circle id="ti-pt-3" cx="240" cy="240" r="3.8" fill="#94a3b8"/>
-                                <circle id="ti-pt-4" cx="300" cy="210" r="3.8" fill="#94a3b8"/>
-                                <circle id="ti-pt-5" cx="360" cy="115" r="4.2" fill="#0284c7"/>
-                                <circle id="ti-pt-6" cx="420" cy="140" r="4.2" fill="#0284c7"/>
-                                <circle id="ti-pt-7" cx="480" cy="125" r="4.2" fill="#0284c7"/>
-                                <circle id="ti-pt-8" cx="540" cy="132" r="4.2" fill="#0284c7"/>
-                                <circle id="ti-pt-9" cx="600" cy="128" r="4.2" fill="#0284c7"/>
-                                <circle id="ti-pt-10" cx="660" cy="130" r="4.2" fill="#0284c7"/>
-                            </g>
-
-                            <!-- Shifted Target Points (b_n = a_{n+k}) -->
-                            <g id="ti-pts-shift" style="display:none;">
-                                <circle id="ti-spt-1" cx="120" cy="210" r="4.0" fill="#94a3b8"/>
-                                <circle id="ti-spt-2" cx="180" cy="115" r="4.4" fill="#059669"/>
-                                <circle id="ti-spt-3" cx="240" cy="140" r="4.4" fill="#059669"/>
-                                <circle id="ti-spt-4" cx="300" cy="125" r="4.4" fill="#059669"/>
-                                <circle id="ti-spt-5" cx="360" cy="132" r="4.4" fill="#059669"/>
-                                <circle id="ti-spt-6" cx="420" cy="128" r="4.4" fill="#059669"/>
-                                <circle id="ti-spt-7" cx="480" cy="130" r="4.4" fill="#059669"/>
-                            </g>
-
-                            <!-- Corrupted Prefix Overlay Points (Corruption Mode) -->
-                            <g id="ti-pts-corrupt" style="display:none;">
-                                <circle cx="120" cy="40" r="4.5" fill="#e11d48"/>
-                                <circle cx="180" cy="270" r="4.5" fill="#e11d48"/>
-                                <circle cx="240" cy="35" r="4.5" fill="#e11d48"/>
-                                <text x="180" y="25" fill="#e11d48" font-size="9.5" font-weight="600" text-anchor="middle">Arbitrary Prefix Disruption</text>
-                            </g>
-
-                            <!-- Alignment Vectors (Showing Translation Index Arrows) -->
-                            <g id="ti-vectors" style="display:none;" stroke="#059669" stroke-width="1.1" marker-end="url(#ti-arrow)">
-                                <line x1="360" y1="115" x2="190" y2="115"/>
-                                <line x1="420" y1="140" x2="250" y2="140"/>
-                                <line x1="480" y1="125" x2="310" y2="125"/>
-                            </g>
-                        </svg>
-                    </div>
-
-                    <!-- NAVIGATION & INLINE PREVIEW -->
-                    <div class="nav-panel">
-                        <div class="nav-buttons">
-                            <button id="ti-btn-prev" class="ti-btn" onclick="advanceTailStep(-1)" disabled>Previous</button>
-                            <button id="ti-btn-next" class="ti-btn ti-btn-primary" onclick="advanceTailStep(1)">Next</button>
-                            <button id="ti-btn-reset" class="ti-btn" onclick="restoreInitialTailStep()">Reset</button>
-                        </div>
-                        <p id="ti-preview-text" class="preview-desc">
-                            An initial sequence (aₙ) has established convergence to L = +2 past milestone N = 4. Terms inside the prefix oscillate wildly, but all terms for n > 4 stay permanently confined to the ε = 1 corridor.
-                        </p>
-                    </div>
-
-                    <!-- PAIRED ANALYTICAL PANES -->
-                    <div class="panes-grid">
-                        <div class="ti-pane ti-pane-what">
-                            <h4>What Is Happening</h4>
-                            <div id="ti-pane-what" class="ti-pane-body">
-                                The baseline sequence (aₙ) satisfies |aₙ - 2.0| &lt; 1.0 for all n &gt; 4. The initial terms {a₁, a₂, a₃, a₄} take unconstrained values, but once past N = 4, the infinite tail enters and remains inside the blue ε-corridor.
-                            </div>
-                        </div>
-                        <div class="ti-pane ti-pane-why">
-                            <h4>Why The System Does This</h4>
-                            <div id="ti-pane-why" class="ti-pane-body">
-                                Universal Quantification. Convergence is strictly an asymptotic tail condition. The finite prefix has zero mathematical authority over the limit; compliance is demanded only on the infinite remainder past N.
-                            </div>
+                    <div class="ti-pane ti-pane-why">
+                        <h4>Why The System Does This</h4>
+                        <div id="ti-pane-why" class="ti-pane-body">
+                            Universal Quantification. Convergence is strictly an asymptotic tail condition. The finite prefix has zero mathematical authority over the limit; compliance is demanded only on the infinite remainder past N.
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
 
             <script>
             (function() {
@@ -4498,9 +4393,9 @@
                             nprime: "n + 3 > 4 ⟹ n > 1",
                             status: "Translating Indices Left",
                             statusColor: "#0284c7",
-                            summary: "Vectors illustrate the index translation: term a₅ moves to b₂, term a₆ moves to b₃, and term a₇ moves to b₄. All terms in the captured tail slide left by k = 3 units.",
-                            what: "Translation arrows show the 1:1 mapping: bₙ = aₙ₊₃. Because term a₅ was already inside the ε-corridor for the original sequence, the new term b₂ is immediately inside the corridor as well.",
-                            why: "Bijective Tail Mapping. Shifting an infinite sequence by a finite offset k is an index bijection on the tail. The geometric coordinates of the values do not alter; only their index labels change."
+                            summary: "Watch the points glide along the green guide vectors: a₄ slides into b₁, a₅ slides into b₂, a₆ slides into b₃, and a₇ slides into b₄. Every captured term arrives 3 slots earlier.",
+                            what: "Dynamic translation vectors guide each point across Δn = −3 units. Ghosted blue rings mark the starting coordinates, while solid green dots slide into their new index positions on the axis. Because a₅, a₆, a₇ were already trapped, their transformed counterparts b₂, b₃, b₄ glide straight along the corridor.",
+                            why: "Bijective Tail Mapping. Advancing the subscript by k pulls future terms into earlier index positions. The vertical values never change; only their horizontal arrival times are fast-forwarded."
                         },
                         {
                             phase: "3: Recalibrating the Cutoff Milestone",
@@ -4512,7 +4407,7 @@
                             status: "N' = 1 Active",
                             statusColor: "#059669",
                             summary: "The convergence milestone shifts left in lockstep: N' = max(0, N - k) = max(0, 4 - 3) = 1. Beyond index 1, every term of bₙ is guaranteed to be inside the corridor.",
-                            what: "A new green boundary wall appears at N' = 1. For any index n > 1, the original index satisfies n + 3 > 4 = N. Therefore, |bₙ - L| = |aₙ₊₃ - L| < ε holds for all n > 1.",
+                            what: "A new green boundary appears at N' = 1, and the green tail capture zone expands leftward to x = 120. Notice that for every index n > 1 (terms b₂, b₃, b₄...), the sequence is already safely trapped inside the blue corridor.",
                             why: "Algebraic Translation. The condition n + k > N is mathematically equivalent to n > N - k. If N > k, the new threshold is N - k. If N ≤ k, the entire remaining sequence is already trapped, giving N' = 0."
                         },
                         {
@@ -4601,7 +4496,6 @@
                 function refreshTailCanvas(idx) {
                     const data = tailData[activeTailDim][idx];
 
-                    // Update telemetry
                     document.getElementById("ti-tel-phase").textContent = data.phase;
                     document.getElementById("ti-tel-param-lbl").textContent = data.paramLbl;
                     document.getElementById("ti-tel-param").textContent = data.paramVal;
@@ -4611,16 +4505,13 @@
                     document.getElementById("ti-tel-status").textContent = data.status;
                     document.getElementById("ti-tel-status").style.color = data.statusColor;
 
-                    // Update narrative and analytical panes
                     document.getElementById("ti-preview-text").textContent = data.summary;
                     document.getElementById("ti-pane-what").textContent = data.what;
                     document.getElementById("ti-pane-why").textContent = data.why;
 
-                    // Update navigation buttons
                     document.getElementById("ti-btn-prev").disabled = (idx === 0);
                     document.getElementById("ti-btn-next").disabled = (idx === tailData[activeTailDim].length - 1);
 
-                    // DOM hooks
                     const prefixRect = document.getElementById("ti-prefix-rect");
                     const tailRect = document.getElementById("ti-tail-rect");
                     const lineN = document.getElementById("ti-line-n");
@@ -4637,6 +4528,7 @@
                     if (activeTailDim === 'shift') {
                         lblN.textContent = "N = 4";
                         ptsCorrupt.style.display = "none";
+                        ptsOrig.style.opacity = "1";
 
                         if (idx === 0) {
                             prefixRect.style.display = "none";
@@ -4647,9 +4539,14 @@
                             lineNprime.style.display = "none";
                             lblNprime.style.display = "none";
                             origTrail.style.display = "block";
+                            origTrail.style.opacity = "1";
                             shiftTrail.style.display = "none";
+                            shiftTrail.style.transition = "none";
+                            shiftTrail.style.transform = "translateX(0px)";
                             ptsOrig.style.display = "block";
                             ptsShift.style.display = "none";
+                            ptsShift.style.transition = "none";
+                            ptsShift.style.transform = "translateX(0px)";
                             vectors.style.display = "none";
                         } else if (idx === 1) {
                             prefixRect.style.display = "block";
@@ -4661,9 +4558,14 @@
                             lineNprime.style.display = "none";
                             lblNprime.style.display = "none";
                             origTrail.style.display = "block";
+                            origTrail.style.opacity = "1";
                             shiftTrail.style.display = "none";
+                            shiftTrail.style.transition = "none";
+                            shiftTrail.style.transform = "translateX(0px)";
                             ptsOrig.style.display = "block";
                             ptsShift.style.display = "none";
+                            ptsShift.style.transition = "none";
+                            ptsShift.style.transform = "translateX(0px)";
                             vectors.style.display = "none";
                         } else if (idx === 2) {
                             prefixRect.style.display = "block";
@@ -4673,11 +4575,32 @@
                             lblN.style.display = "block";
                             lineNprime.style.display = "none";
                             lblNprime.style.display = "none";
+
                             origTrail.style.display = "block";
-                            shiftTrail.style.display = "none";
+                            origTrail.style.opacity = "0.25";
                             ptsOrig.style.display = "block";
-                            ptsShift.style.display = "none";
+                            ptsOrig.style.opacity = "0.25";
                             vectors.style.display = "block";
+
+                            shiftTrail.style.display = "block";
+                            ptsShift.style.display = "block";
+
+                            // Prime starting position on top of the original points (Δx = +180px)
+                            shiftTrail.style.transition = "none";
+                            ptsShift.style.transition = "none";
+                            shiftTrail.style.transform = "translateX(180px)";
+                            ptsShift.style.transform = "translateX(180px)";
+                            shiftTrail.style.opacity = "0.2";
+
+                            // Force layout reflow before launching smooth glide
+                            void ptsShift.getBoundingClientRect();
+
+                            // Animate glide left along the vector paths
+                            shiftTrail.style.transition = "transform 0.85s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease";
+                            ptsShift.style.transition = "transform 0.85s cubic-bezier(0.22, 1, 0.36, 1)";
+                            shiftTrail.style.transform = "translateX(0px)";
+                            ptsShift.style.transform = "translateX(0px)";
+                            shiftTrail.style.opacity = "0.6";
                         } else if (idx === 3) {
                             prefixRect.style.display = "none";
                             tailRect.setAttribute("x", "120");
@@ -4686,11 +4609,18 @@
                             lblN.style.display = "block";
                             lineNprime.style.display = "block";
                             lblNprime.style.display = "block";
-                            origTrail.style.display = "block";
-                            shiftTrail.style.display = "none";
-                            ptsOrig.style.display = "block";
-                            ptsShift.style.display = "none";
+
+                            origTrail.style.display = "none";
+                            ptsOrig.style.display = "none";
                             vectors.style.display = "none";
+
+                            shiftTrail.style.transition = "none";
+                            ptsShift.style.transition = "none";
+                            shiftTrail.style.transform = "translateX(0px)";
+                            ptsShift.style.transform = "translateX(0px)";
+                            shiftTrail.style.display = "block";
+                            shiftTrail.style.opacity = "1";
+                            ptsShift.style.display = "block";
                         } else if (idx === 4) {
                             prefixRect.style.display = "none";
                             tailRect.setAttribute("x", "120");
@@ -4700,16 +4630,25 @@
                             lineNprime.style.display = "block";
                             lblNprime.style.display = "block";
                             origTrail.style.display = "none";
-                            shiftTrail.style.display = "block";
                             ptsOrig.style.display = "none";
-                            ptsShift.style.display = "block";
                             vectors.style.display = "none";
+
+                            shiftTrail.style.transition = "none";
+                            ptsShift.style.transition = "none";
+                            shiftTrail.style.transform = "translateX(0px)";
+                            ptsShift.style.transform = "translateX(0px)";
+                            shiftTrail.style.display = "block";
+                            shiftTrail.style.opacity = "1";
+                            ptsShift.style.display = "block";
                         }
                     } else {
-                        // Prefix Alteration (Corruption) Mode
                         ptsShift.style.display = "none";
                         shiftTrail.style.display = "none";
+                        shiftTrail.style.transform = "translateX(0px)";
+                        ptsShift.style.transform = "translateX(0px)";
                         vectors.style.display = "none";
+                        ptsOrig.style.opacity = "1";
+                        origTrail.style.opacity = "1";
 
                         if (idx === 0) {
                             prefixRect.style.display = "none";
