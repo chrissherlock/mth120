@@ -4915,6 +4915,218 @@
                         Imagine two cars driving in parallel lanes toward a red traffic light. Car A stays strictly behind Car B the entire trip ($a_n < b_n$). But as they brake to a halt at the line, both cars can stop bumper-to-bumper at the exact same marker ($K = L$). The daylight separating them shrinks down to zero without Car A ever overtaking Car B.
                     </p>
 
+                    <!-- ================================================================= -->
+                    <!-- ANIMATED DIAGRAM: THE VANISHING DAYLIGHT PHENOMENON               -->
+                    <!-- ================================================================= -->
+                    <figure style="margin: 2.5rem 0; padding: 1.5rem; background: #ffffff; border: 1px solid var(--border, #cbd5e1); border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                        <figcaption style="font-size: 0.95rem; font-weight: 700; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem;">
+                            <span>Figure: The "Vanishing Daylight" Phenomenon</span>
+                            <span style="font-size: 0.82rem; font-weight: 600; color: #059669; background: #d1fae5; padding: 2px 8px; border-radius: 4px;">Order Preservation (aₙ &lt; bₙ ⟹ K ≤ L)</span>
+                        </figcaption>
+
+                        <p style="margin: 0 0 1.25rem 0; color: #475569; font-size: 0.92rem; line-height: 1.6;">
+                            Car A (blue) stays strictly behind Car B (orange) for the entire journey. As they brake toward the red light, the "daylight" separating them continuously shrinks. At the limit, they arrive bumper-to-bumper at the exact same marker. Strict inequalities ($<$) relax into weak inequalities ($\le$) at the limit.
+                        </p>
+
+                        <svg viewBox="0 0 880 440" style="width: 100%; height: auto; display: block; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+                            <defs>
+                                <!-- Arrowheads -->
+                                <marker id="vd-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                    <path d="M 0 2 L 7 5 L 0 8 z" fill="#64748b"/>
+                                </marker>
+                                <marker id="vd-arrow-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                    <path d="M 0 2 L 7 5 L 0 8 z" fill="#ef4444"/>
+                                </marker>
+
+                                <!-- CSS Animations -->
+                                <style>
+                                    /* The expanding wipe that reveals the drawing */
+                                    .vd-wipe {
+                                        animation: vd-reveal 10s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+                                    }
+
+                                    /* The vertical scanning laser line */
+                                    .vd-scanner {
+                                        animation: vd-scan 10s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+                                    }
+
+                                    /* The pop-in badge at the end of the animation */
+                                    .vd-badge {
+                                        transform-origin: 730px 120px;
+                                        animation: vd-pop 10s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+                                    }
+
+                                    /* Limit line glow effect */
+                                    .vd-glow {
+                                        animation: vd-pulse-glow 10s ease-in-out infinite;
+                                    }
+
+                                    @keyframes vd-reveal {
+                                        0%, 10% { width: 0px; }
+                                        80%, 90% { width: 640px; }
+                                        100% { width: 0px; }
+                                    }
+
+                                    @keyframes vd-scan {
+                                        0%, 10% { transform: translateX(0px); opacity: 0; }
+                                        12% { opacity: 1; }
+                                        80% { transform: translateX(600px); opacity: 1; }
+                                        85%, 100% { transform: translateX(600px); opacity: 0; }
+                                    }
+
+                                    @keyframes vd-pop {
+                                        0%, 75% { opacity: 0; transform: scale(0.5); }
+                                        80%, 92% { opacity: 1; transform: scale(1); }
+                                        95%, 100% { opacity: 0; transform: scale(0.9); }
+                                    }
+
+                                    @keyframes vd-pulse-glow {
+                                        0%, 70% { filter: drop-shadow(0 0 0px rgba(239,68,68,0)); }
+                                        80%, 90% { filter: drop-shadow(0 0 6px rgba(239,68,68,0.8)); }
+                                        100% { filter: drop-shadow(0 0 0px rgba(239,68,68,0)); }
+                                    }
+                                </style>
+
+                                <!-- The Clipping Mask to hide/reveal the sequences -->
+                                <clipPath id="vd-wipe-clip">
+                                    <rect x="120" y="0" width="0" height="440" class="vd-wipe" />
+                                </clipPath>
+                            </defs>
+
+                            <!-- ================= BACKGROUND GRID & AXES ================= -->
+                            <g stroke="#e2e8f0" stroke-width="1">
+                                <line x1="80" y1="120" x2="800" y2="120"/> <!-- Target Line -->
+                                <line x1="80" y1="160" x2="800" y2="160"/>
+                                <line x1="80" y1="200" x2="800" y2="200"/>
+                                <line x1="80" y1="240" x2="800" y2="240"/>
+                                <line x1="80" y1="280" x2="800" y2="280"/>
+                                <line x1="80" y1="320" x2="800" y2="320"/>
+                                <line x1="80" y1="360" x2="800" y2="360"/>
+
+                                <line x1="120" y1="60" x2="120" y2="400"/>
+                                <line x1="240" y1="60" x2="240" y2="400"/>
+                                <line x1="360" y1="60" x2="360" y2="400"/>
+                                <line x1="480" y1="60" x2="480" y2="400"/>
+                                <line x1="600" y1="60" x2="600" y2="400"/>
+                                <line x1="720" y1="60" x2="720" y2="400"/>
+                            </g>
+
+                            <!-- Coordinate Axes -->
+                            <line x1="80" y1="400" x2="820" y2="400" stroke="#64748b" stroke-width="1.5" marker-end="url(#vd-arrow)"/>
+                            <text x="830" y="404" fill="#475569" font-size="12" font-weight="600">Time (Index n)</text>
+
+                            <line x1="80" y1="400" x2="80" y2="40" stroke="#64748b" stroke-width="1.5" marker-end="url(#vd-arrow)"/>
+                            <text x="35" y="30" fill="#475569" font-size="12" font-weight="600">Position</text>
+
+                            <!-- ================= RED TRAFFIC LIGHT (LIMIT TARGET) ================= -->
+                            <g class="vd-glow">
+                                <line x1="80" y1="120" x2="800" y2="120" stroke="#ef4444" stroke-width="3" stroke-dasharray="8 6"/>
+                                <!-- Traffic Light Icon -->
+                                <rect x="50" y="102" width="14" height="36" rx="4" fill="#1e293b"/>
+                                <circle cx="57" cy="110" r="4" fill="#ef4444"/>
+                                <circle cx="57" cy="120" r="4" fill="#475569"/>
+                                <circle cx="57" cy="130" r="4" fill="#475569"/>
+                                <!-- Limit Label -->
+                                <rect x="80" y="94" width="180" height="22" rx="4" fill="#fee2e2" stroke="#fca5a5" stroke-width="1"/>
+                                <text x="88" y="109" fill="#b91c1c" font-size="10.5" font-weight="800">RED LIGHT (LIMIT K = L)</text>
+                            </g>
+
+                            <!-- ================= ANIMATED SEQUENCE LAYER ================= -->
+                            <g clip-path="url(#vd-wipe-clip)">
+
+                                <!-- 1. The Vanishing Daylight (Yellow Area) -->
+                                <!-- Top Edge (Orange): 120,200 to 720,121. Bottom Edge (Blue): 720,124 to 120,360 -->
+                                <polygon points="
+                                    120,200 180,171 240,152.5 300,140.7 360,133.2 420,128.4 480,125.4 540,123.4 600,122.2 660,121.4 720,120.9
+                                    720,124.4 660,126.6 600,129.8 540,134.6 480,141.8 420,152.5 360,168.5 300,192.3 240,227.8 180,280.9 120,360
+                                " fill="#fef08a" opacity="0.45"/>
+
+                                <!-- 2. Daylight Vertical Measure Bars -->
+                                <g stroke="#eab308" stroke-width="2" stroke-dasharray="3 3">
+                                    <line x1="120" y1="200" x2="120" y2="360"/>
+                                    <line x1="180" y1="171" x2="180" y2="281"/>
+                                    <line x1="240" y1="152.5" x2="240" y2="227.8"/>
+                                    <line x1="300" y1="140.7" x2="300" y2="192.3"/>
+                                    <line x1="360" y1="133.2" x2="360" y2="168.5"/>
+                                    <line x1="420" y1="128.4" x2="420" y2="152.5"/>
+                                    <line x1="480" y1="125.4" x2="480" y2="141.8"/>
+                                    <line x1="540" y1="123.4" x2="540" y2="134.6"/>
+                                    <line x1="600" y1="122.2" x2="600" y2="129.8"/>
+                                    <line x1="660" y1="121.4" x2="660" y2="126.6"/>
+                                </g>
+
+                                <!-- 3. Sequence b_n (Car B / Orange) -->
+                                <polyline points="120,200 180,171 240,152.5 300,140.7 360,133.2 420,128.4 480,125.4 540,123.4 600,122.2 660,121.4 720,120.9" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+                                <g fill="#fef3c7" stroke="#d97706" stroke-width="1.5">
+                                    <circle cx="120" cy="200" r="4.5"/>
+                                    <circle cx="180" cy="171" r="4.5"/>
+                                    <circle cx="240" cy="152.5" r="4.5"/>
+                                    <circle cx="300" cy="140.7" r="4.5"/>
+                                    <circle cx="360" cy="133.2" r="4.5"/>
+                                    <circle cx="420" cy="128.4" r="4.5"/>
+                                    <circle cx="480" cy="125.4" r="4.5"/>
+                                    <circle cx="540" cy="123.4" r="4.5"/>
+                                    <circle cx="600" cy="122.2" r="4.5"/>
+                                    <circle cx="660" cy="121.4" r="4.5"/>
+                                    <circle cx="720" cy="120.9" r="4.5"/>
+                                </g>
+
+                                <!-- 4. Sequence a_n (Car A / Blue) -->
+                                <polyline points="120,360 180,281 240,227.8 300,192.3 360,168.5 420,152.5 480,141.8 540,134.6 600,129.8 660,126.6 720,124.4" fill="none" stroke="#0ea5e9" stroke-width="2.5"/>
+                                <g fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5">
+                                    <circle cx="120" cy="360" r="4.5"/>
+                                    <circle cx="180" cy="281" r="4.5"/>
+                                    <circle cx="240" cy="227.8" r="4.5"/>
+                                    <circle cx="300" cy="192.3" r="4.5"/>
+                                    <circle cx="360" cy="168.5" r="4.5"/>
+                                    <circle cx="420" cy="152.5" r="4.5"/>
+                                    <circle cx="480" cy="141.8" r="4.5"/>
+                                    <circle cx="540" cy="134.6" r="4.5"/>
+                                    <circle cx="600" cy="129.8" r="4.5"/>
+                                    <circle cx="660" cy="126.6" r="4.5"/>
+                                    <circle cx="720" cy="124.4" r="4.5"/>
+                                </g>
+
+                            </g> <!-- End Wipe Clip -->
+
+                            <!-- ================= SCANNER LINE ================= -->
+                            <g class="vd-scanner">
+                                <!-- Vertical Laser -->
+                                <line x1="120" y1="80" x2="120" y2="400" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 2"/>
+
+                                <!-- Floating Indicator Box -->
+                                <rect x="110" y="60" width="20" height="20" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+                                <text x="120" y="74" fill="#475569" font-size="12" font-weight="800" text-anchor="middle">n</text>
+                            </g>
+
+                            <!-- ================= STATIC ANNOTATIONS ================= -->
+                            <!-- Car B Annotation -->
+                            <rect x="140" y="178" width="130" height="24" rx="4" fill="#ffffff" stroke="#fcd34d" stroke-width="1"/>
+                            <text x="205" y="194" fill="#b45309" font-size="11" font-weight="700" text-anchor="middle">Car B (Orange) Ahead</text>
+                            <path d="M 140 190 Q 125 190 125 195" fill="none" stroke="#fcd34d" stroke-width="1.5" marker-end="url(#vd-arrow)"/>
+
+                            <!-- Car A Annotation -->
+                            <rect x="150" y="340" width="190" height="24" rx="4" fill="#ffffff" stroke="#7dd3fc" stroke-width="1"/>
+                            <text x="245" y="356" fill="#0369a1" font-size="11" font-weight="700" text-anchor="middle">Car A (Blue) Strictly Behind (aₙ &lt; bₙ)</text>
+                            <path d="M 150 352 Q 130 352 128 356" fill="none" stroke="#7dd3fc" stroke-width="1.5" marker-end="url(#vd-arrow)"/>
+
+                            <!-- Daylight Annotation -->
+                            <rect x="330" y="225" width="165" height="36" rx="6" fill="#fef08a" stroke="#eab308" stroke-width="1.5"/>
+                            <text x="412" y="240" fill="#a16207" font-size="10.5" font-weight="800" text-anchor="middle">THE "DAYLIGHT"</text>
+                            <text x="412" y="254" fill="#a16207" font-size="9" font-weight="600" text-anchor="middle">Distance = bₙ - aₙ &gt; 0</text>
+                            <line x1="330" y1="230" x2="260" y2="190" stroke="#eab308" stroke-width="1.5" stroke-dasharray="2 2"/>
+
+                            <!-- ================= ENDING REVELATION BADGE (POPS IN) ================= -->
+                            <g class="vd-badge">
+                                <rect x="630" y="45" width="190" height="50" rx="8" fill="#ffffff" stroke="#10b981" stroke-width="2" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))"/>
+                                <text x="725" y="65" fill="#047857" font-size="11.5" font-weight="800" text-anchor="middle">BUMPER TO BUMPER!</text>
+                                <text x="725" y="82" fill="#059669" font-size="9.5" font-weight="600" text-anchor="middle">Gap ≈ 0, but aₙ never passed bₙ.</text>
+                                <!-- Pointer to the dot crash -->
+                                <path d="M 725 95 L 725 112" fill="none" stroke="#10b981" stroke-width="2" marker-end="url(#vd-arrow-green)"/>
+                            </g>
+                        </svg>
+                    </figure>
+
                     <ul style="padding-left: 1.25rem; margin: 0.5rem 0 0 0; color: #334155; font-size: 0.92rem; line-height: 1.7;">
                         <li style="margin-bottom: 0.5rem;">
                             <strong>Counterexample 1 (The Stationary Floor):</strong> Let $a_n = 0$ and $b_n = \frac{1}{n}$. For every single positive integer $n$:
@@ -5243,59 +5455,59 @@
                             }
                         ],
                         clash: [
-                            {
-                                phase: "0: The False Assumption",
-                                state: "Ordered (aₙ ≤ bₙ)",
-                                stateColor: "#059669",
-                                n0: "Valid",
-                                k: "K (Blue) is High",
-                                l: "L (Orange) is Low",
-                                conc: "Assume K > L",
-                                concColor: "#e11d48",
-                                summary: "To prove why K ≤ L is mandatory, let's play devil's advocate. What if aₙ ≤ bₙ perfectly, but their limits crossed? Assume K > L (blue limit is strictly higher than the orange limit).",
-                                what: "The limit lines are drawn with K above L. The sequences begin by obeying aₙ ≤ bₙ (blue starts below orange), but they are drawn toward their respective reversed targets.",
-                                why: "Proof by Contradiction. We intentionally assume the opposite of what we want to prove (assume K > L) to see if it physically breaks the universe."
-                            },
-                            {
-                                phase: "1: The Separation Moat",
-                                state: "Ordered (aₙ ≤ bₙ)",
-                                stateColor: "#059669",
-                                n0: "Valid",
-                                k: "K (Blue)",
-                                l: "L (Orange)",
-                                conc: "Assume K > L",
-                                concColor: "#e11d48",
-                                summary: "Because K and L are distinct numbers separated by a gap, we can wrap them in tight, non-overlapping ε-corridors. A red impassable moat separates the two zones.",
-                                what: "We invoke the Elbow Room principle. We choose an ε small enough that the blue corridor around K and the orange corridor around L have zero overlap.",
-                                why: "This sets the trap. Because the limits are separated by a positive distance d = K - L > 0, we are guaranteed the geometric space to build two disjoint corridors."
-                            },
-                            {
-                                phase: "2: The Infinite Lock-In",
-                                state: "Ordered (aₙ ≤ bₙ)",
-                                stateColor: "#059669",
-                                n0: "Valid",
-                                k: "K (Blue)",
-                                l: "L (Orange)",
-                                conc: "Assume K > L",
-                                concColor: "#e11d48",
-                                summary: "Because aₙ converges to K, its tail must eventually lock into the top blue corridor. Because bₙ converges to L, its tail must eventually lock into the bottom orange corridor.",
-                                what: "As we follow the sequences to the right, blue rises into the top corridor, and orange sinks into the bottom corridor. Both sequences are trapped in their respective limit neighborhoods.",
-                                why: "This is the unforgiving definition of a limit. No matter how the sequences behave early on, they MUST eventually reside entirely within their assigned ε-corridors."
-                            },
-                            {
-                                phase: "3: The Fatal Clash",
-                                state: "Violated (aₙ > bₙ)",
-                                stateColor: "#e11d48",
-                                n0: "BROKEN",
-                                k: "K (Blue)",
-                                l: "L (Orange)",
-                                conc: "Contradiction!",
-                                concColor: "#e11d48",
-                                summary: "CRASH! Look at the red highlighted region. Because blue is trapped high and orange is trapped low, blue is forced strictly ABOVE orange. But our ironclad starting rule was aₙ ≤ bₙ!",
-                                what: "Inside the red highlight (n ≥ 5), aₙ > bₙ. This directly violates the premise that aₙ ≤ bₙ for all terms past N₀. The sequence cannot satisfy both the inequality rule and the crossed limits.",
-                                why: "The contradiction destroys the assumption. Since aₙ ≤ bₙ is an unbreakable given, it is physically impossible for K > L. Therefore, K ≤ L is the only mathematical reality."
-                            }
-                        ]
+                        {
+                            phase: "0: The False Assumption",
+                            state: "Attempting aₙ ≤ bₙ",
+                            stateColor: "#b45309",
+                            n0: "Valid",
+                            k: "K (Blue) is High",
+                            l: "L (Orange) is Low",
+                            conc: "Assume K > L",
+                            concColor: "#e11d48",
+                            summary: "We are required to keep aₙ ≤ bₙ forever. But let's play devil's advocate: what if we try to force their limits to cross? Assume K > L (blue limit is strictly higher than orange).",
+                            what: "The graph tries to plot this impossible scenario. For the first four terms, it behaves perfectly (blue stays safely below orange). But look at where the sequences are being dragged.",
+                            why: "Proof by Contradiction. We intentionally assume the opposite of our goal (assume K > L). We want to see if the math allows it, or if it physically breaks the universe. The graph is already spoiling the ending: it's going to crash."
+                        },
+                        {
+                            phase: "1: The Separation Moat",
+                            state: "Attempting aₙ ≤ bₙ",
+                            stateColor: "#b45309",
+                            n0: "Valid",
+                            k: "K (Blue)",
+                            l: "L (Orange)",
+                            conc: "Assume K > L",
+                            concColor: "#e11d48",
+                            summary: "Because K and L are distinct numbers separated by a gap, we can wrap them in tight, non-overlapping ε-corridors. A red impassable moat separates the two zones.",
+                            what: "We invoke the Elbow Room principle. We choose an ε small enough that the blue corridor around K and the orange corridor around L have zero overlap.",
+                            why: "This sets the trap. Because the limits are separated by a positive distance d = K - L > 0, we are guaranteed the geometric space to build two disjoint corridors."
+                        },
+                        {
+                            phase: "2: The Infinite Lock-In",
+                            state: "Attempting aₙ ≤ bₙ",
+                            stateColor: "#b45309",
+                            n0: "Valid",
+                            k: "K (Blue)",
+                            l: "L (Orange)",
+                            conc: "Assume K > L",
+                            concColor: "#e11d48",
+                            summary: "Because aₙ converges to K, its tail must eventually lock into the top blue corridor. Because bₙ converges to L, its tail must eventually lock into the bottom orange corridor.",
+                            what: "As we follow the sequences to the right, blue rises into the top corridor, and orange sinks into the bottom corridor. Both sequences are forever trapped in their respective limit neighborhoods.",
+                            why: "This is the unforgiving definition of a limit. No matter how the sequences behave early on, they MUST eventually reside entirely within their assigned ε-corridors."
+                        },
+                        {
+                            phase: "3: The Fatal Clash",
+                            state: "Violated (aₙ > bₙ)",
+                            stateColor: "#e11d48",
+                            n0: "BROKEN",
+                            k: "K (Blue)",
+                            l: "L (Orange)",
+                            conc: "Contradiction!",
+                            concColor: "#e11d48",
+                            summary: "CRASH! Look at the red highlighted region. To reach their targets, blue is forced strictly ABOVE orange. But our one ironclad rule was aₙ ≤ bₙ!",
+                            what: "Inside the red highlight (n ≥ 5), aₙ > bₙ. The sequence cannot satisfy both the inequality rule and the crossed limits simultaneously. One of them has to give.",
+                            why: "The contradiction destroys the assumption. Since aₙ ≤ bₙ is an unbreakable given fact, it is physically impossible for K > L. Therefore, K ≤ L is the only mathematical reality."
+                        }
+                    ]
                     };
 
                     function refreshOrderCanvas(idx) {
