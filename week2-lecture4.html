@@ -222,18 +222,120 @@
                 </div>
             </div>
 
-            <!-- TABLE OF CONTENTS -->
-            <div class="toc-box">
-                <h4>📌 Lecture 4 Topics</h4>
-                <ul class="toc-grid">
-                    <li><a href="#section-epsilon-n">1. Formal $\epsilon\text{-}N$ Convergence</a></li>
-                    <li><a href="#section-quantifiers">2. Quantifier Order, Timing, and Dependencies</a></li>
-                    <li><a href="#section-interactive-widget">3. Interactive Visualizers: 2D Simulator &amp; 3D Flight Corridor</a></li>
-                    <li><a href="#section-prop5">4. Properties of Convergent Sequences &amp; Foundational Theorems</a></li>
-                    <li><a href="#section-theorems">5. Algebraic Limit Laws and Proofs (Theorem 1)</a></li>
-                    <li><a href="#section-divergence-test">6. Proving Non-Existence of Limits</a></li>
-                </ul>
-            </div>
+            <!-- ================================================================= -->
+            <!-- TABLE OF CONTENTS (ACADEMIC OUTLINE SPECIFICATION)                -->
+            <!-- ================================================================= -->
+            <nav class="toc-container" aria-label="Table of Contents" style="margin: 2.25rem 0 3rem 0; background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem 1.75rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+                <div style="border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem;">
+                    <h3 style="margin: 0; color: #0f172a; font-size: 1.15rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">
+                        Table of Contents
+                    </h3>
+                    <span style="font-size: 0.82rem; color: #64748b; font-weight: 500;">
+                        Week 2 &bull; Lecture 4 &bull; 6 Sections
+                    </span>
+                </div>
+
+                <!-- Responsive 2-Column Academic Outline -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem 2rem;">
+
+                    <!-- LEFT COLUMN: SECTIONS 1 - 3 -->
+                    <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+
+                        <!-- 1.0 Formal Convergence -->
+                        <div>
+                            <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 0.35rem;">
+                                <a href="#section-epsilon-n" style="color: #0f172a; text-decoration: none;">1.0 Formal $\epsilon\text{-}N$ Convergence</a>
+                            </div>
+                            <ol style="margin: 0; padding-left: 1.4rem; list-style-type: none; font-size: 0.88rem; color: #475569; line-height: 1.65;">
+                                <li><a href="#section-epsilon-n" style="color: #475569; text-decoration: none;">1.1 The Failure of Kinetic Intuition ("Closer & Closer")</a></li>
+                                <li><a href="#history-aside-title" style="color: #0284c7; text-decoration: none;">1.2 Historical Context: Bolzano, Cauchy &amp; Weierstrass</a></li>
+                                <li><a href="#section-epsilon-n" style="color: #475569; text-decoration: none;">1.3 Metric Distance: $|a_n - L| < \epsilon$ as an Open Interval</a></li>
+                                <li><a href="#section-epsilon-n" style="color: #475569; text-decoration: none;">1.4 The Formal Definition &amp; Piece-by-Piece Anatomy</a></li>
+                                <li><a href="#definition-walkthrough" style="color: #0284c7; text-decoration: none;">1.5 Interactive: 4-Clause Quantifier Stepper <span style="font-size: 0.72rem; color: #0284c7; font-weight: 600;">[Tool]</span></a></li>
+                                <li><a href="#epsilon-delta-suite" style="color: #b45309; text-decoration: none; font-weight: 600;">1.6 The 10 Canon $\epsilon$-$\delta$ Proof Archetypes <span style="font-size: 0.72rem; color: #b45309;">[Master Suite]</span></a></li>
+                            </ol>
+                        </div>
+
+                        <!-- 2.0 Quantifier Order -->
+                        <div>
+                            <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 0.35rem;">
+                                <a href="#section-quantifiers" style="color: #0f172a; text-decoration: none;">2.0 Quantifier Order, Timing &amp; Dependencies</a>
+                            </div>
+                            <ol style="margin: 0; padding-left: 1.4rem; list-style-type: none; font-size: 0.88rem; color: #475569; line-height: 1.65;">
+                                <li><a href="#section-quantifiers" style="color: #475569; text-decoration: none;">2.1 The Grammar of Analysis &amp; Left-to-Right Evaluation</a></li>
+                                <li><a href="#section-quantifiers" style="color: #475569; text-decoration: none;">2.2 Information Visibility: Why $N$ Depends on $\epsilon$</a></li>
+                                <li><a href="#section-quantifiers" style="color: #475569; text-decoration: none;">2.3 Commutativity Rules: When Quantifiers Cannot Swap</a></li>
+                                <li><a href="#section-quantifiers" style="color: #b91c1c; text-decoration: none;">2.4 The Fatal Swap: Why $\exists N \forall \epsilon$ Freezes Sequences</a></li>
+                                <li><a href="#section-quantifiers" style="color: #475569; text-decoration: none;">2.5 A Practical Checklist for Writing &amp; Auditing Proofs</a></li>
+                            </ol>
+                        </div>
+
+                        <!-- 3.0 Interactive Visualizers -->
+                        <div>
+                            <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 0.35rem;">
+                                <a href="#section-interactive-widget" style="color: #0f172a; text-decoration: none;">3.0 Interactive Visualizers (2D &amp; 3D)</a>
+                            </div>
+                            <ol style="margin: 0; padding-left: 1.4rem; list-style-type: none; font-size: 0.88rem; color: #475569; line-height: 1.65;">
+                                <li><a href="#section-interactive-widget" style="color: #475569; text-decoration: none;">3.1 Guide 1: The Adversarial Challenge Game ($a_n = 1/n$)</a></li>
+                                <li><a href="#epsilon-guide2-widget-2d" style="color: #0284c7; text-decoration: none;">3.2 Guide 2: Oscillations &amp; Shifted Rational Horizons <span style="font-size: 0.72rem; color: #0284c7; font-weight: 600;">[2D Sim]</span></a></li>
+                                <li><a href="#corridor-3d-section" style="color: #0284c7; text-decoration: none;">3.3 Guide 3: Spatial $\epsilon$-Tube &amp; Flight Corridor <span style="font-size: 0.72rem; color: #0284c7; font-weight: 600;">[3D WebGL]</span></a></li>
+                                <li><a href="#section-interactive-widget" style="color: #047857; text-decoration: none;">3.4 Worked Example: The Backward Scratchpad Method</a></li>
+                            </ol>
+                        </div>
+
+                    </div>
+
+                    <!-- RIGHT COLUMN: SECTIONS 4 - 6 -->
+                    <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+
+                        <!-- 4.0 Foundational Theorems & Proposition 5 -->
+                        <div>
+                            <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 0.35rem;">
+                                <a href="#section-prop5" style="color: #0f172a; text-decoration: none;">4.0 Foundational Theorems &amp; Proposition 5</a>
+                            </div>
+                            <ol style="margin: 0; padding-left: 1.4rem; list-style-type: none; font-size: 0.88rem; color: #475569; line-height: 1.65;">
+                                <li><a href="#uniqueness-widget-2d" style="color: #0f172a; text-decoration: none;">4.1 Theorem: Uniqueness of Limits &amp; Disjoint Moats</a></li>
+                                <li><a href="#tail-invariance-widget-2d" style="color: #0f172a; text-decoration: none;">4.2 Theorem: Tail Invariance (Shift &amp; Truncation Amnesty)</a></li>
+                                <li><a href="#section-prop5" style="color: #0f172a; text-decoration: none;">4.3 Theorem: Order Limit Theorem (Preservation of Inequalities)</a></li>
+                                <li><a href="#section-prop5" style="color: #b91c1c; text-decoration: none;">4.4 The "Vanishing Daylight" Trap (Strict to Non-Strict Bounds)</a></li>
+                                <li><a href="#section-prop5" style="color: #0369a1; text-decoration: none;">4.5 Prop 5, Property 1: Absolute Value Stabilization ($|a_n| \to |L|$)</a></li>
+                                <li><a href="#section-prop5" style="color: #0369a1; text-decoration: none;">4.6 Prop 5, Property 2: Convergence Implies Boundedness</a></li>
+                                <li><a href="#section-prop5" style="color: #0369a1; text-decoration: none;">4.7 Prop 5, Property 3: Preservation of Sign ($L/2$ Buffer Moat)</a></li>
+                            </ol>
+                        </div>
+
+                        <!-- 5.0 Algebraic Limit Laws -->
+                        <div>
+                            <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 0.35rem;">
+                                <a href="#section-theorems" style="color: #0f172a; text-decoration: none;">5.0 Algebraic Limit Laws &amp; Proofs (Theorem 1)</a>
+                            </div>
+                            <ol style="margin: 0; padding-left: 1.4rem; list-style-type: none; font-size: 0.88rem; color: #475569; line-height: 1.65;">
+                                <li><a href="#section-theorems" style="color: #475569; text-decoration: none;">5.1 The Architecture of Compositionality</a></li>
+                                <li><a href="#section-theorems" style="color: #475569; text-decoration: none;">5.2 The 6 Arithmetic Rules (Scalar, Sum, Product, Quotient, Power)</a></li>
+                                <li><a href="#section-theorems" style="color: #b45309; text-decoration: none;">5.3 The Shared Error Budget: The $\epsilon/2$ Technique</a></li>
+                                <li><a href="#section-theorems" style="color: #475569; text-decoration: none;">5.4 Tail Synchronization via $N = \max(N_1, N_2)$</a></li>
+                                <li><a href="#section-theorems" style="color: #475569; text-decoration: none;">5.5 The "Add-and-Subtract Bridge" for the Product Law</a></li>
+                                <li><a href="#section-theorems" style="color: #475569; text-decoration: none;">5.6 Guarding Denominators: Bounding Quotients via Sign Preservation</a></li>
+                            </ol>
+                        </div>
+
+                        <!-- 6.0 Proving Non-Existence of Limits -->
+                        <div>
+                            <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 0.35rem;">
+                                <a href="#section-divergence-test" style="color: #0f172a; text-decoration: none;">6.0 Proving Non-Existence of Limits (Divergence)</a>
+                            </div>
+                            <ol style="margin: 0; padding-left: 1.4rem; list-style-type: none; font-size: 0.88rem; color: #475569; line-height: 1.65;">
+                                <li><a href="#section-divergence-test" style="color: #475569; text-decoration: none;">6.1 The Adversarial Reversal: Defeating the Target Game</a></li>
+                                <li><a href="#section-divergence-test" style="color: #475569; text-decoration: none;">6.2 Quantifier Negation: Flipping $\forall$ and $\exists$ Systematically</a></li>
+                                <li><a href="#section-divergence-test" style="color: #475569; text-decoration: none;">6.3 Disproving All Candidates Simultaneously ($\forall L \in \mathbb{R}$)</a></li>
+                                <li><a href="#section-divergence-test" style="color: #9f1239; text-decoration: none;">6.4 Case Analysis Walkthrough: Divergence of $a_n = (-1)^n$</a></li>
+                                <li><a href="#section-divergence-test" style="color: #047857; text-decoration: none; font-weight: 600;">6.5 The 4-Step Blueprint for Disproving Convergence</a></li>
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
+            </nav>
 
             <!-- SECTION 1: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->
             <h2 id="section-epsilon-n">1. Formal $\epsilon\text{-}N$ Convergence</h2>
