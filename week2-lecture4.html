@@ -2682,6 +2682,248 @@
                     Notice that between $5$ and $7$, there is an open no-man's land. The two bubbles <strong>cannot touch</strong>.
                 </p>
 
+                <!-- ================================================================= -->
+                <!-- DIAGRAM: THE CONCRETE 2 vs. 10 CLASH (RESTORED CLOSING BRACKET)   -->
+                <!-- ================================================================= -->
+                <figure style="margin: 2rem 0; padding: 1.5rem; background: #ffffff; border: 1px solid var(--border, #cbd5e1); border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                    <figcaption style="font-size: 0.95rem; font-weight: 700; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem;">
+                        <span>Figure: The 2 vs. 10 Clash — Why Disjoint Safety Bubbles Cannot Touch</span>
+                        <span style="font-size: 0.82rem; font-weight: 600; color: #0284c7; background: #e0f2fe; padding: 2px 8px; border-radius: 4px;">Gap d = 8 &bull; Radius ε = 3</span>
+                    </figcaption>
+
+                    <p style="margin: 0 0 1.25rem 0; color: #475569; font-size: 0.92rem; line-height: 1.6;">
+                        With candidate limits $L = 2$ and $M = 10$, the total separation is $d = 8$. Choosing error tolerance $\epsilon = 3$ creates a 3-unit bubble around $2$ (spanning $-1$ to $5$) and a 3-unit bubble around $10$ (spanning $7$ to $13$). Between $5$ and $7$, an open 2-unit no-man's land prevents the bubbles from ever touching.
+                    </p>
+
+                    <svg viewBox="0 0 920 345" style="width: 100%; height: auto; display: block;" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+                        <defs>
+                            <!-- Diagonal Hatching for Open No-Man's Land -->
+                            <pattern id="clash-moat-hatch" width="8" height="8" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+                                <line x1="0" y1="0" x2="0" y2="8" stroke="#f87171" stroke-width="1.2" stroke-opacity="0.85" />
+                            </pattern>
+
+                            <!-- Axis Arrowhead -->
+                            <marker id="clash-axis-arr" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                                <path d="M 0 2 L 6 5 L 0 8 z" fill="#64748b"/>
+                            </marker>
+
+                            <!-- Annotation Callout Arrowheads -->
+                            <marker id="callout-arr-blue" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                                <path d="M 0 2 L 6 5 L 0 8 z" fill="#0284c7"/>
+                            </marker>
+                            <marker id="callout-arr-amber" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                                <path d="M 0 2 L 6 5 L 0 8 z" fill="#d97706"/>
+                            </marker>
+                        </defs>
+
+                        <!-- ================= TIER 1: TOP HEADER BADGE ================= -->
+                        <rect x="290" y="10" width="340" height="24" rx="12" fill="#fef3c7" stroke="#fde68a" stroke-width="0.8"/>
+                        <text x="460" y="26" font-size="10.5" font-weight="700" fill="#92400e" text-anchor="middle">
+                            Concrete Example: d = 8 &nbsp;⟹&nbsp; Pick ε = 3 &lt; 4 (Half the Gap)
+                        </text>
+
+                        <!-- ================= TIER 2: ELEVATED BADGES & TITLES ================= -->
+                        <!-- Center Warning Badge -->
+                        <g transform="translate(460, 54)">
+                            <rect x="-65" y="-12" width="130" height="26" rx="4" fill="#ffffff" stroke="#f87171" stroke-width="0.85" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.06))"/>
+                            <text x="0" y="1" font-size="8.8" font-weight="800" fill="#b91c1c" text-anchor="middle" letter-spacing="0.03em">
+                                OPEN NO-MAN'S LAND
+                            </text>
+                            <text x="0" y="10.5" font-size="7.5" font-weight="700" fill="#e11d48" text-anchor="middle">
+                                (Gap = 2 &bull; Never Touches!)
+                            </text>
+                        </g>
+
+                        <!-- Left Bubble Title -->
+                        <text x="324" y="66" font-size="10.8" font-weight="800" fill="#0369a1" text-anchor="middle">
+                            3-Unit Safety Bubble
+                        </text>
+                        <text x="324" y="78" font-size="9" font-weight="600" fill="#0284c7" text-anchor="middle">
+                            spanning from −1 to 5
+                        </text>
+
+                        <!-- Right Bubble Title -->
+                        <text x="596" y="66" font-size="10.8" font-weight="800" fill="#b45309" text-anchor="middle">
+                            3-Unit Safety Bubble
+                        </text>
+                        <text x="596" y="78" font-size="9" font-weight="600" fill="#d97706" text-anchor="middle">
+                            spanning from 7 to 13
+                        </text>
+
+                        <!-- ================= TIER 3: EPSILON CURLY BRACES ================= -->
+                        <!-- Blue Left: [-1, 2] -->
+                        <path d="M 222 102 Q 222 97 227 97 L 268 97 Q 273 97 273 92 Q 273 97 278 97 L 319 97 Q 324 97 324 102"
+                              fill="none" stroke="#0284c7" stroke-width="0.8"/>
+                        <text x="273" y="88" font-size="9.5" font-weight="700" fill="#0284c7" text-anchor="middle">ε = 3</text>
+
+                        <!-- Blue Right: [2, 5] -->
+                        <path d="M 324 102 Q 324 97 329 97 L 370 97 Q 375 97 375 92 Q 375 97 380 97 L 421 97 Q 426 97 426 102"
+                              fill="none" stroke="#0284c7" stroke-width="0.8"/>
+                        <text x="375" y="88" font-size="9.5" font-weight="700" fill="#0284c7" text-anchor="middle">ε = 3</text>
+
+                        <!-- Amber Left: [7, 10] -->
+                        <path d="M 494 102 Q 494 97 499 97 L 540 97 Q 545 97 545 92 Q 545 97 550 97 L 591 97 Q 596 97 596 102"
+                              fill="none" stroke="#d97706" stroke-width="0.8"/>
+                        <text x="545" y="88" font-size="9.5" font-weight="700" fill="#d97706" text-anchor="middle">ε = 3</text>
+
+                        <!-- Amber Right: [10, 13] -->
+                        <path d="M 596 102 Q 596 97 601 97 L 642 97 Q 647 97 647 92 Q 647 97 652 97 L 693 97 Q 698 97 698 102"
+                              fill="none" stroke="#d97706" stroke-width="0.8"/>
+                        <text x="647" y="88" font-size="9.5" font-weight="700" fill="#d97706" text-anchor="middle">ε = 3</text>
+
+                        <!-- ================= TIER 4: BACKGROUND CORRIDOR FILLS (RENDERED FIRST) ================= -->
+                        <!-- Blue Safety Bubble Background -->
+                        <rect x="222" y="106" width="204" height="62" rx="4" fill="#f0f9ff" fill-opacity="0.9" stroke="#38bdf8" stroke-width="0.9" stroke-dasharray="3 3"/>
+
+                        <!-- Open No-Man's Land Background & Hatching -->
+                        <rect x="426" y="106" width="68" height="62" fill="#fff1f2" />
+                        <rect x="426" y="106" width="68" height="62" fill="url(#clash-moat-hatch)" stroke="#ef4444" stroke-width="0.9" stroke-dasharray="3 3"/>
+
+                        <!-- Amber Safety Bubble Background -->
+                        <rect x="494" y="106" width="204" height="62" rx="4" fill="#fffbeb" fill-opacity="0.9" stroke="#f59e0b" stroke-width="0.9" stroke-dasharray="3 3"/>
+
+                        <!-- ================= TIER 4b: BOUNDARY BRACKETS (RENDERED ON TOP OF FILLS) ================= -->
+                        <!-- Blue Opening Bracket ( at -1 -->
+                        <path d="M 222,106 Q 215,137 222,168" fill="none" stroke="#0284c7" stroke-width="1.8"/>
+                        <!-- Blue Closing Bracket ) at 5 -->
+                        <path d="M 426,106 Q 433,137 426,168" fill="none" stroke="#0284c7" stroke-width="1.8"/>
+
+                        <!-- Amber Opening Bracket ( at 7 -->
+                        <path d="M 494,106 Q 487,137 494,168" fill="none" stroke="#d97706" stroke-width="1.8"/>
+                        <!-- Amber Closing Bracket ) at 13 -->
+                        <path d="M 698,106 Q 705,137 698,168" fill="none" stroke="#d97706" stroke-width="1.8"/>
+
+                        <!-- ================= NUMBER LINE AXIS ================= -->
+                        <line x1="160" y1="138" x2="760" y2="138" stroke="#94a3b8" stroke-width="1.1" marker-end="url(#clash-axis-arr)"/>
+                        <text x="772" y="142" font-size="12" font-weight="800" fill="#64748b">ℝ</text>
+
+                        <!-- Minor ticks on axis -->
+                        <g stroke="#94a3b8" stroke-width="0.8">
+                            <line x1="188" y1="134" x2="188" y2="142"/>
+                            <line x1="256" y1="134" x2="256" y2="142"/>
+                            <line x1="290" y1="134" x2="290" y2="142"/>
+                            <line x1="358" y1="134" x2="358" y2="142"/>
+                            <line x1="392" y1="134" x2="392" y2="142"/>
+                            <line x1="460" y1="134" x2="460" y2="142"/>
+                            <line x1="528" y1="134" x2="528" y2="142"/>
+                            <line x1="562" y1="134" x2="562" y2="142"/>
+                            <line x1="630" y1="134" x2="630" y2="142"/>
+                            <line x1="664" y1="134" x2="664" y2="142"/>
+                            <line x1="732" y1="134" x2="732" y2="142"/>
+                        </g>
+
+                        <!-- Target Centerpoints on Axis -->
+                        <circle cx="324" cy="138" r="9" fill="#e0f2fe" stroke="#38bdf8" stroke-width="1"/>
+                        <circle cx="324" cy="138" r="4.2" fill="#0284c7"/>
+
+                        <circle cx="596" cy="138" r="9" fill="#fef3c7" stroke="#fcd34d" stroke-width="1"/>
+                        <circle cx="596" cy="138" r="4.2" fill="#d97706"/>
+
+                        <!-- Trapped Sequence Points in Blue Window -->
+                        <g fill="#059669" stroke="#ffffff" stroke-width="1">
+                            <circle cx="240" cy="126" r="3.4"/>
+                            <circle cx="265" cy="144" r="3.4"/>
+                            <circle cx="285" cy="130" r="3.6"/>
+                            <circle cx="350" cy="142" r="3.6"/>
+                            <circle cx="375" cy="128" r="3.4"/>
+                            <circle cx="405" cy="144" r="3.4"/>
+                        </g>
+
+                        <!-- ================= TIER 5: AXIS NUMBERS ROW ================= -->
+                        <!-- Fine Guide Ticks -->
+                        <g stroke="#94a3b8" stroke-width="0.8">
+                            <line x1="188" y1="168" x2="188" y2="175"/>
+                            <line x1="256" y1="168" x2="256" y2="175"/>
+                            <line x1="290" y1="168" x2="290" y2="175"/>
+                            <line x1="358" y1="168" x2="358" y2="175"/>
+                            <line x1="392" y1="168" x2="392" y2="175"/>
+                            <line x1="460" y1="168" x2="460" y2="175"/>
+                            <line x1="528" y1="168" x2="528" y2="175"/>
+                            <line x1="562" y1="168" x2="562" y2="175"/>
+                            <line x1="630" y1="168" x2="630" y2="175"/>
+                            <line x1="664" y1="168" x2="664" y2="175"/>
+                            <line x1="732" y1="168" x2="732" y2="175"/>
+                        </g>
+                        <line x1="222" y1="168" x2="222" y2="176" stroke="#0284c7" stroke-width="1"/>
+                        <line x1="426" y1="168" x2="426" y2="176" stroke="#0284c7" stroke-width="1"/>
+                        <line x1="494" y1="168" x2="494" y2="176" stroke="#d97706" stroke-width="1"/>
+                        <line x1="698" y1="168" x2="698" y2="176" stroke="#d97706" stroke-width="1"/>
+
+                        <!-- Standard numbers (Baseline y=189) -->
+                        <g font-size="10" font-weight="500" fill="#64748b" text-anchor="middle">
+                            <text x="188" y="189">−2</text>
+                            <text x="256" y="189">0</text>
+                            <text x="290" y="189">1</text>
+                            <text x="324" y="189" font-size="11" font-weight="900" fill="#0284c7">2</text>
+                            <text x="358" y="189">3</text>
+                            <text x="392" y="189">4</text>
+                            <text x="460" y="189" font-weight="700" fill="#b91c1c">6</text>
+                            <text x="528" y="189">8</text>
+                            <text x="562" y="189">9</text>
+                            <text x="596" y="189" font-size="11" font-weight="900" fill="#d97706">10</text>
+                            <text x="630" y="189">11</text>
+                            <text x="664" y="189">12</text>
+                            <text x="732" y="189">14</text>
+                        </g>
+
+                        <!-- Boundary Boxes (-1, 5, 7, 13) -->
+                        <g text-anchor="middle">
+                            <!-- -1 -->
+                            <rect x="211" y="176" width="22" height="17" rx="3.5" fill="#e0f2fe" stroke="#38bdf8" stroke-width="0.8"/>
+                            <text x="222" y="188.5" font-size="9.5" font-weight="800" fill="#0369a1">−1</text>
+
+                            <!-- 5 -->
+                            <rect x="417" y="176" width="18" height="17" rx="3.5" fill="#e0f2fe" stroke="#38bdf8" stroke-width="0.8"/>
+                            <text x="426" y="188.5" font-size="9.5" font-weight="800" fill="#0369a1">5</text>
+
+                            <!-- 7 -->
+                            <rect x="485" y="176" width="18" height="17" rx="3.5" fill="#fef3c7" stroke="#fcd34d" stroke-width="0.8"/>
+                            <text x="494" y="188.5" font-size="9.5" font-weight="800" fill="#b45309">7</text>
+
+                            <!-- 13 -->
+                            <rect x="687" y="176" width="22" height="17" rx="3.5" fill="#fef3c7" stroke="#fcd34d" stroke-width="0.8"/>
+                            <text x="698" y="188.5" font-size="9.5" font-weight="800" fill="#b45309">13</text>
+                        </g>
+
+                        <!-- ================= TIER 6: TARGET DESCRIPTORS ================= -->
+                        <text x="324" y="212" font-size="10" font-weight="800" fill="#0369a1" text-anchor="middle">Claim L = 2</text>
+                        <text x="596" y="212" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle">Rival M = 10</text>
+
+                        <!-- ================= TIER 7: BOTTOM DISTANCE BRACE ================= -->
+                        <path d="M 324 226 Q 324 234 332 234 L 452 234 Q 460 234 460 242 Q 460 234 468 234 L 588 234 Q 596 234 596 226"
+                              fill="none" stroke="#0f172a" stroke-width="0.9"/>
+                        <text x="460" y="258" font-size="11" font-weight="800" fill="#0f172a" text-anchor="middle">
+                            Total Distance d = |10 − 2| = 8
+                        </text>
+                        <text x="460" y="271" font-size="8.8" font-weight="600" fill="#64748b" text-anchor="middle">
+                            (The positive gap between the two candidate numbers)
+                        </text>
+
+                        <!-- ================= LATERAL NARRATIVE CALLOUTS ================= -->
+                        <text x="25" y="80" font-size="9.2" font-weight="600" fill="#334155" text-anchor="start">
+                            <tspan x="25" dy="0">If sequence converges to 2,</tspan>
+                            <tspan x="25" dy="13">it eventually must stay inside</tspan>
+                            <tspan x="25" dy="13" font-weight="700" fill="#0284c7">this blue window (−1 to 5)...</tspan>
+                        </text>
+                        <path d="M 155,108 Q 185,116 215,124" fill="none" stroke="#0284c7" stroke-width="0.8" marker-end="url(#callout-arr-blue)"/>
+
+                        <text x="735" y="80" font-size="9.2" font-weight="600" fill="#334155" text-anchor="start">
+                            <tspan x="735" dy="0">...leaving zero terms</tspan>
+                            <tspan x="735" dy="13">available to enter the</tspan>
+                            <tspan x="735" dy="13" font-weight="700" fill="#d97706">rival bubble (7 to 13)!</tspan>
+                        </text>
+                        <path d="M 735,108 Q 718,116 705,124" fill="none" stroke="#d97706" stroke-width="0.8" marker-end="url(#callout-arr-amber)"/>
+
+                        <!-- ================= TIER 8: SUMMARY BANNER ================= -->
+                        <g transform="translate(460, 298)">
+                            <rect x="-230" y="-12" width="460" height="24" rx="5" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.8"/>
+                            <text x="0" y="4.5" font-size="10" font-weight="800" fill="#b91c1c" text-anchor="middle">
+                                A single sequence term aₙ cannot be in two separated bubbles at the same time!
+                            </text>
+                        </g>
+                    </svg>
+                </figure>
+
                 <p>
                     This is the entire engine of the proof. In algebra, if two proposed limits $L$ and $M$ are different, the gap between them is strictly positive:
                 </p>
