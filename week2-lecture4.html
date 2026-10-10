@@ -4803,15 +4803,28 @@
                     </div>
                 </div>
 
-                <!-- Tail Invariance Connection (Slate/Muted Blue) -->
-                <div style="background: #f1f5f9; border: 1px solid #cbd5e1; border-left: 4px solid #64748b; border-radius: 8px; padding: 1.15rem 1.4rem; margin: 1.5rem 0;">
-                    <div style="color: #334155; margin: 0 0 0.4rem 0; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
-                        Why the $n > N_0$ Condition Should Relieve You
-                    </div>
-                    <p style="margin: 0; color: #475569; font-size: 0.93rem;">
-                        Notice that the theorem does <strong>not</strong> demand $a_n \le b_n$ for $n = 1, 2, 3$. Sequence $(a_n)$ could sit miles above $(b_n)$ for the first thousand terms. Thanks to our friend the <em>Tail Invariance Theorem</em>, early disorder is completely forgiven. As long as $(a_n)$ drops below $(b_n)$ <em>eventually</em> (for all indices past some finite marker $N_0$), the limit comparison $K \le L$ is unconditionally protected.
-                    </p>
-                </div>
+            <!-- ================================================================= -->
+            <!-- CONCEPT: PRESERVATION OF INEQUALITIES                             -->
+            <!-- ================================================================= -->
+            <div style="background: #ffffff; border: 1px solid #cbd5e1; border-left: 4px solid #0ea5e9; border-radius: 8px; padding: 1.5rem; margin: 2rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+
+                <h4 style="color: #0f172a; font-size: 1.1rem; font-weight: 700; margin: 0 0 0.75rem 0;">
+                    Why the $n > N_0$ Condition Should Relieve You
+                </h4>
+
+                <p style="color: #334155; font-size: 0.95rem; line-height: 1.6; margin-bottom: 1rem;">
+                    Suppose we have two converging sequences, $a_n \to K$ and $b_n \to L$. We want to prove that if sequence $a_n$ is "smaller" than sequence $b_n$, its limit $K$ must also be smaller than $L$.
+                </p>
+
+                <p style="color: #334155; font-size: 0.95rem; line-height: 1.6; margin-bottom: 1rem;">
+                    Notice that the formal theorem only demands $a_n \le b_n$ <strong>for all $n > N_0$</strong>. It does not demand $a_1 \le b_1$ or $a_2 \le b_2$.
+                </p>
+
+                <p style="color: #334155; font-size: 0.95rem; line-height: 1.6; margin: 0;">
+                    Sequence $(a_n)$ could sit miles above $(b_n)$ for the first thousand terms. Thanks to the <strong>Amnesia Principle</strong> we just learned, early disorder is completely forgiven. As long as $(a_n)$ eventually drops below $(b_n)$ and stays there past some finite cutoff $N_0$, the final limit comparison $K \le L$ is unconditionally protected.
+                </p>
+
+            </div>
 
                 <!-- The Special Single-Sequence Corollary (Emerald Green) -->
                 <div style="background: #f0fdf4; border: 1px solid #dcfce7; border-left: 4px solid #059669; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
