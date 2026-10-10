@@ -3442,11 +3442,11 @@
                         Applying the triangle inequality gives $|a_n| = |(a_n - L) + L| \le |a_n - L| + |L| < 1 + |L|$. <em>All infinitely many terms past index $N$ are safely trapped below the constant $|L| + 1$!</em>
                     </li>
                     <li style="margin-bottom: 0.75rem;">
-                        <strong>Checking the Finite Prefix:</strong> What about the terms before the cutoff: $\{a_0, a_1, a_2, \dots, a_N\}$? There are only finitely many of them! Any finite collection of real numbers has a guaranteed maximum absolute value.
+                        <strong>Checking the Finite Prefix:</strong> What about the terms before the cutoff: $\{a_1, a_2, \dots, a_N\}$? There are only finitely many of them! Any finite collection of real numbers has a guaranteed maximum absolute value.
                     </li>
                     <li>
                         <strong>Building the Global Fence ($M$):</strong> We take the maximum across the prefix terms and our tail ceiling:
-                        $$M = \max\Big(|a_0|, |a_1|, |a_2|, \dots, |a_N|, |L| + 1\Big)$$
+                        $$M = \max\Big(|a_1|, |a_2|, \dots, |a_N|, |L| + 1\Big)$$
                         Because every term in the prefix is $\le M$ by definition of a maximum, and every term in the tail satisfies $|a_n| < |L| + 1 \le M$, the finite number $M$ bounds the entire infinite sequence. $\blacksquare$
                     </li>
                 </ol>
