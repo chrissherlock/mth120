@@ -1404,7 +1404,7 @@
                 </ol>
             </div>
 
-                                    <!-- SECTION 4: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->
+            <!-- SECTION 4: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->
             <h2 id="section-prop5">4. Properties of Convergent Sequences (Proposition 5) &amp; Foundational Theorems</h2>
 
             <h3 style="color: #0f172a; margin-top: 1.5rem;">Structural Guarantees: The Free Gifts of Convergence</h3>
@@ -1415,27 +1415,118 @@
                 In this section, we explore Proposition 5 along with three foundational theorems that solidify the logical architecture of limits: Uniqueness, Tail Invariance, and the Order Limit Theorem.
             </p>
 
-            <h3 style="color: #0f172a; margin-top: 1.75rem;">Theorem: Uniqueness of Limits</h3>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Before writing $\lim a_n = L$, we must guarantee that a sequence cannot have two different limits. If a sequence settles down, its destination is uniquely determined.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>The Theorem:</strong> If a sequence $(a_n)$ converges to $L$ and also converges to $M$, then $L = M$.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>The Proof Strategy (The $\epsilon/2$ Technique):</strong><br>
-                Let $\epsilon > 0$ be given. Because $a_n \to L$, there is a cutoff $N_1$ where $|a_n - L| < \epsilon/2$. Because $a_n \to M$, there is a cutoff $N_2$ where $|a_n - M| < \epsilon/2$. Let $N = \max(N_1, N_2)$. For any index $n > N$, both inequalities hold. Using the triangle inequality on the fixed distance $|L - M|$:
-            </p>
-            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$\begin{aligned}
-                |L - M| &= |(L - a_n) + (a_n - M)| \\
-                &\le |a_n - L| + |a_n - M| \\
-                &< \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon
-                \end{aligned}$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                We have shown that the non-negative real number $|L - M|$ is strictly smaller than <em>every</em> positive number $\epsilon$. The only non-negative number with that property is zero. Thus, $|L - M| = 0$, which proves $L = M$. $\blacksquare$
-            </p>
+            <!-- ================================================================= -->
+            <!-- THEOREM: UNIQUENESS OF LIMITS                                     -->
+            <!-- ================================================================= -->
+            <div style="margin-top: 2.25rem; margin-bottom: 1rem;">
+                <h3 style="color: #0f172a; font-size: 1.35rem; font-weight: 700; margin: 0 0 0.35rem 0; line-height: 1.3;">
+                    Theorem: Uniqueness of Limits
+                </h3>
+                <div style="color: #64748b; font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
+                    Intuition, The Sacred Equals Sign &amp; The Exclusionary Moat
+                </div>
+            </div>
+
+            <section style="margin-bottom: 2rem; color: #334155; font-size: 1rem; line-height: 1.75;">
+                <!-- Pedagogical Opening -->
+                <p style="margin-top: 0;">
+                    When you first see a theorem titled <em>"Uniqueness of Limits,"</em> your instinctive reaction is probably: <em>"Why do we even need to prove this? Isn't it obvious that a sequence can't head toward two places at once?"</em>
+                </p>
+
+                <p>
+                    Your intuition is <strong>completely sound</strong>. If a sequence is genuinely settling down, it cannot arrive at two separate destinations. Analysis treats this as a foundational theorem because it is about <strong>auditing our mathematical language</strong>. When we write the familiar equation:
+                </p>
+
+                <div style="text-align: center; margin: 1rem 0;">
+                    $$\lim_{n \to \infty} a_n = L$$
+                </div>
+
+                <p>
+                    we are using an <strong>equals sign</strong> ($=$) and the definite article—we call $L$ <em>the</em> limit, not merely <em>a</em> limit. In mathematics, the equals sign is sacred: it asserts an absolute, singular identity between the left-hand expression and the right-hand object. If a sequence could simultaneously arrive at both $+2$ and $-2$, the expression $\lim a_n$ would be an ambiguous contradiction. Proving uniqueness is the legal certificate licensing us to use the equals sign, perform limit arithmetic, and trust that our $\epsilon$-neighborhood definitions describe physical reality.
+                </p>
+
+                <!-- Mental Model Card (Sky Blue) -->
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #0284c7; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                    <div style="color: #0284c7; margin: 0 0 0.5rem 0; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
+                        The Mental Model: The GPS Transponder
+                    </div>
+                    <p style="margin: 0; color: #334155;">
+                        Imagine tracking a homing beacon across a map. If telemetry confirms that the beacon eventually stays permanently within one millimeter of Sydney, is it physically possible for it to also stay permanently within one millimeter of Melbourne? <strong>Of course not.</strong> The two cities are separated by hundreds of kilometers. Being trapped inside a tiny neighborhood of Sydney physically locks the beacon out of Melbourne. In the metric geometry of the real numbers, distinct destinations always have open buffer space between them.
+                    </p>
+                </div>
+
+                <!-- Formal Statement Card -->
+                <div style="background: #ffffff; border: 1px solid #e2e8f0; border-left: 4px solid #0284c7; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);">
+                    <div style="color: #0284c7; margin: 0 0 0.5rem 0; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
+                        Formal Mathematical Statement
+                    </div>
+                    <p style="margin: 0 0 0.5rem 0; color: #0f172a; font-weight: 600;">
+                        Let $(a_n)$ be a convergent sequence in $\mathbb{R}$.
+                    </p>
+                    <p style="margin: 0.5rem 0; color: #334155;">
+                        If $\lim_{n \to \infty} a_n = L$ and $\lim_{n \to \infty} a_n = M$, then:
+                    </p>
+                    <div style="text-align: center; margin: 0.75rem 0; font-size: 1.25rem; font-weight: 700; color: #0f172a;">
+                        $$L = M$$
+                    </div>
+                    <p style="margin: 0.5rem 0 0 0; color: #64748b; font-size: 0.92rem;">
+                        <em>In plain terms: A sequence cannot converge to two different limits. If a limit exists, it is uniquely determined.</em>
+                    </p>
+                </div>
+
+                <!-- Why Analysis Audits This -->
+                <div style="font-weight: 700; color: #0f172a; margin-top: 1.75rem; margin-bottom: 0.5rem; font-size: 1.15rem;">
+                    Why Mathematical Analysis Demands a Formal Proof
+                </div>
+
+                <p>
+                    If limit uniqueness is so intuitive, why does every real analysis curriculum insist on proving it as a non-trivial theorem?
+                </p>
+
+                <ul style="padding-left: 1.5rem; margin: 0.75rem 0 1.25rem 0; color: #334155; line-height: 1.75;">
+                    <li style="margin-bottom: 0.6rem;">
+                        <strong>Auditing Our Own Definitions:</strong> In analysis, definitions function like legal contracts. We crafted the formal $\epsilon$-$N$ definition of convergence to replace imprecise hand-waving like <em>"approaches"</em> or <em>"gets close."</em> Because we authored that quantifier predicate ($\forall \epsilon > 0$, $\exists N \in \mathbb{N}$ such that $\forall n > N$, $|a_n - L| < \epsilon$), we must audit it: did our algebraic phrasing leave a loophole permitting an oscillating tail to claim two limits? The proof confirms it did not.
+                    </li>
+                    <li>
+                        <strong>The Role of Real Metric Geometry (The Hausdorff Property):</strong> In more abstract topological spaces without distance, sequences <em>can</em> legitimately converge to multiple points at once. Limit uniqueness on the real line $\mathbb{R}$ is a direct consequence of metric geometry: because any two distinct numbers sit a strictly positive distance $d = |L - M| > 0$ apart, the real line allows us to isolate them inside mutually disjoint open sets.
+                    </li>
+                </ul>
+
+                <!-- Proof Strategy Card: The Exclusionary Moat (Amber) -->
+                <div style="background: #fffbeb; border: 1px solid #fef3c7; border-left: 4px solid #b45309; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                    <div style="color: #b45309; margin: 0 0 0.5rem 0; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
+                        The Proof Strategy: Constructing the Exclusionary Moat
+                    </div>
+                    <p style="margin: 0 0 0.75rem 0; color: #334155;">
+                        The proof proceeds by <strong>contradiction</strong> using an exclusionary buffer zone:
+                    </p>
+                    <ol style="padding-left: 1.25rem; margin: 0; color: #334155; line-height: 1.75;">
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>The Inviolable Gap:</strong> Assume for contradiction that $a_n \to L$ and $a_n \to M$ with $L \ne M$. The metric distance separating them is strictly positive: $d = |L - M| > 0$.
+                        </li>
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>The Disjoint Partition:</strong> Choose a strict tolerance smaller than half the distance, such as $\epsilon = d/2$. This shrinks the corridors $U_\epsilon(L) = (L - \epsilon, L + \epsilon)$ and $U_\epsilon(M) = (M - \epsilon, M + \epsilon)$ until their intersection is strictly empty: $U_\epsilon(L) \cap U_\epsilon(M) = \emptyset$.
+                        </li>
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>The Independent Milestones:</strong> By convergence, there exists milestone $N_1$ trapping all terms $n > N_1$ inside $U_\epsilon(L)$, and milestone $N_2$ trapping all terms $n > N_2$ inside $U_\epsilon(M)$.
+                        </li>
+                        <li>
+                            <strong>The Colliding Demands:</strong> Past the master tail horizon $N^* = \max(N_1, N_2)$, any subsequent term $a_n$ is required to exist inside $U_\epsilon(L)$ <em>and</em> inside $U_\epsilon(M)$ simultaneously. Because the sets share zero common real numbers, this requirement is impossible ($|L - M| < d$), destroying the premise that two limits can exist.
+                        </li>
+                    </ol>
+                </div>
+
+                <!-- Practical Relief Box (Emerald Green) -->
+                <div style="background: #f0fdf4; border: 1px solid #dcfce7; border-left: 4px solid #059669; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                    <div style="color: #059669; margin: 0 0 0.5rem 0; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
+                        How This Liberates Your Problem Solving
+                    </div>
+                    <p style="margin: 0; color: #166534;">
+                        This theorem gives you complete peace of mind when solving limit problems: <strong>there is never a "rival" correct answer</strong>. Whether you compute a limit through factoring, the Squeeze Theorem, or a formal $\epsilon$-$N$ construction, you never need to worry that another valid value exists. Once you locate <em>a</em> limit, you have captured <em>the only</em> limit.
+                    </p>
+                </div>
+            </section>
+
                 <!-- ================================================================= -->
                 <!-- 2D INTERACTIVE AID: THEOREM - UNIQUENESS OF LIMITS (LIGHT THEME)  -->
                 <!-- ================================================================= -->
@@ -2104,7 +2195,87 @@
                 })();
                 </script>
 
-            <h3 style="color: #0f172a; margin-top: 1.75rem;">Theorem: Tail Invariance (The Shift &amp; Truncation Theorem)</h3>
+            <!-- ================================================================= -->
+            <!-- THEOREM: TAIL INVARIANCE                                          -->
+            <!-- ================================================================= -->
+            <div style="margin-top: 2.25rem; margin-bottom: 1rem;">
+                <h3 style="color: #0f172a; font-size: 1.35rem; font-weight: 700; margin: 0 0 0.35rem 0; line-height: 1.3;">
+                    Theorem: Tail Invariance (The Shift &amp; Truncation Theorem)
+                </h3>
+                <div style="color: #64748b; font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
+                    Intuition &amp; The "Forgiveness" Principle
+                </div>
+            </div>
+
+            <section style="margin-bottom: 2rem; color: #334155; font-size: 1rem; line-height: 1.75;">
+                <p>
+                    When students first meet the formal $\epsilon$-$N$ definition, the heavy machinery of quantifiers ($\forall \epsilon > 0$, $\exists N \in \mathbb{N}$) can look like an unforgiving straitjacket. It is easy to assume that convergence demands immediate perfection—that every term from $a_1$ onward must politely behave. But look closely at the condition: the inequality $|a_n - L| < \epsilon$ is only required for <em>$n > N$</em>, never from $n = 1$. The existence of $N$ is mathematics granting an official grace period. The <strong>Tail Invariance Theorem</strong> elevates this into a fundamental principle: <strong>early chaos is completely forgiven, and only the eventual destination matters</strong>.
+                </p>
+
+                <!-- Core Promise Callout (Sky Blue) -->
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #0284c7; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                    <div style="color: #0284c7; margin: 0 0 0.5rem 0; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
+                        The Amnesty Principle
+                    </div>
+                    <p style="margin: 0; color: #334155;">
+                        A sequence is allowed to have an absolute train wreck of a start. It can explode to $+10^{9}$ at $n = 1$, dive to $-10^{6}$ at $n = 2$, divide by zero at $n = 3$, or oscillate hysterically for the next five hundred indices. None of those early terms have any legal standing over convergence. <strong>Convergence is strictly an eventual destination.</strong> As long as the sequence eventually settles down somewhere far down the index line, the limit remains identical.
+                    </p>
+                </div>
+
+                <div style="font-weight: 700; color: #0f172a; margin-top: 1.5rem; margin-bottom: 0.75rem; font-size: 1.05rem;">
+                    Two Intuitive Ways to Picture the Theorem
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1rem 0 1.5rem 0;">
+                    <!-- Analogy 1: Marathon -->
+                    <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+                        <div style="color: #0284c7; margin: 0 0 0.4rem 0; font-size: 0.95rem; font-weight: 700;">
+                            1. The Marathon Runner
+                        </div>
+                        <p style="margin: 0; font-size: 0.92rem; color: #475569; line-height: 1.6;">
+                            Imagine a runner in a 42-kilometer marathon. In the first five meters out of the gate, they trip over their shoelace, drop their water bottle, and stumble. Does any of that initial clumsy chaos change where the finish line sits or whether they cross it three hours later? Over a journey that stretches toward infinity, any finite start is merely a microscopic speck of dust.
+                        </p>
+                    </div>
+
+                    <!-- Analogy 2: Infinite Book -->
+                    <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+                        <div style="color: #0284c7; margin: 0 0 0.4rem 0; font-size: 0.95rem; font-weight: 700;">
+                            2. The Infinite Manuscript
+                        </div>
+                        <p style="margin: 0; font-size: 0.92rem; color: #475569; line-height: 1.6;">
+                            Imagine a manuscript with infinitely many pages. If a mischievous reader tears out the first 10 pages (<em>truncation</em>) or scribbles red graffiti across the first 50 pages (<em>finite modification</em>), have they altered the final trajectory of the infinite narrative? Not at all. There remain infinitely many unaltered pages preserving the story's asymptotic conclusion.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- De-Mystifying the Math Box (Amber) -->
+                <div style="background: #fffbeb; border: 1px solid #fef3c7; border-left: 4px solid #b45309; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                    <div style="color: #b45309; margin: 0 0 0.5rem 0; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
+                        De-Mystifying the Subscript Mechanics ($n + k$)
+                    </div>
+                    <p style="margin: 0 0 0.75rem 0; color: #334155;">
+                        Do not let the subscript algebra intimidate you. The notation is performing two everyday operations:
+                    </p>
+                    <ul style="padding-left: 1.25rem; margin: 0; color: #334155; line-height: 1.65;">
+                        <li style="margin-bottom: 0.6rem;">
+                            <strong>Fast-Forwarding a Playlist ($a_{n+k}$):</strong> When we define $b_n = a_{n+5}$, we are not altering any values; we are merely skipping the first 5 tracks. The new sequence starts at track 6: $b_1 = a_6$, $b_2 = a_7$, and so on. If the playlist was heading toward a silent fade-out at the end, skipping the first five tracks does not alter that fade-out.
+                        </li>
+                        <li>
+                            <strong>Resetting a Countdown Timer ($N' = N - k$):</strong> If a pizza is guaranteed to be ready after 20 minutes ($N = 20$), and you fast-forward your clock by 5 minutes ($k = 5$), how much longer must you wait from your new standpoint? Exactly $20 - 5 = 15$ minutes ($N' = 15$). Shifting the sequence forward by $k$ simply advances your milestone threshold by $k$ positions.
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Practical Reassurance (Emerald Green) -->
+                <div style="background: #f0fdf4; border: 1px solid #dcfce7; border-left: 4px solid #059669; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                    <div style="color: #059669; margin: 0 0 0.5rem 0; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
+                        How This Liberates Your Proofs
+                    </div>
+                    <p style="margin: 0; color: #166534;">
+                        When writing $\epsilon$-$N$ proofs, you <strong>never</strong> have to construct an inequality that works for $n = 1, 2, 3$. If your algebraic bound involves dividing by $n - 2$ or only becomes valid once $n \ge 50$, you do not need to panic or rewrite your solution. You simply discard or ignore the first 49 terms. Tail Invariance certifies that any algebraic guarantee that holds <em>eventually</em> is fully sufficient to govern the limit $\lim_{n \to \infty} a_n = L$.
+                    </p>
+                </div>
+            </section>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
                 Real analysis teaches us an empowering truth: <strong>initial terms do not matter</strong> for convergence. If you are ever worried about a sequence having a few messy starting terms, this theorem provides absolute peace of mind.
             </p>
@@ -2891,247 +3062,498 @@
                 </li>
             </ul>
 
-            <h3 style="color: #0f172a; margin-top: 1.75rem;">Theorem: Order Limit Theorem (Inequality Preservation)</h3>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                One of the most comforting features of limits is that they respect relative order. If one sequence always stays below another on the number line, its eventual limit cannot leap ahead of the other sequence's limit.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>The Formal Statement:</strong> Let $(a_n)$ and $(b_n)$ be convergent sequences with limits $K, L \in \mathbb{R}$:
-            </p>
-            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$\lim_{n\to\infty} a_n = K \quad \text{and} \quad \lim_{n\to\infty} b_n = L$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                If there exists an index $N_0 \in \mathbb{N}$ such that $a_n \le b_n$ for all $n > N_0$, then:
-            </p>
-            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$K \le L$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <em>Special Single-Sequence Corollary:</em> If $a_n \ge 0$ for all $n > N_0$ and $\lim a_n = K$, then $K \ge 0$. A non-negative sequence cannot converge to a negative number.
-            </p>
-
-            <h4 style="color: #0f172a; margin-top: 1.5rem;">The Proof Strategy: Proof by Contradiction via the Midpoint Moat</h4>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                How do we prove this? Proving an inequality directly with $\epsilon\text{-}N$ can feel clumsy. Instead, mathematicians use <strong>Proof by Contradiction</strong>: we assume the opposite—that $K > L$—and watch the system contradict itself.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>The Geometric Picture:</strong> If $K > L$, there is a positive gap between them of width $K - L > 0$. If we choose a tolerance equal to half this gap, $\epsilon = \frac{K - L}{2}$, the target windows around $K$ and $L$ will never overlap! Their common boundary will be their exact midpoint, $M = \frac{K + L}{2}$.
-            </p>
-            <ol style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
-                <li style="margin-bottom: 0.6rem;">
-                    Assume, for contradiction, that $K > L$. Then $K - L > 0$.
-                </li>
-                <li style="margin-bottom: 0.6rem;">
-                    Set $\epsilon = \frac{K - L}{2} > 0$. Note that $L + \epsilon = \frac{K + L}{2} = K - \epsilon$.
-                </li>
-                <li style="margin-bottom: 0.6rem;">
-                    Since $a_n \to K$, there exists $N_1 \in \mathbb{N}$ such that for all $n > N_1$:
-                    $$|a_n - K| < \epsilon \implies a_n > K - \epsilon = \frac{K + L}{2}$$
-                </li>
-                <li style="margin-bottom: 0.6rem;">
-                    Since $b_n \to L$, there exists $N_2 \in \mathbb{N}$ such that for all $n > N_2$:
-                    $$|b_n - L| < \epsilon \implies b_n < L + \epsilon = \frac{K + L}{2}$$
-                </li>
-                <li>
-                    Now choose the master cutoff $N = \max(N_0, N_1, N_2)$. For any index $n > N$, all conditions hold at once:
-                    $$b_n < \frac{K + L}{2} < a_n \implies b_n < a_n$$
-                    This directly contradicts our hypothesis that $a_n \le b_n$ for all $n > N_0$!
-                    Therefore, our assumption that $K > L$ must be false. We conclude that $K \le L$. $\blacksquare$
-                </li>
-            </ol>
-
-            <h4 style="color: #0f172a; margin-top: 1.5rem;">⚠️ The Classic Trap: Why Strict Inequalities Become Non-Strict</h4>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                There is one critical warning every beginner must know, because exam questions love testing it:
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem; font-weight: 600; color: #b91c1c;">
-                Strict inequalities between terms are NOT preserved in the limit!
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                If $a_n < b_n$ strictly for every single term in the sequence, you can only conclude that $\lim a_n \le \lim b_n$. You <strong>cannot</strong> claim that $\lim a_n < \lim b_n$.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>Why does this happen? The "Pinch Point" Phenomenon:</strong><br>
-                Two sequences can maintain a strict gap between themselves at every finite step, but as they travel to infinity, that gap can shrink down to zero. The limits can "touch" at infinity even though no finite pair of terms ever touches.
-            </p>
-            <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
-                <li style="margin-bottom: 0.6rem;">
-                    <strong>Counterexample 1:</strong> Let $a_n = 0$ and $b_n = \frac{1}{n}$. Clearly, $0 < \frac{1}{n}$ strictly holds for every $n \in \mathbb{N}^+$. Yet in the limit:
-                    $$\lim_{n\to\infty} 0 = 0 \quad \text{and} \quad \lim_{n\to\infty} \frac{1}{n} = 0 \implies 0 \le 0$$
-                    The strict inequality has collapsed into equality!
-                </li>
-                <li>
-                    <strong>Counterexample 2:</strong> Let $a_n = -\frac{1}{n}$ and $b_n = \frac{1}{n}$. At every finite index $n$, $a_n$ is strictly negative and $b_n$ is strictly positive ($-\frac{1}{n} < \frac{1}{n}$). Yet both meet at the exact same limit: $0 = 0$.
-                </li>
-            </ul>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Keep this in mind: limits weaken strict bounds into non-strict bounds ($<$ becomes $\le$, and $>$ becomes $\ge$). This property is the direct precursor to the famous <strong>Squeeze Theorem</strong>, which we will explore in Lecture 5!
-            </p>
-
-            <!-- DIAGRAM: Order Limit Theorem -->
-            <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 8px; margin: 1.5rem 0; padding: 1.5rem;">
-                <h5 style="margin-top: 0; margin-bottom: 1rem; color: #334155; font-size: 0.95rem;">Visualization: Inequality Preservation ($a_n \le b_n \implies K \le L$)</h5>
-                <svg viewBox="0 0 740 180" style="width: 100%; height: auto;">
-                    <line x1="40" y1="150" x2="700" y2="150" stroke="#cbd5e1" stroke-width="1.5" />
-                    <!-- b_n converging to L -->
-                    <line x1="40" y1="50" x2="700" y2="50" stroke="#10b981" stroke-dasharray="4" />
-                    <text x="705" y="54" font-family="sans-serif" font-size="12" fill="#10b981" font-weight="bold">Limit L</text>
-                    <!-- a_n converging to K -->
-                    <line x1="40" y1="100" x2="700" y2="100" stroke="#3b82f6" stroke-dasharray="4" />
-                    <text x="705" y="104" font-family="sans-serif" font-size="12" fill="#3b82f6" font-weight="bold">Limit K</text>
-
-                    <!-- b_n points (top) -->
-                    <circle cx="80" cy="20" r="4" fill="#10b981" />
-                    <circle cx="160" cy="35" r="4" fill="#10b981" />
-                    <circle cx="240" cy="45" r="4" fill="#10b981" />
-                    <circle cx="320" cy="52" r="4" fill="#10b981" />
-                    <circle cx="400" cy="49" r="4" fill="#10b981" />
-                    <circle cx="480" cy="50.5" r="4" fill="#10b981" />
-
-                    <!-- a_n points (bottom) -->
-                    <circle cx="80" cy="140" r="4" fill="#3b82f6" />
-                    <circle cx="160" cy="120" r="4" fill="#3b82f6" />
-                    <circle cx="240" cy="108" r="4" fill="#3b82f6" />
-                    <circle cx="320" cy="98" r="4" fill="#3b82f6" />
-                    <circle cx="400" cy="101" r="4" fill="#3b82f6" />
-                    <circle cx="480" cy="99.5" r="4" fill="#3b82f6" />
-
-                    <!-- Vertical constraint lines -->
-                    <line x1="80" y1="28" x2="80" y2="132" stroke="#94a3b8" stroke-dasharray="2" />
-                    <line x1="160" y1="43" x2="160" y2="112" stroke="#94a3b8" stroke-dasharray="2" />
-                    <line x1="240" y1="53" x2="240" y2="100" stroke="#94a3b8" stroke-dasharray="2" />
-                    <text x="85" y="85" font-family="sans-serif" font-size="10" fill="#64748b">a₁ &le; b₁</text>
-                </svg>
+            <!-- ================================================================= -->
+            <!-- THEOREM: ORDER LIMIT THEOREM                                      -->
+            <!-- ================================================================= -->
+            <div style="margin-top: 2.25rem; margin-bottom: 1rem;">
+                <h3 style="color: #0f172a; font-size: 1.35rem; font-weight: 700; margin: 0 0 0.35rem 0; line-height: 1.3;">
+                    Theorem: Order Limit Theorem (Preservation of Inequalities)
+                </h3>
+                <div style="color: #64748b; font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
+                    Intuition, The "No-Leapfrogging" Principle &amp; Formal Proof
+                </div>
             </div>
 
-            <h3 style="color: #0f172a; margin-top: 2rem;">Proposition 5: Fundamental Sequence Properties</h3>
+            <section style="margin-bottom: 2rem; color: #334155; font-size: 1rem; line-height: 1.75;">
+                <!-- Reassuring Opening Narrative -->
+                <p style="margin-top: 0;">
+                    When you first encounter infinite processes in real analysis, it is completely natural to feel uneasy. Infinity has a reputation for breaking things: sums can oscillate, sets can turn strange, and operations that work fine for five numbers often collapse when applied infinitely many times. You might reasonably wonder: <em>Does the number line itself twist at infinity? If one sequence stays beneath another for a million steps, could taking a limit suddenly invert their order?</em>
+                </p>
 
-            <h4 style="color: #0f172a; margin-top: 1.25rem;">Property 1: Absolute Value Stabilization ($a_n \to L \implies |a_n| \to |L|$)</h4>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                The first property says that if a sequence of numbers settles down to a limit $L$, then taking the absolute values of those numbers causes them to settle down to $|L|$.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>Why does this make intuitive sense?</strong> Absolute value measures distance from the origin $0$. If the points $a_n$ are crowding closer and closer to $L$, their distance from zero must naturally crowd closer and closer to $L$'s distance from zero.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>The Rigorous Proof:</strong> The proof relies on a handy tool known as the <em>Reverse Triangle Inequality</em>, which states that for any real numbers $x$ and $y$:
-            </p>
-            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$\big| |x| - |y| \big| \le |x - y|$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Notice what this inequality tells us: the distance between $|a_n|$ and $|L|$ is <em>always smaller than or equal to</em> the distance between $a_n$ and $L$. Therefore, whenever we choose an index $N$ such that $|a_n - L| < \epsilon$, we automatically get:
-            </p>
-            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$\big| |a_n| - |L| \big| \le |a_n - L| < \epsilon$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                The exact same cutoff index $N$ that worked for $a_n$ works immediately for $|a_n|$!
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem; background: #fffbeb; border-left: 4px solid var(--accent); padding: 0.85rem 1.15rem; border-radius: 4px;">
-                ⚠️ <strong>A Classic Beginner Trap (The Converse Fails!):</strong> Does $|a_n| \to |L|$ imply that $a_n \to L$? <em>No!</em> Consider the sequence $a_n = (-1)^n = (-1, 1, -1, 1, \dots)$. Taking absolute values gives $|a_n| = 1$, which obviously converges to $1$. But the sequence $a_n$ itself never converges because it permanently oscillates. The only exception where the converse works is when the limit is zero: $|a_n| \to 0 \iff a_n \to 0$.
-            </p>
+                <p>
+                    The <strong>Order Limit Theorem</strong> exists to put your mind entirely at ease. It is the mathematical guarantee that <strong>the geometry of the real line remains stable</strong> under limits. Analysis does not scramble, invert, or randomize relative positions: if sequence $(a_n)$ never overtakes sequence $(b_n)$, its final destination cannot magically leapfrog $(b_n)$'s destination either.
+                </p>
 
-            <h4 style="color: #0f172a; margin-top: 1.75rem;">Property 2: Convergence Implies Boundedness (The Prefix vs. Tail Strategy)</h4>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                The second property is one of the most celebrated cornerstones of analysis:
-            </p>
-            <p style="text-align: center; margin: 1rem 0; font-size: 1.15rem; font-weight: 600; color: #0f172a;">
-                Every convergent sequence is bounded.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                That is, there exists some positive real number $M > 0$ such that $|a_n| \le M$ for every single index $n \in \mathbb{N}$. In other words, a sequence that converges can never run off to $+\infty$ or $-\infty$.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>The Conceptual Dilemma:</strong> An infinite sequence has infinitely many terms. How could we possibly build a single finite fence $[-M, M]$ that holds infinitely many numbers, especially when earlier terms might have jumped around wildly?
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>The Proof Strategy (Divide and Conquer):</strong> Mathematicians solve this using a two-step technique: we split the sequence into a <em>finite prefix</em> and an <em>infinite tail</em>.
-            </p>
-            <ol style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
-                <li style="margin-bottom: 0.75rem;">
-                    <strong>Trapping the Infinite Tail:</strong> Because $a_n \to L$, we can choose <em>any</em> tolerance we like. Let's make our lives easy and simply pick $\epsilon = 1$. By the definition of convergence, there exists some cutoff index $N$ such that:
-                    $$n > N \implies |a_n - L| < 1$$
-                    Applying the triangle inequality gives $|a_n| = |(a_n - L) + L| \le |a_n - L| + |L| < 1 + |L|$. <em>All infinitely many terms past index $N$ are trapped below the number $|L| + 1$!</em>
-                </li>
-                <li style="margin-bottom: 0.75rem;">
-                    <strong>Checking the Finite Prefix:</strong> What about the terms before the cutoff: $\{a_0, a_1, a_2, \dots, a_N\}$? There are only finitely many of them! Any finite list of real numbers has a guaranteed largest absolute value.
-                </li>
-                <li>
-                    <strong>Building the Global Fence ($M$):</strong> We simply take the maximum over the finite prefix and our tail bound:
-                    $$M = \max\Big(|a_0|, |a_1|, |a_2|, \dots, |a_N|, |L| + 1\Big)$$
-                    Because every term in the prefix is $\le M$ by definition of a maximum, and every term in the tail is $< |L| + 1 \le M$, the number $M$ bounds the entire infinite sequence. $\blacksquare$
-                </li>
-            </ol>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>Does the converse hold?</strong> Again, ask yourself: if a sequence is bounded, does it have to converge? No! Boundedness is a <em>necessary</em> condition for convergence, but not a <em>sufficient</em> one. The sequence $a_n = (-1)^n$ is safely trapped inside $[-1, 1]$, yet it never converges.
-            </p>
+                <!-- Core Reassurance Box (Sky Blue) -->
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #0284c7; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                    <div style="color: #0284c7; margin: 0 0 0.5rem 0; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
+                        The Mental Model: Two Elevators in the Same Shaft
+                    </div>
+                    <p style="margin: 0; color: #334155;">
+                        Picture two elevator cars sharing the same vertical shaft. Elevator A is physically constrained below Elevator B at every single floor along their journey ($a_n \le b_n$). As both cars come to a halt at their respective final levels ($K$ and $L$), is it physically possible for Elevator A to end up suspended above Elevator B? <strong>Of course not.</strong> At worst, they can stop bumper-to-bumper at the exact same level ($K = L$), but Elevator A can never teleport through Elevator B's floor. Limits respect this exact same physical common sense.
+                    </p>
+                </div>
 
-            <!-- DIAGRAM: Boundedness -->
-            <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 8px; margin: 1.5rem 0; padding: 1.5rem;">
-                <h5 style="margin-top: 0; margin-bottom: 1rem; color: #334155; font-size: 0.95rem;">Visualization: Prefix/Tail Split for Bounded Sequences</h5>
-                <svg viewBox="0 0 740 200" style="width: 100%; height: auto;">
-                    <line x1="40" y1="160" x2="700" y2="160" stroke="#cbd5e1" stroke-width="1.5" />
+                <!-- Formal Statement Card -->
+                <div style="background: #ffffff; border: 1px solid #e2e8f0; border-left: 4px solid #0284c7; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);">
+                    <div style="color: #0284c7; margin: 0 0 0.5rem 0; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
+                        Formal Mathematical Statement
+                    </div>
+                    <p style="margin: 0 0 0.5rem 0; color: #0f172a; font-weight: 600;">
+                        Let $(a_n)$ and $(b_n)$ be convergent sequences in $\mathbb{R}$ with:
+                    </p>
+                    <div style="text-align: center; margin: 0.75rem 0;">
+                        $$\lim_{n\to\infty} a_n = K \quad \text{and} \quad \lim_{n\to\infty} b_n = L$$
+                    </div>
+                    <p style="margin: 0.5rem 0 0 0; color: #334155;">
+                        If there exists a cutoff milestone $N_0 \in \mathbb{N}$ such that $a_n \le b_n$ for all $n > N_0$, then:
+                    </p>
+                    <div style="text-align: center; margin: 0.75rem 0; font-size: 1.2rem; font-weight: 700; color: #0f172a;">
+                        $$K \le L$$
+                    </div>
+                </div>
 
-                    <!-- Limit L and Epsilon Band -->
-                    <rect x="260" y="80" width="440" height="40" fill="#fde68a" opacity="0.3" stroke="#f59e0b" stroke-dasharray="2" />
-                    <line x1="40" y1="100" x2="700" y2="100" stroke="#64748b" stroke-dasharray="4" />
-                    <text x="705" y="104" font-family="sans-serif" font-size="12" fill="#64748b">L</text>
+                <!-- Tail Invariance Connection (Slate/Muted Blue) -->
+                <div style="background: #f1f5f9; border: 1px solid #cbd5e1; border-left: 4px solid #64748b; border-radius: 8px; padding: 1.15rem 1.4rem; margin: 1.5rem 0;">
+                    <div style="color: #334155; margin: 0 0 0.4rem 0; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
+                        Why the $n > N_0$ Condition Should Relieve You
+                    </div>
+                    <p style="margin: 0; color: #475569; font-size: 0.93rem;">
+                        Notice that the theorem does <strong>not</strong> demand $a_n \le b_n$ for $n = 1, 2, 3$. Sequence $(a_n)$ could sit miles above $(b_n)$ for the first thousand terms. Thanks to our friend the <em>Tail Invariance Theorem</em>, early disorder is completely forgiven. As long as $(a_n)$ drops below $(b_n)$ <em>eventually</em> (for all indices past some finite marker $N_0$), the limit comparison $K \le L$ is unconditionally protected.
+                    </p>
+                </div>
 
-                    <!-- Master Fence M -->
-                    <line x1="40" y1="30" x2="700" y2="30" stroke="#ef4444" stroke-width="2" opacity="0.5" />
-                    <text x="705" y="34" font-family="sans-serif" font-size="12" fill="#ef4444" font-weight="bold">+M</text>
+                <!-- The Special Single-Sequence Corollary (Emerald Green) -->
+                <div style="background: #f0fdf4; border: 1px solid #dcfce7; border-left: 4px solid #059669; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                    <div style="color: #059669; margin: 0 0 0.5rem 0; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
+                        The Non-Negative Anchor (Single-Sequence Corollary)
+                    </div>
+                    <p style="margin: 0 0 0.5rem 0; color: #166534;">
+                        If you set the lower sequence to a constant zero ($a_n = 0$), you obtain the most practical workhorse corollary in analysis:
+                    </p>
+                    <div style="text-align: center; margin: 0.6rem 0; font-weight: 600; color: #166534; font-size: 1.05rem;">
+                        $$\text{If } b_n \ge 0 \text{ for all } n > N_0, \quad \text{then } \lim_{n\to\infty} b_n \ge 0$$
+                    </div>
+                    <p style="margin: 0; color: #166534;">
+                        A sequence of positive measurements—such as distances $|x - y|$, absolute values, squared errors, or norms—can never converge to a negative destination. Zero serves as a rock-solid floor.
+                    </p>
+                </div>
 
-                    <!-- N Cutoff -->
-                    <line x1="260" y1="20" x2="260" y2="160" stroke="#0f172a" stroke-dasharray="4" />
-                    <text x="265" y="155" font-family="sans-serif" font-size="11" fill="#0f172a">Cutoff N</text>
+                <!-- Proof Strategy Section -->
+                <div style="font-weight: 700; color: #0f172a; margin-top: 2rem; margin-bottom: 0.5rem; font-size: 1.15rem;">
+                    The Proof Strategy: Constructing the Midpoint Moat
+                </div>
 
-                    <!-- Prefix Points -->
-                    <circle cx="80" cy="140" r="4" fill="#94a3b8" />
-                    <circle cx="140" cy="40" r="5" fill="#ef4444" />
-                    <text x="140" y="25" font-family="sans-serif" font-size="10" fill="#ef4444" text-anchor="middle">Max of Prefix</text>
-                    <circle cx="200" cy="120" r="4" fill="#94a3b8" />
-                    <!-- Tail Points -->
-                    <circle cx="300" cy="110" r="4" fill="#10b981" />
-                    <circle cx="360" cy="90" r="4" fill="#10b981" />
-                    <circle cx="420" cy="105" r="4" fill="#10b981" />
-                    <circle cx="480" cy="95" r="4" fill="#10b981" />
+                <p>
+                    Proving an inequality directly with forward $\epsilon$-$N$ bounds can feel clumsy because inequalities do not naturally supply tight numeric tolerances. Instead, mathematicians take the adversarial route: <strong>Proof by Contradiction</strong>. We suppose the impossible actually happened—that $a_n \le b_n$ but $K > L$—and watch the system tear itself apart by building an impenetrable fence between their target neighborhoods.
+                </p>
 
-                    <!-- Labels -->
-                    <text x="150" y="180" font-family="sans-serif" font-size="11" fill="#64748b" text-anchor="middle">Finite Prefix (Checked Manually)</text>
-                    <text x="480" y="180" font-family="sans-serif" font-size="11" fill="#10b981" text-anchor="middle">Infinite Tail (Trapped by ϵ=1)</text>
-                </svg>
+                <!-- Strategy Card (Amber) -->
+                <div style="background: #fffbeb; border: 1px solid #fef3c7; border-left: 4px solid #b45309; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                    <div style="color: #b45309; margin: 0 0 0.5rem 0; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
+                        The Geometric Picture: The Midpoint Fence
+                    </div>
+                    <p style="margin: 0 0 0.75rem 0; color: #334155;">
+                        If the lower limit $K$ genuinely sat above the upper limit $L$, there would be positive daylight between them: $K - L > 0$. We erect a boundary line at their exact arithmetic average:
+                    </p>
+                    <div style="text-align: center; margin: 0.75rem 0;">
+                        $$M = \frac{K + L}{2}$$
+                    </div>
+                    <p style="margin: 0; color: #334155;">
+                        By choosing our challenge tolerance to be half of the total gap, $\epsilon = \frac{K - L}{2}$, the neighborhood of $K$ is pushed entirely above $M$, while the neighborhood of $L$ is pushed entirely below $M$.
+                    </p>
+                </div>
+
+                <ol style="margin: 1rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.8;">
+                    <li style="margin-bottom: 0.75rem;">
+                        <strong>The Adversarial Premise:</strong> Assume for contradiction that $K > L$. Therefore, the difference $K - L$ is strictly positive.
+                    </li>
+                    <li style="margin-bottom: 0.75rem;">
+                        <strong>Setting the Tolerance:</strong> Choose $\epsilon = \frac{K - L}{2} > 0$. Notice how cleanly the arithmetic balances:
+                        $$K - \epsilon = K - \frac{K - L}{2} = \frac{K + L}{2} = M$$
+                        $$L + \epsilon = L + \frac{K - L}{2} = \frac{K + L}{2} = M$$
+                        Both tolerance corridors meet at the neutral fence $M$ without sharing any common interior points.
+                    </li>
+                    <li style="margin-bottom: 0.75rem;">
+                        <strong>Trapping Sequence $(a_n)$ Above $M$:</strong> Because $a_n \to K$, there exists $N_1 \in \mathbb{N}$ such that for all $n > N_1$:
+                        $$|a_n - K| < \epsilon \implies a_n > K - \epsilon = M$$
+                        Every term of $(a_n)$ past $N_1$ is forced strictly above the fence $M$.
+                    </li>
+                    <li style="margin-bottom: 0.75rem;">
+                        <strong>Trapping Sequence $(b_n)$ Below $M$:</strong> Because $b_n \to L$, there exists $N_2 \in \mathbb{N}$ such that for all $n > N_2$:
+                        $$|b_n - L| < \epsilon \implies b_n < L + \epsilon = M$$
+                        Every term of $(b_n)$ past $N_2$ is forced strictly below the fence $M$.
+                    </li>
+                    <li>
+                        <strong>The Master Cutoff Collision:</strong> Choose the master horizon $N^* = \max(N_0, N_1, N_2)$. For any index $n > N^*$, all conditions hold at once:
+                        $$b_n < M < a_n \implies b_n < a_n$$
+                        This flatly contradicts our foundational premise that $a_n \le b_n$ for all $n > N_0$.
+                        <br>
+                        A term cannot be strictly smaller and greater-or-equal simultaneously. The assumption $K > L$ is completely destroyed; we conclude with certainty that $K \le L$. $\blacksquare$
+                    </li>
+                </ol>
+
+                <!-- The Classic Trap Box (Rose / Warning) -->
+                <div style="background: #fff1f2; border: 1px solid #fecdd3; border-left: 4px solid #e11d48; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.75rem 0;">
+                    <div style="color: #e11d48; margin: 0 0 0.5rem 0; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
+                        The Classic Trap: Strict Inequalities Become Non-Strict
+                    </div>
+                    <p style="margin: 0 0 0.75rem 0; color: #9f1239; font-weight: 600;">
+                        Strict inequalities ($<$) are NOT preserved across limits. They soften into non-strict inequalities ($\le$).
+                    </p>
+                    <p style="margin: 0 0 0.75rem 0; color: #334155;">
+                        Even if $a_n < b_n$ holds strictly for every single index $n \in \mathbb{N}$, you can only conclude that $\lim a_n \le \lim b_n$. You <strong>cannot</strong> claim that $\lim a_n < \lim b_n$.
+                    </p>
+
+                    <div style="font-weight: 700; color: #0f172a; margin: 1rem 0 0.4rem 0; font-size: 0.95rem;">
+                        Why? The "Vanishing Daylight" Phenomenon
+                    </div>
+                    <p style="margin: 0 0 0.75rem 0; color: #475569; font-size: 0.92rem;">
+                        Imagine two cars driving in parallel lanes toward a red traffic light. Car A stays strictly behind Car B the entire trip ($a_n < b_n$). But as they brake to a halt at the line, both cars can stop bumper-to-bumper at the exact same marker ($K = L$). The daylight separating them shrinks down to zero without Car A ever overtaking Car B.
+                    </p>
+
+                    <ul style="padding-left: 1.25rem; margin: 0.5rem 0 0 0; color: #334155; font-size: 0.92rem; line-height: 1.7;">
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>Counterexample 1 (The Stationary Floor):</strong> Let $a_n = 0$ and $b_n = \frac{1}{n}$. For every single positive integer $n$:
+                            $$0 < \frac{1}{n} \quad \text{holds strictly.}$$
+                            Yet in the limit:
+                            $$\lim_{n\to\infty} 0 = 0 \quad \text{and} \quad \lim_{n\to\infty} \frac{1}{n} = 0 \implies 0 \le 0 \quad (\text{equality!})$$
+                        </li>
+                        <li>
+                            <strong>Counterexample 2 (Symmetric Approach):</strong> Let $a_n = -\frac{1}{n}$ and $b_n = \frac{1}{n}$. For all $n$, $a_n$ is strictly negative while $b_n$ is strictly positive ($a_n < b_n$). Yet both meet at the origin: $\lim a_n = 0 = \lim b_n$.
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- VISUALIZATION CANVAS: ORDER LIMIT THEOREM -->
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; margin: 2rem 0; padding: 1.25rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+                    <div style="margin-bottom: 0.75rem; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem;">
+                        <span style="font-size: 0.95rem; font-weight: 700; color: #0f172a;">
+                            Visualizing Order Preservation: $(a_n \le b_n \implies K \le L)$
+                        </span>
+                        <span style="font-size: 0.8rem; font-weight: 600; color: #64748b;">
+                            Green sequence $(b_n)$ bounds blue sequence $(a_n)$ from above
+                        </span>
+                    </div>
+
+                    <svg viewBox="0 0 780 230" style="width: 100%; height: auto; display: block;" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+                        <defs>
+                            <marker id="ord-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                <path d="M 0 2 L 7 5 L 0 8 z" fill="#64748b"/>
+                            </marker>
+                        </defs>
+
+                        <!-- Coordinate Grid -->
+                        <g stroke="#f1f5f9" stroke-width="0.75">
+                            <line x1="60" y1="40" x2="710" y2="40"/>
+                            <line x1="60" y1="80" x2="710" y2="80"/>
+                            <line x1="60" y1="120" x2="710" y2="120"/>
+                            <line x1="60" y1="160" x2="710" y2="160"/>
+                            <line x1="120" y1="20" x2="120" y2="190"/>
+                            <line x1="180" y1="20" x2="180" y2="190"/>
+                            <line x1="240" y1="20" x2="240" y2="190"/>
+                            <line x1="300" y1="20" x2="300" y2="190"/>
+                            <line x1="360" y1="20" x2="360" y2="190"/>
+                            <line x1="420" y1="20" x2="420" y2="190"/>
+                            <line x1="480" y1="20" x2="480" y2="190"/>
+                            <line x1="540" y1="20" x2="540" y2="190"/>
+                            <line x1="600" y1="20" x2="600" y2="190"/>
+                            <line x1="660" y1="20" x2="660" y2="190"/>
+                        </g>
+
+                        <!-- Compliant Zone Shading (Past N0 = 2) -->
+                        <rect x="180" y="20" width="530" height="170" fill="#f8fafc" fill-opacity="0.8" stroke="#e2e8f0" stroke-width="0.75"/>
+
+                        <!-- Limit Lines -->
+                        <!-- Limit L (Top - Green) -->
+                        <line x1="60" y1="65" x2="710" y2="65" stroke="#059669" stroke-width="1.2" stroke-dasharray="4 3"/>
+                        <text x="718" y="69" fill="#059669" font-size="11" font-weight="700">Limit L</text>
+
+                        <!-- Limit K (Bottom - Blue) -->
+                        <line x1="60" y1="145" x2="710" y2="145" stroke="#0284c7" stroke-width="1.2" stroke-dasharray="4 3"/>
+                        <text x="718" y="149" fill="#0284c7" font-size="11" font-weight="700">Limit K</text>
+
+                        <!-- Coordinate Axes -->
+                        <line x1="60" y1="190" x2="715" y2="190" stroke="#94a3b8" stroke-width="1" marker-end="url(#ord-arrow)"/>
+                        <text x="724" y="194" fill="#64748b" font-size="10" font-weight="500">Index n</text>
+                        <line x1="60" y1="190" x2="60" y2="15" stroke="#94a3b8" stroke-width="1" marker-end="url(#ord-arrow)"/>
+                        <text x="32" y="16" fill="#64748b" font-size="10" font-weight="500">Values</text>
+
+                        <!-- Cutoff Horizon N0 = 2 -->
+                        <line x1="180" y1="20" x2="180" y2="190" stroke="#b45309" stroke-width="1.2" stroke-dasharray="3 3"/>
+                        <text x="180" y="205" fill="#b45309" font-size="10" font-weight="600" text-anchor="middle">N₀ = 2 (Order holds for n > 2)</text>
+
+                        <!-- Order Constraint Tether Lines (b_n >= a_n) -->
+                        <g stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2 2">
+                            <line x1="240" y1="52" x2="240" y2="162"/>
+                            <line x1="300" y1="72" x2="300" y2="154"/>
+                            <line x1="360" y1="62" x2="360" y2="140"/>
+                            <line x1="420" y1="68" x2="420" y2="148"/>
+                            <line x1="480" y1="64" x2="480" y2="143"/>
+                            <line x1="540" y1="66" x2="540" y2="146"/>
+                            <line x1="600" y1="65" x2="600" y2="144"/>
+                            <line x1="660" y1="65" x2="660" y2="145"/>
+                        </g>
+
+                        <!-- Connecting Polyline: b_n (Green) -->
+                        <polyline points="120,35 180,48 240,52 300,72 360,62 420,68 480,64 540,66 600,65 660,65"
+                                  fill="none" stroke="#6ee7b7" stroke-width="1" stroke-dasharray="3 2"/>
+
+                        <!-- Connecting Polyline: a_n (Blue) -->
+                        <polyline points="120,180 180,170 240,162 300,154 360,140 420,148 480,143 540,146 600,144 660,145"
+                                  fill="none" stroke="#7dd3fc" stroke-width="1" stroke-dasharray="3 2"/>
+
+                        <!-- Points: Sequence b_n (Top - Green) -->
+                        <g fill="#059669">
+                            <circle cx="120" cy="35" r="3.8"/>
+                            <circle cx="180" cy="48" r="3.8"/>
+                            <circle cx="240" cy="52" r="4"/>
+                            <circle cx="300" cy="72" r="4"/>
+                            <circle cx="360" cy="62" r="4"/>
+                            <circle cx="420" cy="68" r="4"/>
+                            <circle cx="480" cy="64" r="4"/>
+                            <circle cx="540" cy="66" r="4"/>
+                            <circle cx="600" cy="65" r="4"/>
+                            <circle cx="660" cy="65" r="4"/>
+                        </g>
+
+                        <!-- Points: Sequence a_n (Bottom - Blue) -->
+                        <g fill="#0284c7">
+                            <circle cx="120" cy="180" r="3.8"/>
+                            <circle cx="180" cy="170" r="3.8"/>
+                            <circle cx="240" cy="162" r="4"/>
+                            <circle cx="300" cy="154" r="4"/>
+                            <circle cx="360" cy="140" r="4"/>
+                            <circle cx="420" cy="148" r="4"/>
+                            <circle cx="480" cy="143" r="4"/>
+                            <circle cx="540" cy="146" r="4"/>
+                            <circle cx="600" cy="144" r="4"/>
+                            <circle cx="660" cy="145" r="4"/>
+                        </g>
+
+                        <!-- Order Annotations -->
+                        <text x="245" y="105" fill="#475569" font-size="9" font-weight="600">a₃ ≤ b₃</text>
+                        <text x="365" y="100" fill="#475569" font-size="9" font-weight="600">a₅ ≤ b₅</text>
+                        <text x="485" y="102" fill="#475569" font-size="9" font-weight="600">a₇ ≤ b₇</text>
+                    </svg>
+                </div>
+
+                <p style="margin-bottom: 0;">
+                    This result is the direct mechanical foundation for the <strong>Squeeze Theorem</strong>: if an unknown sequence is trapped between two bounding sequences whose limits meet ($K = L$), the middle sequence is compressed into that exact same destination with zero room to escape.
+                </p>
+            </section>
+
+            <!-- ================================================================= -->
+            <!-- PROPOSITION 5: FUNDAMENTAL SEQUENCE PROPERTIES                    -->
+            <!-- ================================================================= -->
+            <div style="margin-top: 2.5rem; margin-bottom: 1rem;">
+                <h3 style="color: #0f172a; font-size: 1.35rem; font-weight: 700; margin: 0 0 0.35rem 0; line-height: 1.3;">
+                    Proposition 5: Fundamental Sequence Properties
+                </h3>
+                <div style="color: #64748b; font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
+                    Absolute Values, Boundedness &amp; Sign Preservation
+                </div>
             </div>
 
-            <h4 style="color: #0f172a; margin-top: 1.75rem;">Property 3: Preservation of Sign (The Buffer Zone)</h4>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                The third property provides peace of mind when working with signs:
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                If a sequence converges to a strictly positive limit ($L > 0$), then eventually all of its terms must become strictly positive and stay bounded away from zero. Specifically, there is an index $N_0$ such that:
-            </p>
-            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$a_n > \frac{L}{2} > 0 \quad \text{for all } n > N_0$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                (Likewise, if $L < 0$, then eventually $a_n < \frac{L}{2} < 0$).
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>Why do we care so much about this?</strong> Think ahead to the Algebraic Limit Laws in the next section. When we want to prove that $\lim \frac{a_n}{b_n} = \frac{K}{L}$, we need to divide by $b_n$. But you cannot divide by zero! Even worse, if the numbers $b_n$ got closer and closer to zero, $1/b_n$ would explode to infinity. The preservation of sign property guarantees that if $L \neq 0$, the terms $b_n$ eventually build an impenetrable moat of width $L/2$ between themselves and zero.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                <strong>The Geometric Proof:</strong> If $L > 0$, the distance from $L$ to zero is exactly $L$. Since we can choose any positive $\epsilon$ in the definition of convergence, let's deliberately choose a tolerance that doesn't reach zero: set $\epsilon = \frac{L}{2}$.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                By the definition of convergence, there is an index $N_0$ such that for all $n > N_0$, we have $|a_n - L| < \frac{L}{2}$. Unpacking the absolute value bars:
-            </p>
-            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$-\frac{L}{2} < a_n - L < \frac{L}{2} \implies L - \frac{L}{2} < a_n < L + \frac{L}{2} \implies \frac{L}{2} < a_n < \frac{3L}{2}$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Look at the left-hand inequality: $a_n > \frac{L}{2}$. Because $L > 0$, $\frac{L}{2}$ is strictly positive. Every term in the tail is trapped above $\frac{L}{2}$ forever, completely insulated from zero! $\blacksquare$
-            </p>
+            <section style="margin-bottom: 2.5rem; color: #334155; font-size: 1rem; line-height: 1.75;">
+                <p style="margin-top: 0;">
+                    Before constructing the full algebra of limits (addition, multiplication, and quotients), we need three baseline stability properties. These results confirm that convergent sequences behave predictably under absolute values, remain trapped within finite boundaries, and stay insulated away from zero when their limits are non-zero.
+                </p>
+
+                <!-- ------------------------------------------------------------- -->
+                <!-- PROPERTY 1: ABSOLUTE VALUE STABILIZATION                      -->
+                <!-- ------------------------------------------------------------- -->
+                <h4 style="color: #0f172a; font-size: 1.15rem; font-weight: 700; margin-top: 1.75rem; margin-bottom: 0.5rem;">
+                    Property 1: Absolute Value Stabilization ($a_n \to L \implies |a_n| \to |L|$)
+                </h4>
+
+                <p>
+                    The first property says that if a sequence settles down to a limit $L$, taking the absolute value of each term causes the resulting sequence to settle down to $|L|$.
+                </p>
+
+                <p>
+                    <strong>Why does this make intuitive sense?</strong> Absolute value measures distance from the origin $0$. If the sequence terms $a_n$ are crowding closer and closer to $L$, their distances from zero must naturally crowd closer and closer to $L$'s distance from zero.
+                </p>
+
+                <p>
+                    <strong>The Rigorous Proof:</strong> The proof relies on the <em>Reverse Triangle Inequality</em>, which states that for any real numbers $x, y \in \mathbb{R}$:
+                </p>
+
+                <div style="text-align: center; margin: 1rem 0;">
+                    $$\big| |x| - |y| \big| \le |x - y|$$
+                </div>
+
+                <p>
+                    Notice what this inequality tells us: the distance between $|a_n|$ and $|L|$ is <em>always smaller than or equal to</em> the distance between $a_n$ and $L$. Therefore, whenever we choose an index $N$ such that $|a_n - L| < \epsilon$, we automatically get:
+                </p>
+
+                <div style="text-align: center; margin: 1rem 0;">
+                    $$\big| |a_n| - |L| \big| \le |a_n - L| < \epsilon$$
+                </div>
+
+                <p>
+                    The exact same cutoff index $N$ that establishes convergence for $(a_n)$ works immediately for $(|a_n|)$!
+                </p>
+
+                <!-- Warning Box: Converse Fails -->
+                <div style="background: #fffbeb; border: 1px solid #fef3c7; border-left: 4px solid #b45309; border-radius: 8px; padding: 1.15rem 1.35rem; margin: 1.25rem 0;">
+                    <div style="color: #b45309; margin: 0 0 0.35rem 0; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
+                        ⚠️ A Classic Beginner Trap: The Converse Fails!
+                    </div>
+                    <p style="margin: 0; color: #334155;">
+                        Does $|a_n| \to |L|$ imply that $a_n \to L$? <strong>No!</strong> Consider the oscillating sequence $a_n = (-1)^n = (-1, 1, -1, 1, \dots)$. Taking absolute values gives $|a_n| = 1$, which obviously converges to $1$. But the sequence $(a_n)$ itself never converges because it permanently jumps back and forth. The only exception where the converse holds is when the limit is zero:
+                    </p>
+                    <div style="text-align: center; margin: 0.5rem 0; font-weight: 600; color: #0f172a;">
+                        $$|a_n| \to 0 \iff a_n \to 0$$
+                    </div>
+                </div>
+
+                <!-- ------------------------------------------------------------- -->
+                <!-- PROPERTY 2: CONVERGENCE IMPLIES BOUNDEDNESS                   -->
+                <!-- ------------------------------------------------------------- -->
+                <h4 style="color: #0f172a; font-size: 1.15rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.5rem;">
+                    Property 2: Convergence Implies Boundedness (The Prefix vs. Tail Strategy)
+                </h4>
+
+                <p>
+                    The second property is one of the most celebrated cornerstones of real analysis:
+                </p>
+
+                <div style="text-align: center; margin: 1rem 0; font-size: 1.15rem; font-weight: 700; color: #0f172a;">
+                    Every convergent sequence is bounded.
+                </div>
+
+                <p>
+                    That is, there exists some finite bound $M > 0$ such that $|a_n| \le M$ for every single index $n \in \mathbb{N}$. A sequence that converges can never escape to $+\infty$ or $-\infty$.
+                </p>
+
+                <p>
+                    <strong>The Conceptual Dilemma:</strong> An infinite sequence contains infinitely many terms. How could we possibly build a single finite fence $[-M, M]$ that encloses infinitely many values, especially when early terms might swing wildly?
+                </p>
+
+                <p>
+                    <strong>The Proof Strategy (Divide and Conquer):</strong> We split the sequence into two distinct domains: a <em>finite prefix</em> and an <em>infinite tail</em>.
+                </p>
+
+                <ol style="margin: 0.75rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.8;">
+                    <li style="margin-bottom: 0.75rem;">
+                        <strong>Trapping the Infinite Tail:</strong> Because $a_n \to L$, we can choose <em>any</em> tolerance we like. We set $\epsilon = 1$. By the definition of convergence, there exists some cutoff index $N$ such that:
+                        $$n > N \implies |a_n - L| < 1$$
+                        Applying the triangle inequality gives $|a_n| = |(a_n - L) + L| \le |a_n - L| + |L| < 1 + |L|$. <em>All infinitely many terms past index $N$ are safely trapped below the constant $|L| + 1$!</em>
+                    </li>
+                    <li style="margin-bottom: 0.75rem;">
+                        <strong>Checking the Finite Prefix:</strong> What about the terms before the cutoff: $\{a_0, a_1, a_2, \dots, a_N\}$? There are only finitely many of them! Any finite collection of real numbers has a guaranteed maximum absolute value.
+                    </li>
+                    <li>
+                        <strong>Building the Global Fence ($M$):</strong> We take the maximum across the prefix terms and our tail ceiling:
+                        $$M = \max\Big(|a_0|, |a_1|, |a_2|, \dots, |a_N|, |L| + 1\Big)$$
+                        Because every term in the prefix is $\le M$ by definition of a maximum, and every term in the tail satisfies $|a_n| < |L| + 1 \le M$, the finite number $M$ bounds the entire infinite sequence. $\blacksquare$
+                    </li>
+                </ol>
+
+                <p>
+                    <strong>Does the converse hold?</strong> Ask yourself: if a sequence is bounded, must it converge? <em>No!</em> Boundedness is a <strong>necessary</strong> condition for convergence, but not a <strong>sufficient</strong> one. The sequence $a_n = (-1)^n$ is safely trapped inside $[-1, 1]$, yet it never converges.
+                </p>
+
+                <!-- Visualization: Prefix/Tail Split for Boundedness -->
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; margin: 1.75rem 0; padding: 1.25rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+                    <div style="margin-bottom: 0.75rem; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem;">
+                        <span style="font-size: 0.95rem; font-weight: 700; color: #0f172a;">
+                            Visualization: Prefix vs. Tail Split for Bounded Sequences
+                        </span>
+                        <span style="font-size: 0.8rem; font-weight: 600; color: #64748b;">
+                            Finite prefix checked individually; infinite tail bound by $\epsilon = 1$
+                        </span>
+                    </div>
+
+                    <svg viewBox="0 0 740 200" style="width: 100%; height: auto; display: block;" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+                        <line x1="40" y1="160" x2="700" y2="160" stroke="#cbd5e1" stroke-width="1.5" />
+
+                        <!-- Limit L and Epsilon Band (Tail Corridor) -->
+                        <rect x="260" y="80" width="440" height="40" fill="#fde68a" fill-opacity="0.3" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3 3" />
+                        <line x1="40" y1="100" x2="700" y2="100" stroke="#64748b" stroke-width="1.2" stroke-dasharray="4 4" />
+                        <text x="705" y="104" font-size="12" fill="#64748b" font-weight="600">L</text>
+
+                        <!-- Master Fence M -->
+                        <line x1="40" y1="30" x2="700" y2="30" stroke="#ef4444" stroke-width="2" stroke-opacity="0.6" />
+                        <text x="705" y="34" font-size="12" fill="#ef4444" font-weight="700">+M</text>
+
+                        <!-- N Cutoff Line -->
+                        <line x1="260" y1="20" x2="260" y2="160" stroke="#0f172a" stroke-width="1.5" stroke-dasharray="4 4" />
+                        <text x="265" y="155" font-size="11" fill="#0f172a" font-weight="600">Cutoff N</text>
+
+                        <!-- Prefix Points (Red peak marks prefix maximum) -->
+                        <circle cx="80" cy="140" r="4" fill="#94a3b8" />
+                        <circle cx="140" cy="40" r="5" fill="#ef4444" />
+                        <text x="140" y="24" font-size="10" fill="#ef4444" font-weight="700" text-anchor="middle">Max of Prefix</text>
+                        <circle cx="200" cy="120" r="4" fill="#94a3b8" />
+
+                        <!-- Tail Points (Locked in green corridor) -->
+                        <circle cx="300" cy="110" r="4" fill="#059669" />
+                        <circle cx="360" cy="90" r="4" fill="#059669" />
+                        <circle cx="420" cy="105" r="4" fill="#059669" />
+                        <circle cx="480" cy="95" r="4" fill="#059669" />
+                        <circle cx="540" cy="102" r="4" fill="#059669" />
+                        <circle cx="600" cy="98" r="4" fill="#059669" />
+                        <circle cx="660" cy="100" r="4" fill="#059669" />
+
+                        <!-- Zone Labels -->
+                        <text x="150" y="180" font-size="11" fill="#64748b" font-weight="600" text-anchor="middle">Finite Prefix (Checked Directly)</text>
+                        <text x="480" y="180" font-size="11" fill="#059669" font-weight="600" text-anchor="middle">Infinite Tail (Trapped by ε = 1)</text>
+                    </svg>
+                </div>
+
+                <!-- ------------------------------------------------------------- -->
+                <!-- PROPERTY 3: PRESERVATION OF SIGN                              -->
+                <!-- ------------------------------------------------------------- -->
+                <h4 style="color: #0f172a; font-size: 1.15rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.5rem;">
+                    Property 3: Preservation of Sign (The Buffer Zone)
+                </h4>
+
+                <p>
+                    The third property guarantees stability when working with signs:
+                </p>
+
+                <p>
+                    If a sequence converges to a strictly positive limit ($L > 0$), eventually all of its terms must become strictly positive and stay bounded away from zero. Specifically, there exists an index $N_0$ such that:
+                </p>
+
+                <div style="text-align: center; margin: 1rem 0; font-size: 1.1rem; font-weight: 600; color: #0f172a;">
+                    $$a_n > \frac{L}{2} > 0 \quad \text{for all } n > N_0$$
+                </div>
+
+                <p>
+                    <em>(Likewise, if $L < 0$, then eventually $a_n < \frac{L}{2} < 0$).</em>
+                </p>
+
+                <p>
+                    <strong>Why do we care so much about this?</strong> Think ahead to the Algebraic Limit Laws in Section 5. When we want to prove the Quotient Law:
+                </p>
+
+                <div style="text-align: center; margin: 0.75rem 0;">
+                    $$\lim_{n\to\infty} \frac{a_n}{b_n} = \frac{K}{L}$$
+                </div>
+
+                <p>
+                    we are forced to divide by $b_n$. But division by zero is undefined! Even worse, if the denominators $b_n$ got arbitrarily close to zero, $1/b_n$ would explode to infinity. The preservation of sign property guarantees that if $L \ne 0$, the sequence $(b_n)$ builds an impenetrable buffer moat of width $|L|/2$ between itself and zero.
+                </p>
+
+                <p>
+                    <strong>The Geometric Proof:</strong> If $L > 0$, the distance from $L$ to zero is exactly $L$. Since we can choose any positive $\epsilon$ in the definition of convergence, let's deliberately choose a tolerance that cannot reach zero: set $\epsilon = \frac{L}{2}$.
+                </p>
+
+                <p>
+                    By the definition of convergence, there exists an index $N_0$ such that for all $n > N_0$, we have $|a_n - L| < \frac{L}{2}$. Unpacking the absolute value inequality:
+                </p>
+
+                <div style="text-align: center; margin: 1rem 0;">
+                    $$-\frac{L}{2} < a_n - L < \frac{L}{2} \implies L - \frac{L}{2} < a_n < L + \frac{L}{2} \implies \frac{L}{2} < a_n < \frac{3L}{2}$$
+                </div>
+
+                <p>
+                    Evaluating the left inequality shows $a_n > \frac{L}{2}$. Because $L > 0$, the number $\frac{L}{2}$ is strictly positive. Every single term in the tail is trapped above $\frac{L}{2}$ forever, completely insulated from zero! $\blacksquare$
+                </p>
+            </section>
 
             <!-- SECTION 5: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->
             <h2 id="section-theorems">5. Algebraic Limit Laws and Proofs (Theorem 1)</h2>
