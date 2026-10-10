@@ -4124,7 +4124,7 @@
                 </li>
             </ol>
 
-<!-- ================================================================= -->
+            <!-- ================================================================= -->
             <!-- WIDGET: TAIL INVARIANCE & TRUNCATION (DIRECTED NARRATIVE STEPPER) -->
             <!-- ================================================================= -->
             <div class="widget-box" style="margin: 2.5rem 0; padding: 1.5rem; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
@@ -4274,8 +4274,8 @@
                         <polyline id="ti-seq-trail" points="120,250 180,60 240,240 300,210 360,115 420,140 480,125 540,132 600,128 660,130"
                                   fill="none" stroke="#cbd5e1" stroke-width="0.9" stroke-dasharray="3 2"/>
 
-                        <!-- Translated Shift Trail Polyline -->
-                        <polyline id="ti-shift-trail" points="120,210 180,115 240,140 300,125 360,132 420,128 480,130"
+                        <!-- Translated Shift Trail Polyline (Extended to n = 10) -->
+                        <polyline id="ti-shift-trail" points="120,210 180,115 240,140 300,125 360,132 420,128 480,130 540,131 600,129.5 660,130"
                                   fill="none" stroke="#059669" stroke-width="1.2" stroke-dasharray="4 2" style="display:none;"/>
 
                         <!-- Original Sequence Points (a_n) -->
@@ -4292,7 +4292,7 @@
                             <circle id="ti-pt-10" cx="660" cy="130" r="4.2" fill="#0284c7"/>
                         </g>
 
-                        <!-- Shifted Sequence Points (b_n = a_{n+3}) -->
+                        <!-- Shifted Sequence Points (b_n = a_{n+3}, populated through n = 10) -->
                         <g id="ti-pts-shift" style="display:none;">
                             <circle id="ti-spt-1" cx="120" cy="210" r="4.0" fill="#94a3b8"/>
                             <circle id="ti-spt-2" cx="180" cy="115" r="4.4" fill="#059669"/>
@@ -4301,6 +4301,9 @@
                             <circle id="ti-spt-5" cx="360" cy="132" r="4.4" fill="#059669"/>
                             <circle id="ti-spt-6" cx="420" cy="128" r="4.4" fill="#059669"/>
                             <circle id="ti-spt-7" cx="480" cy="130" r="4.4" fill="#059669"/>
+                            <circle id="ti-spt-8" cx="540" cy="131" r="4.4" fill="#059669"/>
+                            <circle id="ti-spt-9" cx="600" cy="129.5" r="4.4" fill="#059669"/>
+                            <circle id="ti-spt-10" cx="660" cy="130" r="4.4" fill="#059669"/>
                         </g>
 
                         <!-- Corrupted Prefix Overlay Points -->
@@ -4393,8 +4396,8 @@
                             nprime: "n + 3 > 4 ⟹ n > 1",
                             status: "Translating Indices Left",
                             statusColor: "#0284c7",
-                            summary: "Watch the points glide along the green guide vectors: a₄ slides into b₁, a₅ slides into b₂, a₆ slides into b₃, and a₇ slides into b₄. Every captured term arrives 3 slots earlier.",
-                            what: "Dynamic translation vectors guide each point across Δn = −3 units. Ghosted blue rings mark the starting coordinates, while solid green dots slide into their new index positions on the axis. Because a₅, a₆, a₇ were already trapped, their transformed counterparts b₂, b₃, b₄ glide straight along the corridor.",
+                            summary: "Watch the points glide along the green guide vectors: a₄ slides into b₁, a₅ slides into b₂, and so on. As terms slide left, fresh terms from deeper in the tail stream in from the right (b₈, b₉, b₁₀) tightly tracking L = +2.",
+                            what: "Dynamic translation vectors slide each point left by Δn = −3 units. Notice that the right edge does not remain empty: new terms from the infinite tail (b₈, b₉, b₁₀) slide into view, locked straight onto the L = 2 centerline.",
                             why: "Bijective Tail Mapping. Advancing the subscript by k pulls future terms into earlier index positions. The vertical values never change; only their horizontal arrival times are fast-forwarded."
                         },
                         {
