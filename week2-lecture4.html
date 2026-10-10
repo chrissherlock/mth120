@@ -1288,15 +1288,95 @@
             <!-- SECTION 3: 2D SIMULATOR & 3D FLIGHT CORRIDOR -->
             <h2 id="section-interactive-widget">3. Interactive Visualizers: 2D Simulator &amp; 3D Flight Corridor</h2>
 
-            <div class="widget-instructions">
-                <h4>📖 Guide 1: 2D Epsilon Challenge Simulator (a<sub>n</sub> = 1/n)</h4>
-                <p>Observe how shrinking tolerance pushes cutoff $N$ further down the tail:</p>
-                <ol>
-                    <li><strong>Choose Tolerance ($\epsilon$):</strong> Test $\epsilon = 0.2$ ($N=5$), $\epsilon = 0.1$ ($N=10$), or $\epsilon = 0.05$ ($N=20$).</li>
-                    <li><strong>Observe Cutoff ($N$):</strong> Marked by the red dashed line ($N = \lceil 1/\epsilon \rceil$).</li>
-                    <li><strong>Step Forward:</strong> Watch terms turn green as they enter the safe interior past $N$.</li>
-                </ol>
+            <!-- ================================================================= -->
+            <!-- GUIDE 1 EXPLANATION: THE EPSILON-N DUEL (a_n = 1/n)               -->
+            <!-- ================================================================= -->
+            <div style="margin-top: 2.25rem; margin-bottom: 1rem;">
+                <h3 style="color: #0f172a; font-size: 1.35rem; font-weight: 700; margin: 0 0 0.35rem 0; line-height: 1.3;">
+                    Guide 1: The $\epsilon$-$N$ Challenge Game ($a_n = \frac{1}{n} \to 0$)
+                </h3>
+                <div style="color: #64748b; font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
+                    The Adversarial Duel, Milestone Response &amp; The Archimedean Guarantee
+                </div>
             </div>
+
+            <section style="margin-bottom: 2rem; color: #334155; font-size: 1rem; line-height: 1.75;">
+                <p style="margin-top: 0;">
+                    The formal definition of a limit—$\forall \epsilon > 0, \, \exists N \in \mathbb{N} \text{ such that } \forall n > N, \, |a_n - L| < \epsilon$—is notoriously intimidating at first glance. It reads like a dense wall of logic symbols.
+                </p>
+
+                <p>
+                    The secret to mastering this definition is to stop reading it as a static formula and start reading it as a <strong>two-player turn-based game</strong>. Proving that $\lim_{n \to \infty} \frac{1}{n} = 0$ is simply demonstrating that you have an unbeatable response strategy against any opponent.
+                </p>
+
+                <!-- Concept Card: The Rules of the Game (Sky Blue) -->
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #0284c7; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                    <div style="color: #0284c7; margin: 0 0 0.5rem 0; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
+                        The Mental Model: The Adversarial Duel
+                    </div>
+                    <p style="margin: 0 0 0.75rem 0; color: #334155;">
+                        Imagine a game played between a skeptical <strong>Adversary</strong> and you, the <strong>Prover</strong>:
+                    </p>
+                    <ul style="padding-left: 1.25rem; margin: 0; color: #334155; line-height: 1.7;">
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>Turn 1 (The Adversary's Move):</strong> The adversary challenges your claim that the limit is $0$ by demanding a precision tolerance $\epsilon > 0$. They draw an open corridor $(-\epsilon, +\epsilon)$ around the target $0$. Their goal is to make $\epsilon$ as tiny as possible (say, $0.1$, $0.001$, or $10^{-9}$) to catch your sequence outside the band.
+                        </li>
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>Turn 2 (Your Move):</strong> You inspect their chosen $\epsilon$ and reply with a single whole number: the milestone cutoff $N$.
+                        </li>
+                        <li>
+                            <strong>The Victory Condition:</strong> You win the round if <em>every single subsequent term</em> past your milestone ($a_{N+1}, a_{N+2}, a_{N+3}, \dots$) stays trapped inside their corridor. To win the game overall, you must have a formula for $N$ that works no matter what positive $\epsilon$ they choose.
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Strategy Card: Algebraic Inversion (Amber) -->
+                <div style="background: #fffbeb; border: 1px solid #fef3c7; border-left: 4px solid #b45309; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                    <div style="color: #b45309; margin: 0 0 0.5rem 0; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
+                        The Mechanics: Solving Backward for $N$
+                    </div>
+                    <p style="margin: 0 0 0.75rem 0; color: #334155;">
+                        How do you calculate your winning response $N$? You work backward from the target inequality:
+                    </p>
+                    <ol style="padding-left: 1.25rem; margin: 0; color: #334155; line-height: 1.75;">
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>Set up the Error Distance:</strong>
+                            $$|a_n - L| = \left|\frac{1}{n} - 0\right| = \frac{1}{n}$$
+                            <em>(Notice the absolute value bars drop away because the index $n \in \mathbb{N}$ is always positive.)</em>
+                        </li>
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>State the Target Condition:</strong> We demand that $\frac{1}{n} < \epsilon$.
+                        </li>
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>Invert to Isolate $n$:</strong> Taking the reciprocal of both sides reverses the inequality:
+                            $$n > \frac{1}{\epsilon}$$
+                        </li>
+                        <li>
+                            <strong>Set Your Cutoff:</strong> To ensure $N$ is a genuine positive integer, choose:
+                            $$N = \left\lceil \frac{1}{\epsilon} \right\rceil \quad \text{or simply pick any integer } N > \frac{1}{\epsilon}$$
+                        </li>
+                    </ol>
+                    <div style="background: rgba(180, 83, 9, 0.07); border-radius: 6px; padding: 0.75rem 1rem; margin-top: 0.85rem; font-size: 0.92rem; color: #92400e;">
+                        <strong>Test Rounds:</strong><br>
+                        • If adversary picks $\epsilon = 0.1 \implies n > \frac{1}{0.1} = 10 \implies$ You answer <strong>$N = 10$</strong>.<br>
+                        • If adversary picks $\epsilon = 0.02 \implies n > \frac{1}{0.02} = 50 \implies$ You answer <strong>$N = 50$</strong>.<br>
+                        • If adversary picks $\epsilon = 10^{-6} \implies n > 10^6 \implies$ You answer <strong>$N = 1,000,000$</strong>.
+                    </div>
+                </div>
+
+                <!-- Practical Reassurance Card (Emerald Green) -->
+                <div style="background: #f0fdf4; border: 1px solid #dcfce7; border-left: 4px solid #059669; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                    <div style="color: #059669; margin: 0 0 0.5rem 0; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
+                        Pedagogical Reassurance: $N$ Gets to React to $\epsilon$
+                    </div>
+                    <p style="margin: 0 0 0.5rem 0; color: #166534;">
+                        The single most common source of beginner panic is the belief that one single number $N$ must work for every possible tolerance. <strong>That is not how limits work.</strong>
+                    </p>
+                    <p style="margin: 0; color: #166534;">
+                        Notice the order of the quantifiers: <em>"For every $\epsilon > 0$, there exists an $N$..."</em> The adversary must place their $\epsilon$ on the table <strong>first</strong>. You choose $N$ with full knowledge of what $\epsilon$ is. By the <strong>Archimedean Property of $\mathbb{R}$</strong>, no matter how small a positive number $\epsilon$ they choose, the reciprocal $\frac{1}{\epsilon}$ is just a finite real number—meaning a larger natural number $N$ is guaranteed to exist. You are mathematically guaranteed to win every round.
+                    </p>
+                </div>
+            </section>
 
             <!-- 2D EPSILON CHALLENGE WIDGET -->
             <div class="game-box">
@@ -1327,6 +1407,847 @@
                     </div>
                 </div>
             </div>
+
+            <!-- ================================================================= -->
+            <!-- 2D INTERACTIVE AID: GUIDE 2 - EPSILON CHALLENGE SIMULATOR         -->
+            <!-- ================================================================= -->
+            <section id="epsilon-guide2-widget-2d" style="margin: 2.5rem 0; font-family: system-ui, -apple-system, sans-serif;">
+                <style>
+                    #epsilon-guide2-widget-2d {
+                        --eg2-bg: #f8fafc;
+                        --eg2-card-bg: #ffffff;
+                        --eg2-border: #cbd5e1;
+                        --eg2-text: #0f172a;
+                        --eg2-text-muted: #64748b;
+                        --eg2-primary: #0284c7;
+                        --eg2-accent: #b45309;
+                        --eg2-danger: #e11d48;
+                        --eg2-success: #059669;
+                    }
+                    #epsilon-guide2-widget-2d .widget-box {
+                        background: var(--eg2-card-bg);
+                        border: 1px solid var(--eg2-border);
+                        border-radius: 12px;
+                        overflow: hidden;
+                        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+                        color: var(--eg2-text);
+                    }
+                    #epsilon-guide2-widget-2d .widget-header {
+                        padding: 1.25rem 1.5rem;
+                        border-bottom: 1px solid #e2e8f0;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        flex-wrap: wrap;
+                        gap: 1rem;
+                        background: #ffffff;
+                    }
+                    #epsilon-guide2-widget-2d .widget-title {
+                        font-size: 1.15rem;
+                        font-weight: 700;
+                        margin: 0;
+                        color: var(--eg2-text);
+                    }
+                    #epsilon-guide2-widget-2d .dim-toggles {
+                        display: flex;
+                        gap: 0.35rem;
+                        background: #f1f5f9;
+                        padding: 0.25rem;
+                        border-radius: 8px;
+                        border: 1px solid var(--eg2-border);
+                    }
+                    #epsilon-guide2-widget-2d .dim-btn {
+                        background: transparent;
+                        color: #475569;
+                        border: none;
+                        padding: 0.35rem 0.75rem;
+                        border-radius: 6px;
+                        cursor: pointer;
+                        font-size: 0.82rem;
+                        font-weight: 600;
+                        transition: all 0.2s ease;
+                    }
+                    #epsilon-guide2-widget-2d .dim-btn.active {
+                        background: var(--eg2-primary);
+                        color: #ffffff !important;
+                    }
+                    #epsilon-guide2-widget-2d .telemetry-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+                        gap: 0.5rem;
+                        background: #f8fafc;
+                        padding: 0.75rem 1.25rem;
+                        border-bottom: 1px solid #e2e8f0;
+                        box-sizing: border-box;
+                    }
+                    #epsilon-guide2-widget-2d .telemetry-cell {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: flex-start;
+                    }
+                    #epsilon-guide2-widget-2d .telemetry-label {
+                        font-size: 0.68rem;
+                        text-transform: uppercase;
+                        letter-spacing: 0.06em;
+                        color: var(--eg2-text-muted);
+                        font-weight: 700;
+                        margin-bottom: 0.25rem;
+                    }
+                    #epsilon-guide2-widget-2d .telemetry-val {
+                        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+                        font-variant-numeric: tabular-nums;
+                        letter-spacing: -0.01em;
+                        font-size: 0.92rem;
+                        line-height: 1.3;
+                        font-weight: 600;
+                        color: var(--eg2-primary);
+                        display: block;
+                        min-height: 2.6em;
+                    }
+                    #epsilon-guide2-widget-2d .canvas-wrap {
+                        width: 100%;
+                        background: #f8fafc;
+                        position: relative;
+                        border-bottom: 1px solid #e2e8f0;
+                    }
+                    #epsilon-guide2-widget-2d svg {
+                        display: block;
+                        width: 100%;
+                        height: auto;
+                    }
+                    #epsilon-guide2-widget-2d .nav-panel {
+                        display: grid;
+                        grid-template-columns: auto 1fr;
+                        gap: 1.25rem;
+                        padding: 1.25rem;
+                        border-bottom: 1px solid #e2e8f0;
+                        align-items: flex-start;
+                        background: #ffffff;
+                        min-height: 76px;
+                        box-sizing: border-box;
+                    }
+                    @media (max-width: 680px) {
+                        #epsilon-guide2-widget-2d .nav-panel {
+                            grid-template-columns: 1fr;
+                        }
+                    }
+                    #epsilon-guide2-widget-2d .nav-buttons {
+                        display: flex;
+                        gap: 0.5rem;
+                        align-items: center;
+                        flex-shrink: 0;
+                    }
+                    #epsilon-guide2-widget-2d .eg-btn {
+                        background: #f8fafc;
+                        color: #1e293b !important;
+                        border: 1px solid var(--eg2-border);
+                        padding: 0.55rem 0.95rem;
+                        border-radius: 6px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        font-size: 0.85rem;
+                        transition: background 0.15s, border-color 0.15s;
+                    }
+                    #epsilon-guide2-widget-2d .eg-btn:hover:not(:disabled) {
+                        background: #e2e8f0;
+                        border-color: #94a3b8;
+                    }
+                    #epsilon-guide2-widget-2d .eg-btn:disabled {
+                        opacity: 0.45;
+                        cursor: not-allowed;
+                    }
+                    #epsilon-guide2-widget-2d .eg-btn-primary {
+                        background: #0284c7;
+                        color: #ffffff !important;
+                        border-color: #0284c7;
+                    }
+                    #epsilon-guide2-widget-2d .eg-btn-primary:hover:not(:disabled) {
+                        background: #0369a1;
+                        border-color: #0369a1;
+                    }
+                    #epsilon-guide2-widget-2d .preview-desc {
+                        font-size: 0.92rem;
+                        color: #334155;
+                        border-left: 3px solid var(--eg2-primary);
+                        padding-left: 0.85rem;
+                        margin: 0;
+                        line-height: 1.55;
+                        min-height: 2.85rem;
+                    }
+                    #epsilon-guide2-widget-2d .panes-grid {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        gap: 1rem;
+                        padding: 1.25rem;
+                        background: #ffffff;
+                    }
+                    @media (max-width: 768px) {
+                        #epsilon-guide2-widget-2d .panes-grid {
+                            grid-template-columns: 1fr;
+                        }
+                    }
+                    #epsilon-guide2-widget-2d .eg-pane {
+                        background: #f8fafc;
+                        border: 1px solid #e2e8f0;
+                        border-radius: 8px;
+                        padding: 1rem;
+                    }
+                    #epsilon-guide2-widget-2d .eg-pane h4 {
+                        margin: 0 0 0.5rem 0;
+                        font-size: 0.85rem;
+                        text-transform: uppercase;
+                        letter-spacing: 0.05em;
+                    }
+                    #epsilon-guide2-widget-2d .eg-pane-what h4 { color: var(--eg2-primary); }
+                    #epsilon-guide2-widget-2d .eg-pane-why h4 { color: var(--eg2-accent); }
+                    #epsilon-guide2-widget-2d .eg-pane-body {
+                        font-size: 0.88rem;
+                        color: #334155;
+                        line-height: 1.6;
+                        min-height: 5.6rem;
+                    }
+                </style>
+
+                <!-- ================================================================= -->
+                <!-- GUIDE 2 EXPLANATION: BEYOND MONOTONIC SEQUENCES                   -->
+                <!-- ================================================================= -->
+                <div style="margin-top: 2.25rem; margin-bottom: 1rem;">
+                    <h3 style="color: #0f172a; font-size: 1.35rem; font-weight: 700; margin: 0 0 0.35rem 0; line-height: 1.3;">
+                        Guide 2: Beyond Monotonic Sequences (Oscillations &amp; Shifted Horizons)
+                    </h3>
+                    <div style="color: #64748b; font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
+                        Sign Neutralisation, Absolute Value Armor &amp; Non-Zero Asymptotes
+                    </div>
+                </div>
+
+                <section style="margin-bottom: 2rem; color: #334155; font-size: 1rem; line-height: 1.75;">
+                    <p style="margin-top: 0;">
+                        In <strong>Guide 1</strong>, exploring $a_n = \frac{1}{n}$ demonstrated the foundational rhythm of the $\epsilon$-$N$ challenge. However, relying solely on $\frac{1}{n}$ frequently instills two pervasive misconceptions:
+                    </p>
+
+                    <ol style="margin: 0.75rem 0 1.25rem 1.25rem; color: #334155; line-height: 1.75;">
+                        <li style="margin-bottom: 0.5rem;">
+                            <em>"Sequences must glide smoothly toward their limit from one direction without crossing it."</em>
+                        </li>
+                        <li>
+                            <em>"Limits are always zero, and the algebra always reduces directly to $n > \frac{1}{\epsilon}$."</em>
+                        </li>
+                    </ol>
+
+                    <p>
+                        <strong>Guide 2</strong> is specifically engineered to shatter those false assumptions by studying two distinct archetypes: the <strong>Alternating Damped Oscillator</strong> ($a_n = \frac{(-1)^n}{n} \to 0$) and the <strong>Shifted Rational Horizon</strong> ($a_n = \frac{2n+1}{n+1} \to 2$).
+                    </p>
+
+                    <!-- Concept Card: Neutralizing Oscillation (Sky Blue) -->
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #0284c7; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                        <div style="color: #0284c7; margin: 0 0 0.5rem 0; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
+                            Model 1: The Alternating Oscillator &amp; The Absolute Value Armor
+                        </div>
+                        <p style="margin: 0 0 0.75rem 0; color: #334155;">
+                            Consider $a_n = \frac{(-1)^n}{n} = \left(-1, \, \frac{1}{2}, \, -\frac{1}{3}, \, \frac{1}{4}, \, -\frac{1}{5}, \dots\right)$. At every subsequent step, the sequence violently jumps across the limit $L = 0$, alternating between positive and negative values.
+                        </p>
+                        <p style="margin: 0 0 0.75rem 0; color: #334155;">
+                            Beginners often panic: <em>"How do we construct an inequality for a sequence that keeps changing sign?"</em> The answer is the <strong>absolute value bars</strong> embedded inside the definition:
+                        </p>
+                        <div style="text-align: center; margin: 0.75rem 0;">
+                            $$|a_n - L| = \left|\frac{(-1)^n}{n} - 0\right| = \left|\frac{(-1)^n}{n}\right| = \frac{|(-1)^n|}{|n|} = \frac{1}{n}$$
+                        </div>
+                        <p style="margin: 0; color: #334155;">
+                            The absolute value acts as an impermeable shield: because $|(-1)^n| = 1$ for every integer $n$, the sign oscillation is instantly disarmed. The spatial distance from $a_n$ to $0$ decays monotonically at rate $\frac{1}{n}$, meaning the exact same cutoff rule $N = \lceil\frac{1}{\epsilon}\rceil$ works unconditionally.
+                        </p>
+                    </div>
+
+                    <!-- Strategy Card: Algebraic Isolation (Amber) -->
+                    <div style="background: #fffbeb; border: 1px solid #fef3c7; border-left: 4px solid #b45309; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                        <div style="color: #b45309; margin: 0 0 0.5rem 0; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
+                            Model 2: Shifting to Non-Zero Horizons ($a_n = \frac{2n+1}{n+1} \to 2$)
+                        </div>
+                        <p style="margin: 0 0 0.75rem 0; color: #334155;">
+                            When the target limit is not zero, the difference $|a_n - L|$ requires algebraic consolidation before we can isolate $n$:
+                        </p>
+                        <ol style="padding-left: 1.25rem; margin: 0; color: #334155; line-height: 1.75;">
+                            <li style="margin-bottom: 0.5rem;">
+                                <strong>Form the Difference:</strong>
+                                $$\left|\frac{2n+1}{n+1} - 2\right| = \left|\frac{2n+1 - 2(n+1)}{n+1}\right| = \left|\frac{-1}{n+1}\right| = \frac{1}{n+1}$$
+                            </li>
+                            <li style="margin-bottom: 0.5rem;">
+                                <strong>Set up the Epsilon Challenge:</strong> We require $\frac{1}{n+1} < \epsilon$.
+                            </li>
+                            <li style="margin-bottom: 0.5rem;">
+                                <strong>Invert and Isolate the Index $n$:</strong>
+                                $$n + 1 > \frac{1}{\epsilon} \iff n > \frac{1}{\epsilon} - 1$$
+                            </li>
+                            <li>
+                                <strong>Choose Milestone $N$ Valid for Natural Numbers:</strong> To guarantee an index in $\mathbb{N}$, set $N = \max\left(1, \, \left\lceil \frac{1}{\epsilon} - 1 \right\rceil\right)$.
+                            </li>
+                        </ol>
+                    </div>
+
+                    <!-- Practical Reassurance Card (Emerald Green) -->
+                    <div style="background: #f0fdf4; border: 1px solid #dcfce7; border-left: 4px solid #059669; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                        <div style="color: #059669; margin: 0 0 0.5rem 0; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
+                            Pedagogical Reassurance: You Only Need to Control the Bounding Envelope
+                        </div>
+                        <p style="margin: 0; color: #166534;">
+                            You never have to calculate the individual path of every single erratic zigzag or oscillation. In real analysis, our goal is simply to find a smooth, clean <strong>bounding envelope</strong> (like $\frac{1}{n}$ or $\frac{1}{n+1}$) that dominates the error term. Once you force that simple outer envelope to fit inside the adversary's $\epsilon$-corridor, everything bouncing around inside the envelope is automatically trapped alongside it.
+                        </p>
+                    </div>
+                </section>
+
+                <div class="widget-box">
+                    <!-- HEADER & COMPARATIVE DIMENSION TOGGLES -->
+                    <div class="widget-header">
+                        <h3 class="widget-title">Guide 2: 2D Epsilon Challenge Simulator</h3>
+                        <div class="dim-toggles">
+                            <button id="eg2-dim-osc" class="dim-btn active" onclick="switchEpsDimension('osc')">Alternating ((-1)ⁿ/n)</button>
+                            <button id="eg2-dim-rat" class="dim-btn" onclick="switchEpsDimension('rat')">Rational ((2n+1)/(n+1))</button>
+                        </div>
+                    </div>
+
+                    <!-- LIVE STATE TELEMETRY -->
+                    <div class="telemetry-grid">
+                        <div class="telemetry-cell">
+                            <span class="telemetry-label">Active Phase</span>
+                            <span id="eg2-tel-phase" class="telemetry-val">0: Baseline State</span>
+                        </div>
+                        <div class="telemetry-cell">
+                            <span class="telemetry-label">Sequence Model</span>
+                            <span id="eg2-tel-model" class="telemetry-val">aₙ = (-1)ⁿ/n</span>
+                        </div>
+                        <div class="telemetry-cell">
+                            <span class="telemetry-label">Target Limit L</span>
+                            <span id="eg2-tel-limit" class="telemetry-val">L = 0.00</span>
+                        </div>
+                        <div class="telemetry-cell">
+                            <span class="telemetry-label">Challenge ε</span>
+                            <span id="eg2-tel-eps" class="telemetry-val">1.00</span>
+                        </div>
+                        <div class="telemetry-cell">
+                            <span class="telemetry-label">Required Threshold N</span>
+                            <span id="eg2-tel-n" class="telemetry-val">N = 1</span>
+                        </div>
+                        <div class="telemetry-cell">
+                            <span class="telemetry-label">Duel Status</span>
+                            <span id="eg2-tel-status" class="telemetry-val" style="color: #0284c7;">Baseline Confined</span>
+                        </div>
+                    </div>
+
+                    <!-- 2D SYNCHRONIZED VISUAL CANVAS (SVG) -->
+                    <div class="canvas-wrap">
+                        <svg id="eg2-svg" viewBox="0 0 780 320" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+                            <defs>
+                                <marker id="eg2-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                    <path d="M 0 2 L 7 5 L 0 8 z" fill="#64748b"/>
+                                </marker>
+                            </defs>
+
+                            <!-- Subtle Grid -->
+                            <g stroke="#f1f5f9" stroke-width="0.75">
+                                <line x1="60" y1="50" x2="710" y2="50"/>
+                                <line x1="60" y1="90" x2="710" y2="90"/>
+                                <line x1="60" y1="130" x2="710" y2="130"/>
+                                <line x1="60" y1="170" x2="710" y2="170"/>
+                                <line x1="60" y1="210" x2="710" y2="210"/>
+                                <line x1="60" y1="250" x2="710" y2="250"/>
+                                <line x1="120" y1="20" x2="120" y2="280"/>
+                                <line x1="180" y1="20" x2="180" y2="280"/>
+                                <line x1="240" y1="20" x2="240" y2="280"/>
+                                <line x1="300" y1="20" x2="300" y2="280"/>
+                                <line x1="360" y1="20" x2="360" y2="280"/>
+                                <line x1="420" y1="20" x2="420" y2="280"/>
+                                <line x1="480" y1="20" x2="480" y2="280"/>
+                                <line x1="540" y1="20" x2="540" y2="280"/>
+                                <line x1="600" y1="20" x2="600" y2="280"/>
+                                <line x1="660" y1="20" x2="660" y2="280"/>
+                            </g>
+
+                            <!-- Target Epsilon Corridor Band -->
+                            <rect id="eg2-eps-band" x="60" y="50" width="650" height="200" fill="#f0f9ff" fill-opacity="0.7" stroke="#38bdf8" stroke-width="0.9" stroke-dasharray="3 3"/>
+
+                            <!-- Limit Line L -->
+                            <line id="eg2-line-limit" x1="60" y1="150" x2="710" y2="150" stroke="#0284c7" stroke-width="1.2" stroke-dasharray="4 3"/>
+                            <text id="eg2-lbl-limit" x="718" y="154" fill="#0284c7" font-size="11" font-weight="700">L = 0</text>
+
+                            <!-- Coordinate Axes -->
+                            <line x1="60" y1="280" x2="715" y2="280" stroke="#94a3b8" stroke-width="1" marker-end="url(#eg2-arrow)"/>
+                            <text x="722" y="284" fill="#64748b" font-size="10" font-weight="500">Index n</text>
+                            <line x1="60" y1="280" x2="60" y2="18" stroke="#94a3b8" stroke-width="1" marker-end="url(#eg2-arrow)"/>
+                            <text x="32" y="18" fill="#64748b" font-size="10" font-weight="500">Values</text>
+
+                            <!-- Milestone Cutoff Line N -->
+                            <line id="eg2-line-n" x1="120" y1="20" x2="120" y2="280" stroke="#059669" stroke-width="1.3" stroke-dasharray="4 3"/>
+                            <text id="eg2-lbl-n" x="120" y="295" fill="#059669" font-size="10" font-weight="600" text-anchor="middle">N = 1</text>
+
+                            <!-- Sequence Points & Trail (Dynamic SVG Groups) -->
+                            <polyline id="eg2-trail" points="" fill="none" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3 2"/>
+                            <g id="eg2-points"></g>
+                        </svg>
+                    </div>
+
+                    <!-- NAVIGATION & INLINE PREVIEW -->
+                    <div class="nav-panel">
+                        <div class="nav-buttons">
+                            <button id="eg2-btn-prev" class="eg-btn" onclick="advanceEpsStep(-1)" disabled>Previous</button>
+                            <button id="eg2-btn-next" class="eg-btn eg-btn-primary" onclick="advanceEpsStep(1)">Next</button>
+                            <button id="eg2-btn-reset" class="eg-btn" onclick="restoreInitialEpsStep()">Reset</button>
+                        </div>
+                        <p id="eg2-preview-text" class="preview-desc">
+                            The alternating sequence aₙ = (-1)ⁿ/n oscillates across L = 0. Under a wide initial tolerance of ε = 1.00, every term past index N = 1 already resides safely inside the corridor.
+                        </p>
+                    </div>
+
+                    <!-- PAIRED ANALYTICAL PANES -->
+                    <div class="panes-grid">
+                        <div class="eg-pane eg-pane-what">
+                            <h4>What Is Happening</h4>
+                            <div id="eg2-pane-what" class="eg-pane-body">
+                                Terms jump back and forth across zero: a₁ = -1.0, a₂ = +0.5, a₃ = -0.33, a₄ = +0.25. The initial blue tolerance band covers (-1.0, +1.0).
+                            </div>
+                        </div>
+                        <div class="eg-pane eg-pane-why">
+                            <h4>Why The System Does This</h4>
+                            <div id="eg2-pane-why" class="eg-pane-body">
+                                Neutralising Sign. Convergence requires bounding the absolute distance |aₙ - L|. Because |(-1)ⁿ/n - 0| = 1/n, sign alternation does not prevent the distance from shrinking.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <script>
+            (function() {
+                let activeEpsStep = 0;
+                let activeEpsDim = 'osc';
+
+                const epsSimData = {
+                    osc: [
+                        {
+                            phase: "0: Baseline State",
+                            model: "aₙ = (-1)ⁿ/n",
+                            limit: "L = 0.00",
+                            eps: "1.00",
+                            n: "N = 1",
+                            status: "Baseline Confined",
+                            statusColor: "#0284c7",
+                            summary: "The alternating sequence aₙ = (-1)ⁿ/n oscillates across L = 0. Under a wide initial tolerance of ε = 1.00, every term past index N = 1 resides safely inside the corridor.",
+                            what: "Terms jump back and forth across zero: a₁ = -1.00, a₂ = +0.50, a₃ = -0.33, a₄ = +0.25. The wide blue corridor spans (-1.0, +1.0).",
+                            why: "Sign Neutralisation. Convergence measures absolute metric distance |aₙ - L|. Because |(-1)ⁿ/n - 0| = 1/n, sign alternation does not prevent the sequence envelope from decaying.",
+                            epsY: 50, epsHeight: 200, limitY: 150, limitText: "L = 0",
+                            cutoffX: 120, cutoffText: "N = 1",
+                            // Points x: 120, 180, 240, 300, 360, 420, 480, 540, 600, 660
+                            // y values mapped: L=0 at y=150. Scale: 1 unit = 100px.
+                            pts: [
+                                {x: 120, y: 250, val: "-1.00", in: true},
+                                {x: 180, y: 100, val: "+0.50", in: true},
+                                {x: 240, y: 183, val: "-0.33", in: true},
+                                {x: 300, y: 125, val: "+0.25", in: true},
+                                {x: 360, y: 170, val: "-0.20", in: true},
+                                {x: 420, y: 133, val: "+0.17", in: true},
+                                {x: 480, y: 164, val: "-0.14", in: true},
+                                {x: 540, y: 137, val: "+0.13", in: true},
+                                {x: 600, y: 161, val: "-0.11", in: true},
+                                {x: 660, y: 140, val: "+0.10", in: true}
+                            ]
+                        },
+                        {
+                            phase: "1: Adversary Challenge",
+                            model: "aₙ = (-1)ⁿ/n",
+                            limit: "L = 0.00",
+                            eps: "0.25",
+                            n: "Pending...",
+                            status: "Corridor Breached!",
+                            statusColor: "#e11d48",
+                            summary: "The adversary attacks by shrinking the tolerance to ε = 0.25 (the band (-0.25, +0.25)). Early terms now violently breach the boundary.",
+                            what: "The corridor constricts to height ±0.25 around zero. Points a₁, a₂, a₃, and a₄ sit outside the blue zone and illuminate in red.",
+                            why: "Universal Challenge. To claim convergence, we must be able to defeat ANY positive ε chosen by an adversary, no matter how aggressively narrow.",
+                            epsY: 125, epsHeight: 50, limitY: 150, limitText: "L = 0",
+                            cutoffX: 120, cutoffText: "N = ?",
+                            pts: [
+                                {x: 120, y: 250, val: "-1.00", in: false},
+                                {x: 180, y: 100, val: "+0.50", in: false},
+                                {x: 240, y: 183, val: "-0.33", in: false},
+                                {x: 300, y: 125, val: "+0.25", in: false},
+                                {x: 360, y: 170, val: "-0.20", in: true},
+                                {x: 420, y: 133, val: "+0.17", in: true},
+                                {x: 480, y: 164, val: "-0.14", in: true},
+                                {x: 540, y: 137, val: "+0.13", in: true},
+                                {x: 600, y: 161, val: "-0.11", in: true},
+                                {x: 660, y: 140, val: "+0.10", in: true}
+                            ]
+                        },
+                        {
+                            phase: "2: Solving for N",
+                            model: "aₙ = (-1)ⁿ/n",
+                            limit: "L = 0.00",
+                            eps: "0.25",
+                            n: "n > 1/0.25 = 4",
+                            status: "Threshold Derived",
+                            statusColor: "#b45309",
+                            summary: "We solve the target predicate |aₙ - 0| < 0.25 algebraically: 1/n < 1/4 implies n > 4. The threshold milestone is found.",
+                            what: "The calculation shows that as soon as index n exceeds 4, the amplitude 1/n strictly drops below 0.25. The exact cutoff required is N = 4.",
+                            why: "Constructive Defense. In real analysis, the respondent must construct a finite N in terms of ε. Here, N(ε) = ⌈1/ε⌉.",
+                            epsY: 125, epsHeight: 50, limitY: 150, limitText: "L = 0",
+                            cutoffX: 300, cutoffText: "N = 4",
+                            pts: [
+                                {x: 120, y: 250, val: "-1.00", in: false},
+                                {x: 180, y: 100, val: "+0.50", in: false},
+                                {x: 240, y: 183, val: "-0.33", in: false},
+                                {x: 300, y: 125, val: "+0.25", in: false},
+                                {x: 360, y: 170, val: "-0.20", in: true},
+                                {x: 420, y: 133, val: "+0.17", in: true},
+                                {x: 480, y: 164, val: "-0.14", in: true},
+                                {x: 540, y: 137, val: "+0.13", in: true},
+                                {x: 600, y: 161, val: "-0.11", in: true},
+                                {x: 660, y: 140, val: "+0.10", in: true}
+                            ]
+                        },
+                        {
+                            phase: "3: Deploying Barrier N",
+                            model: "aₙ = (-1)ⁿ/n",
+                            limit: "L = 0.00",
+                            eps: "0.25",
+                            n: "N = 4 Active",
+                            status: "Barrier Established",
+                            statusColor: "#059669",
+                            summary: "We drop the green milestone barrier at N = 4. Early unruly oscillations at n ≤ 4 are quarantined in the discarded prefix.",
+                            what: "A vertical line appears at x = 300 (n = 4). Terms to the left are ignored prefix noise; terms to the right enter the formal tail.",
+                            why: "Asymptotic Focus. The limit definition demands compliance only for n > N. We do not care if terms breach ε prior to milestone N.",
+                            epsY: 125, epsHeight: 50, limitY: 150, limitText: "L = 0",
+                            cutoffX: 300, cutoffText: "N = 4",
+                            pts: [
+                                {x: 120, y: 250, val: "-1.00", in: false},
+                                {x: 180, y: 100, val: "+0.50", in: false},
+                                {x: 240, y: 183, val: "-0.33", in: false},
+                                {x: 300, y: 125, val: "+0.25", in: false},
+                                {x: 360, y: 170, val: "-0.20", in: true},
+                                {x: 420, y: 133, val: "+0.17", in: true},
+                                {x: 480, y: 164, val: "-0.14", in: true},
+                                {x: 540, y: 137, val: "+0.13", in: true},
+                                {x: 600, y: 161, val: "-0.11", in: true},
+                                {x: 660, y: 140, val: "+0.10", in: true}
+                            ]
+                        },
+                        {
+                            phase: "4: Infinite Tail Captured",
+                            model: "aₙ = (-1)ⁿ/n",
+                            limit: "L = 0.00",
+                            eps: "0.25",
+                            n: "N = 4",
+                            status: "lim aₙ = 0 Verified",
+                            statusColor: "#059669",
+                            summary: "Every term beyond N = 4 remains permanently trapped inside (-0.25, +0.25). The adversary is defeated; convergence is proven.",
+                            what: "For all n > 4, |(-1)ⁿ/n - 0| ≤ 1/5 = 0.20 < 0.25. All tail points turn solid green, locked inside the tolerance tube forever.",
+                            why: "Rigorous Victory. Because a valid N can be calculated for ANY ε > 0 via N = ⌈1/ε⌉, the claim lim (-1)ⁿ/n = 0 is rock-solid.",
+                            epsY: 125, epsHeight: 50, limitY: 150, limitText: "L = 0",
+                            cutoffX: 300, cutoffText: "N = 4",
+                            pts: [
+                                {x: 120, y: 250, val: "-1.00", in: false},
+                                {x: 180, y: 100, val: "+0.50", in: false},
+                                {x: 240, y: 183, val: "-0.33", in: false},
+                                {x: 300, y: 125, val: "+0.25", in: false},
+                                {x: 360, y: 170, val: "-0.20", in: true},
+                                {x: 420, y: 133, val: "+0.17", in: true},
+                                {x: 480, y: 164, val: "-0.14", in: true},
+                                {x: 540, y: 137, val: "+0.13", in: true},
+                                {x: 600, y: 161, val: "-0.11", in: true},
+                                {x: 660, y: 140, val: "+0.10", in: true}
+                            ]
+                        }
+                    ],
+                    rat: [
+                        {
+                            phase: "0: Baseline State",
+                            model: "aₙ = (2n+1)/(n+1)",
+                            limit: "L = 2.00",
+                            eps: "0.50",
+                            n: "N = 1",
+                            status: "Baseline Confined",
+                            statusColor: "#0284c7",
+                            summary: "The rational sequence aₙ = (2n+1)/(n+1) approaches non-zero limit L = 2 from below. For wide tolerance ε = 0.50, all terms past N = 1 are inside (1.50, 2.50).",
+                            what: "Terms rise toward 2: a₁ = 1.50, a₂ = 1.67, a₃ = 1.75, a₄ = 1.80. The baseline corridor covers (1.50, 2.50) centered at L = 2.",
+                            why: "Non-Zero Target. When L ≠ 0, convergence measures distance to the horizontal asymptote: |aₙ - 2| = 1/(n+1).",
+                            epsY: 60, epsHeight: 140, limitY: 130, limitText: "L = 2",
+                            cutoffX: 120, cutoffText: "N = 1",
+                            pts: [
+                                {x: 120, y: 200, val: "1.50", in: true},
+                                {x: 180, y: 177, val: "1.67", in: true},
+                                {x: 240, y: 165, val: "1.75", in: true},
+                                {x: 300, y: 158, val: "1.80", in: true},
+                                {x: 360, y: 153, val: "1.83", in: true},
+                                {x: 420, y: 150, val: "1.86", in: true},
+                                {x: 480, y: 147, val: "1.88", in: true},
+                                {x: 540, y: 145, val: "1.89", in: true},
+                                {x: 600, y: 143, val: "1.90", in: true},
+                                {x: 660, y: 141, val: "1.91", in: true}
+                            ]
+                        },
+                        {
+                            phase: "1: Adversary Challenge",
+                            model: "aₙ = (2n+1)/(n+1)",
+                            limit: "L = 2.00",
+                            eps: "0.15",
+                            n: "Pending...",
+                            status: "Corridor Breached!",
+                            statusColor: "#e11d48",
+                            summary: "The adversary constricts ε to 0.15 around L = 2.00 (the band (1.85, 2.15)). Early terms a₁ through a₅ fall short of the lower threshold.",
+                            what: "The corridor narrows tightly around y = 130 (L = 2). Points a₁ through a₅ sit below y = 151 (1.85) and turn red.",
+                            why: "Testing High Precision. Tighter tolerances demand sequences get closer to their asymptotic ceiling.",
+                            epsY: 109, epsHeight: 42, limitY: 130, limitText: "L = 2",
+                            cutoffX: 120, cutoffText: "N = ?",
+                            pts: [
+                                {x: 120, y: 200, val: "1.50", in: false},
+                                {x: 180, y: 177, val: "1.67", in: false},
+                                {x: 240, y: 165, val: "1.75", in: false},
+                                {x: 300, y: 158, val: "1.80", in: false},
+                                {x: 360, y: 153, val: "1.83", in: false},
+                                {x: 420, y: 150, val: "1.86", in: true},
+                                {x: 480, y: 147, val: "1.88", in: true},
+                                {x: 540, y: 145, val: "1.89", in: true},
+                                {x: 600, y: 143, val: "1.90", in: true},
+                                {x: 660, y: 141, val: "1.91", in: true}
+                            ]
+                        },
+                        {
+                            phase: "2: Solving for N",
+                            model: "aₙ = (2n+1)/(n+1)",
+                            limit: "L = 2.00",
+                            eps: "0.15",
+                            n: "n > 1/0.15 - 1 ≈ 5.67",
+                            status: "Threshold Derived",
+                            statusColor: "#b45309",
+                            summary: "We solve |(2n+1)/(n+1) - 2| = 1/(n+1) < 0.15. Inverting gives n + 1 > 6.67, so n > 5.67. We need milestone N = 6.",
+                            what: "Algebraic reduction isolates n: 1/(n+1) < 3/20 implies n+1 > 20/3 ≈ 6.67, so n ≥ 6. The milestone is N = 6.",
+                            why: "Algebraic Isolation. With rational expressions, finding N requires reducing the difference to a simple reciprocal 1/g(n).",
+                            epsY: 109, epsHeight: 42, limitY: 130, limitText: "L = 2",
+                            cutoffX: 420, cutoffText: "N = 6",
+                            pts: [
+                                {x: 120, y: 200, val: "1.50", in: false},
+                                {x: 180, y: 177, val: "1.67", in: false},
+                                {x: 240, y: 165, val: "1.75", in: false},
+                                {x: 300, y: 158, val: "1.80", in: false},
+                                {x: 360, y: 153, val: "1.83", in: false},
+                                {x: 420, y: 150, val: "1.86", in: true},
+                                {x: 480, y: 147, val: "1.88", in: true},
+                                {x: 540, y: 145, val: "1.89", in: true},
+                                {x: 600, y: 143, val: "1.90", in: true},
+                                {x: 660, y: 141, val: "1.91", in: true}
+                            ]
+                        },
+                        {
+                            phase: "3: Deploying Barrier N",
+                            model: "aₙ = (2n+1)/(n+1)",
+                            limit: "L = 2.00",
+                            eps: "0.15",
+                            n: "N = 6 Active",
+                            status: "Barrier Established",
+                            statusColor: "#059669",
+                            summary: "We erect the milestone boundary at N = 6. Terms a₁ through a₅ are quarantined as prefix warmup.",
+                            what: "A green milestone appears at x = 420 (n = 6). The deficient terms sit safely quarantined to the left.",
+                            why: "Finite Grace Period. The first 5 terms fail the tolerance, but finiteness guarantees they can be bypassed by choosing N = 6.",
+                            epsY: 109, epsHeight: 42, limitY: 130, limitText: "L = 2",
+                            cutoffX: 420, cutoffText: "N = 6",
+                            pts: [
+                                {x: 120, y: 200, val: "1.50", in: false},
+                                {x: 180, y: 177, val: "1.67", in: false},
+                                {x: 240, y: 165, val: "1.75", in: false},
+                                {x: 300, y: 158, val: "1.80", in: false},
+                                {x: 360, y: 153, val: "1.83", in: false},
+                                {x: 420, y: 150, val: "1.86", in: true},
+                                {x: 480, y: 147, val: "1.88", in: true},
+                                {x: 540, y: 145, val: "1.89", in: true},
+                                {x: 600, y: 143, val: "1.90", in: true},
+                                {x: 660, y: 141, val: "1.91", in: true}
+                            ]
+                        },
+                        {
+                            phase: "4: Infinite Tail Captured",
+                            model: "aₙ = (2n+1)/(n+1)",
+                            limit: "L = 2.00",
+                            eps: "0.15",
+                            n: "N = 6",
+                            status: "lim aₙ = 2 Verified",
+                            statusColor: "#059669",
+                            summary: "For every index n > 6, aₙ stays permanently trapped inside (1.85, 2.15). The non-zero limit L = 2 is rigorously verified.",
+                            what: "For all n > 6, |aₙ - 2| ≤ 1/8 = 0.125 < 0.15. Tail points illuminate in emerald green, locked inside the corridor.",
+                            why: "Universal Defense. Choosing N = ⌈1/ε - 1⌉ guarantees tail entrapment for any ε > 0, verifying lim (2n+1)/(n+1) = 2.",
+                            epsY: 109, epsHeight: 42, limitY: 130, limitText: "L = 2",
+                            cutoffX: 420, cutoffText: "N = 6",
+                            pts: [
+                                {x: 120, y: 200, val: "1.50", in: false},
+                                {x: 180, y: 177, val: "1.67", in: false},
+                                {x: 240, y: 165, val: "1.75", in: false},
+                                {x: 300, y: 158, val: "1.80", in: false},
+                                {x: 360, y: 153, val: "1.83", in: false},
+                                {x: 420, y: 150, val: "1.86", in: true},
+                                {x: 480, y: 147, val: "1.88", in: true},
+                                {x: 540, y: 145, val: "1.89", in: true},
+                                {x: 600, y: 143, val: "1.90", in: true},
+                                {x: 660, y: 141, val: "1.91", in: true}
+                            ]
+                        }
+                    ]
+                };
+
+                function refreshEpsCanvas(idx) {
+                    const data = epsSimData[activeEpsDim][idx];
+
+                    // Telemetry updates
+                    document.getElementById("eg2-tel-phase").textContent = data.phase;
+                    document.getElementById("eg2-tel-model").textContent = data.model;
+                    document.getElementById("eg2-tel-limit").textContent = data.limit;
+                    document.getElementById("eg2-tel-eps").textContent = data.eps;
+                    document.getElementById("eg2-tel-n").textContent = data.n;
+                    document.getElementById("eg2-tel-status").textContent = data.status;
+                    document.getElementById("eg2-tel-status").style.color = data.statusColor;
+
+                    // Text panels
+                    document.getElementById("eg2-preview-text").textContent = data.summary;
+                    document.getElementById("eg2-pane-what").textContent = data.what;
+                    document.getElementById("eg2-pane-why").textContent = data.why;
+
+                    // Navigation buttons
+                    document.getElementById("eg2-btn-prev").disabled = (idx === 0);
+                    document.getElementById("eg2-btn-next").disabled = (idx === epsSimData[activeEpsDim].length - 1);
+
+                    // SVG elements
+                    const band = document.getElementById("eg2-eps-band");
+                    band.setAttribute("y", data.epsY);
+                    band.setAttribute("height", data.epsHeight);
+
+                    const lineLim = document.getElementById("eg2-line-limit");
+                    lineLim.setAttribute("y1", data.limitY);
+                    lineLim.setAttribute("y2", data.limitY);
+
+                    const lblLim = document.getElementById("eg2-lbl-limit");
+                    lblLim.setAttribute("y", data.limitY + 4);
+                    lblLim.textContent = data.limitText;
+
+                    const lineN = document.getElementById("eg2-line-n");
+                    const lblN = document.getElementById("eg2-lbl-n");
+                    lineN.setAttribute("x1", data.cutoffX);
+                    lineN.setAttribute("x2", data.cutoffX);
+                    lblN.setAttribute("x", data.cutoffX);
+                    lblN.textContent = data.cutoffText;
+
+                    // Plot points and connecting polyline
+                    const ptsGroup = document.getElementById("eg2-points");
+                    while (ptsGroup.firstChild) {
+                        ptsGroup.removeChild(ptsGroup.firstChild);
+                    }
+
+                    let polyPoints = "";
+                    data.pts.forEach((pt, pIdx) => {
+                        polyPoints += `${pt.x},${pt.y} `;
+
+                        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                        circle.setAttribute("cx", pt.x);
+                        circle.setAttribute("cy", pt.y);
+                        circle.setAttribute("r", pt.in ? "4.2" : "4.8");
+                        circle.setAttribute("fill", pt.in ? "#059669" : "#e11d48");
+                        ptsGroup.appendChild(circle);
+                    });
+
+                    document.getElementById("eg2-trail").setAttribute("points", polyPoints.trim());
+                }
+
+                window.advanceEpsStep = function(delta) {
+                    activeEpsStep = Math.max(0, Math.min(epsSimData[activeEpsDim].length - 1, activeEpsStep + delta));
+                    refreshEpsCanvas(activeEpsStep);
+                };
+
+                window.restoreInitialEpsStep = function() {
+                    activeEpsStep = 0;
+                    refreshEpsCanvas(0);
+                };
+
+                window.switchEpsDimension = function(mode) {
+                    activeEpsDim = mode;
+                    document.getElementById("eg2-dim-osc").classList.toggle("active", mode === 'osc');
+                    document.getElementById("eg2-dim-rat").classList.toggle("active", mode === 'rat');
+                    activeEpsStep = 0;
+                    refreshEpsCanvas(0);
+                };
+
+                refreshEpsCanvas(0);
+            })();
+            </script>
+
+            <!-- ================================================================= -->
+            <!-- GUIDE: THE 3D EPSILON-TUBE (SPATIAL CONVERGENCE CONDUIT)         -->
+            <!-- ================================================================= -->
+            <div style="margin-top: 2.25rem; margin-bottom: 1rem;">
+                <h3 style="color: #0f172a; font-size: 1.35rem; font-weight: 700; margin: 0 0 0.35rem 0; line-height: 1.3;">
+                    Guide: Visualizing Convergence in 3D (The $\epsilon$-Tube)
+                </h3>
+                <div style="color: #64748b; font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
+                    Translucent Conduits, Radial Buffers &amp; The Airlock Principle
+                </div>
+            </div>
+
+            <section style="margin-bottom: 2rem; color: #334155; font-size: 1rem; line-height: 1.75;">
+                <p style="margin-top: 0;">
+                    In the 2D simulators, an $\epsilon$-neighborhood appears as a flat, horizontal corridor $(L - \epsilon, L + \epsilon)$ drawn across a Cartesian plane. While mathematically sound for sequences on the real line, viewing limits solely as a flat ribbon can create a subtle mental trap: it encourages beginners to think of convergence merely as two-line "subtraction arithmetic," rather than as entry into a <strong>spatial target zone</strong>.
+                </p>
+
+                <p>
+                    The 3D simulator shifts your perspective by rotating the camera so you look <strong>straight down the hallway of infinity</strong>. Instead of watching a sequence crawl horizontally across a page, you are looking directly down the axis of advancing indices ($n \to \infty$).
+                </p>
+
+                <!-- Concept Card: The Translucent Conduit (Sky Blue) -->
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #0284c7; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                    <div style="color: #0284c7; margin: 0 0 0.5rem 0; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
+                        The Mental Model: The Glass Containment Pipe
+                    </div>
+                    <p style="margin: 0 0 0.75rem 0; color: #334155;">
+                        Picture the limit process not as abstract numbers, but as a physical conduit running through space:
+                    </p>
+                    <ul style="padding-left: 1.25rem; margin: 0; color: #334155; line-height: 1.7;">
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>The Limit Spine ($L$):</strong> The target destination is a central fiber-optic wire running directly down the center of your field of view into the deep horizon.
+                        </li>
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>The Tolerance Radius ($\epsilon$):</strong> The challenge tolerance $\epsilon$ inflates outward from that central wire into a <strong>cylindrical glass pipe</strong> of radius $\epsilon$. A forgiving tolerance ($\epsilon = 1.0$) is a wide drainage tunnel; an aggressive challenge ($\epsilon = 0.05$) is a hair-thin glass capillary.
+                        </li>
+                        <li>
+                            <strong>The Sequence Trajectory ($a_n$):</strong> Terms are no longer forced onto a rigid 1D track. They can corkscrew, spiral, or bounce around the space as they travel deeper down the pipe toward infinity.
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Strategy Card: The Airlock Game (Amber) -->
+                <div style="background: #fffbeb; border: 1px solid #fef3c7; border-left: 4px solid #b45309; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                    <div style="color: #b45309; margin: 0 0 0.5rem 0; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
+                        The Mechanics: The Epsilon-N Duel as a Containment Game
+                    </div>
+                    <p style="margin: 0 0 0.75rem 0; color: #334155;">
+                        In 3D, the formal quantifier sequence ($\forall \epsilon > 0, \exists N \in \mathbb{N}$) turns into a mechanical duel:
+                    </p>
+                    <ol style="padding-left: 1.25rem; margin: 0; color: #334155; line-height: 1.75;">
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>The Adversary Attacks:</strong> The challenger turns a dial, constricting the cylindrical glass pipe from a wide tunnel down to a tight sleeve around the central wire.
+                        </li>
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>The Breach:</strong> Because the pipe narrowed, early spiral coils that used to fit inside now burst violently through the glass walls, flashing red in the void outside the tube.
+                        </li>
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>Your Defense (Deploying Airlock $N$):</strong> As the defender, you do <em>not</em> need to pull those early terms back into the pipe. Instead, you slide a green <strong>airlock bulkhead</strong> ($N$) further down the tunnel until it sits past the very last wall puncture.
+                        </li>
+                        <li>
+                            <strong>Total Asymptotic Containment:</strong> Beyond that green bulkhead ($n > N$), the remaining infinite tail of the sequence is hermetically sealed inside the glass cylinder, never touching the boundary again.
+                        </li>
+                    </ol>
+                </div>
+
+                <!-- Practical Reassurance Card (Emerald Green) -->
+                <div style="background: #f0fdf4; border: 1px solid #dcfce7; border-left: 4px solid #059669; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                    <div style="color: #059669; margin: 0 0 0.5rem 0; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
+                        Pedagogical Reassurance: Bridging 1D to Higher Dimensions
+                    </div>
+                    <p style="margin: 0; color: #166534;">
+                        This spatial view directly prepares you for advanced analysis, multivariable calculus, and metric spaces. In higher dimensions, an $\epsilon$-neighborhood is never a flat interval—it is an <strong>open metric ball</strong> $B_\epsilon(L) = \{x : d(x, L) < \epsilon\}$. Convergence does not demand that a sequence travel down the dead center of the road from the moment it leaves the driveway; it guarantees that no matter how narrow a containment pipe is clamped around the target, there is always a point down the line where the entire infinite journey slips inside and stays there permanently.
+                    </p>
+                </div>
+            </section>
 
             <!-- 3D THREE.JS CONVERGENCE FLIGHT CORRIDOR (DIRECTED NARRATIVE STEPPER) -->
             <div class="corridor-3d-box" id="corridor-3d-section">
