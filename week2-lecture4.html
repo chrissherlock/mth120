@@ -5932,6 +5932,204 @@
                     </svg>
                 </figure>
 
+                <!-- ================================================================= -->
+                <!-- WORKED EXAMPLE: STRIPPING NESTED ABSOLUTE VALUE BARS (WITH SVG)   -->
+                <!-- ================================================================= -->
+                <div class="worked-example-box" style="margin: 1.75rem 0;">
+                    <h4>🎯 Worked Example: Stripping Nested Absolute Value Bars</h4>
+                    <p style="margin-bottom: 0.75rem;">
+                        Prove that $\lim_{n\to\infty} \left|-3 + \frac{(-1)^n}{n}\right| = 3$, and verify the cutoff index for challenge tolerance $\epsilon = 0.25$:
+                    </p>
+
+                    <ol style="margin: 0.5rem 0 1.25rem 1.25rem; padding: 0; line-height: 1.75;">
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>The Algebraic Obstacle:</strong> Let $a_n = -3 + \frac{(-1)^n}{n}$, which oscillates around $L = -3$:
+                            $$a_1 = -4.00, \quad a_2 = -2.50, \quad a_3 = -3.33, \quad a_4 = -2.75, \quad a_5 = -3.20, \dots$$
+                            Setting up the target distance for $|a_n| \to 3$ directly creates awkward <strong>nested absolute value bars</strong>:
+                            $$\big||a_n| - 3\big| = \left| \left|-3 + \frac{(-1)^n}{n}\right| - 3 \right| &lt; \epsilon$$
+                        </li>
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>The Reverse Triangle Shortcut:</strong> Recognise that $3 = |-3|$ and apply $\big||x| - |y|\big| \le |x - y|$ to collapse the outer bars in a single step:
+                            $$\left| \left|-3 + \frac{(-1)^n}{n}\right| - |-3| \right| \le \left| \left(-3 + \frac{(-1)^n}{n}\right) - (-3) \right| = \left|\frac{(-1)^n}{n}\right| = \frac{1}{n}$$
+                        </li>
+                        <li>
+                            <strong>Shared Cutoff ($N = 4$ for $\epsilon = 0.25$):</strong> Requiring $\frac{1}{n} &lt; \epsilon$ gives $N = \lceil 1/\epsilon \rceil$. For $\epsilon = 0.25$, $N = \frac{1}{0.25} = 4$. As the diagram below illustrates, reflecting $a_n$ across the $0$ axis flips every point into $+3 \pm \frac{1}{n}$ without changing its vertical distance to the target line—so the single cutoff barrier $N = 4$ traps both tails simultaneously. $\blacksquare$
+                        </li>
+                    </ol>
+
+                    <!-- VISUALIZATION OF THE WORKED EXAMPLE -->
+                    <div style="background: #ffffff; border: 1px solid #bbf7d0; border-radius: 8px; padding: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+                        <div style="font-size: 0.88rem; font-weight: 700; color: #047857; margin-bottom: 0.75rem; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem;">
+                            <span>
+                                <span style="text-transform: uppercase; letter-spacing: 0.04em;">Visualizing the Mirror Reflection:</span>
+                                $a_n = -3 + \frac{(-1)^n}{n}$ vs. $|a_n|$
+                            </span>
+                            <span style="font-size: 0.78rem; font-weight: 600; color: #0284c7; background: #e0f2fe; padding: 2px 8px; border-radius: 4px;">Challenge $\epsilon = 0.25 \implies$ Shared Cutoff $N = 4$</span>
+                        </div>
+
+                        <svg viewBox="0 0 780 370" style="width: 100%; height: auto; display: block;" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+                            <defs>
+                                <marker id="we-axis-arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse">
+                                    <path d="M 0 2 L 7 5 L 0 8 z" fill="#64748b"/>
+                                </marker>
+                                <marker id="we-flip-arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto">
+                                    <path d="M 0 2 L 7 5 L 0 8 z" fill="#d97706"/>
+                                </marker>
+                            </defs>
+
+                            <!-- Subtle Vertical Index Grid Lines -->
+                            <g stroke="#f1f5f9" stroke-width="0.8">
+                                <line x1="120" y1="28" x2="120" y2="338"/>
+                                <line x1="195" y1="28" x2="195" y2="338"/>
+                                <line x1="270" y1="28" x2="270" y2="338"/>
+                                <line x1="345" y1="28" x2="345" y2="338"/>
+                                <line x1="420" y1="28" x2="420" y2="338"/>
+                                <line x1="495" y1="28" x2="495" y2="338"/>
+                                <line x1="570" y1="28" x2="570" y2="338"/>
+                                <line x1="645" y1="28" x2="645" y2="338"/>
+                            </g>
+
+                            <!-- Shared Tail Capture Shading (n > 4) -->
+                            <rect x="345" y="28" width="335" height="310" fill="#f0fdf4" fill-opacity="0.55"/>
+
+                            <!-- ================= TOP HALF: REFLECTED SEQUENCE |a_n| -> +3 ================= -->
+                            <!-- Top Epsilon Corridor (+3 +/- 0.25 => y from 72 to 108, center y = 90) -->
+                            <rect x="70" y="72" width="610" height="36" fill="#ecfdf5" fill-opacity="0.85" stroke="#10b981" stroke-width="0.9" stroke-dasharray="3 3"/>
+                            <line x1="70" y1="90" x2="680" y2="90" stroke="#059669" stroke-width="1.2" stroke-dasharray="4 3"/>
+                            <text x="688" y="87" font-size="10.5" font-weight="800" fill="#059669">|L| = +3</text>
+                            <text x="688" y="100" font-size="9" font-weight="600" fill="#059669">(Reflected Limit)</text>
+
+                            <!-- ================= BOTTOM HALF: ORIGINAL SEQUENCE a_n -> -3 ================= -->
+                            <!-- Bottom Epsilon Corridor (-3 +/- 0.25 => y from 242 to 278, center y = 260) -->
+                            <rect x="70" y="242" width="610" height="36" fill="#f0f9ff" fill-opacity="0.85" stroke="#38bdf8" stroke-width="0.9" stroke-dasharray="3 3"/>
+                            <line x1="70" y1="260" x2="680" y2="260" stroke="#0284c7" stroke-width="1.2" stroke-dasharray="4 3"/>
+                            <text x="688" y="257" font-size="10.5" font-weight="800" fill="#0284c7">L = −3</text>
+                            <text x="688" y="270" font-size="9" font-weight="600" fill="#0284c7">(Original Limit)</text>
+
+                            <!-- ================= MIDDLE MIRROR AXIS: y = 0 (y = 175) ================= -->
+                            <line x1="70" y1="175" x2="680" y2="175" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="5 3"/>
+
+                            <!-- Left Midline Badge: Mirror Axis -->
+                            <rect x="135" y="163" width="195" height="24" rx="5" fill="#fffbeb" stroke="#fcd34d" stroke-width="1"/>
+                            <text x="232.5" y="178.5" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">
+                                0 Axis (Mirror Fold: a<tspan font-size="7.5" dy="2">n</tspan><tspan dy="-2"> ↦ |a</tspan><tspan font-size="7.5" dy="2">n</tspan><tspan dy="-2">|)</tspan>
+                            </text>
+
+                            <!-- Right Midline Badge: Reverse Triangle Distance Bound (Generous 280px width) -->
+                            <rect x="432" y="163" width="280" height="24" rx="5" fill="#ffffff" stroke="#94a3b8" stroke-width="1"/>
+                            <text x="572" y="178.5" font-size="9.5" font-weight="700" fill="#0f172a" text-anchor="middle">
+                                Distance to Limit: ||a<tspan font-size="7.5" dy="2">n</tspan><tspan dy="-2">| − |−3|| ≤ |a</tspan><tspan font-size="7.5" dy="2">n</tspan><tspan dy="-2"> − (−3)| = 1/n</tspan>
+                            </text>
+
+                            <!-- Vertical Value Axis (x = 70) & Bottom Index Axis (y = 338) -->
+                            <line x1="70" y1="338" x2="70" y2="20" stroke="#94a3b8" stroke-width="1.2" marker-end="url(#we-axis-arr)"/>
+                            <line x1="70" y1="338" x2="690" y2="338" stroke="#94a3b8" stroke-width="1.2" marker-end="url(#we-axis-arr)"/>
+                            <text x="698" y="342" font-size="10.5" font-weight="700" fill="#475569">Index n</text>
+
+                            <!-- Left Axis Ticks & Labels -->
+                            <g font-size="9.5" font-weight="600" fill="#64748b" text-anchor="end">
+                                <!-- Top Positive Ticks -->
+                                <line x1="65" y1="35" x2="70" y2="35" stroke="#94a3b8"/><text x="61" y="38.5">+4.0</text>
+                                <line x1="65" y1="72" x2="70" y2="72" stroke="#10b981"/><text x="61" y="75" fill="#059669">+3.25</text>
+                                <line x1="64" y1="90" x2="70" y2="90" stroke="#059669"/><text x="61" y="93.5" font-weight="800" fill="#059669">+3.0</text>
+                                <line x1="65" y1="108" x2="70" y2="108" stroke="#10b981"/><text x="61" y="111.5" fill="#059669">+2.75</text>
+                                <line x1="65" y1="130" x2="70" y2="130" stroke="#94a3b8"/><text x="61" y="133.5">+2.5</text>
+
+                                <!-- Origin 0 -->
+                                <line x1="64" y1="175" x2="70" y2="175" stroke="#475569"/><text x="61" y="178.5" font-weight="800" fill="#0f172a">0</text>
+
+                                <!-- Bottom Negative Ticks -->
+                                <line x1="65" y1="220" x2="70" y2="220" stroke="#94a3b8"/><text x="61" y="223.5">−2.5</text>
+                                <line x1="65" y1="242" x2="70" y2="242" stroke="#38bdf8"/><text x="61" y="245" fill="#0284c7">−2.75</text>
+                                <line x1="64" y1="260" x2="70" y2="260" stroke="#0284c7"/><text x="61" y="263.5" font-weight="800" fill="#0284c7">−3.0</text>
+                                <line x1="65" y1="278" x2="70" y2="278" stroke="#38bdf8"/><text x="61" y="281.5" fill="#0284c7">−3.25</text>
+                                <line x1="65" y1="315" x2="70" y2="315" stroke="#94a3b8"/><text x="61" y="318.5">−4.0</text>
+                            </g>
+
+                            <!-- Bottom Index Ticks & Labels -->
+                            <g font-size="9.5" font-weight="600" fill="#64748b" text-anchor="middle">
+                                <line x1="120" y1="338" x2="120" y2="343" stroke="#94a3b8"/><text x="120" y="355">n = 1</text>
+                                <line x1="195" y1="338" x2="195" y2="343" stroke="#94a3b8"/><text x="195" y="355">n = 2</text>
+                                <line x1="270" y1="338" x2="270" y2="343" stroke="#94a3b8"/><text x="270" y="355">n = 3</text>
+                                <line x1="345" y1="338" x2="345" y2="344" stroke="#059669"/><text x="345" y="355" fill="#059669" font-weight="800">N = 4</text>
+                                <line x1="420" y1="338" x2="420" y2="343" stroke="#94a3b8"/><text x="420" y="355">n = 5</text>
+                                <line x1="495" y1="338" x2="495" y2="343" stroke="#94a3b8"/><text x="495" y="355">n = 6</text>
+                                <line x1="570" y1="338" x2="570" y2="343" stroke="#94a3b8"/><text x="570" y="355">n = 7</text>
+                                <line x1="645" y1="338" x2="645" y2="343" stroke="#94a3b8"/><text x="645" y="355">n = 8</text>
+                            </g>
+
+                            <!-- ================= SHARED CUTOFF LINE N = 4 (x = 345) ================= -->
+                            <line x1="345" y1="28" x2="345" y2="338" stroke="#059669" stroke-width="1.6" stroke-dasharray="5 3"/>
+                            <rect x="255" y="6" width="180" height="20" rx="4" fill="#059669"/>
+                            <text x="345" y="19.5" font-size="10" font-weight="800" fill="#ffffff" text-anchor="middle">
+                                Shared Cutoff N = 4 (for ϵ = 0.25)
+                            </text>
+
+                            <!-- ================= MIRROR REFLECTION VECTORS (a_n -> |a_n|) ================= -->
+                            <g stroke="#f59e0b" stroke-width="1.15" stroke-dasharray="3 2" marker-end="url(#we-flip-arr)">
+                                <!-- n=1 flip: (120, 308) -> (120, 43) -->
+                                <line x1="120" y1="308" x2="120" y2="43"/>
+                                <!-- n=5 flip: (420, 267) -> (420, 83) -->
+                                <line x1="420" y1="267" x2="420" y2="83"/>
+                            </g>
+
+                            <!-- ================= CONNECTING POLYLINES ================= -->
+                            <!-- Bottom Polyline: a_n -->
+                            <polyline points="120,315 195,220 270,284 345,242 420,274 495,248 570,270 645,251"
+                                      fill="none" stroke="#93c5fd" stroke-width="1.2" stroke-dasharray="3 2"/>
+                            <!-- Top Polyline: |a_n| -->
+                            <polyline points="120,35 195,130 270,66 345,108 420,76 495,102 570,80 645,99"
+                                      fill="none" stroke="#6ee7b7" stroke-width="1.2" stroke-dasharray="3 2"/>
+
+                            <!-- ================= SEQUENCE POINTS (BOTTOM: a_n) ================= -->
+                            <!-- Prefix Breaches (n = 1, 2, 3, 4) -->
+                            <g fill="#e11d48" stroke="#ffffff" stroke-width="1">
+                                <circle cx="120" cy="315" r="4.2"/>
+                                <circle cx="195" cy="220" r="4.2"/>
+                                <circle cx="270" cy="284" r="4.2"/>
+                                <circle cx="345" cy="242" r="4.2"/>
+                            </g>
+                            <!-- Trapped Tail (n = 5, 6, 7, 8) -->
+                            <g fill="#0284c7" stroke="#ffffff" stroke-width="1">
+                                <circle cx="420" cy="274" r="4.4"/>
+                                <circle cx="495" cy="248" r="4.4"/>
+                                <circle cx="570" cy="270" r="4.4"/>
+                                <circle cx="645" cy="251" r="4.4"/>
+                            </g>
+
+                            <!-- Bottom Point Labels -->
+                            <text x="130" y="318.5" font-size="9" font-weight="700" fill="#e11d48" text-anchor="start">a₁ = −4.00</text>
+                            <text x="195" y="210" font-size="9" font-weight="700" fill="#e11d48" text-anchor="middle">a₂ = −2.50</text>
+                            <text x="270" y="298" font-size="9" font-weight="700" fill="#e11d48" text-anchor="middle">a₃ = −3.33</text>
+                            <text x="337" y="234" font-size="9" font-weight="700" fill="#e11d48" text-anchor="end">a₄ = −2.75</text>
+                            <text x="420" y="290" font-size="9" font-weight="700" fill="#0284c7" text-anchor="middle">a₅ = −3.20 ✓</text>
+
+                            <!-- ================= REFLECTED POINTS (TOP: |a_n|) ================= -->
+                            <!-- Prefix Breaches (n = 1, 2, 3, 4) -->
+                            <g fill="#e11d48" stroke="#ffffff" stroke-width="1">
+                                <circle cx="120" cy="35" r="4.2"/>
+                                <circle cx="195" cy="130" r="4.2"/>
+                                <circle cx="270" cy="66" r="4.2"/>
+                                <circle cx="345" cy="108" r="4.2"/>
+                            </g>
+                            <!-- Trapped Tail (n = 5, 6, 7, 8) -->
+                            <g fill="#059669" stroke="#ffffff" stroke-width="1">
+                                <circle cx="420" cy="76" r="4.4"/>
+                                <circle cx="495" cy="102" r="4.4"/>
+                                <circle cx="570" cy="80" r="4.4"/>
+                                <circle cx="645" cy="99" r="4.4"/>
+                            </g>
+
+                            <!-- Top Point Labels -->
+                            <text x="130" y="38.5" font-size="9" font-weight="700" fill="#e11d48" text-anchor="start">|a₁| = +4.00</text>
+                            <text x="195" y="144" font-size="9" font-weight="700" fill="#e11d48" text-anchor="middle">|a₂| = +2.50</text>
+                            <text x="270" y="56" font-size="9" font-weight="700" fill="#e11d48" text-anchor="middle">|a₃| = +3.33</text>
+                            <text x="337" y="121" font-size="9" font-weight="700" fill="#e11d48" text-anchor="end">|a₄| = +2.75</text>
+                            <text x="420" y="66" font-size="9" font-weight="700" fill="#059669" text-anchor="middle">|a₅| = +3.20 ✓</text>
+                        </svg>
+                    </div>
+                </div>
+
                 <p>
                     <strong>The Rigorous Proof:</strong> The proof relies on the <em>Reverse Triangle Inequality</em>, which states that for any real numbers $x, y \in \mathbb{R}$:
                 </p>
