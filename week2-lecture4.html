@@ -5949,8 +5949,8 @@
                             $$\big||a_n| - 3\big| = \left| \left|-3 + \frac{(-1)^n}{n}\right| - 3 \right| &lt; \epsilon$$
                         </li>
                         <li style="margin-bottom: 0.5rem;">
-                            <strong>The Reverse Triangle Shortcut:</strong> Recognise that $3 = |-3|$ and apply $\big||x| - |y|\big| \le |x - y|$ to collapse the outer bars in a single step:
-                            $$\left| \left|-3 + \frac{(-1)^n}{n}\right| - |-3| \right| \le \left| \left(-3 + \frac{(-1)^n}{n}\right) - (-3) \right| = \left|\frac{(-1)^n}{n}\right| = \frac{1}{n}$$
+                            <strong>The Reverse Triangle Shortcut:</strong> We want to apply $\big||x| - |y|\big| \le |x - y|$ to erase the inner absolute value bars. By rewriting $3$ as $|-3|$ (so that $x = -3 + \frac{(-1)^n}{n}$ and $y = -3$ share the same $-3$ term), the inner bars drop away and the $-3$ terms cancel immediately:
+                            $$\left| \underbrace{\left|-3 + \frac{(-1)^n}{n}\right|}_{|x|} - \underbrace{|-3|}_{|y|} \right| \le \left| \underbrace{\left(-3 + \frac{(-1)^n}{n}\right)}_{x} - \underbrace{(-3)}_{y} \right| = \left|\frac{(-1)^n}{n}\right| = \frac{1}{n}$$
                         </li>
                         <li>
                             <strong>Shared Cutoff ($N = 4$ for $\epsilon = 0.25$):</strong> Requiring $\frac{1}{n} &lt; \epsilon$ gives $N = \lceil 1/\epsilon \rceil$. For $\epsilon = 0.25$, $N = \frac{1}{0.25} = 4$. As the diagram below illustrates, reflecting $a_n$ across the $0$ axis flips every point into $+3 \pm \frac{1}{n}$ without changing its vertical distance to the target line—so the single cutoff barrier $N = 4$ traps both tails simultaneously. $\blacksquare$
