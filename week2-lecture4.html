@@ -5718,7 +5718,7 @@
 
             <section style="margin-bottom: 2.5rem; color: #334155; font-size: 1rem; line-height: 1.75;">
                 <p style="margin-top: 0;">
-                    Before constructing the full algebra of limits (addition, multiplication, and quotients), we need three baseline stability properties. These results confirm that convergent sequences behave predictably under absolute values, remain trapped within finite boundaries, and stay insulated away from zero when their limits are non-zero.
+                    Before constructing the full algebra of limits (addition, multiplication, and quotients), we need three essential structural guarantees in our toolkit. These results are the unsung workhorses of real analysis: they ensure that convergent sequences behave predictably under absolute values, never escape to infinity (boundedness), and stay safely insulated from zero whenever their limit is non-zero. As you will see in Section 5, these three properties are precisely what keep our product and quotient proofs from collapsing.
                 </p>
 
                 <!-- ------------------------------------------------------------- -->
@@ -5735,6 +5735,202 @@
                 <p>
                     <strong>Why does this make intuitive sense?</strong> Absolute value measures distance from the origin $0$. If the sequence terms $a_n$ are crowding closer and closer to $L$, their distances from zero must naturally crowd closer and closer to $L$'s distance from zero.
                 </p>
+
+                <!-- ================================================================= -->
+                <!-- DIAGRAM: ABSOLUTE VALUE AS DISTANCE FROM ORIGIN (SVG)             -->
+                <!-- ================================================================= -->
+                <figure style="margin: 2rem 0; padding: 1.5rem; background: #ffffff; border: 1px solid var(--border, #cbd5e1); border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                    <figcaption style="font-size: 0.95rem; font-weight: 700; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem;">
+                        <span>Figure: Absolute Value as Distance from the Origin ($a_n \to L \implies |a_n| \to |L|$)</span>
+                        <span style="font-size: 0.82rem; font-weight: 600; color: #0284c7; background: #e0f2fe; padding: 2px 8px; border-radius: 4px; text-transform: none;">Reverse Triangle Inequality: $\big||a_n| - |L|\big| \le |a_n - L| &lt; \epsilon$</span>
+                    </figcaption>
+
+                    <p style="margin: 0 0 1.25rem 0; color: #475569; font-size: 0.92rem; line-height: 1.6;">
+                        Absolute value measures straight-line distance from the origin $0$. Because reflecting negative numbers across $0$ is a distance-preserving isometry ($x \mapsto |x|$), a cluster of sequence terms $a_n$ trapped within $\epsilon$ of $L = -3$ maps into an identical cluster $|a_n|$ trapped within $\epsilon$ of $|L| = +3$.
+                    </p>
+
+                    <svg viewBox="0 0 780 255" style="width: 100%; height: auto; display: block;" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+                        <defs>
+                            <!-- Soft Vertical Gradient for Left Blue Corridor -->
+                            <linearGradient id="av-blue-corridor" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#e0f2fe" stop-opacity="0.2"/>
+                                <stop offset="50%" stop-color="#bae6fd" stop-opacity="0.65"/>
+                                <stop offset="100%" stop-color="#e0f2fe" stop-opacity="0.2"/>
+                            </linearGradient>
+
+                            <!-- Soft Vertical Gradient for Right Green Corridor -->
+                            <linearGradient id="av-green-corridor" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#d1fae5" stop-opacity="0.2"/>
+                                <stop offset="50%" stop-color="#a7f3d0" stop-opacity="0.65"/>
+                                <stop offset="100%" stop-color="#d1fae5" stop-opacity="0.2"/>
+                            </linearGradient>
+
+                            <!-- Axis Arrowhead -->
+                            <marker id="av-axis-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                                <path d="M 0 2 L 6 5 L 0 8 z" fill="#64748b"/>
+                            </marker>
+
+                            <!-- Amber Arrowheads for Isometry Arc -->
+                            <marker id="av-gold-arrow-end" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+                                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#d97706"/>
+                            </marker>
+                            <marker id="av-gold-arrow-start" viewBox="0 0 10 10" refX="3" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+                                <path d="M 10 1.5 L 2 5 L 10 8.5 z" fill="#d97706"/>
+                            </marker>
+                        </defs>
+
+                        <!-- ================= TOP FORMULA PILL ================= -->
+                        <rect x="280" y="6" width="220" height="24" rx="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.75"/>
+                        <text x="390" y="22" font-size="10.5" font-weight="700" fill="#0f172a" text-anchor="middle">
+                            ||aₙ| − |L|| ≤ |aₙ − L| &lt; ϵ
+                        </text>
+
+                        <!-- ================= CORRIDOR SHADING & TOP LABELS ================= -->
+                        <!-- Left Blue Corridor (Centered at x = 210) -->
+                        <rect x="176" y="72" width="68" height="76" rx="4" fill="url(#av-blue-corridor)"/>
+                        <text x="210" y="48" font-size="10.5" font-weight="700" fill="#0f172a" text-anchor="middle">
+                            Sequence aₙ
+                        </text>
+                        <text x="210" y="61" font-size="9.5" font-weight="600" fill="#0284c7" text-anchor="middle">
+                            within ϵ of L
+                        </text>
+
+                        <!-- Right Green Corridor (Centered at x = 570) -->
+                        <rect x="536" y="72" width="68" height="76" rx="4" fill="url(#av-green-corridor)"/>
+                        <text x="570" y="48" font-size="10.5" font-weight="700" fill="#0f172a" text-anchor="middle">
+                            Absolute values |aₙ|
+                        </text>
+                        <text x="570" y="61" font-size="9.5" font-weight="600" fill="#059669" text-anchor="middle">
+                            within ϵ of |L|
+                        </text>
+
+                        <!-- ================= VERTICAL ORIGIN AXIS & DISTANCE BRACES ================= -->
+                        <!-- Dashed Vertical Line at Origin 0 (x = 390) -->
+                        <line x1="390" y1="42" x2="390" y2="145" stroke="#64748b" stroke-width="1.1" stroke-dasharray="4 3"/>
+
+                        <!-- Left Distance Brace: x = 210 to x = 390 -->
+                        <path d="M 210 92 Q 210 85 217 85 L 293 85 Q 300 85 300 78 Q 300 85 307 85 L 383 85 Q 390 85 390 92"
+                              fill="none" stroke="#334155" stroke-width="1"/>
+                        <text x="300" y="73" font-size="10" font-weight="700" fill="#334155" text-anchor="middle">
+                            Distance |L| = 3
+                        </text>
+
+                        <!-- Right Distance Brace: x = 390 to x = 570 -->
+                        <path d="M 390 92 Q 390 85 397 85 L 473 85 Q 480 85 480 78 Q 480 85 487 85 L 563 85 Q 570 85 570 92"
+                              fill="none" stroke="#334155" stroke-width="1"/>
+                        <text x="480" y="73" font-size="10" font-weight="700" fill="#334155" text-anchor="middle">
+                            Distance |L| = 3
+                        </text>
+
+                        <!-- Small Corridor Curly Braces -->
+                        <!-- Left Blue Brace (176 to 244) -->
+                        <path d="M 176 108 Q 176 103 181 103 L 205 103 Q 210 103 210 98 Q 210 103 215 103 L 239 103 Q 244 103 244 108"
+                              fill="none" stroke="#0284c7" stroke-width="1"/>
+
+                        <!-- Right Green Brace (536 to 604) -->
+                        <path d="M 536 108 Q 536 103 541 103 L 565 103 Q 570 103 570 98 Q 570 103 575 103 L 599 103 Q 604 103 604 108"
+                              fill="none" stroke="#059669" stroke-width="1"/>
+
+                        <!-- ================= REAL NUMBER LINE (y = 125) ================= -->
+                        <line x1="90" y1="125" x2="690" y2="125" stroke="#94a3b8" stroke-width="1.2" marker-end="url(#av-axis-arrow)"/>
+                        <text x="702" y="129" font-size="11" font-weight="700" fill="#64748b">ℝ</text>
+
+                        <!-- Axis Ticks -->
+                        <g stroke="#64748b" stroke-width="1.1">
+                            <line x1="150" y1="119" x2="150" y2="131"/>
+                            <line x1="270" y1="119" x2="270" y2="131"/>
+                            <line x1="330" y1="119" x2="330" y2="131"/>
+                            <line x1="390" y1="118" x2="390" y2="132"/>
+                            <line x1="450" y1="119" x2="450" y2="131"/>
+                            <line x1="510" y1="119" x2="510" y2="131"/>
+                            <line x1="630" y1="119" x2="630" y2="131"/>
+                        </g>
+
+                        <!-- ================= CLUSTER POINTS ================= -->
+                        <!-- Left Cluster around L = -3 (x = 210, y = 125) -->
+                        <g fill="#059669" stroke="#ffffff" stroke-width="0.9">
+                            <!-- Upper Row -->
+                            <circle cx="190" cy="116" r="3.8"/>
+                            <circle cx="201" cy="116" r="3.8"/>
+                            <circle cx="219" cy="116" r="3.8"/>
+                            <!-- On-Axis Row -->
+                            <circle cx="179" cy="125" r="3.8"/>
+                            <circle cx="189" cy="125" r="3.8"/>
+                            <circle cx="199" cy="125" r="3.8"/>
+                            <circle cx="221" cy="125" r="3.8"/>
+                            <circle cx="231" cy="125" r="3.8"/>
+                            <circle cx="241" cy="125" r="3.8"/>
+                            <!-- Lower Row -->
+                            <circle cx="190" cy="134" r="3.8"/>
+                            <circle cx="200" cy="134" r="3.8"/>
+                            <circle cx="219" cy="134" r="3.8"/>
+                            <circle cx="229" cy="134" r="3.8"/>
+                        </g>
+                        <!-- Target L = -3 Center Dot (Blue) -->
+                        <circle cx="210" cy="125" r="5.2" fill="#0284c7" stroke="#ffffff" stroke-width="1.2"/>
+
+                        <!-- Right Cluster around |L| = +3 (x = 570, y = 125) - Reflected Across x = 390 -->
+                        <g fill="#059669" stroke="#ffffff" stroke-width="0.9">
+                            <!-- Upper Row -->
+                            <circle cx="561" cy="116" r="3.8"/>
+                            <circle cx="579" cy="116" r="3.8"/>
+                            <circle cx="590" cy="116" r="3.8"/>
+                            <!-- On-Axis Row -->
+                            <circle cx="539" cy="125" r="3.8"/>
+                            <circle cx="549" cy="125" r="3.8"/>
+                            <circle cx="559" cy="125" r="3.8"/>
+                            <circle cx="581" cy="125" r="3.8"/>
+                            <circle cx="591" cy="125" r="3.8"/>
+                            <circle cx="601" cy="125" r="3.8"/>
+                            <!-- Lower Row -->
+                            <circle cx="551" cy="134" r="3.8"/>
+                            <circle cx="561" cy="134" r="3.8"/>
+                            <circle cx="580" cy="134" r="3.8"/>
+                            <circle cx="590" cy="134" r="3.8"/>
+                        </g>
+                        <!-- Target |L| = +3 Center Dot (Teal/Emerald) -->
+                        <circle cx="570" cy="125" r="5.2" fill="#0d9488" stroke="#ffffff" stroke-width="1.2"/>
+
+                        <!-- ================= AXIS NUMBERS & TARGET LABELS ================= -->
+                        <g font-size="10" font-weight="600" fill="#64748b" text-anchor="middle">
+                            <text x="150" y="152">−4</text>
+                            <text x="210" y="152" font-size="10.5" font-weight="800" fill="#0f172a">−3</text>
+                            <text x="270" y="152">−2</text>
+                            <text x="330" y="152">−1</text>
+                            <text x="390" y="152" font-size="10.5" font-weight="800" fill="#0f172a">0</text>
+                            <text x="450" y="152">+1</text>
+                            <text x="510" y="152">+2</text>
+                            <text x="570" y="152" font-size="10.5" font-weight="800" fill="#0f172a">+3</text>
+                            <text x="630" y="152">+4</text>
+                        </g>
+
+                        <!-- Sub-labels under -3, 0, +3 -->
+                        <text x="210" y="168" font-size="11" font-weight="800" fill="#0284c7" text-anchor="middle">
+                            L = −3
+                        </text>
+                        <text x="390" y="168" font-size="9.5" font-weight="600" fill="#64748b" text-anchor="middle">
+                            (Origin)
+                        </text>
+                        <text x="570" y="168" font-size="11" font-weight="800" fill="#059669" text-anchor="middle">
+                            |L| = 3
+                        </text>
+
+                        <!-- ================= ISOMETRY REFLECTION ARC & BOTTOM BANNER ================= -->
+                        <path d="M 220 176 Q 390 214 560 176"
+                              fill="none" stroke="#d97706" stroke-width="2"
+                              marker-start="url(#av-gold-arrow-start)" marker-end="url(#av-gold-arrow-end)"/>
+
+                        <text x="390" y="210" font-size="10.5" font-weight="700" fill="#b45309" text-anchor="middle">
+                            Isometry: x ↦ |x| (Flipped across 0)
+                        </text>
+
+                        <!-- Bottom Summary Banner (Matches Diagram 1 & Clash Diagram Style) -->
+                        <rect x="115" y="222" width="550" height="26" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="0.75"/>
+                        <text x="390" y="238.5" font-size="10" font-weight="600" fill="#334155" text-anchor="middle">
+                            Because reflection across 0 preserves distance, the error ϵ remains unchanged and the cluster cannot disperse.
+                        </text>
+                    </svg>
+                </figure>
 
                 <p>
                     <strong>The Rigorous Proof:</strong> The proof relies on the <em>Reverse Triangle Inequality</em>, which states that for any real numbers $x, y \in \mathbb{R}$:
