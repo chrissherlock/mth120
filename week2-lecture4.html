@@ -828,6 +828,7 @@
                     <figcaption style="font-size: 0.9rem; font-weight: 700; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">
                         Figure 4: The Challenge–Response Game (N as an Explicit Function of ϵ)
                     </figcaption>
+
                     <svg viewBox="0 0 740 270" style="width: 100%; height: auto; display: block;" font-family="system-ui, -apple-system, sans-serif">
                         <!-- FRAME A: LOOSE CHALLENGE -->
                         <g transform="translate(0, 0)">
@@ -837,20 +838,18 @@
                             <rect x="50" y="46" width="640" height="48" fill="#fef3c7" opacity="0.6"></rect>
                             <line x1="50" y1="70" x2="690" y2="70" stroke="#94a3b8" stroke-dasharray="2"></line>
                             <text x="695" y="73" font-size="11" fill="#64748b">L</text>
-                            <!-- Small Cutoff N1 = 3 -->
-                            <line x1="220" y1="30" x2="220" y2="110" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"></line>
-                            <text x="220" y="123" font-size="11" font-weight="bold" fill="#ef4444" text-anchor="middle">N₁ = 3</text>
-                            <!-- Consistent Points -->
+                            <!-- Cutoff Line N1 = 2 (Placed directly on point n=2 at x = 190) -->
+                            <line x1="190" y1="30" x2="190" y2="110" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"></line>
+                            <text x="190" y="123" font-size="11" font-weight="bold" fill="#ef4444" text-anchor="middle">N₁ = 2</text>
+                            <!-- Points: n=1, n=2 in head; n=3 onward green tail -->
                             <circle cx="100" cy="100" r="4" fill="#94a3b8"></circle>
-                            <circle cx="160" cy="40" r="4" fill="#94a3b8"></circle>
-                            <circle cx="220" cy="92" r="4" fill="#94a3b8"></circle>
+                            <circle cx="190" cy="40" r="4" fill="#94a3b8"></circle>
+                            <!-- First Green Point (n = 3) -->
                             <circle cx="280" cy="78" r="4.5" fill="#10b981"></circle>
-                            <circle cx="350" cy="65" r="4.5" fill="#10b981"></circle>
-                            <circle cx="430" cy="73" r="4.5" fill="#10b981"></circle>
-                            <circle cx="480" cy="68" r="4.5" fill="#10b981"></circle>
-                            <circle cx="530" cy="67" r="4.5" fill="#10b981"></circle>
-                            <circle cx="590" cy="72" r="4.5" fill="#10b981"></circle>
-                            <circle cx="650" cy="70" r="4.5" fill="#10b981"></circle>
+                            <circle cx="360" cy="65" r="4.5" fill="#10b981"></circle>
+                            <circle cx="440" cy="73" r="4.5" fill="#10b981"></circle>
+                            <circle cx="520" cy="68" r="4.5" fill="#10b981"></circle>
+                            <circle cx="600" cy="70" r="4.5" fill="#10b981"></circle>
                             <text x="450" y="60" font-size="11" font-weight="bold" fill="#047857">Early cutoff suffices for wide tolerance</text>
                         </g>
                         <!-- FRAME B: STRICT CHALLENGE -->
@@ -862,27 +861,25 @@
                             <line x1="50" y1="70" x2="690" y2="70" stroke="#94a3b8" stroke-dasharray="2"></line>
                             <text x="695" y="73" font-size="11" fill="#64748b">L</text>
                             <!-- Old N fails -->
-                            <line x1="220" y1="30" x2="220" y2="110" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="2"></line>
-                            <text x="220" y="123" font-size="10" fill="#64748b" text-anchor="middle">Old N₁ fails</text>
-                            <!-- New Far Cutoff N2 = 8 (aligned with x=480 dot) -->
-                            <line x1="480" y1="30" x2="480" y2="110" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"></line>
-                            <text x="480" y="123" font-size="11" font-weight="bold" fill="#ef4444" text-anchor="middle">N₂ = 8 (Forced Right)</text>
-                            <!-- Mirrored Points (Same positions as Round 1, colored red if they violate narrow corridor) -->
+                            <line x1="190" y1="30" x2="190" y2="110" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="2"></line>
+                            <text x="190" y="123" font-size="10" fill="#64748b" text-anchor="middle">Old N₁ fails</text>
+                            <!-- New Far Cutoff N2 = 6 -->
+                            <line x1="520" y1="30" x2="520" y2="110" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"></line>
+                            <text x="520" y="123" font-size="11" font-weight="bold" fill="#ef4444" text-anchor="middle">N₂ = 6 (Forced Right)</text>
+                            <!-- Mirrored Points (n=3, n=4, n=5 escape narrow corridor) -->
                             <circle cx="100" cy="100" r="4" fill="#94a3b8"></circle>
-                            <circle cx="160" cy="40" r="4" fill="#ef4444"></circle>
-                            <circle cx="220" cy="92" r="4" fill="#94a3b8"></circle>
+                            <circle cx="190" cy="40" r="4" fill="#94a3b8"></circle>
                             <circle cx="280" cy="78" r="4" fill="#ef4444"></circle>
-                            <circle cx="350" cy="65" r="4" fill="#ef4444"></circle>
-                            <text x="350" y="44" font-size="9" font-weight="bold" fill="#ef4444" text-anchor="middle">Escapes corridor!</text>
-                            <circle cx="430" cy="73" r="4" fill="#ef4444"></circle>
-                            <!-- Point N2 = 8 (The exact boundary point) -->
-                            <circle cx="480" cy="68" r="4.5" fill="#ef4444"></circle>
+                            <circle cx="360" cy="52" r="4" fill="#ef4444"></circle>
+                            <text x="360" y="44" font-size="9" font-weight="bold" fill="#ef4444" text-anchor="middle">Escapes corridor!</text>
+                            <circle cx="440" cy="82" r="4" fill="#ef4444"></circle>
+                            <!-- Point N2 = 6 (The exact boundary point) -->
+                            <circle cx="520" cy="68" r="4.5" fill="#ef4444"></circle>
                             <!-- Points finally trapped after N2 -->
-                            <circle cx="530" cy="67" r="4.5" fill="#10b981"></circle>
-                            <circle cx="590" cy="72" r="4.5" fill="#10b981"></circle>
-                            <circle cx="650" cy="70" r="4.5" fill="#10b981"></circle>
+                            <circle cx="600" cy="70" r="4.5" fill="#10b981"></circle>
                         </g>
                     </svg>
+
                     <p style="margin: 0.6rem 0 0 0; font-size: 0.88rem; color: #64748b; line-height: 1.5;">
                         <strong>Quantifier ordering in action:</strong> You must wait for the skeptic to name <code style="color:#b45309;">ϵ</code> <em>first</em> before you can commit to <code style="color:#ef4444;">N</code>. As <code style="color:#b45309;">ϵ → 0</code>, the required cutoff <code style="color:#ef4444;">N</code> is pushed arbitrarily far to the right.
                     </p>
