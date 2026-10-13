@@ -831,58 +831,56 @@
                     <svg viewBox="0 0 740 270" style="width: 100%; height: auto; display: block;" font-family="system-ui, -apple-system, sans-serif">
                         <!-- FRAME A: LOOSE CHALLENGE -->
                         <g transform="translate(0, 0)">
-                            <rect x="50" y="30" width="640" height="80" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+                            <rect x="50" y="30" width="640" height="80" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"></rect>
                             <text x="65" y="22" font-size="11" font-weight="700" fill="#0369a1">ROUND 1: SKEPTIC CHOOSES LOOSE ϵ₁ = 0.5</text>
-
                             <!-- Wide corridor -->
-                            <rect x="50" y="46" width="640" height="48" fill="#fef3c7" opacity="0.6"/>
-                            <line x1="50" y1="70" x2="690" y2="70" stroke="#94a3b8" stroke-dasharray="2"/>
+                            <rect x="50" y="46" width="640" height="48" fill="#fef3c7" opacity="0.6"></rect>
+                            <line x1="50" y1="70" x2="690" y2="70" stroke="#94a3b8" stroke-dasharray="2"></line>
                             <text x="695" y="73" font-size="11" fill="#64748b">L</text>
-
-                            <!-- Small Cutoff N1 -->
-                            <line x1="220" y1="30" x2="220" y2="110" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"/>
+                            <!-- Small Cutoff N1 = 3 -->
+                            <line x1="220" y1="30" x2="220" y2="110" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"></line>
                             <text x="220" y="123" font-size="11" font-weight="bold" fill="#ef4444" text-anchor="middle">N₁ = 3</text>
-
-                            <!-- Points -->
-                            <circle cx="100" cy="100" r="4" fill="#94a3b8"/>
-                            <circle cx="150" cy="40" r="4" fill="#94a3b8"/>
-                            <circle cx="200" cy="92" r="4" fill="#94a3b8"/>
-                            <circle cx="260" cy="78" r="4.5" fill="#10b981"/>
-                            <circle cx="330" cy="65" r="4.5" fill="#10b981"/>
-                            <circle cx="410" cy="73" r="4.5" fill="#10b981"/>
-                            <circle cx="500" cy="69" r="4.5" fill="#10b981"/>
-                            <circle cx="600" cy="70" r="4.5" fill="#10b981"/>
+                            <!-- Consistent Points -->
+                            <circle cx="100" cy="100" r="4" fill="#94a3b8"></circle>
+                            <circle cx="160" cy="40" r="4" fill="#94a3b8"></circle>
+                            <circle cx="220" cy="92" r="4" fill="#94a3b8"></circle>
+                            <circle cx="280" cy="78" r="4.5" fill="#10b981"></circle>
+                            <circle cx="350" cy="65" r="4.5" fill="#10b981"></circle>
+                            <circle cx="430" cy="73" r="4.5" fill="#10b981"></circle>
+                            <circle cx="480" cy="68" r="4.5" fill="#10b981"></circle>
+                            <circle cx="530" cy="67" r="4.5" fill="#10b981"></circle>
+                            <circle cx="590" cy="72" r="4.5" fill="#10b981"></circle>
+                            <circle cx="650" cy="70" r="4.5" fill="#10b981"></circle>
                             <text x="450" y="60" font-size="11" font-weight="bold" fill="#047857">Early cutoff suffices for wide tolerance</text>
                         </g>
-
                         <!-- FRAME B: STRICT CHALLENGE -->
                         <g transform="translate(0, 140)">
-                            <rect x="50" y="30" width="640" height="80" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+                            <rect x="50" y="30" width="640" height="80" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"></rect>
                             <text x="65" y="22" font-size="11" font-weight="700" fill="#b45309">ROUND 2: SKEPTIC TIGHTENS TO ϵ₂ = 0.15 (OLD CUTOFF FAILS!)</text>
-
                             <!-- Narrow corridor -->
-                            <rect x="50" y="60" width="640" height="20" fill="#fef3c7" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3"/>
-                            <line x1="50" y1="70" x2="690" y2="70" stroke="#94a3b8" stroke-dasharray="2"/>
+                            <rect x="50" y="60" width="640" height="20" fill="#fef3c7" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3"></rect>
+                            <line x1="50" y1="70" x2="690" y2="70" stroke="#94a3b8" stroke-dasharray="2"></line>
                             <text x="695" y="73" font-size="11" fill="#64748b">L</text>
-
                             <!-- Old N fails -->
-                            <line x1="220" y1="30" x2="220" y2="110" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="2"/>
+                            <line x1="220" y1="30" x2="220" y2="110" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="2"></line>
                             <text x="220" y="123" font-size="10" fill="#64748b" text-anchor="middle">Old N₁ fails</text>
-
-                            <!-- New Far Cutoff N2 -->
-                            <line x1="480" y1="30" x2="480" y2="110" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"/>
+                            <!-- New Far Cutoff N2 = 8 (aligned with x=480 dot) -->
+                            <line x1="480" y1="30" x2="480" y2="110" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"></line>
                             <text x="480" y="123" font-size="11" font-weight="bold" fill="#ef4444" text-anchor="middle">N₂ = 8 (Forced Right)</text>
-
-                            <!-- Escaping points that broke old N -->
-                            <circle cx="260" cy="78" r="4" fill="#ef4444"/>
-                            <circle cx="330" cy="52" r="4" fill="#ef4444"/>
-                            <text x="330" y="44" font-size="9" font-weight="bold" fill="#ef4444" text-anchor="middle">Escapes corridor!</text>
-                            <circle cx="410" cy="82" r="4" fill="#ef4444"/>
-
+                            <!-- Mirrored Points (Same positions as Round 1, colored red if they violate narrow corridor) -->
+                            <circle cx="100" cy="100" r="4" fill="#94a3b8"></circle>
+                            <circle cx="160" cy="40" r="4" fill="#ef4444"></circle>
+                            <circle cx="220" cy="92" r="4" fill="#94a3b8"></circle>
+                            <circle cx="280" cy="78" r="4" fill="#ef4444"></circle>
+                            <circle cx="350" cy="65" r="4" fill="#ef4444"></circle>
+                            <text x="350" y="44" font-size="9" font-weight="bold" fill="#ef4444" text-anchor="middle">Escapes corridor!</text>
+                            <circle cx="430" cy="73" r="4" fill="#ef4444"></circle>
+                            <!-- Point N2 = 8 (The exact boundary point) -->
+                            <circle cx="480" cy="68" r="4.5" fill="#ef4444"></circle>
                             <!-- Points finally trapped after N2 -->
-                            <circle cx="520" cy="67" r="4.5" fill="#10b981"/>
-                            <circle cx="580" cy="72" r="4.5" fill="#10b981"/>
-                            <circle cx="640" cy="70" r="4.5" fill="#10b981"/>
+                            <circle cx="530" cy="67" r="4.5" fill="#10b981"></circle>
+                            <circle cx="590" cy="72" r="4.5" fill="#10b981"></circle>
+                            <circle cx="650" cy="70" r="4.5" fill="#10b981"></circle>
                         </g>
                     </svg>
                     <p style="margin: 0.6rem 0 0 0; font-size: 0.88rem; color: #64748b; line-height: 1.5;">
