@@ -712,7 +712,7 @@
                     A sequence $(a_n)_{n=0}^\infty$ converges to a real limit $L \in \mathbb{R}$ (written $\lim_{n\to\infty} a_n = L$ or $a_n \to L$) if and only if:
                 </span>
                 <p style="margin: 1rem 0 0.5rem 0; font-size: 1.25rem;">
-                    $$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad n > N \implies |a_n - L| < \epsilon$$
+                    $$\forall \epsilon > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad \forall n \ge N, \quad |a_n - L| < \epsilon$$
                 </p>
             </div>
 
@@ -782,7 +782,7 @@
                     </figure>
                 </li>
                 <li>
-                    <strong>$\implies |a_n - L| < \epsilon$ ("The terms remain permanently trapped"):</strong><br>
+                    <strong>$, |a_n - L| < \epsilon$ ("The terms remain permanently trapped"):</strong><br>
                     Once you pass milestone $N$, every term $a_n$ is within distance $\epsilon$ of $L$. It is not enough for one term to enter the window and bounce back out. Once $n > N$, <em>no term is ever allowed to leave the target corridor again</em>.
                 </li>
             </ul>
