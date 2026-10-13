@@ -880,9 +880,9 @@
                             <line x1="190" y1="30" x2="190" y2="110" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="2"></line>
                             <text x="190" y="123" font-size="10" fill="#64748b" text-anchor="middle">Old N₁ fails</text>
 
-                            <!-- New Far Cutoff N2 = 6 -->
-                            <line x1="520" y1="30" x2="520" y2="110" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"></line>
-                            <text x="520" y="123" font-size="11" font-weight="bold" fill="#ef4444" text-anchor="middle">N₂ = 6 (Forced Right)</text>
+                            <!-- New Far Cutoff N2 = 5 (Placed on point at x = 440) -->
+                            <line x1="440" y1="30" x2="440" y2="110" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"></line>
+                            <text x="440" y="123" font-size="11" font-weight="bold" fill="#ef4444" text-anchor="middle">N₂ = 5 (Forced Right)</text>
 
                             <!-- Mirrored Points -->
                             <circle cx="100" cy="100" r="4" fill="#94a3b8"></circle>
@@ -890,8 +890,10 @@
                             <circle cx="280" cy="78" r="4" fill="#ef4444"></circle>
                             <circle cx="360" cy="52" r="4" fill="#ef4444"></circle>
                             <text x="360" y="44" font-size="9" font-weight="bold" fill="#ef4444" text-anchor="middle">Escapes corridor!</text>
-                            <circle cx="440" cy="82" r="4" fill="#ef4444"></circle>
-                            <circle cx="520" cy="68" r="4.5" fill="#ef4444"></circle>
+                            <!-- Point N2 = 5 (The boundary point at x = 440) -->
+                            <circle cx="440" cy="82" r="4.5" fill="#ef4444"></circle>
+                            <!-- First point strictly after N2 that stays locked in (at x = 520) -->
+                            <circle cx="520" cy="68" r="4.5" fill="#10b981"></circle>
                             <circle cx="600" cy="70" r="4.5" fill="#10b981"></circle>
                         </g>
                     </svg>
