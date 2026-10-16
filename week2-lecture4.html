@@ -4169,6 +4169,63 @@
                 </li>
             </ol>
 
+            <div style="margin: 2rem 0; padding: 1.75rem 2rem; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                <h3 style="margin-top: 0; font-size: 1.15rem; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; margin-bottom: 1.25rem;">
+                    Worked Example: The Finite Modification Principle
+                </h3>
+
+                <p style="margin: 0 0 1.25rem 0; font-size: 0.92rem; color: #475569; line-height: 1.6;">
+                    <strong>The Principle:</strong> Changing a finite number of terms in a sequence has zero effect on whether it converges or what limit it approaches. No matter how wild, huge, or chaotic the early terms are, if the sequence eventually matches a convergent sequence, the limit is preserved.
+                </p>
+
+                <div style="margin-bottom: 1.25rem;">
+                    <h4 style="font-size: 0.98rem; font-weight: 700; color: #0284c7; margin-bottom: 0.35rem;">1. Formal Theorem</h4>
+                    <p style="margin: 0; font-size: 0.92rem; color: #475569; line-height: 1.6;">
+                        Let $(a_n)$ and $(b_n)$ be sequences. Suppose there exists an index milestone $N_0$ such that:
+                    </p>
+                    <p style="margin: 0.5rem 0; font-size: 0.9rem; color: #0f172a; background: #ffffff; padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid #e2e8f0; text-align: center;">
+                        $$a_n = b_n \quad \forall n \ge N_0$$
+                    </p>
+                    <p style="margin: 0; font-size: 0.92rem; color: #475569; line-height: 1.6;">
+                        Then $(a_n)$ converges to $L$ if and only if $(b_n)$ converges to $L$.
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 1.25rem;">
+                    <h4 style="font-size: 0.98rem; font-weight: 700; color: #0284c7; margin-bottom: 0.35rem;">2. Concrete Setup</h4>
+                    <p style="margin: 0; font-size: 0.92rem; color: #475569; line-height: 1.6;">
+                        Consider the well-behaved sequence $a_n = \frac{1}{n}$, which converges to $L = 0$. Let $b_n$ be a modified sequence with chaotic initial values that syncs with $a_n$ from index $n = 4$ onward ($N_0 = 4$):
+                    </p>
+                    <p style="margin: 0.5rem 0; font-size: 0.9rem; color: #0f172a; background: #ffffff; padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid #e2e8f0; text-align: center;">
+                        $$b_1 = 5000, \quad b_2 = -999, \quad b_3 = \pi, \quad b_n = \frac{1}{n} \quad (\forall n \ge 4)$$
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 0;">
+                    <h4 style="font-size: 0.98rem; font-weight: 700; color: #047857; margin-bottom: 0.35rem;">3. Step-by-Step Proof</h4>
+                    <ol style="margin: 0; padding-left: 1.25rem; font-size: 0.92rem; color: #475569; line-height: 1.6;">
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>Skeptic provides error tolerance:</strong> Let $\epsilon > 0$ be arbitrarily chosen.
+                        </li>
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>Milestone for the clean sequence:</strong> Because $a_n \to 0$, there exists $N_a = \lceil 1/\epsilon \rceil$ such that $|a_n - 0| < \epsilon$ for all $n \ge N_a$.
+                        </li>
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>Define master cutoff:</strong> Set $N_b = \max(N_0, N_a) = \max(4, \lceil 1/\epsilon \rceil)$.
+                        </li>
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>Verify the tail:</strong> For any $n \ge N_b$, the condition $n \ge N_0$ ensures $b_n = a_n = \frac{1}{n}$, and $n \ge N_a$ ensures:
+                            <div style="margin: 0.35rem 0; font-size: 0.9rem; color: #0f172a; background: #ffffff; padding: 0.4rem 0.6rem; border-radius: 6px; border: 1px solid #e2e8f0; text-align: center;">
+                                $$|b_n - 0| = |a_n - 0| = \frac{1}{n} < \epsilon$$
+                            </div>
+                        </li>
+                    </ol>
+                    <p style="margin: 0.75rem 0 0 0; font-size: 0.92rem; color: #0f172a; font-weight: 600;">
+                        The finite disruptive head is successfully bypassed, proving $b_n \to 0$.
+                    </p>
+                </div>
+            </div>
+
             <!-- ================================================================= -->
             <!-- WIDGET: TAIL INVARIANCE & TRUNCATION (DIRECTED NARRATIVE STEPPER) -->
             <!-- ================================================================= -->
