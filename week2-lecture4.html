@@ -7737,6 +7737,43 @@
                 &= a_n (b_n - L) + L (a_n - K)
                 \end{aligned}$$
             </p>
+
+            <!-- ================================================================= -->
+            <!-- HISTORICAL CONTEXT: THE ART OF "ADDING ZERO"                      -->
+            <!-- ================================================================= -->
+            <aside style="margin: 2rem 0; padding: 1.5rem; background: #f8fafc; border: 1px solid #cbd5e1; border-left: 5px solid #0284c7; border-radius: 8px; font-family: system-ui, -apple-system, sans-serif;">
+                <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+                    <div>
+                        <span style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #0284c7; display: block; margin-bottom: 0.2rem;">
+                            Mathematical Craft &amp; History
+                        </span>
+                        <h4 style="margin: 0; color: #0f172a; font-size: 1.15rem; font-weight: 700;">
+                            The Secret Weapon of Analysis: "Adding Zero"
+                        </h4>
+                    </div>
+                    <span style="background: #e0f2fe; color: #0369a1; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 9999px;">
+                        The Leibniz–Cauchy Maneuver
+                    </span>
+                </div>
+
+                <p style="margin: 0 0 0.85rem 0; color: #334155; font-size: 0.95rem; line-height: 1.65;">
+                    In German mathematical tradition, this technique is lovingly referred to as an <em>analytischer Kunstgriff</em> (an "artful analytical device") or simply <strong>Nulladdition</strong> ("adding zero"). While it feels like sleight of hand, it has a celebrated lineage:
+                </p>
+
+                <ul style="margin: 0 0 1rem 1.25rem; padding: 0; color: #334155; font-size: 0.92rem; line-height: 1.65;">
+                    <li style="margin-bottom: 0.6rem;">
+                        <strong>Gottfried Wilhelm Leibniz (1677):</strong> The earliest appearance of this cross-term maneuver occurred when Leibniz discovered the <strong>Product Rule for derivatives</strong>. Faced with the difference quotient $\frac{f(x+h)g(x+h) - f(x)g(x)}{h}$, where two variables move at once, he inserted $-f(x+h)g(x) + f(x+h)g(x)$ into the numerator to decouple the changes of $f$ and $g$.
+                    </li>
+                    <li>
+                        <strong>Augustin-Louis Cauchy (1821) &amp; Karl Weierstrass:</strong> When 19th-century mathematicians banished infinitesimals in favor of metric inequalities, they realized Leibniz's algebraic move was the missing key to proving the Product Limit Law. Because the Triangle Inequality only works on additions, adding zero in the shape of $+a_n L - a_n L$ is the only algebraic device that fractures the coupled difference $a_n b_n - KL$ into two separate, manageable terms.
+                    </li>
+                </ul>
+
+                <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 0.85rem 1rem; font-size: 0.9rem; color: #475569; line-height: 1.55;">
+                    <strong style="color: #0f172a;">Why mathematicians consider it art:</strong> You aren't altering the numerical value of the expression—$0$ leaves everything identical. But by choosing a *clever disguise* for zero that blends the moving terms ($a_n$) with the target destination ($L$), you build a stepping stone that lets the Triangle Inequality bridge the gap.
+                </div>
+            </aside>
+
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
                 Applying the triangle inequality to this bridged expression gives:
             </p>
