@@ -7295,7 +7295,7 @@
                 Here is a subtle hurdle that every beginner wonders about:
             </p>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Because $a_n \to K$, we can find a cutoff $N_1$ so that $|a_n - K| < \epsilon/2$ for all $n > N_1$. Separately, because $b_n \to L$, we can find a cutoff $N_2$ so that $|b_n - L| < \epsilon/2$ for all $n > N_2$.
+                Since we already know $(a_n)$ successfully converges to $K$, it can satisfy <em>any</em> error margin we demand. If we demand a strict margin of $\epsilon/2$, the mathematical definition guarantees there is some milestone—let's call it $N_1$—past which $|a_n - K| < \epsilon/2$. Separately, since $(b_n)$ converges to $L$, it is also guaranteed to eventually meet that $\epsilon/2$ margin, giving us its own distinct milestone $N_2$.
             </p>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
                 What if $N_1 = 10$, but $N_2 = 500$? At step $n = 50$, sequence $a_n$ has settled down nicely, but sequence $b_n$ is still wandering around wildly!
