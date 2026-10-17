@@ -7974,12 +7974,127 @@
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
                 Because $\frac{a_n}{b_n} = a_n \cdot \frac{1}{b_n}$, we can combine the Product Law with a simpler rule: proving that $\lim \frac{1}{b_n} = \frac{1}{L}$ whenever $L \neq 0$.
             </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Investigating the distance:
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-bottom: 1rem;">
+                To test whether the reciprocal sequence converges, we begin by measuring the physical gap between where each term is ($\frac{1}{b_n}$) and where we want it to land ($\frac{1}{L}$). Combining these into a single fraction reveals what drives this distance:
             </p>
-            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$\left|\frac{1}{b_n} - \frac{1}{L}\right| = \left|\frac{L - b_n}{b_n L}\right| = \frac{|b_n - L|}{|b_n| |L|}$$
+
+            <div style="text-align: center; margin: 1.25rem 0;">
+                $$\left|\frac{1}{b_n} - \frac{1}{L}\right| = \left|\frac{L - b_n}{b_n L}\right| = \frac{|b_n - L|}{|b_n| \cdot |L|}$$
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-bottom: 0.75rem;">
+                Here is what each step in this equality chain is doing:
             </p>
+
+            <ul style="color: #334155; line-height: 1.7; font-size: 0.95rem; margin-bottom: 1.25rem; padding-left: 1.5rem;">
+                <li style="margin-bottom: 0.5rem;">
+                    <strong>Finding a common denominator:</strong> Subtracting the two fractions requires a shared base of $b_n L$, turning $\frac{1}{b_n} - \frac{1}{L}$ into $\frac{L - b_n}{b_n L}$.
+                </li>
+                <li style="margin-bottom: 0.5rem;">
+                    <strong>Splitting the absolute value:</strong> Absolute value distributes cleanly over division and products, allowing us to evaluate the numerator and denominator independently: $\frac{|L - b_n|}{|b_n| \cdot |L|}$.
+                </li>
+                <li style="margin-bottom: 0.5rem;">
+                    <strong>Symmetry of distance:</strong> The distance between two points is direction-free ($|L - b_n| = |b_n - L|$). Flipping this order exposes the familiar term $|b_n - L|$.
+                </li>
+            </ul>
+
+<p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+    This rewrites our problem into two distinct forces: the numerator $|b_n - L|$ is safe because $b_n \to L$ allows us to make it as tiny as we want, but the denominator $|b_n|$ is a wildcard. If $b_n$ wanders close to zero, dividing by it will blow the entire fraction up to infinity.
+</p>
+
+            <!-- ================================================================= -->
+            <!-- ORIENTATION & GUIDE: THE RECIPROCAL MOAT WALKTHROUGH              -->
+            <!-- ================================================================= -->
+            <div style="margin-top: 2.25rem; margin-bottom: 1.25rem;">
+                <h3 style="color: #0f172a; font-size: 1.35rem; font-weight: 700; margin: 0 0 0.35rem 0; line-height: 1.3;">
+                    Guide: The Reciprocal Moat &amp; Inversion Geometry
+                </h3>
+                <div style="color: #64748b; font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
+                    Dual-Track Mapping, Singularity Defense &amp; The Floor-to-Ceiling Flip
+                </div>
+            </div>
+
+            <section style="margin-bottom: 1.75rem; color: #334155; font-size: 1rem; line-height: 1.75;">
+                <p style="margin-top: 0;">
+                    When proving the Quotient Law ($\lim \frac{a_n}{b_n} = \frac{K}{L}$), the entire proof hinges on controlling the reciprocal term:
+                </p>
+
+                <div style="text-align: center; margin: 1rem 0;">
+                    $$\left|\frac{1}{b_n} - \frac{1}{L}\right| = \frac{|b_n - L|}{|b_n| \cdot |L|}$$
+                </div>
+
+                <p>
+                    Notice the danger lurking in the denominator: $|b_n|$. While the numerator $|b_n - L|$ shrinks toward zero, the denominator $|b_n|$ changes at every step. If terms $b_n$ wander anywhere near zero, dividing by them causes the fraction $\frac{1}{|b_n|}$ to blow up toward infinity, destroying your proof.
+                </p>
+
+                <!-- Reading Key: Track A vs Track B -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+
+                    <!-- Track B Card -->
+                    <div style="background: #ffffff; border: 1px solid #e2e8f0; border-top: 4px solid #059669; border-radius: 8px; padding: 1.15rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+                        <div style="font-weight: 800; font-size: 0.92rem; color: #047857; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.35rem;">
+                            Track B (Bottom Axis) — The Denominator $b_n$
+                        </div>
+                        <p style="margin: 0; font-size: 0.9rem; color: #475569; line-height: 1.6;">
+                            This shows the original sequence terms $b_n$ marching toward limit $L$. The origin ($0$) on the far left is the fatal singularity trap where division by zero occurs.
+                        </p>
+                    </div>
+
+                    <!-- Track A Card -->
+                    <div style="background: #ffffff; border: 1px solid #e2e8f0; border-top: 4px solid #0284c7; border-radius: 8px; padding: 1.15rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+                        <div style="font-weight: 800; font-size: 0.92rem; color: #0369a1; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.35rem;">
+                            Track A (Top Axis) — The Fraction $\frac{1}{b_n}$
+                        </div>
+                        <p style="margin: 0; font-size: 0.9rem; color: #475569; line-height: 1.6;">
+                            This shows the inverted fraction values $\frac{1}{b_n}$ marching toward target $\frac{1}{L}$. The red shaded area on the right is the explosion zone where fractions shoot off to $+\infty$.
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- The Core Mathematical Secret (Floor to Ceiling) -->
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #0284c7; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                    <div style="color: #0284c7; margin: 0 0 0.5rem 0; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
+                        The Core Discovery: The Floor Becomes a Ceiling
+                    </div>
+                    <p style="margin: 0 0 0.75rem 0; color: #334155; line-height: 1.65;">
+                        Fractions invert inequalities. By using <strong>Proposition 5 (Sign Preservation)</strong>, we build a green <strong>Safety Floor</strong> under the denominator: $b_n > \frac{L}{2}$.
+                    </p>
+                    <p style="margin: 0; color: #334155; line-height: 1.65;">
+                        Watch what happens when you invert both sides:
+                        $$\text{Denominator Floor: } b_n > \frac{L}{2} \implies \text{Fraction Ceiling: } \frac{1}{b_n} < \frac{2}{L}$$
+                        Placing a floor under the denominator automatically puts a solid ceiling over the fraction. It can never explode to infinity!
+                    </p>
+                </div>
+
+                <!-- Step Breakdown Guidance -->
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                    <h4 style="margin: 0 0 0.75rem 0; color: #0f172a; font-size: 1rem; font-weight: 700;">
+                        What the 5 Phases Step You Through
+                    </h4>
+                    <ol style="margin: 0; padding-left: 1.25rem; font-size: 0.92rem; color: #475569; line-height: 1.7;">
+                        <li style="margin-bottom: 0.45rem;">
+                            <strong>Phase 0 (The Threat):</strong> Unconstrained terms $b_n$ approach $L$, but risk flirting with the red singularity at $0$.
+                        </li>
+                        <li style="margin-bottom: 0.45rem;">
+                            <strong>Phase 1 (The Moat):</strong> We set tolerance $\epsilon_0 = \frac{L}{2}$. This digs an impassable red moat across $[0, \frac{L}{2}]$ and locks the tail above the green safety floor at $\frac{L}{2}$.
+                        </li>
+                        <li style="margin-bottom: 0.45rem;">
+                            <strong>Phase 2 (The Inversion):</strong> Track A activates. Curved mapping lines show the green safety floor on the bottom flipping into a green ceiling on the top ($\frac{2}{L}$).
+                        </li>
+                        <li style="margin-bottom: 0.45rem;">
+                            <strong>Phase 3 (The Exploded Threat):</strong> A red dashed line illustrates what would happen if a denominator entered the moat—it would launch wildly into the red explosion zone.
+                        </li>
+                        <li>
+                            <strong>Phase 4 (Final Budget):</strong> With $\frac{1}{|b_n|}$ safely capped below $\frac{2}{|L|}$, shrinking $|b_n - L|$ automatically collapses $\left|\frac{1}{b_n} - \frac{1}{L}\right|$ under $\epsilon$.
+                        </li>
+                    </ol>
+                    <p style="margin: 0.85rem 0 0 0; font-size: 0.88rem; color: #64748b; line-height: 1.5;">
+                        <em>Tip: Use the top dimension buttons to switch between a comfortable limit ($L = 2.0$, generous moat) and a high-stress limit ($L = 0.4$, tiny moat where the fraction ceiling shoots up to $5.0$).</em>
+                    </p>
+                </div>
+            </section>
 
             <!-- ================================================================= -->
             <!-- INTERACTIVE WIDGET: THE RECIPROCAL MOAT (QUOTIENT LAW)            -->
