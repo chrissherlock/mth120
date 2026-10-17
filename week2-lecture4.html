@@ -343,7 +343,7 @@
                             <ol style="margin: 0; padding-left: 1.4rem; list-style-type: none; font-size: 0.88rem; color: #475569; line-height: 1.65;">
                                 <li><a href="#guide1-adversarial" style="color: #475569; text-decoration: none;">3.1 Guide 1: The $\epsilon\text{-}N$ Challenge Game ($a_n = 1/n \to 0$)</a></li>
                                 <li><a href="#epsilon-guide2-widget-2d" style="color: #0284c7; text-decoration: none;">3.2 Guide 2: Beyond Monotonic Sequences <span style="font-size: 0.72rem; color: #0284c7; font-weight: 600;">[2D Sim]</span></a></li>
-                                <li><a href="#corridor-3d-section" style="color: #0284c7; text-decoration: none;">3.3 Guide: Visualizing Convergence in 3D (The $\epsilon$-Tube) <span style="font-size: 0.72rem; color: #0284c7; font-weight: 600;">[3D WebGL]</span></a></li>
+                                <li><a href="#guide-3d-tube" style="color: #0284c7; text-decoration: none;">3.3 Guide: Visualizing Convergence in 3D (The $\epsilon$-Tube) <span style="font-size: 0.72rem; color: #0284c7; font-weight: 600;">[3D WebGL]</span></a></li>
                                 <li><a href="#worked-example" style="color: #047857; text-decoration: none;">3.4 🎯 Worked Example: The $\epsilon\text{-}N$ Scratchpad Method</a></li>
                             </ol>
                         </div>
@@ -824,9 +824,10 @@
                         If you have a reliable rule to produce a valid $N$ for <em>any</em> positive $\epsilon$ the skeptic throws at you, you win the game—and the sequence converges to $L$!
                     </p>
                 </div>
+            </div>
 
-                <!-- DIAGRAM 4: CHALLENGE-RESPONSE SHRINKAGE COMPARISON -->
-                <figure style="margin: 1.25rem 0; padding: 1.25rem 1.5rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;">
+            <!-- DIAGRAM 4: CHALLENGE-RESPONSE SHRINKAGE COMPARISON -->
+            <figure style="margin: 1.25rem 0; padding: 1.25rem 1.5rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;">
                     <figcaption style="font-size: 0.9rem; font-weight: 700; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">
                         Figure 4: The Challenge–Response Game (N as an Explicit Function of ϵ)
                     </figcaption>
@@ -902,8 +903,7 @@
                     <p style="margin: 0.6rem 0 0 0; font-size: 0.88rem; color: #64748b; line-height: 1.5;">
                         <strong>Quantifier ordering in action:</strong> You must wait for the skeptic to name <code style="color:#b45309;">ϵ</code> <em>first</em> before you can commit to <code style="color:#ef4444;">N</code>. As <code style="color:#b45309;">ϵ → 0</code>, the required cutoff <code style="color:#ef4444;">N</code> is pushed arbitrarily far to the right.
                     </p>
-                </figure>
-            </div>
+            </figure>
 
             <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-top: 1.5rem;">
                 Use the interactive tool below to step through each clause of this definition in order. Notice how the internal telemetry updates, the visual diagram highlights the active region, and the mechanical and logical explanations synchronize with each step:
@@ -1175,12 +1175,12 @@
                     The 10 Canon ϵ-δ Limit Proofs
                   </h3>
                   <p style="margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.6;">
-                    Every rigorous functional limit proof follows the four-word structural spine:
+                    Every rigorous limit proof—whether bounding continuous inputs ($0 &lt; |x - a| &lt; \delta$) or discrete sequence tails ($n &gt; N$)—follows the exact same four-word structural spine:
                     <strong style="color: #0284c7;">Given</strong>,
                     <strong style="color: #d97706;">Choose</strong>,
                     <strong style="color: #475569;">Suppose</strong>, and
                     <strong style="color: #047857;">Check</strong>.
-                    Select an archetype below to explore the core algebraic obstacle and its formal resolution.
+                    Select an archetype below to explore the core algebraic obstacle (conjugates, polynomial bounding, or reciprocal moats) and its formal resolution.
                   </p>
 
                   <!-- ATTRIBUTION & VIDEO RESOURCE FOOTER -->
@@ -2482,7 +2482,7 @@
             <!-- GUIDE: THE 3D EPSILON-TUBE (SPATIAL CONVERGENCE CONDUIT)         -->
             <!-- ================================================================= -->
             <div style="margin-top: 2.25rem; margin-bottom: 1rem;">
-                <h3 style="color: #0f172a; font-size: 1.35rem; font-weight: 700; margin: 0 0 0.35rem 0; line-height: 1.3;">
+                <h3 id="guide-3d-tube" style="color: #0f172a; font-size: 1.35rem; font-weight: 700; margin: 0 0 0.35rem 0; line-height: 1.3;">
                     Guide: Visualizing Convergence in 3D (The $\epsilon$-Tube)
                 </h3>
                 <div style="color: #64748b; font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
@@ -2678,10 +2678,10 @@
                     <!-- Section 3 Anchor -->
                     <div style="background: #ffffff; padding: 1.2rem; border-radius: 8px; border: 1px solid #e2e8f0;">
                         <div style="font-weight: 700; color: #0369a1; font-size: 0.95rem; margin-bottom: 0.4rem;">
-                            3. The Elbow Room Principle
+                            3. The Scratchpad &amp; Tail Lock-In
                         </div>
                         <p style="font-size: 0.88rem; color: #475569; line-height: 1.6; margin: 0;">
-                            You discovered that limit uniqueness is not a rule of grammar, but a geometric gift of distance ($d = |L - M| > 0$). Because distinct numbers have space between them, we can draw non-touching bubbles that force an adversarial contradiction.
+                            You learned the analyst's trade secret: work backward from $|a_n - L| &lt; \epsilon$ on scrap paper to isolate $n &gt; g(\epsilon)$, then set $N = \lceil g(\epsilon) \rceil$ to seal the infinite tail inside the 2D ribbon or 3D containment pipe.
                         </p>
                     </div>
                 </div>
@@ -3189,7 +3189,7 @@
                         <span style="font-size: 0.82rem; font-weight: 600; color: #0284c7; text-transform: none; background: #e0f2fe; padding: 2px 8px; border-radius: 4px;">Separation Rule: ε &lt; d / 2</span>
                     </figcaption>
                     <p style="margin: 0 0 1.25rem 0; color: #475569; font-size: 0.92rem; line-height: 1.6;">
-                        Because distinct limits <span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo mathvariant="normal">≠</mo><mi>M</mi></mrow><annotation encoding="application/x-tex">L \ne M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.8889em; vertical-align: -0.1944em;"></span><span class="mord mathnormal">L</span><span class="mspace" style="margin-right: 0.2778em;"></span><span class="mrel"><span class="mrel"><span class="mord vbox"><span class="thinbox"><span class="rlap"><span class="strut" style="height: 0.8889em; vertical-align: -0.1944em;"></span><span class="inner"><span class="mord"><span class="mrel"></span></span></span><span class="fix"></span></span></span></span></span><span class="mrel">=</span></span><span class="mspace" style="margin-right: 0.2778em;"></span></span><span class="base"><span class="strut" style="height: 0.6833em;"></span><span style="margin-right: 0.109em;" class="mord mathnormal">M</span></span></span></span></span> sit separated by positive distance <span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mo>=</mo><mi mathvariant="normal">∣</mi><mi>L</mi><mo>−</mo><mi>M</mi><mi mathvariant="normal">∣</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">d = |L - M| &gt; 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.6944em;"></span><span class="mord mathnormal">d</span><span class="mspace" style="margin-right: 0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.2778em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord">∣</span><span class="mord mathnormal">L</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.2222em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span style="margin-right: 0.109em;" class="mord mathnormal">M</span><span class="mord">∣</span><span class="mspace" style="margin-right: 0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right: 0.2778em;"></span></span><span class="base"><span class="strut" style="height: 0.6444em;"></span><span class="mord">0</span></span></span></span></span>, setting tolerance <span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ϵ</mi><mo>&lt;</mo><mfrac><mi>d</mi><mn>2</mn></mfrac></mrow><annotation encoding="application/x-tex">\epsilon &lt; \frac{d}{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.5782em; vertical-align: -0.0391em;"></span><span class="mord mathnormal">ϵ</span><span class="mspace" style="margin-right: 0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right: 0.2778em;"></span></span><span class="base"><span class="strut" style="height: 1.2251em; vertical-align: -0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.8801em;"><span class="" style="top: -2.655em;"><span class="pstrut" style="height: 3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span class="" style="top: -3.23em;"><span class="pstrut" style="height: 3em;"></span><span class="frac-line" style="border-bottom-width: 0.04em;"></span></span><span class="" style="top: -3.394em;"><span class="pstrut" style="height: 3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span></span></span></span></span><span class="vlist-s"></span></span><span class="vlist-r"><span class="vlist" style="height: 0.345em;"><span class=""></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span> creates an impassable water-moat with hazard boundaries. An infinite sequence tail trapped in the blue corridor is physically barred from reaching the amber corridor.
+                        Because distinct limits $L \ne M$ sit separated by positive distance $d = |L - M| > 0$, setting tolerance $\epsilon < \frac{d}{2}$ creates an impassable water-moat with hazard boundaries. An infinite sequence tail trapped in the blue corridor is physically barred from reaching the amber corridor.
                     </p>
                     <svg viewBox="0 0 820 410" style="width: 100%; height: auto; display: block;" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
                         <defs>
@@ -4337,37 +4337,38 @@
             <!-- ================================================================= -->
             <!-- WIDGET: TAIL INVARIANCE & TRUNCATION (DIRECTED NARRATIVE STEPPER) -->
             <!-- ================================================================= -->
-            <div class="widget-box" style="margin: 2.5rem 0; padding: 1.5rem; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+            <div class="widget-box" id="tail-invariance-widget" style="margin: 2.5rem 0; padding: 1.5rem; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
                 <style>
-                    .widget-box .widget-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.85rem; }
-                    .widget-box .widget-title { margin: 0; font-size: 1.15rem; font-weight: 800; color: #0f172a; letter-spacing: -0.01em; }
-                    .widget-box .dim-toggles { display: flex; gap: 0.5rem; }
-                    .widget-box .dim-btn { padding: 0.4rem 0.85rem; font-size: 0.82rem; font-weight: 600; border-radius: 6px; border: 1px solid #cbd5e1; background: #f8fafc; color: #475569; cursor: pointer; transition: all 0.2s ease; }
-                    .widget-box .dim-btn.active { background: #0284c7; color: #ffffff; border-color: #0284c7; box-shadow: 0 1px 2px rgba(2, 132, 199, 0.2); }
-                    .widget-box .telemetry-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.65rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.75rem; margin-bottom: 1.25rem; }
-                    .widget-box .telemetry-cell { display: flex; flex-direction: column; gap: 0.2rem; }
-                    .widget-box .telemetry-label { font-size: 0.72rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.04em; }
-                    .widget-box .telemetry-val { font-size: 0.88rem; font-weight: 700; color: #0f172a; font-variant-numeric: tabular-nums; }
-                    .widget-box .canvas-wrap { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; overflow: hidden; }
+                    #tail-invariance-widget .widget-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.85rem; }
+                    #tail-invariance-widget .widget-title { margin: 0; font-size: 1.15rem; font-weight: 800; color: #0f172a; letter-spacing: -0.01em; }
+                    #tail-invariance-widget .dim-toggles { display: flex; gap: 0.5rem; }
+                    #tail-invariance-widget .dim-btn { padding: 0.4rem 0.85rem; font-size: 0.82rem; font-weight: 600; border-radius: 6px; border: 1px solid #cbd5e1; background: #f8fafc; color: #475569; cursor: pointer; transition: all 0.2s ease; }
+                    #tail-invariance-widget .dim-btn.active { background: #0284c7; color: #ffffff; border-color: #0284c7; box-shadow: 0 1px 2px rgba(2, 132, 199, 0.2); }
+                    #tail-invariance-widget .telemetry-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.65rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.75rem; margin-bottom: 1.25rem; }
+                    #tail-invariance-widget .telemetry-cell { display: flex; flex-direction: column; gap: 0.2rem; }
+                    #tail-invariance-widget .telemetry-label { font-size: 0.72rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.04em; }
+                    #tail-invariance-widget .telemetry-val { font-size: 0.88rem; font-weight: 700; color: #0f172a; font-variant-numeric: tabular-nums; }
+                    #tail-invariance-widget .canvas-wrap { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; margin-bottom: 1.25rem; overflow: hidden; }
 
                     /* STRICT SIDE-BY-SIDE NAVIGATION PANEL */
-                    .widget-box .nav-panel { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 1.25rem; background: #f1f5f9; border-radius: 8px; padding: 0.85rem 1.15rem; margin-bottom: 1.25rem; }
-                    .widget-box .nav-buttons { display: flex; gap: 0.5rem; flex-shrink: 0; white-space: nowrap; }
-                    .widget-box .ti-btn { padding: 0.45rem 0.9rem; font-size: 0.85rem; font-weight: 600; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #334155; cursor: pointer; transition: all 0.15s ease; }
-                    .widget-box .ti-btn:hover:not(:disabled) { background: #f8fafc; border-color: #94a3b8; }
-                    .widget-box .ti-btn:disabled { opacity: 0.45; cursor: not-allowed; }
-                    .widget-box .ti-btn-primary { background: #0284c7; color: #ffffff; border-color: #0284c7; }
-                    .widget-box .ti-btn-primary:hover:not(:disabled) { background: #0369a1; border-color: #0369a1; }
-                    .widget-box .preview-desc { margin: 0; font-size: 0.9rem; line-height: 1.5; color: #334155; min-width: 0; }
+                    #tail-invariance-widget .nav-panel { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 1.25rem; background: #f1f5f9; border-radius: 8px; padding: 0.85rem 1.15rem; margin-bottom: 1.25rem; }
+                    @media (max-width: 680px) { #tail-invariance-widget .nav-panel { grid-template-columns: 1fr; } }
+                    #tail-invariance-widget .nav-buttons { display: flex; gap: 0.5rem; flex-shrink: 0; white-space: nowrap; }
+                    #tail-invariance-widget .ti-btn { padding: 0.45rem 0.9rem; font-size: 0.85rem; font-weight: 600; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #334155; cursor: pointer; transition: all 0.15s ease; }
+                    #tail-invariance-widget .ti-btn:hover:not(:disabled) { background: #f8fafc; border-color: #94a3b8; }
+                    #tail-invariance-widget .ti-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+                    #tail-invariance-widget .ti-btn-primary { background: #0284c7; color: #ffffff; border-color: #0284c7; }
+                    #tail-invariance-widget .ti-btn-primary:hover:not(:disabled) { background: #0369a1; border-color: #0369a1; }
+                    #tail-invariance-widget .preview-desc { margin: 0; font-size: 0.9rem; line-height: 1.5; color: #334155; min-width: 0; }
 
-                    .widget-box .panes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
-                    .widget-box .ti-pane { border-radius: 8px; padding: 1rem; border: 1px solid #e2e8f0; }
-                    .widget-box .ti-pane-what { background: #f0fdf4; border-color: #bbf7d0; border-left: 4px solid #16a34a; }
-                    .widget-box .ti-pane-why { background: #eff6ff; border-color: #bfdbfe; border-left: 4px solid #2563eb; }
-                    .widget-box .ti-pane h4 { margin: 0 0 0.4rem 0; font-size: 0.82rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
-                    .widget-box .ti-pane-what h4 { color: #15803d; }
-                    .widget-box .ti-pane-why h4 { color: #1d4ed8; }
-                    .widget-box .ti-pane-body { font-size: 0.88rem; line-height: 1.6; color: #1e293b; }
+                    #tail-invariance-widget .panes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+                    #tail-invariance-widget .ti-pane { border-radius: 8px; padding: 1rem; border: 1px solid #e2e8f0; }
+                    #tail-invariance-widget .ti-pane-what { background: #f0fdf4; border-color: #bbf7d0; border-left: 4px solid #16a34a; }
+                    #tail-invariance-widget .ti-pane-why { background: #eff6ff; border-color: #bfdbfe; border-left: 4px solid #2563eb; }
+                    #tail-invariance-widget .ti-pane h4 { margin: 0 0 0.4rem 0; font-size: 0.82rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
+                    #tail-invariance-widget .ti-pane-what h4 { color: #15803d; }
+                    #tail-invariance-widget .ti-pane-why h4 { color: #1d4ed8; }
+                    #tail-invariance-widget .ti-pane-body { font-size: 0.88rem; line-height: 1.6; color: #1e293b; }
 
                     /* HARDWARE-ACCELERATED TRANSLATION LAYER */
                     #ti-pts-shift, #ti-shift-trail {
@@ -5454,6 +5455,7 @@
 
                         /* STRICT SIDE-BY-SIDE NAVIGATION PANEL */
                         #order-preservation-widget .nav-panel { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 1.25rem; background: #f1f5f9; border-radius: 8px; padding: 0.85rem 1.15rem; margin-bottom: 1.25rem; }
+                    @media (max-width: 680px) { #order-preservation-widget .nav-panel { grid-template-columns: 1fr; } }
                         #order-preservation-widget .nav-buttons { display: flex; gap: 0.5rem; flex-shrink: 0; white-space: nowrap; }
                         #order-preservation-widget .op-btn { padding: 0.45rem 0.9rem; font-size: 0.85rem; font-weight: 600; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #334155; cursor: pointer; transition: all 0.15s ease; }
                         #order-preservation-widget .op-btn:hover:not(:disabled) { background: #f8fafc; border-color: #94a3b8; }
@@ -5576,7 +5578,7 @@
                             <g id="op-clash-highlight" class="op-fade" style="opacity: 0;">
                                 <rect x="360" y="20" width="360" height="260" fill="#fef2f2" fill-opacity="0.7"/>
                                 <line x1="360" y1="20" x2="360" y2="280" stroke="#e11d48" stroke-width="2"/>
-                                <rect x="440" y="138" width="200" height="44" rx="6" fill="#dc2626" shadow="0 4px 6px rgba(0,0,0,0.1)"/>
+                                <rect x="440" y="138" width="200" height="44" rx="6" fill="#dc2626" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))"/>
                                 <text x="540" y="156" fill="#ffffff" font-size="12" font-weight="800" text-anchor="middle">⚡ FATAL CLASH</text>
                                 <text x="540" y="172" fill="#fca5a5" font-size="10" font-weight="600" text-anchor="middle">Blue > Orange (Violates Rule!)</text>
                             </g>
@@ -6637,7 +6639,7 @@
                     <em>(Likewise, if $L < 0$, then eventually $a_n < \frac{L}{2} < 0$).</em>
                 </p>
 
-                <div style="margin: 2rem 0; padding: 1.75rem 2rem; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+                <div style="margin: 2rem 0; padding: 1.75rem 2rem; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
                     <h3 style="margin-top: 0; font-size: 1.15rem; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; margin-bottom: 1.25rem;">
                         Worked Example: Constructing the Midpoint Moat
                     </h3>
@@ -6771,7 +6773,7 @@
                                 $$|a_n - 2| < 1 \implies 1 < a_n < 3$$
                             </li>
                             <li style="margin-bottom: 0.5rem;">
-                                <strong>Test terms sequence:</strong> Let's look at the trajectory beginning past N = 2:
+                                <strong>Test terms sequence:</strong> Let's inspect the trajectory from milestone $N = 2$ onward ($n \ge 2$):
                                 <ul>
                                     <li>$a_1 = 1$ (sits right on the barrier boundary).</li>
                                     <li>$a_2 = 2.5 > 1$ (inside safety window).</li>
@@ -7310,6 +7312,7 @@
 
                     /* Navigation & Inline Preview Panel */
                     #sync-widget .nav-panel { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 1.25rem; background: #f1f5f9; border-radius: 8px; padding: 0.85rem 1.15rem; margin-bottom: 1.25rem; }
+                    @media (max-width: 680px) { #sync-widget .nav-panel { grid-template-columns: 1fr; } }
                     #sync-widget .nav-buttons { display: flex; gap: 0.5rem; flex-shrink: 0; white-space: nowrap; }
                     #sync-widget .sync-btn { padding: 0.45rem 0.9rem; font-size: 0.85rem; font-weight: 600; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #334155; cursor: pointer; transition: all 0.15s ease; }
                     #sync-widget .sync-btn:hover:not(:disabled) { background: #f8fafc; border-color: #94a3b8; }
@@ -8306,6 +8309,7 @@
 
                     /* Navigation & Inline Preview Panel */
                     #reciprocal-moat-widget .nav-panel { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 1.25rem; background: #f1f5f9; border-radius: 8px; padding: 0.85rem 1.15rem; margin-bottom: 1.25rem; }
+                    @media (max-width: 680px) { #reciprocal-moat-widget .nav-panel { grid-template-columns: 1fr; } }
                     #reciprocal-moat-widget .nav-buttons { display: flex; gap: 0.5rem; flex-shrink: 0; white-space: nowrap; }
                     #reciprocal-moat-widget .rm-btn { padding: 0.45rem 0.9rem; font-size: 0.85rem; font-weight: 600; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #334155; cursor: pointer; transition: all 0.15s ease; }
                     #reciprocal-moat-widget .rm-btn:hover:not(:disabled) { background: #f8fafc; border-color: #94a3b8; }
@@ -8788,22 +8792,13 @@
             </script>
 
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Notice the danger lurking in the denominator: $|b_n|$. If terms $b_n$ were allowed to flirt with zero, the fraction $\frac{1}{|b_n|}$ would blow up to infinity!
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Here again, Section 4 comes to our rescue. By the <strong>Preservation of Sign property</strong>, because $L \neq 0$, there exists an index $N_0$ past which $|b_n| > \frac{|L|}{2}$. Inverting this inequality flips the direction:
+                Substituting the reciprocal ceiling $\frac{1}{|b_n|} &lt; \frac{2}{|L|}$ (valid for all $n &gt; N_0$) into our distance formula replaces the volatile denominator with a fixed constant:
             </p>
             <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$\frac{1}{|b_n|} < \frac{2}{|L|}$$
+                $$\left|\frac{1}{b_n} - \frac{1}{L}\right| = \frac{|b_n - L|}{|b_n| \cdot |L|} &lt; \frac{2}{|L|^2} |b_n - L|$$
             </p>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                The dangerous denominator is now securely capped by a fixed constant! We substitute this bound into our expression:
-            </p>
-            <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$\left|\frac{1}{b_n} - \frac{1}{L}\right| < \frac{2}{|L|^2} |b_n - L|$$
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Because $|b_n - L|$ can be made arbitrarily small, the entire distance collapses below $\epsilon$. The Algebraic Limit Laws form an airtight, beautiful system: each theorem rests securely on the foundational properties we established in the sections before it.
+                By choosing a second cutoff $N_1$ so that $|b_n - L| &lt; \frac{\epsilon |L|^2}{2}$ and taking the master horizon $N = \max(N_0, N_1)$, the entire distance collapses strictly below $\epsilon$. Together with the Product Law, this completes the Quotient Law—showing how each algebraic theorem rests securely on the structural properties established in Section 4. $\blacksquare$
             </p>
 
             <!-- ================================================================= -->
