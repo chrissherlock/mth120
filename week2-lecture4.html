@@ -5023,12 +5023,32 @@
                 </div>
 
                 <!-- Proof Strategy Section -->
-                <div style="font-weight: 700; color: #0f172a; margin-top: 2rem; margin-bottom: 0.5rem; font-size: 1.15rem;">
-                    The Proof Strategy: Constructing the Midpoint Moat
+                <div style="font-weight: 700; color: #0f172a; margin-top: 3rem; margin-bottom: 0.5rem; font-size: 1.15rem;">
+                    The Proof Strategy: The "Leapfrog" Contradiction
                 </div>
 
-                <p>
-                    Proving an inequality directly with forward $\epsilon$-$N$ bounds can feel clumsy because inequalities do not naturally supply tight numeric tolerances. Instead, mathematicians take the adversarial route: <strong>Proof by Contradiction</strong>. We suppose the impossible actually happened—that $a_n \le b_n$ but $K > L$—and watch the system tear itself apart by building an impenetrable fence between their target neighborhoods.
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-bottom: 1rem;">
+                    After exploring those edge cases and visual traps, let's refocus on our primary objective. We need to prove the core of the <strong>Order Limit Theorem</strong>: if sequence $(a_n)$ is eventually trapped below sequence $(b_n)$, their limits must obey that exact same order ($K \le L$).
+                </p>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-bottom: 1rem;">
+                    Proving this directly with $\epsilon\text{-}N$ bounds is clumsy. Instead, mathematicians use the adversarial route: <strong>Proof by Contradiction</strong>. We suppose the impossible actually happened—that the order flipped at infinity. We assume the lower sequence $(a_n)$ somehow arrived at a limit $K$ that sits strictly <em>above</em> the upper sequence's limit $L$.
+                </p>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-bottom: 1rem;">
+                    If $K > L$, there is a literal, physical gap of space between these two destinations. To watch this broken system tear itself apart, we use the one superpower the limit definition gives us: <strong>we get to choose the error tolerance $\epsilon$</strong>.
+                </p>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-bottom: 1rem;">
+                    We set $\epsilon$ to be exactly half the distance between $K$ and $L$. This creates two perfectly separated safety corridors—one around $K$ and one around $L$—that meet at an invisible geometric fence halfway between the limits, but never overlap.
+                </p>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-bottom: 1rem;">
+                    Because $a_n \to K$, its infinite tail is eventually forced entirely inside the top corridor (strictly <em>above</em> the fence). Because $b_n \to L$, its tail is eventually forced inside the bottom corridor (strictly <em>below</em> the fence).
+                </p>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-bottom: 1.5rem;">
+                    But look at the reality this creates: if $a_n$ is locked above the fence and $b_n$ is locked below it, we have just forced $a_n > b_n$. This violently shatters our one foundational rule that $a_n \le b_n$. Because the math leads to an impossible contradiction, our assumption that $K > L$ must be false, leaving $K \le L$ as the only mathematical reality.
                 </p>
 
                 <!-- Strategy Card (Amber) -->
