@@ -2713,6 +2713,84 @@
                 </p>
             </section>
 
+            <!-- ================================================================= -->
+            <!-- THE BRIDGE: FROM FIRST PRINCIPLES TO STRUCTURAL THEOREMS         -->
+            <!-- ================================================================= -->
+            <div id="lecture-bridge" style="margin: 3rem 0; padding: 2rem; background: #ffffff; border: 2px solid #cbd5e1; border-top: 6px solid #0284c7; border-radius: 10px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.02);">
+
+                <div style="display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.75rem; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                    <div>
+                        <span style="font-size: 0.85rem; font-weight: 800; color: #0284c7; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 0.25rem;">
+                            The Bridge to Part II • Sections 4 &amp; 5
+                        </span>
+                        <h3 style="margin: 0; color: #0f172a; font-size: 1.4rem; font-weight: 800;">
+                            From Raw $\epsilon\text{-}N$ Scrapwork to Structural Power
+                        </h3>
+                    </div>
+                    <span style="font-size: 0.85rem; font-weight: 600; color: #0369a1; background: #e0f2fe; padding: 0.35rem 0.75rem; border-radius: 6px; border: 1px solid #bae6fd;">
+                        ⚡ The Payoff Phase: Reusable Theorems
+                    </span>
+                </div>
+
+                <!-- Reassurance Callout -->
+                <div style="background: #f0fdf4; border: 1px solid #dcfce7; border-left: 4px solid #059669; border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 1.75rem;">
+                    <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; color: #166534; line-height: 1.6;">
+                        <strong>Take a breath: you have survived the hardest part of real analysis.</strong> In Sections 1 through 3, you wrestled with the raw $\epsilon\text{-}N$ definition, quantifier directionality, and scratchpad bounds.
+                    </p>
+                    <p style="margin: 0; font-size: 0.95rem; color: #166534; line-height: 1.6;">
+                        <strong>Why do we pivot here?</strong> Proving every single limit from scratch with scrap paper is tedious and unsustainable. From this point forward, mathematicians stop writing manual scratchpad proofs and start relying on <strong>structural theorems</strong>. These are universal legal certificates: once you know a sequence converges, you automatically inherit the properties below for free.
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+
+                    <!-- COLUMN 1: Foundational Theorems -->
+                    <div>
+                        <h4 style="margin: 0 0 1rem 0; color: #0369a1; font-size: 1.05rem; font-weight: 700; border-bottom: 1px solid #bae6fd; padding-bottom: 0.5rem;">
+                            I. Foundational Guarantees (Section 4)
+                        </h4>
+                        <ul style="margin: 0; padding-left: 1.25rem; color: #1e293b; font-size: 0.92rem; line-height: 1.6;">
+                            <li style="margin-bottom: 0.85rem;">
+                                <strong>Uniqueness of Limits:</strong> A sequence cannot converge to two different limits. If $\lim a_n = L$ and $\lim a_n = M$, then $L = M$.
+                            </li>
+                            <li style="margin-bottom: 0.85rem;">
+                                <strong>Tail Invariance:</strong> Early sequence terms do not matter. Finite modifications (vandalizing the start) or index shifts ($a_{n+k}$) leave the limit completely unchanged.
+                            </li>
+                            <li style="margin-bottom: 0.85rem;">
+                                <strong>Order Preservation:</strong> Limits respect physical boundaries. If $a_n \le b_n$ eventually, then $\lim a_n \le \lim b_n$.
+                            </li>
+                            <li style="margin-bottom: 0.85rem;">
+                                <strong>Proposition 5 Properties:</strong>
+                                <ul style="margin: 0.25rem 0 0 0; padding-left: 1.25rem; color: #475569;">
+                                    <li><em>Absolute Value:</em> $a_n \to L \implies |a_n| \to |L|$.</li>
+                                    <li><em>Boundedness:</em> Every convergent sequence is bounded by some ceiling $M$.</li>
+                                    <li><em>Sign Insulation:</em> If $L > 0$, the tail eventually stays strictly positive ($a_n > L/2 > 0$).</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- COLUMN 2: Algebraic Limit Laws -->
+                    <div>
+                        <h4 style="margin: 0 0 1rem 0; color: #d97706; font-size: 1.05rem; font-weight: 700; border-bottom: 1px solid #fde68a; padding-bottom: 0.5rem;">
+                            II. Algebraic Limit Laws (Theorem 1 / Section 5)
+                        </h4>
+                        <p style="margin: 0 0 0.75rem 0; font-size: 0.85rem; color: #64748b; line-height: 1.5;">
+                            Assuming $a_n \to K$ and $b_n \to L$, limits safely distribute across standard arithmetic:
+                        </p>
+                        <ul style="margin: 0; padding-left: 1.25rem; color: #1e293b; font-size: 0.95rem; line-height: 1.75;">
+                            <li><strong>Constant Rule:</strong> $\lim c = c$</li>
+                            <li><strong>Scalar Multiple:</strong> $\lim (c \cdot a_n) = c \cdot K$</li>
+                            <li><strong>Sum / Difference:</strong> $\lim (a_n \pm b_n) = K \pm L$</li>
+                            <li><strong>Product Rule:</strong> $\lim (a_n \cdot b_n) = K \cdot L$</li>
+                            <li><strong>Quotient Rule:</strong> $\lim \left(\frac{a_n}{b_n}\right) = \frac{K}{L}$ <span style="font-size: 0.8rem; color: #64748b;">(if $L \neq 0$)</span></li>
+                            <li><strong>Power Rule:</strong> $\lim (a_n)^p = K^p$ <span style="font-size: 0.8rem; color: #64748b;">(for integer $p$)</span></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
             <!-- SECTION 4: UNBOXED, DETAILED, EMPATHETIC EXPLANATION -->
             <h2 id="section-prop5">4. Properties of Convergent Sequences (Proposition 5) &amp; Foundational Theorems</h2>
 
@@ -5308,6 +5386,155 @@
                     </ul>
                 </div>
 
+                <div style="margin: 2rem 0; padding: 1.75rem 2rem; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+                    <h3 style="margin-top: 0; font-size: 1.15rem; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; margin-bottom: 1.25rem;">
+                        Worked Example: Constructing the Midpoint Moat
+                    </h3>
+
+                    <div style="margin-bottom: 1.25rem;">
+                        <h4 style="font-size: 0.98rem; font-weight: 700; color: #0284c7; margin-bottom: 0.35rem;">1. Problem Definition &amp; Target Claim</h4>
+                        <p style="margin: 0; font-size: 0.92rem; color: #475569; line-height: 1.6;">
+                            Prove that if a sequence $(a_n)$ converges to a strictly positive limit $L > 0$, there exists an index cutoff $N$ after which all subsequent terms stay strictly positive and safely bounded away from zero. We want to construct the "Midpoint Moat" at $M = \frac{L}{2}$ to show:
+                        </p>
+                        <p style="margin: 0.5rem 0; font-size: 0.9rem; color: #0f172a; background: #ffffff; padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid #e2e8f0; text-align: center;">
+                            $$\exists N \in \mathbb{N} \quad \text{such that} \quad n \ge N \implies a_n > \frac{L}{2} > 0$$
+                        </p>
+                    </div>
+
+                    <!-- Interactive Diagram Card -->
+                    <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.025);">
+                        <span style="font-size: 0.78rem; font-weight: 700; color: #0284c7; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.5rem;">Visual: The Midpoint Moat Principle ($a_n = 2 + \frac{(-1)^n}{n}$)</span>
+
+                        <svg viewBox="0 0 740 320" style="width: 100%; height: auto; display: block;">
+                            <defs>
+                                <!-- Marker pattern for safety window and unsafe moat -->
+                                <pattern id="moat-stripes" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                                    <line x1="0" y1="0" x2="0" y2="10" stroke="#fef3c7" stroke-width="3"></line>
+                                </pattern>
+                                <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"></path>
+                                </marker>
+                                <marker id="clash-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444"></path>
+                                </marker>
+                            </defs>
+
+                            <!-- Subtle Grid Line -->
+                            <line x1="80" y1="260" x2="680" y2="260" stroke="#f1f5f9" stroke-width="1"></line>
+
+                            <!-- === Background Regions === -->
+                            <!-- Safety Window (L-ε to L+ε) spanning y=60 to y=180 -->
+                            <rect x="80" y="60" width="600" height="120" fill="#f0f9ff" opacity="0.85" stroke="#38bdf8" stroke-width="1" stroke-dasharray="3 3"></rect>
+
+                            <!-- Midpoint Moat / No-Man's Land: spanning y=180 to y=260 -->
+                            <rect x="80" y="180" width="600" height="80" fill="#fffbeb" stroke="#f59e0b" stroke-dasharray="3 2" stroke-width="1"></rect>
+
+                            <!-- Boundary limit labels and lines -->
+                            <line x1="80" y1="120" x2="680" y2="120" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="5 3"></line> <!-- L = 2 -->
+                            <line x1="80" y1="180" x2="680" y2="180" stroke="#b45309" stroke-width="2"></line> <!-- M = L/2 = 1 -->
+
+                            <text x="690" y="64" font-size="9.5" font-weight="600" fill="#0284c7">L + ε = 3</text>
+                            <text x="690" y="124" font-size="11" font-weight="800" fill="#0284c7">L = 2</text>
+                            <text x="690" y="184" font-size="10.5" font-weight="800" fill="#b45309">M = L/2 = 1</text>
+                            <text x="690" y="264" font-size="9.5" font-style="italic" fill="#64748b">0</text>
+
+                            <!-- Braces for Epsilon Margin -->
+                            <path d="M 68 60 Q 60 60 60 70 L 60 80 Q 60 90 52 90 Q 60 90 60 100 L 60 110 Q 60 120 68 120" fill="none" stroke="#0284c7" stroke-width="1"></path>
+                            <text x="44" y="94" font-size="11" font-weight="700" fill="#0284c7">ε = 1</text>
+
+                            <!-- labels inside standard zones -->
+                            <text x="140" y="95" font-size="11" font-weight="700" fill="#0369a1">Safety Window</text>
+                            <text x="140" y="215" font-size="11" font-weight="700" fill="#b45309">THE MOAT</text>
+                            <text x="140" y="230" font-size="8.5" font-weight="600" fill="#78350f">(NO-MAN'S LAND)</text>
+
+                            <!-- === Coordinate Axes === -->
+                            <!-- Horizontal index axis -->
+                            <line x1="80" y1="260" x2="660" y2="260" stroke="#94a3b8" stroke-width="1.2" marker-end="url(#arrow)"></line>
+                            <text x="670" y="264" font-size="11" font-weight="600" fill="#64748b">n</text>
+
+                            <!-- Vertical axis for value plotting -->
+                            <line x1="80" y1="260" x2="80" y2="40" stroke="#94a3b8" stroke-width="1.2" marker-end="url(#arrow)"></line>
+                            <text x="76" y="32" font-size="10" font-weight="700" fill="#0f172a" text-anchor="end">Values</text>
+
+                            <!-- === Sequence Traps & Milestone Milestone N = 2 === -->
+                            <!-- Vertical cutoff master line and shading boundary -->
+                            <line x1="280" y1="40" x2="280" y2="260" stroke="#059669" stroke-width="1.8" stroke-dasharray="4 2"></line>
+                            <text x="280" y="278" font-size="11" font-weight="800" fill="#059669" text-anchor="middle">N = 2</text>
+                            <text x="280" y="31" font-size="9.5" font-weight="800" fill="#059669" text-anchor="middle">Milestone N = 2</text>
+                            <rect x="280" y="60" width="400" height="200" fill="#f0fdf4" fill-opacity="0.15"></rect> <!-- Tail Zone -->
+
+                            <!-- === Dot Plots based on a_n = 2 + (-1)^n / n === -->
+                            <!-- Early index point n=1 that lands outside safety criteria -->
+                            <circle cx="160" cy="180" r="4.5" fill="#94a3b8"></circle> <!-- n=1 (Value 1.0) -->
+                            <text x="160" y="168" font-size="10" font-weight="600" fill="#64748b" text-anchor="middle">a₁ = 1</text>
+                            <line x1="160" y1="256" x2="160" y2="264" stroke="#94a3b8" stroke-width="1"></line>
+                            <text x="160" y="275" font-size="9" fill="#94a3b8" text-anchor="middle">1</text>
+
+                            <!-- Sequence tail permanently bound to the top target band -->
+                            <polyline points="160,180 280,90 400,160 520,105 640,132" fill="none" stroke="#cbd5e1" stroke-width="0.75" stroke-dasharray="3 2"></polyline>
+
+                            <!-- Confirmed Locked Sequence Points (n >= 2) -->
+                            <circle cx="280" cy="90" r="5" fill="#10b981" stroke="#ffffff" stroke-width="1"></circle> <!-- n=2 (Value 2.5) -->
+                            <text x="280" y="78" font-size="10" font-weight="700" fill="#047857" text-anchor="middle">a₂ = 2.5</text>
+                            <text x="280" y="293" font-size="8.5" font-weight="700" fill="#059669" text-anchor="middle">(first protected point)</text>
+
+                            <circle cx="400" cy="160" r="5" fill="#10b981" stroke="#ffffff" stroke-width="1"></circle> <!-- n=3 (Value ~1.67) -->
+                            <text x="400" y="148" font-size="10" font-weight="700" fill="#047857" text-anchor="middle">a₃ ≈ 1.67</text>
+                            <line x1="400" y1="256" x2="400" y2="264" stroke="#94a3b8" stroke-width="1"></line>
+                            <text x="400" y="275" font-size="9" fill="#94a3b8" text-anchor="middle">3</text>
+
+                            <circle cx="520" cy="105" r="5" fill="#10b981" stroke="#ffffff" stroke-width="1"></circle> <!-- n=4 (Value 2.25) -->
+                            <text x="520" y="93" font-size="10" font-weight="700" fill="#047857" text-anchor="middle">a₄ = 2.25</text>
+                            <line x1="520" y1="256" x2="520" y2="264" stroke="#94a3b8" stroke-width="1"></line>
+                            <text x="520" y="275" font-size="9" fill="#94a3b8" text-anchor="middle">4</text>
+
+                            <circle cx="640" cy="132" r="4.5" fill="#10b981"></circle> <!-- n=5 (Value 1.8) -->
+                            <text x="650" y="264" font-size="11" font-weight="600" fill="#64748b">···</text>
+
+                            <!-- Clash prevention arrow dropping to show distance bounds -->
+                            <path d="M 440 185 L 440 220" fill="none" stroke="#ef4444" stroke-dasharray="3 2" stroke-width="1.2" marker-end="url(#clash-arrow)"></path>
+                            <text x="452" y="206" font-size="10" font-weight="700" fill="#dc2626">Barred from No-Man's Land ($a_n > \frac{L}{2}$)</text>
+                        </g>
+                    </div>
+
+                    <!-- Step Breakdown -->
+                    <div style="margin-bottom: 1.25rem;">
+                        <h4 style="font-size: 0.98rem; font-weight: 700; color: #0284c7; margin-bottom: 0.35rem;">2. Construction Logic</h4>
+                        <p style="margin: 0; font-size: 0.92rem; color: #475569; line-height: 1.6;">
+                            We choose our error tolerance $\epsilon = \frac{L}{2} = 1$. By setting $\epsilon$ exactly to this margin, the open safety corridor $(L-\epsilon, L+\epsilon)$ sits strictly above $M$. There's no way any point in this corridor can reach the unsafe space:
+                        </p>
+                        <p style="margin: 0.5rem 0; font-size: 0.9rem; color: #0f172a; background: #ffffff; padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid #e2e8f0; text-align: center;">
+                            $$\text{Moat Region} = (0, \frac{L}{2}] = (0, 1] \qquad \text{Safety Region} = (\frac{L}{2}, \frac{3L}{2}) = (1, 3)$$
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 0;">
+                        <h4 style="font-size: 0.98rem; font-weight: 700; color: #047857; margin-bottom: 0.35rem;">3. Invoking the $N$ Limit Definition &amp; Proof Check</h4>
+                        <ol style="margin: 0; padding-left: 1.25rem; font-size: 0.92rem; color: #475569; line-height: 1.6;">
+                            <li style="margin-bottom: 0.5rem;">
+                                <strong>Seek boundary condition:</strong> Because $a_n \to 2$, we search for where $|a_n - L| < \epsilon = 1$ starts. Since $|(2 + \frac{(-1)^n}{n}) - 2| = \frac{1}{n}$, we calculate:
+                                $$\frac{1}{n} < 1 \implies n > 1$$
+                            </li>
+                            <li style="margin-bottom: 0.5rem;">
+                                <strong>Verify sequence index:</strong> By choosing milestone $N = 2$, any index $n \ge N$ forces:
+                                $$|a_n - 2| < 1 \implies 1 < a_n < 3$$
+                            </li>
+                            <li style="margin-bottom: 0.5rem;">
+                                <strong>Test terms sequence:</strong> Let's look at the trajectory beginning past N = 2:
+                                <ul>
+                                    <li>$a_1 = 1$ (sits right on the barrier boundary).</li>
+                                    <li>$a_2 = 2.5 > 1$ (inside safety window).</li>
+                                    <li>$a_3 \approx 1.67 > 1$ (inside safety window).</li>
+                                    <li>$a_4 = 2.25 > 1$ (inside safety window).</li>
+                                </ul>
+                            </li>
+                        </ol>
+                        <p style="margin: 0.75rem 0 0 0; font-size: 0.92rem; color: #0f172a; font-weight: 600;">
+                            The Midpoint Moat effectively locks all tail terms safely inside the positive safety zone $(a_n > 1)$, bounded away from $0$.
+                        </p>
+                    </div>
+                </div>
+
                 <!-- ================================================================= -->
                 <!-- WIDGET: ORDER PRESERVATION (DIRECTED NARRATIVE STEPPER)           -->
                 <!-- ================================================================= -->
@@ -6022,14 +6249,14 @@
                             <strong>The Algebraic Obstacle:</strong> Let $a_n = -3 + \frac{(-1)^n}{n}$, which oscillates around $L = -3$:
                             $$a_1 = -4.00, \quad a_2 = -2.50, \quad a_3 = -3.33, \quad a_4 = -2.75, \quad a_5 = -3.20, \dots$$
                             Setting up the target distance for $|a_n| \to 3$ directly creates awkward <strong>nested absolute value bars</strong>:
-                            $$\big||a_n| - 3\big| = \left| \left|-3 + \frac{(-1)^n}{n}\right| - 3 \right| &lt; \epsilon$$
+                            $$\big||a_n| - 3\big| = \left| \left|-3 + \frac{(-1)^n}{n}\right| - 3 \right| < \epsilon$$
                         </li>
                         <li style="margin-bottom: 0.5rem;">
                             <strong>The Reverse Triangle Shortcut:</strong> We want to apply $\big||x| - |y|\big| \le |x - y|$ to erase the inner absolute value bars. By rewriting $3$ as $|-3|$ (so that $x = -3 + \frac{(-1)^n}{n}$ and $y = -3$ share the same $-3$ term), the inner bars drop away and the $-3$ terms cancel immediately:
                             $$\left| \underbrace{\left|-3 + \frac{(-1)^n}{n}\right|}_{|x|} - \underbrace{|-3|}_{|y|} \right| \le \left| \underbrace{\left(-3 + \frac{(-1)^n}{n}\right)}_{x} - \underbrace{(-3)}_{y} \right| = \left|\frac{(-1)^n}{n}\right| = \frac{1}{n}$$
                         </li>
                         <li>
-                            <strong>Shared Cutoff ($N = 4$ for $\epsilon = 0.25$):</strong> Requiring $\frac{1}{n} &lt; \epsilon$ gives $N = \lceil 1/\epsilon \rceil$. For $\epsilon = 0.25$, $N = \frac{1}{0.25} = 4$. As the diagram below illustrates, reflecting $a_n$ across the $0$ axis flips every point into $+3 \pm \frac{1}{n}$ without changing its vertical distance to the target line—so the single cutoff barrier $N = 4$ traps both tails simultaneously. $\blacksquare$
+                            <strong>Shared Cutoff ($N = 5$ for $\epsilon = 0.25$):</strong> Requiring $\frac{1}{n} < \epsilon$ implies $n > \frac{1}{\epsilon}$. For $\epsilon = 0.25$, we need $n > 4$, making our first safe index $N = 5$. As the diagram below illustrates, reflecting $a_n$ across the $0$ axis flips every point into $+3 \pm \frac{1}{n}$ without changing its vertical distance to the target line—so the single cutoff barrier $N = 5$ traps both tails simultaneously. $\blacksquare$
                         </li>
                     </ol>
 
