@@ -8263,6 +8263,31 @@
                     </p>
                 </div>
 
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    To examine the behavior of our reciprocal sequence, we begin by measuring the physical distance between $\frac{1}{b_n}$ and $\frac{1}{L}$. Finding a common denominator ($b_n L$) and splitting the absolute value over division yields:
+                </p>
+                <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
+                    $$\left|\frac{1}{b_n} - \frac{1}{L}\right| = \left|\frac{L - b_n}{b_n L}\right| = \frac{|L - b_n|}{|b_n| \cdot |L|} = \frac{|b_n - L|}{|b_n| \cdot |L|}$$
+                </p>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    Again, notice the danger lurking in the denominator: $|b_n|$. While the numerator $|b_n - L|$ shrinks toward zero, the denominator $|b_n|$ changes at every step. If terms $b_n$ were allowed to flirt with zero, the fraction $\frac{1}{|b_n|}$ would blow up to infinity!
+                </p>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    Here again, Section 4 comes to our rescue. By the <strong>Preservation of Sign property</strong>, because $L \neq 0$, there exists an index $N_0$ past which $|b_n| > \frac{|L|}{2}$. Inverting this inequality flips the direction, placing a fixed ceiling over the reciprocal:
+                </p>
+                <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
+                    $$\frac{1}{|b_n|} < \frac{2}{|L|}$$
+                </p>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    The volatile denominator is now securely capped by a fixed constant! We substitute this bound into our expression:
+                </p>
+                <p style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
+                    $$\left|\frac{1}{b_n} - \frac{1}{L}\right| = \left(\frac{1}{|b_n|}\right) \cdot \left(\frac{|b_n - L|}{|L|}\right) < \left(\frac{2}{|L|}\right) \cdot \left(\frac{|b_n - L|}{|L|}\right) = \frac{2}{|L|^2} |b_n - L|$$
+                </p>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    Because $|b_n - L|$ can be made arbitrarily small by choosing an index past $N_1$, we simply require $|b_n - L| < \frac{\epsilon |L|^2}{2}$, forcing the entire distance below $\epsilon$. The Algebraic Limit Laws form an airtight, beautiful system: each theorem rests securely on the foundational properties we established in the sections before it. $\blacksquare$
+                </p>
+
                 <!-- Step Breakdown Guidance -->
                 <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
                     <h4 style="margin: 0 0 0.75rem 0; color: #0f172a; font-size: 1rem; font-weight: 700;">
