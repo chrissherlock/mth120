@@ -534,7 +534,23 @@
 
             <!-- SECTION 2 -->
             <h2 id="section-euler">2. Construction of Euler's Number $e$</h2>
-            <p>Consider the sequence $a_n = \left(1 + \frac{1}{n}\right)^n$. By expanding via the Binomial Theorem:</p>
+
+            <div class="aside-box" style="margin-top: 1.5rem; margin-bottom: 2rem; border-left-color: #0ea5e9; background: #f0f9ff; border-color: #bae6fd;">
+                <h4 style="color: #0369a1;">🧠 Refresher: The Binomial Theorem</h4>
+                <p>
+                    Before we dive into the sequence that defines $e$, we need to unpack how to expand expressions raised to the $n$-th power. You likely recall expanding simple binomials like $(1+x)^2 = 1 + 2x + x^2$. The <strong>Binomial Theorem</strong> provides the generalized machinery for expanding $(1+x)^n$:
+                </p>
+                <div style="text-align: center; margin: 1rem 0; font-size: 1.1rem; color: #0f172a;">
+                    $$(1+x)^n = 1 + nx + \frac{n(n-1)}{2!}x^2 + \frac{n(n-1)(n-2)}{3!}x^3 + \dots + x^n$$
+                </div>
+                <p style="margin-bottom: 0;">
+                    Notice how the coefficients follow a predictable pattern using factorials ($2!, 3!$). Keep this formula close—we are about to use it to pry open one of the most famous limits in mathematics.
+                </p>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Now, consider the sequence that formally defines Euler's number: $a_n = \left(1 + \frac{1}{n}\right)^n$. By expanding this expression via the Binomial Theorem (plugging in $x = \frac{1}{n}$):
+            </p>
             <div style="text-align: center; margin: 0.75rem 0;">
                 $$a_n = 1 + 1 + \frac{1}{2!}\left(1 - \frac{1}{n}\right) + \frac{1}{3!}\left(1 - \frac{1}{n}\right)\left(1 - \frac{2}{n}\right) + \dots + \frac{1}{n!}\left(1 - \frac{1}{n}\right)\dots\left(1 - \frac{n-1}{n}\right)$$
             </div>
