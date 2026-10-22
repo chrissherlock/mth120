@@ -671,17 +671,28 @@
 
             <!-- SECTION 3 -->
             <h2 id="section-lottery">3. The Lottery Thought Experiment</h2>
-            <div class="aside-box">
-                <h4>🎟️ The "One-in-a-Million" Paradox</h4>
-                <p>Imagine the chance of winning a lottery ticket is one in a million ($p = 10^{-6}$). If you purchase $n = 1,000,000$ tickets, what is the probability that you win at least once?</p>
-                <p>The probability of losing on every single ticket is:</p>
-                <div style="text-align: center; margin: 0.5rem 0;">
-                    $$P(\text{lose all}) = \left(1 - \frac{1}{1,000,000}\right)^{1,000,000} \approx \lim_{n\to\infty} \left(1 - \frac{1}{n}\right)^n = e^{-1} = \frac{1}{e} \approx 0.3679$$
-                </div>
-                <p style="margin-bottom: 0;">
-                    Therefore, the probability of winning at least once is $1 - \frac{1}{e} \approx \mathbf{63.2\%}$, not $100\%$!
-                </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                If this algebra still feels a bit abstract, let's look at a concrete thought experiment that flips the structure of $a_n = \left(1 + \frac{1}{n}\right)^n$ inside out. Instead of continuous financial growth, imagine a game of chance.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Suppose you play a lottery where your odds of winning are exactly $1$ in $n$. To be fair, you buy $n$ tickets. What is the probability that you <strong>lose every single time</strong>?
+            </p>
+            <ul style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                <li>Your chance of losing a single draw is $1 - \frac{1}{n}$.</li>
+                <li>Since each draw is independent, your chance of losing all $n$ draws is $\left(1 - \frac{1}{n}\right)^n$.</li>
+            </ul>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Notice how familiar that equation looks! But what happens if we scale this up to infinity? What if you have a 1-in-a-million chance and you play a million times? Or a 1-in-a-billion chance played a billion times?
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                As $n$ gets infinitely large, your chance of total failure doesn't drop to zero. Instead, it hits a strict mathematical floor governed by the exact same constant:
+            </p>
+            <div style="text-align: center; margin: 1.25rem 0; font-size: 1.1rem;">
+                $$ \lim_{n \to \infty} \left(1 - \frac{1}{n}\right)^n = \frac{1}{e} \approx 36.8\% $$
             </div>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                This shows that $e$ isn't just about compound interest—it is the universal speed limit governing the probability of extremely rare, independent events.
+            </p>
 
             <!-- SECTION 4 -->
             <h2 id="section-squeeze">4. The Comparison Principle &amp; Squeeze Theorem</h2>
