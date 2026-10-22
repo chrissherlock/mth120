@@ -1,58 +1,37 @@
 #!/usr/bin/env python3
-"""Add a historical infobox for Bernoulli and Euler, then commit and push."""
+"""Fix broken LaTeX rendering in Bernoulli's biography text, then commit and push."""
 
 import subprocess
 import sys
 
-COMMIT_MESSAGE = """Content: Add biography infobox for Bernoulli and Euler
+COMMIT_MESSAGE = """Fix: Correct LaTeX formatting in Bernoulli biography text
 
-Update week2-lecture5.html to include a two-column biography infobox
-featuring Jacob Bernoulli and Leonhard Euler directly beneath the
-historical narrative in Section 2. Uses the existing .biography-box
-CSS class for styling and a responsive grid layout to display the
-provided image assets alongside their historical contributions to
-the constant 'e'.
+Update week2-lecture5.html to fix broken math rendering in Jacob
+Bernoulli's biographical text box by properly wrapping expressions
+in KaTeX delimiters and fixing spacing.
 """
 
-OLD_TARGET = r"""                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-bottom: 0;">
-                    Euler didn't just find a number; he proved that $e$ represents the fundamental rate of growth for all natural continuous processes. By proving that it can be defined as the infinite limit of $\left(1 + \frac{1}{n}\right)^n$, Euler hardwired $e$ into the very foundations of calculus, physics, and probability. Today, we are going to reconstruct his exact proof to show that this sequence safely converges.
-                </p>
-            </div>
-
-            <div style="margin: 2.5rem 0; padding: 2rem; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px;">"""
-
-NEW_TARGET = r"""                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-bottom: 0;">
-                    Euler didn't just find a number; he proved that $e$ represents the fundamental rate of growth for all natural continuous processes. By proving that it can be defined as the infinite limit of $\left(1 + \frac{1}{n}\right)^n$, Euler hardwired $e$ into the very foundations of calculus, physics, and probability. Today, we are going to reconstruct his exact proof to show that this sequence safely converges.
-                </p>
-            </div>
-
-            <div class="biography-box" style="margin-top: 1.5rem; margin-bottom: 3rem;">
-                <h4>🏛️ The Architects of $e$</h4>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.75rem; margin-top: 1.25rem;">
-                    <!-- Bernoulli -->
-                    <div style="display: flex; gap: 1.25rem; align-items: flex-start;">
-                        <img src="image/bernoulli.jpg" alt="Jacob Bernoulli" style="width: 75px; height: 75px; border-radius: 50%; object-fit: cover; border: 2px solid #ddd6fe; flex-shrink: 0; background: #ffffff;">
+OLD_BIOGRAPHY_BLOCK = r"""                    <!-- Bernoulli -->
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <img src="images/bernoulli.jpg" alt="Jacob Bernoulli" style="width: 100%; height: 180px; object-fit: cover; border-radius: 6px; border: 1px solid #ddd6fe; background: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.04);">
                         <div>
-                            <strong style="color: #3730a3; display: block; font-size: 1.05rem;">Jacob Bernoulli (1655–1705)</strong>
-                            <p style="margin: 0.25rem 0 0 0; font-size: 0.9rem; line-height: 1.6; color: #1e293b;">
-                                Discovered the constant in 1683 while calculating continuous compound interest. He realized that as compounding intervals approach infinity, the return hits a strict mathematical ceiling—the very first approximation of $e$.
+                            <strong style="color: #3730a3; display: block; font-size: 1.1rem; margin-bottom: 0.35rem;">Jacob Bernoulli (1655–1705)</strong>
+                            <p style="margin: 0; font-size: 0.93rem; line-height: 1.65; color: #1e293b;">
+                                In 1683, Swiss mathematician Jacob Bernoulli stumbled upon the constant while studying a question concerning compound interest. He imagined a bank account paying 100% interest per year. If compounded annually, you double your money ($2.00).If compoundedsemiannually, youget(1 + \frac{1}{2})^2 = \$2.25. Bernoulli realized that even if compounded continuously (infinitely fast), the total return doesn't shoot off to infinity—it hits a strict, unyielding financial and mathematical ceiling: approximately $2.71828$. Though he couldn't evaluate it explicitly, he set the stage for its discovery.
                             </p>
                         </div>
-                    </div>
-                    <!-- Euler -->
-                    <div style="display: flex; gap: 1.25rem; align-items: flex-start;">
-                        <img src="image/euler.jpg" alt="Leonhard Euler" style="width: 75px; height: 75px; border-radius: 50%; object-fit: cover; border: 2px solid #ddd6fe; flex-shrink: 0; background: #ffffff;">
+                    </div>"""
+
+NEW_BIOGRAPHY_BLOCK = r"""                    <!-- Bernoulli -->
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <img src="images/bernoulli.jpg" alt="Jacob Bernoulli" style="width: 100%; height: 180px; object-fit: cover; border-radius: 6px; border: 1px solid #ddd6fe; background: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.04);">
                         <div>
-                            <strong style="color: #3730a3; display: block; font-size: 1.05rem;">Leonhard Euler (1707–1783)</strong>
-                            <p style="margin: 0.25rem 0 0 0; font-size: 0.9rem; line-height: 1.6; color: #1e293b;">
-                                Standardized the symbol $e$ in 1727. He seamlessly integrated the constant into the core of mathematics, proving its irrationality and formulating the famous Euler's Identity ($e^{i\pi} + 1 = 0$).
+                            <strong style="color: #3730a3; display: block; font-size: 1.1rem; margin-bottom: 0.35rem;">Jacob Bernoulli (1655–1705)</strong>
+                            <p style="margin: 0; font-size: 0.93rem; line-height: 1.65; color: #1e293b;">
+                                In 1683, Swiss mathematician Jacob Bernoulli stumbled upon the constant while studying a question concerning compound interest. He imagined a bank account paying 100% interest per year. If compounded annually, you double your money ($\$2.00$). If compounded semiannually, you get $\left(1 + \frac{1}{2}\right)^2 = \$2.25$. Bernoulli realized that even if compounded continuously (infinitely fast), the total return doesn't shoot off to infinity—it hits a strict, unyielding financial and mathematical ceiling: approximately $2.71828$. Though he couldn't evaluate it explicitly, he set the stage for its discovery.
                             </p>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div style="margin: 2.5rem 0; padding: 2rem; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px;">"""
+                    </div>"""
 
 def run_git_command(cmd, **kwargs):
     try:
@@ -74,11 +53,11 @@ def apply_patch():
         print(f"Error: {target_file} not found.")
         sys.exit(1)
 
-    if OLD_TARGET in content:
-        content = content.replace(OLD_TARGET, NEW_TARGET)
-        print(f"Successfully injected the Bernoulli & Euler infobox.")
+    if OLD_BIOGRAPHY_BLOCK in content:
+        content = content.replace(OLD_BIOGRAPHY_BLOCK, NEW_BIOGRAPHY_BLOCK)
+        print("Successfully corrected Bernoulli's biography text.")
     else:
-        print(f"Warning: Could not find target injection site. Check if the file was modified.", file=sys.stderr)
+        print("Warning: Could not find exact Bernoulli text block to replace. Check if it was modified.", file=sys.stderr)
         sys.exit(1)
 
     with open(target_file, "w", encoding="utf-8") as f:
@@ -95,7 +74,7 @@ def apply_patch():
     print("Pushing to remote repository...")
     run_git_command(['git', 'push'])
 
-    print("\n✅ Infobox added, committed, and pushed!")
+    print("\n✅ Fix applied, committed, and pushed!")
 
 if __name__ == "__main__":
     apply_patch()
