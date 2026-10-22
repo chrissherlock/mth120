@@ -488,6 +488,50 @@
             })();
             </script>
 
+            <div class="worked-example-box" style="margin-top: 3rem; margin-bottom: 2rem;">
+                <h4>🎯 Worked Example: Flying Blind with a Recursive Sequence</h4>
+                <p>
+                    Let's see the Monotone Convergence Theorem in action. Consider a sequence defined recursively:
+                </p>
+                <div style="text-align: center; margin: 0.75rem 0; font-size: 1.1rem;">
+                    $$a_1 = \sqrt{2}, \quad a_{n+1} = \sqrt{2 + a_n}$$
+                </div>
+                <p style="margin-bottom: 1rem;">
+                    If we write out the first few terms ($\sqrt{2}$, $\sqrt{2 + \sqrt{2}}$, $\dots$), the algebraic complexity explodes. We cannot easily isolate $n$ to do an $\epsilon\text{-}N$ proof, and we don't know the exact limit $L$. Here is how the MCT saves the day:
+                </p>
+
+                <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0; line-height: 1.7;">
+                    <li style="margin-bottom: 0.85rem;">
+                        <strong>Step 1: Prove it is bounded above (The Ceiling).</strong><br>
+                        We claim $a_n < 2$ for all $n$. We prove this by mathematical induction.
+                        <ul style="margin-top: 0.25rem; margin-bottom: 0;">
+                            <li><em>Base case:</em> $a_1 = \sqrt{2} \approx 1.414 < 2$.</li>
+                            <li><em>Inductive step:</em> Assume $a_k < 2$. Then $a_{k+1} = \sqrt{2 + a_k} < \sqrt{2 + 2} = \sqrt{4} = 2$. By induction, the sequence is bounded above by $M = 2$.</li>
+                        </ul>
+                    </li>
+                    <li style="margin-bottom: 0.85rem;">
+                        <strong>Step 2: Prove it is strictly increasing (The Engine).</strong><br>
+                        We want to show $a_{n+1} > a_n$. Let's compare their squares:
+                        <div style="text-align: center; margin: 0.5rem 0;">
+                            $$a_{n+1}^2 - a_n^2 = (2 + a_n) - a_n^2 = -(a_n^2 - a_n - 2) = -(a_n - 2)(a_n + 1)$$
+                        </div>
+                        Since we just proved $a_n < 2$, the term $(a_n - 2)$ is strictly negative. Because all terms are positive, $(a_n + 1)$ is positive. Thus, $-( \text{negative} )( \text{positive} ) = \text{positive}$. Therefore $a_{n+1}^2 > a_n^2$, meaning $a_{n+1} > a_n$.
+                    </li>
+                    <li style="margin-bottom: 0.85rem;">
+                        <strong>Step 3: Invoke the Monotone Convergence Theorem.</strong><br>
+                        Because $(a_n)$ is strictly increasing and bounded above, the MCT mathematically guarantees that a limit $L$ <strong>must exist</strong>. We have secured the legal right to use $\lim a_n = L$ without ever knowing what $L$ is!
+                    </li>
+                    <li>
+                        <strong>Step 4: Solve for the Limit.</strong><br>
+                        Now that we possess the guarantee that $L$ exists, we can apply the Algebraic Limit Laws to the recursive formula:
+                        <div style="text-align: center; margin: 0.5rem 0;">
+                            $$\lim_{n\to\infty} a_{n+1} = \lim_{n\to\infty} \sqrt{2 + a_n} \implies L = \sqrt{2 + L}$$
+                        </div>
+                        Squaring both sides gives $L^2 = 2 + L \implies L^2 - L - 2 = 0 \implies (L - 2)(L + 1) = 0$. Since our sequence consists of strictly positive roots, $L$ cannot be $-1$. Thus, the limit is exactly $L = 2$. $\blacksquare$
+                    </li>
+                </ol>
+            </div>
+
             <!-- SECTION 2 -->
             <h2 id="section-euler">2. Construction of Euler's Number $e$</h2>
             <p>Consider the sequence $a_n = \left(1 + \frac{1}{n}\right)^n$. By expanding via the Binomial Theorem:</p>
