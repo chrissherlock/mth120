@@ -266,7 +266,7 @@
 
                 <!-- SYNCHRONIZED VISUAL CANVAS (SVG) -->
                 <div class="canvas-wrap">
-                    <svg id="mct-svg" viewBox="0 0 800 340">
+                    <svg id="mct-svg" viewBox="0 0 860 340">
                         <defs>
                             <marker id="mct-arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse">
                                 <path d="M 0 2 L 7 5 L 0 8 z" fill="#64748b"/>
@@ -345,7 +345,7 @@
                             <!-- Highlight the specific point that breaks the floor -->
                             <circle cx="300" cy="115" r="7" fill="none" stroke="#ef4444" stroke-width="2"/>
                             <path d="M 300 145 L 300 128" fill="none" stroke="#ef4444" stroke-width="1.5" marker-end="url(#mct-arr)"/>
-                            <text x="300" y="160" font-size="10" font-weight="800" fill="#e11d48" text-anchor="middle">Milestone Term a_N</text>
+                            <text x="300" y="160" font-size="10" font-weight="800" fill="#e11d48" text-anchor="middle">Milestone Term a<tspan font-size="7.5" dy="2">N</tspan></text>
 
                             <!-- Red shading below floor to show it's not an upper bound -->
                             <rect x="80" y="120" width="220" height="160" fill="url(#mct-hatch-red)"/>
@@ -422,26 +422,26 @@
                         phase: "1: The Epsilon Challenge",
                         eps: "ε > 0 Chosen", n: "Pending",
                         status: "Testing the Floor", statusColor: "#b45309",
-                        summary: "The Skeptic issues a challenge tolerance ε. We draw an open corridor spanning from the ceiling α down to a floor at α - ε.",
-                        what: "An amber corridor of width ε is drawn directly below the supremum ceiling. The lower boundary forms a new barrier at α - ε.",
+                        summary: "The Skeptic issues a challenge tolerance ε. We draw an open corridor spanning from the ceiling α down to a floor at α − ε.",
+                        what: "An amber corridor of width ε is drawn directly below the supremum ceiling. The lower boundary forms a new barrier at α − ε.",
                         why: "The ε-N Game. We are asserting that α is the true limit. Therefore, the sequence must eventually be able to penetrate and survive inside this tiny margin, no matter how small ε is.",
                         l_eps: true, l_break: false, l_tail: false
                     },
                     {
                         phase: "2: The Breakthrough Point",
-                        eps: "ε > 0", n: "Term a_N Found",
+                        eps: "ε > 0", n: "Term a<sub>N</sub> Found",
                         status: "Floor Breached", statusColor: "#e11d48",
-                        summary: "Because α is the LOWEST possible ceiling, dropping the floor down by ε means α - ε is no longer a valid upper bound. Therefore, at least one sequence term MUST exist above it.",
-                        what: "We identify a specific term a_N that has broken through the floor α - ε. (If no such term existed, the floor would be an upper bound smaller than the supremum, which is a logical contradiction).",
-                        why: "The Supremum Property. This is the pure magic of the proof. We don't have to calculate N algebraically. The definition of the supremum mathematically guarantees that a breakthrough term a_N must exist.",
+                        summary: "Because α is the LOWEST possible ceiling, dropping the floor down by ε means α − ε is no longer a valid upper bound. Therefore, at least one sequence term MUST exist above it.",
+                        what: "We identify a specific term a<sub>N</sub> that has broken through the floor α − ε. (If no such term existed, the floor would be an upper bound smaller than the supremum, which is a logical contradiction).",
+                        why: "The Supremum Property. This is the pure magic of the proof. We don't have to calculate N algebraically. The definition of the supremum mathematically guarantees that a breakthrough term a<sub>N</sub> must exist.",
                         l_eps: true, l_break: true, l_tail: false
                     },
                     {
                         phase: "3: The Monotonic Lock-In",
                         eps: "ε > 0", n: "Master Cutoff N",
                         status: "Tail Captured ✓", statusColor: "#059669",
-                        summary: "Because the sequence only moves upward, every term after a_N is pushed even higher. The entire infinite tail is now crushed between the breakthrough floor and the supremum ceiling.",
-                        what: "The master cutoff N drops. For every index n > N, we know aₙ ≥ a_N (because it is increasing). Therefore: α - ε < a_N ≤ aₙ ≤ α. The tail is locked inside the green corridor.",
+                        summary: "Because the sequence only moves upward, every term after a<sub>N</sub> is pushed even higher. The entire infinite tail is now crushed between the breakthrough floor and the supremum ceiling.",
+                        what: "The master cutoff N drops. For every index n > N, we know aₙ ≥ a<sub>N</sub> (because it is increasing). Therefore: α − ε &lt; a<sub>N</sub> ≤ aₙ ≤ α. The tail is locked inside the green corridor.",
                         why: "The Engine Meets the Ceiling. Monotonicity acts like a ratchet—the sequence cannot fall back down below the floor. The combination of the supremum and monotonicity completes the limit proof.",
                         l_eps: true, l_break: true, l_tail: true
                     }
@@ -452,13 +452,13 @@
 
                     document.getElementById('mct-tel-phase').textContent = data.phase;
                     document.getElementById('mct-tel-eps').textContent = data.eps;
-                    document.getElementById('mct-tel-n').textContent = data.n;
+                    document.getElementById('mct-tel-n').innerHTML = data.n;
                     document.getElementById('mct-tel-status').textContent = data.status;
                     document.getElementById('mct-tel-status').style.color = data.statusColor;
 
-                    document.getElementById('mct-preview-text').textContent = data.summary;
-                    document.getElementById('mct-pane-what').textContent = data.what;
-                    document.getElementById('mct-pane-why').textContent = data.why;
+                    document.getElementById('mct-preview-text').innerHTML = data.summary;
+                    document.getElementById('mct-pane-what').innerHTML = data.what;
+                    document.getElementById('mct-pane-why').innerHTML = data.why;
 
                     document.getElementById('mct-btn-prev').disabled = (mctStep === 0);
                     document.getElementById('mct-btn-next').disabled = (mctStep === mctData.length - 1);
