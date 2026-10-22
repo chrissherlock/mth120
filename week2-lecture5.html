@@ -583,16 +583,27 @@
             <div style="margin: 2.5rem 0; padding: 2rem; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px;">
                 <h3 style="margin-top: 0; color: #0f172a; font-size: 1.25rem;">Unpacking the Algebra: Where do the factorials come from?</h3>
                 <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                    Before we formally define Euler's number as a limit, we have to deal with a formidable piece of algebra. Consider the sequence $a_n = \left(1 + \frac{1}{n}\right)^n$. To prove this converges using the MCT, we need to rip open that $n$-th power using the <strong>Binomial Theorem</strong>.
+                    Before we formally define Euler's number as a limit, we have to deal with a formidable piece of algebra: expanding $a_n = \left(1 + \frac{1}{n}\right)^n$ using the Binomial Theorem. If textbooks throw this at you as a wall of symbols, it looks like magic. Let's break down what is actually happening behind the scenes.
+                </p>
+
+                <h4 style="color: #0f172a; margin-top: 1.75rem; font-size: 1.1rem;">1. What is a factorial really? (The Over-Counting Fix)</h4>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    An exclamation mark like $2!$ or $3!$ is just a counting tool. When you expand an $n$-th power, you are choosing which parentheses to pull the $\frac{1}{n}$ from. Because choosing slot A then slot B is the exact same pair as slot B then slot A, you end up double-counting. The factorial in the denominator (like $2! = 2 \times 1$ or $3! = 3 \times 2 \times 1$) is literally just a correction factor to remove that duplication.
+                </p>
+
+                <h4 style="color: #0f172a; margin-top: 1.75rem; font-size: 1.1rem;">2. Decoding the "n choose k" Notation & Mechanically Building the Terms</h4>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    The Binomial Theorem relies on a shorthand notation written with giant parentheses: $\binom{n}{k}$, which is read aloud as <strong>"n choose k"</strong>. It simply answers the question: <em>"If I have a total pool of $n$ items (parentheses), how many ways can I pick a group of $k$ of them?"</em>
                 </p>
                 <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                    The Binomial Theorem states that for any term $(1+x)^n$, the general term for the $k$-th position involves the "n choose k" combinations formula:
+                    Mathematically, it is calculated using factorials like this:
                 </p>
                 <div style="text-align: center; margin: 1.25rem 0; font-size: 1.1rem;">
                     $$ \binom{n}{k} x^k = \frac{n!}{k!(n-k)!} x^k $$
                 </div>
-
-                <h4 style="color: #0f172a; margin-top: 2rem; font-size: 1.1rem;">Let's mechanically build the first few terms by plugging in $x = \frac{1}{n}$:</h4>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    Let's plug in $x = \frac{1}{n}$ and watch how the algebra naturally cleans itself up for the first few terms:
+                </p>
 
                 <div style="background: #f8fafc; border-left: 4px solid #0284c7; padding: 1.5rem; margin-top: 1rem; margin-bottom: 1.5rem; border-radius: 0 6px 6px 0;">
                     <strong style="color: #0369a1; display: block; margin-bottom: 0.5rem;">Term $k=0$ and $k=1$:</strong>
@@ -610,7 +621,7 @@
                         $$ \frac{n(n-1)\color{gray}{\cancel{(n-2)!}}}{2!\color{gray}{\cancel{(n-2)!}}} \cdot \frac{1}{n^2} \quad = \quad \frac{n(n-1)}{2!} \cdot \frac{1}{n^2} $$
                     </div>
                     <p style="margin: 1rem 0 1rem 0; color: #334155; line-height: 1.7;">
-                        Now, we regroup the fractions. We pair the two $n$ terms in the numerator with the $n^2$ in the denominator:
+                        Now, let's split the fraction apart and pair the $n$ terms up:
                     </p>
                     <div style="text-align: center; font-size: 1.1rem;">
                         $$ = \frac{1}{2!} \left( \frac{n}{n} \cdot \frac{n-1}{n} \right) \quad = \quad \frac{1}{2!} \left( 1 \right) \left( 1 - \frac{1}{n} \right) $$
@@ -629,6 +640,17 @@
                         $$ = \frac{1}{3!} \left( 1 - \frac{1}{n} \right) \left( 1 - \frac{2}{n} \right) $$
                     </div>
                 </div>
+
+                <h4 style="color: #0f172a; margin-top: 2rem; font-size: 1.1rem;">3. The Final Collapsed Form</h4>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    When you assemble all these pieces, the sprawling binomial expansion collapses into this clean, structured formula:
+                </p>
+                <div style="text-align: center; font-size: 1.05rem; margin: 1rem 0;">
+                    $$ a_n = 1 + 1 + \frac{1}{2!}\left(1 - \frac{1}{n}\right) + \frac{1}{3!}\left(1 - \frac{1}{n}\right)\left(1 - \frac{2}{n}\right) + \dots + \frac{1}{n!}\left(1 - \frac{1}{n}\right)\cdots\left(1 - \frac{n-1}{n}\right) $$
+                </div>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-bottom: 0;">
+                    Look at what this does for us: every single term containing $n$ has $n$ in the denominator. As $n$ grows toward infinity, those correction terms vanish, leaving us with a pure sum of factorials that defines $e$!
+                </p>
             </div>
 
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
