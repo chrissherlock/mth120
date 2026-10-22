@@ -535,21 +535,59 @@
             <!-- SECTION 2 -->
             <h2 id="section-euler">2. Construction of Euler's Number $e$</h2>
 
-            <div class="aside-box" style="margin-top: 1.5rem; margin-bottom: 2rem; border-left-color: #0ea5e9; background: #f0f9ff; border-color: #bae6fd;">
-                <h4 style="color: #0369a1;">🧠 Refresher: The Binomial Theorem</h4>
-                <p>
-                    Before we dive into the sequence that defines $e$, we need to unpack how to expand expressions raised to the $n$-th power. You likely recall expanding simple binomials like $(1+x)^2 = 1 + 2x + x^2$. The <strong>Binomial Theorem</strong> provides the generalized machinery for expanding $(1+x)^n$:
+            <div style="margin: 2.5rem 0; padding: 2rem; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px;">
+                <h3 style="margin-top: 0; color: #0f172a; font-size: 1.25rem;">Unpacking the Algebra: Where do the factorials come from?</h3>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    Before we formally define Euler's number as a limit, we have to deal with a formidable piece of algebra. Consider the sequence $a_n = \left(1 + \frac{1}{n}\right)^n$. To prove this converges using the MCT, we need to rip open that $n$-th power using the <strong>Binomial Theorem</strong>.
                 </p>
-                <div style="text-align: center; margin: 1rem 0; font-size: 1.1rem; color: #0f172a;">
-                    $$(1+x)^n = 1 + nx + \frac{n(n-1)}{2!}x^2 + \frac{n(n-1)(n-2)}{3!}x^3 + \dots + x^n$$
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    The Binomial Theorem states that for any term $(1+x)^n$, the general term for the $k$-th position involves the "n choose k" combinations formula:
+                </p>
+                <div style="text-align: center; margin: 1.25rem 0; font-size: 1.1rem;">
+                    $$ \binom{n}{k} x^k = \frac{n!}{k!(n-k)!} x^k $$
                 </div>
-                <p style="margin-bottom: 0;">
-                    Notice how the coefficients follow a predictable pattern using factorials ($2!, 3!$). Keep this formula close—we are about to use it to pry open one of the most famous limits in mathematics.
-                </p>
+
+                <h4 style="color: #0f172a; margin-top: 2rem; font-size: 1.1rem;">Let's mechanically build the first few terms by plugging in $x = \frac{1}{n}$:</h4>
+
+                <div style="background: #f8fafc; border-left: 4px solid #0284c7; padding: 1.5rem; margin-top: 1rem; margin-bottom: 1.5rem; border-radius: 0 6px 6px 0;">
+                    <strong style="color: #0369a1; display: block; margin-bottom: 0.5rem;">Term $k=0$ and $k=1$:</strong>
+                    <p style="margin: 0; color: #334155; line-height: 1.7;">
+                        These are the easy ones. The zeroth term is always just $1$. The first term is $n \cdot x = n \cdot \left(\frac{1}{n}\right) = 1$. So the sequence always starts with $1 + 1$.
+                    </p>
+                </div>
+
+                <div style="background: #f8fafc; border-left: 4px solid #0284c7; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 6px 6px 0;">
+                    <strong style="color: #0369a1; display: block; margin-bottom: 0.5rem;">Term $k=2$ (The Mechanics Reveal Themselves):</strong>
+                    <p style="margin: 0 0 1rem 0; color: #334155; line-height: 1.7;">
+                        Here we apply the formula: $\frac{n!}{2!(n-2)!} \left(\frac{1}{n}\right)^2$. Watch how the factorials cancel out:
+                    </p>
+                    <div style="text-align: center; font-size: 1.1rem;">
+                        $$ \frac{n(n-1)\color{gray}{\cancel{(n-2)!}}}{2!\color{gray}{\cancel{(n-2)!}}} \cdot \frac{1}{n^2} \quad = \quad \frac{n(n-1)}{2!} \cdot \frac{1}{n^2} $$
+                    </div>
+                    <p style="margin: 1rem 0 1rem 0; color: #334155; line-height: 1.7;">
+                        Now, we regroup the fractions. We pair the two $n$ terms in the numerator with the $n^2$ in the denominator:
+                    </p>
+                    <div style="text-align: center; font-size: 1.1rem;">
+                        $$ = \frac{1}{2!} \left( \frac{n}{n} \cdot \frac{n-1}{n} \right) \quad = \quad \frac{1}{2!} \left( 1 \right) \left( 1 - \frac{1}{n} \right) $$
+                    </div>
+                </div>
+
+                <div style="background: #f8fafc; border-left: 4px solid #0284c7; padding: 1.5rem; border-radius: 0 6px 6px 0;">
+                    <strong style="color: #0369a1; display: block; margin-bottom: 0.5rem;">Term $k=3$ (Solidifying the Pattern):</strong>
+                    <p style="margin: 0 0 1rem 0; color: #334155; line-height: 1.7;">
+                        The exact same cancellation happens. The $(n-3)!$ gets wiped out, leaving three terms on top, paired with $n^3$ on the bottom:
+                    </p>
+                    <div style="text-align: center; font-size: 1.1rem;">
+                        $$ \frac{n(n-1)(n-2)}{3!} \cdot \frac{1}{n^3} \quad = \quad \frac{1}{3!} \left( \frac{n}{n} \right) \left( \frac{n-1}{n} \right) \left( \frac{n-2}{n} \right) $$
+                    </div>
+                    <div style="text-align: center; font-size: 1.1rem; margin-top: 1rem;">
+                        $$ = \frac{1}{3!} \left( 1 - \frac{1}{n} \right) \left( 1 - \frac{2}{n} \right) $$
+                    </div>
+                </div>
             </div>
 
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Now, consider the sequence that formally defines Euler's number: $a_n = \left(1 + \frac{1}{n}\right)^n$. By expanding this expression via the Binomial Theorem (plugging in $x = \frac{1}{n}$):
+                When we assemble all these carefully grouped pieces, the sprawling binomial expansion collapses into the beautiful, structured form we need for our proof:
             </p>
             <div style="text-align: center; margin: 0.75rem 0;">
                 $$a_n = 1 + 1 + \frac{1}{2!}\left(1 - \frac{1}{n}\right) + \frac{1}{3!}\left(1 - \frac{1}{n}\right)\left(1 - \frac{2}{n}\right) + \dots + \frac{1}{n!}\left(1 - \frac{1}{n}\right)\dots\left(1 - \frac{n-1}{n}\right)$$
