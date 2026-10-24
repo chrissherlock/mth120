@@ -610,7 +610,7 @@
                     Imagine you have <strong>5 different letters (A, B, C, D, E)</strong>, and you need to grab a group of <strong>3 letters</strong>.
                 </p>
 
-                <p style="color: #0f172a; font-weight: 600; font-size: 1.05rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">Step 1: Making the picks (where order matters)</p>
+                <p style="color: #0f172a; font-weight: 600; font-size: 1.05rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">Step 1: Making the picks (The Fundamental Counting Principle)</p>
                 <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
                     To pick 3 letters out of 5, you make three choices in a row:
                 </p>
@@ -619,9 +619,179 @@
                     <li>You have <strong>4</strong> options left for your second pick.</li>
                     <li>You have <strong>3</strong> options left for your third pick.</li>
                 </ul>
-                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                    Multiply those together: $5 \times 4 \times 3 = 60$ possible ways to pick 3 letters.
-                </p>
+
+                <div style="background: #f8fafc; border-left: 4px solid #0284c7; padding: 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0;">
+                    <strong style="color: #0369a1; display: block; margin-bottom: 0.5rem; font-size: 1.05rem;">Why do we multiply these numbers instead of adding them?</strong>
+                    <p style="margin: 0 0 0.85rem 0; color: #334155; line-height: 1.7;">
+                        This relies on the <strong>Fundamental Counting Principle</strong>. If you have a series of choices to make, you multiply the number of options at each step to find the total number of possible combinations.
+                    </p>
+                    <p style="margin: 0 0 0.85rem 0; color: #334155; line-height: 1.7;">
+                        To see why we multiply instead of add, think about getting dressed. Imagine you have <strong>3 shirts</strong> (Red, Blue, Green) and <strong>2 pairs of pants</strong> (Jeans, Khakis). How many different outfits can you make? If you just added the options, you'd say $3 + 2 = 5$ outfits. But look at the actual choices:
+                    </p>
+
+                    <!-- VISUALIZATION: SHIRTS x PANTS (3 x 2 = 6) -->
+                    <div style="margin: 1.5rem 0 2rem 0; text-align: center; background:#ffffff; border-radius: 8px; border: 1px solid #cbd5e1; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); overflow-x: auto;">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 340" width="100%" style="font-family:system-ui, -apple-system, sans-serif; min-width: 600px;">
+                            <defs>
+                                <!-- Custom T-Shirt Vector -->
+                                <g id="shirt">
+                                    <path d="M 8.5 2 C 8.5 4.5 15.5 4.5 15.5 2 L 22 5 L 24 10 L 19 13 L 18 10 L 18 22 L 6 22 L 6 10 L 5 13 L 0 10 L 2 5 Z" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
+                                </g>
+                                <!-- Custom Pants Vector -->
+                                <g id="pants">
+                                    <path d="M 6 2 L 18 2 L 20 22 L 13.5 22 L 12 9 L 10.5 22 L 4 22 Z" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
+                                    <line x1="6" y1="5" x2="18" y2="5" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" />
+                                </g>
+                            </defs>
+
+                            <style>
+                                .lbl { font-size: 14px; font-weight: bold; }
+                                .hdr { font-size: 16px; font-weight: bold; fill: #0f172a; }
+                            </style>
+
+                            <!-- Headers -->
+                            <text x="185" y="25" text-anchor="middle" class="hdr">Shirts (3 choices)</text>
+                            <text x="415" y="25" text-anchor="middle" class="hdr">Pants (2 choices each)</text>
+                            <text x="655" y="25" text-anchor="middle" class="hdr">6 Final Outfits</text>
+
+                            <line x1="40" y1="40" x2="760" y2="40" stroke="#e2e8f0" stroke-width="2" />
+
+                            <!-- START NODE -->
+                            <circle cx="65" cy="190" r="8" fill="#0f172a" />
+                            <text x="50" y="190" dy="0.35em" text-anchor="end" font-size="14" font-weight="bold" fill="#0f172a">Start</text>
+
+                            <!-- Connecting Lines from Start to Shirts -->
+                            <path d="M 65 190 C 95 190, 95 90, 130 90" fill="none" stroke="#ef4444" stroke-width="3" opacity="0.3" />
+                            <path d="M 65 190 L 130 190" fill="none" stroke="#3b82f6" stroke-width="3" opacity="0.3" />
+                            <path d="M 65 190 C 95 190, 95 290, 130 290" fill="none" stroke="#22c55e" stroke-width="3" opacity="0.3" />
+
+                            <!-- Connecting Lines from Shirts to Pants -->
+                            <path d="M 265 90 C 310 90, 310 65, 360 65" fill="none" stroke="#ef4444" stroke-width="3" opacity="0.3" />
+                            <path d="M 265 90 C 310 90, 310 115, 360 115" fill="none" stroke="#ef4444" stroke-width="3" opacity="0.3" />
+
+                            <path d="M 265 190 C 310 190, 310 165, 360 165" fill="none" stroke="#3b82f6" stroke-width="3" opacity="0.3" />
+                            <path d="M 265 190 C 310 190, 310 215, 360 215" fill="none" stroke="#3b82f6" stroke-width="3" opacity="0.3" />
+
+                            <path d="M 265 290 C 310 290, 310 265, 360 265" fill="none" stroke="#22c55e" stroke-width="3" opacity="0.3" />
+                            <path d="M 265 290 C 310 290, 310 315, 360 315" fill="none" stroke="#22c55e" stroke-width="3" opacity="0.3" />
+
+                            <!-- L1: SHIRTS -->
+                            <g transform="translate(130, 68)">
+                                <rect width="135" height="44" rx="8" fill="#fee2e2" stroke="#ef4444" stroke-width="2" />
+                                <use href="#shirt" x="12" y="10" fill="#dc2626" />
+                                <text x="44" y="22" dy="0.35em" class="lbl" fill="#b91c1c">Red Shirt</text>
+                            </g>
+                            <g transform="translate(130, 168)">
+                                <rect width="135" height="44" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" />
+                                <use href="#shirt" x="12" y="10" fill="#2563eb" />
+                                <text x="44" y="22" dy="0.35em" class="lbl" fill="#1d4ed8">Blue Shirt</text>
+                            </g>
+                            <g transform="translate(130, 268)">
+                                <rect width="135" height="44" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="2" />
+                                <use href="#shirt" x="12" y="10" fill="#16a34a" />
+                                <text x="44" y="22" dy="0.35em" class="lbl" fill="#15803d">Green Shirt</text>
+                            </g>
+
+                            <!-- L2: PANTS -->
+                            <!-- Group 1 -->
+                            <g transform="translate(360, 43)">
+                                <rect width="110" height="44" rx="8" fill="#e0e7ff" stroke="#6366f1" stroke-width="2" />
+                                <use href="#pants" x="14" y="10" fill="#3730a3" />
+                                <text x="46" y="22" dy="0.35em" class="lbl" fill="#312e81">Jeans</text>
+                            </g>
+                            <g transform="translate(360, 93)">
+                                <rect width="110" height="44" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" />
+                                <use href="#pants" x="14" y="10" fill="#b45309" />
+                                <text x="46" y="22" dy="0.35em" class="lbl" fill="#78350f">Khakis</text>
+                            </g>
+                            <!-- Group 2 -->
+                            <g transform="translate(360, 143)">
+                                <rect width="110" height="44" rx="8" fill="#e0e7ff" stroke="#6366f1" stroke-width="2" />
+                                <use href="#pants" x="14" y="10" fill="#3730a3" />
+                                <text x="46" y="22" dy="0.35em" class="lbl" fill="#312e81">Jeans</text>
+                            </g>
+                            <g transform="translate(360, 193)">
+                                <rect width="110" height="44" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" />
+                                <use href="#pants" x="14" y="10" fill="#b45309" />
+                                <text x="46" y="22" dy="0.35em" class="lbl" fill="#78350f">Khakis</text>
+                            </g>
+                            <!-- Group 3 -->
+                            <g transform="translate(360, 243)">
+                                <rect width="110" height="44" rx="8" fill="#e0e7ff" stroke="#6366f1" stroke-width="2" />
+                                <use href="#pants" x="14" y="10" fill="#3730a3" />
+                                <text x="46" y="22" dy="0.35em" class="lbl" fill="#312e81">Jeans</text>
+                            </g>
+                            <g transform="translate(360, 293)">
+                                <rect width="110" height="44" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" />
+                                <use href="#pants" x="14" y="10" fill="#b45309" />
+                                <text x="46" y="22" dy="0.35em" class="lbl" fill="#78350f">Khakis</text>
+                            </g>
+
+                            <!-- L3: OUTCOMES -->
+                            <line x1="470" y1="65" x2="560" y2="65" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4" />
+                            <line x1="470" y1="115" x2="560" y2="115" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4" />
+                            <line x1="470" y1="165" x2="560" y2="165" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4" />
+                            <line x1="470" y1="215" x2="560" y2="215" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4" />
+                            <line x1="470" y1="265" x2="560" y2="265" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4" />
+                            <line x1="470" y1="315" x2="560" y2="315" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4" />
+
+                            <g transform="translate(560, 43)">
+                                <rect width="215" height="44" rx="22" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+                                <use href="#shirt" x="15" y="10" fill="#dc2626" />
+                                <text x="45" y="22" dy="0.35em" font-size="16" font-weight="bold" fill="#94a3b8">+</text>
+                                <use href="#pants" x="55" y="10" fill="#3730a3" />
+                                <text x="88" y="22" dy="0.35em" class="lbl" fill="#0f172a">Red &amp; Jeans</text>
+                            </g>
+                            <g transform="translate(560, 93)">
+                                <rect width="215" height="44" rx="22" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+                                <use href="#shirt" x="15" y="10" fill="#dc2626" />
+                                <text x="45" y="22" dy="0.35em" font-size="16" font-weight="bold" fill="#94a3b8">+</text>
+                                <use href="#pants" x="55" y="10" fill="#b45309" />
+                                <text x="88" y="22" dy="0.35em" class="lbl" fill="#0f172a">Red &amp; Khakis</text>
+                            </g>
+                            <g transform="translate(560, 143)">
+                                <rect width="215" height="44" rx="22" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+                                <use href="#shirt" x="15" y="10" fill="#2563eb" />
+                                <text x="45" y="22" dy="0.35em" font-size="16" font-weight="bold" fill="#94a3b8">+</text>
+                                <use href="#pants" x="55" y="10" fill="#3730a3" />
+                                <text x="88" y="22" dy="0.35em" class="lbl" fill="#0f172a">Blue &amp; Jeans</text>
+                            </g>
+                            <g transform="translate(560, 193)">
+                                <rect width="215" height="44" rx="22" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+                                <use href="#shirt" x="15" y="10" fill="#2563eb" />
+                                <text x="45" y="22" dy="0.35em" font-size="16" font-weight="bold" fill="#94a3b8">+</text>
+                                <use href="#pants" x="55" y="10" fill="#b45309" />
+                                <text x="88" y="22" dy="0.35em" class="lbl" fill="#0f172a">Blue &amp; Khakis</text>
+                            </g>
+                            <g transform="translate(560, 243)">
+                                <rect width="215" height="44" rx="22" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+                                <use href="#shirt" x="15" y="10" fill="#16a34a" />
+                                <text x="45" y="22" dy="0.35em" font-size="16" font-weight="bold" fill="#94a3b8">+</text>
+                                <use href="#pants" x="55" y="10" fill="#3730a3" />
+                                <text x="88" y="22" dy="0.35em" class="lbl" fill="#0f172a">Green &amp; Jeans</text>
+                            </g>
+                            <g transform="translate(560, 293)">
+                                <rect width="215" height="44" rx="22" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
+                                <use href="#shirt" x="15" y="10" fill="#16a34a" />
+                                <text x="45" y="22" dy="0.35em" font-size="16" font-weight="bold" fill="#94a3b8">+</text>
+                                <use href="#pants" x="55" y="10" fill="#b45309" />
+                                <text x="88" y="22" dy="0.35em" class="lbl" fill="#0f172a">Green &amp; Khakis</text>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <ul style="color: #334155; line-height: 1.7; font-size: 0.95rem; margin: 0.5rem 0 0.85rem 1.25rem; padding-left: 1rem;">
+                        <li>If you wear the Red shirt, you can pair it with Jeans or Khakis (2 outfits).</li>
+                        <li>If you wear the Blue shirt, you can pair it with Jeans or Khakis (2 outfits).</li>
+                        <li>If you wear the Green shirt, you can pair it with Jeans or Khakis (2 outfits).</li>
+                    </ul>
+                    <p style="margin: 0 0 0.85rem 0; color: #334155; line-height: 1.7;">
+                        For <em>every single one</em> of your 3 shirts, the timeline splits into 2 new branches for the pants. So you have $2 + 2 + 2$ outfits, which is exactly what multiplication is: <strong>$3 \times 2 = 6$ outfits</strong>.
+                    </p>
+                    <p style="margin: 0; color: #334155; line-height: 1.7;">
+                        The same branching logic applies to our letters. For every one of your 5 first picks, the timeline splits into 4 new paths. Then each of those paths splits into 3 more. Because every choice forces the timeline to branch out again, we multiply: <strong>$5 \times 4 \times 3 = 60$ possible ways</strong> to pick 3 letters.
+                    </p>
+                </div>
 
                 <!-- VISUALIZATION: STEP 1 (Full 60-Branch Network) -->
                 <div style="margin: 1.5rem 0 2.5rem 0; text-align: center; background:#ffffff; border-radius: 8px; border: 1px solid #cbd5e1; padding: 2rem 1rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); overflow-x: auto;">
@@ -775,6 +945,23 @@
                 </p>
                 <div style="text-align: center; font-size: 1.1rem; margin: 1rem 0;">
                     $$ \frac{n!}{k!(n-k)!} $$
+                </div>
+
+                <!-- VISUALIZATION: STEP 4 -->
+                <div style="margin: 1.5rem 0 2.5rem 0; text-align: center; background:#ffffff; border-radius: 8px; border: 1px solid #cbd5e1; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 120" width="100%" style="font-family:system-ui, -apple-system, sans-serif;">
+                        <style>
+                            .math { font-size: 26px; font-family: 'Times New Roman', Times, serif; fill: #0f172a; }
+                            .small-text { font-size: 14px; fill: #64748b; }
+                        </style>
+                        <g transform="translate(400, 50)">
+                            <rect x="-80" y="-45" width="160" height="90" rx="8" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+                            <text x="0" y="-15" text-anchor="middle" class="math">n!</text>
+                            <line x1="-60" y1="0" x2="60" y2="0" stroke="#0f172a" stroke-width="2" />
+                            <text x="0" y="30" text-anchor="middle" class="math">k!(n-k)!</text>
+                        </g>
+                        <text x="400" y="115" text-anchor="middle" class="small-text">The Final Combinations Formula</text>
+                    </svg>
                 </div>
 
                 <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
