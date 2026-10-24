@@ -947,23 +947,6 @@
                     $$ \frac{n!}{k!(n-k)!} $$
                 </div>
 
-                <!-- VISUALIZATION: STEP 4 -->
-                <div style="margin: 1.5rem 0 2.5rem 0; text-align: center; background:#ffffff; border-radius: 8px; border: 1px solid #cbd5e1; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 120" width="100%" style="font-family:system-ui, -apple-system, sans-serif;">
-                        <style>
-                            .math { font-size: 26px; font-family: 'Times New Roman', Times, serif; fill: #0f172a; }
-                            .small-text { font-size: 14px; fill: #64748b; }
-                        </style>
-                        <g transform="translate(400, 50)">
-                            <rect x="-80" y="-45" width="160" height="90" rx="8" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
-                            <text x="0" y="-15" text-anchor="middle" class="math">n!</text>
-                            <line x1="-60" y1="0" x2="60" y2="0" stroke="#0f172a" stroke-width="2" />
-                            <text x="0" y="30" text-anchor="middle" class="math">k!(n-k)!</text>
-                        </g>
-                        <text x="400" y="115" text-anchor="middle" class="small-text">The Final Combinations Formula</text>
-                    </svg>
-                </div>
-
                 <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
                     So when expanding $(1+x)^n$, the $\binom{n}{k}x^k$ term is just applying this exact logic: <em>"Find all the ways to pick an $x$ from $k$ parentheses, use factorials to chop off the unpicked tail, and divide out the duplicate scrambles."</em>
                 </p>
