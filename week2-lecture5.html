@@ -625,13 +625,14 @@
 
                 <!-- VISUALIZATION: STEP 1 -->
                 <div style="margin: 1.5rem 0 2.5rem 0; text-align: center; background:#ffffff; border-radius: 8px; border: 1px solid #cbd5e1; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 180" width="100%" style="font-family:system-ui, -apple-system, sans-serif;">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 185" width="100%" style="font-family:system-ui, -apple-system, sans-serif;">
                         <style>
                             .box-text { font-size: 20px; font-weight: bold; fill: #0f172a; }
                             .small-text { font-size: 14px; fill: #64748b; }
                             .math { font-size: 22px; font-family: 'Times New Roman', Times, serif; fill: #0f172a; }
                         </style>
-                        <g transform="translate(160, 0)">
+                        <!-- Pushed down 2px to prevent clipping the top stroke -->
+                        <g transform="translate(160, 2)">
                             <rect x="0" y="0" width="60" height="60" rx="8" fill="#e0f2fe" stroke="#38bdf8" stroke-width="2"/>
                             <text x="30" y="36" text-anchor="middle" class="box-text">A</text>
                             <rect x="80" y="0" width="60" height="60" rx="8" fill="#e0f2fe" stroke="#38bdf8" stroke-width="2"/>
@@ -643,7 +644,8 @@
                             <rect x="320" y="0" width="60" height="60" rx="8" fill="#e0f2fe" stroke="#38bdf8" stroke-width="2"/>
                             <text x="350" y="36" text-anchor="middle" class="box-text">E</text>
                         </g>
-                        <g transform="translate(140, 100)">
+                        <!-- Pushed down 2px to keep relative spacing -->
+                        <g transform="translate(140, 102)">
                             <rect x="0" y="0" width="80" height="80" rx="8" fill="none" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4"/>
                             <text x="40" y="-10" text-anchor="middle" class="small-text">1st Pick</text>
                             <text x="40" y="45" text-anchor="middle" class="box-text" fill="#0369a1">5</text>
@@ -676,6 +678,77 @@
                 <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
                     <strong>Translating to algebra:</strong> If you have $n$ total items (5) and you are picking $k$ of them (3), the unpicked "tail" you are chopping off is $(n-k)$ items long. So, to get your starting multiplication chain, the formula is: <strong>$\frac{n!}{(n-k)!}$</strong>.
                 </p>
+
+                <!-- VISUALIZATION: STEP 2 -->
+                <div style="margin: 1.5rem 0 2.5rem 0; text-align: center; background:#ffffff; border-radius: 8px; border: 1px solid #cbd5e1; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 220" width="100%" style="font-family:system-ui, -apple-system, sans-serif;">
+                        <style>
+                            .math { font-size: 24px; font-family: 'Times New Roman', Times, serif; }
+                            .label-text { font-size: 15px; font-weight: 600; }
+                            .strike { stroke: #ef4444; stroke-width: 3; stroke-linecap: round; opacity: 0.8; }
+                            .bracket { fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+                        </style>
+
+                        <!-- Left Side: Concrete Math -->
+                        <g transform="translate(10, 0)">
+                            <!-- Fraction 1: 5! / 2! -->
+                            <text x="90" y="95" text-anchor="middle" class="math" fill="#0f172a">5!</text>
+                            <line x1="70" y1="110" x2="110" y2="110" stroke="#0f172a" stroke-width="2" />
+                            <text x="90" y="145" text-anchor="middle" class="math" fill="#0f172a">2!</text>
+
+                            <!-- n = 5 Bracket -->
+                            <polyline points="75,65 75,55 105,55 105,65" class="bracket" stroke="#475569" />
+                            <text x="90" y="45" text-anchor="middle" class="label-text" fill="#475569">n = 5 total</text>
+
+                            <!-- Equals Sign -->
+                            <text x="135" y="120" text-anchor="middle" class="math" fill="#0f172a">=</text>
+
+                            <!-- Fraction 2: Expanded -->
+                            <line x1="160" y1="110" x2="380" y2="110" stroke="#0f172a" stroke-width="2" />
+
+                            <!-- Numerator -->
+                            <text x="225" y="95" text-anchor="middle" class="math" fill="#0284c7" font-weight="bold">5 &times; 4 &times; 3</text>
+                            <text x="290" y="95" text-anchor="middle" class="math" fill="#0f172a">&times;</text>
+                            <text x="345" y="95" text-anchor="middle" class="math" fill="#94a3b8">2 &times; 1</text>
+
+                            <!-- Denominator -->
+                            <text x="345" y="145" text-anchor="middle" class="math" fill="#94a3b8">2 &times; 1</text>
+
+                            <!-- Brackets for Expanded Form -->
+                            <!-- k picks -->
+                            <polyline points="170,65 170,55 280,55 280,65" class="bracket" stroke="#0284c7" />
+                            <text x="225" y="45" text-anchor="middle" class="label-text" fill="#0284c7">k = 3 picks</text>
+
+                            <!-- n-k unused top -->
+                            <polyline points="315,65 315,55 375,55 375,65" class="bracket" stroke="#dc2626" />
+                            <text x="345" y="45" text-anchor="middle" class="label-text" fill="#dc2626">n - k = 2 unused</text>
+
+                            <!-- n-k unused bottom -->
+                            <polyline points="315,160 315,170 375,170 375,160" class="bracket" stroke="#dc2626" />
+                            <text x="345" y="190" text-anchor="middle" class="label-text" fill="#dc2626">Chops off the tail</text>
+
+                            <!-- Strikethroughs -->
+                            <line x1="310" y1="83" x2="380" y2="99" class="strike" />
+                            <line x1="310" y1="133" x2="380" y2="149" class="strike" />
+                        </g>
+
+                        <!-- Vertical Divider -->
+                        <line x1="430" y1="30" x2="430" y2="190" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="6,6" />
+
+                        <!-- Right Side: General Form -->
+                        <g transform="translate(460, 0)">
+                            <text x="170" y="45" text-anchor="middle" font-size="16" font-weight="bold" fill="#0f172a">General Algebraic Form</text>
+
+                            <text x="60" y="95" text-anchor="middle" class="math" fill="#0f172a">n!</text>
+                            <line x1="20" y1="110" x2="100" y2="110" stroke="#0f172a" stroke-width="2" />
+                            <text x="60" y="145" text-anchor="middle" class="math" fill="#dc2626">(n-k)!</text>
+
+                            <text x="120" y="117" text-anchor="start" font-size="18" fill="#334155">
+                                = Ways to make <tspan fill="#0284c7" font-weight="bold">k</tspan> picks
+                            </text>
+                        </g>
+                    </svg>
+                </div>
 
                 <p style="color: #0f172a; font-weight: 600; font-size: 1.05rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">Step 3: The Second Factorial Trick (Fixing the over-counting)</p>
                 <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
