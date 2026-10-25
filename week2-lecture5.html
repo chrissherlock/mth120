@@ -888,56 +888,95 @@
                     </svg>
                 </div>
 
-                <p style="color: #0f172a; font-weight: 600; font-size: 1.05rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">Step 3: The Second Factorial Trick (Fixing the over-counting)</p>
+                <h3 style="margin-top: 0; color: #0f172a; font-size: 1.15rem;">Step 3: The Second Factorial Trick (Fixing the Over-Counting)</h3>
                 <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                    There is a major flaw in our 60 ways. We counted picking "A then B then C" as a completely different outcome than picking "C then B then A". But if you are just grabbing a handful of letters, the order doesn't matter. It's the exact same group.
+                    There is a major flaw in our 60-way count from Step 1. Our tree diagram treated order as sacred: it counted picking <strong>"A then B then C"</strong> as a completely different path than picking <strong>"C then B then A"</strong>.
                 </p>
                 <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                    How many different ways can you shuffle 3 items? The first spot has 3 options, the second has 2, the third has 1. That is $3 \times 2 \times 1$, or exactly <strong>$3!$</strong>.
-                </p>
-                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                    Because every group of 3 letters has been duplicated $3!$ times in our list of 60, we must divide our total by $3!$ to find the true number of unique groups.
-                </p>
-                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                    <strong>Translating to algebra:</strong> The number of items in our handful is $k$. So we have over-counted by exactly $k!$, and we must divide our previous fraction by $k!$.
+                    But if you are just grabbing a handful of letters to throw into a bag, the order doesn't matter. Once they are sitting inside the bag, <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">{A, B, C}</span> is the exact same group as <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">{C, B, A}</span>. Our list accidentally committed massive double-counting.
                 </p>
 
-                <!-- VISUALIZATION: STEP 3 -->
-                <div style="margin: 1.5rem 0 2.5rem 0; text-align: center; background:#ffffff; border-radius: 8px; border: 1px solid #cbd5e1; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 140" width="100%" style="font-family:system-ui, -apple-system, sans-serif;">
+                <h4 style="color: #0f172a; margin-top: 1.5rem; font-size: 1.05rem;">How many times did we over-count? ($3!$)</h4>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    Let's isolate just one single group of three letters: <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">A, B, and C</span>. How many different ways can you shuffle or arrange that exact same group into a line?
+                </p>
+                <ul style="color: #334155; line-height: 1.75; font-size: 1rem; margin-bottom: 1rem;">
+                    <li>3 options for the first position.</li>
+                    <li>2 options for the second position.</li>
+                    <li>1 option for the third position.</li>
+                </ul>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    Multiplying those together gives $3 \times 2 \times 1 = \mathbf{3!}$ (or 6) different ways to write those same letters (<span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">ABC</span>, <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">ACB</span>, <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">BAC</span>, <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">BCA</span>, <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">CAB</span>, <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">CBA</span>). Every single unique handful in our list has been bloated by a factor of exactly 6.
+                </p>
+
+                <h3 style="margin-top: 0; color: #0f172a; font-size: 1.15rem;">Step 3: The Second Factorial Trick (Fixing the Over-Counting)</h3>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    There is a major flaw in our 60-way count from Step 1. Our tree diagram treated order as sacred: it counted picking <strong>"A then B then C"</strong> as a completely different path than picking <strong>"C then B then A"</strong>.
+                </p>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    But if you are just grabbing a handful of letters to throw into a bag, the order doesn't matter. Once they are sitting inside the bag, <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">{A, B, C}</span> is the exact same group as <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">{C, B, A}</span>. Our list accidentally committed massive double-counting.
+                </p>
+
+                <h4 style="color: #0f172a; margin-top: 1.5rem; font-size: 1.05rem;">How many times did we over-count? ($3!$)</h4>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    Let's isolate just one single group of three letters: <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">A, B, and C</span>. How many different ways can you shuffle or arrange that exact same group into a line?
+                </p>
+                <ul style="color: #334155; line-height: 1.75; font-size: 1rem; margin-bottom: 1rem;">
+                    <li>3 options for the first position.</li>
+                    <li>2 options for the second position.</li>
+                    <li>1 option for the third position.</li>
+                </ul>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    Multiplying those together gives $3 \times 2 \times 1 = \mathbf{3!}$ (or 6) different ways to write those same letters (<span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">ABC</span>, <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">ACB</span>, <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">BAC</span>, <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">BCA</span>, <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">CAB</span>, <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">CBA</span>). Every single unique handful in our list has been bloated by a factor of exactly 6.
+                </p>
+
+                <!-- VISUALIZATION: STEP 3 (Perfectly Centered & Tight) -->
+                <div style="margin: 1.5rem 0; text-align: center; background:#f8fafc; border-radius: 8px; border: 1px solid #cbd5e1; padding: 1.5rem; overflow-x: auto;">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 140" width="100%" style="font-family:system-ui, -apple-system, sans-serif; min-width: 440px; display: block; margin: 0 auto;">
                         <defs>
                             <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
                                 <path d="M 0 0 L 10 5 L 0 10 z" fill="#0284c7" />
                             </marker>
                         </defs>
                         <style>
-                            .box-text { font-size: 16px; font-weight: bold; fill: #0f172a; }
-                            .small-text { font-size: 14px; fill: #64748b; }
+                            .box-text { font-size: 16px; font-weight: bold; fill: #0f172a; font-family: monospace; }
+                            .small-text { font-size: 13px; fill: #64748b; }
                         </style>
-                        <g transform="translate(180, 10)">
-                            <rect x="0" y="0" width="60" height="30" rx="4" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
-                            <text x="30" y="20" text-anchor="middle" class="box-text">ABC</text>
-                            <rect x="70" y="0" width="60" height="30" rx="4" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
-                            <text x="100" y="20" text-anchor="middle" class="box-text">ACB</text>
-                            <rect x="0" y="40" width="60" height="30" rx="4" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
-                            <text x="30" y="60" text-anchor="middle" class="box-text">BAC</text>
-                            <rect x="70" y="40" width="60" height="30" rx="4" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
-                            <text x="100" y="60" text-anchor="middle" class="box-text">BCA</text>
-                            <rect x="0" y="80" width="60" height="30" rx="4" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
-                            <text x="30" y="100" text-anchor="middle" class="box-text">CAB</text>
-                            <rect x="70" y="80" width="60" height="30" rx="4" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
-                            <text x="100" y="100" text-anchor="middle" class="box-text">CBA</text>
 
-                            <path d="M 150 55 L 210 55" stroke="#0284c7" stroke-width="2" marker-end="url(#arrow-blue)" />
-                            <text x="180" y="45" text-anchor="middle" class="small-text" fill="#0369a1" font-weight="bold">Divide by 3!</text>
+                        <!-- Group of 6 arrangement boxes on the left -->
+                        <g transform="translate(20, 10)">
+                            <rect x="0" y="0" width="60" height="30" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+                            <text x="30" y="20" text-anchor="middle" class="box-text">ABC</text>
+                            <rect x="70" y="0" width="60" height="30" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+                            <text x="100" y="20" text-anchor="middle" class="box-text">ACB</text>
+                            <rect x="0" y="40" width="60" height="30" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+                            <text x="30" y="60" text-anchor="middle" class="box-text">BAC</text>
+                            <rect x="70" y="40" width="60" height="30" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+                            <text x="100" y="60" text-anchor="middle" class="box-text">BCA</text>
+                            <rect x="0" y="80" width="60" height="30" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+                            <text x="30" y="100" text-anchor="middle" class="box-text">CAB</text>
+                            <rect x="70" y="80" width="60" height="30" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+                            <text x="100" y="100" text-anchor="middle" class="box-text">CBA</text>
                         </g>
-                        <g transform="translate(420, 45)">
-                            <rect x="0" y="0" width="120" height="40" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
-                            <text x="60" y="26" text-anchor="middle" class="box-text" font-size="20">{ A, B, C }</text>
-                            <text x="60" y="65" text-anchor="middle" class="small-text">1 Unique Group</text>
+
+                        <!-- Arrow and text in the middle -->
+                        <g transform="translate(170, 0)">
+                            <text x="65" y="40" text-anchor="middle" class="small-text" fill="#0369a1" font-weight="bold">Divide by 3! (6 ways)</text>
+                            <path d="M 15 55 L 115 55" stroke="#0284c7" stroke-width="2.5" marker-end="url(#arrow-blue)" />
+                        </g>
+
+                        <!-- Final unique handful box on the right -->
+                        <g transform="translate(335, 45)">
+                            <rect x="0" y="0" width="140" height="40" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+                            <text x="70" y="26" text-anchor="middle" class="box-text" font-size="18" fill="#15803d">{ A, B, C }</text>
+                            <text x="70" y="62" text-anchor="middle" class="small-text">1 Unique Handful</text>
                         </g>
                     </svg>
                 </div>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-top: 1.5rem;">
+                    <strong>The Algebraic Rule:</strong> Because every handful of size $k$ can be internally rearranged in $k!$ different ways, our initial ordered count bloated every group by a factor of $k!$. To find the true number of unique groups, we must divide our previous formula by $k!$.
+                </p>
 
                 <p style="color: #0f172a; font-weight: 600; font-size: 1.05rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">Step 4: Putting it all together</p>
                 <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
