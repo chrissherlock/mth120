@@ -1050,34 +1050,104 @@
 
                 <h4 style="display: flex; align-items: center; gap: 0.75rem; margin-top: 2.5rem; font-size: 1.1rem; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.75rem;">
                     <span style="background: #0284c7; color: #ffffff; padding: 0.25rem 0.6rem; border-radius: 6px; font-size: 0.85rem; font-weight: 700; white-space: nowrap; flex-shrink: 0;">Step 4b</span>
-                    <span>The "Vending Machine" Rule of Multiplying Brackets</span>
+                    <span>The Distribution Rule: Selecting $1$ or $x$ from Each Bracket</span>
                 </h4>
                 <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                    Let's figure out what goes in the $x^3$ box (which is the step where $k=3$). An exponent of $5$ means multiplying $5$ identical brackets together. Let's label them A through E so we don't lose track:
+                    When we multiply $n$ identical binomial factors together—like $(1+x)(1+x)\dots(1+x)$—algebraic distribution requires us to generate every possible product by choosing <strong>either $1$ or $x$ from every single bracket</strong> and multiplying those choices together.
                 </p>
-                <div style="text-align: center; margin: 1.25rem 0; font-size: 1.1rem;">
-                    $$\underbrace{(1+x)}_{\text{Machine A}} \cdot \underbrace{(1+x)}_{\text{Machine B}} \cdot \underbrace{(1+x)}_{\text{Machine C}} \cdot \underbrace{(1+x)}_{\text{Machine D}} \cdot \underbrace{(1+x)}_{\text{Machine E}}$$
-                </div>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    To see how this works in practice, let's look at a small example: expanding <strong>$(1+x)^3$</strong> (three brackets multiplied together).
+                </p>
 
-                <div style="background: #f8fafc; border-left: 4px solid #0284c7; padding: 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0;">
-                    <p style="margin: 0 0 0.85rem 0; color: #334155; line-height: 1.7;">
-                        Think of these brackets as <strong>5 vending machines</strong> in a row. Inside every machine, there are only two buttons: <strong>Button $1$</strong> or <strong>Button $x$</strong>. To multiply this out, you must walk down the line, press exactly one button on every single machine, and multiply your 5 choices together.
-                    </p>
-                    <p style="margin: 0 0 0.85rem 0; color: #334155; line-height: 1.7;">
-                        How do you get an $x^3$? You have to press the <strong>$x$ button</strong> on <strong>exactly 3 machines</strong>, which forces you to press the <strong>$1$ button</strong> on the <strong>remaining 2 machines</strong>.
-                    </p>
-                    <div style="text-align: center; margin: 1rem 0; font-size: 1.05rem;">
-                        $$\underbrace{x}_{\text{A}} \cdot \underbrace{x}_{\text{B}} \cdot \underbrace{x}_{\text{C}} \cdot \underbrace{1}_{\text{D}} \cdot \underbrace{1}_{\text{E}} = x \cdot x \cdot x \cdot 1 \cdot 1 = \mathbf{x^3}$$
-                    </div>
-                    <p style="margin: 0; color: #334155; line-height: 1.7;">
-                        Notice that the $1$'s do absolutely nothing when multiplied! The only thing that matters is <strong>which handful of 3 machines gave you an $x$</strong>. Every time you pick a different group of 3 machines to donate an $x$, another $+ x^3$ pops out of the expansion:
-                    </p>
-                    <ul style="color: #334155; line-height: 1.7; font-size: 0.95rem; margin: 0.5rem 0 0 1.25rem; padding-left: 0.5rem;">
-                        <li>Pick $x$ from machines <span style="font-family: monospace; background: #e2e8f0; padding: 0.1rem 0.35rem; border-radius: 4px;">{A, B, C}</span> (and $1$ from the rest) $\rightarrow \mathbf{x^3}$</li>
-                        <li>Pick $x$ from machines <span style="font-family: monospace; background: #e2e8f0; padding: 0.1rem 0.35rem; border-radius: 4px;">{A, D, E}</span> (and $1$ from the rest) $\rightarrow \mathbf{x^3}$</li>
-                        <li>Pick $x$ from machines <span style="font-family: monospace; background: #e2e8f0; padding: 0.1rem 0.35rem; border-radius: 4px;">{B, C, E}</span> (and $1$ from the rest) $\rightarrow \mathbf{x^3}$</li>
-                    </ul>
-                </div>
+<div style="background: #f8fafc; border-left: 4px solid #0284c7; padding: 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0;">
+    <strong style="color: #0369a1; display: block; margin-bottom: 0.5rem;">Small Example: Generating the $x^3$ term in $(x+1)^5$</strong>
+    <p style="margin: 0 0 0.85rem 0; color: #334155; line-height: 1.7;">
+        Suppose we want to understand exactly how the coefficient for $x^3$ is generated. When we expand our five identical factors:
+        $$(x+1)(x+1)(x+1)(x+1)(x+1)$$
+        algebraic distribution requires us to pick either $x$ or $1$ from every single bracket. To land on $x^3$, we must choose $x$ from <strong>exactly three brackets</strong>, which forces us to choose $1$ from the <strong>remaining two brackets</strong>.
+    </p>
+    <p style="margin: 0 0 0.5rem 0; color: #334155; line-height: 1.7;">
+        Every single valid path multiplies those choices together:
+        $$x \cdot x \cdot x \cdot 1 \cdot 1 = \mathbf{x^3}$$
+    </p>
+    <p style="margin: 0 0 0.5rem 0; color: #334155; line-height: 1.7;">
+        To find the coefficient, we must list and count every unique way those 3 brackets can be chosen out of the 5 available factors:
+    </p>
+    <ul style="color: #334155; line-height: 1.7; font-size: 0.95rem; margin: 0.5rem 0 0.85rem 1.25rem; padding-left: 0.5rem;">
+        <li>Pick $x$ from brackets {1, 2, 3} and $1$ from {4, 5} $\rightarrow x \cdot x \cdot x \cdot 1 \cdot 1 = \mathbf{x^3}$</li>
+        <li>Pick $x$ from brackets {1, 2, 4} and $1$ from {3, 5} $\rightarrow x \cdot x \cdot 1 \cdot x \cdot 1 = \mathbf{x^3}$</li>
+        <li>Pick $x$ from brackets {1, 2, 5} and $1$ from {3, 4} $\rightarrow x \cdot x \cdot 1 \cdot 1 \cdot x = \mathbf{x^3}$</li>
+        <li>Pick $x$ from brackets {1, 3, 4} and $1$ from {2, 5} $\rightarrow x \cdot 1 \cdot x \cdot x \cdot 1 = \mathbf{x^3}$</li>
+        <li>Pick $x$ from brackets {1, 3, 5} and $1$ from {2, 4} $\rightarrow x \cdot 1 \cdot x \cdot 1 \cdot x = \mathbf{x^3}$</li>
+        <li>Pick $x$ from brackets {1, 4, 5} and $1$ from {2, 3} $\rightarrow x \cdot 1 \cdot 1 \cdot x \cdot x = \mathbf{x^3}$</li>
+        <li>Pick $x$ from brackets {2, 3, 4} and $1$ from {1, 5} $\rightarrow 1 \cdot x \cdot x \cdot x \cdot 1 = \mathbf{x^3}$</li>
+        <li>Pick $x$ from brackets {2, 3, 5} and $1$ from {1, 4} $\rightarrow 1 \cdot x \cdot x \cdot 1 \cdot x = \mathbf{x^3}$</li>
+        <li>Pick $x$ from brackets {2, 4, 5} and $1$ from {1, 3} $\rightarrow 1 \cdot x \cdot 1 \cdot x \cdot x = \mathbf{x^3}$</li>
+        <li>Pick $x$ from brackets {3, 4, 5} and $1$ from {1, 2} $\rightarrow 1 \cdot 1 \cdot x \cdot x \cdot x = \mathbf{x^3}$</li>
+    </ul>
+    <p style="margin: 0; color: #334155; line-height: 1.7;">
+      Because there are exactly <strong>10 distinct pathways</strong> that generate $x^3$, collecting and adding them all together gives us the final term: <em>$10x^3$</em>.
+    </p>
+</div>
+
+<div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+    <div style="text-align: center; margin-bottom: 1rem;">
+        <span style="font-weight: 700; color: #0f172a; font-size: 1.1rem;">Unified Mathematical Derivation: Expanding $(x+1)^5$</span>
+        <p style="color: #64748b; font-size: 0.9rem; margin-top: 0.25rem;">Continuous equation expansion with the $x^3$ coefficients highlighted in orange.</p>
+    </div>
+
+    <!-- SVG Unified Equation Block -->
+    <div style="display: flex; justify-content: center; overflow-x: auto; padding: 0.5rem 0;">
+        <svg width="640" height="360" viewBox="0 0 640 360" style="font-family: system-ui, sans-serif; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0;">
+            <style>
+                @keyframes revealLine {
+                    0% { opacity: 0; transform: translateY(-6px); }
+                    100% { opacity: 1; transform: translateY(0); }
+                }
+                .eq-line-1 { animation: revealLine 0.5s ease-out 0.2s forwards; opacity: 0; }
+                .eq-line-2 { animation: revealLine 0.5s ease-out 1.8s forwards; opacity: 0; }
+                .eq-line-3 { animation: revealLine 0.5s ease-out 3.4s forwards; opacity: 0; }
+                .eq-line-4 { animation: revealLine 0.5s ease-out 5.0s forwards; opacity: 0; }
+                .eq-line-5 { animation: revealLine 0.5s ease-out 6.6s forwards; opacity: 0; }
+            </style>
+
+            <!-- Unified derivation container background -->
+            <rect x="20" y="20" width="600" height="320" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+
+            <!-- Line 1 -->
+            <text x="40" y="55" font-size="15" font-weight="700" fill="#0369a1" class="eq-line-1">(x + 1)⁵</text>
+
+            <!-- Line 2 -->
+            <text x="40" y="105" font-size="15" font-weight="600" fill="#334155" class="eq-line-2">= (x + 1)(x + 1)(x + 1)(x + 1)(x + 1)</text>
+
+            <!-- Line 3 -->
+            <text x="40" y="155" font-size="15" font-weight="600" fill="#334155" class="eq-line-3">= (x² + 2x + 1)(x + 1)(x + 1)(x + 1)</text>
+
+            <!-- Line 4 (Highlighting 3x³) -->
+            <text x="40" y="210" font-size="15" font-weight="600" fill="#334155" class="eq-line-4">
+                = (x³ + <tspan font-weight="700" fill="#d97706">3</tspan>x² + 3x + 1)(x + 1)(x + 1)
+            </text>
+
+            <!-- Line 5 (Highlighting 4x³) -->
+            <text x="40" y="265" font-size="15" font-weight="600" fill="#334155" class="eq-line-5">
+                = (x⁴ + <tspan font-weight="700" fill="#d97706">4</tspan>x³ + 6x² + 4x + 1)(x + 1)
+            </text>
+
+            <!-- Line 6: Final Result (Highlighting 10x³) -->
+            <text x="40" y="315" font-size="16" font-weight="700" fill="#15803d" class="eq-line-5">
+                = x⁵ + 5x⁴ + <tspan font-weight="700" fill="#d97706">10</tspan>x³ + 10x² + 5x + 1
+            </text>
+        </svg>
+    </div>
+
+    <!-- Replay Button -->
+    <div style="text-align: center; margin-top: 1rem;">
+        <button onclick="let svg=this.parentNode.previousElementSibling.firstElementChild; svg.style.display='none'; setTimeout(() => svg.style.display='block', 50);" style="padding: 0.4rem 1rem; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; font-weight: 600; color: #334155; cursor: pointer; font-size: 0.85rem;">Replay Animation ↺</button>
+    </div>
+</div>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    Generalizing this to $n$ brackets: to get a power of $x^k$, we must choose $x$ from exactly $k$ brackets out of the $n$ total factors, and $1$ from the remaining $(n-k)$ brackets. Every such path evaluates to $x^k$, and the total number of times it appears is how many ways we can make that selection.
+                </p>
 
                 <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
                     So, how many total $x^3$'s pop out to fill in our box? We just have to ask: <em>"How many different ways can we pick 3 machines out of 5?"</em>
