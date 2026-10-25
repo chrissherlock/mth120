@@ -986,9 +986,162 @@
                     $$ \frac{n!}{k!(n-k)!} $$
                 </div>
 
+                <h4 style="color: #0f172a; margin-top: 2rem; font-size: 1.1rem;">Step Zero: What is the actual goal of expanding?</h4>
                 <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                    So when expanding $(1+x)^n$, the $\binom{n}{k}x^k$ term is just applying this exact logic: <em>"Find all the ways to pick an $x$ from $k$ parentheses, use factorials to chop off the unpicked tail, and divide out the duplicate scrambles."</em>
+                    Before we connect our combinations formula to algebra, we have to look at the big picture. When you "expand" a binomial like $(1+x)^5$, your goal is to turn a compacted equation into a long, stretched-out polynomial. If you multiplied all five brackets together by hand and grouped the matching pieces, your final answer would form a staircase of powers from $x^0$ up to $x^5$:
                 </p>
+                <div style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
+                    $$(1+x)^5 = [?] + [?]x + [?]x^2 + [?]x^3 + [?]x^4 + [?]x^5$$
+                </div>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    The grand goal of the Binomial Theorem is to figure out exactly what numbers (coefficients) go into those blank <strong>$[?]$</strong> boxes without having to do hours of tedious multiplication. To do this, mathematicians don't look at the whole equation at once. They shine a spotlight on <strong>one single box at a time</strong>.
+                </p>
+
+                <h4 style="color: #0f172a; margin-top: 2rem; font-size: 1.1rem;">The "Vending Machine" Rule of Multiplying Brackets</h4>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    Let's figure out what goes in the $x^3$ box (which is the step where $k=3$). An exponent of $5$ means multiplying $5$ identical brackets together. Let's label them A through E so we don't lose track:
+                </p>
+                <div style="text-align: center; margin: 1.25rem 0; font-size: 1.1rem;">
+                    $$\underbrace{(1+x)}_{\text{Machine A}} \cdot \underbrace{(1+x)}_{\text{Machine B}} \cdot \underbrace{(1+x)}_{\text{Machine C}} \cdot \underbrace{(1+x)}_{\text{Machine D}} \cdot \underbrace{(1+x)}_{\text{Machine E}}$$
+                </div>
+
+                <div style="background: #f8fafc; border-left: 4px solid #0284c7; padding: 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0;">
+                    <p style="margin: 0 0 0.85rem 0; color: #334155; line-height: 1.7;">
+                        Think of these brackets as <strong>5 vending machines</strong> in a row. Inside every machine, there are only two buttons: <strong>Button $1$</strong> or <strong>Button $x$</strong>. To multiply this out, you must walk down the line, press exactly one button on every single machine, and multiply your 5 choices together.
+                    </p>
+                    <p style="margin: 0 0 0.85rem 0; color: #334155; line-height: 1.7;">
+                        How do you get an $x^3$? You have to press the <strong>$x$ button</strong> on <strong>exactly 3 machines</strong>, which forces you to press the <strong>$1$ button</strong> on the <strong>remaining 2 machines</strong>.
+                    </p>
+                    <div style="text-align: center; margin: 1rem 0; font-size: 1.05rem;">
+                        $$\underbrace{x}_{\text{A}} \cdot \underbrace{x}_{\text{B}} \cdot \underbrace{x}_{\text{C}} \cdot \underbrace{1}_{\text{D}} \cdot \underbrace{1}_{\text{E}} = x \cdot x \cdot x \cdot 1 \cdot 1 = \mathbf{x^3}$$
+                    </div>
+                    <p style="margin: 0; color: #334155; line-height: 1.7;">
+                        Notice that the $1$'s do absolutely nothing when multiplied! The only thing that matters is <strong>which handful of 3 machines gave you an $x$</strong>. Every time you pick a different group of 3 machines to donate an $x$, another $+ x^3$ pops out of the expansion:
+                    </p>
+                    <ul style="color: #334155; line-height: 1.7; font-size: 0.95rem; margin: 0.5rem 0 0 1.25rem; padding-left: 0.5rem;">
+                        <li>Pick $x$ from machines <span style="font-family: monospace; background: #e2e8f0; padding: 0.1rem 0.35rem; border-radius: 4px;">{A, B, C}</span> (and $1$ from the rest) $\rightarrow \mathbf{x^3}$</li>
+                        <li>Pick $x$ from machines <span style="font-family: monospace; background: #e2e8f0; padding: 0.1rem 0.35rem; border-radius: 4px;">{A, D, E}</span> (and $1$ from the rest) $\rightarrow \mathbf{x^3}$</li>
+                        <li>Pick $x$ from machines <span style="font-family: monospace; background: #e2e8f0; padding: 0.1rem 0.35rem; border-radius: 4px;">{B, C, E}</span> (and $1$ from the rest) $\rightarrow \mathbf{x^3}$</li>
+                    </ul>
+                </div>
+
+                <!-- STEP 4: PUTTING IT ALL TOGETHER -->
+                <p style="color: #0f172a; font-weight: 600; font-size: 1.05rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">Step 4: Putting it all together</p>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    We started with $\frac{n!}{(n-k)!}$ to make our initial picks, and then we divided that entire thing by $k!$ to erase the duplicates. Stick them together in the denominator, and you get the final combinations formula:
+                </p>
+                <div style="text-align: center; font-size: 1.1rem; margin: 1rem 0;">
+                    $$ \binom{n}{k} = \frac{n!}{k!(n-k)!} $$
+                </div>
+
+                <h4 style="display: flex; align-items: center; gap: 0.75rem; margin-top: 2.5rem; font-size: 1.1rem; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.75rem;">
+                    <span style="background: #0284c7; color: #ffffff; padding: 0.25rem 0.6rem; border-radius: 6px; font-size: 0.85rem; font-weight: 700; white-space: nowrap; flex-shrink: 0;">Step 4a</span>
+                    <span>The Big Picture: What is the actual goal of expanding?</span>
+                </h4>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    When you "expand" a binomial like $(1+x)^5$, your goal is to turn a compacted equation into a long, stretched-out polynomial. If you multiplied all five brackets together by hand and grouped the matching pieces, your final answer would form a staircase of powers from $x^0$ up to $x^5$:
+                </p>
+                <div style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
+                    $$(1+x)^5 = [?] + [?]x + [?]x^2 + [?]x^3 + [?]x^4 + [?]x^5$$
+                </div>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    The grand goal of the Binomial Theorem is to figure out exactly what numbers (coefficients) go into those blank <strong>$[?]$</strong> boxes without having to do hours of tedious multiplication. To do this, mathematicians don't look at the whole equation at once. They shine a spotlight on <strong>one single box at a time</strong>.
+                </p>
+
+                <h4 style="display: flex; align-items: center; gap: 0.75rem; margin-top: 2.5rem; font-size: 1.1rem; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.75rem;">
+                    <span style="background: #0284c7; color: #ffffff; padding: 0.25rem 0.6rem; border-radius: 6px; font-size: 0.85rem; font-weight: 700; white-space: nowrap; flex-shrink: 0;">Step 4b</span>
+                    <span>The "Vending Machine" Rule of Multiplying Brackets</span>
+                </h4>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    Let's figure out what goes in the $x^3$ box (which is the step where $k=3$). An exponent of $5$ means multiplying $5$ identical brackets together. Let's label them A through E so we don't lose track:
+                </p>
+                <div style="text-align: center; margin: 1.25rem 0; font-size: 1.1rem;">
+                    $$\underbrace{(1+x)}_{\text{Machine A}} \cdot \underbrace{(1+x)}_{\text{Machine B}} \cdot \underbrace{(1+x)}_{\text{Machine C}} \cdot \underbrace{(1+x)}_{\text{Machine D}} \cdot \underbrace{(1+x)}_{\text{Machine E}}$$
+                </div>
+
+                <div style="background: #f8fafc; border-left: 4px solid #0284c7; padding: 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0;">
+                    <p style="margin: 0 0 0.85rem 0; color: #334155; line-height: 1.7;">
+                        Think of these brackets as <strong>5 vending machines</strong> in a row. Inside every machine, there are only two buttons: <strong>Button $1$</strong> or <strong>Button $x$</strong>. To multiply this out, you must walk down the line, press exactly one button on every single machine, and multiply your 5 choices together.
+                    </p>
+                    <p style="margin: 0 0 0.85rem 0; color: #334155; line-height: 1.7;">
+                        How do you get an $x^3$? You have to press the <strong>$x$ button</strong> on <strong>exactly 3 machines</strong>, which forces you to press the <strong>$1$ button</strong> on the <strong>remaining 2 machines</strong>.
+                    </p>
+                    <div style="text-align: center; margin: 1rem 0; font-size: 1.05rem;">
+                        $$\underbrace{x}_{\text{A}} \cdot \underbrace{x}_{\text{B}} \cdot \underbrace{x}_{\text{C}} \cdot \underbrace{1}_{\text{D}} \cdot \underbrace{1}_{\text{E}} = x \cdot x \cdot x \cdot 1 \cdot 1 = \mathbf{x^3}$$
+                    </div>
+                    <p style="margin: 0; color: #334155; line-height: 1.7;">
+                        Notice that the $1$'s do absolutely nothing when multiplied! The only thing that matters is <strong>which handful of 3 machines gave you an $x$</strong>. Every time you pick a different group of 3 machines to donate an $x$, another $+ x^3$ pops out of the expansion:
+                    </p>
+                    <ul style="color: #334155; line-height: 1.7; font-size: 0.95rem; margin: 0.5rem 0 0 1.25rem; padding-left: 0.5rem;">
+                        <li>Pick $x$ from machines <span style="font-family: monospace; background: #e2e8f0; padding: 0.1rem 0.35rem; border-radius: 4px;">{A, B, C}</span> (and $1$ from the rest) $\rightarrow \mathbf{x^3}$</li>
+                        <li>Pick $x$ from machines <span style="font-family: monospace; background: #e2e8f0; padding: 0.1rem 0.35rem; border-radius: 4px;">{A, D, E}</span> (and $1$ from the rest) $\rightarrow \mathbf{x^3}$</li>
+                        <li>Pick $x$ from machines <span style="font-family: monospace; background: #e2e8f0; padding: 0.1rem 0.35rem; border-radius: 4px;">{B, C, E}</span> (and $1$ from the rest) $\rightarrow \mathbf{x^3}$</li>
+                    </ul>
+                </div>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    So, how many total $x^3$'s pop out to fill in our box? We just have to ask: <em>"How many different ways can we pick 3 machines out of 5?"</em>
+                </p>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    <strong>This is the exact letter game we just solved!</strong> We use the combinations formula we built in Steps 1 through 3 to find the answer: $\binom{5}{3} = \frac{5!}{3!2!} = 10$ ways. Because there are $10$ unique groups of 3 machines, $x^3$ gets added to itself $10$ times. The number in our $[?]$ box is $10$.
+                </p>
+
+                <h4 style="display: flex; align-items: center; gap: 0.75rem; margin-top: 2.5rem; font-size: 1.1rem; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.75rem;">
+                    <span style="background: #0284c7; color: #ffffff; padding: 0.25rem 0.6rem; border-radius: 6px; font-size: 0.85rem; font-weight: 700; white-space: nowrap; flex-shrink: 0;">Step 4c</span>
+                    <span>Putting It Into the Master Formula</span>
+                </h4>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    When we generalize this logic from $5$ total machines to <strong>$n$ total machines</strong>, and from a specific step like $3$ to <strong>any step $k$</strong> on the staircase, we get the complete blueprint for every single term in the expansion:
+                </p>
+                <div style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
+                    $$\underbrace{\binom{n}{k}}_{\substack{\text{How many ways to pick} \\ k \text{ machines out of } n}} \cdot \underbrace{x^k}_{\substack{\text{What you get when those} \\ k \text{ machines give an } x}} \quad = \quad \frac{n!}{k!(n-k)!}x^k$$
+                </div>
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                    The Binomial Theorem is just this exact logic applied to every step of the staircase (from $k=0$ up to $k=n$) all added together:
+                </p>
+                <div style="text-align: center; margin: 1.25rem 0; font-size: 1.1rem;">
+                    $$(1+x)^n = \underbrace{\binom{n}{0}x^0}_{k=0} + \underbrace{\binom{n}{1}x^1}_{k=1} + \underbrace{\binom{n}{2}x^2}_{k=2} + \underbrace{\binom{n}{3}x^3}_{k=3} + \dots + \underbrace{\binom{n}{n}x^n}_{k=n}$$
+                </div>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-top: 2.5rem;">
+                    Now, let's plug in $x = \frac{1}{n}$ to match our sequence $a_n = \left(1 + \frac{1}{n}\right)^n$ and watch how the algebra naturally cleans itself up for the first few terms:
+                </p>
+
+                <div style="background: #f8fafc; border-left: 4px solid #0284c7; padding: 1.5rem; margin-top: 1rem; margin-bottom: 1.5rem; border-radius: 0 6px 6px 0;">
+                    <strong style="color: #0369a1; display: block; margin-bottom: 0.5rem;">Term $k=0$ and $k=1$:</strong>
+                    <p style="margin: 0; color: #334155; line-height: 1.7;">
+                        These are the easy ones. The zeroth term is always just $1$. The first term is $n \cdot x = n \cdot \left(\frac{1}{n}\right) = 1$. So the sequence always starts with $1 + 1$.
+                    </p>
+                </div>
+
+                <div style="background: #f8fafc; border-left: 4px solid #0284c7; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 6px 6px 0;">
+                    <strong style="color: #0369a1; display: block; margin-bottom: 0.5rem;">Term $k=2$ (The Mechanics Reveal Themselves):</strong>
+                    <p style="margin: 0 0 1rem 0; color: #334155; line-height: 1.7;">
+                        Here we apply the formula: $\frac{n!}{2!(n-2)!} \left(\frac{1}{n}\right)^2$. Watch how the factorials cancel out:
+                    </p>
+                    <div style="text-align: center; font-size: 1.1rem;">
+                        $$ \frac{n(n-1)\color{gray}{\cancel{(n-2)!}}}{2!\color{gray}{\cancel{(n-2)!}}} \cdot \frac{1}{n^2} \quad = \quad \frac{n(n-1)}{2!} \cdot \frac{1}{n^2} $$
+                    </div>
+                    <p style="margin: 1rem 0 1rem 0; color: #334155; line-height: 1.7;">
+                        Now, let's split the fraction apart and pair the $n$ terms up:
+                    </p>
+                    <div style="text-align: center; font-size: 1.1rem;">
+                        $$ = \frac{1}{2!} \left( \frac{n}{n} \cdot \frac{n-1}{n} \right) \quad = \quad \frac{1}{2!} \left( 1 \right) \left( 1 - \frac{1}{n} \right) $$
+                    </div>
+                </div>
+
+                <div style="background: #f8fafc; border-left: 4px solid #0284c7; padding: 1.5rem; border-radius: 0 6px 6px 0;">
+                    <strong style="color: #0369a1; display: block; margin-bottom: 0.5rem;">Term $k=3$ (Solidifying the Pattern):</strong>
+                    <p style="margin: 0 0 1rem 0; color: #334155; line-height: 1.7;">
+                        The exact same cancellation happens. The $(n-3)!$ gets wiped out, leaving three terms on top, paired with $n^3$ on the bottom:
+                    </p>
+                    <div style="text-align: center; font-size: 1.1rem;">
+                        $$ \frac{n(n-1)(n-2)}{3!} \cdot \frac{1}{n^3} \quad = \quad \frac{1}{3!} \left( \frac{n}{n} \right) \left( \frac{n-1}{n} \right) \left( \frac{n-2}{n} \right) $$
+                    </div>
+                    <div style="text-align: center; font-size: 1.1rem; margin-top: 1rem;">
+                        $$ = \frac{1}{3!} \left( 1 - \frac{1}{n} \right) \left( 1 - \frac{2}{n} \right) $$
+                    </div>
+                </div>
 
                 <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-top: 2rem;">
                     Let's plug in $x = \frac{1}{n}$ and watch how the algebra naturally cleans itself up for the first few terms:
