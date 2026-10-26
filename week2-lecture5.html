@@ -1538,20 +1538,46 @@
                 <p style="margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.6;">
                     <strong>What it means:</strong> Limits respect physical boundaries. If sequence $B$ is always drawn physically above sequence $A$ on a graph, then sequence $B$'s final destination cannot suddenly drop below sequence $A$'s destination. The final limits must obey the same vertical ordering as the sequences themselves.
                 </p>
-
-                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.5rem;">
-                    <strong>⚠️ The Strict Inequality Trap:</strong> There is a subtle trap hidden in this theorem that catches almost everyone. Notice that the rule uses the "less than or equal to" sign ($\le$). What if sequence $B$ is <em>strictly</em> greater than sequence $A$ for its entire infinite life ($a_n < b_n$)? Does the limit $K$ have to be strictly greater than $L$?
-                </p>
-                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
-                    <strong>No!</strong> The limits can actually crash into each other and become perfectly equal, even if the individual sequence terms never touch.
-                </p>
-                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
-                    To see why, let $a_n = 0$ (a completely flat sequence) and $b_n = \frac{1}{n}$. For every single step, $0 < \frac{1}{n}$. Sequence $B$ is strictly hovering above Sequence $A$. But look at their final destinations: $\lim_{n\to\infty} 0 = 0$ and $\lim_{n\to\infty} \frac{1}{n} = 0$.
-                </p>
-                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-bottom: 2.5rem;">
-                    The physical gap between them is crushed down to nothing. Infinity has a habit of flattening inequalities, which is why the theorem must always allow for the possibility of equality ($L \le K$). In fact, this precise "collapsing gap" behavior is the exact mechanism that makes the Squeeze Theorem work in the very next step!
-                </p>
             </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                Before we tear apart the notation, let's take a step back and look at what this theorem is actually trying to accomplish. In real analysis, our goal isn't always to calculate a hard number; often, our goal is to build an unbreakable logical fence. The Comparison Principle is the simplest, most intuitive fence in our entire toolkit. It takes a very obvious physical truth—if object A is always shorter than object B, it cannot suddenly become taller at the finish line—and locks it into the rigorous language of limits. It might look intimidating on the page, but once you see the physical reality behind the symbols, it will feel like absolute common sense.
+            </p>
+
+            <h4 style="margin: 0 0 0.75rem 0; color: #0f172a; font-size: 1.1rem;">1. Translating the Symbols</h4>
+            <p style="margin: 0 0 0.75rem 0; color: #334155; line-height: 1.7;">
+                The theorem states: <em>If $a_n \le b_n$ for all $n$, and $\lim_{n\to\infty} a_n = L$, and $\lim_{n\to\infty} b_n = K$, then $L \le K$.</em>
+            </p>
+            <p style="margin: 0; color: #334155; line-height: 1.7;">
+                Think of this as the rule of <strong>Physical Ordering</strong>. Imagine you are graphing two sequences. Sequence $B$ (the blue dots) is always plotted physically above, or exactly on top of, Sequence $A$ (the red dots). If both of these sequences eventually settle down to a final horizontal line (their limits), it is physically impossible for Sequence $B$'s final line to suddenly drop below Sequence $A$'s line. The limits must respect the same vertical ordering that the sequence terms followed.
+            </p>
+
+            <h4 style="margin: 2rem 0 0.5rem 0; color: #0f172a; font-size: 1.1rem;">2. The Infinite Flattening Effect (The Inequality Trap)</h4>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                If you look closely at the theorem, it relies entirely on the "less than or equal to" sign ($\le$). A very common and understandable question students ask is: <em>"What if Sequence B is strictly higher than Sequence A forever? What if they never, ever touch? Shouldn't the limit $K$ be strictly greater than $L$?"</em>
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                This is where human intuition clashes with the concept of infinity. Infinity has a habit of crushing strict gaps down to absolutely nothing.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                To prove this to yourself, put a flat sequence on the floor: $a_n = 0$. Now, put a moving sequence above it: $b_n = \frac{1}{n}$.
+            </p>
+            <ul style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-bottom: 1.5rem; padding-left: 1.25rem;">
+                <li>Term 1: $0 < 1$</li>
+                <li>Term 10: $0 < 0.1$</li>
+                <li>Term 1,000,000: $0 < 0.000001$</li>
+            </ul>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                No matter how far out you go, $b_n$ is <strong>strictly greater</strong> than $a_n$. They never touch. But what happens at the final destination? The limit of $0$ is $0$, and the limit of $\frac{1}{n}$ is $0$. Their limits crash into each other and become perfectly equal. This is why the Comparison Principle safely uses $L \le K$. It leaves the door open for infinity to flatten the gap.
+            </p>
+
+            <h4 style="margin: 2rem 0 0.5rem 0; color: #0f172a; font-size: 1.1rem;">3. Why is this the "Foundation"?</h4>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                You might be wondering why we even need a theorem to tell us something so seemingly obvious. We need it because it acts as the legal mathematical engine for the <strong>Squeeze Theorem</strong>.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-bottom: 0;">
+                The Comparison Principle establishes that sequences cannot bypass boundaries. Once we have locked in that immutable law, we can introduce a ceiling and a floor at the exact same time. Without the Comparison Principle proving that limits respect boundaries, the Squeeze Theorem would have no logical legs to stand on.
+            </p>
 
             <div class="definition-box" style="margin-top: 1.5rem;">
                 <h4 style="margin: 0 0 0.75rem 0; color: #b45309; font-size: 1.05rem;">Theorem 4: The Squeeze Theorem</h4>
