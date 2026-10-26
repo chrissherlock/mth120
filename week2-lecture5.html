@@ -1252,46 +1252,6 @@
                     </div>
                 </div>
 
-                <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-top: 2rem;">
-                    Let's plug in $x = \frac{1}{n}$ and watch how the algebra naturally cleans itself up for the first few terms:
-                </p>
-
-                <div style="background: #f8fafc; border-left: 4px solid #0284c7; padding: 1.5rem; margin-top: 1rem; margin-bottom: 1.5rem; border-radius: 0 6px 6px 0;">
-                    <strong style="color: #0369a1; display: block; margin-bottom: 0.5rem;">Term $k=0$ and $k=1$:</strong>
-                    <p style="margin: 0; color: #334155; line-height: 1.7;">
-                        These are the easy ones. The zeroth term is always just $1$. The first term is $n \cdot x = n \cdot \left(\frac{1}{n}\right) = 1$. So the sequence always starts with $1 + 1$.
-                    </p>
-                </div>
-
-                <div style="background: #f8fafc; border-left: 4px solid #0284c7; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 6px 6px 0;">
-                    <strong style="color: #0369a1; display: block; margin-bottom: 0.5rem;">Term $k=2$ (The Mechanics Reveal Themselves):</strong>
-                    <p style="margin: 0 0 1rem 0; color: #334155; line-height: 1.7;">
-                        Here we apply the formula: $\frac{n!}{2!(n-2)!} \left(\frac{1}{n}\right)^2$. Watch how the factorials cancel out:
-                    </p>
-                    <div style="text-align: center; font-size: 1.1rem;">
-                        $$ \frac{n(n-1)\color{gray}{\cancel{(n-2)!}}}{2!\color{gray}{\cancel{(n-2)!}}} \cdot \frac{1}{n^2} \quad = \quad \frac{n(n-1)}{2!} \cdot \frac{1}{n^2} $$
-                    </div>
-                    <p style="margin: 1rem 0 1rem 0; color: #334155; line-height: 1.7;">
-                        Now, let's split the fraction apart and pair the $n$ terms up:
-                    </p>
-                    <div style="text-align: center; font-size: 1.1rem;">
-                        $$ = \frac{1}{2!} \left( \frac{n}{n} \cdot \frac{n-1}{n} \right) \quad = \quad \frac{1}{2!} \left( 1 \right) \left( 1 - \frac{1}{n} \right) $$
-                    </div>
-                </div>
-
-                <div style="background: #f8fafc; border-left: 4px solid #0284c7; padding: 1.5rem; border-radius: 0 6px 6px 0;">
-                    <strong style="color: #0369a1; display: block; margin-bottom: 0.5rem;">Term $k=3$ (Solidifying the Pattern):</strong>
-                    <p style="margin: 0 0 1rem 0; color: #334155; line-height: 1.7;">
-                        The exact same cancellation happens. The $(n-3)!$ gets wiped out, leaving three terms on top, paired with $n^3$ on the bottom:
-                    </p>
-                    <div style="text-align: center; font-size: 1.1rem;">
-                        $$ \frac{n(n-1)(n-2)}{3!} \cdot \frac{1}{n^3} \quad = \quad \frac{1}{3!} \left( \frac{n}{n} \right) \left( \frac{n-1}{n} \right) \left( \frac{n-2}{n} \right) $$
-                    </div>
-                    <div style="text-align: center; font-size: 1.1rem; margin-top: 1rem;">
-                        $$ = \frac{1}{3!} \left( 1 - \frac{1}{n} \right) \left( 1 - \frac{2}{n} \right) $$
-                    </div>
-                </div>
-
                 <h4 style="color: #0f172a; margin-top: 2rem; font-size: 1.1rem;">3. The Final Collapsed Form</h4>
                 <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
                     When you assemble all these pieces, the sprawling binomial expansion collapses into this clean, structured formula:
