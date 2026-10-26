@@ -909,27 +909,6 @@
                     Multiplying those together gives $3 \times 2 \times 1 = \mathbf{3!}$ (or 6) different ways to write those same letters (<span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">ABC</span>, <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">ACB</span>, <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">BAC</span>, <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">BCA</span>, <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">CAB</span>, <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">CBA</span>). Every single unique handful in our list has been bloated by a factor of exactly 6.
                 </p>
 
-                <h3 style="margin-top: 0; color: #0f172a; font-size: 1.15rem;">Step 3: The Second Factorial Trick (Fixing the Over-Counting)</h3>
-                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                    There is a major flaw in our 60-way count from Step 1. Our tree diagram treated order as sacred: it counted picking <strong>"A then B then C"</strong> as a completely different path than picking <strong>"C then B then A"</strong>.
-                </p>
-                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                    But if you are just grabbing a handful of letters to throw into a bag, the order doesn't matter. Once they are sitting inside the bag, <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">{A, B, C}</span> is the exact same group as <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">{C, B, A}</span>. Our list accidentally committed massive double-counting.
-                </p>
-
-                <h4 style="color: #0f172a; margin-top: 1.5rem; font-size: 1.05rem;">How many times did we over-count? ($3!$)</h4>
-                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                    Let's isolate just one single group of three letters: <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">A, B, and C</span>. How many different ways can you shuffle or arrange that exact same group into a line?
-                </p>
-                <ul style="color: #334155; line-height: 1.75; font-size: 1rem; margin-bottom: 1rem;">
-                    <li>3 options for the first position.</li>
-                    <li>2 options for the second position.</li>
-                    <li>1 option for the third position.</li>
-                </ul>
-                <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                    Multiplying those together gives $3 \times 2 \times 1 = \mathbf{3!}$ (or 6) different ways to write those same letters (<span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">ABC</span>, <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">ACB</span>, <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">BAC</span>, <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">BCA</span>, <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">CAB</span>, <span style="font-family: monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">CBA</span>). Every single unique handful in our list has been bloated by a factor of exactly 6.
-                </p>
-
                 <!-- VISUALIZATION: STEP 3 (Perfectly Centered & Tight) -->
                 <div style="margin: 1.5rem 0; text-align: center; background:#f8fafc; border-radius: 8px; border: 1px solid #cbd5e1; padding: 1.5rem; overflow-x: auto;">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 140" width="100%" style="font-family:system-ui, -apple-system, sans-serif; min-width: 440px; display: block; margin: 0 auto;">
