@@ -1035,7 +1035,7 @@
                     When we multiply $n$ identical binomial factors together—like $(1+x)(1+x)\dots(1+x)$—algebraic distribution requires us to generate every possible product by choosing <strong>either $1$ or $x$ from every single bracket</strong> and multiplying those choices together.
                 </p>
                 <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                    To see how this works in practice, let's look at a small example: expanding <strong>$(1+x)^3$</strong> (three brackets multiplied together).
+                    To see how this works in practice, let's look at a concrete example: expanding <strong>$(x+1)^5$</strong> (five brackets multiplied together), and get the coefficient for $x^3$:
                 </p>
 
                 <div style="background: #f8fafc; border-left: 4px solid #0284c7; padding: 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0;">
@@ -1396,65 +1396,187 @@
 
             <!-- SECTION 4 -->
             <h2 id="section-squeeze">4. The Comparison Principle &amp; Squeeze Theorem</h2>
-            <div class="definition-box">
-                <strong>Theorem 3 (Comparison Principle):</strong> If $a_n \le b_n$ for all $n$, and $\lim a_n = L$, $\lim b_n = K$, then $L \le K$.
+
+            <div style="margin: 1.5rem 0 2rem 0;">
+                <h3 style="margin-top: 0; color: #0f172a; font-size: 1.25rem;">When Algebra Fails: Handling Chaos</h3>
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                    So far, we have relied on Algebraic Limit Laws to solve our sequences. But those laws have a fatal weakness: they demand that every individual piece of your sequence behaves perfectly. If a sequence contains chaotic, oscillating terms—like $\sin(n)$ or $(-1)^n$—the standard limit laws immediately shatter because those terms never settle down on a single number.
+                </p>
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-bottom: 0;">
+                    Instead of trying to calculate the limit of a chaotic sequence directly, mathematicians use a physical workaround. If you cannot control a wild sequence, you don't fight it—you <strong>trap it</strong>.
+                </p>
             </div>
 
-            <div class="definition-box" style="margin-top: 1rem;">
-                <strong>Theorem 4 (The Squeeze Theorem):</strong> Let $(a_n), (b_n), (c_n)$ be sequences such that $a_n \le b_n \le c_n$ for all $n \ge N_0$. If:
-                <p style="text-align: center; margin: 0.5rem 0;">$$\lim_{n\to\infty} a_n = L \quad \text{and} \quad \lim_{n\to\infty} c_n = L$$</p>
-                then $(b_n)$ converges and $\lim_{n\to\infty} b_n = L$.
-            </div>
-
-            <div class="worked-example-box">
-                <h4>🎯 Rigorous Proof of the Squeeze Theorem</h4>
-                <p>Let $\epsilon > 0$. We want to find $N$ such that $n > N \implies |b_n - L| < \epsilon$.</p>
-                <ul style="margin: 0.4rem 0 0 1.25rem;">
-                    <li>Since $a_n \to L$, $\exists N_1$ such that $n > N_1 \implies L - \epsilon < a_n < L + \epsilon$.</li>
-                    <li>Since $c_n \to L$, $\exists N_2$ such that $n > N_2 \implies L - \epsilon < c_n < L + \epsilon$.</li>
-                </ul>
-                <p>Set $N = \max(N_0, N_1, N_2)$. Then for any $n > N$:</p>
-                <div style="text-align: center; margin: 0.5rem 0;">
-                    $$L - \epsilon < a_n \le b_n \le c_n < L + \epsilon \implies |b_n - L| < \epsilon$$
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #0284c7; border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0;">
+                <div style="color: #0284c7; margin: 0 0 0.5rem 0; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">
+                    The Physical Intuition: The Hallway and the Trash Compactor
                 </div>
-                <p style="margin-bottom: 0;">Hence $\lim b_n = L$. $\blacksquare$</p>
+                <p style="margin: 0 0 1rem 0; color: #334155; line-height: 1.7;">
+                    Imagine you are walking a highly energetic dog down a long hallway. The dog is bouncing wildly, leaping from the floor to the ceiling. Tracking its exact path algebraically is impossible.
+                </p>
+                <p style="margin: 0 0 1rem 0; color: #334155; line-height: 1.7;">
+                    Now, imagine this hallway is actually a giant, slow-moving trash compactor. As you walk forward (as $n \to \infty$), the ceiling slowly grinds downward and the floor steadily pushes upward. You don't need to know the dog's exact frantic path to know where it will end up.
+                </p>
+                <p style="margin: 0; color: #334155; line-height: 1.7;">
+                    If both the floor and the ceiling eventually crush together to the exact same height, the chaotic bouncing is forced to stop. The dog is mathematically crushed into that exact same final position. This is the <strong>Squeeze Theorem</strong>.
+                </p>
+            </div>
+
+            <div class="definition-box" style="margin-top: 2.5rem;">
+                <h4 style="margin: 0 0 0.5rem 0; color: #b45309; font-size: 1.05rem;">Theorem 3: The Comparison Principle (The Foundation)</h4>
+                <p style="margin: 0 0 0.75rem 0; font-size: 1.05rem;"><strong>The Formal Math:</strong> If $a_n \le b_n$ for all $n$, and $\lim_{n\to\infty} a_n = L$, and $\lim_{n\to\infty} b_n = K$, then $L \le K$.</p>
+                <p style="margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.6;">
+                    <strong>What it means:</strong> Limits respect physical boundaries. If sequence $B$ is always drawn physically above sequence $A$ on a graph, then sequence $B$'s final destination cannot suddenly drop below sequence $A$'s destination. The final limits must obey the same vertical ordering as the sequences themselves.
+                </p>
+            </div>
+
+            <div class="definition-box" style="margin-top: 1.5rem;">
+                <h4 style="margin: 0 0 0.75rem 0; color: #b45309; font-size: 1.05rem;">Theorem 4: The Squeeze Theorem</h4>
+                <p style="margin: 0 0 0.5rem 0; font-size: 1.05rem;"><strong>The Formal Math:</strong> Let $(a_n), (b_n), (c_n)$ be sequences such that $a_n \le b_n \le c_n$ for all $n \ge N_0$. If:</p>
+                <div style="text-align: center; margin: 1rem 0; font-size: 1.2rem;">$$\lim_{n\to\infty} a_n = L \quad \text{and} \quad \lim_{n\to\infty} c_n = L$$</div>
+                <p style="margin: 0 0 1rem 0; font-size: 1.05rem;">then the middle sequence $(b_n)$ converges and $\lim_{n\to\infty} b_n = L$.</p>
+
+                <div style="background: #ffffff; padding: 1rem; border-radius: 6px; border: 1px solid #e2e8f0;">
+                    <strong style="color: #334155; font-size: 0.95rem;">Translating the notation:</strong>
+                    <ul style="margin: 0.5rem 0 0 1.25rem; padding: 0; color: #475569; font-size: 0.95rem; line-height: 1.6;">
+                        <li><strong>$a_n$ (The Floor):</strong> A predictable, well-behaved sequence that sits strictly below the chaos.</li>
+                        <li><strong>$b_n$ (The Target):</strong> The messy, oscillating sequence we actually want to solve.</li>
+                        <li><strong>$c_n$ (The Ceiling):</strong> A predictable, well-behaved sequence that sits strictly above the chaos.</li>
+                        <li><strong>$N_0$ (The Cutoff):</strong> The trapping doesn't have to start immediately. The sequences can act however they want at first, as long as the trapping condition locks in eventually (after some index $N_0$).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="worked-example-box" style="margin-top: 1.5rem; background: #f8fafc; border-color: #cbd5e1; border-left-color: #64748b;">
+                <h4 style="color: #334155;">🧠 The Logical Proof: Why the Squeeze Theorem is Bulletproof</h4>
+                <p style="margin-bottom: 1rem; line-height: 1.7;">
+                    You don't have to take the "Trash Compactor" analogy on faith. We can prove it using the exact $\epsilon$-corridor rules we learned in Lecture 4. This proof often intimidates beginners because it juggles three different sequences at once, but the underlying logic is just a simple checklist.
+                </p>
+                <p style="margin-bottom: 0.75rem;"><strong>The Goal:</strong> Let $\epsilon > 0$. The Skeptic draws a corridor of width $\epsilon$ around the target limit $L$. To win, we must find a master cutoff index $N$ where the chaotic middle sequence $(b_n)$ enters the corridor and never leaves: $n > N \implies |b_n - L| < \epsilon$.</p>
+
+                <ol style="margin: 0.75rem 0 1.25rem 1.25rem; line-height: 1.7; padding-left: 0.5rem;">
+                    <li style="margin-bottom: 0.5rem;"><strong>Secure the Floor:</strong> Because we already know the floor converges ($a_n \to L$), it will eventually enter the $\epsilon$-corridor. There exists some cutoff $N_1$ where $L - \epsilon < a_n$.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Secure the Ceiling:</strong> Because we already know the ceiling converges ($c_n \to L$), it will also eventually enter the corridor. There exists some cutoff $N_2$ where $c_n < L + \epsilon$.</li>
+                </ol>
+
+                <p style="margin: 0.75rem 0; line-height: 1.7;">
+                    We need the floor inside the corridor, the ceiling inside the corridor, AND the trapping condition ($a_n \le b_n \le c_n$) all active at the exact same time. We achieve this by simply waiting for the latest of all three events. We set our master cutoff to $N = \max(N_0, N_1, N_2)$.
+                </p>
+                <p style="margin: 0.75rem 0; line-height: 1.7;">
+                    For any term index $n > N$, all three conditions are locked in, allowing us to chain the inequalities together mathematically:
+                </p>
+                <div style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem; background: #ffffff; padding: 1rem; border-radius: 6px; border: 1px dashed #cbd5e1;">
+                    $$L - \epsilon < a_n \le \mathbf{b_n} \le c_n < L + \epsilon$$
+                </div>
+                <p style="margin-bottom: 0; line-height: 1.7;">
+                    If we ignore the floor and ceiling in the middle, and just look at the far left, the target in the center, and the far right, we get exactly $L - \epsilon < b_n < L + \epsilon$. This is the formal definition of $|b_n - L| < \epsilon$. The chaotic sequence has been mathematically proven to be trapped inside the $\epsilon$-corridor forever. $\blacksquare$
+                </p>
             </div>
 
             <!-- SECTION 5 -->
-            <h2 id="section-squeeze-viz">5. Visualizing Squeeze Collapse: $\frac{\sin(n)}{n}$</h2>
-            <div class="aside-box">
-                <h4>🎯 Classic Example: Trapping $\frac{\sin(n)}{n}$</h4>
-                <p>Because $-1 \le \sin(n) \le 1$, we have $-\frac{1}{n} \le \frac{\sin(n)}{n} \le \frac{1}{n}$. Since $\pm \frac{1}{n} \to 0$, the Squeeze Theorem yields $\lim \frac{\sin(n)}{n} = 0$.</p>
+            <h2 id="section-squeeze-viz" style="margin-top: 3.5rem;">5. Visualizing Squeeze Collapse: $\frac{\sin(n)}{n}$</h2>
 
-                <!-- Embedded Squeeze SVG -->
-                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1rem; margin-top: 1rem;">
-                    <svg viewBox="0 0 800 280" style="width: 100%; height: auto; display: block;">
-                        <line x1="50" y1="140" x2="760" y2="140" stroke="#94a3b8" stroke-width="1.5"/>
-                        <text x="710" y="130" font-size="11" font-weight="bold" fill="#64748b">L = 0</text>
-                        <path d="M 70,20 Q 200,90 350,120 T 730,136" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4"/>
-                        <text x="600" y="105" font-size="10" font-weight="bold" fill="#d97706">Upper Bound: +1/n</text>
-                        <path d="M 70,260 Q 200,190 350,160 T 730,144" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4"/>
-                        <text x="600" y="175" font-size="10" font-weight="bold" fill="#d97706">Lower Bound: -1/n</text>
-                        <g>
-                            <circle cx="92" cy="70" r="4.5" fill="#059669"/><circle cx="114" cy="185" r="4.5" fill="#059669"/>
-                            <circle cx="136" cy="172" r="4.5" fill="#059669"/><circle cx="158" cy="115" r="4.5" fill="#059669"/>
-                            <circle cx="180" cy="120" r="4.5" fill="#059669"/><circle cx="202" cy="160" r="4.5" fill="#059669"/>
-                            <circle cx="224" cy="155" r="4.5" fill="#059669"/><circle cx="246" cy="130" r="4.5" fill="#059669"/>
-                            <circle cx="268" cy="133" r="4.5" fill="#059669"/><circle cx="290" cy="148" r="4.5" fill="#059669"/>
-                            <circle cx="312" cy="146" r="4.5" fill="#059669"/><circle cx="334" cy="138" r="4.5" fill="#059669"/>
-                            <circle cx="356" cy="139" r="4.5" fill="#059669"/><circle cx="378" cy="143" r="4.5" fill="#059669"/>
-                            <circle cx="400" cy="142" r="4.5" fill="#059669"/><circle cx="422" cy="139" r="4.5" fill="#059669"/>
-                            <circle cx="444" cy="140" r="4.5" fill="#059669"/><circle cx="466" cy="141" r="4.5" fill="#059669"/>
-                            <circle cx="488" cy="141" r="4.5" fill="#059669"/><circle cx="510" cy="140" r="4.5" fill="#059669"/>
-                            <circle cx="532" cy="140" r="4.5" fill="#059669"/><circle cx="554" cy="140" r="4.5" fill="#059669"/>
-                            <circle cx="576" cy="140" r="4.5" fill="#059669"/><circle cx="598" cy="140" r="4.5" fill="#059669"/>
-                            <circle cx="620" cy="140" r="4.5" fill="#059669"/><circle cx="642" cy="140" r="4.5" fill="#059669"/>
-                            <circle cx="664" cy="140" r="4.5" fill="#059669"/><circle cx="686" cy="140" r="4.5" fill="#059669"/>
-                            <circle cx="708" cy="140" r="4.5" fill="#059669"/><circle cx="730" cy="140" r="4.5" fill="#059669"/>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
+                Let's put this into practice with one of the most famous limits in early analysis:
+            </p>
+            <div style="text-align: center; margin: 1.25rem 0; font-size: 1.2rem;">
+                $$\lim_{n\to\infty} \frac{\sin(n)}{n}$$
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                <strong>Why Algebraic Limit Laws fail here:</strong> If you try to apply the Division Limit Law (Limit of the Top $\div$ Limit of the Bottom), the entire operation instantly crashes. The bottom limit grows to $\infty$. The top limit, $\lim \sin(n)$, <em>Does Not Exist (DNE)</em>. Sine bounces endlessly between $+1$ and $-1$; it never settles on a target. You cannot do algebra with a "DNE".
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                <strong>How to build the trap:</strong> We don't need to know the limit of $\sin(n)$. We only need to know its physical boundaries. The sine function is permanently trapped between $-1$ and $+1$:
+            </p>
+            <div style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
+                $$-1 \le \sin(n) \le 1$$
+            </div>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                We can mathematically construct our exact target sequence in the middle by dividing all three sides of this inequality by $n$ (since $n$ is positive, the inequality signs stay the same):
+            </p>
+            <div style="text-align: center; margin: 1.5rem 0; font-size: 1.25rem;">
+                $$\underbrace{-\frac{1}{n}}_{\text{Floor } (a_n)} \le \underbrace{\frac{\sin(n)}{n}}_{\text{Target } (b_n)} \le \underbrace{\frac{1}{n}}_{\text{Ceiling } (c_n)}$$
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-bottom: 2rem;">
+                Now, look at our newly constructed floor and ceiling. We know that $\lim_{n\to\infty} \frac{-1}{n} = 0$, and we know that $\lim_{n\to\infty} \frac{1}{n} = 0$. Because both the upper and lower limits evaluate to exact zero, the Squeeze Theorem mathematically crushes the chaotic middle sequence, forcing $\lim_{n\to\infty} \frac{\sin(n)}{n} = 0$.
+            </p>
+
+            <!-- Visualizing the Trap (SVG Diagram) -->
+            <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.5rem; margin-top: 1rem;">
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <span style="font-weight: 700; color: #0f172a; font-size: 1.1rem;">Visual Proof: The Squeeze Collapse</span>
+                    <p style="color: #64748b; font-size: 0.9rem; margin-top: 0.25rem;">Observe how the chaotic green dots ($\frac{\sin(n)}{n}$) bounce wildly, but are strictly confined between the collapsing orange walls ($y = \frac{1}{n}$ and $y = -\frac{1}{n}$).</p>
+                </div>
+
+                <div style="display: flex; justify-content: center; overflow-x: auto; padding: 0.5rem 0;">
+                    <svg width="800" height="340" viewBox="0 0 800 340" style="font-family: system-ui, sans-serif; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0; width: 100%; min-width: 600px;">
+                        <defs>
+                            <marker id="axis-arr" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+                            </marker>
+                        </defs>
+
+                        <!-- X-Axis (Limit L = 0) -->
+                        <line x1="50" y1="170" x2="760" y2="170" stroke="#64748b" stroke-width="2" marker-end="url(#axis-arr)"/>
+                        <text x="765" y="174" font-size="12" font-weight="700" fill="#475569">n</text>
+
+                        <!-- Y-Axis -->
+                        <line x1="60" y1="320" x2="60" y2="20" stroke="#64748b" stroke-width="2" marker-end="url(#axis-arr)"/>
+                        <text x="45" y="25" font-size="12" font-weight="700" fill="#475569">y</text>
+
+                        <!-- L = 0 Target Label -->
+                        <rect x="340" y="160" width="80" height="20" rx="4" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1"/>
+                        <text x="380" y="174" font-size="11" font-weight="800" fill="#475569" text-anchor="middle">Limit L = 0</text>
+
+                        <!-- Ceiling Curve: +1/n -->
+                        <!-- Starts around y=30, asymptotes to y=170 -->
+                        <path d="M 80,30 Q 150,120 300,145 T 740,165" fill="none" stroke="#d97706" stroke-width="2.5" stroke-dasharray="6,4"/>
+                        <rect x="580" y="125" width="130" height="22" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+                        <text x="645" y="140" font-size="11" font-weight="800" fill="#b45309" text-anchor="middle">Ceiling: y = 1/n</text>
+
+                        <!-- Floor Curve: -1/n -->
+                        <!-- Starts around y=310, asymptotes to y=170 -->
+                        <path d="M 80,310 Q 150,220 300,195 T 740,175" fill="none" stroke="#d97706" stroke-width="2.5" stroke-dasharray="6,4"/>
+                        <rect x="580" y="195" width="130" height="22" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+                        <text x="645" y="210" font-size="11" font-weight="800" fill="#b45309" text-anchor="middle">Floor: y = -1/n</text>
+
+                        <!-- Chaotic Middle Sequence: sin(n)/n (Green Dots) -->
+                        <!-- Simulated physically oscillating points constrained by the bounds -->
+                        <g fill="#10b981" stroke="#ffffff" stroke-width="1.5">
+                            <circle cx="80" cy="80" r="5" />
+                            <circle cx="105" cy="270" r="5" />
+                            <circle cx="130" cy="140" r="5" />
+                            <circle cx="155" cy="235" r="5" />
+                            <circle cx="180" cy="115" r="5" />
+                            <circle cx="205" cy="195" r="5" />
+                            <circle cx="230" cy="138" r="5" />
+                            <circle cx="255" cy="182" r="5" />
+                            <circle cx="280" cy="155" r="5" />
+                            <circle cx="305" cy="186" r="5" />
+                            <circle cx="330" cy="150" r="5" />
+                            <circle cx="355" cy="178" r="5" />
+                            <circle cx="380" cy="162" r="5" />
+                            <circle cx="405" cy="175" r="5" />
+                            <circle cx="430" cy="163" r="5" />
+                            <circle cx="455" cy="176" r="5" />
+                            <circle cx="480" cy="164" r="5" />
+                            <circle cx="505" cy="174" r="5" />
+                            <circle cx="530" cy="167" r="5" />
+                            <circle cx="555" cy="173" r="5" />
+                            <circle cx="580" cy="168" r="5" />
+                            <circle cx="605" cy="172" r="5" />
+                            <circle cx="630" cy="169" r="5" />
+                            <circle cx="655" cy="171" r="5" />
+                            <circle cx="680" cy="170" r="5" />
+                            <circle cx="705" cy="170.5" r="5" />
+                            <circle cx="730" cy="169.5" r="5" />
                         </g>
                     </svg>
-                </div> <!-- END SVG CONTAINER FIX -->
-            </div> <!-- END ASIDE-BOX FIX -->
+                </div>
+            </div>
+
             <!-- FOOTER NAVIGATION -->
             <div class="footer-nav" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
                 <a href="week2-lecture4.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&larr; Lecture 4</a>
