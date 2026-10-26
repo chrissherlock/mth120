@@ -1395,15 +1395,15 @@
             </p>
 
             <!-- SECTION 4 -->
-            <h2 id="section-squeeze">4. The Comparison Principle &amp; Squeeze Theorem</h2>
+            <h2 id="section-squeeze">4. The Comparison Principle & Squeeze Theorem</h2>
 
             <div style="margin: 1.5rem 0 2rem 0;">
                 <h3 style="margin-top: 0; color: #0f172a; font-size: 1.25rem;">When Algebra Fails: Handling Chaos</h3>
                 <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
-                    So far, we have relied on Algebraic Limit Laws to solve our sequences. But those laws have a fatal weakness: they demand that every individual piece of your sequence behaves perfectly. If a sequence contains chaotic, oscillating terms—like $\sin(n)$ or $(-1)^n$—the standard limit laws immediately shatter because those terms never settle down on a single number.
+                    So far, we have relied on Algebraic Limit Laws. But those laws have a fatal weakness: they demand that every individual piece of your sequence behaves perfectly. If a sequence contains chaotic, oscillating terms—like $\sin(n)$—the standard limit laws immediately shatter because those terms never settle down on a single number.
                 </p>
                 <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-bottom: 0;">
-                    Instead of trying to calculate the limit of a chaotic sequence directly, mathematicians use a physical workaround. If you cannot control a wild sequence, you don't fight it—you <strong>trap it</strong>.
+                    If you cannot control a wild sequence algebraically, you don't fight it—you <strong>trap it</strong>.
                 </p>
             </div>
 
@@ -1418,8 +1418,118 @@
                     Now, imagine this hallway is actually a giant, slow-moving trash compactor. As you walk forward (as $n \to \infty$), the ceiling slowly grinds downward and the floor steadily pushes upward. You don't need to know the dog's exact frantic path to know where it will end up.
                 </p>
                 <p style="margin: 0; color: #334155; line-height: 1.7;">
-                    If both the floor and the ceiling eventually crush together to the exact same height, the chaotic bouncing is forced to stop. The dog is mathematically crushed into that exact same final position. This is the <strong>Squeeze Theorem</strong>.
+                    If both the floor and the ceiling eventually crush together to the exact same height, the chaotic bouncing is forced to stop. The dog is mathematically funneled into that exact same final position. This is the <strong>Squeeze Theorem</strong>.
                 </p>
+            </div>
+
+            <!-- CUSTOM SVG ILLUSTRATION: THE TRASH COMPACTOR DOG -->
+            <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                <div style="display: flex; justify-content: center; overflow-x: auto; padding: 0.5rem 0;">
+                    <svg width="800" height="420" viewBox="0 0 800 420" style="font-family: system-ui, sans-serif; background: #fffbeb; border-radius: 6px; border: 2px solid #e2e8f0; width: 100%; min-width: 700px;">
+                        <defs>
+                            <!-- Arrowhead for axes -->
+                            <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#0f172a"/>
+                            </marker>
+                            <!-- Down Arrow for Ceiling -->
+                            <g id="down-arrow">
+                                <path d="M 0,0 L 0,25 M -8,15 L 0,25 L 8,15" stroke="#ef4444" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            </g>
+                            <!-- Up Arrow for Floor -->
+                            <g id="up-arrow">
+                                <path d="M 0,0 L 0,-25 M -8,-15 L 0,-25 L 8,-15" stroke="#3b82f6" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            </g>
+                        </defs>
+
+                        <!-- Background Depth/Corridor Center Line -->
+                        <line x1="80" y1="210" x2="700" y2="210" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="8,6"/>
+
+                        <!-- COMPACTOR CEILING BEAM -->
+                        <!-- Slopes from y=45 down to y=200 -->
+                        <polygon points="80,10 700,195 700,200 80,45" fill="#94a3b8" stroke="#475569" stroke-width="2"/>
+                        <polygon points="80,10 700,195 680,185 80,0" fill="#cbd5e1" stroke="#475569" stroke-width="1.5"/> <!-- Top edge to give 3D beam look -->
+
+                        <!-- COMPACTOR FLOOR BEAM -->
+                        <!-- Slopes from y=375 up to y=220 -->
+                        <polygon points="80,375 700,220 700,225 80,410" fill="#94a3b8" stroke="#475569" stroke-width="2"/>
+                        <polygon points="80,375 700,220 720,230 80,385" fill="#cbd5e1" stroke="#475569" stroke-width="1.5"/>
+
+                        <!-- Compactor Force Arrows -->
+                        <use href="#down-arrow" x="250" y="55"/>
+                        <use href="#down-arrow" x="450" y="105"/>
+                        <use href="#down-arrow" x="600" y="145"/>
+
+                        <use href="#up-arrow" x="250" y="365"/>
+                        <use href="#up-arrow" x="450" y="315"/>
+                        <use href="#up-arrow" x="600" y="275"/>
+
+                        <!-- THE DOG'S BOUNCING PATH (Target Sequence b_n) -->
+                        <!-- Perfect dampening wave bound exactly by the beams -->
+                        <path d="M 100, 210
+                                 Q 125, 56 150, 210
+                                 Q 175, 351 200, 210
+                                 Q 225, 81 250, 210
+                                 Q 275, 326 300, 210
+                                 Q 325, 106 350, 210
+                                 Q 375, 301 400, 210
+                                 Q 425, 131 450, 210
+                                 Q 475, 276 500, 210
+                                 Q 525, 156 550, 210
+                                 Q 575, 251 600, 210
+                                 Q 625, 181 650, 210
+                                 Q 675, 226 700, 210"
+                              fill="none" stroke="#10b981" stroke-width="3" stroke-dasharray="8,6" stroke-linecap="round"/>
+
+                        <!-- THE VECTOR DOG -->
+                        <g transform="translate(325, 106) scale(1.3)">
+                            <!-- Action Lines -->
+                            <path d="M-25,15 Q-35,10 -25,0" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/>
+
+                            <!-- Tail -->
+                            <path d="M-12,2 Q-25,-10 -10,-18" fill="none" stroke="#b45309" stroke-width="2.5" stroke-linecap="round"/>
+                            <!-- Back Legs -->
+                            <line x1="-8" y1="10" x2="-10" y2="18" stroke="#b45309" stroke-width="2.5" stroke-linecap="round"/>
+                            <line x1="-3" y1="10" x2="-1" y2="16" stroke="#92400e" stroke-width="2.5" stroke-linecap="round"/>
+                            <!-- Body -->
+                            <rect x="-14" y="-4" width="26" height="14" rx="7" fill="#f59e0b"/>
+                            <!-- Front Legs -->
+                            <line x1="8" y1="8" x2="10" y2="16" stroke="#b45309" stroke-width="2.5" stroke-linecap="round"/>
+                            <line x1="3" y1="8" x2="5" y2="14" stroke="#92400e" stroke-width="2.5" stroke-linecap="round"/>
+                            <!-- Head -->
+                            <circle cx="10" cy="-4" r="8" fill="#f59e0b"/>
+                            <!-- Ear -->
+                            <path d="M11,-9 L4,-16 L8,-2 Z" fill="#b45309"/>
+                            <!-- Snout -->
+                            <circle cx="16" cy="-2" r="4.5" fill="#fef3c7"/>
+                            <circle cx="19" cy="-3" r="1.5" fill="#0f172a"/> <!-- nose -->
+                            <circle cx="12" cy="-6" r="1.5" fill="#0f172a"/> <!-- eye -->
+                        </g>
+
+                        <!-- Boing Text -->
+                        <text x="350" y="80" font-size="16" font-weight="900" fill="#ea580c" font-style="italic">boing!</text>
+                        <text x="180" y="325" font-size="14" font-weight="900" fill="#ea580c" font-style="italic">boing!</text>
+
+                        <!-- THE EXIT / LIMIT L -->
+                        <rect x="690" y="195" width="10" height="30" fill="#38bdf8" stroke="#0284c7" stroke-width="2"/>
+                        <text x="735" y="195" font-size="16" font-weight="800" fill="#0f172a" text-anchor="middle">Limit L</text>
+                        <text x="735" y="215" font-size="13" font-weight="600" fill="#475569" text-anchor="middle">(The Exit)</text>
+
+                        <!-- LABELS -->
+                        <!-- Ceiling Label (Rotated to match beam slope of ~14 degrees) -->
+                        <text x="210" y="30" transform="rotate(14 210 30)" font-size="18" font-weight="800" fill="#1e293b">Ceiling (cₙ) moving down</text>
+
+                        <!-- Floor Label (Rotated to match beam slope of ~-14 degrees) -->
+                        <text x="230" y="405" transform="rotate(-14 230 405)" font-size="18" font-weight="800" fill="#1e293b">Floor (aₙ) moving up</text>
+
+                        <!-- Target Sequence Label -->
+                        <rect x="425" y="275" width="190" height="28" rx="6" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+                        <text x="520" y="294" font-size="14" font-weight="700" fill="#065f46" text-anchor="middle">Target path of dog (bₙ)</text>
+
+                        <!-- Forward Motion Axis -->
+                        <line x1="580" y1="380" x2="740" y2="380" stroke="#0f172a" stroke-width="3" marker-end="url(#arrow)"/>
+                        <text x="660" y="405" font-size="16" font-weight="800" fill="#0f172a" text-anchor="middle">Forward Motion (n &rarr; &infin;)</text>
+                    </svg>
+                </div>
             </div>
 
             <div class="definition-box" style="margin-top: 2.5rem;">
@@ -1428,20 +1538,20 @@
                 <p style="margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.6;">
                     <strong>What it means:</strong> Limits respect physical boundaries. If sequence $B$ is always drawn physically above sequence $A$ on a graph, then sequence $B$'s final destination cannot suddenly drop below sequence $A$'s destination. The final limits must obey the same vertical ordering as the sequences themselves.
                 </p>
-            </div>
 
-            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.5rem;">
-                <strong>⚠️ The Strict Inequality Trap:</strong> There is a subtle trap hidden in this theorem that catches almost everyone. Notice that the rule uses the "less than or equal to" sign ($\le$). What if sequence $B$ is <em>strictly</em> greater than sequence $A$ for its entire infinite life ($a_n < b_n$)? Does the limit $K$ have to be strictly greater than $L$?
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
-                <strong>No!</strong> The limits can actually crash into each other and become perfectly equal, even if the individual sequence terms never touch.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
-                To see why, let $a_n = 0$ (a completely flat sequence) and $b_n = \frac{1}{n}$. For every single step, $0 < \frac{1}{n}$. Sequence $B$ is strictly hovering above Sequence $A$. But look at their final destinations: $\lim_{n\to\infty} 0 = 0$ and $\lim_{n\to\infty} \frac{1}{n} = 0$.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-bottom: 2.5rem;">
-                The physical gap between them is crushed down to nothing. Infinity has a habit of flattening inequalities, which is why the theorem must always allow for the possibility of equality ($L \le K$). In fact, this precise "collapsing gap" behavior is the exact mechanism that makes the Squeeze Theorem work in the very next step!
-            </p>
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.5rem;">
+                    <strong>⚠️ The Strict Inequality Trap:</strong> There is a subtle trap hidden in this theorem that catches almost everyone. Notice that the rule uses the "less than or equal to" sign ($\le$). What if sequence $B$ is <em>strictly</em> greater than sequence $A$ for its entire infinite life ($a_n < b_n$)? Does the limit $K$ have to be strictly greater than $L$?
+                </p>
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                    <strong>No!</strong> The limits can actually crash into each other and become perfectly equal, even if the individual sequence terms never touch.
+                </p>
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                    To see why, let $a_n = 0$ (a completely flat sequence) and $b_n = \frac{1}{n}$. For every single step, $0 < \frac{1}{n}$. Sequence $B$ is strictly hovering above Sequence $A$. But look at their final destinations: $\lim_{n\to\infty} 0 = 0$ and $\lim_{n\to\infty} \frac{1}{n} = 0$.
+                </p>
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-bottom: 2.5rem;">
+                    The physical gap between them is crushed down to nothing. Infinity has a habit of flattening inequalities, which is why the theorem must always allow for the possibility of equality ($L \le K$). In fact, this precise "collapsing gap" behavior is the exact mechanism that makes the Squeeze Theorem work in the very next step!
+                </p>
+            </div>
 
             <div class="definition-box" style="margin-top: 1.5rem;">
                 <h4 style="margin: 0 0 0.75rem 0; color: #b45309; font-size: 1.05rem;">Theorem 4: The Squeeze Theorem</h4>
