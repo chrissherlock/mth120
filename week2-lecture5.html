@@ -1430,6 +1430,19 @@
                 </p>
             </div>
 
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.5rem;">
+                <strong>⚠️ The Strict Inequality Trap:</strong> There is a subtle trap hidden in this theorem that catches almost everyone. Notice that the rule uses the "less than or equal to" sign ($\le$). What if sequence $B$ is <em>strictly</em> greater than sequence $A$ for its entire infinite life ($a_n < b_n$)? Does the limit $K$ have to be strictly greater than $L$?
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                <strong>No!</strong> The limits can actually crash into each other and become perfectly equal, even if the individual sequence terms never touch.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                To see why, let $a_n = 0$ (a completely flat sequence) and $b_n = \frac{1}{n}$. For every single step, $0 < \frac{1}{n}$. Sequence $B$ is strictly hovering above Sequence $A$. But look at their final destinations: $\lim_{n\to\infty} 0 = 0$ and $\lim_{n\to\infty} \frac{1}{n} = 0$.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-bottom: 2.5rem;">
+                The physical gap between them is crushed down to nothing. Infinity has a habit of flattening inequalities, which is why the theorem must always allow for the possibility of equality ($L \le K$). In fact, this precise "collapsing gap" behavior is the exact mechanism that makes the Squeeze Theorem work in the very next step!
+            </p>
+
             <div class="definition-box" style="margin-top: 1.5rem;">
                 <h4 style="margin: 0 0 0.75rem 0; color: #b45309; font-size: 1.05rem;">Theorem 4: The Squeeze Theorem</h4>
                 <p style="margin: 0 0 0.5rem 0; font-size: 1.05rem;"><strong>The Formal Math:</strong> Let $(a_n), (b_n), (c_n)$ be sequences such that $a_n \le b_n \le c_n$ for all $n \ge N_0$. If:</p>
