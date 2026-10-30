@@ -532,6 +532,39 @@
                 </ol>
             </div>
 
+            <div style="background: #faf5ff; border: 1px solid #e9d5ff; border-left: 4px solid #9333ea; border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0;">
+                <h4 style="margin: 0 0 0.75rem 0; color: #7e22ce; font-size: 1.05rem;">📜 Historical Aside: Ghosts, Swiss Cheese, and the Monotone Convergence Theorem</h4>
+
+                <p style="margin: 0 0 1rem 0; color: #334155; line-height: 1.7;">
+                    The Monotone Convergence Theorem doesn't belong to just one person; it was forged in the mid-to-late 19th century by a group of mathematicians—primarily <strong>Karl Weierstrass</strong>, <strong>Richard Dedekind</strong>, and an earlier pioneer named <strong>Bernard Bolzano</strong>—who were trying to fix a massive logical crisis in calculus.
+                </p>
+
+                <h5 style="margin: 0 0 0.5rem 0; color: #6b21a8; font-size: 1rem;">The Ghostly Foundations of Calculus</h5>
+                <p style="margin: 0 0 1rem 0; color: #334155; line-height: 1.7;">
+                    When Isaac Newton and Gottfried Leibniz invented calculus in the 1600s, they built it on "infinitesimals"—tiny, magical quantities that were smaller than any measurable number, but not quite zero. For 150 years, the calculations worked beautifully, but logically, it was a house of cards. Critics famously mocked infinitesimals as the <em>"ghosts of departed quantities."</em> You couldn't rigorously prove <em>why</em> limits worked; you just trusted the machinery.
+                </p>
+
+                <h5 style="margin: 0 0 0.5rem 0; color: #6b21a8; font-size: 1rem;">The Swiss Cheese Number Line</h5>
+                <p style="margin: 0 0 1rem 0; color: #334155; line-height: 1.7;">
+                    By the 1800s, mathematicians wanted to tear down the ghostly magic and rebuild calculus on unbreakable logical fences. But they hit a terrifying roadblock: they realized their number line was full of microscopic holes. If your mathematical universe relies heavily on fractions, irrational numbers like <span style="white-space: nowrap;">$\sqrt{2}$</span>, <span style="white-space: nowrap;">$\pi$</span>, and <span style="white-space: nowrap;">$e$</span> effectively don't exist. The number line is basically Swiss cheese.
+                </p>
+                <p style="margin: 0 0 1rem 0; color: #334155; line-height: 1.7;">
+                    Imagine our exact sequence, <span style="white-space: nowrap;">$a_n = (1 + 1/n)^n$</span>. It is strictly increasing, and we proved it is trapped below a ceiling of $3$. But if the number line has a "hole" where $e$ is supposed to be, the sequence climbs up, hits the ceiling, and just falls into the void. It has no physical number to land on.
+                </p>
+
+                <h5 style="margin: 0 0 0.5rem 0; color: #6b21a8; font-size: 1rem;">The Fix: The Completeness Axiom</h5>
+                <p style="margin: 0 0 1rem 0; color: #334155; line-height: 1.7;">
+                    Weierstrass and Dedekind realized they had to mathematically outlaw these holes by formalizing the <strong>Completeness Axiom</strong> (stating there are absolutely no missing pixels on the real number line).
+                </p>
+                <p style="margin: 0 0 1rem 0; color: #334155; line-height: 1.7;">
+                    The <strong>Monotone Convergence Theorem</strong> is the direct, practical tool that enforces this law. It guarantees that if a sequence is marching steadily in one direction (monotonic) and is trapped by a wall (bounded), the exact spot where it gets crushed against the wall is a guaranteed, physical, existing real number. It will not fall through a hole.
+                </p>
+
+                <p style="margin: 0; color: #64748b; font-size: 0.9rem; line-height: 1.6; font-style: italic;">
+                    Note: If you look this up and see the "Monotone Convergence Theorem" attributed to Beppo Levi in 1906, that is a different, much heavier theorem used for advanced Lebesgue integration. The sequence version here is the 19th-century Weierstrass/Dedekind foundation of the real numbers.
+                </p>
+            </div>
+
             <!-- SECTION 2 -->
             <h2 id="section-euler">2. Construction of Euler's Number $e$</h2>
 
@@ -1718,6 +1751,40 @@
                 </div>
                 <p style="margin-bottom: 0; line-height: 1.7;">
                     If we ignore the floor and ceiling in the middle, and just look at the far left, the target in the center, and the far right, we get exactly $L - \epsilon < b_n < L + \epsilon$. This is the formal definition of $|b_n - L| < \epsilon$. The chaotic sequence has been mathematically proven to be trapped inside the $\epsilon$-corridor forever. $\blacksquare$
+                </p>
+            </div>
+
+            <div style="background: #faf5ff; border: 1px solid #e9d5ff; border-left: 4px solid #9333ea; border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; overflow: hidden;">
+                <h4 style="margin: 0 0 0.75rem 0; color: #7e22ce; font-size: 1.05rem;">📜 Historical Aside: Archimedes' Polygons and the Taming of Chaos</h4>
+
+                <figure style="float: right; margin: 0 0 1rem 1.5rem; max-width: 220px; text-align: center;">
+                    <a href="https://en.wikipedia.org/wiki/Archimedes" target="_blank">
+                        <img src="images/archimedes.jpg" alt="Archimedes of Syracuse" style="width: 100%; border-radius: 6px; border: 1px solid #d8b4fe; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                    </a>
+                    <figcaption style="font-size: 0.85rem; color: #6b21a8; margin-top: 0.75rem; line-height: 1.4;">
+                        <a href="https://en.wikipedia.org/wiki/Archimedes" target="_blank" style="color: #7e22ce; text-decoration: none; font-weight: 600;">Archimedes of Syracuse</a><br>
+                        c. 287 – c. 212 BC
+                    </figcaption>
+                </figure>
+
+                <p style="margin: 0 0 1rem 0; color: #334155; line-height: 1.7;">
+                    Unlike the Monotone Convergence Theorem, which was born in the 19th century to fix logical holes, the intuition for the <strong>Squeeze Theorem</strong> is over two thousand years old. It was originally invented by <strong>Archimedes of Syracuse</strong> around 250 BC.
+                </p>
+
+                <h5 style="margin: 0 0 0.5rem 0; color: #6b21a8; font-size: 1rem;">The Ancient Geometric Trap</h5>
+                <p style="margin: 0 0 1rem 0; color: #334155; line-height: 1.7;">
+                    Archimedes didn't have algebra or limits; he had geometry. He wanted to calculate the exact value of $\pi$ (the circumference of a circle), but curved lines were impossible to measure directly. So, he built a trap. He drew a polygon perfectly inside the circle (the floor) and a polygon perfectly outside the circle (the ceiling).
+                </p>
+                <p style="margin: 0 0 1rem 0; color: #334155; line-height: 1.7;">
+                    By endlessly doubling the number of sides on both polygons, he forced the straight lines to hug the curve tighter and tighter. He physically "squeezed" the circle until the inner and outer boundaries crushed together, famously proving that $\pi$ was trapped strictly between $\frac{223}{71}$ and $\frac{22}{7}$. He called this the <em>Method of Exhaustion</em>.
+                </p>
+
+                <h5 style="margin: 0 0 0.5rem 0; color: #6b21a8; font-size: 1rem;">The 19th Century Algebraic Upgrade</h5>
+                <p style="margin: 0 0 1rem 0; color: #334155; line-height: 1.7;">
+                    Fast forward to the 1820s. Mathematics was undergoing the same rigorous "arithmetization" led by <strong>Augustin-Louis Cauchy</strong>, <strong>Karl Gauss</strong>, and later <strong>Karl Weierstrass</strong>. Calculus was suddenly being used to study incredibly complex, chaotic phenomena like heat waves, acoustics, and oscillating signals (Fourier series).
+                </p>
+                <p style="margin: 0 0 0; color: #334155; line-height: 1.7;">
+                    Standard algebraic limit laws were completely useless against functions that vibrated infinitely, like $\frac{\sin(x)}{x}$. Cauchy and his contemporaries realized they could take Archimedes' ancient geometric trap and write it as an unbreakable algebraic law. They needed the Squeeze Theorem because it was the only mathematical tool that didn't care how chaotic or violent a sequence's journey was—it only cared about the boundaries. By mathematically translating Archimedes' polygons into sequences $A$, $B$, and $C$, they gained the power to tame oscillating chaos.
                 </p>
             </div>
 
