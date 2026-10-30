@@ -1250,10 +1250,48 @@
                 $$a_n = 1 + 1 + \frac{1}{2!}\left(1 - \frac{1}{n}\right) + \frac{1}{3!}\left(1 - \frac{1}{n}\right)\left(1 - \frac{2}{n}\right) + \dots + \frac{1}{n!}\left(1 - \frac{1}{n}\right)\dots\left(1 - \frac{n-1}{n}\right)$$
             </div>
             <p>Comparing term-by-term with $a_{n+1}$, each factor $\left(1 - \frac{k}{n+1}\right) > \left(1 - \frac{k}{n}\right)$ is strictly larger, and $a_{n+1}$ has an additional positive term. Hence, $(a_n)$ is <strong>strictly increasing</strong>.</p>
-            <p>To establish boundedness above, replace each bracket with 1 and use $\frac{1}{k!} \le \frac{1}{2^{k-1}}$:</p>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                To establish that this sequence is bounded above, we need to tame the complex factorial fractions in our expansion. We do this by replacing each term with a slightly larger, but much more predictable, fraction. Specifically, we replace the brackets with $1$ and rely on a vital inequality:
+            </p>
+
+            <div style="text-align: center; margin: 1.5rem 0; font-size: 1.15rem; color: #0f172a;">
+                $$ \frac{1}{k!} \le \frac{1}{2^{k-1}} \quad \text{for all } k \ge 1 $$
+            </div>
+
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #0284c7; border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0;">
+                <h4 style="margin: 0 0 0.75rem 0; color: #0369a1; font-size: 1.05rem;">Deep Dive: Why is this inequality true?</h4>
+                <p style="margin: 0 0 1rem 0; color: #334155; line-height: 1.7;">
+                    It is much easier to see why this is true if we flip the fractions upside down. In mathematics, taking the reciprocal of both sides of a positive inequality flips the sign. So, we just need to prove that <strong>$k! \ge 2^{k-1}$</strong>.
+                </p>
+                <p style="margin: 0 0 0.5rem 0; color: #334155; line-height: 1.7;">
+                    Let's write out exactly what both sides mean and stack them on top of each other term-by-term:
+                </p>
+
+                <div style="overflow-x: auto; margin-bottom: 1rem;">
+                    $$
+                    \begin{array}{rcccccccccc}
+                    k! & = & 1 & \times & 2 & \times & 3 & \times & 4 & \times \dots \times & k \\
+                    2^{k-1} & = & 1 & \times & 2 & \times & 2 & \times & 2 & \times \dots \times & 2 \\
+                    \hline
+                    \text{Compare:} & & (1=1) & & (2=2) & & (3>2) & & (4>2) & & (k \ge 2)
+                    \end{array}
+                    $$
+                </div>
+
+                <p style="margin: 0; color: #334155; line-height: 1.7;">
+                    Look at the pairings. For the first two slots, the numbers are identical. But for every single slot after that, the building block in the top row (the factorial) is strictly larger than the $2$ in the bottom row. Because every individual piece of $k!$ is greater than or equal to the corresponding piece of $2^{k-1}$, the final multiplied total of $k!$ must be larger. Since $k!$ is a mathematically "heavier" denominator, dividing $1$ by it naturally results in a smaller fraction.
+                </p>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                By replacing our factorial denominators with these simple powers of $2$, we effectively convert the tail end of our chaotic expansion into a classic geometric series. Instead of incorrectly treating the entire string as one series, we leave the very first $1$ alone, and group the remaining terms into a predictable geometric sum ($1 + \frac{1}{2} + \frac{1}{4} + \dots$). This allows us to easily evaluate the infinite sum and definitively prove the sequence is bounded strictly below $3$.
+            </p>
+
             <div style="text-align: center; margin: 0.75rem 0;">
                 $$a_n < 1 + 1 + \frac{1}{2} + \frac{1}{4} + \dots + \frac{1}{2^{n-1}} < 1 + \frac{1}{1 - 1/2} = 3$$
             </div>
+
             <p>Because $(a_n)$ is increasing and bounded above by 3, the Monotone Convergence Theorem guarantees it converges. Its limit is <strong>Euler's number</strong>:</p>
             <div style="text-align: center; margin: 0.75rem 0; font-size: 1.15rem;">
                 $$e = \lim_{n\to\infty} \left(1 + \frac{1}{n}\right)^n \approx 2.71828\dots$$
