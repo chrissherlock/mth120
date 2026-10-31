@@ -318,21 +318,56 @@
             <div class="infobox">
                 <h4>🛠️ The 4-Step Strategy</h4>
                 <ol style="margin: 0.5rem 0 0.5rem 1.25rem; padding: 0;">
-                    <li style="margin-bottom: 0.4rem;"><strong>Step 1: Prove Boundedness.</strong> Use induction to show $a_n \le M$ (bounded above) or $a_n \ge m$ (bounded below).</li>
-                    <li style="margin-bottom: 0.4rem;"><strong>Step 2: Prove Monotonicity.</strong> Show $a_{n+1} \ge a_n$ (increasing) or $a_{n+1} \le a_n$ (decreasing).</li>
-                    <li style="margin-bottom: 0.4rem;"><strong>Step 3: Invoke the MCT.</strong> The Monotone Convergence Theorem guarantees a finite limit $L$ exists.</li>
-                    <li><strong>Step 4: Solve Algebraically.</strong> Take the limit of both sides of $a_{n+1} = f(a_n)$ to find $L$.</li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Step 1: Prove Boundedness.</strong> Use mathematical induction to show the sequence is trapped by a ceiling ($a_n \le M$) or a floor ($a_n \ge m$).</li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Step 2: Prove Monotonicity.</strong> Use induction again to show the sequence only moves in one direction: $a_{n+1} > a_n$ (increasing) or $a_{n+1} < a_n$ (decreasing).</li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Step 3: Invoke the MCT.</strong> Now that you have proven the sequence is physically trapped and moving in one direction, the Monotone Convergence Theorem guarantees a finite limit $L$ exists.</li>
+                    <li><strong>Step 4: Solve Algebraically.</strong> Because you legally proved $L$ exists in Step 3, you can now safely take the limit of both sides of the formula ($a_{n+1} = f(a_n)$) to find exactly what $L$ is.</li>
                 </ol>
             </div>
 
+            <div class="aside-box">
+                <h4>💡 The "Cheat Code" for Step 1</h4>
+                <p style="margin-bottom: 0;">How do you know what number to use for your boundary in Step 1? You cheat. Do Step 4 on a piece of scratch paper first. If your algebraic scratch-work tells you the limit is going to be 2, then you immediately know that 2 is the perfect ceiling to use for your boundedness proof.</p>
+            </div>
+
             <div class="worked-example-box">
-                <h4>🎯 Worked Example: Nested Radical $x_1 = \sqrt{2}, \; x_{n+1} = \sqrt{2 + x_n}$</h4>
-                <ol style="margin: 0.4rem 0 0 1.25rem; padding: 0;">
-                    <li><strong>Boundedness:</strong> $x_1 < 2$. If $x_k < 2$, then $x_{k+1} = \sqrt{2 + x_k} < \sqrt{4} = 2$. Bounded above by 2.</li>
-                    <li><strong>Monotonicity:</strong> $x_2 = \sqrt{2 + \sqrt{2}} > \sqrt{2} = x_1$. By induction, strictly increasing.</li>
-                    <li><strong>MCT:</strong> Increasing and bounded above $\implies \lim x_n = L$ exists.</li>
-                    <li><strong>Evaluation:</strong> $L = \sqrt{2 + L} \implies L^2 - L - 2 = 0 \implies (L-2)(L+1) = 0$. Since $x_n > 0$, $L = 2$.</li>
-                </ol>
+                <h4>🎯 Worked Example: The Nested Radical</h4>
+                <p>Let's define a sequence by $x_1 = \sqrt{2}$, and $x_{n+1} = \sqrt{2 + x_n}$. What is its limit?</p>
+                <p><em>(Scratchpad math: If we assume a limit $L$ exists, $L = \sqrt{2+L}$, which squares to $L^2 - L - 2 = 0$. Factoring gives $(L-2)(L+1)=0$. Since our terms are positive, the limit must be 2. Now we know 2 is the ceiling we need to prove!)</em></p>
+
+                <p style="font-weight: 600; margin-top: 1.25rem;">Step 1: Prove Boundedness (Show it never passes 2)</p>
+                <ul style="margin: 0.5rem 0 1rem 1.25rem; padding: 0; font-size: 0.95rem;">
+                    <li style="margin-bottom: 0.25rem;"><strong>Base Case:</strong> For $n=1$, $x_1 = \sqrt{2} \approx 1.414$, which is strictly less than $2$.</li>
+                    <li style="margin-bottom: 0.25rem;"><strong>Inductive Assumption:</strong> Assume that for some step $k$, $x_k < 2$.</li>
+                    <li><strong>Inductive Step:</strong> We must prove $x_{k+1} < 2$.
+                        <div style="text-align: center; margin: 0.35rem 0;">$$x_{k+1} = \sqrt{2 + x_k}$$</div>
+                        Because we assumed $x_k < 2$, we can replace $x_k$ with 2 to create a strict inequality:
+                        <div style="text-align: center; margin: 0.35rem 0;">$$x_{k+1} < \sqrt{2 + 2} = \sqrt{4} = 2$$</div>
+                        By induction, the sequence is bounded above by 2 forever.
+                    </li>
+                </ul>
+
+                <p style="font-weight: 600; margin-top: 1.25rem;">Step 2: Prove Monotonicity (Show it is always increasing)</p>
+                <ul style="margin: 0.5rem 0 1rem 1.25rem; padding: 0; font-size: 0.95rem;">
+                    <li style="margin-bottom: 0.25rem;"><strong>Base Case:</strong> $x_2 = \sqrt{2 + \sqrt{2}} \approx 1.84$. This is greater than $x_1$ ($1.414$). So, $x_2 > x_1$.</li>
+                    <li style="margin-bottom: 0.25rem;"><strong>Inductive Assumption:</strong> Assume that at step $k$, the sequence increased: $x_{k} > x_{k-1}$.</li>
+                    <li><strong>Inductive Step:</strong> We must prove it increases at the next step: $x_{k+1} > x_k$.
+                        <div style="text-align: center; margin: 0.35rem 0;">$$x_{k+1} = \sqrt{2 + x_k}$$</div>
+                        Because we assumed $x_k > x_{k-1}$, we can swap them out to maintain the inequality:
+                        <div style="text-align: center; margin: 0.35rem 0;">$$x_{k+1} > \sqrt{2 + x_{k-1}}$$</div>
+                        But notice that $\sqrt{2 + x_{k-1}}$ is exactly the definition of $x_k$. Therefore, $x_{k+1} > x_k$. By induction, it is strictly increasing.
+                    </li>
+                </ul>
+
+                <p style="font-weight: 600; margin-top: 1.25rem;">Step 3: Invoke the MCT</p>
+                <p>Because the sequence is strictly increasing (Step 2) and securely trapped below a ceiling of 2 (Step 1), the Monotone Convergence Theorem formally guarantees that a finite limit $\lim x_n = L$ exists.</p>
+
+                <p style="font-weight: 600; margin-top: 1.25rem;">Step 4: Solve Algebraically</p>
+                <p style="margin-bottom: 0;">Because Step 3 gave us mathematical permission, we can now take the limit of the formula $x_{n+1} = \sqrt{2 + x_n}$. Every term becomes $L$:</p>
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.15rem;">
+                    $$L = \sqrt{2 + L} \implies L^2 = 2 + L \implies L^2 - L - 2 = 0$$
+                </div>
+                <p style="margin-bottom: 0;">Factoring gives $(L-2)(L+1) = 0$. Since our sequence consists entirely of positive square roots, the limit cannot be $-1$. The limit is exactly $2$. $\blacksquare$</p>
             </div>
 
             <!-- SECTION 4 -->
