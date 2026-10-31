@@ -100,7 +100,7 @@
         .lecture-card:hover { transform: translateY(-2px); box-shadow: 0 6px 12px -2px rgba(0,0,0,0.08); border-color: var(--accent); }
         .lecture-card h3 { margin-top: 0; color: #0f172a; }
         .lecture-badge { display: inline-block; background: var(--accent); color: white; padding: 0.2rem 0.55rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem; }
-    
+
         /* Mobile-first layout adjustment for phones / smaller viewports */
         @media (max-width: 768px) {
             /* Allow long formulas to scroll horizontally on small viewports */
@@ -132,7 +132,7 @@
                 padding-bottom: 0.75rem;
                 margin-bottom: 1.25rem;
             }
-        
+
             /* Full-width responsive biography cards on mobile */
             .biography-box {
                 padding: 1.25rem 1rem !important;
@@ -160,14 +160,12 @@
                 min-width: 0 !important;
             }
 
-        
             /* Tighten list indentation exclusively on mobile */
             ol, ul {
                 padding-left: 1.25rem !important;
                 margin-left: 0 !important;
             }
 
-        
             /* Keep header and footer navigation buttons side-by-side on mobile */
             .header > div:last-child,
             .nav-btn-group {
@@ -190,7 +188,6 @@
                 text-overflow: ellipsis !important;
             }
 
-        
             /* Prevent long math text or expressions from overflowing mobile screens */
             p, div, li, blockquote {
                 word-break: break-word;
@@ -225,15 +222,26 @@
                 <img src="images/chapter2-hero.jpg" alt="Week 2: Limits of Sequences - UNE Campus Discovery Trail" style="width: 100%; height: auto; display: block;">
             </div>
 
-            <div class="intro-lead">
-                Welcome to Lecture 6. Here we investigate recursive sequences, expose the dangers of blind algebraic limit evaluation, prove error contraction for continued fractions, and formalize divergence to infinity.
+            <div style="margin: 2.25rem 0 2.5rem 0;">
+                <h3 style="margin-top: 0; color: #0f172a; font-size: 1.3rem;">
+                    Welcome to Lecture 6: Recursive Sequences and Divergence to Infinity
+                </h3>
+                <p style="margin: 0 0 1.15rem 0; color: #334155; line-height: 1.75; font-size: 1rem;">
+                    Take a moment to look back at the conceptual gauntlet you've just run. In the first half of this week, you built the rigorous $\epsilon\text{-}N$ foundation of limits. In Lecture 5, you learned how to trap complex, unpredictable sequences using physical boundaries like the Monotone Convergence and Squeeze theorems. You have successfully dismantled the "magic" of calculus and replaced it with unbreakable mathematical logic.
+                </p>
+                <p style="margin: 0 0 1.15rem 0; color: #334155; line-height: 1.75; font-size: 1rem;">
+                    Today, as we close out Week 2, we are tying up two crucial loose ends. First, we will take a deeper dive into <strong>Recursive Sequences</strong>. You saw a brief, successful glimpse of these when we used the MCT, but today we will fully unpack how to analyze sequences that don't give you a clear map, but instead dynamically generate themselves one step at a time based on their own history. Second, we will look at the ultimate rebellious sequences: those that shatter their ceilings and exhibit <strong>Divergence to Infinity</strong>.
+                </p>
+                <p style="margin: 0 0 0.75rem 0; color: #334155; line-height: 1.75; font-size: 1rem;">
+                    Up until now, our working definition of divergence has just been a negative statement: <em>"it fails to converge."</em> But a sequence that bounces chaotically between $-1$ and $1$ is physically very different from a sequence rocketing upward forever. Today, we will build a formal, rigorous definition for infinity itself. Mastering this precise language of recursion and unbounded growth is the essential bridge to our next major chapter—Infinite Series—where we will need to understand exactly how mathematical structures accumulate, and exactly what happens when they explode. Let's finish the week strong!
+                </p>
             </div>
 
             <!-- TABLE OF CONTENTS -->
             <div class="toc-box">
                 <h4>📌 Lecture 6 Topics</h4>
                 <ul class="toc-grid">
-                    <li><a href="#section-blind-algebra">1. The Fallacy of Blind Algebra</a></li>
+                    <li><a href="#section-recursive">1. What is a Recursive Sequence?</a></li>
                     <li><a href="#section-recurrence-sqrt2">2. Continued Fractions &amp; Error Contraction to $\sqrt{2}$</a></li>
                     <li><a href="#section-4step">3. The 4-Step Strategy for Recurrences</a></li>
                     <li><a href="#section-infinity">4. Infinity as a Limit ($M\text{-}N$ Definition)</a></li>
@@ -242,15 +250,34 @@
             </div>
 
             <!-- SECTION 1 -->
-            <h2 id="section-blind-algebra">1. The Fallacy of Blind Algebra</h2>
+            <h2 id="section-recursive">1. What is a Recursive Sequence?</h2>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
+                Up until now, almost every sequence you have worked with has been <strong>explicit</strong>. An explicit sequence gives you a direct mathematical formula (like $a_n = \frac{1}{n}$). If you want to know the 100th term, you just plug in $n=100$ and teleport straight to the answer.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                A <strong>recursive sequence</strong> operates entirely differently. Instead of a direct map, it gives you a starting position (like $a_1 = 2$) and a <em>rule for how to take the next step</em> based on where you currently stand. Mathematically, this rule is written as $a_{n+1} = f(a_n)$. The sequence uses its own past to generate its future. If you want to calculate the 100th term, you cannot teleport; you must know the 99th term first.
+            </p>
+
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 2.5rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem;">Existence Before Algebra (The Limit Prerequisite)</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
+                When you are handed a recursive formula like $a_{n+1} = f(a_n)$ and asked to find its limit, your mathematical reflexes should immediately kick in. Your natural instinct is likely to apply the Algebraic Limit Laws: if the sequence converges to some final destination $L$, then as $n$ goes to infinity, both the "current step" ($a_n$) and the "next step" ($a_{n+1}$) must eventually become $L$. You can simply write $L = f(L)$ and solve for $L$ using basic algebra.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                <strong>This algebraic instinct is absolutely correct and highly powerful.</strong> It is exactly how professional mathematicians solve these problems. However, this algebraic tool has a strict built-in safety switch: the equation $L = f(L)$ is only legally and mathematically valid <em>after</em> you have proven that a finite limit $L$ actually exists.
+            </p>
+
             <div class="aside-box">
-                <h4>⚠️ Putting the Cart Before the Horse</h4>
-                <p>When given a recurrence $a_{n+1} = f(a_n)$, students often write $L = f(L)$ and solve for $L$. But this calculation is only legally valid <strong>after</strong> you have proven the limit exists!</p>
-                <p><strong>The Fibonacci Counterexample:</strong> Consider the Fibonacci numbers $f_0 = 1, f_1 = 1$, and $f_{n+2} = f_{n+1} + f_n$ ($1, 1, 2, 3, 5, 8, 13, \dots$). If we blindly assume $\lim f_n = L$ exists:</p>
-                <div style="text-align: center; margin: 0.5rem 0;">
-                    $$L = L + L \implies L = 2L \implies L = 0$$
+                <h4>⚠️ The Fibonacci Boundary Check</h4>
+                <p>To see why this existence prerequisite is so important, consider the famous Fibonacci sequence: $f_0 = 1, f_1 = 1$, and $f_{n+2} = f_{n+1} + f_n$ ($1, 1, 2, 3, 5, 8, \dots$). We intuitively know this sequence grows forever to infinity.</p>
+                <p>But what if we <strong>skip the boundary check</strong>? Skipping the check means we don't bother to mathematically prove the sequence is trapped by a ceiling. Instead, we just blindly assume it eventually flattens out at some finite limit $L$.</p>
+                <p>If it flattens out at $L$, then eventually every term in the formula ($f_{n+2}$, $f_{n+1}$, and $f_n$) just becomes $L$. Look what happens when we plug that assumption into the Fibonacci rule:</p>
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.15rem;">
+                    $$L = L + L \implies L = 2L$$
                 </div>
-                <p style="margin-bottom: 0;">This is clearly false. Blind algebra assumes existence before proving it.</p>
+                <p>Subtracting $L$ from both sides leaves us with exactly $L = 0$.</p>
+                <p>The algebra worked flawlessly and output $0$. But this completely contradicts reality—the sequence is rocketing away from zero!</p>
+                <p style="margin-bottom: 0;"><strong>The Takeaway:</strong> Algebra is like a blind machine. If you feed it an equation and ask <em>"where does this stop?"</em>, it will confidently crunch the numbers and hand you an answer, even if the sequence is actually rocketing off into outer space. You must use boundary theorems (like the Monotone Convergence Theorem) first to guarantee a limit actually exists before your algebraic tools can be trusted.</p>
             </div>
 
             <!-- SECTION 2 -->
@@ -345,6 +372,7 @@
                 </div>
                 <p style="margin-bottom: 0;">As $n \to \infty$, the term $\frac{n-1}{2}\epsilon^2$ grows without bound, forcing $\frac{r^n}{n} \to \infty$. Hence, exponential growth dominates any linear polynomial.</p>
             </div>
+
             <!-- FOOTER NAVIGATION -->
             <div class="footer-nav" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
                 <a href="week2-lecture5.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&larr; Lecture 5</a>
