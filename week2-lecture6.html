@@ -103,7 +103,6 @@
 
         /* Mobile-first layout adjustment for phones / smaller viewports */
         @media (max-width: 768px) {
-            /* Allow long formulas to scroll horizontally on small viewports */
             .katex-display {
                 overflow-x: auto !important;
                 overflow-y: hidden !important;
@@ -112,93 +111,24 @@
                 padding: 0.25rem 0 !important;
             }
 
-            body {
-                background: #ffffff;
-                padding: 1rem 0.75rem;
-            }
-            .container {
-                max-width: 100%;
-                margin: 0;
-            }
-            .module-content {
-                background: transparent;
-                padding: 0;
-                border: none;
-                border-radius: 0;
-                box-shadow: none;
-                margin-bottom: 1rem;
-            }
-            .header {
-                padding-bottom: 0.75rem;
-                margin-bottom: 1.25rem;
-            }
+            body { background: #ffffff; padding: 1rem 0.75rem; }
+            .container { max-width: 100%; margin: 0; }
+            .module-content { background: transparent; padding: 0; border: none; border-radius: 0; box-shadow: none; margin-bottom: 1rem; }
+            .header { padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
 
-            /* Full-width responsive biography cards on mobile */
-            .biography-box {
-                padding: 1.25rem 1rem !important;
-            }
-            .biography-box > div {
-                flex-direction: column !important;
-                align-items: stretch !important;
-                gap: 1.25rem !important;
-            }
-            .biography-box > div > div:first-child {
-                flex: 0 0 100% !important;
-                width: 100% !important;
-                max-width: 100% !important;
-                margin: 0 0 0.5rem 0 !important;
-            }
-            .biography-box > div > div:first-child img {
-                width: 100% !important;
-                max-height: 380px !important;
-                object-fit: cover !important;
-                border-radius: 6px !important;
-                display: block !important;
-            }
-            .biography-box > div > div:last-child {
-                width: 100% !important;
-                min-width: 0 !important;
-            }
+            .biography-box { padding: 1.25rem 1rem !important; }
+            .biography-box > div { flex-direction: column !important; align-items: stretch !important; gap: 1.25rem !important; }
+            .biography-box > div > div:first-child { flex: 0 0 100% !important; width: 100% !important; max-width: 100% !important; margin: 0 0 0.5rem 0 !important; }
+            .biography-box > div > div:first-child img { width: 100% !important; max-height: 380px !important; object-fit: cover !important; border-radius: 6px !important; display: block !important; }
+            .biography-box > div > div:last-child { width: 100% !important; min-width: 0 !important; }
 
-            /* Tighten list indentation exclusively on mobile */
-            ol, ul {
-                padding-left: 1.25rem !important;
-                margin-left: 0 !important;
-            }
+            ol, ul { padding-left: 1.25rem !important; margin-left: 0 !important; }
 
-            /* Keep header and footer navigation buttons side-by-side on mobile */
-            .header > div:last-child,
-            .nav-btn-group {
-                display: flex !important;
-                flex-direction: row !important;
-                flex-wrap: nowrap !important;
-                width: 100% !important;
-                gap: 0.5rem !important;
-            }
+            .header > div:last-child, .nav-btn-group { display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; width: 100% !important; gap: 0.5rem !important; }
+            .header > div:last-child a, .nav-btn-group a { flex: 1 1 0 !important; min-width: 0 !important; text-align: center !important; padding: 0.55rem 0.4rem !important; font-size: 0.82rem !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
 
-            .header > div:last-child a,
-            .nav-btn-group a {
-                flex: 1 1 0 !important;
-                min-width: 0 !important;
-                text-align: center !important;
-                padding: 0.55rem 0.4rem !important;
-                font-size: 0.82rem !important;
-                white-space: nowrap !important;
-                overflow: hidden !important;
-                text-overflow: ellipsis !important;
-            }
-
-            /* Prevent long math text or expressions from overflowing mobile screens */
-            p, div, li, blockquote {
-                word-break: break-word;
-                overflow-wrap: break-word;
-            }
-            .math-overflow-fix, div[style*="text-align: center"] {
-                max-width: 100%;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-
+            p, div, li, blockquote { word-break: break-word; overflow-wrap: break-word; }
+            .math-overflow-fix, div[style*="text-align: center"] { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
         }
     </style>
 </head>
@@ -242,7 +172,7 @@
                 <h4>📌 Lecture 6 Topics</h4>
                 <ul class="toc-grid">
                     <li><a href="#section-recursive">1. What is a Recursive Sequence?</a></li>
-                    <li><a href="#section-recurrence-sqrt2">2. Continued Fractions &amp; Error Contraction to $\sqrt{2}$</a></li>
+                    <li><a href="#section-recurrence-sqrt2">2. Approximating the Impossible: Calculating $\sqrt{2}$</a></li>
                     <li><a href="#section-4step">3. The 4-Step Strategy for Recurrences</a></li>
                     <li><a href="#section-infinity">4. Infinity as a Limit ($M\text{-}N$ Definition)</a></li>
                     <li><a href="#section-growth-rates">5. Growth Rates: Geometric vs. Linear Divergence</a></li>
@@ -281,23 +211,106 @@
             </div>
 
             <!-- SECTION 2 -->
-            <h2 id="section-recurrence-sqrt2">2. Continued Fractions &amp; Error Contraction to $\sqrt{2}$</h2>
-            <p>Consider the recurrence defined by $a_0 = 1$ and $a_{n+1} = \frac{a_n + 2}{a_n + 1}$:</p>
-            <div style="text-align: center; margin: 0.5rem 0;">
-                $$a_0 = 1, \quad a_1 = \frac{3}{2} = 1.5, \quad a_2 = \frac{7}{5} = 1.4, \quad a_3 = \frac{17}{12} \approx 1.4167, \quad a_4 = \frac{41}{29} \approx 1.4138$$
+            <h2 id="section-recurrence-sqrt2" style="margin-top: 3.5rem;">2. Approximating the Impossible: Calculating $\sqrt{2}$</h2>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
+                <strong>Why should we care about recursive sequences?</strong> Because they allow us to calculate the impossible.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                Imagine you are an ancient mathematician trying to calculate the diagonal of a $1 \times 1$ square. The answer is $\sqrt{2}$. But $\sqrt{2}$ is an irrational number—it is an infinite, non-repeating decimal. You cannot write it as a simple fraction, and you certainly don't have a calculator. How do you find its value using only basic arithmetic?
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                The answer is to build a <strong>recursive machine</strong>. You design a formula where you plug in a bad guess, and the formula spits out a slightly better fraction. You take that new fraction, plug it back into the formula, and get an even better one.
+            </p>
+
+            <div class="aside-box" style="margin-top: 2rem;">
+                <h4>💡 Demystifying the Magic: Where does the formula come from?</h4>
+                <p>Math textbooks love to drop formulas from the sky. Let's look at exactly how we invent a recursive machine to find $\sqrt{2}$. We start with the basic equation and use an algebraic trick to turn it into a loop:</p>
+                <div style="text-align: center; margin: 1rem 0; font-size: 1.15rem;">
+                    $$x^2 = 2$$
+                </div>
+                <p style="margin-bottom: 0.5rem;">Add $x$ to both sides so we have $x$ in multiple places:</p>
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.15rem;">
+                    $$x^2 + x = x + 2$$
+                </div>
+                <p style="margin-bottom: 0.5rem;">Factor out the $x$ on the left:</p>
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.15rem;">
+                    $$x(x + 1) = x + 2$$
+                </div>
+                <p style="margin-bottom: 0.5rem;">Divide by $(x + 1)$ to isolate $x$:</p>
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.15rem;">
+                    $$x = \frac{x + 2}{x + 1}$$
+                </div>
+                <p style="margin-top: 1rem; margin-bottom: 0;"><strong>The Machine is Built!</strong> We just replace the $x$ on the left with our "next step" ($a_{n+1}$) and the $x$'s on the right with our "current step" ($a_n$). We now have a recursive formula that zeroes in on $\sqrt{2}$!</p>
             </div>
 
-            <div class="worked-example-box">
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 2rem;">
+                Let's test our new machine. We will start with a terrible guess ($a_0 = 1$) and see what fractions it generates:
+            </p>
+            <div style="text-align: center; margin: 1.5rem 0; font-size: 1.15rem;">
+                $$a_0 = 1, \quad a_1 = \frac{1+2}{1+1} = 1.5, \quad a_2 = \frac{1.5+2}{1.5+1} = 1.4, \quad a_3 = \frac{17}{12} \approx 1.416, \quad a_4 = \frac{41}{29} \approx 1.4138$$
+            </div>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                Notice how the numbers bounce above and below the true value of $\sqrt{2}$ ($\approx 1.4142$), but the bounces are getting smaller. This brings us to a powerful proof strategy.
+            </p>
+
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 2.5rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem;">What is "Error Contraction"?</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
+                When a sequence bounces up and down, we cannot use the Monotone Convergence Theorem (because it isn't moving in just one direction).
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                Instead, we use a strategy called <strong>Error Contraction</strong>. Instead of looking at the sequence numbers themselves, we look at the <em>gap</em> between our sequence and the target. This gap is our "Error."
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                <strong>The Concept:</strong> If you are guessing a number, and with every single guess, the size of your error gets chopped in half, what eventually happens? The error shrinks to zero. If the error reaches zero, you have hit the exact target.
+            </p>
+
+            <div class="worked-example-box" style="margin-top: 2rem;">
                 <h4>🎯 Rigorous Proof of Convergence via Error Contraction</h4>
-                <p>Let $\alpha_n = |a_n - \sqrt{2}|$ measure the distance to $\sqrt{2}$. Then:</p>
-                <div style="text-align: center; margin: 0.5rem 0;">
-                    $$\alpha_{n+1} = \left|\frac{a_n + 2}{a_n + 1} - \sqrt{2}\right| = \left|\frac{a_n + 2 - \sqrt{2}a_n - \sqrt{2}}{a_n + 1}\right| = \frac{\sqrt{2} - 1}{a_n + 1} |a_n - \sqrt{2}|$$
+                <p>Let's define our Error at step $n$ (the absolute distance to the target) as $\text{Error}_n = |a_n - \sqrt{2}|$.</p>
+                <p>We want to prove that taking a step in our recursive machine forces this error to shrink significantly.</p>
+
+                <p style="font-weight: 600; margin-top: 1.25rem;">Step 1: Calculate the Error for the next step ($n+1$)</p>
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.1rem; overflow-x: auto;">
+                    $$\text{Error}_{n+1} = \left| a_{n+1} - \sqrt{2} \right| = \left| \frac{a_n + 2}{a_n + 1} - \sqrt{2} \right|$$
                 </div>
-                <p>Since $\sqrt{2} - 1 < 0.5$ and $a_n \ge 1$ (so $\frac{1}{a_n+1} \le \frac{1}{2}$), we have $\frac{\sqrt{2}-1}{a_n+1} < \frac{1}{2}$, giving:</p>
-                <div style="text-align: center; margin: 0.5rem 0;">
-                    $$\alpha_{n+1} < \frac{1}{2}\alpha_n \implies 0 \le \alpha_n < \left(\frac{1}{2}\right)^n \alpha_0$$
+
+                <p style="font-weight: 600; margin-top: 1.25rem;">Step 2: Find a common denominator to combine the terms</p>
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.1rem; overflow-x: auto;">
+                    $$= \left| \frac{a_n + 2 - \sqrt{2}(a_n + 1)}{a_n + 1} \right| = \left| \frac{a_n - \sqrt{2}a_n + 2 - \sqrt{2}}{a_n + 1} \right|$$
                 </div>
-                <p style="margin-bottom: 0;">Since $\lim_{n\to\infty} \left(\frac{1}{2}\right)^n = 0$, by the Squeeze Theorem $\alpha_n \to 0$, proving $\lim_{n\to\infty} a_n = \sqrt{2}$.</p>
+
+                <p style="font-weight: 600; margin-top: 1.25rem;">Step 3: Factor out the previous Error ($|a_n - \sqrt{2}|$)</p>
+                <p style="font-size: 0.95rem; color: #475569;"><em>(By factoring out $(1 - \sqrt{2})$ from the numerator, we can separate our previous error from the rest of the garbage)</em></p>
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.1rem; overflow-x: auto;">
+                    $$= \frac{\sqrt{2} - 1}{a_n + 1} \cdot |a_n - \sqrt{2}|$$
+                </div>
+
+                <p style="font-size: 0.95rem; color: #475569;"><em>(If the algebra in the numerator seems to jump too fast, here is the exact breakdown of how we separate the previous error from the rest of the terms)</em></p>
+                <ul style="margin: 0.5rem 0 1rem 1.25rem; padding: 0; font-size: 0.95rem;">
+                    <li style="margin-bottom: 0.4rem;"><strong>Group the terms:</strong> Rearrange the numerator to group the $a_n$ terms together and the constants together: $a_n - \sqrt{2}a_n + 2 - \sqrt{2}$.</li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Factor the groups:</strong> Pull $a_n$ out of the first pair, and pull $\sqrt{2}$ out of the second pair (remembering that $2 = \sqrt{2} \cdot \sqrt{2}$):
+                        <div style="text-align: center; margin: 0.35rem 0;">$$a_n(1 - \sqrt{2}) + \sqrt{2}(\sqrt{2} - 1)$$</div>
+                    </li>
+                    <li style="margin-bottom: 0.4rem;"><strong>Match the factors:</strong> To make the pieces in the parentheses match, rewrite $\sqrt{2}(\sqrt{2} - 1)$ as $-\sqrt{2}(1 - \sqrt{2})$. Now factor $(1 - \sqrt{2})$ out of the entire numerator:
+                        <div style="text-align: center; margin: 0.35rem 0;">$$(1 - \sqrt{2})(a_n - \sqrt{2})$$</div>
+                    </li>
+                    <li><strong>Separate the absolute values:</strong> The absolute value of a product is the product of the absolute values. Since $|1 - \sqrt{2}| = \sqrt{2} - 1$ and $|a_n + 1| = a_n + 1$, we are left with:</li>
+                </ul>
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.1rem; overflow-x: auto;">
+                    $$= \frac{\sqrt{2} - 1}{a_n + 1} \cdot |a_n - \sqrt{2}|$$
+                </div>
+
+                <p style="font-weight: 600; margin-top: 1.25rem;">Step 4: Prove the Shrinkage</p>
+                <p>We now have this relationship: $\text{Error}_{n+1} = \left(\frac{\sqrt{2} - 1}{a_n + 1}\right) \cdot \text{Error}_n$.</p>
+                <p>Look at the fraction multiplying our old error. We know $\sqrt{2} - 1 \approx 0.414$. We also know our sequence terms $a_n$ are always at least $1$, making the denominator $(a_n + 1)$ at least $2$.</p>
+                <p>Therefore, the fraction $\frac{0.414}{\text{at least } 2}$ is safely smaller than $\frac{1}{2}$. We have successfully proven that our error gets chopped by more than half every single step:</p>
+
+                <div style="text-align: center; margin: 1rem 0; font-size: 1.15rem; color: #065f46; font-weight: 700;">
+                    $$\text{Error}_{n+1} < \frac{1}{2}\text{Error}_n$$
+                </div>
+
+                <p style="margin-bottom: 0; margin-top: 1rem;">Because multiplying by a fraction less than $1$ repeatedly drives a number to zero (e.g., $\left(\frac{1}{2}\right)^n \to 0$), the Squeeze Theorem forces our Error sequence to exactly $0$. The sequence has no choice but to converge exactly to $\sqrt{2}$. $\blacksquare$</p>
             </div>
 
             <!-- SECTION 3 -->
