@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Podcast Timecode Logger</title>
+    <title>Podcast Timecode Logger Pro</title>
     <style>
         :root {
             --bg: #f8fafc;
@@ -13,6 +13,7 @@
             --accent: #0284c7;
             --danger: #e11d48;
             --success: #059669;
+            --warning: #f59e0b;
             --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
         }
 
@@ -28,7 +29,7 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 850px;
             width: 100%;
         }
 
@@ -53,28 +54,23 @@
             margin-bottom: 2rem;
         }
 
-        .file-picker-container.active {
-            border-color: var(--accent);
-            background: #e0f2fe;
-        }
-
         .instructions {
-            background: #fffbeb;
-            border: 1px solid #fde68a;
-            border-left: 4px solid #d97706;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-left: 4px solid #16a34a;
             padding: 1rem 1.25rem;
             border-radius: 6px;
             margin-bottom: 2rem;
-            font-size: 0.95rem;
-            color: #92400e;
-            display: none; /* Hidden until file is loaded */
+            font-size: 0.92rem;
+            color: #166534;
+            display: none;
         }
 
         audio {
             width: 100%;
             height: 48px;
             margin-bottom: 2rem;
-            display: none; /* Hidden until file is loaded */
+            display: none;
         }
 
         /* Table Styling */
@@ -83,11 +79,11 @@
             border-collapse: collapse;
             margin-bottom: 2rem;
             font-size: 0.95rem;
-            display: none; /* Hidden until file is loaded */
+            display: none;
         }
 
         th, td {
-            padding: 0.75rem 1rem;
+            padding: 0.75rem 0.5rem;
             text-align: left;
             border-bottom: 1px solid #e2e8f0;
         }
@@ -101,7 +97,9 @@
             letter-spacing: 0.05em;
         }
 
+        tr { transition: background 0.3s; }
         tr:hover { background: #f8fafc; }
+        tr.collision-warning { background: #fef3c7; }
 
         td input[type="text"] {
             width: 100%;
@@ -131,7 +129,7 @@
         }
 
         .btn-export {
-            display: none; /* Hidden until file is loaded */
+            display: none;
             width: 100%;
             background: var(--success);
             color: white;
@@ -145,28 +143,39 @@
             text-align: center;
         }
 
-        .btn-export:hover {
-            background: #047857;
-        }
+        .btn-export:hover { background: #047857; }
         
         .delete-btn {
             background: #fee2e2;
             color: #ef4444;
             border: 1px solid #fca5a5;
-            padding: 0.25rem 0.5rem;
+            padding: 0.35rem 0.5rem;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
         }
-        .delete-btn:hover {
-            background: #fecaca;
-        }
+        .delete-btn:hover { background: #fecaca; }
         
         .status-recording {
             color: #d97706;
             font-weight: bold;
             font-style: italic;
+        }
+
+        #collision-alert {
+            display: none;
+            background: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #f87171;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
         }
 
     </style>
@@ -175,7 +184,7 @@
 
 <div class="container">
     <div class="card">
-        <h2>Podcast Timecode Logger</h2>
+        <h2>Podcast Timecode Logger Pro</h2>
         <p>Map the start and end times for concepts discussed in your podcast.</p>
         
         <!-- File Picker -->
@@ -185,21 +194,24 @@
         </div>
 
         <div class="instructions" id="instructions-panel">
-            <strong>Streamlined Workflow:</strong><br>
+            <strong>Advanced Splicing Engine Active:</strong><br>
             • The segment automatically <strong>Starts</strong> from 0:00 (or the end of your last segment).<br>
-            • Press <strong style="background: #fde68a; padding: 2px 6px; border-radius: 4px;">E</strong> to mark the <strong>End</strong> of the current concept. The audio will pause.<br>
-            • Type the description, then press <strong>Enter</strong>. The audio will instantly resume and start a new segment automatically.
+            • Press <strong style="background: #bbf7d0; padding: 2px 6px; border-radius: 4px;">E</strong> to mark the <strong>End</strong> of the current concept. The audio will pause.<br>
+            • Type the description, then press <strong>Enter</strong> to instantly resume and track the next segment.<br>
+            • <em>Clicking <strong>"↺ Re-Record"</strong> will jump the audio back to that segment's exact start time and protect subsequent segments from being overwritten.</em>
         </div>
+
+        <div id="collision-alert">⚠️ Boundary reached! Auto-paused to prevent overwriting the next segment.</div>
 
         <audio id="podcast-audio" controls preload="metadata"></audio>
 
         <table id="timecode-table">
             <thead>
                 <tr>
-                    <th style="width: 15%;">Start Time</th>
-                    <th style="width: 15%;">End Time</th>
-                    <th style="width: 60%;">Concept / Discussion Topic</th>
-                    <th style="width: 10%;">Actions</th>
+                    <th style="width: 15%;">Start</th>
+                    <th style="width: 15%;">End</th>
+                    <th style="width: 55%;">Concept / Discussion Topic</th>
+                    <th style="width: 15%;">Actions</th>
                 </tr>
             </thead>
             <tbody id="table-body">
@@ -212,42 +224,39 @@
 </div>
 
 <script>
-    let currentStartTime = 0; // Automatically starts at 0
+    let currentStartTime = 0;
     let isRecording = false;
+    let maxAllowedEndTime = Infinity; 
+    
     const tableBody = document.getElementById('table-body');
     const audioPlayer = document.getElementById('podcast-audio');
     const audioUpload = document.getElementById('audio-upload');
     const dropZone = document.getElementById('drop-zone');
-    
-    // UI Elements to reveal
     const instructionsPanel = document.getElementById('instructions-panel');
     const timecodeTable = document.getElementById('timecode-table');
     const btnExport = document.getElementById('btn-export');
+    const collisionAlert = document.getElementById('collision-alert');
 
     // Handle File Selection
     audioUpload.addEventListener('change', function(e) {
         const file = e.target.files[0];
-        if (file) {
-            loadAudioFile(file);
-        }
+        if (file) loadAudioFile(file);
     });
 
     function loadAudioFile(file) {
-        // Create an object URL for the local file
         const objectUrl = URL.createObjectURL(file);
         audioPlayer.src = objectUrl;
         
-        // Update UI to show file is loaded
         dropZone.style.display = 'none';
         instructionsPanel.style.display = 'block';
         audioPlayer.style.display = 'block';
         timecodeTable.style.display = 'table';
         btnExport.style.display = 'block';
         
-        // Reset table if loading a new file
         tableBody.innerHTML = '';
         currentStartTime = 0;
         isRecording = true;
+        recalculateBoundary();
         renderRecordingRow();
     }
 
@@ -257,13 +266,43 @@
         return `${mins}:${secs}`;
     }
 
+    // Sorts all rows (including the active recording row) chronologically
+    function sortRows() {
+        const rows = Array.from(document.querySelectorAll('#table-body tr'));
+        rows.sort((a, b) => parseFloat(a.dataset.startRaw) - parseFloat(b.dataset.startRaw));
+        rows.forEach(row => tableBody.appendChild(row));
+    }
+
+    // Finds the next existing segment so we don't overwrite it
+    function recalculateBoundary() {
+        if (!isRecording) {
+            maxAllowedEndTime = Infinity;
+            return;
+        }
+        
+        const existingRows = document.querySelectorAll('#table-body tr:not(#temp-recording-row)');
+        let nextStart = Infinity;
+        
+        existingRows.forEach(row => {
+            const rowStart = parseFloat(row.dataset.startRaw);
+            // Find the closest segment that starts AFTER our current starting position
+            if (rowStart > currentStartTime + 0.1 && rowStart < nextStart) {
+                nextStart = rowStart;
+            }
+        });
+        
+        maxAllowedEndTime = nextStart;
+    }
+
     function renderRecordingRow() {
-        // Remove existing if any
         const existingRow = document.getElementById('temp-recording-row');
         if (existingRow) existingRow.remove();
 
+        collisionAlert.style.display = 'none';
+
         const tr = document.createElement('tr');
         tr.id = "temp-recording-row";
+        tr.dataset.startRaw = currentStartTime;
         tr.innerHTML = `
             <td><span class="time-badge">${formatTime(currentStartTime)}</span></td>
             <td class="status-recording">Recording...</td>
@@ -271,40 +310,103 @@
             <td></td>
         `;
         tableBody.appendChild(tr);
+        sortRows();
     }
 
-    // Monitor for the 'Enter' key inside inputs to save and resume
+    // Engine: Stop recording if we hit the boundary of the next segment
+    audioPlayer.addEventListener('timeupdate', () => {
+        if (isRecording && audioPlayer.currentTime >= maxAllowedEndTime) {
+            audioPlayer.pause();
+            audioPlayer.currentTime = maxAllowedEndTime;
+            
+            // Flash warning
+            collisionAlert.style.display = 'block';
+            
+            // Auto-trigger the End Sequence
+            triggerEndAction(maxAllowedEndTime);
+        }
+    });
+
+    // The Re-record Logic
+    window.deleteAndRerecord = function(btn, startTimeStr) {
+        const startTime = parseFloat(startTimeStr);
+        
+        // Remove the row from DOM
+        btn.closest('tr').remove();
+        
+        // Seek audio and reset state
+        audioPlayer.currentTime = startTime;
+        currentStartTime = startTime;
+        isRecording = true;
+        
+        recalculateBoundary();
+        renderRecordingRow();
+        
+        // Auto-play so they can hear what they are documenting
+        audioPlayer.play();
+    };
+
+    function triggerEndAction(endTime) {
+        if (!isRecording) return;
+        
+        if (endTime <= currentStartTime) {
+            alert("End time must be after start time.");
+            return;
+        }
+
+        audioPlayer.pause();
+        isRecording = false;
+
+        const tempRow = document.getElementById('temp-recording-row');
+        if (tempRow) tempRow.remove();
+
+        const tr = document.createElement('tr');
+        tr.dataset.startRaw = currentStartTime.toFixed(2);
+        tr.dataset.endRaw = endTime.toFixed(2);
+
+        tr.innerHTML = `
+            <td><span class="time-badge">${formatTime(currentStartTime)}</span></td>
+            <td><span class="time-badge">${formatTime(endTime)}</span></td>
+            <td><input type="text" class="concept-input" placeholder="Type description, then press ENTER to resume..." autofocus></td>
+            <td><button class="delete-btn" onclick="deleteAndRerecord(this, '${currentStartTime}')">↺ Re-Record</button></td>
+        `;
+        
+        tableBody.appendChild(tr);
+        sortRows();
+        
+        const newInput = tr.querySelector('input');
+        if (newInput) {
+            setTimeout(() => newInput.focus(), 10);
+        }
+    }
+
     document.addEventListener('keydown', (e) => {
-        // If we are typing in an input field and hit Enter
         if (e.target.tagName.toLowerCase() === 'input' && e.target.classList.contains('concept-input')) {
             if (e.key === 'Enter') {
                 e.preventDefault();
-                // Remove focus so 'E' hotkey works again
                 e.target.blur();
                 
-                // Automatically start the next segment
-                currentStartTime = audioPlayer.currentTime;
-                isRecording = true;
-                renderRecordingRow();
+                // Set the start time exactly where the last one ended
+                const row = e.target.closest('tr');
+                currentStartTime = parseFloat(row.dataset.endRaw);
                 
-                // Resume audio
+                isRecording = true;
+                recalculateBoundary();
+                renderRecordingRow();
                 audioPlayer.play();
             }
             return;
         }
 
-        // Global hotkeys (only if not typing in an input)
         if (e.target.tagName.toLowerCase() === 'input') return;
-        
-        // Only allow hotkeys if audio player is visible (file loaded)
         if (audioPlayer.style.display === 'none') return;
 
         const key = e.key.toLowerCase();
 
-        // Optional manual start (in case they paused manually and want to restart the block)
         if (key === 's') {
             currentStartTime = audioPlayer.currentTime;
             isRecording = true;
+            recalculateBoundary();
             renderRecordingRow();
         } 
         else if (key === 'e') {
@@ -312,70 +414,24 @@
                 alert("You need a starting point first! Press 'S' to start a new segment manually.");
                 return;
             }
-
-            const endTime = audioPlayer.currentTime;
-            
-            if (endTime <= currentStartTime) {
-                alert("End time must be after start time.");
-                return;
-            }
-
-            // Pause the audio to allow typing
-            audioPlayer.pause();
-            isRecording = false;
-
-            // Remove the temporary recording row
-            const tempRow = document.getElementById('temp-recording-row');
-            if (tempRow) tempRow.remove();
-
-            // Create the permanent row
-            const tr = document.createElement('tr');
-            
-            // Save the raw seconds as data attributes for the JSON export
-            tr.dataset.startRaw = currentStartTime.toFixed(2);
-            tr.dataset.endRaw = endTime.toFixed(2);
-
-            tr.innerHTML = `
-                <td><span class="time-badge">${formatTime(currentStartTime)}</span></td>
-                <td><span class="time-badge">${formatTime(endTime)}</span></td>
-                <td><input type="text" class="concept-input" placeholder="Type description, then press ENTER to resume..." autofocus></td>
-                <td><button class="delete-btn" onclick="this.closest('tr').remove()">Delete</button></td>
-            `;
-            
-            tableBody.appendChild(tr);
-            
-            // Focus the new input field automatically
-            const newInput = tr.querySelector('input');
-            if (newInput) {
-                setTimeout(() => newInput.focus(), 10);
-            }
+            triggerEndAction(audioPlayer.currentTime);
         }
     });
 
     function exportJSON() {
-        const rows = document.querySelectorAll('#table-body tr');
+        const rows = document.querySelectorAll('#table-body tr:not(#temp-recording-row)');
         const data = [];
-        
         let hasEmptyDescriptions = false;
 
         rows.forEach(row => {
-            // Skip the temporary recording row if it exists
-            if (row.id === "temp-recording-row") return;
-
             const start = parseFloat(row.dataset.startRaw);
             const end = parseFloat(row.dataset.endRaw);
             const input = row.querySelector('.concept-input');
             const concept = input ? input.value.trim() : "";
             
-            if (concept === "") {
-                hasEmptyDescriptions = true;
-            }
+            if (concept === "") hasEmptyDescriptions = true;
 
-            data.push({
-                start: start,
-                end: end,
-                concept: concept
-            });
+            data.push({ start, end, concept });
         });
 
         if (data.length === 0) {
@@ -388,18 +444,12 @@
             if (!proceed) return;
         }
 
-        // Create the JSON string
         const jsonString = JSON.stringify(data, null, 2);
-        
-        // Create a downloadable blob
         const blob = new Blob([jsonString], { type: "application/json" });
         const url = URL.createObjectURL(blob);
-        
-        // Create a temporary anchor element to trigger the download
         const a = document.createElement('a');
         a.href = url;
         
-        // Use the original audio filename for the JSON filename if possible
         let exportName = "podcast_timecodes.json";
         if (audioUpload.files.length > 0) {
             const originalName = audioUpload.files[0].name;
@@ -410,8 +460,6 @@
         
         document.body.appendChild(a);
         a.click();
-        
-        // Cleanup
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
     }
