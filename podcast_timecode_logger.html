@@ -19,13 +19,19 @@
         p { color: #475569; margin-bottom: 1.5rem; }
 
         /* AI Panel */
-        .ai-panel { background: var(--ai-bg); border: 1px solid var(--ai-border); border-left: 4px solid #7c3aed; padding: 1.25rem; border-radius: 8px; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .ai-panel { background: var(--ai-bg); border: 1px solid var(--ai-border); border-left: 4px solid #7c3aed; padding: 1.25rem; border-radius: 8px; margin-bottom: 2rem; display: flex; flex-direction: column; gap: 0.75rem; }
+        .ai-panel-top { display: flex; justify-content: space-between; align-items: center; }
         .ai-status { font-weight: 600; color: #5b21b6; font-size: 0.95rem; }
+        
+        /* Progress Bar Styles */
+        .progress-container { width: 100%; background: #e2e8f0; border-radius: 9999px; height: 10px; overflow: hidden; display: none; }
+        .progress-bar { width: 0%; height: 100%; background: #7c3aed; transition: width 0.3s ease; }
+
         .btn-ai { background: #7c3aed; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600; cursor: pointer; display: none; }
         .btn-ai:hover { background: #6d28d9; }
         .btn-ai:disabled { background: #c4b5fd; cursor: not-allowed; }
 
-        .file-picker-container { background: #f1f5f9; border: 2px dashed #cbd5e1; padding: 1.5rem; text-align: center; border-radius: 8px; margin-bottom: 2rem; transition: all 0.3s ease; }
+        .file-picker-container { background: #f1f5f9; border: 2px dashed #cbd5e1; padding: 1.5rem; text-align: center; border-radius: 8px; margin-bottom: 2rem; }
         audio { width: 100%; height: 48px; margin-bottom: 2rem; display: none; }
 
         table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; font-size: 0.95rem; display: none; }
@@ -64,8 +70,13 @@
         <p>Map concepts or use the on-device AI to transcribe segments automatically.</p>
         
         <div class="ai-panel">
-            <div class="ai-status" id="ai-status-text">🤖 AI Engine: Awaiting Audio File...</div>
-            <button class="btn-ai" id="btn-full-transcribe" onclick="transcribeFullFile()">Transcribe Full Audio</button>
+            <div class="ai-panel-top">
+                <div class="ai-status" id="ai-status-text">🤖 AI Engine: Idle (Load an audio file to start model download in the background)</div>
+                <button class="btn-ai" id="btn-full-transcribe" onclick="transcribeFullFile()">Transcribe Full Audio</button>
+            </div>
+            <div class="progress-container" id="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
         </div>
 
         <div class="file-picker-container" id="drop-zone">
@@ -97,9 +108,7 @@
 <script id="worker-script" type="javascript/worker">
     import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.1';
     
-    // Disable local models since we are running in a browser
     env.allowLocalModels = false;
-    
     let transcriber = null;
 
     self.onmessage = async (e) => {
@@ -107,9 +116,20 @@
 
         if (type === 'init') {
             try {
-                self.postMessage({ status: 'loading', message: 'Downloading Whisper Model (~70MB)...' });
-                transcriber = await pipeline('automatic-speech-recognition', 'Xenova/whisper-tiny.en');
-                self.postMessage({ status: 'ready', message: 'AI Engine Ready' });
+                // Hook into the progress callback of transformers.js via env if supported or handle status messages
+                self.postMessage({ status: 'loading', message: 'Downloading Whisper Model (~70MB)...', progress: 10 });
+                
+                // We can track download using a custom progress callback if passed or simulate status
+                transcriber = await pipeline('automatic-speech-recognition', 'Xenova/whisper-tiny.en', {
+                    progress_callback: (data) => {
+                        if (data.status === 'progress' && data.loaded && data.total) {
+                            const pct = Math.round((data.loaded / data.total) * 100);
+                            self.postMessage({ status: 'progress_update', progress: pct, message: `Downloading Model: ${pct}%` });
+                        }
+                    }
+                });
+                
+                self.postMessage({ status: 'ready', message: 'AI Engine Ready', progress: 100 });
             } catch (error) {
                 self.postMessage({ status: 'error', message: 'Failed to load model: ' + error.message });
             }
@@ -121,14 +141,13 @@
             }
             
             try {
-                self.postMessage({ status: 'transcribing', message: 'Analyzing audio...' });
-                // We ask for chunks to get periodic timestamps
+                self.postMessage({ status: 'transcribing', message: 'Analyzing audio...', progress: 50 });
                 const result = await transcriber(audioData, {
                     chunk_length_s: 30,
                     stride_length_s: 5,
                     return_timestamps: true
                 });
-                self.postMessage({ status: 'complete', result: result });
+                self.postMessage({ status: 'complete', result: result, progress: 100 });
             } catch (error) {
                 self.postMessage({ status: 'error', message: 'Transcription failed: ' + error.message });
             }
@@ -146,11 +165,6 @@
     let audioContext = null;
     let aiWorker = null;
     let activeAiRowId = null;
-    
-    // Blocking state checks
-    let isModelReady = false;
-    let isAudioDecoded = false;
-    let pendingFile = null;
 
     const tableBody = document.getElementById('table-body');
     const audioPlayer = document.getElementById('podcast-audio');
@@ -161,6 +175,8 @@
     const collisionAlert = document.getElementById('collision-alert');
     const aiStatusText = document.getElementById('ai-status-text');
     const btnFullTranscribe = document.getElementById('btn-full-transcribe');
+    const progressContainer = document.getElementById('progress-container');
+    const progressBar = document.getElementById('progress-bar');
 
     function generateId() { return Math.random().toString(36).substr(2, 9); }
     function formatTime(seconds) {
@@ -169,7 +185,17 @@
         return `${mins}:${secs}`;
     }
 
-    // Initialize the Web Worker using a Blob
+    function setProgress(pct) {
+        progressContainer.style.display = 'block';
+        progressBar.style.width = `${pct}%`;
+    }
+
+    function hideProgress() {
+        progressContainer.style.display = 'none';
+        progressBar.style.width = '0%';
+    }
+
+    // Initialize the Web Worker asynchronously (NON-BLOCKING)
     function initAI() {
         if (aiWorker) return;
         const workerScript = document.getElementById('worker-script').textContent;
@@ -178,20 +204,25 @@
         
         aiWorker.onmessage = (e) => {
             const data = e.data;
-            if (data.status === 'loading') {
+            if (data.progress !== undefined) {
+                setProgress(data.progress);
+            }
+            if (data.status === 'loading' || data.status === 'progress_update') {
                 aiStatusText.innerText = `🤖 ${data.message}`;
             } else if (data.status === 'ready') {
-                isModelReady = true;
-                aiStatusText.innerText = `🤖 Model Downloaded.`;
-                checkReadyToStart();
+                aiStatusText.innerText = `🤖 AI Engine Ready.`;
+                hideProgress();
+                if(audioBufferData) btnFullTranscribe.style.display = 'block';
             } else if (data.status === 'error') {
                 aiStatusText.innerText = `❌ ${data.message}`;
                 aiStatusText.style.color = 'var(--danger)';
-                dropZone.innerHTML = `<p style="color: var(--danger); font-weight: bold;">Failed to load AI model. Please refresh.</p>`;
+                hideProgress();
             } else if (data.status === 'transcribing') {
                 aiStatusText.innerText = `🤖 ${data.message}`;
+                setProgress(60);
             } else if (data.status === 'complete') {
                 aiStatusText.innerText = `🤖 AI Engine Ready.`;
+                hideProgress();
                 handleTranscriptionResult(data.result);
             }
         };
@@ -199,14 +230,13 @@
         aiWorker.postMessage({ type: 'init' });
     }
 
-    // Process the audio file into a 16kHz Float32Array for Whisper
+    // Process the audio file into a 16kHz Float32Array in the background
     async function processAudioForAI(file) {
         try {
             audioContext = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
             const arrayBuffer = await file.arrayBuffer();
             const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
             
-            // Convert to mono
             const offlineCtx = new OfflineAudioContext(1, audioBuffer.length, 16000);
             const source = offlineCtx.createBufferSource();
             source.buffer = audioBuffer;
@@ -215,19 +245,18 @@
             const renderedBuffer = await offlineCtx.startRendering();
             
             audioBufferData = renderedBuffer.getChannelData(0);
-            isAudioDecoded = true;
-            checkReadyToStart();
         } catch (err) {
-            aiStatusText.innerText = `❌ Error decoding audio.`;
+            console.error("Error decoding audio:", err);
         }
     }
 
-    function checkReadyToStart() {
-        if (isModelReady && isAudioDecoded && pendingFile) {
-            aiStatusText.innerText = `🤖 AI Engine Ready.`;
-            btnFullTranscribe.style.display = 'block';
-
-            // Reveal the UI only when everything is loaded
+    audioUpload.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const objectUrl = URL.createObjectURL(file);
+            audioPlayer.src = objectUrl;
+            
+            // NON-BLOCKING: Reveal UI immediately so user can play audio right away!
             dropZone.style.display = 'none';
             audioPlayer.style.display = 'block';
             timecodeTable.style.display = 'table';
@@ -235,26 +264,8 @@
             
             segments = [];
             startNewRecording(0, null);
-            pendingFile = null;
-        }
-    }
 
-    audioUpload.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            pendingFile = file;
-            const objectUrl = URL.createObjectURL(file);
-            audioPlayer.src = objectUrl;
-            
-            // Show loading state and block playback
-            dropZone.innerHTML = `
-                <p style="margin-bottom: 0.5rem; font-weight: 700; color: var(--accent); font-size: 1.1rem;">⏳ Initializing AI & Decoding Audio...</p>
-                <p style="font-size: 0.9rem; color: #64748b; margin: 0;">Downloading Whisper Model (~70MB). The podcast will start playing automatically when ready.</p>
-            `;
-            dropZone.style.borderColor = "var(--accent)";
-            dropZone.style.background = "#e0f2fe";
-            
-            // Trigger both heavy operations concurrently
+            // Kick off AI loading & decoding silently in the background
             initAI();
             processAudioForAI(file);
         }
@@ -423,7 +434,7 @@
 
     document.addEventListener('keydown', (e) => {
         if (e.target.tagName.toLowerCase() === 'textarea' && e.target.classList.contains('concept-input')) {
-            if (e.key === 'Enter' && !e.shiftKey) { // Shift+Enter allows new lines, Enter resumes
+            if (e.key === 'Enter' && !e.shiftKey) { 
                 e.preventDefault();
                 e.target.blur(); 
                 const rowId = e.target.closest('tr').dataset.id;
@@ -459,16 +470,14 @@
 
     window.transcribeSegment = function(id) {
         if (!aiWorker || !audioBufferData) {
-            alert("AI Engine is still loading or audio is decoding.");
+            alert("AI Engine is still loading in the background. Please try again shortly.");
             return;
         }
         
         const gap = segments.find(s => s.id === id);
         if (!gap) return;
 
-        activeAiRowId = gap.id; // Store so worker knows which row to update
-        
-        // Extract the exact audio slice based on start/end times (sample rate = 16000)
+        activeAiRowId = gap.id; 
         const startSample = Math.floor(gap.start * 16000);
         const endSample = Math.floor(gap.end * 16000);
         const audioSlice = audioBufferData.slice(startSample, endSample);
@@ -480,16 +489,17 @@
     };
 
     window.transcribeFullFile = function() {
-        if (!aiWorker || !audioBufferData) return;
+        if (!aiWorker || !audioBufferData) {
+            alert("AI Engine is still loading in the background. Please try again shortly.");
+            return;
+        }
         
-        const proceed = confirm("Full file transcription may take a few minutes depending on your device. Proceed?");
+        const proceed = confirm("Full file transcription may take a couple of minutes in the background. Proceed?");
         if (!proceed) return;
 
         activeAiRowId = "FULL_FILE";
-        btnFullTranscribe.innerText = "⏳ Transcribing...";
+        btnFullTranscribe.innerText = "⏳ Transcribing Full Audio...";
         btnFullTranscribe.disabled = true;
-        
-        // Cancel any active recordings
         isRecording = false;
         
         aiWorker.postMessage({ type: 'transcribe', audioData: audioBufferData });
@@ -497,7 +507,6 @@
 
     function handleTranscriptionResult(result) {
         if (activeAiRowId === "FULL_FILE") {
-            // Replace entire table with the generated chunks
             segments = [];
             if (result.chunks && result.chunks.length > 0) {
                 result.chunks.forEach(chunk => {
@@ -510,7 +519,6 @@
                     });
                 });
             } else {
-                // Fallback if timestamps fail
                 segments.push({
                     id: generateId(),
                     start: 0,
@@ -524,7 +532,6 @@
             renderTable();
         } 
         else if (activeAiRowId) {
-            // Targeted segment transcription
             const gapIndex = segments.findIndex(s => s.id === activeAiRowId);
             if (gapIndex !== -1) {
                 segments[gapIndex].isEmpty = false;
