@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Podcast Timecode Logger Pro</title>
+    <title>Podcast Timecode Logger Pro Max</title>
     <style>
         :root {
             --bg: #f8fafc;
@@ -14,6 +14,7 @@
             --danger: #e11d48;
             --success: #059669;
             --warning: #f59e0b;
+            --empty-bg: #fef2f2;
             --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
         }
 
@@ -98,8 +99,12 @@
         }
 
         tr { transition: background 0.3s; }
-        tr:hover { background: #f8fafc; }
-        tr.collision-warning { background: #fef3c7; }
+        tr:hover:not(.empty-segment) { background: #f8fafc; }
+        
+        tr.empty-segment {
+            background: var(--empty-bg);
+            border-left: 3px solid var(--danger);
+        }
 
         td input[type="text"] {
             width: 100%;
@@ -128,6 +133,11 @@
             font-size: 0.9rem;
         }
 
+        .empty-badge {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
         .btn-export {
             display: none;
             width: 100%;
@@ -145,20 +155,31 @@
 
         .btn-export:hover { background: #047857; }
         
-        .delete-btn {
-            background: #fee2e2;
-            color: #ef4444;
-            border: 1px solid #fca5a5;
+        .action-btn {
             padding: 0.35rem 0.5rem;
             border-radius: 4px;
             cursor: pointer;
             font-size: 0.75rem;
             font-weight: bold;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 0.25rem;
+            border: 1px solid transparent;
+        }
+
+        .delete-btn {
+            background: #fee2e2;
+            color: #ef4444;
+            border-color: #fca5a5;
         }
         .delete-btn:hover { background: #fecaca; }
+
+        .record-btn {
+            background: #e0f2fe;
+            color: #0284c7;
+            border-color: #7dd3fc;
+        }
+        .record-btn:hover { background: #bae6fd; }
         
         .status-recording {
             color: #d97706;
@@ -178,6 +199,12 @@
             font-weight: bold;
         }
 
+        .empty-text {
+            color: #ef4444;
+            font-style: italic;
+            font-weight: 600;
+        }
+
     </style>
 </head>
 <body>
@@ -195,10 +222,9 @@
 
         <div class="instructions" id="instructions-panel">
             <strong>Advanced Splicing Engine Active:</strong><br>
-            • The segment automatically <strong>Starts</strong> from 0:00 (or the end of your last segment).<br>
             • Press <strong style="background: #bbf7d0; padding: 2px 6px; border-radius: 4px;">E</strong> to mark the <strong>End</strong> of the current concept. The audio will pause.<br>
             • Type the description, then press <strong>Enter</strong> to instantly resume and track the next segment.<br>
-            • <em>Clicking <strong>"↺ Re-Record"</strong> will jump the audio back to that segment's exact start time and protect subsequent segments from being overwritten.</em>
+            • Deleting segments will create "Empty Gaps". Contiguous empty gaps automatically fuse together into a single gap, which you can re-record into later.
         </div>
 
         <div id="collision-alert">⚠️ Boundary reached! Auto-paused to prevent overwriting the next segment.</div>
@@ -224,10 +250,15 @@
 </div>
 
 <script>
-    let currentStartTime = 0;
-    let isRecording = false;
-    let maxAllowedEndTime = Infinity; 
+    // State Management
+    let segments = []; 
+    // Segment Object: { id: string, start: number, end: number, concept: string, isEmpty: boolean }
     
+    let isRecording = false;
+    let currentRecordingStart = 0;
+    let maxAllowedEndTime = Infinity;
+    let recordingTargetId = null; // ID of the empty segment we are currently filling
+
     const tableBody = document.getElementById('table-body');
     const audioPlayer = document.getElementById('podcast-audio');
     const audioUpload = document.getElementById('audio-upload');
@@ -236,6 +267,11 @@
     const timecodeTable = document.getElementById('timecode-table');
     const btnExport = document.getElementById('btn-export');
     const collisionAlert = document.getElementById('collision-alert');
+
+    // Utility: Generate unique IDs
+    function generateId() {
+        return Math.random().toString(36).substr(2, 9);
+    }
 
     // Handle File Selection
     audioUpload.addEventListener('change', function(e) {
@@ -253,11 +289,8 @@
         timecodeTable.style.display = 'table';
         btnExport.style.display = 'block';
         
-        tableBody.innerHTML = '';
-        currentStartTime = 0;
-        isRecording = true;
-        recalculateBoundary();
-        renderRecordingRow();
+        segments = [];
+        startNewRecording(0, null);
     }
 
     function formatTime(seconds) {
@@ -266,134 +299,247 @@
         return `${mins}:${secs}`;
     }
 
-    // Sorts all rows (including the active recording row) chronologically
-    function sortRows() {
-        const rows = Array.from(document.querySelectorAll('#table-body tr'));
-        rows.sort((a, b) => parseFloat(a.dataset.startRaw) - parseFloat(b.dataset.startRaw));
-        rows.forEach(row => tableBody.appendChild(row));
-    }
-
-    // Finds the next existing segment so we don't overwrite it
-    function recalculateBoundary() {
-        if (!isRecording) {
-            maxAllowedEndTime = Infinity;
-            return;
-        }
+    // Core Logic: Normalize, Coalesce, and Render the Table
+    function renderTable() {
+        tableBody.innerHTML = '';
         
-        const existingRows = document.querySelectorAll('#table-body tr:not(#temp-recording-row)');
-        let nextStart = Infinity;
+        // 1. Sort segments chronologically
+        segments.sort((a, b) => a.start - b.start);
         
-        existingRows.forEach(row => {
-            const rowStart = parseFloat(row.dataset.startRaw);
-            // Find the closest segment that starts AFTER our current starting position
-            if (rowStart > currentStartTime + 0.1 && rowStart < nextStart) {
-                nextStart = rowStart;
+        // 2. Coalesce contiguous empty segments
+        let coalesced = [];
+        for (let i = 0; i < segments.length; i++) {
+            let current = segments[i];
+            
+            if (current.isEmpty && coalesced.length > 0) {
+                let prev = coalesced[coalesced.length - 1];
+                
+                // If previous is also empty AND they touch (or overlap slightly due to rounding)
+                if (prev.isEmpty && Math.abs(prev.end - current.start) < 0.1) {
+                    prev.end = current.end; // Fuse them
+                    continue; // Skip adding current
+                }
             }
+            coalesced.push({...current}); // push a copy
+        }
+        segments = coalesced;
+
+        // 3. Render HTML
+        segments.forEach(seg => {
+            const tr = document.createElement('tr');
+            tr.dataset.id = seg.id;
+            
+            if (seg.isEmpty) {
+                tr.className = 'empty-segment';
+                
+                // If this is the empty segment we are CURRENTLY recording into
+                if (isRecording && recordingTargetId === seg.id) {
+                    tr.innerHTML = `
+                        <td><span class="time-badge">${formatTime(currentRecordingStart)}</span></td>
+                        <td class="status-recording">Recording...</td>
+                        <td><em>Filling empty gap (Max end: ${formatTime(seg.end)})...</em></td>
+                        <td></td>
+                    `;
+                } else {
+                    tr.innerHTML = `
+                        <td><span class="time-badge empty-badge">${formatTime(seg.start)}</span></td>
+                        <td><span class="time-badge empty-badge">${formatTime(seg.end)}</span></td>
+                        <td><span class="empty-text">[Empty Gap]</span></td>
+                        <td><button class="action-btn record-btn" onclick="startFillingGap('${seg.id}')">▶ Record</button></td>
+                    `;
+                }
+            } else {
+                // Normal filled segment
+                tr.innerHTML = `
+                    <td><span class="time-badge">${formatTime(seg.start)}</span></td>
+                    <td><span class="time-badge">${formatTime(seg.end)}</span></td>
+                    <td><input type="text" class="concept-input" value="${seg.concept.replace(/"/g, '&quot;')}" onchange="updateConcept('${seg.id}', this.value)"></td>
+                    <td><button class="action-btn delete-btn" onclick="deleteSegment('${seg.id}')">✖ Delete</button></td>
+                `;
+            }
+            tableBody.appendChild(tr);
         });
+
+        // 4. Render trailing recording row if we are recording OUTSIDE of a gap (at the very end)
+        if (isRecording && recordingTargetId === null) {
+            const tr = document.createElement('tr');
+            tr.id = "temp-recording-row";
+            tr.innerHTML = `
+                <td><span class="time-badge">${formatTime(currentRecordingStart)}</span></td>
+                <td class="status-recording">Recording...</td>
+                <td><em>Press 'E' to end segment...</em></td>
+                <td></td>
+            `;
+            tableBody.appendChild(tr);
+        }
+    }
+
+    // Start recording at the very end of all segments
+    function startNewRecording(startTime, targetEmptyId = null) {
+        currentRecordingStart = startTime;
+        recordingTargetId = targetEmptyId;
+        isRecording = true;
         
-        maxAllowedEndTime = nextStart;
+        // Calculate max allowed end time
+        if (targetEmptyId) {
+            // We are filling a specific gap
+            const targetGap = segments.find(s => s.id === targetEmptyId);
+            maxAllowedEndTime = targetGap ? targetGap.end : Infinity;
+        } else {
+            // We are at the end of the line
+            maxAllowedEndTime = Infinity;
+            // Check if there are any segments AFTER this start time (shouldn't happen with normal flow, but safety first)
+            const nextSeg = segments.find(s => !s.isEmpty && s.start > currentRecordingStart + 0.1);
+            if (nextSeg) maxAllowedEndTime = nextSeg.start;
+        }
+
+        renderTable();
+        
+        if(audioPlayer.currentTime !== currentRecordingStart) {
+             audioPlayer.currentTime = currentRecordingStart;
+        }
+        audioPlayer.play();
     }
 
-    function renderRecordingRow() {
-        const existingRow = document.getElementById('temp-recording-row');
-        if (existingRow) existingRow.remove();
+    // Called when user clicks "Record" on an Empty Gap
+    window.startFillingGap = function(id) {
+        const gap = segments.find(s => s.id === id);
+        if (gap) {
+            startNewRecording(gap.start, gap.id);
+        }
+    };
 
-        collisionAlert.style.display = 'none';
+    // Called when user clicks "Delete" on a filled segment
+    window.deleteSegment = function(id) {
+        const index = segments.findIndex(s => s.id === id);
+        if (index !== -1) {
+            // Convert to an empty segment
+            segments[index].isEmpty = true;
+            segments[index].concept = "";
+            renderTable(); // Re-render will automatically coalesce!
+        }
+    };
 
-        const tr = document.createElement('tr');
-        tr.id = "temp-recording-row";
-        tr.dataset.startRaw = currentStartTime;
-        tr.innerHTML = `
-            <td><span class="time-badge">${formatTime(currentStartTime)}</span></td>
-            <td class="status-recording">Recording...</td>
-            <td><em>Press 'E' to end segment and add notes...</em></td>
-            <td></td>
-        `;
-        tableBody.appendChild(tr);
-        sortRows();
-    }
+    // Sync input field changes to the state array
+    window.updateConcept = function(id, newValue) {
+        const seg = segments.find(s => s.id === id);
+        if (seg) seg.concept = newValue;
+    };
 
-    // Engine: Stop recording if we hit the boundary of the next segment
+    // Engine: Stop recording if we hit the boundary
     audioPlayer.addEventListener('timeupdate', () => {
         if (isRecording && audioPlayer.currentTime >= maxAllowedEndTime) {
             audioPlayer.pause();
             audioPlayer.currentTime = maxAllowedEndTime;
-            
-            // Flash warning
             collisionAlert.style.display = 'block';
-            
-            // Auto-trigger the End Sequence
             triggerEndAction(maxAllowedEndTime);
         }
     });
 
-    // The Re-record Logic
-    window.deleteAndRerecord = function(btn, startTimeStr) {
-        const startTime = parseFloat(startTimeStr);
-        
-        // Remove the row from DOM
-        btn.closest('tr').remove();
-        
-        // Seek audio and reset state
-        audioPlayer.currentTime = startTime;
-        currentStartTime = startTime;
-        isRecording = true;
-        
-        recalculateBoundary();
-        renderRecordingRow();
-        
-        // Auto-play so they can hear what they are documenting
-        audioPlayer.play();
-    };
-
     function triggerEndAction(endTime) {
         if (!isRecording) return;
         
-        if (endTime <= currentStartTime) {
+        if (endTime <= currentRecordingStart) {
             alert("End time must be after start time.");
             return;
         }
 
         audioPlayer.pause();
         isRecording = false;
+        collisionAlert.style.display = 'none';
 
-        const tempRow = document.getElementById('temp-recording-row');
-        if (tempRow) tempRow.remove();
+        if (recordingTargetId) {
+            // We were filling a gap. We need to split it if we didn't fill the whole thing.
+            const gapIndex = segments.findIndex(s => s.id === recordingTargetId);
+            const originalGap = segments[gapIndex];
 
-        const tr = document.createElement('tr');
-        tr.dataset.startRaw = currentStartTime.toFixed(2);
-        tr.dataset.endRaw = endTime.toFixed(2);
-
-        tr.innerHTML = `
-            <td><span class="time-badge">${formatTime(currentStartTime)}</span></td>
-            <td><span class="time-badge">${formatTime(endTime)}</span></td>
-            <td><input type="text" class="concept-input" placeholder="Type description, then press ENTER to resume..." autofocus></td>
-            <td><button class="delete-btn" onclick="deleteAndRerecord(this, '${currentStartTime}')">↺ Re-Record</button></td>
-        `;
-        
-        tableBody.appendChild(tr);
-        sortRows();
-        
-        const newInput = tr.querySelector('input');
-        if (newInput) {
-            setTimeout(() => newInput.focus(), 10);
+            // 1. Insert the newly recorded filled segment
+            const newFilledSeg = {
+                id: generateId(),
+                start: currentRecordingStart,
+                end: endTime,
+                concept: "",
+                isEmpty: false
+            };
+            
+            // 2. If there is remaining time in the gap, create a new smaller gap after it
+            if (endTime < originalGap.end - 0.1) { // 0.1s tolerance
+                const remainingGap = {
+                    id: generateId(),
+                    start: endTime,
+                    end: originalGap.end,
+                    concept: "",
+                    isEmpty: true
+                };
+                // Replace original gap with filled segment, then append remaining gap
+                segments.splice(gapIndex, 1, newFilledSeg, remainingGap);
+            } else {
+                // We filled the whole gap perfectly
+                segments.splice(gapIndex, 1, newFilledSeg);
+            }
+            
+        } else {
+            // Normal append at the end
+            segments.push({
+                id: generateId(),
+                start: currentRecordingStart,
+                end: endTime,
+                concept: "",
+                isEmpty: false
+            });
         }
+
+        recordingTargetId = null;
+        renderTable();
+        
+        // Focus the newly created input field
+        setTimeout(() => {
+            const inputs = document.querySelectorAll('.concept-input');
+            if (inputs.length > 0) {
+                // Focus the LAST input field that was added (which corresponds to what we just finished)
+                // If we filled a gap in the middle, we need to find it by time
+                const activeRow = Array.from(document.querySelectorAll('#table-body tr')).find(tr => {
+                    const timeBadge = tr.querySelector('.time-badge');
+                    return timeBadge && timeBadge.innerText === formatTime(currentRecordingStart);
+                });
+                
+                if (activeRow) {
+                    const input = activeRow.querySelector('input');
+                    if (input) input.focus();
+                }
+            }
+        }, 10);
     }
 
     document.addEventListener('keydown', (e) => {
+        // Handle ENTER inside an input field
         if (e.target.tagName.toLowerCase() === 'input' && e.target.classList.contains('concept-input')) {
             if (e.key === 'Enter') {
                 e.preventDefault();
-                e.target.blur();
+                e.target.blur(); // Save state via onchange
                 
-                // Set the start time exactly where the last one ended
                 const row = e.target.closest('tr');
-                currentStartTime = parseFloat(row.dataset.endRaw);
+                const rowEndStr = row.cells[1].innerText; // Gets the formatTime string
                 
-                isRecording = true;
-                recalculateBoundary();
-                renderRecordingRow();
-                audioPlayer.play();
+                // We need the raw end time for this row to start the next one
+                const rowId = row.dataset.id;
+                const seg = segments.find(s => s.id === rowId);
+                
+                if (seg) {
+                    // Check if there is an empty gap immediately following this segment
+                    const nextSeg = segments.find(s => Math.abs(s.start - seg.end) < 0.1);
+                    
+                    if (nextSeg && nextSeg.isEmpty) {
+                        // Start recording into the next gap automatically
+                        startNewRecording(seg.end, nextSeg.id);
+                    } else if (!nextSeg) {
+                        // We are at the end of all segments, start fresh at the end
+                        startNewRecording(seg.end, null);
+                    } else {
+                        // Next segment is already filled. We can't automatically continue.
+                        alert("The next segment is already filled. You cannot record over it.");
+                    }
+                }
             }
             return;
         }
@@ -404,14 +550,15 @@
         const key = e.key.toLowerCase();
 
         if (key === 's') {
-            currentStartTime = audioPlayer.currentTime;
-            isRecording = true;
-            recalculateBoundary();
-            renderRecordingRow();
+            if (!isRecording) {
+                // Find the absolute end time of all segments
+                const maxTime = segments.length > 0 ? Math.max(...segments.map(s => s.end)) : 0;
+                startNewRecording(maxTime, null);
+            }
         } 
         else if (key === 'e') {
             if (!isRecording) {
-                alert("You need a starting point first! Press 'S' to start a new segment manually.");
+                alert("You need a starting point first! Press 'S' to start a new segment at the end of your track.");
                 return;
             }
             triggerEndAction(audioPlayer.currentTime);
@@ -419,23 +566,21 @@
     });
 
     function exportJSON() {
-        const rows = document.querySelectorAll('#table-body tr:not(#temp-recording-row)');
-        const data = [];
+        // Filter out empty gaps, only export valid data
+        const validSegments = segments.filter(s => !s.isEmpty);
+        
         let hasEmptyDescriptions = false;
-
-        rows.forEach(row => {
-            const start = parseFloat(row.dataset.startRaw);
-            const end = parseFloat(row.dataset.endRaw);
-            const input = row.querySelector('.concept-input');
-            const concept = input ? input.value.trim() : "";
-            
-            if (concept === "") hasEmptyDescriptions = true;
-
-            data.push({ start, end, concept });
+        const data = validSegments.map(seg => {
+            if (seg.concept.trim() === "") hasEmptyDescriptions = true;
+            return {
+                start: parseFloat(seg.start.toFixed(2)),
+                end: parseFloat(seg.end.toFixed(2)),
+                concept: seg.concept.trim()
+            };
         });
 
         if (data.length === 0) {
-            alert("No timecodes recorded yet!");
+            alert("No filled timecodes recorded yet!");
             return;
         }
         
