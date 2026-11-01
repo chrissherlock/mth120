@@ -371,14 +371,22 @@
             </div>
 
             <!-- SECTION 4 -->
-            <h2 id="section-infinity">4. Infinity as a Limit ($M\text{-}N$ Definition)</h2>
+            <h2 id="section-infinity" style="margin-top: 3.5rem;">4. Infinity as a Limit ($M\text{-}N$ Definition)</h2>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
+                Earlier this week, you mastered the $\epsilon\text{-}N$ definition of a limit. In that definition, $\epsilon$ represented a tiny, microscopic boundary used to trap a sequence that was settling down to a single finite number.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                But how do we rigorously describe a sequence that never settles down, but instead rockets upward forever? A tiny boundary $\epsilon$ is absolutely useless here. Instead, we need to prove that the sequence can break through any ceiling we put in its way. We replace the tiny error $\epsilon$ with a massive threshold <strong>$M$</strong>.
+            </p>
+
             <div class="definition-box">
                 <strong>Definition: Divergence to $\pm \infty$ ($M\text{-}N$ Test):</strong>
-                <p>A sequence tends to positive infinity ($\lim_{n\to\infty} a_n = \infty$) if:</p>
+                <p>A sequence tends to positive infinity ($\lim_{n\to\infty} a_n = \infty$) if for every massive threshold $M$, there is a specific step $N$ in the sequence where all terms after that step permanently cross the threshold:</p>
                 <div style="text-align: center; margin: 0.5rem 0;">
                     $$\forall M > 0, \quad \exists N \in \mathbb{N} \quad \text{such that} \quad n > N \implies a_n > M$$
                 </div>
-                <p>Similarly, $\lim_{n\to\infty} a_n = -\infty$ if for every $M < 0$, $\exists N \in \mathbb{N}$ such that $n > N \implies a_n < M$.</p>
+                <p style="margin-bottom: 0;">Similarly, $\lim_{n\to\infty} a_n = -\infty$ if for every deep floor $M < 0$, there exists an $N \in \mathbb{N}$ such that $n > N \implies a_n < M$.</p>
             </div>
 
             <!-- SVG THRESHOLD DIAGRAM -->
@@ -405,20 +413,88 @@
                 </svg>
             </div>
 
-            <!-- SECTION 5 -->
-            <h2 id="section-growth-rates">5. Growth Rates: Geometric vs. Linear Divergence</h2>
-            <div class="worked-example-box">
-                <h4>🎯 Theorem: Geometric Sequences Diverge Faster Than Linear Ones</h4>
-                <p>Let $a_n = c r^n$ with $r > 1$ and $b_n = \alpha n + \beta$ ($\alpha > 0$). We prove $\frac{a_n}{b_n} \to \infty$ by showing $\frac{r^n}{n} \to \infty$.</p>
-                <p>Write $r = 1 + \epsilon$ for some $\epsilon > 0$. By the Binomial Formula:</p>
-                <div style="text-align: center; margin: 0.5rem 0;">
-                    $$r^n = (1 + \epsilon)^n \ge 1 + n\epsilon + \frac{n(n-1)}{2}\epsilon^2$$
+            <div class="worked-example-box" style="margin-top: 2rem;">
+                <h4>🎯 Worked Example: Proving $\lim_{n\to\infty} \sqrt{n} = \infty$</h4>
+                <p>Just like the $\epsilon\text{-}N$ proofs from earlier, $M\text{-}N$ proofs follow a predictable game: the challenger hands you an arbitrary threshold $M$, and you must use algebra to find the exact step $N$ where the sequence permanently breaks past it.</p>
+
+                <p style="font-weight: 600; margin-top: 1.25rem;">Step 1: The Challenge</p>
+                <p>Let $M > 0$ be an arbitrary, massively large threshold given to us.</p>
+
+                <p style="font-weight: 600; margin-top: 1.25rem;">Step 2: The Algebraic Scratch-Work</p>
+                <p>We want our sequence to break the threshold. So, we set up the inequality $a_n > M$ and solve for $n$:</p>
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.1rem; overflow-x: auto;">
+                    $$\sqrt{n} > M \implies n > M^2$$
                 </div>
-                <p>Dividing by $n$:</p>
-                <div style="text-align: center; margin: 0.5rem 0;">
+
+                <p style="font-weight: 600; margin-top: 1.25rem;">Step 3: The Formal Choice</p>
+                <p>Based on our scratch-work, we choose our cutoff index $N$ to be any natural number greater than $M^2$.</p>
+
+                <p style="font-weight: 600; margin-top: 1.25rem;">Step 4: The Proof</p>
+                <p>If we take any step $n > N$, it immediately follows that $n > M^2$. Taking the square root of both sides of that inequality, we get exactly what we needed to show:</p>
+                <div style="text-align: center; margin: 1rem 0; font-size: 1.15rem; color: #065f46; font-weight: 700;">
+                    $$\sqrt{n} > M$$
+                </div>
+                <p style="margin-bottom: 0; margin-top: 1rem;">Because we proved the sequence eventually exceeds any arbitrary threshold $M$, we have formally proven that $\lim_{n\to\infty} \sqrt{n} = \infty$. $\blacksquare$</p>
+            </div>
+
+            <!-- SECTION 5 -->
+            <h2 id="section-growth-rates" style="margin-top: 3.5rem;">5. Growth Rates: Geometric vs. Linear Divergence</h2>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
+                In Section 4, we built the $M\text{-}N$ test to formally prove <em>if</em> a sequence diverges to infinity. But in applied mathematics, just knowing a sequence explodes is rarely enough—we usually need to know <em>how fast</em> it explodes.
+            </p>
+
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 2rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem;">The Two Flavors of Infinity</h3>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
+                Consider two different sequences that both diverge to infinity:
+            </p>
+            <ul style="margin: 0.5rem 0 1.5rem 1.25rem; padding: 0; font-size: 1.05rem; color: #334155; line-height: 1.75;">
+                <li style="margin-bottom: 0.5rem;"><strong>Linear Divergence ($b_n = \alpha n + \beta$):</strong> This is steady, additive growth. If you have a sequence like $b_n = 5n + 1000$, you are just adding 5 at every single step. It marches to infinity at a constant, predictable speed, much like walking up a staircase.</li>
+                <li style="margin-bottom: 0.5rem;"><strong>Geometric Divergence ($a_n = c r^n$):</strong> This is multiplicative, compounding growth. If you have a sequence like $a_n = 2^n$ (with a ratio $r > 1$), you are multiplying the previous term by 2 at every step. The growth accelerates violently as the numbers get larger.</li>
+            </ul>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                Understanding the difference between these two growth rates becomes critically important in computer science when analyzing how fast an algorithm works. If the time it takes a program to run grows linearly as you give it more data, the algorithm scales well. But if the time grows geometrically, the algorithm will quickly exceed all available computational resources.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                We need a rigorous mathematical way to prove that geometric growth is truly in a different weight class than linear growth. To do this, we put them in a race by looking at their ratio: $\frac{a_n}{b_n}$. If this ratio tends to $\infty$, the sequence on top is the undisputed winner.
+            </p>
+
+            <div class="aside-box" style="margin-top: 2rem;">
+                <h4>💡 The Algebraic Trick: Cracking Open $r^n$</h4>
+                <p>To prove this, we need to compare an exponential term ($r^n$) directly to a linear term ($n$). How do we get the $n$ out of the exponent so we can do algebra with it?</p>
+                <p style="margin-bottom: 0;"><strong>The Trick:</strong> Because our geometric ratio $r$ is strictly greater than 1, we can split it into exactly $1$ plus some positive remainder $\epsilon$. So, $r = 1 + \epsilon$. Once we do this, we can use the <strong>Binomial Formula</strong> to expand $(1 + \epsilon)^n$ and expose the standard polynomials hiding inside it.</p>
+            </div>
+
+            <div class="worked-example-box" style="margin-top: 2rem;">
+                <h4>🎯 Theorem: Geometric Sequences Diverge Faster Than Linear Ones</h4>
+                <p>Let $a_n = c r^n$ be a geometric sequence with $r > 1$ and $c > 0$. Let $b_n = \alpha n + \beta$ be a linear sequence ($\alpha > 0$). We will prove that $\frac{a_n}{b_n} \to \infty$ by focusing on the core engine of the sequences: we will prove $\frac{r^n}{n} \to \infty$.</p>
+
+                <p style="font-weight: 600; margin-top: 1.25rem;">Step 1: The Binomial Expansion</p>
+                <p>Write $r = 1 + \epsilon$ for some $\epsilon > 0$. By the Binomial Formula, expanding $(1 + \epsilon)^n$ gives us a sum of positive terms:</p>
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.1rem; overflow-x: auto;">
+                    $$r^n = (1 + \epsilon)^n = 1 + n\epsilon + \frac{n(n-1)}{2}\epsilon^2 + \dots + \epsilon^n$$
+                </div>
+                <p>Because every term is positive, if we chop off everything after the first three terms, the right side becomes strictly smaller. This gives us a guaranteed floor:</p>
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.1rem; overflow-x: auto;">
+                    $$r^n \ge 1 + n\epsilon + \frac{n(n-1)}{2}\epsilon^2$$
+                </div>
+
+                <p style="font-weight: 600; margin-top: 1.25rem;">Step 2: Divide by the Linear Engine ($n$)</p>
+                <p>Our goal is to analyze the ratio $\frac{r^n}{n}$, so let's divide our entire inequality by $n$:</p>
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.1rem; overflow-x: auto;">
                     $$\frac{r^n}{n} \ge \frac{1}{n} + \epsilon + \frac{n-1}{2}\epsilon^2$$
                 </div>
-                <p style="margin-bottom: 0;">As $n \to \infty$, the term $\frac{n-1}{2}\epsilon^2$ grows without bound, forcing $\frac{r^n}{n} \to \infty$. Hence, exponential growth dominates any linear polynomial.</p>
+
+                <p style="font-weight: 600; margin-top: 1.25rem;">Step 3: Evaluate the Limit</p>
+                <p>Let's look at what happens to the right side of our inequality as $n \to \infty$:</p>
+                <ul style="margin: 0.5rem 0 1rem 1.25rem; padding: 0; font-size: 0.95rem;">
+                    <li style="margin-bottom: 0.4rem;">The $\frac{1}{n}$ term shrinks to $0$.</li>
+                    <li style="margin-bottom: 0.4rem;">The $\epsilon$ term is just a constant.</li>
+                    <li style="margin-bottom: 0.4rem;">The $\frac{n-1}{2}\epsilon^2$ term has an $n$ in the numerator, meaning it <strong>grows without bound</strong> (to $\infty$).</li>
+                </ul>
+                <p style="margin-bottom: 0;">Because the right side of our inequality explodes to infinity, the left side ($\frac{r^n}{n}$) is physically pushed to infinity as well. Because the geometric sequence contains an $n^2$ engine hidden inside its expansion, it completely overpowers and dominates any linear polynomial. $\blacksquare$</p>
             </div>
 
             <!-- FOOTER NAVIGATION -->
