@@ -30,7 +30,7 @@
         }
 
         .container {
-            max-width: 850px;
+            max-width: 900px; /* Slightly wider to fit both buttons */
             width: 100%;
         }
 
@@ -165,6 +165,7 @@
             align-items: center;
             gap: 0.25rem;
             border: 1px solid transparent;
+            white-space: nowrap;
         }
 
         .delete-btn {
@@ -224,7 +225,8 @@
             <strong>Advanced Splicing Engine Active:</strong><br>
             • Press <strong style="background: #bbf7d0; padding: 2px 6px; border-radius: 4px;">E</strong> to mark the <strong>End</strong> of the current concept. The audio will pause.<br>
             • Type the description, then press <strong>Enter</strong> to instantly resume and track the next segment.<br>
-            • Deleting segments will create "Empty Gaps". Contiguous empty gaps automatically fuse together into a single gap, which you can re-record into later.
+            • Use <strong>↺ Re-Record</strong> to immediately redo a specific segment from its original start time.<br>
+            • Deleting segments creates "Empty Gaps". Contiguous empty gaps automatically fuse together into a single gap.
         </div>
 
         <div id="collision-alert">⚠️ Boundary reached! Auto-paused to prevent overwriting the next segment.</div>
@@ -234,10 +236,10 @@
         <table id="timecode-table">
             <thead>
                 <tr>
-                    <th style="width: 15%;">Start</th>
-                    <th style="width: 15%;">End</th>
-                    <th style="width: 55%;">Concept / Discussion Topic</th>
-                    <th style="width: 15%;">Actions</th>
+                    <th style="width: 12%;">Start</th>
+                    <th style="width: 12%;">End</th>
+                    <th style="width: 50%;">Concept / Discussion Topic</th>
+                    <th style="width: 26%;">Actions</th>
                 </tr>
             </thead>
             <tbody id="table-body">
@@ -354,7 +356,12 @@
                     <td><span class="time-badge">${formatTime(seg.start)}</span></td>
                     <td><span class="time-badge">${formatTime(seg.end)}</span></td>
                     <td><input type="text" class="concept-input" value="${seg.concept.replace(/"/g, '&quot;')}" onchange="updateConcept('${seg.id}', this.value)"></td>
-                    <td><button class="action-btn delete-btn" onclick="deleteSegment('${seg.id}')">✖ Delete</button></td>
+                    <td>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="action-btn record-btn" onclick="rerecordSegment('${seg.id}')">↺ Re-Record</button>
+                            <button class="action-btn delete-btn" onclick="deleteSegment('${seg.id}')">✖ Delete</button>
+                        </div>
+                    </td>
                 `;
             }
             tableBody.appendChild(tr);
@@ -417,6 +424,26 @@
             segments[index].isEmpty = true;
             segments[index].concept = "";
             renderTable(); // Re-render will automatically coalesce!
+        }
+    };
+
+    // Called when user clicks "Re-Record" on a filled segment
+    window.rerecordSegment = function(id) {
+        const segToRerecord = segments.find(s => s.id === id);
+        if (!segToRerecord) return;
+        
+        // Store exact original start time
+        const targetStartTime = segToRerecord.start;
+        
+        // 1. Delete the segment (converts to gap, coalesces if adjacent to other gaps)
+        deleteSegment(id); 
+        
+        // 2. Find the gap that now envelopes this start time
+        const newGap = segments.find(s => s.isEmpty && targetStartTime >= s.start && targetStartTime < s.end);
+        
+        // 3. Immediately start recording inside that gap
+        if (newGap) {
+            startNewRecording(targetStartTime, newGap.id);
         }
     };
 
