@@ -1,49 +1,385 @@
 #!/usr/bin/env python3
-import sys
+import json
+import os
 
-def fix_svg_box_widths(filepath):
-    try:
-        with open(filepath, 'r', encoding='utf-8') as f:
-            content = f.read()
-    except FileNotFoundError:
-        print(f"Error: '{filepath}' not found.")
-        sys.exit(1)
+# 1. Define the Stepper HTML Template
+html_template = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTHS120 Interactive Stepper: Week 1 Lecture 2</title>
 
-    # 1. Widen the Shirt boxes from 110px to 135px to fit "Green Shirt"
-    content = content.replace(
-        '<rect width="110" height="44" rx="8" fill="#fee2e2" stroke="#ef4444" stroke-width="2" />',
-        '<rect width="135" height="44" rx="8" fill="#fee2e2" stroke="#ef4444" stroke-width="2" />'
-    )
-    content = content.replace(
-        '<rect width="110" height="44" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" />',
-        '<rect width="135" height="44" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" />'
-    )
-    content = content.replace(
-        '<rect width="110" height="44" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="2" />',
-        '<rect width="135" height="44" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="2" />'
-    )
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
-    # 2. Adjust the connecting curves to start at 265px instead of 240px
-    # (since the shirt boxes were just widened by 25px)
-    content = content.replace('M 240 90 C 300 90, 300 65, 360 65', 'M 265 90 C 310 90, 310 65, 360 65')
-    content = content.replace('M 240 90 C 300 90, 300 115, 360 115', 'M 265 90 C 310 90, 310 115, 360 115')
+    <style>
+        :root {
+            --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
+            --accent: #d97706; --accent-hover: #b45309; --accent-light: #fef3c7;
+            --success: #10b981; --success-bg: #d1fae5;
+            --danger: #ef4444; --danger-bg: #fee2e2;
+            --info: #3b82f6; --info-bg: #dbeafe;
+            --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
 
-    content = content.replace('M 240 190 C 300 190, 300 165, 360 165', 'M 265 190 C 310 190, 310 165, 360 165')
-    content = content.replace('M 240 190 C 300 190, 300 215, 360 215', 'M 265 190 C 310 190, 310 215, 360 215')
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
+        .container { max-width: 900px; margin: 0 auto; }
 
-    content = content.replace('M 240 290 C 300 290, 300 265, 360 265', 'M 265 290 C 310 290, 310 265, 360 265')
-    content = content.replace('M 240 290 C 300 290, 300 315, 360 315', 'M 265 290 C 310 290, 310 315, 360 315')
+        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .back-link { background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; transition: background 0.2s; white-space: nowrap; }
+        .back-link:hover { background: #e2e8f0; color: #0f172a; }
 
-    # 3. Widen the final Outcome boxes from 190px to 215px to fit "Green & Khakis"
-    content = content.replace(
-        '<rect width="190" height="44" rx="22" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />',
-        '<rect width="215" height="44" rx="22" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />'
-    )
+        .telemetry-bar { background: var(--card); border: 1px solid var(--border); padding: 1rem; border-radius: 8px; display: flex; gap: 1.5rem; margin-bottom: 2rem; font-size: 0.9rem; font-family: monospace; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .tel-stat { display: flex; flex-direction: column; }
+        .tel-label { color: #64748b; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem; }
+        .tel-val { font-weight: bold; color: var(--accent); font-size: 1.1rem; }
 
-    with open(filepath, 'w', encoding='utf-8') as f:
-        f.write(content)
+        .stage-container { background: var(--card); border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 8px; padding: 2rem; margin-bottom: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .scenario-title { font-size: 1.25rem; font-weight: bold; color: #1e293b; margin-top: 0; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.75rem; }
+        .scenario-context { font-size: 1.05rem; color: #334155; margin-bottom: 1.5rem; }
 
-    print(f"Successfully fixed the SVG rectangle widths in {filepath}.")
+        .options-grid { display: grid; gap: 0.75rem; margin-bottom: 1.5rem; }
+        .option-btn { background: #f1f5f9; border: 1px solid var(--border); border-radius: 6px; padding: 1rem 1.25rem; text-align: left; font-size: 1rem; cursor: pointer; transition: all 0.2s; font-family: var(--font-ui); color: var(--text); }
+        .option-btn:hover { background: var(--accent-light); border-color: var(--accent); }
+        .option-btn.selected { background: var(--accent-light); border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+        .option-btn.correct { background: var(--success-bg); border-color: var(--success); color: #065f46; }
+        .option-btn.wrong { background: var(--danger-bg); border-color: var(--danger); color: #991b1b; }
 
-if __name__ == "__main__":
-    fix_svg_box_widths("week2-lecture5.html")
+        .analysis-container { display: none; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem; border-top: 2px dashed #e2e8f0; padding-top: 1.5rem; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .pane { padding: 1.25rem; border-radius: 6px; border: 1px solid; }
+        .pane-what { background: #f0fdf4; border-color: #bbf7d0; border-left: 4px solid var(--success); }
+        .pane-why { background: #eff6ff; border-color: #bfdbfe; border-left: 4px solid var(--info); }
+        .pane h4 { margin: 0 0 0.75rem 0; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .pane-what h4 { color: #047857; }
+        .pane-why h4 { color: #1d4ed8; }
+        .pane p { margin: 0; font-size: 0.95rem; line-height: 1.5; color: #334155; }
+
+        .stepper-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; }
+        .action-btn { background: var(--accent); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: background 0.2s; }
+        .action-btn:hover { background: var(--accent-hover); }
+        .action-btn:disabled { background: #cbd5e1; cursor: not-allowed; }
+        .nav-btn { background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.75rem 1.25rem; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        .nav-btn:hover:not(:disabled) { background: #e2e8f0; }
+        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        @media (max-width: 640px) {
+            .analysis-container { grid-template-columns: 1fr; }
+            .telemetry-bar { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div>
+            <h1 style="margin:0; font-size:1.75rem; color:#0f172a;">MTHS120 Interactive Stepper</h1>
+            <p style="margin:0.25rem 0 0 0; color:#475569;">Week 1 Lecture 2: Numbers, Metric Properties, and Completeness</p>
+        </div>
+        <div>
+            <a href="week1-lecture2.html" class="back-link">&larr; Back to Lecture 2</a>
+        </div>
+    </div>
+
+    <div class="telemetry-bar">
+        <div class="tel-stat">
+            <span class="tel-label">Active Phase</span>
+            <span class="tel-val" id="tel-phase">1 / 5</span>
+        </div>
+        <div class="tel-stat">
+            <span class="tel-label">Current Mode</span>
+            <span class="tel-val" id="tel-mode">Awaiting Input</span>
+        </div>
+        <div class="tel-stat">
+            <span class="tel-label">Score</span>
+            <span class="tel-val" id="tel-score">0</span>
+        </div>
+    </div>
+
+    <div class="stage-container">
+        <h2 class="scenario-title" id="stage-title">Loading...</h2>
+        <div class="scenario-context" id="stage-context"></div>
+
+        <div class="options-grid" id="options-container"></div>
+
+        <div class="analysis-container" id="analysis-panes">
+            <div class="pane pane-what">
+                <h4>What Is Happening</h4>
+                <p id="text-what"></p>
+            </div>
+            <div class="pane pane-why">
+                <h4>Why The System Does This</h4>
+                <p id="text-why"></p>
+            </div>
+        </div>
+
+        <div class="stepper-controls">
+            <button class="nav-btn" id="btn-prev" onclick="stepPrevious()" disabled>Prev</button>
+            <button class="action-btn" id="btn-submit" onclick="evaluateSelection()">Submit Verification</button>
+            <button class="nav-btn" id="btn-next" onclick="stepNext()" style="display:none;">Next Step ➔</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const courseData = {course_data_json};
+
+    let currentIndex = 0;
+    let selectedOption = null;
+    let phaseScore = 0;
+    let hasAnsweredCurrent = false;
+
+    const elTitle = document.getElementById("stage-title");
+    const elContext = document.getElementById("stage-context");
+    const elOptions = document.getElementById("options-container");
+    const elPanes = document.getElementById("analysis-panes");
+    const elWhat = document.getElementById("text-what");
+    const elWhy = document.getElementById("text-why");
+    const elBtnSubmit = document.getElementById("btn-submit");
+    const elBtnNext = document.getElementById("btn-next");
+    const elBtnPrev = document.getElementById("btn-prev");
+
+    const telPhase = document.getElementById("tel-phase");
+    const telMode = document.getElementById("tel-mode");
+    const telScore = document.getElementById("tel-score");
+
+    function renderMath() {
+        if (typeof renderMathInElement !== 'undefined') {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ],
+                throwOnError: false
+            });
+        }
+    }
+
+    function buildStep() {
+        const data = courseData[currentIndex];
+
+        elTitle.innerHTML = data.title;
+        elContext.innerHTML = data.context;
+
+        elOptions.innerHTML = "";
+        data.options.forEach((opt, idx) => {
+            const btn = document.createElement("button");
+            btn.className = "option-btn";
+            btn.innerHTML = opt;
+            btn.onclick = () => selectOption(idx, btn);
+            elOptions.appendChild(btn);
+        });
+
+        elPanes.style.display = "none";
+        elBtnSubmit.style.display = "block";
+        elBtnNext.style.display = "none";
+        elBtnSubmit.disabled = true;
+
+        selectedOption = null;
+        hasAnsweredCurrent = false;
+
+        telPhase.innerText = `${currentIndex + 1} / ${courseData.length}`;
+        telMode.innerText = "Awaiting Input";
+        telMode.style.color = "var(--text)";
+
+        elBtnPrev.disabled = currentIndex === 0;
+
+        renderMath();
+    }
+
+    function selectOption(idx, btnNode) {
+        if (hasAnsweredCurrent) return;
+
+        const buttons = elOptions.querySelectorAll(".option-btn");
+        buttons.forEach(b => b.classList.remove("selected"));
+
+        btnNode.classList.add("selected");
+        selectedOption = idx;
+        elBtnSubmit.disabled = false;
+    }
+
+    function evaluateSelection() {
+        if (selectedOption === null || hasAnsweredCurrent) return;
+
+        const data = courseData[currentIndex];
+        const buttons = elOptions.querySelectorAll(".option-btn");
+
+        hasAnsweredCurrent = true;
+        elBtnSubmit.style.display = "none";
+        elBtnNext.style.display = "block";
+        elBtnNext.innerText = currentIndex === courseData.length - 1 ? "Complete Verification" : "Next Step ➔";
+
+        if (selectedOption === data.correct) {
+            buttons[selectedOption].classList.add("correct");
+            phaseScore++;
+            telScore.innerText = phaseScore;
+            telMode.innerText = "Verified Valid";
+            telMode.style.color = "var(--success)";
+        } else {
+            buttons[selectedOption].classList.add("wrong");
+            buttons[data.correct].classList.add("correct");
+            telMode.innerText = "Structural Error";
+            telMode.style.color = "var(--danger)";
+        }
+
+        elWhat.innerHTML = data.what;
+        elWhy.innerHTML = data.why;
+        elPanes.style.display = "grid";
+
+        renderMath();
+    }
+
+    function stepNext() {
+        if (currentIndex < courseData.length - 1) {
+            currentIndex++;
+            buildStep();
+        } else {
+            elTitle.innerHTML = "System Verified: Diagnostics Complete";
+            elContext.innerHTML = `<strong>Final Diagnostic Score: ${phaseScore} / ${courseData.length}</strong><br><br>You have successfully traced the structural framework of the real continuum. From exploiting rational midpoints to identifying completeness gaps and leveraging suprema, the coordinate landscape is now demonstrably solid and prepared for analysis limits.`;
+            elOptions.innerHTML = "";
+            elPanes.style.display = "none";
+            elBtnNext.style.display = "none";
+            elBtnPrev.style.display = "none";
+
+            telMode.innerText = "Simulation Ended";
+            telMode.style.color = "var(--info)";
+        }
+    }
+
+    function stepPrevious() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            buildStep();
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        buildStep();
+    });
+</script>
+
+</body>
+</html>"""
+
+# 2. Define the Lecture 2 Course Data
+course_data = [
+    {
+        "title": "Phase 1: Density of the Rationals",
+        "context": "<strong>Scenario:</strong> You are tasked with generating an intermediate fractional stepping stone strictly between $a = \\frac{4}{9}$ and $b = \\frac{5}{9}$. Using the arithmetic midpoint method, which of the following confirms the sequence is dense?",
+        "options": [
+            "$$c_1 = \\frac{4+5}{9+9} = \\frac{9}{18} = \\frac{1}{2}$$",
+            "$$c_1 = \\frac{4}{9} + \\frac{1}{9} = \\frac{5}{9}$$",
+            "$$c_1 = \\frac{\\frac{4}{9} + \\frac{5}{9}}{2} = \\frac{\\frac{9}{9}}{2} = \\frac{1}{2}$$",
+            "There are no fractions between $\\frac{4}{9}$ and $\\frac{5}{9}$ because the numerators are consecutive."
+        ],
+        "correct": 2,
+        "what": "The arithmetic average of two numbers is exactly halfway between them. Adding $a$ and $b$ yields $1$, and dividing by $2$ outputs $\\frac{1}{2}$.",
+        "why": "This demonstrates the Density of $\\mathbb{Q}$. Between any two rational numbers, an infinite sequence of distinct intermediate rational values can be generated by recursively halving the distance, proving the rational line is infinitely crowded."
+    },
+    {
+        "title": "Phase 2: Rational Incompleteness (The Missing Gap)",
+        "context": "<strong>Scenario:</strong> The geometry engine evaluates a unit right triangle with legs of length 1, yielding a hypotenuse of $c = \\sqrt{2}$. The engine is restricted to the rational number space $\\mathbb{Q}$. Which of the following statements correctly identifies the system failure?",
+        "options": [
+            "The length $\\sqrt{2}$ maps to a repeating decimal which cannot be converted to a fraction.",
+            "$\\sqrt{2}$ cannot be expressed as a ratio $p/q$, so the coordinate falls into an empty void on the rational line.",
+            "The hypotenuse length exceeds the bounded domain of $\\mathbb{Q}$.",
+            "The calculation is valid, and $\\sqrt{2}$ will align perfectly with a rational midpoint."
+        ],
+        "correct": 1,
+        "what": "Proof by contradiction demonstrates that assuming $\\sqrt{2} = p/q$ forces an impossibility regarding odd and even prime factors. Thus, $\\sqrt{2} \\notin \\mathbb{Q}$.",
+        "why": "This exposes the fundamental flaw in the rational number line: Density does not equal Completeness. Even though fractions are infinitely dense, the rational line is riddled with microscopic holes (like $\\sqrt{2}$) where geometric lengths attempt to land."
+    },
+    {
+        "title": "Phase 3: The Triangle Inequality (Distance Metrics)",
+        "context": "<strong>Scenario:</strong> A pathfinding algorithm analyzes distances on a 1D timeline using absolute values. It records an origin shift defined by: $|x + y| \\le |x| + |y|$. What physical reality does this rule enforce?",
+        "options": [
+            "The direct net distance $|x+y|$ will always equal the sum of the absolute individual segments.",
+            "The direct distance between two points is inherently larger than detour routes.",
+            "A direct, net journey between points is always shorter than or equal to the total distance traveled when taking a detour.",
+            "Distances calculated in opposite directions inherently cancel out to zero."
+        ],
+        "correct": 2,
+        "what": "The Triangle Inequality dictates that the absolute value of a sum is bounded by the sum of the absolute values.",
+        "why": "If vectors $x$ and $y$ point in opposite directions, their net sum collapses inward, resulting in a shorter total displacement. The only scenario where equality holds is when both movements push in the exact same direction."
+    },
+    {
+        "title": "Phase 4: Evaluating Bounds and Suprema",
+        "context": "<strong>Scenario:</strong> You are auditing the open interval $S = (0, 1)$, defined as $S = \\{x \\in \\mathbb{R} \\mid 0 < x < 1\\}$. The system must determine the set's tightest ceiling. Which classification is structurally correct?",
+        "options": [
+            "The maximum is $0.999\\dots$, and the supremum is $1$.",
+            "The maximum is $1$, and the supremum is $1$.",
+            "The maximum does not exist, and the supremum is $1$.",
+            "Neither the maximum nor the supremum exists because the interval is open."
+        ],
+        "correct": 2,
+        "what": "The number $1$ is an upper bound and it is the least possible upper bound, making $\\sup S = 1$. However, because $1$ is not contained within the set $S$ itself ($1 \\notin S$), $S$ has no maximum element.",
+        "why": "A maximum requires the tightest ceiling to physically reside inside the set. Open intervals infinitely approach their boundary without ever touching it. The supremum acts as a generalized boundary that successfully pins down the exact edge of the data, regardless of inclusion."
+    },
+    {
+        "title": "Phase 5: The Axiom of Completeness",
+        "context": "<strong>Scenario:</strong> Consider the set of all rational numbers whose square is less than 2: $S = \\{x \\in \\mathbb{Q} \\mid x^2 < 2\\}$. The system attempts to find the supremum of this set within the rational numbers ($\\mathbb{Q}$). What occurs?",
+        "options": [
+            "The tightest ceiling in $\\mathbb{Q}$ evaluates to exactly $1.414$.",
+            "The tightest ceiling in $\\mathbb{Q}$ falls through a missing hole, because $\\sqrt{2}$ does not exist in $\\mathbb{Q}$.",
+            "The supremum is automatically rounded to the nearest valid integer bound, $2$.",
+            "The set is unbounded above in $\\mathbb{Q}$, so the supremum diverges to infinity."
+        ],
+        "correct": 1,
+        "what": "The subset is clearly bounded above (e.g., $2$, $1.5$ are valid rational upper bounds). However, the absolute tightest possible ceiling is exactly $\\sqrt{2}$. Because $\\sqrt{2} \\notin \\mathbb{Q}$, there is no least upper bound within the rational space.",
+        "why": "This is why the Real Numbers ($\\mathbb{R}$) are constructed as a <em>Complete</em> Ordered Field. The Axiom of Completeness explicitly repairs this flaw by mathematically guaranteeing that every bounded subset possesses a valid, existent supremum within the continuum."
+    }
+]
+
+# 3. Write the Stepper HTML File
+final_stepper_html = html_template.replace("{course_data_json}", json.dumps(course_data, indent=4))
+stepper_filename = "week1-lecture2-interactive-stepper.html"
+
+with open(stepper_filename, "w", encoding="utf-8") as f:
+    f.write(final_stepper_html)
+print(f"Created: {stepper_filename}")
+
+# 4. Patch week1-lecture2.html
+lecture_filename = "week1-lecture2.html"
+
+# HTML Snippets for Injection
+nav_target = '<a href="week1-lecture3.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">Lecture 3 &rarr;</a>'
+
+nav_replacement = """<a href="week1-lecture2-interactive-stepper.html" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">✎ Practice Problems</a>
+                """ + nav_target
+
+cta_target = "<!-- FOOTER NAVIGATION -->"
+
+cta_replacement = """<!-- INTERACTIVE STEPPER CTA -->
+            <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.75rem; margin-bottom: 2.5rem; border-radius: 6px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                <h4 style="margin: 0 0 0.75rem 0; color: #047857; font-size: 1.15rem;">Ready to test your understanding?</h4>
+                <p style="margin: 0 0 1.25rem 0; color: #334155; font-size: 1.02rem;">Work through the progressive interactive problems to lock in these foundational concepts before moving on to Lecture 3.</p>
+                <a href="week1-lecture2-interactive-stepper.html" style="display: inline-block; background: #10b981; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 1rem; transition: background 0.2s;">
+                    Launch Interactive Problem Stepper ➔
+                </a>
+            </div>
+
+            <!-- FOOTER NAVIGATION -->"""
+
+if os.path.exists(lecture_filename):
+    with open(lecture_filename, "r", encoding="utf-8") as f:
+        lecture_html = f.read()
+
+    # Idempotency check: Only patch if the links don't already exist
+    if "week1-lecture2-interactive-stepper.html" not in lecture_html:
+        # Inject Nav Link
+        lecture_html = lecture_html.replace(nav_target, nav_replacement)
+
+        # Inject CTA
+        lecture_html = lecture_html.replace(cta_target, cta_replacement)
+
+        with open(lecture_filename, "w", encoding="utf-8") as f:
+            f.write(lecture_html)
+        print(f"Patched: {lecture_filename} (Navigation and CTA injected)")
+    else:
+        print(f"Skipped: {lecture_filename} (Already contains the practice problem links)")
+else:
+    print(f"Error: {lecture_filename} not found in the current directory.")
