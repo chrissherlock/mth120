@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTHS120 Interactive Stepper: Week 2 Lecture 5</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+    <style>
+        :root {
+            --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
+            --accent: #d97706; --accent-hover: #b45309; --accent-light: #fef3c7;
+            --success: #10b981; --success-bg: #d1fae5;
+            --danger: #ef4444; --danger-bg: #fee2e2;
+            --info: #3b82f6; --info-bg: #dbeafe;
+            --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
+        .container { max-width: 900px; margin: 0 auto; }
+
+        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .back-link { background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; transition: background 0.2s; white-space: nowrap; }
+        .back-link:hover { background: #e2e8f0; color: #0f172a; }
+
+        .telemetry-bar { background: var(--card); border: 1px solid var(--border); padding: 1rem; border-radius: 8px; display: flex; gap: 1.5rem; margin-bottom: 2rem; font-size: 0.9rem; font-family: monospace; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .tel-stat { display: flex; flex-direction: column; }
+        .tel-label { color: #64748b; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem; }
+        .tel-val { font-weight: bold; color: var(--accent); font-size: 1.1rem; }
+
+        .stage-container { background: var(--card); border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 8px; padding: 2rem; margin-bottom: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .scenario-title { font-size: 1.25rem; font-weight: bold; color: #1e293b; margin-top: 0; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.75rem; }
+        .scenario-context { font-size: 1.05rem; color: #334155; margin-bottom: 1.5rem; }
+
+        .options-grid { display: grid; gap: 0.75rem; margin-bottom: 1.5rem; }
+        .option-btn { background: #f1f5f9; border: 1px solid var(--border); border-radius: 6px; padding: 1rem 1.25rem; text-align: left; font-size: 1rem; cursor: pointer; transition: all 0.2s; font-family: var(--font-ui); color: var(--text); }
+        .option-btn:hover { background: var(--accent-light); border-color: var(--accent); }
+        .option-btn.selected { background: var(--accent-light); border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+        .option-btn.correct { background: var(--success-bg); border-color: var(--success); color: #065f46; }
+        .option-btn.wrong { background: var(--danger-bg); border-color: var(--danger); color: #991b1b; }
+
+        .analysis-container { display: none; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem; border-top: 2px dashed #e2e8f0; padding-top: 1.5rem; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .pane { padding: 1.25rem; border-radius: 6px; border: 1px solid; }
+        .pane-what { background: #f0fdf4; border-color: #bbf7d0; border-left: 4px solid var(--success); }
+        .pane-why { background: #eff6ff; border-color: #bfdbfe; border-left: 4px solid var(--info); }
+        .pane h4 { margin: 0 0 0.75rem 0; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .pane-what h4 { color: #047857; }
+        .pane-why h4 { color: #1d4ed8; }
+        .pane p { margin: 0; font-size: 0.95rem; line-height: 1.5; color: #334155; }
+
+        .stepper-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; }
+        .action-btn { background: var(--accent); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: background 0.2s; }
+        .action-btn:hover { background: var(--accent-hover); }
+        .action-btn:disabled { background: #cbd5e1; cursor: not-allowed; }
+        .nav-btn { background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.75rem 1.25rem; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        .nav-btn:hover:not(:disabled) { background: #e2e8f0; }
+        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        @media (max-width: 640px) {
+            .analysis-container { grid-template-columns: 1fr; }
+            .telemetry-bar { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div>
+            <h1 style="margin:0; font-size:1.75rem; color:#0f172a;">MTHS120 Interactive Stepper</h1>
+            <p style="margin:0.25rem 0 0 0; color:#475569;">Week 2 Lecture 5: Monotone Convergence and Squeeze Theorem</p>
+        </div>
+        <div>
+            <a href="week2-lecture5.html" class="back-link">&larr; Back to Lecture 5</a>
+        </div>
+    </div>
+
+    <div class="telemetry-bar">
+        <div class="tel-stat">
+            <span class="tel-label">Active Phase</span>
+            <span class="tel-val" id="tel-phase">1 / 5</span>
+        </div>
+        <div class="tel-stat">
+            <span class="tel-label">Current Mode</span>
+            <span class="tel-val" id="tel-mode">Awaiting Input</span>
+        </div>
+        <div class="tel-stat">
+            <span class="tel-label">Score</span>
+            <span class="tel-val" id="tel-score">0</span>
+        </div>
+    </div>
+
+    <div class="stage-container">
+        <h2 class="scenario-title" id="stage-title">Loading...</h2>
+        <div class="scenario-context" id="stage-context"></div>
+
+        <div class="options-grid" id="options-container"></div>
+
+        <div class="analysis-container" id="analysis-panes">
+            <div class="pane pane-what">
+                <h4>What Is Happening</h4>
+                <p id="text-what"></p>
+            </div>
+            <div class="pane pane-why">
+                <h4>Why The System Does This</h4>
+                <p id="text-why"></p>
+            </div>
+        </div>
+
+        <div class="stepper-controls">
+            <button class="nav-btn" id="btn-prev" onclick="stepPrevious()" disabled>Prev</button>
+            <button class="action-btn" id="btn-submit" onclick="evaluateSelection()">Submit Verification</button>
+            <button class="nav-btn" id="btn-next" onclick="stepNext()" style="display:none;">Next Step ➔</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const courseData = [
+    {
+        "title": "Phase 1: Escaping the Algebraic Sandbox (MCT Purpose)",
+        "context": "<strong>Scenario:</strong> You are presented with a recursively defined sequence $a_{n+1} = \\sqrt{5 + a_n}$ where $a_1 = 1$. The standard Algebraic Limit Laws fail because you do not know the exact target limit $L$ beforehand. How does the Monotone Convergence Theorem (MCT) resolve this?",
+        "options": [
+            "It automatically calculates the exact limit $L$ using the Completeness Axiom.",
+            "It proves the sequence diverges because the terms are trapped under a square root.",
+            "It legally guarantees that a limit $L$ exists, giving you the right to replace $\\lim_{n\\to\\infty} a_{n+1}$ with $L$ and solve algebraically.",
+            "It forces the sequence to become strictly decreasing so the lowest bound can be found."
+        ],
+        "correct": 2,
+        "what": "The MCT guarantees convergence by confirming the sequence is physically trapped (bounded above) and moving in one direction (increasing). Once convergence is guaranteed, you can confidently assign the symbol $L$ to the unknown limit and solve $L = \\sqrt{5 + L}$.",
+        "why": "Algebraic Limit Laws require limits to exist before they can be applied. The MCT acts as a bridge, mathematically confirming the limit's existence without requiring its numerical value, allowing you to bypass the need for an $\\epsilon$-$N$ proof."
+    },
+    {
+        "title": "Phase 2: Removing the Duplicate Paths (Factorials)",
+        "context": "<strong>Scenario:</strong> When deriving Euler's Number using the Binomial Theorem on $\\left(1 + \\frac{1}{n}\\right)^n$, you must evaluate $\\binom{n}{3}$. You construct a decision tree with $n \\times (n-1) \\times (n-2)$ branches to pick 3 brackets to donate an $\\frac{1}{n}$. Why must you divide this result by $3!$?",
+        "options": [
+            "Because the probability of picking exactly 3 brackets is 1 in 6.",
+            "Because the decision tree treats the order of selection as unique, leading to a massive overcount where every distinct group of 3 brackets was counted 6 times.",
+            "Because the remaining $n-3$ brackets must also be accounted for.",
+            "Because you are dividing by the number of terms in the sequence."
+        ],
+        "correct": 1,
+        "what": "The numerator $n(n-1)(n-2)$ calculates ordered permutations (e.g., picking bracket A, then B, then C). However, the group {A, B, C} is identical to {C, B, A}. Dividing by $3!$ (which is 6) removes these internal permutations.",
+        "why": "In combinations, the order of selection does not matter. The factorial in the denominator of $\\binom{n}{k} = \\frac{n!}{k!(n-k)!}$ acts as a crucial mathematical correction factor to eliminate the duplicate timelines created by the Fundamental Counting Principle."
+    },
+    {
+        "title": "Phase 3: The Inequality Trap (Comparison Principle)",
+        "context": "<strong>Scenario:</strong> Two sequences satisfy $a_n = 0$ and $b_n = \\frac{1}{n}$. It is physically true that $a_n < b_n$ for every single positive integer $n$. Why does the Comparison Principle state that $L \\le K$ instead of $L < K$?",
+        "options": [
+            "Because the inequality must flip when taking the limit of a fraction.",
+            "Because the limit of $b_n$ is negative.",
+            "Because the sequences become undefined at infinity.",
+            "Because infinity crushes the strict gap to zero; both sequences converge to exactly 0, making their limits equal."
+        ],
+        "correct": 3,
+        "what": "Although $0 < \\frac{1}{n}$ is strictly true for all $n$, their limits are $\\lim 0 = 0$ and $\\lim \\frac{1}{n} = 0$. The limits are equal.",
+        "why": "Strict inequalities do not survive the infinite flattening effect of a limit. The Comparison Principle uses the weak inequality ($\\le$) to ensure it legally covers scenarios where sequences arrive bumper-to-bumper at the same destination."
+    },
+    {
+        "title": "Phase 4: Crushing the Chaos (Squeeze Theorem)",
+        "context": "<strong>Scenario:</strong> You must evaluate $\\lim_{n\\to\\infty} \\frac{\\cos(n^2)}{n^3}$. The numerator oscillates violently between -1 and 1, rendering standard Limit Laws useless. How do you construct the Squeeze Theorem trap?",
+        "options": [
+            "Set the floor to $-\\frac{1}{n^3}$ and the ceiling to $\\frac{1}{n^3}$. Because both bounds converge to 0, the target sequence is crushed to 0.",
+            "Set the floor to $-1$ and the ceiling to $1$. Because both bounds are constant, the sequence converges to 0.",
+            "Take the derivative of the numerator and denominator using L'H\u00f4pital's rule.",
+            "Since $\\cos(n^2)$ does not exist as a limit, the entire sequence diverges."
+        ],
+        "correct": 0,
+        "what": "By knowing $-1 \\le \\cos(n^2) \\le 1$, we divide all sides by the positive term $n^3$ to get $-\\frac{1}{n^3} \\le \\frac{\\cos(n^2)}{n^3} \\le \\frac{1}{n^3}$.",
+        "why": "The Squeeze Theorem does not care about the chaotic journey of the middle sequence. By proving that the absolute maximum and absolute minimum bounds both collapse to the same point (0), the chaotic sequence is mathematically forced to follow."
+    },
+    {
+        "title": "Phase 5: The Synchronization Cutoff (Squeeze Proof)",
+        "context": "<strong>Scenario:</strong> To prove the Squeeze Theorem using $\\epsilon$-corridors, you find cutoff $N_1$ where the floor enters the corridor, and cutoff $N_2$ where the ceiling enters. The trapping condition $a_n \\le b_n \\le c_n$ only activates after cutoff $N_0$. What is the master cutoff $N$ for the target sequence $b_n$?",
+        "options": [
+            "$$N = N_0 + N_1 + N_2$$",
+            "$$N = N_0$$",
+            "$$N = \\min(N_0, N_1, N_2)$$",
+            "$$N = \\max(N_0, N_1, N_2)$$"
+        ],
+        "correct": 3,
+        "what": "By defining $N = \\max(N_0, N_1, N_2)$, we select the latest possible cutoff index among the three conditions.",
+        "why": "For the Squeeze Theorem to work logically, all three conditions must be active at the exact same time. Taking the maximum ensures we wait until the floor is inside, the ceiling is inside, and the trap itself has fully engaged."
+    }
+];
+
+    let currentIndex = 0;
+    let selectedOption = null;
+    let phaseScore = 0;
+    let hasAnsweredCurrent = false;
+
+    const elTitle = document.getElementById("stage-title");
+    const elContext = document.getElementById("stage-context");
+    const elOptions = document.getElementById("options-container");
+    const elPanes = document.getElementById("analysis-panes");
+    const elWhat = document.getElementById("text-what");
+    const elWhy = document.getElementById("text-why");
+    const elBtnSubmit = document.getElementById("btn-submit");
+    const elBtnNext = document.getElementById("btn-next");
+    const elBtnPrev = document.getElementById("btn-prev");
+
+    const telPhase = document.getElementById("tel-phase");
+    const telMode = document.getElementById("tel-mode");
+    const telScore = document.getElementById("tel-score");
+
+    function renderMath() {
+        if (typeof renderMathInElement !== 'undefined') {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ],
+                throwOnError: false
+            });
+        }
+    }
+
+    function buildStep() {
+        const data = courseData[currentIndex];
+
+        elTitle.innerHTML = data.title;
+        elContext.innerHTML = data.context;
+
+        elOptions.innerHTML = "";
+        data.options.forEach((opt, idx) => {
+            const btn = document.createElement("button");
+            btn.className = "option-btn";
+            btn.innerHTML = opt;
+            btn.onclick = () => selectOption(idx, btn);
+            elOptions.appendChild(btn);
+        });
+
+        elPanes.style.display = "none";
+        elBtnSubmit.style.display = "block";
+        elBtnNext.style.display = "none";
+        elBtnSubmit.disabled = true;
+
+        selectedOption = null;
+        hasAnsweredCurrent = false;
+
+        telPhase.innerText = `${currentIndex + 1} / ${courseData.length}`;
+        telMode.innerText = "Awaiting Input";
+        telMode.style.color = "var(--text)";
+
+        elBtnPrev.disabled = currentIndex === 0;
+
+        renderMath();
+    }
+
+    function selectOption(idx, btnNode) {
+        if (hasAnsweredCurrent) return;
+
+        const buttons = elOptions.querySelectorAll(".option-btn");
+        buttons.forEach(b => b.classList.remove("selected"));
+
+        btnNode.classList.add("selected");
+        selectedOption = idx;
+        elBtnSubmit.disabled = false;
+    }
+
+    function evaluateSelection() {
+        if (selectedOption === null || hasAnsweredCurrent) return;
+
+        const data = courseData[currentIndex];
+        const buttons = elOptions.querySelectorAll(".option-btn");
+
+        hasAnsweredCurrent = true;
+        elBtnSubmit.style.display = "none";
+        elBtnNext.style.display = "block";
+        elBtnNext.innerText = currentIndex === courseData.length - 1 ? "Complete Verification" : "Next Step ➔";
+
+        if (selectedOption === data.correct) {
+            buttons[selectedOption].classList.add("correct");
+            phaseScore++;
+            telScore.innerText = phaseScore;
+            telMode.innerText = "Verified Valid";
+            telMode.style.color = "var(--success)";
+        } else {
+            buttons[selectedOption].classList.add("wrong");
+            buttons[data.correct].classList.add("correct");
+            telMode.innerText = "Structural Error";
+            telMode.style.color = "var(--danger)";
+        }
+
+        elWhat.innerHTML = data.what;
+        elWhy.innerHTML = data.why;
+        elPanes.style.display = "grid";
+
+        renderMath();
+    }
+
+    function stepNext() {
+        if (currentIndex < courseData.length - 1) {
+            currentIndex++;
+            buildStep();
+        } else {
+            elTitle.innerHTML = "System Verified: Diagnostics Complete";
+            elContext.innerHTML = `<strong>Final Diagnostic Score: ${phaseScore} / ${courseData.length}</strong><br><br>You have successfully traced the structural framework of the Monotone Convergence Theorem and Squeeze Theorem. By mastering the combinations formula, the physical constraints of monotonic bounds, and the trapping mechanics of the Squeeze Theorem, you are fully equipped to evaluate sequences that defeat standard algebra.`;
+            elOptions.innerHTML = "";
+            elPanes.style.display = "none";
+            elBtnNext.style.display = "none";
+            elBtnPrev.style.display = "none";
+
+            telMode.innerText = "Simulation Ended";
+            telMode.style.color = "var(--info)";
+        }
+    }
+
+    function stepPrevious() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            buildStep();
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        buildStep();
+    });
+</script>
+
+</body>
+</html>

@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 import json
 import os
+import sys
 import subprocess
 
-# 1. Define the Stepper HTML Template
 html_template = """<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MTHS120 Interactive Stepper: Week 2 Lecture 4</title>
+    <title>MTHS120 Interactive Stepper: Week 2 Lecture 5</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
@@ -79,10 +79,10 @@ html_template = """<!DOCTYPE html>
     <div class="header">
         <div>
             <h1 style="margin:0; font-size:1.75rem; color:#0f172a;">MTHS120 Interactive Stepper</h1>
-            <p style="margin:0.25rem 0 0 0; color:#475569;">Week 2 Lecture 4: Formal Convergence and Limit Laws</p>
+            <p style="margin:0.25rem 0 0 0; color:#475569;">Week 2 Lecture 5: Monotone Convergence and Squeeze Theorem</p>
         </div>
         <div>
-            <a href="week2-lecture4.html" class="back-link">&larr; Back to Lecture 4</a>
+            <a href="week2-lecture5.html" class="back-link">&larr; Back to Lecture 5</a>
         </div>
     </div>
 
@@ -240,7 +240,7 @@ html_template = """<!DOCTYPE html>
             buildStep();
         } else {
             elTitle.innerHTML = "System Verified: Diagnostics Complete";
-            elContext.innerHTML = `<strong>Final Diagnostic Score: ${phaseScore} / ${courseData.length}</strong><br><br>You have successfully traced the structural framework of the limit definition. By mastering quantifier dependencies, tail invariance, and the elegant ε/2 shared budget, you are fully equipped for rigorous analysis.`;
+            elContext.innerHTML = `<strong>Final Diagnostic Score: ${phaseScore} / ${courseData.length}</strong><br><br>You have successfully traced the structural framework of the Monotone Convergence Theorem and Squeeze Theorem. By mastering the combinations formula, the physical constraints of monotonic bounds, and the trapping mechanics of the Squeeze Theorem, you are fully equipped to evaluate sequences that defeat standard algebra.`;
             elOptions.innerHTML = "";
             elPanes.style.display = "none";
             elBtnNext.style.display = "none";
@@ -266,99 +266,93 @@ html_template = """<!DOCTYPE html>
 </body>
 </html>"""
 
-# 2. Define the Lecture 4 Course Data
 course_data = [
     {
-        "title": "Phase 1: The Epsilon-N Duel (Quantifier Order)",
-        "context": "<strong>Scenario:</strong> You are playing the $\\epsilon$-$N$ game to prove $\\lim_{n \\to \\infty} a_n = L$. The skeptic hands you an impossibly tight tolerance $\\epsilon = 10^{-100}$. Why does the formal definition $\\forall \\epsilon > 0, \\exists N \\in \\mathbb{N}$ guarantee you can still win?",
+        "title": "Phase 1: Escaping the Algebraic Sandbox (MCT Purpose)",
+        "context": "<strong>Scenario:</strong> You are presented with a recursively defined sequence $a_{n+1} = \\sqrt{5 + a_n}$ where $a_1 = 1$. The standard Algebraic Limit Laws fail because you do not know the exact target limit $L$ beforehand. How does the Monotone Convergence Theorem (MCT) resolve this?",
         "options": [
-            "Because $N$ must be chosen before $\\epsilon$ is announced.",
-            "Because $\\exists N$ comes after $\\forall \\epsilon$, allowing your cutoff index to depend directly on the adversary's choice.",
-            "Because the limit $L$ shrinks to accommodate small tolerances.",
-            "Because you only need to prove it for $\\epsilon \\ge 1$."
-        ],
-        "correct": 1,
-        "what": "The order of quantifiers means the adversary acts first (choosing $\\epsilon$), and you respond (choosing $N$). You can calculate $N$ as a function of $\\epsilon$, such as $N = \\lceil 1/\\epsilon \\rceil$.",
-        "why": "If the order were reversed ($\\exists N \\forall \\epsilon$), you would have to pick one universal cutoff that works for every microscopic error bound simultaneously, which is impossible unless the sequence is permanently frozen."
-    },
-    {
-        "title": "Phase 2: Tail Invariance (Finite Modification)",
-        "context": "<strong>Scenario:</strong> Sequence $a_n$ converges to $L = 5$ with cutoff $N_a = 100$. Sequence $b_n$ is formed by replacing the first $10^6$ terms of $a_n$ with chaotic random noise, but letting $b_n = a_n$ for all $n > 10^6$. What is the limit of $b_n$?",
-        "options": [
-            "The limit is destroyed by the massive prefix corruption.",
-            "The limit is exactly $L = 5$, verified by shifting the master cutoff to $N^* = 10^6$.",
-            "The limit shifts to $L = 5 + 10^6$.",
-            "The sequence becomes non-monotonic and therefore diverges."
-        ],
-        "correct": 1,
-        "what": "By defining a master cutoff $N = \\max(100, 10^6) = 10^6$, we isolate the infinite tail where $b_n$ is perfectly identical to $a_n$. Since $|a_n - 5| < \\epsilon$ for all $n > 10^6$, the same is true for $b_n$.",
-        "why": "Convergence is exclusively an asymptotic property of the infinite tail. The Tail Invariance Theorem guarantees that any finite modification—no matter how chaotic—has zero effect on the eventual destination."
-    },
-    {
-        "title": "Phase 3: The Vanishing Daylight (Order Limit Theorem)",
-        "context": "<strong>Scenario:</strong> Two sequences satisfy $a_n < b_n$ for every single index $n \\in \\mathbb{N}$. If $a_n \\to K$ and $b_n \\to L$, what is the strictest valid relationship between their limits?",
-        "options": [
-            "$$K < L$$",
-            "$$K \\le L$$",
-            "$$K = L$$",
-            "$$K > L$$"
-        ],
-        "correct": 1,
-        "what": "Even though $a_n$ is strictly less than $b_n$ at every step, their limits can converge to the exact same numerical value (e.g., $-1/n < 1/n$, but both converge to 0).",
-        "why": "Strict inequalities soften into weak (non-strict) inequalities at the limit. The 'Vanishing Daylight' phenomenon allows two sequences to arrive bumper-to-bumper at the exact same location."
-    },
-    {
-        "title": "Phase 4: The Shared Budget ($\\epsilon/2$ Trick)",
-        "context": "<strong>Scenario:</strong> To prove the Sum Law $\\lim (a_n + b_n) = K + L$, you are handed a total error budget $\\epsilon$. How do you assign the tolerances for the individual sequences $a_n$ and $b_n$ to guarantee the sum stays inside the target corridor?",
-        "options": [
-            "Demand $|a_n - K| < \\epsilon$ and $|b_n - L| < \\epsilon$.",
-            "Demand $|a_n - K| < \\epsilon^2$ and $|b_n - L| < \\epsilon^2$.",
-            "Demand $|a_n - K| < \\epsilon/2$ and $|b_n - L| < \\epsilon/2$.",
-            "Demand $|a_n - K| = 0$ and $|b_n - L| = 0$."
+            "It automatically calculates the exact limit $L$ using the Completeness Axiom.",
+            "It proves the sequence diverges because the terms are trapped under a square root.",
+            "It legally guarantees that a limit $L$ exists, giving you the right to replace $\\lim_{n\\to\\infty} a_{n+1}$ with $L$ and solve algebraically.",
+            "It forces the sequence to become strictly decreasing so the lowest bound can be found."
         ],
         "correct": 2,
-        "what": "By cutting the total budget in half, the triangle inequality yields $|(a_n - K) + (b_n - L)| \\le |a_n - K| + |b_n - L| < \\epsilon/2 + \\epsilon/2 = \\epsilon$.",
-        "why": "Since $a_n$ and $b_n$ fluctuate independently, their errors could align in the worst-case scenario. Sharing the tolerance as $\\epsilon/2$ prevents their combined drift from spilling out of the skeptic's $\\epsilon$-band."
+        "what": "The MCT guarantees convergence by confirming the sequence is physically trapped (bounded above) and moving in one direction (increasing). Once convergence is guaranteed, you can confidently assign the symbol $L$ to the unknown limit and solve $L = \\sqrt{5 + L}$.",
+        "why": "Algebraic Limit Laws require limits to exist before they can be applied. The MCT acts as a bridge, mathematically confirming the limit's existence without requiring its numerical value, allowing you to bypass the need for an $\\epsilon$-$N$ proof."
     },
     {
-        "title": "Phase 5: Defeating the Limit (Negation)",
-        "context": "<strong>Scenario:</strong> To prove a sequence does <em>not</em> converge to a candidate limit $L$, you must step into the role of the Skeptic. What is the correct logical negation of the $\\epsilon$-$N$ limit definition?",
+        "title": "Phase 2: Removing the Duplicate Paths (Factorials)",
+        "context": "<strong>Scenario:</strong> When deriving Euler's Number using the Binomial Theorem on $\\left(1 + \\frac{1}{n}\\right)^n$, you must evaluate $\\binom{n}{3}$. You construct a decision tree with $n \\times (n-1) \\times (n-2)$ branches to pick 3 brackets to donate an $\\frac{1}{n}$. Why must you divide this result by $3!$?",
         "options": [
-            "$$\\exists \\epsilon > 0 \\text{ such that } \\forall N \\in \\mathbb{N}, \\exists n > N \\text{ with } |a_n - L| \\ge \\epsilon$$",
-            "$$\\forall \\epsilon > 0, \\forall N \\in \\mathbb{N}, |a_n - L| \\ge \\epsilon$$",
-            "$$\\exists \\epsilon > 0, \\exists N \\in \\mathbb{N}, \\forall n > N, |a_n - L| \\ge \\epsilon$$",
-            "$$\\exists N \\in \\mathbb{N} \\text{ such that } \\forall \\epsilon > 0, |a_n - L| \\ge \\epsilon$$"
+            "Because the probability of picking exactly 3 brackets is 1 in 6.",
+            "Because the decision tree treats the order of selection as unique, leading to a massive overcount where every distinct group of 3 brackets was counted 6 times.",
+            "Because the remaining $n-3$ brackets must also be accounted for.",
+            "Because you are dividing by the number of terms in the sequence."
+        ],
+        "correct": 1,
+        "what": "The numerator $n(n-1)(n-2)$ calculates ordered permutations (e.g., picking bracket A, then B, then C). However, the group {A, B, C} is identical to {C, B, A}. Dividing by $3!$ (which is 6) removes these internal permutations.",
+        "why": "In combinations, the order of selection does not matter. The factorial in the denominator of $\\binom{n}{k} = \\frac{n!}{k!(n-k)!}$ acts as a crucial mathematical correction factor to eliminate the duplicate timelines created by the Fundamental Counting Principle."
+    },
+    {
+        "title": "Phase 3: The Inequality Trap (Comparison Principle)",
+        "context": "<strong>Scenario:</strong> Two sequences satisfy $a_n = 0$ and $b_n = \\frac{1}{n}$. It is physically true that $a_n < b_n$ for every single positive integer $n$. Why does the Comparison Principle state that $L \\le K$ instead of $L < K$?",
+        "options": [
+            "Because the inequality must flip when taking the limit of a fraction.",
+            "Because the limit of $b_n$ is negative.",
+            "Because the sequences become undefined at infinity.",
+            "Because infinity crushes the strict gap to zero; both sequences converge to exactly 0, making their limits equal."
+        ],
+        "correct": 3,
+        "what": "Although $0 < \\frac{1}{n}$ is strictly true for all $n$, their limits are $\\lim 0 = 0$ and $\\lim \\frac{1}{n} = 0$. The limits are equal.",
+        "why": "Strict inequalities do not survive the infinite flattening effect of a limit. The Comparison Principle uses the weak inequality ($\\le$) to ensure it legally covers scenarios where sequences arrive bumper-to-bumper at the same destination."
+    },
+    {
+        "title": "Phase 4: Crushing the Chaos (Squeeze Theorem)",
+        "context": "<strong>Scenario:</strong> You must evaluate $\\lim_{n\\to\\infty} \\frac{\\cos(n^2)}{n^3}$. The numerator oscillates violently between -1 and 1, rendering standard Limit Laws useless. How do you construct the Squeeze Theorem trap?",
+        "options": [
+            "Set the floor to $-\\frac{1}{n^3}$ and the ceiling to $\\frac{1}{n^3}$. Because both bounds converge to 0, the target sequence is crushed to 0.",
+            "Set the floor to $-1$ and the ceiling to $1$. Because both bounds are constant, the sequence converges to 0.",
+            "Take the derivative of the numerator and denominator using L'Hôpital's rule.",
+            "Since $\\cos(n^2)$ does not exist as a limit, the entire sequence diverges."
         ],
         "correct": 0,
-        "what": "Every $\\forall$ flips to $\\exists$, and every $\\exists$ flips to $\\forall$. The condition $|a_n - L| < \\epsilon$ is negated to $|a_n - L| \\ge \\epsilon$.",
-        "why": "To disprove a limit, you only need to find one lethal tolerance $\\epsilon > 0$ where no matter how far down the sequence someone looks ($\\forall N$), they will always find at least one rogue term ($\\exists n > N$) that escapes the corridor."
+        "what": "By knowing $-1 \\le \\cos(n^2) \\le 1$, we divide all sides by the positive term $n^3$ to get $-\\frac{1}{n^3} \\le \\frac{\\cos(n^2)}{n^3} \\le \\frac{1}{n^3}$.",
+        "why": "The Squeeze Theorem does not care about the chaotic journey of the middle sequence. By proving that the absolute maximum and absolute minimum bounds both collapse to the same point (0), the chaotic sequence is mathematically forced to follow."
+    },
+    {
+        "title": "Phase 5: The Synchronization Cutoff (Squeeze Proof)",
+        "context": "<strong>Scenario:</strong> To prove the Squeeze Theorem using $\\epsilon$-corridors, you find cutoff $N_1$ where the floor enters the corridor, and cutoff $N_2$ where the ceiling enters. The trapping condition $a_n \\le b_n \\le c_n$ only activates after cutoff $N_0$. What is the master cutoff $N$ for the target sequence $b_n$?",
+        "options": [
+            "$$N = N_0 + N_1 + N_2$$",
+            "$$N = N_0$$",
+            "$$N = \\min(N_0, N_1, N_2)$$",
+            "$$N = \\max(N_0, N_1, N_2)$$"
+        ],
+        "correct": 3,
+        "what": "By defining $N = \\max(N_0, N_1, N_2)$, we select the latest possible cutoff index among the three conditions.",
+        "why": "For the Squeeze Theorem to work logically, all three conditions must be active at the exact same time. Taking the maximum ensures we wait until the floor is inside, the ceiling is inside, and the trap itself has fully engaged."
     }
 ]
 
-# 3. Write the Stepper HTML File
 final_stepper_html = html_template.replace("{course_data_json}", json.dumps(course_data, indent=4))
-stepper_filename = "week2-lecture4-interactive-stepper.html"
+stepper_filename = "week2-lecture5-interactive-stepper.html"
 
 with open(stepper_filename, "w", encoding="utf-8") as f:
     f.write(final_stepper_html)
 print(f"Created: {stepper_filename}")
 
-# 4. Patch week2-lecture4.html
-lecture_filename = "week2-lecture4.html"
+lecture_filename = "week2-lecture5.html"
 
-# HTML Snippets for Injection
-nav_target = '<a href="week2-lecture5.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">Lecture 5 &rarr;</a>'
-
-nav_replacement = """<a href="week2-lecture4-interactive-stepper.html" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">✎ Practice Problems</a>
+nav_target = '<a href="week2-lecture6.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">Lecture 6 &rarr;</a>'
+nav_replacement = """<a href="week2-lecture5-interactive-stepper.html" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">✎ Practice Problems</a>
                 """ + nav_target
 
 cta_target = "<!-- FOOTER NAVIGATION -->"
-
 cta_replacement = """<!-- INTERACTIVE STEPPER CTA -->
             <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.75rem; margin-bottom: 2.5rem; border-radius: 6px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
                 <h4 style="margin: 0 0 0.75rem 0; color: #047857; font-size: 1.15rem;">Ready to test your understanding?</h4>
-                <p style="margin: 0 0 1.25rem 0; color: #334155; font-size: 1.02rem;">Work through the progressive interactive problems to lock in these foundational concepts before moving on to Lecture 5.</p>
-                <a href="week2-lecture4-interactive-stepper.html" style="display: inline-block; background: #10b981; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 1rem; transition: background 0.2s;">
+                <p style="margin: 0 0 1.25rem 0; color: #334155; font-size: 1.02rem;">Work through the progressive interactive problems to lock in these foundational concepts before moving on to Lecture 6.</p>
+                <a href="week2-lecture5-interactive-stepper.html" style="display: inline-block; background: #10b981; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 1rem; transition: background 0.2s;">
                     Launch Interactive Problem Stepper ➔
                 </a>
             </div>
@@ -369,12 +363,8 @@ if os.path.exists(lecture_filename):
     with open(lecture_filename, "r", encoding="utf-8") as f:
         lecture_html = f.read()
 
-    # Idempotency check: Only patch if the links don't already exist
-    if "week2-lecture4-interactive-stepper.html" not in lecture_html:
-        # Inject Nav Link
+    if "week2-lecture5-interactive-stepper.html" not in lecture_html:
         lecture_html = lecture_html.replace(nav_target, nav_replacement)
-
-        # Inject CTA
         lecture_html = lecture_html.replace(cta_target, cta_replacement)
 
         with open(lecture_filename, "w", encoding="utf-8") as f:
@@ -385,11 +375,16 @@ if os.path.exists(lecture_filename):
 else:
     print(f"Error: {lecture_filename} not found in the current directory.")
 
-# 5. Execute Git Commands Automatically
 print("\\nExecuting Git commands...")
 try:
-    subprocess.run(["git", "add", "update.py", "week2-lecture4-interactive-stepper.html", "week2-lecture4.html"], check=True)
-    subprocess.run(["git", "commit", "-m", "Add interactive stepper to Week 2 Lecture 4\\n\\nGenerate week2-lecture4-interactive-stepper.html and automatically patch week2-lecture4.html to include navigational and call-to-action links to the newly generated problems."], check=True)
+    script_name = os.path.basename(sys.argv[0])
+    files_to_add = ["week2-lecture5-interactive-stepper.html", "week2-lecture5.html"]
+
+    if os.path.exists(script_name):
+        files_to_add.append(script_name)
+
+    subprocess.run(["git", "add"] + files_to_add, check=True)
+    subprocess.run(["git", "commit", "-m", "Add interactive stepper to Week 2 Lecture 5\n\nGenerate week2-lecture5-interactive-stepper.html and automatically patch week2-lecture5.html to include navigational and call-to-action links to the newly generated problems."], check=True)
     subprocess.run(["git", "push"], check=True)
     print("Git operations completed successfully.")
 except Exception as e:
