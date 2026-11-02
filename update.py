@@ -9,7 +9,7 @@ html_template = """<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MTHS120 Interactive Stepper: Week 1 Lecture 3</title>
+    <title>MTHS120 Interactive Stepper: Week 2 Lecture 4</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
@@ -79,10 +79,10 @@ html_template = """<!DOCTYPE html>
     <div class="header">
         <div>
             <h1 style="margin:0; font-size:1.75rem; color:#0f172a;">MTHS120 Interactive Stepper</h1>
-            <p style="margin:0.25rem 0 0 0; color:#475569;">Week 1 Lecture 3: Sequences and Discrete Calculus</p>
+            <p style="margin:0.25rem 0 0 0; color:#475569;">Week 2 Lecture 4: Formal Convergence and Limit Laws</p>
         </div>
         <div>
-            <a href="week1-lecture3.html" class="back-link">&larr; Back to Lecture 3</a>
+            <a href="week2-lecture4.html" class="back-link">&larr; Back to Lecture 4</a>
         </div>
     </div>
 
@@ -240,7 +240,7 @@ html_template = """<!DOCTYPE html>
             buildStep();
         } else {
             elTitle.innerHTML = "System Verified: Diagnostics Complete";
-            elContext.innerHTML = `<strong>Final Diagnostic Score: ${phaseScore} / ${courseData.length}</strong><br><br>You have successfully analyzed discrete sequences. From distinguishing monotonic profiles to reversing discrete step derivatives with telescoping sums, your foundation for formal convergence in Week 2 is fully assembled.`;
+            elContext.innerHTML = `<strong>Final Diagnostic Score: ${phaseScore} / ${courseData.length}</strong><br><br>You have successfully traced the structural framework of the limit definition. By mastering quantifier dependencies, tail invariance, and the elegant ε/2 shared budget, you are fully equipped for rigorous analysis.`;
             elOptions.innerHTML = "";
             elPanes.style.display = "none";
             elBtnNext.style.display = "none";
@@ -266,90 +266,90 @@ html_template = """<!DOCTYPE html>
 </body>
 </html>"""
 
-# 2. Define the Lecture 3 Course Data
+# 2. Define the Lecture 4 Course Data
 course_data = [
     {
-        "title": "Phase 1: Diagnosing Monotonicity",
-        "context": "<strong>Scenario:</strong> You are evaluating a system state sequence represented by $a_n = \\frac{1}{n^2}$ for $n \\ge 1$. Which algebraic condition correctly proves this sequence is strictly decreasing?",
+        "title": "Phase 1: The Epsilon-N Duel (Quantifier Order)",
+        "context": "<strong>Scenario:</strong> You are playing the $\\epsilon$-$N$ game to prove $\\lim_{n \\to \\infty} a_n = L$. The skeptic hands you an impossibly tight tolerance $\\epsilon = 10^{-100}$. Why does the formal definition $\\forall \\epsilon > 0, \\exists N \\in \\mathbb{N}$ guarantee you can still win?",
         "options": [
-            "$$a_{n+1} - a_n = \\frac{1}{(n+1)^2} - \\frac{1}{n^2} < 0$$ for all $n \\ge 1$",
-            "$$\\frac{a_{n+1}}{a_n} = \\frac{n^2}{(n+1)^2} > 1$$ for all $n \\ge 1$",
-            "$$a_{n+1} - a_n = \\frac{1}{n+1} - \\frac{1}{n} \\le 0$$ for all $n \\ge 1$",
-            "By checking the first three terms: $1 > \\frac{1}{4} > \\frac{1}{9}$"
+            "Because $N$ must be chosen before $\\epsilon$ is announced.",
+            "Because $\\exists N$ comes after $\\forall \\epsilon$, allowing your cutoff index to depend directly on the adversary's choice.",
+            "Because the limit $L$ shrinks to accommodate small tolerances.",
+            "Because you only need to prove it for $\\epsilon \\ge 1$."
         ],
-        "correct": 0,
-        "what": "The Difference Test demands we evaluate $a_{n+1} - a_n$. Since $(n+1)^2 > n^2$ for $n \\ge 1$, the fraction $\\frac{1}{(n+1)^2}$ is strictly smaller than $\\frac{1}{n^2}$, forcing their difference to be strictly negative.",
-        "why": "A sequence is strictly decreasing if and only if every forward step results in a net drop (a negative derived difference). The finite observation trap (checking only the first few terms) is never a rigorous proof in analysis."
+        "correct": 1,
+        "what": "The order of quantifiers means the adversary acts first (choosing $\\epsilon$), and you respond (choosing $N$). You can calculate $N$ as a function of $\\epsilon$, such as $N = \\lceil 1/\\epsilon \\rceil$.",
+        "why": "If the order were reversed ($\\exists N \\forall \\epsilon$), you would have to pick one universal cutoff that works for every microscopic error bound simultaneously, which is impossible unless the sequence is permanently frozen."
     },
     {
-        "title": "Phase 2: Pointwise Algebra and Oscillations",
-        "context": "<strong>Scenario:</strong> The sequence $c_n$ is formed by adding an arithmetic climb to a negative oscillation: $c_n = 2n + (-1)^n$. What is the behavior of the derived sequence $c_n'$?",
+        "title": "Phase 2: Tail Invariance (Finite Modification)",
+        "context": "<strong>Scenario:</strong> Sequence $a_n$ converges to $L = 5$ with cutoff $N_a = 100$. Sequence $b_n$ is formed by replacing the first $10^6$ terms of $a_n$ with chaotic random noise, but letting $b_n = a_n$ for all $n > 10^6$. What is the limit of $b_n$?",
         "options": [
-            "It remains constant at $c_n' = 2$.",
-            "It alternates signs continuously, causing $c_n$ to lose all monotonic properties.",
-            "It evaluates to $0$ on even steps and $+4$ on odd steps, proving $c_n$ is weakly increasing with flat plateaus.",
-            "It evaluates to $-2$ everywhere, proving $c_n$ is strictly decreasing."
+            "The limit is destroyed by the massive prefix corruption.",
+            "The limit is exactly $L = 5$, verified by shifting the master cutoff to $N^* = 10^6$.",
+            "The limit shifts to $L = 5 + 10^6$.",
+            "The sequence becomes non-monotonic and therefore diverges."
+        ],
+        "correct": 1,
+        "what": "By defining a master cutoff $N = \\max(100, 10^6) = 10^6$, we isolate the infinite tail where $b_n$ is perfectly identical to $a_n$. Since $|a_n - 5| < \\epsilon$ for all $n > 10^6$, the same is true for $b_n$.",
+        "why": "Convergence is exclusively an asymptotic property of the infinite tail. The Tail Invariance Theorem guarantees that any finite modification—no matter how chaotic—has zero effect on the eventual destination."
+    },
+    {
+        "title": "Phase 3: The Vanishing Daylight (Order Limit Theorem)",
+        "context": "<strong>Scenario:</strong> Two sequences satisfy $a_n < b_n$ for every single index $n \\in \\mathbb{N}$. If $a_n \\to K$ and $b_n \\to L$, what is the strictest valid relationship between their limits?",
+        "options": [
+            "$$K < L$$",
+            "$$K \\le L$$",
+            "$$K = L$$",
+            "$$K > L$$"
+        ],
+        "correct": 1,
+        "what": "Even though $a_n$ is strictly less than $b_n$ at every step, their limits can converge to the exact same numerical value (e.g., $-1/n < 1/n$, but both converge to 0).",
+        "why": "Strict inequalities soften into weak (non-strict) inequalities at the limit. The 'Vanishing Daylight' phenomenon allows two sequences to arrive bumper-to-bumper at the exact same location."
+    },
+    {
+        "title": "Phase 4: The Shared Budget ($\\epsilon/2$ Trick)",
+        "context": "<strong>Scenario:</strong> To prove the Sum Law $\\lim (a_n + b_n) = K + L$, you are handed a total error budget $\\epsilon$. How do you assign the tolerances for the individual sequences $a_n$ and $b_n$ to guarantee the sum stays inside the target corridor?",
+        "options": [
+            "Demand $|a_n - K| < \\epsilon$ and $|b_n - L| < \\epsilon$.",
+            "Demand $|a_n - K| < \\epsilon^2$ and $|b_n - L| < \\epsilon^2$.",
+            "Demand $|a_n - K| < \\epsilon/2$ and $|b_n - L| < \\epsilon/2$.",
+            "Demand $|a_n - K| = 0$ and $|b_n - L| = 0$."
         ],
         "correct": 2,
-        "what": "The derived difference of the linear term $2n$ is constantly $+2$. The derived difference of $(-1)^n$ alternates between $+2$ and $-2$. Adding them pointwise gives a derived sequence that hits $0$ then jumps to $+4$.",
-        "why": "Pointwise addition of a constant difference and an alternating difference creates a periodic wave of differences. When the oscillation perfectly cancels the linear climb ($2 - 2 = 0$), the sequence hits a flat plateau, making it weakly (not strictly) increasing."
+        "what": "By cutting the total budget in half, the triangle inequality yields $|(a_n - K) + (b_n - L)| \\le |a_n - K| + |b_n - L| < \\epsilon/2 + \\epsilon/2 = \\epsilon$.",
+        "why": "Since $a_n$ and $b_n$ fluctuate independently, their errors could align in the worst-case scenario. Sharing the tolerance as $\\epsilon/2$ prevents their combined drift from spilling out of the skeptic's $\\epsilon$-band."
     },
     {
-        "title": "Phase 3: The Discrete Derivative",
-        "context": "<strong>Scenario:</strong> You need to compute the derived sequence $a_n' = a_{n+1} - a_n$ for the geometric progression $a_n = 5 \\cdot (3)^n$. What is the resulting sequence?",
+        "title": "Phase 5: Defeating the Limit (Negation)",
+        "context": "<strong>Scenario:</strong> To prove a sequence does <em>not</em> converge to a candidate limit $L$, you must step into the role of the Skeptic. What is the correct logical negation of the $\\epsilon$-$N$ limit definition?",
         "options": [
-            "$$a_n' = 15 \\cdot (3)^{n-1}$$",
-            "$$a_n' = 10 \\cdot (3)^n$$",
-            "$$a_n' = 5 \\cdot (2)^n$$",
-            "$$a_n' = 5 \\cdot (3)^n$$"
-        ],
-        "correct": 1,
-        "what": "Substitute into the definition: $a_n' = 5 \\cdot 3^{n+1} - 5 \\cdot 3^n = 5 \\cdot 3^n(3 - 1) = 5 \\cdot 3^n(2) = 10 \\cdot 3^n$.",
-        "why": "The derived sequence of a geometric progression $aq^n$ is another geometric progression $a(q-1)q^n$. The scaling factor $(q-1)$ emerges naturally from factoring out the common ratio."
-    },
-    {
-        "title": "Phase 4: Telescoping Sums",
-        "context": "<strong>Scenario:</strong> You are evaluating the sum of the derived sequence $\\sum_{k=0}^{n-1} a_k'$ where $a_k = \\frac{1}{k+1}$. According to the Discrete Fundamental Theorem of Calculus (Telescoping Identity), what does this sum collapse to?",
-        "options": [
-            "$$\\frac{1}{n+1} - 1$$",
-            "$$\\frac{1}{n+1}$$",
-            "$$1 - \\frac{1}{n+1}$$",
-            "$$0$$"
+            "$$\\exists \\epsilon > 0 \\text{ such that } \\forall N \\in \\mathbb{N}, \\exists n > N \\text{ with } |a_n - L| \\ge \\epsilon$$",
+            "$$\\forall \\epsilon > 0, \\forall N \\in \\mathbb{N}, |a_n - L| \\ge \\epsilon$$",
+            "$$\\exists \\epsilon > 0, \\exists N \\in \\mathbb{N}, \\forall n > N, |a_n - L| \\ge \\epsilon$$",
+            "$$\\exists N \\in \\mathbb{N} \\text{ such that } \\forall \\epsilon > 0, |a_n - L| \\ge \\epsilon$$"
         ],
         "correct": 0,
-        "what": "The Telescoping Identity states that $\\sum_{k=0}^{n-1} a_k' = a_n - a_0$. Substituting the terms gives $a_n = \\frac{1}{n+1}$ and $a_0 = \\frac{1}{1} = 1$. The result is strictly $\\frac{1}{n+1} - 1$.",
-        "why": "A sum of consecutive differences always collapses inward, canceling every intermediate locker state. Only the final destination boundary ($a_n$) and the initial starting boundary ($-a_0$) survive the accumulation."
-    },
-    {
-        "title": "Phase 5: Boundedness vs. Limits",
-        "context": "<strong>Scenario:</strong> An analysis engine evaluates the alternating sequence $d_n = (-1)^n$. It logs that the sequence is strictly bounded. Does this guarantee the sequence has a convergent limit?",
-        "options": [
-            "Yes. The Axiom of Completeness guarantees bounded sequences always converge to their supremum.",
-            "No. Boundedness only guarantees the sequence is trapped within a horizontal corridor (e.g., between -1 and 1), but it may oscillate forever without settling on a single destination.",
-            "Yes, because the bounds $-1$ and $1$ eventually cancel each other out to zero.",
-            "No, because the sequence is not bounded; it oscillates infinitely."
-        ],
-        "correct": 1,
-        "what": "The sequence is bounded because $|d_n| \\le 1$ for all $n$. However, it diverges by oscillation, never approaching a single numerical limit.",
-        "why": "Boundedness is a geometric fence; convergence is a destination. While convergence requires boundedness, boundedness alone does not guarantee convergence. A sequence can bounce infinitely between walls without ever coming to rest."
+        "what": "Every $\\forall$ flips to $\\exists$, and every $\\exists$ flips to $\\forall$. The condition $|a_n - L| < \\epsilon$ is negated to $|a_n - L| \\ge \\epsilon$.",
+        "why": "To disprove a limit, you only need to find one lethal tolerance $\\epsilon > 0$ where no matter how far down the sequence someone looks ($\\forall N$), they will always find at least one rogue term ($\\exists n > N$) that escapes the corridor."
     }
 ]
 
 # 3. Write the Stepper HTML File
 final_stepper_html = html_template.replace("{course_data_json}", json.dumps(course_data, indent=4))
-stepper_filename = "week1-lecture3-interactive-stepper.html"
+stepper_filename = "week2-lecture4-interactive-stepper.html"
 
 with open(stepper_filename, "w", encoding="utf-8") as f:
     f.write(final_stepper_html)
 print(f"Created: {stepper_filename}")
 
-# 4. Patch week1-lecture3.html
-lecture_filename = "week1-lecture3.html"
+# 4. Patch week2-lecture4.html
+lecture_filename = "week2-lecture4.html"
 
 # HTML Snippets for Injection
-nav_target = '<a href="week2-lecture4.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">Lecture 4 &rarr;</a>'
+nav_target = '<a href="week2-lecture5.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">Lecture 5 &rarr;</a>'
 
-nav_replacement = """<a href="week1-lecture3-interactive-stepper.html" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">✎ Practice Problems</a>
+nav_replacement = """<a href="week2-lecture4-interactive-stepper.html" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">✎ Practice Problems</a>
                 """ + nav_target
 
 cta_target = "<!-- FOOTER NAVIGATION -->"
@@ -357,8 +357,8 @@ cta_target = "<!-- FOOTER NAVIGATION -->"
 cta_replacement = """<!-- INTERACTIVE STEPPER CTA -->
             <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.75rem; margin-bottom: 2.5rem; border-radius: 6px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
                 <h4 style="margin: 0 0 0.75rem 0; color: #047857; font-size: 1.15rem;">Ready to test your understanding?</h4>
-                <p style="margin: 0 0 1.25rem 0; color: #334155; font-size: 1.02rem;">Work through the progressive interactive problems to lock in these foundational concepts before moving on to Week 2.</p>
-                <a href="week1-lecture3-interactive-stepper.html" style="display: inline-block; background: #10b981; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 1rem; transition: background 0.2s;">
+                <p style="margin: 0 0 1.25rem 0; color: #334155; font-size: 1.02rem;">Work through the progressive interactive problems to lock in these foundational concepts before moving on to Lecture 5.</p>
+                <a href="week2-lecture4-interactive-stepper.html" style="display: inline-block; background: #10b981; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 1rem; transition: background 0.2s;">
                     Launch Interactive Problem Stepper ➔
                 </a>
             </div>
@@ -370,7 +370,7 @@ if os.path.exists(lecture_filename):
         lecture_html = f.read()
 
     # Idempotency check: Only patch if the links don't already exist
-    if "week1-lecture3-interactive-stepper.html" not in lecture_html:
+    if "week2-lecture4-interactive-stepper.html" not in lecture_html:
         # Inject Nav Link
         lecture_html = lecture_html.replace(nav_target, nav_replacement)
 
@@ -388,8 +388,8 @@ else:
 # 5. Execute Git Commands Automatically
 print("\\nExecuting Git commands...")
 try:
-    subprocess.run(["git", "add", "update.py", "week1-lecture3-interactive-stepper.html", "week1-lecture3.html"], check=True)
-    subprocess.run(["git", "commit", "-m", "Add interactive stepper to Week 1 Lecture 3\\n\\nGenerate week1-lecture3-interactive-stepper.html and automatically patch week1-lecture3.html to include navigational and call-to-action links to the newly generated problems."], check=True)
+    subprocess.run(["git", "add", "update.py", "week2-lecture4-interactive-stepper.html", "week2-lecture4.html"], check=True)
+    subprocess.run(["git", "commit", "-m", "Add interactive stepper to Week 2 Lecture 4\\n\\nGenerate week2-lecture4-interactive-stepper.html and automatically patch week2-lecture4.html to include navigational and call-to-action links to the newly generated problems."], check=True)
     subprocess.run(["git", "push"], check=True)
     print("Git operations completed successfully.")
 except Exception as e:
