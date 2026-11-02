@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTHS120 Interactive Stepper: Week 2 Lecture 6</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+    <style>
+        :root {
+            --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
+            --accent: #d97706; --accent-hover: #b45309; --accent-light: #fef3c7;
+            --success: #10b981; --success-bg: #d1fae5;
+            --danger: #ef4444; --danger-bg: #fee2e2;
+            --info: #3b82f6; --info-bg: #dbeafe;
+            --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
+        .container { max-width: 900px; margin: 0 auto; }
+
+        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .back-link { background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; transition: background 0.2s; white-space: nowrap; }
+        .back-link:hover { background: #e2e8f0; color: #0f172a; }
+
+        .telemetry-bar { background: var(--card); border: 1px solid var(--border); padding: 1rem; border-radius: 8px; display: flex; gap: 1.5rem; margin-bottom: 2rem; font-size: 0.9rem; font-family: monospace; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .tel-stat { display: flex; flex-direction: column; }
+        .tel-label { color: #64748b; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem; }
+        .tel-val { font-weight: bold; color: var(--accent); font-size: 1.1rem; }
+
+        .stage-container { background: var(--card); border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 8px; padding: 2rem; margin-bottom: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .scenario-title { font-size: 1.25rem; font-weight: bold; color: #1e293b; margin-top: 0; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.75rem; }
+        .scenario-context { font-size: 1.05rem; color: #334155; margin-bottom: 1.5rem; }
+
+        .options-grid { display: grid; gap: 0.75rem; margin-bottom: 1.5rem; }
+        .option-btn { background: #f1f5f9; border: 1px solid var(--border); border-radius: 6px; padding: 1rem 1.25rem; text-align: left; font-size: 1rem; cursor: pointer; transition: all 0.2s; font-family: var(--font-ui); color: var(--text); }
+        .option-btn:hover { background: var(--accent-light); border-color: var(--accent); }
+        .option-btn.selected { background: var(--accent-light); border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+        .option-btn.correct { background: var(--success-bg); border-color: var(--success); color: #065f46; }
+        .option-btn.wrong { background: var(--danger-bg); border-color: var(--danger); color: #991b1b; }
+
+        .analysis-container { display: none; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem; border-top: 2px dashed #e2e8f0; padding-top: 1.5rem; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .pane { padding: 1.25rem; border-radius: 6px; border: 1px solid; }
+        .pane-what { background: #f0fdf4; border-color: #bbf7d0; border-left: 4px solid var(--success); }
+        .pane-why { background: #eff6ff; border-color: #bfdbfe; border-left: 4px solid var(--info); }
+        .pane h4 { margin: 0 0 0.75rem 0; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .pane-what h4 { color: #047857; }
+        .pane-why h4 { color: #1d4ed8; }
+        .pane p { margin: 0; font-size: 0.95rem; line-height: 1.5; color: #334155; }
+
+        .stepper-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; }
+        .action-btn { background: var(--accent); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: background 0.2s; }
+        .action-btn:hover { background: var(--accent-hover); }
+        .action-btn:disabled { background: #cbd5e1; cursor: not-allowed; }
+        .nav-btn { background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.75rem 1.25rem; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        .nav-btn:hover:not(:disabled) { background: #e2e8f0; }
+        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        @media (max-width: 640px) {
+            .analysis-container { grid-template-columns: 1fr; }
+            .telemetry-bar { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div>
+            <h1 style="margin:0; font-size:1.75rem; color:#0f172a;">MTHS120 Interactive Stepper</h1>
+            <p style="margin:0.25rem 0 0 0; color:#475569;">Week 2 Lecture 6: Recursive Sequences and Divergence to Infinity</p>
+        </div>
+        <div>
+            <a href="week2-lecture6.html" class="back-link">&larr; Back to Lecture 6</a>
+        </div>
+    </div>
+
+    <div class="telemetry-bar">
+        <div class="tel-stat">
+            <span class="tel-label">Active Phase</span>
+            <span class="tel-val" id="tel-phase">1 / 5</span>
+        </div>
+        <div class="tel-stat">
+            <span class="tel-label">Current Mode</span>
+            <span class="tel-val" id="tel-mode">Awaiting Input</span>
+        </div>
+        <div class="tel-stat">
+            <span class="tel-label">Score</span>
+            <span class="tel-val" id="tel-score">0</span>
+        </div>
+    </div>
+
+    <div class="stage-container">
+        <h2 class="scenario-title" id="stage-title">Loading...</h2>
+        <div class="scenario-context" id="stage-context"></div>
+
+        <div class="options-grid" id="options-container"></div>
+
+        <div class="analysis-container" id="analysis-panes">
+            <div class="pane pane-what">
+                <h4>What Is Happening</h4>
+                <p id="text-what"></p>
+            </div>
+            <div class="pane pane-why">
+                <h4>Why The System Does This</h4>
+                <p id="text-why"></p>
+            </div>
+        </div>
+
+        <div class="stepper-controls">
+            <button class="nav-btn" id="btn-prev" onclick="stepPrevious()" disabled>Prev</button>
+            <button class="action-btn" id="btn-submit" onclick="evaluateSelection()">Submit Verification</button>
+            <button class="nav-btn" id="btn-next" onclick="stepNext()" style="display:none;">Next Step ➔</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const courseData = [
+    {
+        "title": "Phase 1: The Blind Algebra Trap",
+        "context": "<strong>Scenario:</strong> You are given a sequence $a_{n+1} = 3a_n - 4$. You blindly set $L = 3L - 4$ and solve for $L = 2$. Why is this algebraically correct answer completely meaningless without further proof?",
+        "options": [
+            "Because 2 is not a natural number.",
+            "Because the sequence might be oscillating instead of converging.",
+            "Because the algebraic equation $L = f(L)$ is only valid if you have independently proven that the limit $L$ exists first.",
+            "Because the algebra did not account for the starting value $a_1$."
+        ],
+        "correct": 2,
+        "what": "Algebra blindly assumes that $a_n$ and $a_{n+1}$ both reach a flat, finite number $L$. If the sequence actually shoots off to infinity, the math will still give you a false, finite answer (like the Fibonacci sequence returning 0).",
+        "why": "Existence before algebra is a non-negotiable law in real analysis. You must use tools like the Monotone Convergence Theorem (proving it is bounded and monotonic) to guarantee $L$ exists before you are legally allowed to invoke the equation $L = f(L)$."
+    },
+    {
+        "title": "Phase 2: Error Contraction (The Shrinking Gap)",
+        "context": "<strong>Scenario:</strong> A sequence $a_n$ bounces around its target $T$. You prove that the absolute error at step $n+1$ is always $\\text{Error}_{n+1} = \\frac{1}{3} \\text{Error}_n$. Why does this guarantee that the sequence converges to $T$?",
+        "options": [
+            "Because the error is now a decreasing monotonic sequence bounded strictly above by 0.",
+            "Because multiplying by a positive fraction less than 1 repeatedly forces the error to shrink exactly to zero.",
+            "Because the target $T$ is shrinking to meet the error.",
+            "Because the sequence is no longer recursive."
+        ],
+        "correct": 1,
+        "what": "By chopping the distance to the target by at least a fraction of $\\frac{1}{3}$ on every single step, the error sequence takes the form of a geometric decay $(\\frac{1}{3})^n$, which evaluates to exactly 0 at infinity.",
+        "why": "When a sequence oscillates, it is not monotonic, meaning the standard MCT is useless. Error Contraction bypasses the sequence's path entirely and focuses solely on the size of the gap to the target. If the gap reaches 0, you have hit the target."
+    },
+    {
+        "title": "Phase 3: The 4-Step Strategy (Finding the Ceiling)",
+        "context": "<strong>Scenario:</strong> You are evaluating $x_{n+1} = \\sqrt{6 + x_n}$. You do some scratch-work ($L = \\sqrt{6+L}$) and find the potential limits are $3$ and $-2$. Since $x_n$ is positive, you suspect the limit is $3$. What is your immediate next move in the formal proof?",
+        "options": [
+            "Write the formal equation $\\lim x_{n+1} = \\lim \\sqrt{6 + x_n}$ and declare the answer is 3.",
+            "Use the $M$-$N$ threshold test to show it diverges.",
+            "Use Mathematical Induction to prove that $x_n < 3$ for all $n$ to establish the ceiling.",
+            "Prove that the error contracts."
+        ],
+        "correct": 2,
+        "what": "Your scratch-work gave you the \"cheat code\"\u2014it told you exactly what number to use for the ceiling. You now execute Step 1 of the 4-Step Strategy: use induction to formally prove that 3 is an unbreakable upper bound.",
+        "why": "You cannot claim the limit is 3 until you prove the limit exists. By proving it is bounded by 3, and then proving it is monotonic, you satisfy the MCT. Only then does your scratch-work become mathematically legal."
+    },
+    {
+        "title": "Phase 4: Defining Infinity ($M$-Threshold)",
+        "context": "<strong>Scenario:</strong> To formally prove that $a_n = n^3$ diverges to infinity, the skeptic hands you a massive threshold $M = 1,000,000$. What is the correct cutoff index $N$ that mathematically breaks this ceiling?",
+        "options": [
+            "$$N > 100$$",
+            "$$N > \\sqrt[3]{M}$$",
+            "$$N > M^3$$",
+            "$$N = M$$"
+        ],
+        "correct": 1,
+        "what": "To break the ceiling, we need $n^3 > M$. Taking the cube root of both sides gives $n > \\sqrt[3]{M}$. Thus, our cutoff $N$ must be chosen to be greater than the cube root of the given threshold.",
+        "why": "The $M$-$N$ definition requires you to find a specific step where the sequence permanently crosses the boundary. For $M = 1,000,000$, $\\sqrt[3]{1,000,000} = 100$. Any term after the 100th step (e.g., step 101) will permanently exceed 1 million."
+    },
+    {
+        "title": "Phase 5: The Race (Geometric vs Linear)",
+        "context": "<strong>Scenario:</strong> You are racing a geometric algorithm $a_n = 2^n$ against a linear algorithm $b_n = 1000n$. Why does $2^n$ mathematically obliterate $1000n$ as $n \\to \\infty$?",
+        "options": [
+            "Because 2 is an even number.",
+            "Because expanding $2^n$ as $(1+1)^n$ via the Binomial Formula exposes a hidden $n^2$ term, which strictly grows faster than the linear $n$ in the denominator.",
+            "Because linear growth eventually flattens out and becomes a constant.",
+            "Because the linear function has a larger starting coefficient ($1000$)."
+        ],
+        "correct": 1,
+        "what": "The Binomial Formula expands $2^n$ into $1 + n + \\frac{n(n-1)}{2} + \\dots$. When you divide this expansion by $n$ to analyze the ratio $\\frac{2^n}{n}$, the $\\frac{n(n-1)}{2}$ term reduces to something that still has an $n$ in the numerator, meaning it goes to infinity.",
+        "why": "Geometric sequences compound. By cracking open the exponent with the Binomial Trick, we mathematically proved that a geometric sequence always contains a higher-order polynomial engine ($n^2, n^3, \\dots$) hidden inside it, making it infinitely more powerful than any linear equation."
+    }
+];
+
+    let currentIndex = 0;
+    let selectedOption = null;
+    let phaseScore = 0;
+    let hasAnsweredCurrent = false;
+
+    const elTitle = document.getElementById("stage-title");
+    const elContext = document.getElementById("stage-context");
+    const elOptions = document.getElementById("options-container");
+    const elPanes = document.getElementById("analysis-panes");
+    const elWhat = document.getElementById("text-what");
+    const elWhy = document.getElementById("text-why");
+    const elBtnSubmit = document.getElementById("btn-submit");
+    const elBtnNext = document.getElementById("btn-next");
+    const elBtnPrev = document.getElementById("btn-prev");
+
+    const telPhase = document.getElementById("tel-phase");
+    const telMode = document.getElementById("tel-mode");
+    const telScore = document.getElementById("tel-score");
+
+    function renderMath() {
+        if (typeof renderMathInElement !== 'undefined') {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ],
+                throwOnError: false
+            });
+        }
+    }
+
+    function buildStep() {
+        const data = courseData[currentIndex];
+
+        elTitle.innerHTML = data.title;
+        elContext.innerHTML = data.context;
+
+        elOptions.innerHTML = "";
+        data.options.forEach((opt, idx) => {
+            const btn = document.createElement("button");
+            btn.className = "option-btn";
+            btn.innerHTML = opt;
+            btn.onclick = () => selectOption(idx, btn);
+            elOptions.appendChild(btn);
+        });
+
+        elPanes.style.display = "none";
+        elBtnSubmit.style.display = "block";
+        elBtnNext.style.display = "none";
+        elBtnSubmit.disabled = true;
+
+        selectedOption = null;
+        hasAnsweredCurrent = false;
+
+        telPhase.innerText = `${currentIndex + 1} / ${courseData.length}`;
+        telMode.innerText = "Awaiting Input";
+        telMode.style.color = "var(--text)";
+
+        elBtnPrev.disabled = currentIndex === 0;
+
+        renderMath();
+    }
+
+    function selectOption(idx, btnNode) {
+        if (hasAnsweredCurrent) return;
+
+        const buttons = elOptions.querySelectorAll(".option-btn");
+        buttons.forEach(b => b.classList.remove("selected"));
+
+        btnNode.classList.add("selected");
+        selectedOption = idx;
+        elBtnSubmit.disabled = false;
+    }
+
+    function evaluateSelection() {
+        if (selectedOption === null || hasAnsweredCurrent) return;
+
+        const data = courseData[currentIndex];
+        const buttons = elOptions.querySelectorAll(".option-btn");
+
+        hasAnsweredCurrent = true;
+        elBtnSubmit.style.display = "none";
+        elBtnNext.style.display = "block";
+        elBtnNext.innerText = currentIndex === courseData.length - 1 ? "Complete Verification" : "Next Step ➔";
+
+        if (selectedOption === data.correct) {
+            buttons[selectedOption].classList.add("correct");
+            phaseScore++;
+            telScore.innerText = phaseScore;
+            telMode.innerText = "Verified Valid";
+            telMode.style.color = "var(--success)";
+        } else {
+            buttons[selectedOption].classList.add("wrong");
+            buttons[data.correct].classList.add("correct");
+            telMode.innerText = "Structural Error";
+            telMode.style.color = "var(--danger)";
+        }
+
+        elWhat.innerHTML = data.what;
+        elWhy.innerHTML = data.why;
+        elPanes.style.display = "grid";
+
+        renderMath();
+    }
+
+    function stepNext() {
+        if (currentIndex < courseData.length - 1) {
+            currentIndex++;
+            buildStep();
+        } else {
+            elTitle.innerHTML = "System Verified: Diagnostics Complete";
+            elContext.innerHTML = `<strong>Final Diagnostic Score: ${phaseScore} / ${courseData.length}</strong><br><br>You have successfully traced the structural framework of Recursive Sequences and Divergence to Infinity. By mastering the existence prerequisite, error contraction, and the $M$-$N$ threshold logic, you have completely dismantled the concept of chaotic and infinite behavior in discrete space.`;
+            elOptions.innerHTML = "";
+            elPanes.style.display = "none";
+            elBtnNext.style.display = "none";
+            elBtnPrev.style.display = "none";
+
+            telMode.innerText = "Simulation Ended";
+            telMode.style.color = "var(--info)";
+        }
+    }
+
+    function stepPrevious() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            buildStep();
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        buildStep();
+    });
+</script>
+
+</body>
+</html>

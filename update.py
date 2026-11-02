@@ -9,7 +9,7 @@ html_template = """<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MTHS120 Interactive Stepper: Week 2 Lecture 5</title>
+    <title>MTHS120 Interactive Stepper: Week 2 Lecture 6</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
@@ -79,10 +79,10 @@ html_template = """<!DOCTYPE html>
     <div class="header">
         <div>
             <h1 style="margin:0; font-size:1.75rem; color:#0f172a;">MTHS120 Interactive Stepper</h1>
-            <p style="margin:0.25rem 0 0 0; color:#475569;">Week 2 Lecture 5: Monotone Convergence and Squeeze Theorem</p>
+            <p style="margin:0.25rem 0 0 0; color:#475569;">Week 2 Lecture 6: Recursive Sequences and Divergence to Infinity</p>
         </div>
         <div>
-            <a href="week2-lecture5.html" class="back-link">&larr; Back to Lecture 5</a>
+            <a href="week2-lecture6.html" class="back-link">&larr; Back to Lecture 6</a>
         </div>
     </div>
 
@@ -240,7 +240,7 @@ html_template = """<!DOCTYPE html>
             buildStep();
         } else {
             elTitle.innerHTML = "System Verified: Diagnostics Complete";
-            elContext.innerHTML = `<strong>Final Diagnostic Score: ${phaseScore} / ${courseData.length}</strong><br><br>You have successfully traced the structural framework of the Monotone Convergence Theorem and Squeeze Theorem. By mastering the combinations formula, the physical constraints of monotonic bounds, and the trapping mechanics of the Squeeze Theorem, you are fully equipped to evaluate sequences that defeat standard algebra.`;
+            elContext.innerHTML = `<strong>Final Diagnostic Score: ${phaseScore} / ${courseData.length}</strong><br><br>You have successfully traced the structural framework of Recursive Sequences and Divergence to Infinity. By mastering the existence prerequisite, error contraction, and the $M$-$N$ threshold logic, you have completely dismantled the concept of chaotic and infinite behavior in discrete space.`;
             elOptions.innerHTML = "";
             elPanes.style.display = "none";
             elBtnNext.style.display = "none";
@@ -266,93 +266,97 @@ html_template = """<!DOCTYPE html>
 </body>
 </html>"""
 
+# 2. Define the Lecture 6 Course Data
 course_data = [
     {
-        "title": "Phase 1: Escaping the Algebraic Sandbox (MCT Purpose)",
-        "context": "<strong>Scenario:</strong> You are presented with a recursively defined sequence $a_{n+1} = \\sqrt{5 + a_n}$ where $a_1 = 1$. The standard Algebraic Limit Laws fail because you do not know the exact target limit $L$ beforehand. How does the Monotone Convergence Theorem (MCT) resolve this?",
+        "title": "Phase 1: The Blind Algebra Trap",
+        "context": "<strong>Scenario:</strong> You are given a sequence $a_{n+1} = 3a_n - 4$. You blindly set $L = 3L - 4$ and solve for $L = 2$. Why is this algebraically correct answer completely meaningless without further proof?",
         "options": [
-            "It automatically calculates the exact limit $L$ using the Completeness Axiom.",
-            "It proves the sequence diverges because the terms are trapped under a square root.",
-            "It legally guarantees that a limit $L$ exists, giving you the right to replace $\\lim_{n\\to\\infty} a_{n+1}$ with $L$ and solve algebraically.",
-            "It forces the sequence to become strictly decreasing so the lowest bound can be found."
+            "Because 2 is not a natural number.",
+            "Because the sequence might be oscillating instead of converging.",
+            "Because the algebraic equation $L = f(L)$ is only valid if you have independently proven that the limit $L$ exists first.",
+            "Because the algebra did not account for the starting value $a_1$."
         ],
         "correct": 2,
-        "what": "The MCT guarantees convergence by confirming the sequence is physically trapped (bounded above) and moving in one direction (increasing). Once convergence is guaranteed, you can confidently assign the symbol $L$ to the unknown limit and solve $L = \\sqrt{5 + L}$.",
-        "why": "Algebraic Limit Laws require limits to exist before they can be applied. The MCT acts as a bridge, mathematically confirming the limit's existence without requiring its numerical value, allowing you to bypass the need for an $\\epsilon$-$N$ proof."
+        "what": "Algebra blindly assumes that $a_n$ and $a_{n+1}$ both reach a flat, finite number $L$. If the sequence actually shoots off to infinity, the math will still give you a false, finite answer (like the Fibonacci sequence returning 0).",
+        "why": "Existence before algebra is a non-negotiable law in real analysis. You must use tools like the Monotone Convergence Theorem (proving it is bounded and monotonic) to guarantee $L$ exists before you are legally allowed to invoke the equation $L = f(L)$."
     },
     {
-        "title": "Phase 2: Removing the Duplicate Paths (Factorials)",
-        "context": "<strong>Scenario:</strong> When deriving Euler's Number using the Binomial Theorem on $\\left(1 + \\frac{1}{n}\\right)^n$, you must evaluate $\\binom{n}{3}$. You construct a decision tree with $n \\times (n-1) \\times (n-2)$ branches to pick 3 brackets to donate an $\\frac{1}{n}$. Why must you divide this result by $3!$?",
+        "title": "Phase 2: Error Contraction (The Shrinking Gap)",
+        "context": "<strong>Scenario:</strong> A sequence $a_n$ bounces around its target $T$. You prove that the absolute error at step $n+1$ is always $\\text{Error}_{n+1} = \\frac{1}{3} \\text{Error}_n$. Why does this guarantee that the sequence converges to $T$?",
         "options": [
-            "Because the probability of picking exactly 3 brackets is 1 in 6.",
-            "Because the decision tree treats the order of selection as unique, leading to a massive overcount where every distinct group of 3 brackets was counted 6 times.",
-            "Because the remaining $n-3$ brackets must also be accounted for.",
-            "Because you are dividing by the number of terms in the sequence."
+            "Because the error is now a decreasing monotonic sequence bounded strictly above by 0.",
+            "Because multiplying by a positive fraction less than 1 repeatedly forces the error to shrink exactly to zero.",
+            "Because the target $T$ is shrinking to meet the error.",
+            "Because the sequence is no longer recursive."
         ],
         "correct": 1,
-        "what": "The numerator $n(n-1)(n-2)$ calculates ordered permutations (e.g., picking bracket A, then B, then C). However, the group {A, B, C} is identical to {C, B, A}. Dividing by $3!$ (which is 6) removes these internal permutations.",
-        "why": "In combinations, the order of selection does not matter. The factorial in the denominator of $\\binom{n}{k} = \\frac{n!}{k!(n-k)!}$ acts as a crucial mathematical correction factor to eliminate the duplicate timelines created by the Fundamental Counting Principle."
+        "what": "By chopping the distance to the target by at least a fraction of $\\frac{1}{3}$ on every single step, the error sequence takes the form of a geometric decay $(\\frac{1}{3})^n$, which evaluates to exactly 0 at infinity.",
+        "why": "When a sequence oscillates, it is not monotonic, meaning the standard MCT is useless. Error Contraction bypasses the sequence's path entirely and focuses solely on the size of the gap to the target. If the gap reaches 0, you have hit the target."
     },
     {
-        "title": "Phase 3: The Inequality Trap (Comparison Principle)",
-        "context": "<strong>Scenario:</strong> Two sequences satisfy $a_n = 0$ and $b_n = \\frac{1}{n}$. It is physically true that $a_n < b_n$ for every single positive integer $n$. Why does the Comparison Principle state that $L \\le K$ instead of $L < K$?",
+        "title": "Phase 3: The 4-Step Strategy (Finding the Ceiling)",
+        "context": "<strong>Scenario:</strong> You are evaluating $x_{n+1} = \\sqrt{6 + x_n}$. You do some scratch-work ($L = \\sqrt{6+L}$) and find the potential limits are $3$ and $-2$. Since $x_n$ is positive, you suspect the limit is $3$. What is your immediate next move in the formal proof?",
         "options": [
-            "Because the inequality must flip when taking the limit of a fraction.",
-            "Because the limit of $b_n$ is negative.",
-            "Because the sequences become undefined at infinity.",
-            "Because infinity crushes the strict gap to zero; both sequences converge to exactly 0, making their limits equal."
+            "Write the formal equation $\\lim x_{n+1} = \\lim \\sqrt{6 + x_n}$ and declare the answer is 3.",
+            "Use the $M$-$N$ threshold test to show it diverges.",
+            "Use Mathematical Induction to prove that $x_n < 3$ for all $n$ to establish the ceiling.",
+            "Prove that the error contracts."
         ],
-        "correct": 3,
-        "what": "Although $0 < \\frac{1}{n}$ is strictly true for all $n$, their limits are $\\lim 0 = 0$ and $\\lim \\frac{1}{n} = 0$. The limits are equal.",
-        "why": "Strict inequalities do not survive the infinite flattening effect of a limit. The Comparison Principle uses the weak inequality ($\\le$) to ensure it legally covers scenarios where sequences arrive bumper-to-bumper at the same destination."
+        "correct": 2,
+        "what": "Your scratch-work gave you the \"cheat code\"—it told you exactly what number to use for the ceiling. You now execute Step 1 of the 4-Step Strategy: use induction to formally prove that 3 is an unbreakable upper bound.",
+        "why": "You cannot claim the limit is 3 until you prove the limit exists. By proving it is bounded by 3, and then proving it is monotonic, you satisfy the MCT. Only then does your scratch-work become mathematically legal."
     },
     {
-        "title": "Phase 4: Crushing the Chaos (Squeeze Theorem)",
-        "context": "<strong>Scenario:</strong> You must evaluate $\\lim_{n\\to\\infty} \\frac{\\cos(n^2)}{n^3}$. The numerator oscillates violently between -1 and 1, rendering standard Limit Laws useless. How do you construct the Squeeze Theorem trap?",
+        "title": "Phase 4: Defining Infinity ($M$-Threshold)",
+        "context": "<strong>Scenario:</strong> To formally prove that $a_n = n^3$ diverges to infinity, the skeptic hands you a massive threshold $M = 1,000,000$. What is the correct cutoff index $N$ that mathematically breaks this ceiling?",
         "options": [
-            "Set the floor to $-\\frac{1}{n^3}$ and the ceiling to $\\frac{1}{n^3}$. Because both bounds converge to 0, the target sequence is crushed to 0.",
-            "Set the floor to $-1$ and the ceiling to $1$. Because both bounds are constant, the sequence converges to 0.",
-            "Take the derivative of the numerator and denominator using L'Hôpital's rule.",
-            "Since $\\cos(n^2)$ does not exist as a limit, the entire sequence diverges."
+            "$$N > 100$$",
+            "$$N > \\sqrt[3]{M}$$",
+            "$$N > M^3$$",
+            "$$N = M$$"
         ],
-        "correct": 0,
-        "what": "By knowing $-1 \\le \\cos(n^2) \\le 1$, we divide all sides by the positive term $n^3$ to get $-\\frac{1}{n^3} \\le \\frac{\\cos(n^2)}{n^3} \\le \\frac{1}{n^3}$.",
-        "why": "The Squeeze Theorem does not care about the chaotic journey of the middle sequence. By proving that the absolute maximum and absolute minimum bounds both collapse to the same point (0), the chaotic sequence is mathematically forced to follow."
+        "correct": 1,
+        "what": "To break the ceiling, we need $n^3 > M$. Taking the cube root of both sides gives $n > \\sqrt[3]{M}$. Thus, our cutoff $N$ must be chosen to be greater than the cube root of the given threshold.",
+        "why": "The $M$-$N$ definition requires you to find a specific step where the sequence permanently crosses the boundary. For $M = 1,000,000$, $\\sqrt[3]{1,000,000} = 100$. Any term after the 100th step (e.g., step 101) will permanently exceed 1 million."
     },
     {
-        "title": "Phase 5: The Synchronization Cutoff (Squeeze Proof)",
-        "context": "<strong>Scenario:</strong> To prove the Squeeze Theorem using $\\epsilon$-corridors, you find cutoff $N_1$ where the floor enters the corridor, and cutoff $N_2$ where the ceiling enters. The trapping condition $a_n \\le b_n \\le c_n$ only activates after cutoff $N_0$. What is the master cutoff $N$ for the target sequence $b_n$?",
+        "title": "Phase 5: The Race (Geometric vs Linear)",
+        "context": "<strong>Scenario:</strong> You are racing a geometric algorithm $a_n = 2^n$ against a linear algorithm $b_n = 1000n$. Why does $2^n$ mathematically obliterate $1000n$ as $n \\to \\infty$?",
         "options": [
-            "$$N = N_0 + N_1 + N_2$$",
-            "$$N = N_0$$",
-            "$$N = \\min(N_0, N_1, N_2)$$",
-            "$$N = \\max(N_0, N_1, N_2)$$"
+            "Because 2 is an even number.",
+            "Because expanding $2^n$ as $(1+1)^n$ via the Binomial Formula exposes a hidden $n^2$ term, which strictly grows faster than the linear $n$ in the denominator.",
+            "Because linear growth eventually flattens out and becomes a constant.",
+            "Because the linear function has a larger starting coefficient ($1000$)."
         ],
-        "correct": 3,
-        "what": "By defining $N = \\max(N_0, N_1, N_2)$, we select the latest possible cutoff index among the three conditions.",
-        "why": "For the Squeeze Theorem to work logically, all three conditions must be active at the exact same time. Taking the maximum ensures we wait until the floor is inside, the ceiling is inside, and the trap itself has fully engaged."
+        "correct": 1,
+        "what": "The Binomial Formula expands $2^n$ into $1 + n + \\frac{n(n-1)}{2} + \\dots$. When you divide this expansion by $n$ to analyze the ratio $\\frac{2^n}{n}$, the $\\frac{n(n-1)}{2}$ term reduces to something that still has an $n$ in the numerator, meaning it goes to infinity.",
+        "why": "Geometric sequences compound. By cracking open the exponent with the Binomial Trick, we mathematically proved that a geometric sequence always contains a higher-order polynomial engine ($n^2, n^3, \\dots$) hidden inside it, making it infinitely more powerful than any linear equation."
     }
 ]
 
+# 3. Write the Stepper HTML File
 final_stepper_html = html_template.replace("{course_data_json}", json.dumps(course_data, indent=4))
-stepper_filename = "week2-lecture5-interactive-stepper.html"
+stepper_filename = "week2-lecture6-interactive-stepper.html"
 
 with open(stepper_filename, "w", encoding="utf-8") as f:
     f.write(final_stepper_html)
 print(f"Created: {stepper_filename}")
 
-lecture_filename = "week2-lecture5.html"
+# 4. Patch week2-lecture6.html
+lecture_filename = "week2-lecture6.html"
 
-nav_target = '<a href="week2-lecture6.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">Lecture 6 &rarr;</a>'
-nav_replacement = """<a href="week2-lecture5-interactive-stepper.html" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">✎ Practice Problems</a>
-                """ + nav_target
+nav_replacement = """<a href="week2-lecture6-interactive-stepper.html" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">✎ Practice Problems</a>
+                <span style="background: #f1f5f9; color: #94a3b8; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; font-weight: 600; font-size: 0.88rem; cursor: not-allowed; text-align: center; white-space: nowrap;">Next Lecture &rarr;</span>"""
+
+nav_target = '<span style="background: #f1f5f9; color: #94a3b8; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; font-weight: 600; font-size: 0.88rem; cursor: not-allowed; text-align: center; white-space: nowrap;">Next Lecture &rarr;</span>'
 
 cta_target = "<!-- FOOTER NAVIGATION -->"
 cta_replacement = """<!-- INTERACTIVE STEPPER CTA -->
             <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.75rem; margin-bottom: 2.5rem; border-radius: 6px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
                 <h4 style="margin: 0 0 0.75rem 0; color: #047857; font-size: 1.15rem;">Ready to test your understanding?</h4>
-                <p style="margin: 0 0 1.25rem 0; color: #334155; font-size: 1.02rem;">Work through the progressive interactive problems to lock in these foundational concepts before moving on to Lecture 6.</p>
-                <a href="week2-lecture5-interactive-stepper.html" style="display: inline-block; background: #10b981; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 1rem; transition: background 0.2s;">
+                <p style="margin: 0 0 1.25rem 0; color: #334155; font-size: 1.02rem;">Work through the progressive interactive problems to lock in these foundational concepts.</p>
+                <a href="week2-lecture6-interactive-stepper.html" style="display: inline-block; background: #10b981; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 1rem; transition: background 0.2s;">
                     Launch Interactive Problem Stepper ➔
                 </a>
             </div>
@@ -363,8 +367,12 @@ if os.path.exists(lecture_filename):
     with open(lecture_filename, "r", encoding="utf-8") as f:
         lecture_html = f.read()
 
-    if "week2-lecture5-interactive-stepper.html" not in lecture_html:
+    # Idempotency check: Only patch if the links don't already exist
+    if "week2-lecture6-interactive-stepper.html" not in lecture_html:
+        # Inject Nav Link
         lecture_html = lecture_html.replace(nav_target, nav_replacement)
+
+        # Inject CTA
         lecture_html = lecture_html.replace(cta_target, cta_replacement)
 
         with open(lecture_filename, "w", encoding="utf-8") as f:
@@ -375,16 +383,17 @@ if os.path.exists(lecture_filename):
 else:
     print(f"Error: {lecture_filename} not found in the current directory.")
 
+# 5. Execute Git Commands Automatically
 print("\\nExecuting Git commands...")
 try:
     script_name = os.path.basename(sys.argv[0])
-    files_to_add = ["week2-lecture5-interactive-stepper.html", "week2-lecture5.html"]
+    files_to_add = ["week2-lecture6-interactive-stepper.html", "week2-lecture6.html"]
 
     if os.path.exists(script_name):
         files_to_add.append(script_name)
 
     subprocess.run(["git", "add"] + files_to_add, check=True)
-    subprocess.run(["git", "commit", "-m", "Add interactive stepper to Week 2 Lecture 5\n\nGenerate week2-lecture5-interactive-stepper.html and automatically patch week2-lecture5.html to include navigational and call-to-action links to the newly generated problems."], check=True)
+    subprocess.run(["git", "commit", "-m", "Add interactive stepper to Week 2 Lecture 6\n\nGenerate week2-lecture6-interactive-stepper.html and automatically patch week2-lecture6.html to include navigational and call-to-action links to the newly generated problems."], check=True)
     subprocess.run(["git", "push"], check=True)
     print("Git operations completed successfully.")
 except Exception as e:
