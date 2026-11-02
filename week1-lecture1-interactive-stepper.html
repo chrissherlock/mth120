@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MTHS120 Interactive Stepper: Week 1 Foundations</title>
 
-    <!-- KaTeX Integration (Removed 'defer' to ensure synchronous loading before inline scripts execute) -->
+    <!-- KaTeX Integration -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
@@ -24,7 +24,10 @@
         .container { max-width: 900px; margin: 0 auto; }
 
         /* Header & Status Telemetry */
-        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-end; }
+        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .back-link { background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; transition: background 0.2s; white-space: nowrap; }
+        .back-link:hover { background: #e2e8f0; color: #0f172a; }
+
         .telemetry-bar { background: var(--card); border: 1px solid var(--border); padding: 1rem; border-radius: 8px; display: flex; gap: 1.5rem; margin-bottom: 2rem; font-size: 0.9rem; font-family: monospace; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .tel-stat { display: flex; flex-direction: column; }
         .tel-label { color: #64748b; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem; }
@@ -77,6 +80,9 @@
         <div>
             <h1 style="margin:0; font-size:1.75rem; color:#0f172a;">MTHS120 Interactive Stepper</h1>
             <p style="margin:0.25rem 0 0 0; color:#475569;">Week 1: Sets, Functions, and Peano's Foundations</p>
+        </div>
+        <div>
+            <a href="week1-lecture1.html" class="back-link">&larr; Back to Lecture 1</a>
         </div>
     </div>
 
