@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTHS120: Real Analysis - Week 1 Synced Slideshow</title>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --surface: #f8fafc;
+            --text: #0f172a;
+            --muted: #475569;
+            --border: #cbd5e1;
+            --accent: #0284c7;
+            --accent-light: #e0f2fe;
+            --danger: #e11d48;
+            --success: #059669;
+            --warning: #d97706;
+            --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-ui);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1050px;
+            width: 100%;
+        }
+
+        .player-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-top: 5px solid var(--accent);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.06), 0 8px 10px -6px rgba(0,0,0,0.04);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--accent-light);
+            color: #0369a1;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.25rem 0.65rem;
+            border-radius: 4px;
+            margin-bottom: 0.4rem;
+        }
+
+        .header h2 {
+            margin: 0 0 0.35rem 0;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .header p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .local-file-box {
+            background: var(--surface);
+            border: 1px dashed var(--border);
+            padding: 0.6rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        .local-file-box label {
+            font-weight: 700;
+            color: var(--text);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Telemetry Grid */
+        .telemetry-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            background: var(--surface);
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0.85rem 1.1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .telemetry-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .tel-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #64748b;
+        }
+
+        .tel-value {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--accent);
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Visual Stage (White Background) */
+        .visual-stage {
+            width: 100%;
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 1.25rem;
+            aspect-ratio: 16 / 9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .stage-layer {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.45s ease, transform 0.45s ease;
+            pointer-events: none;
+            background: #ffffff;
+        }
+
+        .stage-layer.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .stage-image-wrap {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .stage-image-wrap img {
+            max-width: 92%;
+            max-height: 82%;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+            background: #ffffff;
+        }
+
+        .image-caption {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--muted);
+            background: #f1f5f9;
+            padding: 0.3rem 0.8rem;
+            border-radius: 999px;
+            border: 1px solid #cbd5e1;
+        }
+
+        svg.stage-svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+            background: #ffffff;
+        }
+
+        /* SVG Keyframe Animations */
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.04); opacity: 0.82; }
+        }
+        @keyframes floatItem {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        @keyframes bouncerGate {
+            0%, 100% { stroke-dashoffset: 0; }
+            50% { stroke-dashoffset: 24; }
+        }
+        @keyframes dashFlow {
+            to { stroke-dashoffset: -40; }
+        }
+        @keyframesoscillate {
+            0%, 100% { transform: translateX(-18px); }
+            50% { transform: translateX(18px); }
+        }
+
+        .anim-pulse { animation: pulseGlow 2.8s infinite ease-in-out; transform-origin: center; }
+        .anim-float { animation: floatItem 3.2s infinite ease-in-out; }
+        .anim-dash { stroke-dasharray: 8 6; animation: dashFlow 1.6s infinite linear; }
+
+        /* Narrative Subtitle Box */
+        .subtitle-box {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-left: 5px solid var(--warning);
+            border-radius: 8px;
+            padding: 1.15rem 1.35rem;
+            margin-bottom: 1.25rem;
+            min-height: 4.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .subtitle-text {
+            margin: 0;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #92400e;
+            line-height: 1.5;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 0.4rem;
+            flex-shrink: 0;
+        }
+
+        .btn-step {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fcd34d;
+            border-radius: 6px;
+            padding: 0.4rem 0.7rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .btn-step:hover {
+            background: #fde68a;
+        }
+
+        /* Audio Player */
+        audio {
+            width: 100%;
+            height: 44px;
+            margin-bottom: 1.25rem;
+            border-radius: 8px;
+        }
+
+        /* Interactive Chapter Strip */
+        .chapter-strip-title {
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+        }
+
+        .chapter-strip {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            scrollbar-width: thin;
+        }
+
+        .chapter-pill {
+            flex: 0 0 auto;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.15s ease;
+            max-width: 210px;
+        }
+
+        .chapter-pill:hover {
+            border-color: var(--accent);
+            background: #f0f9ff;
+        }
+
+        .chapter-pill.active {
+            background: var(--accent-light);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.15);
+        }
+
+        .pill-time {
+            font-family: monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+        }
+
+        .pill-concept {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+        }
+
+        .pill-sub {
+            font-size: 0.72rem;
+            color: var(--muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="player-card">
+
+        <div class="header">
+            <div>
+                <span class="badge">▶ MTHS120 • Week 1 Interactive Audio Lecture</span>
+                <h2>How Irrational Numbers Forced Real Analysis</h2>
+                <p>Synchronized visual companion combining historical portraits, course diagrams, and animated SVG proofs.</p>
+            </div>
+            <div class="local-file-box">
+                <label for="local-audio-picker">Load local .m4a (optional):</label>
+                <input type="file" id="local-audio-picker" accept="audio/*">
+            </div>
+        </div>
+
+        <!-- Live Telemetry -->
+        <div class="telemetry-grid">
+            <div class="telemetry-cell">
+                <span class="tel-label">Sync Status</span>
+                <span class="tel-value" id="tel-status" style="color: #64748b;">Standby</span>
+            </div>
+            <div class="telemetry-cell">
+                <span class="tel-label">Active Concept</span>
+                <span class="tel-value" id="tel-concept">01: The Pythagorean Dream</span>
+            </div>
+            <div class="telemetry-cell">
+                <span class="tel-label">Visual Mode</span>
+                <span class="tel-value" id="tel-visual-mode">Image / SVG Hybrid</span>
+            </div>
+            <div class="telemetry-cell">
+                <span class="tel-label">Playback Time</span>
+                <span class="tel-value" id="tel-time">0:00 / 66:16</span>
+            </div>
+        </div>
+
+        <!-- White-Background Visual Stage -->
+        <div class="visual-stage" id="visual-stage">
+            <!-- Image Layer -->
+            <div class="stage-layer" id="image-layer">
+                <div class="stage-image-wrap">
+                    <img id="stage-img" src="images/welcome-mth120.jpeg" alt="Lecture Visual">
+                    <span class="image-caption" id="stage-img-caption">MTHS120 Lecture Visual</span>
+                </div>
+            </div>
+
+            <!-- SVG Layer -->
+            <div class="stage-layer active" id="svg-layer">
+                <svg class="stage-svg" id="stage-svg" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg"></svg>
+            </div>
+        </div>
+
+        <!-- Dynamic Subtitles & Stepper -->
+        <div class="subtitle-box">
+            <p class="subtitle-text" id="active-subtitle">
+                Press play on the audio track or click any cue card below to begin the synchronized walkthrough.
+            </p>
+            <div class="nav-buttons">
+                <button class="btn-step" onclick="stepCue(-1)">◀ Prev</button>
+                <button class="btn-step" onclick="stepCue(1)">Next ▶</button>
+            </div>
+        </div>
+
+        <!-- Audio Player -->
+        <audio id="podcast-audio" controls preload="metadata">
+            <source src="https://pub-96c6477c7d184ce0b88c4ace2687de01.r2.dev/week01/How_Irrational_Numbers_Forced_Real_Analysis_optimized.m4a" type="audio/mp4">
+            Your browser does not support the audio element.
+        </audio>
+
+        <!-- Chapter Timeline Strip -->
+        <div class="chapter-strip-title">Timeline Cues (Click to Jump)</div>
+        <div class="chapter-strip" id="chapter-strip"></div>
+
+    </div>
+</div>
+
+<script>
+    // Complete 26-point synchronized timeline combining `images/` directory files and animated SVGs
+    const timeline = [
+        {
+            time: 0.0,
+            sceneId: "scene-1",
+            concept: "01: The Pythagorean Dream",
+            subtitle: "Imagine being dragged out of your bed in the middle of the night by, you know, people you thought were your closest friends.",
+            visualType: "svg",
+            svgKey: "pythagorean-sea"
+        },
+        {
+            time: 23.88,
+            sceneId: "scene-1",
+            concept: "01: The Pythagorean Dream",
+            subtitle: "Your crime was discovering a number. It sounds totally made up like a myth, but it really is one of the most enduring stories in mathematical history.",
+            visualType: "svg",
+            svgKey: "sqrt2-triangle"
+        },
+        {
+            time: 35.78,
+            sceneId: "scene-1",
+            concept: "01: The Pythagorean Dream",
+            subtitle: "The man who was supposedly thrown overboard was Hippasus of Metapontum. He was a member of the Pythagoreans, a deeply influential, almost cult-like group in ancient Greece who worshipped numbers.",
+            visualType: "image",
+            imageSrc: "images/hippasus.png",
+            caption: "Hippasus of Metapontum & The Crisis of Irrationality (√2)"
+        },
+        {
+            time: 111.72,
+            sceneId: "scene-2",
+            concept: "02: Analysis vs. Calculus",
+            subtitle: "We are tackling the week one materials for MTHS120, which for those who don't know serves as an introduction to real analysis.",
+            visualType: "image",
+            imageSrc: "images/welcome-mth120.jpeg",
+            caption: "Welcome to MTHS120: Introduction to Real Analysis"
+        },
+        {
+            time: 156.1,
+            sceneId: "scene-2",
+            concept: "02: Analysis vs. Calculus",
+            subtitle: "Real analysis is not about following the recipe at all. No, it is about questioning whether the ingredients actually exist, whether the oven is real, and whether the very concept of baking is a logical contradiction.",
+            visualType: "svg",
+            svgKey: "calculus-vs-analysis"
+        },
+        {
+            time: 241.0,
+            sceneId: "scene-3",
+            concept: "03: Set Theory & The Bouncer",
+            subtitle: "Every complex system needs a container first. A set in its absolute purest definition is just an unordered collection of distinct elements.",
+            visualType: "image",
+            imageSrc: "images/chapter1-hero.jpg",
+            caption: "Chapter 1: Foundations of Set Theory & Mathematical Containers"
+        },
+        {
+            time: 320.8,
+            sceneId: "scene-3",
+            concept: "03: Set Theory & The Bouncer",
+            subtitle: "Set builder notation is where you start building a bouncer at the door of an exclusive VIP club using a vertical bar that translates to 'such that'.",
+            visualType: "svg",
+            svgKey: "set-bouncer"
+        },
+        {
+            time: 381.6,
+            sceneId: "scene-3",
+            concept: "03: Set Theory & The Bouncer",
+            subtitle: "The material draws a heavy line between being an element of a set (epsilon) and being a subset (sideways U), like an apple inside a grocery bag versus a bag of lemons inside that bag.",
+            visualType: "svg",
+            svgKey: "element-vs-subset"
+        },
+        {
+            time: 611.04,
+            sceneId: "scene-3",
+            concept: "03: Set Theory & The Bouncer",
+            subtitle: "To prove two sets are identical, mathematicians use a rigorous legal framework called double inclusion, proving A is a subset of B and B is a subset of A.",
+            visualType: "svg",
+            svgKey: "double-inclusion"
+        },
+        {
+            time: 847.76,
+            sceneId: "scene-4",
+            concept: "04: The Cartesian Product",
+            subtitle: "The Cartesian product takes set A and set B and pairs them up into ordered pairs, building a two-dimensional grid.",
+            visualType: "svg",
+            svgKey: "cartesian-grid"
+        },
+        {
+            time: 890.0,
+            sceneId: "scene-4",
+            concept: "04: The Cartesian Product",
+            subtitle: "Named after René Descartes, who watched a fly on the ceiling and realized he could communicate its position using two intersecting measuring lines.",
+            visualType: "image",
+            imageSrc: "images/descartes.jpg",
+            caption: "René Descartes (1596–1650): Bridging Algebra and Geometry"
+        },
+        {
+            time: 1047.0,
+            sceneId: "scene-5",
+            concept: "05: Function Mappings",
+            subtitle: "Real analysis strips away the machine metaphor: a function is a strict, legally binding contract between a domain and a codomain.",
+            visualType: "image",
+            imageSrc: "images/euler.jpg",
+            caption: "Leonhard Euler & Formal Function Contracts: f : A → B"
+        },
+        {
+            time: 1171.68,
+            sceneId: "scene-5",
+            concept: "05: Function Mappings",
+            subtitle: "Functions are categorized by three behaviors in a stadium analogy: injective (one-to-one), surjective (onto), and bijective (the holy grail pairing required for safe inversion).",
+            visualType: "svg",
+            svgKey: "bijective-mapping"
+        },
+        {
+            time: 1350.0,
+            sceneId: "scene-6",
+            concept: "06: Cantor's Diagonalization",
+            subtitle: "Georg Cantor used bijections to shatter our understanding of infinity, proving that not all infinities are the same size.",
+            visualType: "image",
+            imageSrc: "images/cantor.jpg",
+            caption: "Georg Cantor (1845–1918): Architect of Transfinite Set Theory"
+        },
+        {
+            time: 1521.7,
+            sceneId: "scene-6",
+            concept: "06: Cantor's Diagonalization",
+            subtitle: "Through his infinite hotel diagonalization argument, Cantor proved that the continuous real numbers are a vastly larger magnitude of infinity than the counting numbers.",
+            visualType: "svg",
+            svgKey: "cantor-diagonal"
+        },
+        {
+            time: 1689.2,
+            sceneId: "scene-6",
+            concept: "06: Cantor's Diagonalization",
+            subtitle: "Bertrand Russell introduced Russell's Paradox with the obsessive librarian catalog, proving that naive set theory collapses under self-referential language without guardrails.",
+            visualType: "svg",
+            svgKey: "russell-paradox"
+        },
+        {
+            time: 1916.64,
+            sceneId: "scene-6",
+            concept: "06: Cantor's Diagonalization",
+            subtitle: "Giuseppe Peano rebuilt counting numbers using five axioms (Peano postulates), providing an airtight logical foundation for discrete arithmetic.",
+            visualType: "image",
+            imageSrc: "images/peano.jpg",
+            caption: "Giuseppe Peano (1858–1932) & The Five Domino Postulates"
+        },
+        {
+            time: 2090.34,
+            sceneId: "scene-6",
+            concept: "06: Cantor's Diagonalization",
+            subtitle: "Fractions possess density, but density doesn't mean completeness—the rational number line is full of invisible holes where irrational numbers like the square root of 2 hide.",
+            visualType: "svg",
+            svgKey: "swiss-cheese-line"
+        },
+        {
+            time: 2246.28,
+            sceneId: "scene-6",
+            concept: "06: Cantor's Diagonalization",
+            subtitle: "Hippasus' proof by contradiction using prime factorization Legos proved that the square root of 2 cannot be expressed as a ratio, triggering a mathematical apocalypse.",
+            visualType: "svg",
+            svgKey: "prime-lego-proof"
+        },
+        {
+            time: 2529.0,
+            sceneId: "scene-6",
+            concept: "06: Cantor's Diagonalization",
+            subtitle: "Real numbers form a complete ordered field, where the axiom of completeness and Dedekind cuts plug the invisible holes into a flawless continuous continuum.",
+            visualType: "image",
+            imageSrc: "images/dedekind.jpg",
+            caption: "Richard Dedekind (1831–1916): Dedekind Cuts & Completeness"
+        },
+        {
+            time: 2593.58,
+            sceneId: "scene-6",
+            concept: "06: Cantor's Diagonalization",
+            subtitle: "Absolute value represents physical distance between points, unlocking the triangle inequality as the ultimate workhorse for mathematical proofs and trapping errors.",
+            visualType: "image",
+            imageSrc: "images/weierstrass.png",
+            caption: "Karl Weierstrass (1815–1897): Distance Metrics & The Triangle Inequality"
+        },
+        {
+            time: 2826.8,
+            sceneId: "scene-6",
+            concept: "06: Cantor's Diagonalization",
+            subtitle: "Suprema (least upper bounds) and Dedekind cuts force irrational numbers into existence by logical necessity, completing the real number line.",
+            visualType: "image",
+            imageSrc: "images/bolzano.jpg",
+            caption: "Bernard Bolzano & The Least Upper Bound Property (Supremum)"
+        },
+        {
+            time: 3068.96,
+            sceneId: "scene-7",
+            concept: "07: Sequences and Discrete Calculus",
+            subtitle: "A sequence maps natural numbers to real numbers, visualized as an infinite hallway of lockers containing real number values.",
+            visualType: "image",
+            imageSrc: "images/infinite-lockers.png",
+            caption: "Sequences as an Infinite Hallway of Lockers (a : ℕ → ℝ)"
+        },
+        {
+            time: 3157.28,
+            sceneId: "scene-7",
+            concept: "07: Sequences and Discrete Calculus",
+            subtitle: "Sequences are classified by arithmetic/geometric progressions, monotonicity (uphill hikes with optional plateaus), and boundedness (ironclad floors and ceilings).",
+            visualType: "image",
+            imageSrc: "images/arithmetic-vs-geometric.png",
+            caption: "Arithmetic Stride vs. Geometric Multiplier & Monotonicity"
+        },
+        {
+            time: 3414.16,
+            sceneId: "scene-7",
+            concept: "07: Sequences and Discrete Calculus",
+            subtitle: "Point-wise sequence operations mix parallel hallways, while derived sequences calculate rates of change via neighbor subtraction (a_{n+1} - a_n).",
+            visualType: "image",
+            imageSrc: "images/change-in-lockers.png",
+            caption: "Discrete Derivatives via Neighbor Subtraction (Δa_n = a_{n+1} - a_n)"
+        },
+        {
+            time: 3603.0,
+            sceneId: "scene-7",
+            concept: "07: Sequences and Discrete Calculus",
+            subtitle: "Summation via telescoping sums creates inner-term annihilation, yielding elegant computational shortcuts like Gauss's summation formula.",
+            visualType: "image",
+            imageSrc: "images/gauss.jpg",
+            caption: "Carl Friedrich Gauss & Telescoping Sum Annihilation (A_n - A_0)"
+        }
+    ];
+
+    // White-background animated SVG templates
+    const svgTemplates = {
+        "pythagorean-sea": `
+            <rect width="800" height="450" fill="#ffffff"/>
+            <text x="400" y="65" font-size="24" font-weight="800" fill="#0f172a" text-anchor="middle">THE PYTHAGOREAN CRISIS AT SEA</text>
+            <text x="400" y="95" font-size="15" font-weight="600" fill="#475569" text-anchor="middle">"All is Number" — Whole Numbers &amp; Simple Ratios (p / q)</text>
+            <path d="M 80 340 Q 200 315, 320 340 T 560 340 T 720 340" fill="none" stroke="#0284c7" stroke-width="5" class="anim-dash"/>
+            <path d="M 80 375 Q 200 350, 320 375 T 560 375 T 720 375" fill="none" stroke="#38bdf8" stroke-width="3" class="anim-dash"/>
+            <g class="anim-float">
+                <polygon points="310,290 490,290 460,335 340,335" fill="#92400e" stroke="#78350f" stroke-width="3"/>
+                <line x1="400" y1="290" x2="400" y2="165" stroke="#78350f" stroke-width="5"/>
+                <polygon points="404,170 404,265 485,250" fill="#e0f2fe" stroke="#0284c7" stroke-width="3"/>
+                <text x="435" y="235" font-size="16" font-weight="800" fill="#0369a1" text-anchor="middle">p / q</text>
+            </g>
+            <g class="anim-pulse">
+                <circle cx="575" cy="245" r="46" fill="#fff1f2" stroke="#e11d48" stroke-width="3"/>
+                <text x="575" y="242" font-size="22" font-weight="800" fill="#e11d48" text-anchor="middle">√2</text>
+                <text x="575" y="265" font-size="12" font-weight="700" fill="#9f1239" text-anchor="middle">Irrational!</text>
+            </g>
+        `,
+        "sqrt2-triangle": `
+            <rect width="800" height="450" fill="#ffffff"/>
+            <text x="400" y="65" font-size="24" font-weight="800" fill="#0f172a" text-anchor="middle">THE UNIT SQUARE DIAGONAL</text>
+            <text x="400" y="95" font-size="15" font-weight="600" fill="#475569" text-anchor="middle">1² + 1² = c²  ⇒  c = √2 (Cannot be written as p/q)</text>
+            <rect x="290" y="140" width="200" height="200" fill="#f8fafc" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6 4"/>
+            <polygon points="290,340 490,340 490,140" fill="#e0f2fe" fill-opacity="0.55" stroke="#0284c7" stroke-width="4"/>
+            <rect x="465" y="315" width="25" height="25" fill="none" stroke="#0369a1" stroke-width="2"/>
+            <line x1="290" y1="340" x2="490" y2="140" stroke="#e11d48" stroke-width="5" class="anim-dash"/>
+            <text x="390" y="370" font-size="20" font-weight="800" fill="#0f172a" text-anchor="middle">Base = 1</text>
+            <text x="545" y="245" font-size="20" font-weight="800" fill="#0f172a" text-anchor="middle">Height = 1</text>
+            <g class="anim-pulse">
+                <rect x="250" y="195" width="135" height="42" rx="8" fill="#fff1f2" stroke="#e11d48" stroke-width="2"/>
+                <text x="317" y="222" font-size="20" font-weight="800" fill="#e11d48" text-anchor="middle">c = √2 ≠ p/q</text>
+            </g>
+        `,
+        "calculus-vs-analysis": `
+            <rect width="800" height="450" fill="#ffffff"/>
+            <text x="400" y="65" font-size="24" font-weight="800" fill="#0f172a" text-anchor="middle">PROCEDURAL CALCULUS vs. REAL ANALYSIS</text>
+            <text x="400" y="95" font-size="15" font-weight="600" fill="#475569" text-anchor="middle">Moving from "What is the answer?" to "Why is this calculation legal?"</text>
+            <rect x="85" y="140" width="270" height="210" rx="12" fill="#f0f9ff" stroke="#0284c7" stroke-width="3"/>
+            <text x="220" y="185" font-size="20" font-weight="800" fill="#0369a1" text-anchor="middle">STANDARD CALCULUS</text>
+            <text x="220" y="220" font-size="15" font-weight="700" fill="#0f172a" text-anchor="middle">"Following the Recipe"</text>
+            <text x="220" y="255" font-size="14" fill="#475569" text-anchor="middle">• Compute derivatives &amp; integrals</text>
+            <text x="220" y="280" font-size="14" fill="#475569" text-anchor="middle">• Drive on a pre-paved road</text>
+            <text x="220" y="305" font-size="14" fill="#475569" text-anchor="middle">• Circle the final number</text>
+
+            <line x1="370" y1="245" x2="430" y2="245" stroke="#0f172a" stroke-width="4" class="anim-dash"/>
+
+            <rect x="445" y="140" width="270" height="210" rx="12" fill="#ecfdf5" stroke="#059669" stroke-width="3" class="anim-pulse"/>
+            <text x="580" y="185" font-size="20" font-weight="800" fill="#047857" text-anchor="middle">REAL ANALYSIS</text>
+            <text x="580" y="220" font-size="15" font-weight="700" fill="#0f172a" text-anchor="middle">"Auditing the Ingredients"</text>
+            <text x="580" y="255" font-size="14" fill="#475569" text-anchor="middle">• Prove completeness &amp; limits</text>
+            <text x="580" y="280" font-size="14" fill="#475569" text-anchor="middle">• Inspect molecular asphalt</text>
+            <text x="580" y="305" font-size="14" fill="#475569" text-anchor="middle">• Repair logical sinkholes</text>
+        `,
+        "set-bouncer": `
+            <rect width="800" height="450" fill="#ffffff"/>
+            <text x="400" y="65" font-size="24" font-weight="800" fill="#0f172a" text-anchor="middle">SET-BUILDER (PREDICATE) NOTATION</text>
+            <text x="400" y="95" font-size="15" font-weight="600" fill="#475569" text-anchor="middle">The Vertical Bar "|" Acts as the Logical Gatekeeper ("Such That")</text>
+            <rect x="130" y="135" width="540" height="90" rx="12" fill="#f8fafc" stroke="#0284c7" stroke-width="3"/>
+            <text x="400" y="192" font-size="32" font-weight="800" fill="#0f172a" text-anchor="middle" font-family="monospace">
+                S = { x ∈ ℝ <tspan fill="#e11d48">|</tspan> x is even }
+            </text>
+            <g class="anim-float">
+                <rect x="150" y="265" width="150" height="80" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+                <text x="225" y="298" font-size="15" font-weight="800" fill="#0369a1" text-anchor="middle">Candidate Pool</text>
+                <text x="225" y="322" font-size="13" fill="#0f172a" text-anchor="middle">x ∈ ℝ (Domain)</text>
+            </g>
+            <g class="anim-pulse">
+                <rect x="330" y="265" width="140" height="80" rx="8" fill="#fff1f2" stroke="#e11d48" stroke-width="2"/>
+                <text x="400" y="298" font-size="15" font-weight="800" fill="#e11d48" text-anchor="middle">VIP Bouncer "|"</text>
+                <text x="400" y="322" font-size="13" fill="#9f1239" text-anchor="middle">"Such That"</text>
+            </g>
+            <g class="anim-float">
+                <rect x="500" y="265" width="150" height="80" rx="8" fill="#ecfdf5" stroke="#059669" stroke-width="2"/>
+                <text x="575" y="298" font-size="15" font-weight="800" fill="#047857" text-anchor="middle">Entry Rule</text>
+                <text x="575" y="322" font-size="13" fill="#0f172a" text-anchor="middle">2, 4, 6 ✅ | 3, 5 ❌</text>
+            </g>
+        `,
+        "element-vs-subset": `
+            <rect width="800" height="450" fill="#ffffff"/>
+            <text x="400" y="60" font-size="24" font-weight="800" fill="#0f172a" text-anchor="middle">ELEMENT MEMBERSHIP (∈) vs. SUBSET CONTAINMENT (⊆)</text>
+            <text x="400" y="90" font-size="15" font-weight="600" fill="#475569" text-anchor="middle">Avoiding Category Errors: Naked Objects vs. Containers Inside Containers</text>
+            <rect x="90" y="130" width="280" height="250" rx="14" fill="#fffbeb" stroke="#d97706" stroke-width="3"/>
+            <text x="230" y="165" font-size="18" font-weight="800" fill="#92400e" text-anchor="middle">Element: 2 ∈ {1, 2, 3}</text>
+            <circle cx="230" cy="245" r="36" fill="#ef4444" class="anim-float"/>
+            <text x="230" y="252" font-size="22" font-weight="800" fill="#ffffff" text-anchor="middle">2</text>
+            <text x="230" y="335" font-size="14" font-weight="600" fill="#78350f" text-anchor="middle">Loose Apple directly in Grocery Bag</text>
+
+            <rect x="430" y="130" width="280" height="250" rx="14" fill="#f0f9ff" stroke="#0284c7" stroke-width="3"/>
+            <text x="570" y="165" font-size="18" font-weight="800" fill="#0369a1" text-anchor="middle">Subset: {2} ⊆ {1, 2, 3}</text>
+            <rect x="505" y="200" width="130" height="90" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="3" stroke-dasharray="6 4" class="anim-pulse"/>
+            <circle cx="545" cy="245" r="20" fill="#eab308"/>
+            <circle cx="595" cy="245" r="20" fill="#eab308"/>
+            <text x="570" y="335" font-size="14" font-weight="600" fill="#0369a1" text-anchor="middle">Plastic Bag inside Grocery Bag</text>
+        `,
+        "double-inclusion": `
+            <rect width="800" height="450" fill="#ffffff"/>
+            <text x="400" y="65" font-size="24" font-weight="800" fill="#0f172a" text-anchor="middle">PROOF BY DOUBLE INCLUSION (A = B)</text>
+            <text x="400" y="95" font-size="15" font-weight="600" fill="#475569" text-anchor="middle">The Surveyor Protocol: Prove A ⊆ B and B ⊆ A</text>
+            <rect x="100" y="150" width="240" height="170" rx="12" fill="#f0f9ff" stroke="#0284c7" stroke-width="3"/>
+            <text x="220" y="195" font-size="18" font-weight="800" fill="#0369a1" text-anchor="middle">Step 1: A ⊆ B</text>
+            <text x="220" y="230" font-size="14" fill="#0f172a" text-anchor="middle">Every x ∈ A is also in B</text>
+            <text x="220" y="260" font-size="13" fill="#475569" text-anchor="middle">(Deed A fits inside Deed B)</text>
+
+            <rect x="460" y="150" width="240" height="170" rx="12" fill="#ecfdf5" stroke="#059669" stroke-width="3"/>
+            <text x="580" y="195" font-size="18" font-weight="800" fill="#047857" text-anchor="middle">Step 2: B ⊆ A</text>
+            <text x="580" y="230" font-size="14" fill="#0f172a" text-anchor="middle">Every x ∈ B is also in A</text>
+            <text x="580" y="260" font-size="13" fill="#475569" text-anchor="middle">(Deed B fits inside Deed A)</text>
+
+            <rect x="270" y="350" width="260" height="55" rx="999" fill="#0f172a" class="anim-pulse"/>
+            <text x="400" y="384" font-size="20" font-weight="800" fill="#ffffff" text-anchor="middle">Therefore: Set A = Set B</text>
+        `,
+        "cartesian-grid": `
+            <rect width="800" height="450" fill="#ffffff"/>
+            <text x="400" y="55" font-size="24" font-weight="800" fill="#0f172a" text-anchor="middle">THE CARTESIAN PRODUCT (A × B)</text>
+            <text x="400" y="85" font-size="15" font-weight="600" fill="#475569" text-anchor="middle">Ordered Pairs (x, y) — Order Matters: (1, 4) ≠ (4, 1)</text>
+            <g stroke="#e2e8f0" stroke-width="2">
+                <line x1="220" y1="130" x2="580" y2="130"/><line x1="220" y1="180" x2="580" y2="180"/>
+                <line x1="220" y1="230" x2="580" y2="230"/><line x1="220" y1="280" x2="580" y2="280"/>
+                <line x1="220" y1="330" x2="580" y2="330"/><line x1="220" y1="380" x2="580" y2="380"/>
+                <line x1="220" y1="130" x2="220" y2="380"/><line x1="280" y1="130" x2="280" y2="380"/>
+                <line x1="340" y1="130" x2="340" y2="380"/><line x1="400" y1="130" x2="400" y2="380"/>
+                <line x1="460" y1="130" x2="460" y2="380"/><line x1="520" y1="130" x2="520" y2="380"/>
+                <line x1="580" y1="130" x2="580" y2="380"/>
+            </g>
+            <line x1="220" y1="380" x2="600" y2="380" stroke="#0f172a" stroke-width="3"/>
+            <line x1="220" y1="380" x2="220" y2="115" stroke="#0f172a" stroke-width="3"/>
+            <text x="630" y="385" font-size="16" font-weight="800" fill="#0284c7">Set A (x)</text>
+            <text x="220" y="105" font-size="16" font-weight="800" fill="#059669" text-anchor="middle">Set B (y)</text>
+
+            <line x1="220" y1="180" x2="280" y2="180" stroke="#e11d48" stroke-width="2" class="anim-dash"/>
+            <line x1="280" y1="380" x2="280" y2="180" stroke="#e11d48" stroke-width="2" class="anim-dash"/>
+            <circle cx="280" cy="180" r="8" fill="#e11d48" class="anim-pulse"/>
+            <text x="335" y="175" font-size="16" font-weight="800" fill="#e11d48">(1, 4)</text>
+
+            <line x1="220" y1="330" x2="460" y2="330" stroke="#0284c7" stroke-width="2" class="anim-dash"/>
+            <line x1="460" y1="380" x2="460" y2="330" stroke="#0284c7" stroke-width="2" class="anim-dash"/>
+            <circle cx="460" cy="330" r="8" fill="#0284c7" class="anim-pulse"/>
+            <text x="510" y="325" font-size="16" font-weight="800" fill="#0284c7">(4, 1)</text>
+        `,
+        "bijective-mapping": `
+            <rect width="800" height="450" fill="#ffffff"/>
+            <text x="400" y="55" font-size="24" font-weight="800" fill="#0f172a" text-anchor="middle">BIJECTIVE MAPPING: ONE-TO-ONE &amp; ONTO</text>
+            <text x="400" y="85" font-size="15" font-weight="600" fill="#475569" text-anchor="middle">Injective (No Collisions) + Surjective (No Empty Seats) = Invertible</text>
+            <ellipse cx="230" cy="250" rx="75" ry="125" fill="#f0f9ff" stroke="#0284c7" stroke-width="3"/>
+            <text x="230" y="110" font-size="17" font-weight="800" fill="#0369a1" text-anchor="middle">Domain (Crowd)</text>
+            <circle cx="230" cy="180" r="8" fill="#0284c7"/><text x="200" y="185" font-size="15" font-weight="700" fill="#0f172a">x₁</text>
+            <circle cx="230" cy="250" r="8" fill="#0284c7"/><text x="200" y="255" font-size="15" font-weight="700" fill="#0f172a">x₂</text>
+            <circle cx="230" cy="320" r="8" fill="#0284c7"/><text x="200" y="325" font-size="15" font-weight="700" fill="#0f172a">x₃</text>
+
+            <ellipse cx="570" cy="250" rx="75" ry="125" fill="#ecfdf5" stroke="#059669" stroke-width="3"/>
+            <text x="570" y="110" font-size="17" font-weight="800" fill="#047857" text-anchor="middle">Codomain (Chairs)</text>
+            <circle cx="570" cy="180" r="8" fill="#059669"/><text x="600" y="185" font-size="15" font-weight="700" fill="#0f172a">y₁</text>
+            <circle cx="570" cy="250" r="8" fill="#059669"/><text x="600" y="255" font-size="15" font-weight="700" fill="#0f172a">y₂</text>
+            <circle cx="570" cy="320" r="8" fill="#059669"/><text x="600" y="325" font-size="15" font-weight="700" fill="#0f172a">y₃</text>
+
+            <path d="M 242 180 C 360 180, 440 250, 558 250" fill="none" stroke="#0284c7" stroke-width="3" class="anim-dash"/>
+            <path d="M 242 250 C 360 250, 440 180, 558 180" fill="none" stroke="#0284c7" stroke-width="3" class="anim-dash"/>
+            <path d="M 242 320 L 558 320" fill="none" stroke="#0284c7" stroke-width="3" class="anim-dash"/>
+
+            <rect x="300" y="390" width="200" height="38" rx="999" fill="#059669" class="anim-pulse"/>
+            <text x="400" y="414" font-size="14" font-weight="800" fill="#ffffff" text-anchor="middle">f⁻¹ Exists &amp; Is Unambiguous</text>
+        `,
+        "cantor-diagonal": `
+            <rect width="800" height="450" fill="#ffffff"/>
+            <text x="400" y="55" font-size="24" font-weight="800" fill="#0f172a" text-anchor="middle">CANTOR'S DIAGONALIZATION ARGUMENT</text>
+            <text x="400" y="85" font-size="15" font-weight="600" fill="#475569" text-anchor="middle">Flipping Every Diagonal Digit Creates a Real Number Missing from the Infinite Hotel</text>
+            <rect x="190" y="110" width="420" height="220" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+            <g transform="translate(230, 150)" font-family="monospace" font-size="24" fill="#334155" font-weight="700">
+                <text x="0" y="0">Room 1 → 0 . <tspan fill="#e11d48" font-weight="900">1</tspan> 4 1 5 9 ...</text>
+                <text x="0" y="42">Room 2 → 0 . 3 <tspan fill="#e11d48" font-weight="900">3</tspan> 3 3 3 ...</text>
+                <text x="0" y="84">Room 3 → 0 . 7 1 <tspan fill="#e11d48" font-weight="900">8</tspan> 2 8 ...</text>
+                <text x="0" y="126">Room 4 → 0 . 2 7 1 <tspan fill="#e11d48" font-weight="900">8</tspan> 2 ...</text>
+                <text x="0" y="168">Room 5 → 0 . 1 6 1 8 <tspan fill="#e11d48" font-weight="900">0</tspan> ...</text>
+            </g>
+            <line x1="400" y1="125" x2="520" y2="320" stroke="#e11d48" stroke-width="3" class="anim-dash"/>
+            <rect x="210" y="350" width="380" height="55" rx="10" fill="#fff1f2" stroke="#e11d48" stroke-width="3" class="anim-pulse"/>
+            <text x="400" y="384" font-size="20" font-family="monospace" font-weight="800" fill="#be123c" text-anchor="middle">
+                New Guest: 0 . 2 4 9 9 1 ... ∉ Hotel
+            </text>
+        `,
+        "russell-paradox": `
+            <rect width="800" height="450" fill="#ffffff"/>
+            <text x="400" y="60" font-size="24" font-weight="800" fill="#0f172a" text-anchor="middle">RUSSELL'S PARADOX: THE MASTER CATALOG</text>
+            <text x="400" y="90" font-size="15" font-weight="600" fill="#475569" text-anchor="middle">R = { x | x ∉ x }  ⇒  R ∈ R  ⟺  R ∉ R</text>
+            <rect x="110" y="160" width="230" height="140" rx="12" fill="#f0f9ff" stroke="#0284c7" stroke-width="3"/>
+            <text x="225" y="205" font-size="18" font-weight="800" fill="#0369a1" text-anchor="middle">If R Lists Itself (R ∈ R)</text>
+            <text x="225" y="240" font-size="14" fill="#0f172a" text-anchor="middle">It violates the rule</text>
+            <text x="225" y="265" font-size="14" font-weight="700" fill="#e11d48" text-anchor="middle">⇒ Must be erased (R ∉ R)</text>
+
+            <rect x="460" y="160" width="230" height="140" rx="12" fill="#fff1f2" stroke="#e11d48" stroke-width="3"/>
+            <text x="575" y="205" font-size="18" font-weight="800" fill="#be123c" text-anchor="middle">If Erased (R ∉ R)</text>
+            <text x="575" y="240" font-size="14" fill="#0f172a" text-anchor="middle">It now obeys the rule!</text>
+            <text x="575" y="265" font-size="14" font-weight="700" fill="#0284c7" text-anchor="middle">⇒ Must list itself (R ∈ R)</text>
+
+            <path d="M 345 200 L 455 200" stroke="#0f172a" stroke-width="3" class="anim-dash"/>
+            <path d="M 455 260 L 345 260" stroke="#e11d48" stroke-width="3" class="anim-dash"/>
+            <text x="400" y="365" font-size="16" font-weight="800" fill="#92400e" text-anchor="middle">Infinite Logical Oscillation — Axiomatic Guardrails Required</text>
+        `,
+        "swiss-cheese-line": `
+            <rect width="800" height="450" fill="#ffffff"/>
+            <text x="400" y="65" font-size="24" font-weight="800" fill="#0f172a" text-anchor="middle">DENSITY ≠ COMPLETENESS: THE SWISS CHEESE LINE (ℚ)</text>
+            <text x="400" y="95" font-size="15" font-weight="600" fill="#475569" text-anchor="middle">Between any two fractions is another fraction, yet irrational holes remain everywhere</text>
+            <line x1="90" y1="240" x2="710" y2="240" stroke="#0284c7" stroke-width="8"/>
+            <circle cx="170" cy="240" r="8" fill="#0f172a"/><text x="170" y="280" font-size="15" font-weight="700" text-anchor="middle">0</text>
+            <circle cx="310" cy="240" r="8" fill="#0f172a"/><text x="310" y="280" font-size="15" font-weight="700" text-anchor="middle">1</text>
+            <circle cx="440" cy="240" r="16" fill="#ffffff" stroke="#e11d48" stroke-width="4" stroke-dasharray="4 3" class="anim-pulse"/>
+            <text x="440" y="195" font-size="18" font-weight="800" fill="#e11d48" text-anchor="middle">Hole at √2 ≈ 1.414...</text>
+            <circle cx="590" cy="240" r="16" fill="#ffffff" stroke="#e11d48" stroke-width="4" stroke-dasharray="4 3" class="anim-pulse"/>
+            <text x="590" y="195" font-size="18" font-weight="800" fill="#e11d48" text-anchor="middle">Hole at π ≈ 3.1415...</text>
+            <text x="400" y="355" font-size="15" font-weight="700" fill="#334155" text-anchor="middle">Continuous curves slip straight through unpatched holes in ℚ</text>
+        `,
+        "prime-lego-proof": `
+            <rect width="800" height="450" fill="#ffffff"/>
+            <text x="400" y="60" font-size="24" font-weight="800" fill="#0f172a" text-anchor="middle">REDUCTIO AD ABSURDUM: PRIME LEGO BLOCKS</text>
+            <text x="400" y="90" font-size="15" font-weight="600" fill="#475569" text-anchor="middle">Assuming √2 = p/q  ⇒  p² = 2q² (Even Prime Count vs. Odd Prime Count)</text>
+            <rect x="100" y="140" width="250" height="190" rx="12" fill="#f0f9ff" stroke="#0284c7" stroke-width="3"/>
+            <text x="225" y="180" font-size="20" font-weight="800" fill="#0369a1" text-anchor="middle">Left Side: p²</text>
+            <text x="225" y="215" font-size="15" font-weight="700" fill="#0f172a" text-anchor="middle">Duplicated Prime Tower</text>
+            <rect x="165" y="240" width="50" height="32" rx="4" fill="#0284c7"/><rect x="235" y="240" width="50" height="32" rx="4" fill="#0284c7"/>
+            <text x="225" y="305" font-size="15" font-weight="800" fill="#0369a1" text-anchor="middle">EVEN # of Prime Factors</text>
+
+            <text x="400" y="245" font-size="36" font-weight="900" fill="#e11d48" text-anchor="middle">≠</text>
+
+            <rect x="450" y="140" width="250" height="190" rx="12" fill="#fff1f2" stroke="#e11d48" stroke-width="3"/>
+            <text x="575" y="180" font-size="20" font-weight="800" fill="#be123c" text-anchor="middle">Right Side: 2 · q²</text>
+            <text x="575" y="215" font-size="15" font-weight="700" fill="#0f172a" text-anchor="middle">Even Tower + One Extra "2"</text>
+            <rect x="490" y="240" width="45" height="32" rx="4" fill="#64748b"/><rect x="545" y="240" width="45" height="32" rx="4" fill="#64748b"/>
+            <rect x="605" y="235" width="55" height="40" rx="4" fill="#e11d48" class="anim-pulse"/>
+            <text x="632" y="261" font-size="16" font-weight="800" fill="#ffffff" text-anchor="middle">×2</text>
+            <text x="575" y="305" font-size="15" font-weight="800" fill="#be123c" text-anchor="middle">ODD # of Prime Factors</text>
+
+            <text x="400" y="385" font-size="17" font-weight="800" fill="#0f172a" text-anchor="middle">Contradiction by Fundamental Theorem of Arithmetic  ⇒  √2 ∉ ℚ</text>
+        `
+    };
+
+    const audio = document.getElementById("podcast-audio");
+    const localPicker = document.getElementById("local-audio-picker");
+    const statusLabel = document.getElementById("tel-status");
+    const conceptLabel = document.getElementById("tel-concept");
+    const visualModeLabel = document.getElementById("tel-visual-mode");
+    const timeLabel = document.getElementById("tel-time");
+    const subtitleBox = document.getElementById("active-subtitle");
+    const imageLayer = document.getElementById("image-layer");
+    const svgLayer = document.getElementById("svg-layer");
+    const stageImg = document.getElementById("stage-img");
+    const stageImgCaption = document.getElementById("stage-img-caption");
+    const stageSvg = document.getElementById("stage-svg");
+    const chapterStrip = document.getElementById("chapter-strip");
+
+    let currentActiveIndex = -1;
+
+    function formatTime(seconds) {
+        if (!isFinite(seconds) || seconds < 0) return "0:00";
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60).toString().padStart(2, '0');
+        return `${mins}:${secs}`;
+    }
+
+    function buildChapterStrip() {
+        chapterStrip.innerHTML = "";
+        timeline.forEach((cue, idx) => {
+            const pill = document.createElement("button");
+            pill.className = "chapter-pill";
+            pill.id = `cue-pill-${idx}`;
+            pill.innerHTML = `
+                <span class="pill-time">${formatTime(cue.time)} • ${cue.visualType.toUpperCase()}</span>
+                <span class="pill-concept">${cue.concept}</span>
+                <span class="pill-sub">${cue.subtitle}</span>
+            `;
+            pill.addEventListener("click", () => {
+                audio.currentTime = cue.time;
+                activateCue(idx);
+                audio.play().catch(() => {});
+            });
+            chapterStrip.appendChild(pill);
+        });
+    }
+
+    function activateCue(index) {
+        if (index < 0 || index >= timeline.length || index === currentActiveIndex) return;
+        currentActiveIndex = index;
+        const cue = timeline[index];
+
+        conceptLabel.textContent = cue.concept;
+        subtitleBox.textContent = cue.subtitle;
+
+        if (cue.visualType === "image") {
+            visualModeLabel.textContent = `Image (${cue.imageSrc.replace('images/', '')})`;
+            stageImg.src = cue.imageSrc;
+            stageImgCaption.textContent = cue.caption || cue.concept;
+            svgLayer.classList.remove("active");
+            imageLayer.classList.add("active");
+        } else {
+            visualModeLabel.textContent = `Animated SVG (${cue.svgKey})`;
+            stageSvg.innerHTML = svgTemplates[cue.svgKey] || svgTemplates["pythagorean-sea"];
+            imageLayer.classList.remove("active");
+            svgLayer.classList.add("active");
+        }
+
+        document.querySelectorAll(".chapter-pill").forEach((el, idx) => {
+            el.classList.toggle("active", idx === index);
+        });
+        const activePill = document.getElementById(`cue-pill-${index}`);
+        if (activePill) {
+            activePill.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+        }
+    }
+
+    window.stepCue = function(direction) {
+        const nextIndex = Math.min(Math.max((currentActiveIndex === -1 ? 0 : currentActiveIndex) + direction, 0), timeline.length - 1);
+        audio.currentTime = timeline[nextIndex].time;
+        activateCue(nextIndex);
+    };
+
+    // Fallback if an image isn't found locally yet: switch gracefully to SVG banner
+    stageImg.addEventListener("error", () => {
+        const cue = timeline[currentActiveIndex];
+        const missingPath = cue ? cue.imageSrc : "images/...";
+        stageSvg.innerHTML = `
+            <rect width="800" height="450" fill="#ffffff"/>
+            <rect x="100" y="95" width="600" height="260" rx="16" fill="#f8fafc" stroke="#cbd5e1" stroke-width="3" stroke-dasharray="8 6"/>
+            <text x="400" y="190" font-size="22" font-weight="800" fill="#0f172a" text-anchor="middle">${cue ? cue.concept : 'Lecture Visual'}</text>
+            <text x="400" y="235" font-size="16" font-weight="700" fill="#0284c7" text-anchor="middle">Expected Image: ${missingPath}</text>
+            <text x="400" y="275" font-size="14" fill="#64748b" text-anchor="middle">${cue && cue.caption ? cue.caption : 'Place this HTML file next to your images/ folder.'}</text>
+        `;
+        imageLayer.classList.remove("active");
+        svgLayer.classList.add("active");
+    });
+
+    localPicker.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            audio.src = URL.createObjectURL(file);
+            statusLabel.textContent = "Local Audio Loaded";
+            statusLabel.style.color = "var(--accent)";
+        }
+    });
+
+    audio.addEventListener("play", () => {
+        statusLabel.textContent = "Synced & Playing";
+        statusLabel.style.color = "var(--success)";
+    });
+
+    audio.addEventListener("pause", () => {
+        statusLabel.textContent = "Paused";
+        statusLabel.style.color = "var(--accent)";
+    });
+
+    audio.addEventListener("timeupdate", () => {
+        const currentTime = audio.currentTime;
+        const total = isFinite(audio.duration) ? formatTime(audio.duration) : "66:16";
+        timeLabel.textContent = `${formatTime(currentTime)} / ${total}`;
+
+        let matchedIndex = 0;
+        for (let i = timeline.length - 1; i >= 0; i--) {
+            if (currentTime >= timeline[i].time) {
+                matchedIndex = i;
+                break;
+            }
+        }
+        activateCue(matchedIndex);
+    });
+
+    // Initialize UI at cue 0
+    buildChapterStrip();
+    activateCue(0);
+</script>
+
+</body>
+</html>
