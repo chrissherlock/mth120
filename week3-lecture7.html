@@ -89,22 +89,14 @@
                     Welcome to Lecture 7: Mapping the Continuum
                 </h3>
                 <p style="margin: 0 0 1.15rem 0; color: #334155; line-height: 1.75; font-size: 1rem;">
-                    Throughout Week 2, our focus rested entirely on sequences—lists of distinct, isolated numbers stepping one by one toward a destination. In Week 3, we transition from the discrete stepping stones of sequences into the continuous, fluid world of functions.
+                    If the rigorous logic and $\epsilon$-$N$ proofs of Weeks 1 and 2 felt demanding, take a deep breath. You have already done the hardest part: building the logical machinery required for real analysis. Over the past two weeks, we focused entirely on sequences—lists of distinct, isolated numbers acting like stepping stones across a river.
                 </p>
                 <p style="margin: 0 0 1.15rem 0; color: #334155; line-height: 1.75; font-size: 1rem;">
-                    In this unit, we primarily consider functions defined on a subset $X$ of the real numbers $\mathbb{R}$. A function is not just an algebraic formula; it is a rigid structural mapping that assigns every element in a <strong>domain</strong> to exactly one element in a <strong>codomain</strong>. Today, we will formally review these mappings, explore what it takes to run a function in reverse (invertibility), and classify the foundational algebraic curves (linear, power, and rational functions) that we will bend and stretch in upcoming lectures.
+                    Now, we are going to connect those dots. In Week 3, we transition from the discrete stepping stones of sequences into the continuous, fluid world of functions. This shift is crucial. The ultimate goal of this course is to prepare you for calculus—the mathematics of continuous change, like tracing the real-time velocity of an object, the smooth growth of a curve, or the volume of a solid. To analyze how a curve changes and moves, we must first rigorously define the underlying rules that govern the curve itself.
                 </p>
-            </div>
-
-            <!-- TABLE OF CONTENTS -->
-            <div class="toc-box">
-                <h4>📌 Lecture 7 Topics</h4>
-                <ul class="toc-grid">
-                    <li><a href="#section-domain">1. The Natural Domain, Codomain, and Range</a></li>
-                    <li><a href="#section-linear">2. Linear Functions and Monotonicity</a></li>
-                    <li><a href="#section-power">3. Power Functions: The Even/Odd Divide</a></li>
-                    <li><a href="#section-polynomial">4. Polynomials and Rational Functions</a></li>
-                </ul>
+                <p style="margin: 0 0 1.15rem 0; color: #334155; line-height: 1.75; font-size: 1rem;">
+                    We aren't introducing entirely new math today; rather, we are putting a formal analytical lens on algebra you likely already know. We will view a function not just as a formula to be calculated, but as a rigid structural mapping that assigns every element in a <strong>domain</strong> to exactly one element in a <strong>codomain</strong>. Today, we will solidify these mappings, explore the exact geometric and algebraic conditions required to run a function in reverse (invertibility), and lock in the foundational algebraic curves (linear, power, and rational functions) that we will be bending and stretching throughout the rest of the term.
+                </p>
             </div>
 
             <!-- SECTION 1: DOMAIN AND CODOMAIN -->
@@ -192,17 +184,67 @@
                 </p>
             </div>
 
-            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
-                We typically restrict the natural domain to avoid two catastrophic algebraic failures:
+            <!-- INJECTED NOTATION REFRESHER -->
+            <div class="infobox">
+                <h4>📐 Notation Refresher: Intervals on the Real Line</h4>
+                <div class="infobox-intro">
+                    As we transition from discrete sequences to continuous functions, we will rely heavily on <strong>interval notation</strong> to describe unbroken segments of the real number line.
+                </div>
+                <div class="notation-grid">
+                    <div class="notation-item">
+                        <div class="notation-sym">$[a, b]$</div>
+                        <div class="notation-desc"><strong>Closed Interval:</strong> Includes both endpoints. All $x$ where $a \le x \le b$.</div>
+                    </div>
+                    <div class="notation-item">
+                        <div class="notation-sym">$(a, b)$</div>
+                        <div class="notation-desc"><strong>Open Interval:</strong> Excludes the endpoints. All $x$ where $a < x < b$.</div>
+                    </div>
+                    <div class="notation-item">
+                        <div class="notation-sym">$[a, \infty)$</div>
+                        <div class="notation-desc"><strong>Half-Open Ray:</strong> Starts at $a$ (inclusive) and goes right forever. Infinity is <em>always</em> bounded by a soft parenthesis because it is a direction, not a reachable number.</div>
+                    </div>
+                    <div class="notation-item">
+                        <div class="notation-sym">$\cup$</div>
+                        <div class="notation-desc"><strong>Union:</strong> Glues two separate sets together (e.g., jumping over a gap).</div>
+                    </div>
+                </div>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.5rem;">
+                To truly understand how functions behave geometrically, we must look beyond algebraic formulas and examine their <strong>graphs</strong>. In formal set theory, a function is not merely a dynamic rule; it is defined statically by its graph.
             </p>
-            <ol style="color: #334155; line-height: 1.75; font-size: 1.05rem; padding-left: 1.25rem; margin-bottom: 1.5rem;">
-                <li style="margin-bottom: 0.5rem;"><strong>Division by Zero:</strong> The formula $f(x) = \frac{1}{x}$ is well-defined for all real numbers <em>except</em> $x = 0$. Therefore, its natural domain is the union of two open intervals: $(-\infty, 0) \cup (0, \infty)$.</li>
-                <li><strong>Roots of Negative Numbers:</strong> The formula $f(x) = \sqrt{x}$ only produces real numbers for non-negative inputs. Its natural domain is strictly $[0, \infty)$.</li>
-            </ol>
+
+            <div class="definition-box">
+                <h4 style="margin: 0 0 0.5rem 0; color: #b45309; font-size: 1.05rem;">Definition: The Graph of a Function</h4>
+                <p style="margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.6;">
+                    Let $f: X \to Y$ be a function. The <strong>graph</strong> of $f$ is the subset of the Cartesian product $X \times Y$ defined by the set of all coordinate pairs:
+                    $$\text{Graph}(f) = \{ (x, f(x)) \mid x \in X \}$$
+                </p>
+            </div>
 
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
-                The <strong>graph</strong> of a function $f: X \to Y$ is the subset of the Cartesian product $X \times Y$ containing all coordinate pairs $(x, f(x))$. If the function has an inverse function $g: Y \to X$, the graph of the inverse is simply the graph of $f$ reflected perfectly across the diagonal bisector line $y = x$.
+                This formal definition reveals a powerful visual test. A subset of the Cartesian plane $X \times Y$ represents a valid function if and only if every vertical line $x = c$ intersects the graph in <em>at most one point</em>. Why? Because a single input $x$ cannot map to multiple outputs without violating the core definition of a function.
             </p>
+
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 2rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem;">The Geometry of Inverse Graphs</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1rem;">
+                When a function $f: X \to Y$ is bijective (both injective and surjective), it possesses an inverse function $g: Y \to X$ (commonly denoted $f^{-1}$). What is the relationship between the graph of $f$ and the graph of its inverse?
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                If the point $(a, b)$ lies on the graph of $f$, meaning $f(a) = b$, then by definition of the inverse, $f^{-1}(b) = a$, meaning the point $(b, a)$ must lie on the graph of $f^{-1}$. Geometrically, switching the coordinates from $(a, b)$ to $(b, a)$ corresponds to a mirror reflection across the diagonal line $y = x$.
+            </p>
+
+            <div class="aside-box">
+                <h4>🪞 The Horizontal Line Test and Invertibility</h4>
+                <p style="margin-bottom: 0.5rem;">
+                    Because the graph of the inverse is a reflection across $y = x$, we can determine if a function is invertible just by looking at its graph:
+                </p>
+                <ul style="margin: 0; padding-left: 1.25rem; color: #0f172a; line-height: 1.6; font-size: 0.95rem;">
+                    <li style="margin-bottom: 0.5rem;"><strong>Vertical Line Test:</strong> Determines if a curve is a valid <em>function</em> (each input has only one output).</li>
+                    <li><strong>Horizontal Line Test:</strong> Determines if a function is <em>injective</em> (each output comes from only one input). If any horizontal line intersects the graph more than once, the function fails the test, and no standard inverse can exist unless we restrict its domain.</li>
+                </ul>
+            </div>
+
             <!-- SVG: Inverse Reflection -->
             <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
                 <div style="text-align: center; margin-bottom: 1rem;">
