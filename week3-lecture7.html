@@ -71,6 +71,7 @@
             <div class="nav-btn-group" style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; width: 100%;">
                 <a href="week2-lecture6.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&larr; Lecture 6</a>
                 <a href="week3.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&uarr; Week 3 Hub</a>
+                <a href="week3-lecture7-interactive-stepper.html" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">✎ Practice Problems</a>
                 <a href="week3-lecture8.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">Lecture 8 &rarr;</a>
             </div>
             <div style="text-align: center; width: 100%; min-width: 0;">
@@ -541,7 +542,26 @@
             <h2 id="section-polynomial">4. Polynomials and Rational Functions</h2>
 
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
-                By combining power functions with scalar multiplication and addition, we build <strong>polynomial functions</strong>. A polynomial function of order $n$ is given by the formula:
+                In the previous section, we looked at isolated power functions like $x^2$ and $x^3$. You can think of these pure power functions as mathematical building blocks. By scaling these blocks up or down (scalar multiplication) and stacking them together (addition), we construct <strong>polynomial functions</strong>.
+            </p>
+
+            <div class="infobox">
+                <h4>🧱 Polynomial Primer: Anatomy of an Equation</h4>
+                <p style="margin: 0 0 0.5rem 0; font-size: 0.95rem;">
+                    Before we look at the formal definition, consider a familiar quadratic function:
+                </p>
+                <div style="text-align: center; margin: 0.75rem 0; font-size: 1.1rem; color: #1e3a8a; font-weight: bold;">
+                    $$f(x) = 3x^2 - 2x + 5$$
+                </div>
+                <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.95rem; line-height: 1.6;">
+                    <li style="margin-bottom: 0.25rem;"><strong>Terms:</strong> The individual building blocks glued together by plus and minus signs ($3x^2$, $-2x$, and $5$).</li>
+                    <li style="margin-bottom: 0.25rem;"><strong>Coefficients:</strong> The specific numerical weights attached to each power of $x$ (here, $3$, $-2$, and $5$).</li>
+                    <li><strong>Degree (or Order):</strong> The highest exponent that appears in the equation. Because the highest power here is $x^2$, this is a 2nd-degree polynomial.</li>
+                </ul>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
+                Formally, a polynomial function of order (or degree) $n$ generalizes this exact pattern to any number of terms, given by the formula:
             </p>
             <div style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
                 $$f(x) = \sum_{k=0}^{n} a_k x^k = a_n x^n + a_{n-1} x^{n-1} + \dots + a_1 x + a_0$$
@@ -550,7 +570,11 @@
                 where $a_0, \dots, a_n$ are real parameters called the coefficients, and $a_n \neq 0$ is the leading coefficient.
             </p>
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
-                A number $x_0$ from the domain is called a <strong>zero</strong> or <strong>root</strong> of the function if $f(x_0) = 0$.
+                Because these functions only ever involve basic addition, subtraction, and multiplication, they never demand dangerous operations like division by zero or taking the square root of a negative number. Therefore, <strong>the natural domain of any polynomial function is the entire set of real numbers, $\mathbb{R}$</strong>.
+            </p>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                A number $x_0$ from the domain is called a <strong>zero</strong> or <strong>root</strong> of the function if $f(x_0) = 0$. Geometrically, these are the points where the graph intersects the $x$-axis. If $x_0$ is a root, the polynomial can be factored cleanly into $f(x) = (x - x_0)g(x)$, which proves that a polynomial of order $n$ has at most $n$ roots.
             </p>
 
             <!-- SVG: Polynomial Roots -->
@@ -566,18 +590,18 @@
                         <text x="460" y="130" font-size="14" font-weight="bold" fill="#475569">x</text>
                         <text x="230" y="25" font-size="14" font-weight="bold" fill="#475569">y</text>
 
-                        <!-- Cubic Curve (e.g., x^3 - x) -->
+                        <!-- Cubic Curve -->
                         <path d="M 50 230 C 150 20, 200 20, 250 125 C 300 230, 350 230, 450 20" fill="none" stroke="#2563eb" stroke-width="3"/>
 
-                        <!-- Roots -->
-                        <circle cx="127" cy="125" r="5" fill="#dc2626"/>
+                        <!-- Corrected Roots -->
+                        <circle cx="106.5" cy="125" r="5" fill="#dc2626"/>
                         <circle cx="250" cy="125" r="5" fill="#dc2626"/>
-                        <circle cx="373" cy="125" r="5" fill="#dc2626"/>
+                        <circle cx="393.5" cy="125" r="5" fill="#dc2626"/>
 
-                        <!-- Labels -->
-                        <text x="127" y="145" font-size="13" font-style="italic" font-weight="bold" fill="#b91c1c" text-anchor="middle">x₁</text>
+                        <!-- Corrected Labels -->
+                        <text x="106.5" y="145" font-size="13" font-style="italic" font-weight="bold" fill="#b91c1c" text-anchor="middle">x₁</text>
                         <text x="265" y="145" font-size="13" font-style="italic" font-weight="bold" fill="#b91c1c">x₂</text>
-                        <text x="373" y="145" font-size="13" font-style="italic" font-weight="bold" fill="#b91c1c" text-anchor="middle">x₃</text>
+                        <text x="393.5" y="145" font-size="13" font-style="italic" font-weight="bold" fill="#b91c1c" text-anchor="middle">x₃</text>
 
                         <text x="350" y="60" font-size="14" font-style="italic" font-weight="bold" fill="#1d4ed8">y = f(x)</text>
 
@@ -590,14 +614,46 @@
                 </div>
             </div>
 
-            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
-                A <strong>rational function</strong> is formed by taking the ratio of two polynomials:
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 2rem;">
+                If polynomial functions are the mathematical equivalent of integers (simple, solid building blocks), then <strong>rational functions</strong> are the equivalent of fractions. A rational function is formed by taking the ratio (division) of two polynomials:
             </p>
             <div style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
                 $$f(x) = \frac{p(x)}{q(x)}$$
             </div>
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
                 where $p(x)$ and $q(x)$ are polynomials, and $q(x)$ is not the zero polynomial.
+            </p>
+
+            <div class="aside-box">
+                <h4>⚠️ The Danger Zone: Division by Zero</h4>
+                <p style="margin-bottom: 0.5rem;">
+                    Unlike polynomials, which are safe to calculate for any real number, rational functions possess inherent structural weaknesses. If an input $x$ causes the denominator polynomial $q(x)$ to evaluate to zero, the entire function violently breaks down, as division by zero is undefined.
+                </p>
+                <p style="margin: 0;">
+                    Therefore, the <strong>natural domain</strong> of a rational function is the set of all real numbers $\mathbb{R}$, <em>strictly excluding</em> the roots of the denominator $q(x)$.
+                </p>
+            </div>
+
+            <div class="worked-example-box">
+                <h4>🔄 Worked Example: Finding the Domain</h4>
+                <p style="margin-bottom: 0.5rem;">
+                    Consider the rational function:
+                </p>
+                <div style="text-align: center; margin: 0.75rem 0; font-size: 1.1rem; color: #047857; font-weight: bold;">
+                    $$f(x) = \frac{x + 1}{x - 2}$$
+                </div>
+                <p style="margin-bottom: 0.5rem;">
+                    To find the natural domain, we entirely ignore the numerator (the top) and isolate the denominator (the bottom) to find its roots:
+                </p>
+                <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.95rem; line-height: 1.6;">
+                    <li style="margin-bottom: 0.25rem;">Set the denominator to zero: $x - 2 = 0$</li>
+                    <li style="margin-bottom: 0.25rem;">Solve for $x$: $x = 2$</li>
+                    <li><strong>Conclusion:</strong> The function is valid everywhere except at $x = 2$. Using our interval notation, the natural domain is $(-\infty, 2) \cup (2, \infty)$.</li>
+                </ul>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
+                Geometrically, what happens at these excluded points? In most cases, as the $x$-values get closer and closer to the excluded root, the denominator shrinks toward zero, which forces the overall fraction to explode toward infinity (or negative infinity). This creates a sheer, invisible vertical wall on the graph called a <strong>vertical asymptote</strong>, which the curve approaches but can never cross.
             </p>
 
             <!-- SVG: Rational Asymptote -->
@@ -633,10 +689,49 @@
                 </div>
             </div>
 
+            <!-- LECTURE SUMMARY -->
+            <h2 id="section-summary" style="margin-top: 3.5rem;">Summary: The Bridge to Calculus</h2>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
+                We have officially completed our transition from the discrete mathematics of sequences into the continuous world of functions. This lecture was not just an algebra review; it was about establishing a rigorous, structural vocabulary for the curves we will be manipulating for the rest of the term.
+            </p>
+
+            <div class="infobox" style="border-left-color: #3b82f6; background-color: #eff6ff; border: 1px solid #bfdbfe;">
+                <h4 style="color: #1e3a8a;">🎓 Key Takeaways from Lecture 7</h4>
+                <ul style="margin: 0; padding-left: 1.25rem; color: #1e3a8a; line-height: 1.6; font-size: 0.95rem;">
+                    <li style="margin-bottom: 0.5rem;"><strong>Structural Mappings:</strong> Functions are rigid rules mapping a domain to a codomain. Identifying the natural domain protects us from algebraic impossibilities (like division by zero or negative roots).</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Invertibility Requires a One-Way Street:</strong> Strict monotonicity guarantees injectivity (no collisions), which is the geometric key to unlocking clean inverse functions and safely reflecting graphs across $y = x$.</li>
+                    <li><strong>Foundational Families:</strong> Linear, power, polynomial, and rational functions are the standard building blocks of mathematical modeling. We saw how even/odd exponents dictate symmetry and range, and how rational denominators create impassable vertical asymptotes.</li>
+                </ul>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.5rem;">
+                <strong>Where does this fit into the overall course?</strong>
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                In Weeks 1 and 2, we built the logical machinery of limits using isolated stepping stones (sequences). Today, we constructed the continuous tracks (functions) that those limits will soon travel along.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                Right now, the polynomial and rational curves we defined today are static shapes sitting on a Cartesian plane. But the core of calculus is about <strong>dynamic change</strong>. In the upcoming lectures, we will take these foundational curves and set them in motion. We will use limits to ask what happens as $x$ gets infinitely close to a dangerous vertical asymptote, and we will build derivatives to measure the exact slope of a power function that is constantly bending.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                By securing your understanding of domains, inverses, and asymptotes today, you have just laid the concrete foundation for the calculus we will build tomorrow.
+            </p>
+
+            <!-- INTERACTIVE STEPPER CTA -->
+            <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.75rem; margin-bottom: 2.5rem; border-radius: 6px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                <h4 style="margin: 0 0 0.75rem 0; color: #047857; font-size: 1.15rem;">Ready to test your understanding?</h4>
+                <p style="margin: 0 0 1.25rem 0; color: #334155; font-size: 1.02rem;">Work through the progressive interactive problems to lock in these foundational concepts before moving on to Lecture 8.</p>
+                <a href="week3-lecture7-interactive-stepper.html" style="display: inline-block; background: #10b981; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 1rem; transition: background 0.2s;">
+                    Launch Interactive Problem Stepper ➔
+                </a>
+            </div>
+
             <!-- FOOTER NAVIGATION -->
             <div class="footer-nav" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
                 <a href="week2-lecture6.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&larr; Lecture 6</a>
                 <a href="week3.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&uarr; Week 3 Hub</a>
+                <a href="week3-lecture7-interactive-stepper.html" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">✎ Practice Problems</a>
                 <a href="week3-lecture8.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">Lecture 8 &rarr;</a>
             </div>
         </div>
