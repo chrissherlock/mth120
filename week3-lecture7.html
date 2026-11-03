@@ -211,6 +211,111 @@
                 </div>
             </div>
 
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 2.5rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem;">Classification of Mappings: Injective, Surjective, and Bijective</h3>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
+                Not all functions behave the same way when dropping inputs into the codomain. We classify functions based on two critical questions: <em>Do any inputs collide into the same output?</em> and <em>Are any potential outputs left empty?</em>
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.25rem; margin: 2rem 0;">
+
+                <!-- INJECTIVE CARD -->
+                <div style="background: #ffffff; padding: 1.5rem; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+                    <h4 style="margin: 0 0 0.5rem 0; color: #0284c7; font-size: 1.1rem; text-align: center;">1. Injective (One-to-One)</h4>
+                    <p style="margin: 0 0 1rem 0; font-size: 0.85rem; color: #64748b; text-align: center; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">No Collisions</p>
+
+                    <div style="display: flex; justify-content: center; margin-bottom: 1.25rem;">
+                        <svg viewBox="0 0 160 140" width="100%" style="max-width: 160px;">
+                            <defs>
+                                <marker id="arr-inj" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#0284c7"/>
+                                </marker>
+                            </defs>
+                            <ellipse cx="40" cy="70" rx="30" ry="60" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.5"/>
+                            <ellipse cx="120" cy="70" rx="30" ry="60" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.5"/>
+
+                            <!-- Dots -->
+                            <circle cx="40" cy="35" r="3.5" fill="#0369a1"/><circle cx="40" cy="70" r="3.5" fill="#0369a1"/><circle cx="40" cy="105" r="3.5" fill="#0369a1"/>
+                            <circle cx="120" cy="25" r="3.5" fill="#0369a1"/><circle cx="120" cy="55" r="3.5" fill="#0369a1"/><circle cx="120" cy="85" r="3.5" fill="#0369a1"/><circle cx="120" cy="115" r="3.5" fill="#94a3b8"/>
+
+                            <!-- Lines -->
+                            <path d="M 45 35 Q 80 30 112 25" fill="none" stroke="#0284c7" stroke-width="1.5" marker-end="url(#arr-inj)"/>
+                            <path d="M 45 70 Q 80 77 112 85" fill="none" stroke="#0284c7" stroke-width="1.5" marker-end="url(#arr-inj)"/>
+                            <path d="M 45 105 Q 80 80 112 55" fill="none" stroke="#0284c7" stroke-width="1.5" marker-end="url(#arr-inj)"/>
+                        </svg>
+                    </div>
+                    <p style="margin: 0; font-size: 0.9rem; color: #334155; line-height: 1.5;">
+                        Every input maps to a <strong>unique</strong> output. Misses are allowed (the codomain isn't fully covered), but no two inputs ever share a destination.
+                    </p>
+                </div>
+
+                <!-- SURJECTIVE CARD -->
+                <div style="background: #ffffff; padding: 1.5rem; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+                    <h4 style="margin: 0 0 0.5rem 0; color: #d97706; font-size: 1.1rem; text-align: center;">2. Surjective (Onto)</h4>
+                    <p style="margin: 0 0 1rem 0; font-size: 0.85rem; color: #64748b; text-align: center; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">No Misses</p>
+
+                    <div style="display: flex; justify-content: center; margin-bottom: 1.25rem;">
+                        <svg viewBox="0 0 160 140" width="100%" style="max-width: 160px;">
+                            <defs>
+                                <marker id="arr-sur" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#d97706"/>
+                                </marker>
+                            </defs>
+                            <ellipse cx="40" cy="70" rx="30" ry="60" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+                            <ellipse cx="120" cy="70" rx="30" ry="60" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+
+                            <!-- Dots -->
+                            <circle cx="40" cy="25" r="3.5" fill="#b45309"/><circle cx="40" cy="55" r="3.5" fill="#b45309"/><circle cx="40" cy="85" r="3.5" fill="#b45309"/><circle cx="40" cy="115" r="3.5" fill="#b45309"/>
+                            <circle cx="120" cy="35" r="3.5" fill="#b45309"/><circle cx="120" cy="70" r="3.5" fill="#b45309"/><circle cx="120" cy="105" r="3.5" fill="#b45309"/>
+
+                            <!-- Lines -->
+                            <path d="M 45 25 Q 80 30 112 35" fill="none" stroke="#d97706" stroke-width="1.5" marker-end="url(#arr-sur)"/>
+                            <path d="M 45 55 Q 80 62 112 70" fill="none" stroke="#d97706" stroke-width="1.5" marker-end="url(#arr-sur)"/>
+                            <path d="M 45 85 Q 80 77 112 70" fill="none" stroke="#d97706" stroke-width="1.5" marker-end="url(#arr-sur)"/>
+                            <path d="M 45 115 Q 80 110 112 105" fill="none" stroke="#d97706" stroke-width="1.5" marker-end="url(#arr-sur)"/>
+                        </svg>
+                    </div>
+                    <p style="margin: 0; font-size: 0.9rem; color: #334155; line-height: 1.5;">
+                        Every element in the codomain is hit by <em>at least</em> one input. Collisions are allowed, but the Range is exactly equal to the Codomain.
+                    </p>
+                </div>
+
+                <!-- BIJECTIVE CARD -->
+                <div style="background: #ffffff; padding: 1.5rem; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+                    <h4 style="margin: 0 0 0.5rem 0; color: #059669; font-size: 1.1rem; text-align: center;">3. Bijective</h4>
+                    <p style="margin: 0 0 1rem 0; font-size: 0.85rem; color: #64748b; text-align: center; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Perfect Pairing</p>
+
+                    <div style="display: flex; justify-content: center; margin-bottom: 1.25rem;">
+                        <svg viewBox="0 0 160 140" width="100%" style="max-width: 160px;">
+                            <defs>
+                                <marker id="arr-bij" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#059669"/>
+                                </marker>
+                            </defs>
+                            <ellipse cx="40" cy="70" rx="30" ry="60" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="1.5"/>
+                            <ellipse cx="120" cy="70" rx="30" ry="60" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="1.5"/>
+
+                            <!-- Dots -->
+                            <circle cx="40" cy="35" r="3.5" fill="#047857"/><circle cx="40" cy="70" r="3.5" fill="#047857"/><circle cx="40" cy="105" r="3.5" fill="#047857"/>
+                            <circle cx="120" cy="35" r="3.5" fill="#047857"/><circle cx="120" cy="70" r="3.5" fill="#047857"/><circle cx="120" cy="105" r="3.5" fill="#047857"/>
+
+                            <!-- Lines -->
+                            <path d="M 45 35 Q 80 35 112 35" fill="none" stroke="#059669" stroke-width="1.5" marker-end="url(#arr-bij)"/>
+                            <path d="M 45 70 Q 80 87 112 105" fill="none" stroke="#059669" stroke-width="1.5" marker-end="url(#arr-bij)"/>
+                            <path d="M 45 105 Q 80 87 112 70" fill="none" stroke="#059669" stroke-width="1.5" marker-end="url(#arr-bij)"/>
+                        </svg>
+                    </div>
+                    <p style="margin: 0; font-size: 0.9rem; color: #334155; line-height: 1.5;">
+                        The function is <strong>both</strong> injective and surjective. Every input has exactly one output, and every output has exactly one input.
+                    </p>
+                </div>
+
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                <strong>Why this matters for Calculus:</strong> Only a perfect bijection can be safely run in reverse. If a function has collisions (not injective), reversing it would mean one output points back to multiple inputs—creating a paradox. If a function has misses (not surjective), reversing it would cause the reverse function to hit undefined empty space.
+            </p>
+
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.5rem;">
                 To truly understand how functions behave geometrically, we must look beyond algebraic formulas and examine their <strong>graphs</strong>. In formal set theory, a function is not merely a dynamic rule; it is defined statically by its graph.
             </p>
