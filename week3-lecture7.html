@@ -402,34 +402,37 @@
                 </div>
             </div>
 
-            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 2.5rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem;">Monotonicity Guarantees Invertibility</h3>
-
-            <div class="infobox">
-                <h4>📈 Proposition: Strict Monotonicity implies Injectivity</h4>
-                <div class="infobox-intro">
-                    If a function is strictly monotone (strictly increasing or strictly decreasing), then it is injective.
-                </div>
-                <p style="margin: 0; font-size: 0.95rem;">
-                    <strong>Proof:</strong> Assume $f(x)$ is strictly increasing. We have to show that for two different inputs $x_1 \neq x_2$, the outputs are also different. $\blacksquare$
-                </p>
-            </div>
-
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 2.5rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem;">Why Monotonicity Guarantees Invertibility</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
+                Why do mathematicians care so much whether a function is strictly increasing or decreasing? Because <strong>monotonicity guarantees that a function never doubles back on itself</strong>.
+            </p>
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
-                Because a non-flat linear function ($m \neq 0$) is strictly monotonic, we know it is injective.
+                Think of it like walking down a straight road of houses where every house has a unique address. If a function is strictly increasing, every step you take forward brings you to a higher address. Because the path never loops back, <strong>no two different starting distances ($x_1$ and $x_2$) will ever land you at the same house number ($f(x_1) \neq f(x_2)$)</strong>.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                If you arrive at a specific house address (an output), you can trace your steps backward and know <em>uniquely</em> the exact distance you traveled to get there. There are no "collisions" where different paths lead to the same destination.
             </p>
 
-            <div class="worked-example-box">
-                <h4>🔄 Finding the Inverse of a Linear Function</h4>
-                <p style="margin-bottom: 0.5rem;">
-                    If $m \neq 0$, the function $f(x) = mx + b$ has an inverse:
-                </p>
-                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.1rem;">
-                    $$y = mx + b \implies x = \frac{1}{m}y - \frac{b}{m}$$
+            <div class="infobox">
+                <h4>📈 Theorem: Strict Monotonicity Implies Injectivity (No Collisions)</h4>
+                <div class="infobox-intro">
+                    If a function is strictly monotone (always rising or always falling), it is guaranteed to be <strong>injective</strong> (1-to-1). This means no two distinct inputs will ever collide into the same output.
                 </div>
-                <p style="margin-top: 0.5rem; margin-bottom: 0;">
-                    Renaming the independent variable by $x$ gives us the inverse function: $f^{-1}(x) = \frac{1}{m}x - \frac{b}{m}$.
+                <p style="margin: 0; font-size: 0.95rem;">
+                    <strong>Proof:</strong> Assume $f(x)$ is strictly increasing. If we pick two different inputs $x_1 \neq x_2$, one must be smaller (say, $x_1 < x_2$). Because the function strictly increases, it guarantees that $f(x_1) < f(x_2)$. Since the outputs are unequal, no two inputs ever share a destination. Therefore, the function is injective. $\blacksquare$
                 </p>
             </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
+                <strong>The Payoff for Inverses:</strong> Why do we care about proving injectivity and surjectivity? Because together, they give us the green light to <strong>retrace our steps backward without getting lost</strong>.
+            </p>
+            <ul style="margin: 0; padding-left: 1.25rem; color: #334155; line-height: 1.6; font-size: 1.05rem;">
+                <li style="margin-bottom: 0.5rem;"><strong>No Collisions (Injectivity):</strong> Ensures that every house address has a single, unambiguous starting distance. Without this, handing an address to your inverse function would cause a paradox (not knowing whether to point back to $-2$ or $2$).</li>
+                <li style="margin-bottom: 0.5rem;"><strong>No Unreachable Destinations (Surjectivity):</strong> Ensures that every house number in our target set actually exists along the road, meaning the inverse function will never hit a blank wall or undefined error.</li>
+            </ul>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1rem;">
+                When a function satisfies both conditions, it forms a perfect <strong>bijection</strong>. This is what unlocks a clean inverse function $f^{-1}$, allowing us to swap the roles of inputs and outputs and mirror the graph across the diagonal line $y = x$ with total mathematical certainty.
+            </p>
 
             <!-- SECTION 3: POWER FUNCTIONS -->
             <h2 id="section-power">3. Power Functions: The Even/Odd Divide</h2>
