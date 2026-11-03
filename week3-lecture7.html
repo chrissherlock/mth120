@@ -100,7 +100,7 @@
             <div class="toc-box">
                 <h4>📌 Lecture 7 Topics</h4>
                 <ul class="toc-grid">
-                    <li><a href="#section-domain">1. The Natural Domain and Codomain</a></li>
+                    <li><a href="#section-domain">1. The Natural Domain, Codomain, and Range</a></li>
                     <li><a href="#section-linear">2. Linear Functions and Monotonicity</a></li>
                     <li><a href="#section-power">3. Power Functions: The Even/Odd Divide</a></li>
                     <li><a href="#section-polynomial">4. Polynomials and Rational Functions</a></li>
@@ -108,10 +108,81 @@
             </div>
 
             <!-- SECTION 1: DOMAIN AND CODOMAIN -->
-            <h2 id="section-domain">1. The Natural Domain and Codomain</h2>
+            <h2 id="section-domain">1. The Natural Domain, Codomain, and Range</h2>
 
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
-                A function $f: X \to Y$ is an assignment from a set $X$ (the domain) to a set $Y$ (the codomain). When a function is given strictly by an algebraic formula, that formula may make sense for some arguments and completely break down for others (such as demanding division by zero).
+                In set theory and real analysis, a function $f: X \to Y$ is a strict structural mapping. It assigns every single element from a starting set $X$, which is called the <strong>domain</strong>, to exactly one element in a destination set $Y$, which is called the <strong>codomain</strong>.
+            </p>
+
+            <div class="aside-box">
+                <h4>🔍 The Target vs. The Hits (Codomain vs. Range)</h4>
+                <p style="margin-bottom: 0.5rem;">It is a common mistake to confuse the codomain with the range. They are distinct concepts in pure mathematics:</p>
+                <ul style="margin: 0; padding-left: 1.25rem; color: #0f172a; line-height: 1.6; font-size: 0.95rem;">
+                    <li style="margin-bottom: 0.5rem;"><strong>The Codomain ($Y$):</strong> The entire set of <em>possible</em> outputs where the function's results are allowed to land. For most functions in this unit, the codomain is simply the set of all real numbers, $\mathbb{R}$.</li>
+                    <li><strong>The Range ($R$):</strong> The specific subset of the codomain consisting of elements that are <em>actually hit</em> by the function, meaning they are actual values of $f$ for some arguments. For example, the function $f(x) = x^2$ mapping $\mathbb{R} \to \mathbb{R}$ has a codomain of all real numbers, but its range is strictly $[0, \infty)$ because a square cannot be negative.</li>
+                </ul>
+
+                <div style="margin-top: 1.5rem; text-align: center;">
+                    <span style="font-weight: 700; color: #0f172a; font-size: 1.05rem; display: block; margin-bottom: 0.75rem;">Mapping from Domain to Codomain</span>
+                    <div style="display: flex; justify-content: center; overflow-x: auto;">
+                        <svg viewBox="0 0 500 250" width="100%" style="max-width: 500px; font-family: system-ui, sans-serif;">
+                            <defs>
+                                <marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569"/>
+                                </marker>
+                            </defs>
+
+                            <!-- Codomain Y -->
+                            <ellipse cx="375" cy="125" rx="80" ry="110" fill="#f1f5f9" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4,4" />
+                            <text x="375" y="35" font-size="14" font-weight="bold" fill="#64748b" text-anchor="middle">Codomain Y</text>
+
+                            <!-- Range R -->
+                            <ellipse cx="375" cy="140" rx="55" ry="70" fill="#dcfce7" stroke="#22c55e" stroke-width="2" />
+                            <text x="375" y="90" font-size="14" font-weight="bold" fill="#15803d" text-anchor="middle">Range R</text>
+
+                            <!-- Domain X -->
+                            <ellipse cx="125" cy="125" rx="60" ry="110" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" />
+                            <text x="125" y="35" font-size="14" font-weight="bold" fill="#1d4ed8" text-anchor="middle">Domain X</text>
+
+                            <!-- Points in X -->
+                            <circle cx="125" cy="80" r="4" fill="#1e3a8a"/>
+                            <text x="105" y="85" font-size="14" font-style="italic" font-weight="bold" fill="#1e3a8a">x₁</text>
+
+                            <circle cx="125" cy="130" r="4" fill="#1e3a8a"/>
+                            <text x="105" y="135" font-size="14" font-style="italic" font-weight="bold" fill="#1e3a8a">x₂</text>
+
+                            <circle cx="125" cy="180" r="4" fill="#1e3a8a"/>
+                            <text x="105" y="185" font-size="14" font-style="italic" font-weight="bold" fill="#1e3a8a">x₃</text>
+
+                            <!-- Points in Range (Hits) -->
+                            <circle cx="375" cy="110" r="4" fill="#065f46"/>
+                            <text x="390" y="115" font-size="14" font-style="italic" font-weight="bold" fill="#065f46">y₁</text>
+
+                            <circle cx="375" cy="170" r="4" fill="#065f46"/>
+                            <text x="390" y="175" font-size="14" font-style="italic" font-weight="bold" fill="#065f46">y₂</text>
+
+                            <!-- Points outside Range (Misses) -->
+                            <circle cx="375" cy="215" r="4" fill="#64748b"/>
+                            <text x="390" y="220" font-size="14" font-style="italic" fill="#64748b">y₃</text>
+                            <circle cx="375" cy="55" r="4" fill="#64748b"/>
+                            <text x="390" y="60" font-size="14" font-style="italic" fill="#64748b">y₄</text>
+
+                            <!-- Arrows -->
+                            <!-- x1 and x2 both map to y1 to show non-injective but valid mapping -->
+                            <path d="M 135 80 Q 250 95 365 110" fill="none" stroke="#475569" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+                            <path d="M 135 130 Q 250 120 365 110" fill="none" stroke="#475569" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+                            <!-- x3 maps to y2 -->
+                            <path d="M 135 180 Q 250 175 365 170" fill="none" stroke="#475569" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+                            <!-- Function Label -->
+                            <text x="250" y="85" font-size="18" font-style="italic" font-weight="bold" fill="#0f172a" text-anchor="middle">f</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                When a function is given to us strictly as an algebraic formula without an explicit domain, that formula may make perfect sense for some inputs but completely break down for others. We must determine the mathematical boundaries ourselves.
             </p>
 
             <div class="definition-box">
@@ -122,16 +193,54 @@
             </div>
 
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
-                For example, consider the function $f(x) = \frac{1}{x}$. This formula is well-defined for all real numbers <em>except</em> $x = 0$. Therefore, its natural domain is the union of two open intervals:
+                We typically restrict the natural domain to avoid two catastrophic algebraic failures:
             </p>
-            <div style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$X = (-\infty, 0) \cup (0, \infty)$$
-            </div>
+            <ol style="color: #334155; line-height: 1.75; font-size: 1.05rem; padding-left: 1.25rem; margin-bottom: 1.5rem;">
+                <li style="margin-bottom: 0.5rem;"><strong>Division by Zero:</strong> The formula $f(x) = \frac{1}{x}$ is well-defined for all real numbers <em>except</em> $x = 0$. Therefore, its natural domain is the union of two open intervals: $(-\infty, 0) \cup (0, \infty)$.</li>
+                <li><strong>Roots of Negative Numbers:</strong> The formula $f(x) = \sqrt{x}$ only produces real numbers for non-negative inputs. Its natural domain is strictly $[0, \infty)$.</li>
+            </ol>
 
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
-                The <strong>graph</strong> of a function $f: X \to Y$ is the subset of the Cartesian product $X \times Y$ containing all coordinate pairs $(x, f(x))$. If the function has an inverse $f^{-1}: Y \to X$, the graph of the inverse is simply the graph of $f$ reflected perfectly across the diagonal line $y = x$.
+                The <strong>graph</strong> of a function $f: X \to Y$ is the subset of the Cartesian product $X \times Y$ containing all coordinate pairs $(x, f(x))$. If the function has an inverse function $g: Y \to X$, the graph of the inverse is simply the graph of $f$ reflected perfectly across the diagonal bisector line $y = x$.
             </p>
+            <!-- SVG: Inverse Reflection -->
+            <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                <div style="text-align: center; margin-bottom: 1rem;">
+                    <span style="font-weight: 700; color: #0f172a; font-size: 1.1rem;">Visualizing Inverses: Reflection across $y=x$</span>
+                </div>
+                <div style="display: flex; justify-content: center; overflow-x: auto;">
+                    <svg viewBox="0 0 400 400" width="100%" style="max-width: 400px; font-family: system-ui, sans-serif;">
+                        <!-- Grid and Axes -->
+                        <line x1="50" y1="350" x2="380" y2="350" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+                        <line x1="50" y1="350" x2="50" y2="20" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+                        <text x="385" y="365" font-size="14" font-weight="bold" fill="#475569">x</text>
+                        <text x="30" y="30" font-size="14" font-weight="bold" fill="#475569">y</text>
 
+                        <!-- y = x line -->
+                        <line x1="50" y1="350" x2="350" y2="50" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="6,6"/>
+                        <text x="355" y="45" font-size="14" font-weight="bold" fill="#64748b">y = x</text>
+
+                        <!-- y = f(x) -->
+                        <path d="M 50 350 Q 200 350 250 50" fill="none" stroke="#2563eb" stroke-width="3"/>
+                        <text x="260" y="80" font-size="14" font-weight="bold" fill="#1d4ed8">y = f(x)</text>
+
+                        <!-- y = f^-1(x) -->
+                        <path d="M 50 350 Q 50 200 350 150" fill="none" stroke="#dc2626" stroke-width="3"/>
+                        <text x="300" y="140" font-size="14" font-weight="bold" fill="#b91c1c">y = f⁻¹(x)</text>
+
+                        <!-- Connecting line to show reflection -->
+                        <line x1="180" y1="210" x2="250" y2="140" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,4"/>
+                        <circle cx="180" cy="210" r="4" fill="#2563eb"/>
+                        <circle cx="250" cy="140" r="4" fill="#dc2626"/>
+
+                        <defs>
+                            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/>
+                            </marker>
+                        </defs>
+                    </svg>
+                </div>
+            </div>
 
             <!-- SECTION 2: LINEAR FUNCTIONS -->
             <h2 id="section-linear">2. Linear Functions and Monotonicity</h2>
@@ -143,63 +252,241 @@
                 $$f(x) = mx + b$$
             </div>
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
-                where $m$ is the slope (the constant rate of change) and $b$ is the $y$-intercept. The natural domain of any linear function is all real numbers, $\mathbb{R}$.
+                where $m$ and $b$ are given real parameters.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                The graph of a linear function is a straight line that passes through the point $(0, b)$ on the $y$-axis:
+            </p>
+            <div style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
+                $$\frac{y_1 - y_0}{x_1 - x_0} = m$$
+            </div>
+
+            <!-- SVG: Linear Slope -->
+            <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                <div style="text-align: center; margin-bottom: 1rem;">
+                    <span style="font-weight: 700; color: #0f172a; font-size: 1.1rem;">Linear Rate of Change (Slope)</span>
+                </div>
+                <div style="display: flex; justify-content: center; overflow-x: auto;">
+                    <svg viewBox="0 0 500 350" width="100%" style="max-width: 500px; font-family: system-ui, sans-serif;">
+                        <!-- Axes -->
+                        <line x1="50" y1="300" x2="450" y2="300" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow2)"/>
+                        <line x1="50" y1="300" x2="50" y2="50" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow2)"/>
+                        <text x="460" y="305" font-size="14" font-weight="bold" fill="#475569">x</text>
+                        <text x="30" y="45" font-size="14" font-weight="bold" fill="#475569">y</text>
+
+                        <!-- Line -->
+                        <line x1="50" y1="250" x2="400" y2="75" stroke="#059669" stroke-width="3"/>
+                        <text x="410" y="70" font-size="14" font-weight="bold" fill="#047857">y = mx + b</text>
+
+                        <!-- Triangle -->
+                        <line x1="150" y1="200" x2="300" y2="200" stroke="#0f172a" stroke-width="2" stroke-dasharray="4,4"/>
+                        <line x1="300" y1="200" x2="300" y2="125" stroke="#0f172a" stroke-width="2" stroke-dasharray="4,4"/>
+
+                        <!-- Points -->
+                        <circle cx="150" cy="200" r="5" fill="#0f172a"/>
+                        <circle cx="300" cy="125" r="5" fill="#0f172a"/>
+                        <text x="90" y="190" font-size="13" font-weight="bold" fill="#0f172a">(x₀, y₀)</text>
+                        <text x="315" y="115" font-size="13" font-weight="bold" fill="#0f172a">(x₁, y₁)</text>
+
+                        <!-- Labels -->
+                        <text x="180" y="220" font-size="14" font-weight="bold" fill="#0f172a">x₁ - x₀</text>
+                        <text x="315" y="170" font-size="14" font-weight="bold" fill="#0f172a">y₁ - y₀</text>
+
+                        <!-- y-intercept -->
+                        <circle cx="50" cy="250" r="5" fill="#ea580c"/>
+                        <text x="60" y="270" font-size="13" font-weight="bold" fill="#ea580c">b</text>
+
+                        <defs>
+                            <marker id="arrow2" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/>
+                            </marker>
+                        </defs>
+                    </svg>
+                </div>
+            </div>
+
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 2.5rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem;">Monotonicity and Slopes</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
+                Functions can be classified by their directional behavior over a domain.
+            </p>
+            <ul style="margin: 0; padding-left: 1.25rem; color: #334155; line-height: 1.6; font-size: 1.05rem;">
+                <li style="margin-bottom: 0.5rem;">A function is <strong>strictly increasing</strong> if for any two arguments $x_1 < x_2$ from the domain, $f(x_1) < f(x_2)$.</li>
+                <li style="margin-bottom: 0.5rem;">A function is <strong>strictly decreasing</strong> if for any two arguments $x_1 < x_2$ from the domain, $f(x_1) > f(x_2)$.</li>
+                <li style="margin-bottom: 0.5rem;">A function is <strong>monotone</strong> if it is either increasing or decreasing.</li>
+            </ul>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                A linear function is strictly increasing if $m > 0$ and strictly decreasing if $m < 0$.
             </p>
 
-            <div class="aside-box">
-                <h4>🔄 Invertibility of Linear Functions</h4>
-                <p style="margin-bottom: 0;">
-                    Does a linear function run in reverse? Yes, provided it isn't flat. If $m \neq 0$, every single output $y$ comes from exactly one input $x$ (it is <em>injective</em>), and every real number can be hit by the function (it is <em>surjective</em>). This makes it <strong>bijective</strong>.
-                </p>
-                <p style="margin-top: 0.5rem; margin-bottom: 0;">
-                    We can find its inverse simply by solving $y = mx + b$ for $x$:
-                </p>
-                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.1rem;">
-                    $$x = \frac{1}{m}y - \frac{b}{m} \implies f^{-1}(x) = \frac{1}{m}x - \frac{b}{m}$$
+            <!-- SVG: Monotonicity -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+                <div style="background: #ffffff; padding: 1.5rem; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.02); text-align: center;">
+                    <span style="font-weight: 700; color: #0f172a; font-size: 1.05rem; display: block; margin-bottom: 0.75rem;">Strictly Increasing ($m > 0$)</span>
+                    <svg viewBox="0 0 250 200" width="100%" style="max-width: 250px; font-family: system-ui, sans-serif;">
+                        <line x1="30" y1="170" x2="220" y2="170" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow_small)"/>
+                        <line x1="30" y1="170" x2="30" y2="20" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow_small)"/>
+                        <path d="M 30 150 L 200 40" fill="none" stroke="#2563eb" stroke-width="3"/>
+                        <circle cx="80" cy="117.6" r="4" fill="#0f172a"/>
+                        <circle cx="150" cy="72.3" r="4" fill="#0f172a"/>
+                        <line x1="80" y1="170" x2="80" y2="117.6" stroke="#cbd5e1" stroke-dasharray="3,3"/>
+                        <line x1="150" y1="170" x2="150" y2="72.3" stroke="#cbd5e1" stroke-dasharray="3,3"/>
+                        <text x="75" y="190" font-size="12" font-style="italic">x₁</text>
+                        <text x="145" y="190" font-size="12" font-style="italic">x₂</text>
+                        <text x="35" y="112" font-size="12" font-style="italic">f(x₁)</text>
+                        <text x="105" y="67" font-size="12" font-style="italic">f(x₂)</text>
+                        <defs>
+                            <marker id="arrow_small" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/>
+                            </marker>
+                        </defs>
+                    </svg>
+                </div>
+                <div style="background: #ffffff; padding: 1.5rem; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.02); text-align: center;">
+                    <span style="font-weight: 700; color: #0f172a; font-size: 1.05rem; display: block; margin-bottom: 0.75rem;">Strictly Decreasing ($m < 0$)</span>
+                    <svg viewBox="0 0 250 200" width="100%" style="max-width: 250px; font-family: system-ui, sans-serif;">
+                        <line x1="30" y1="170" x2="220" y2="170" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow_small)"/>
+                        <line x1="30" y1="170" x2="30" y2="20" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow_small)"/>
+                        <path d="M 30 40 L 200 150" fill="none" stroke="#dc2626" stroke-width="3"/>
+                        <circle cx="80" cy="72.3" r="4" fill="#0f172a"/>
+                        <circle cx="150" cy="117.6" r="4" fill="#0f172a"/>
+                        <line x1="80" y1="170" x2="80" y2="72.3" stroke="#cbd5e1" stroke-dasharray="3,3"/>
+                        <line x1="150" y1="170" x2="150" y2="117.6" stroke="#cbd5e1" stroke-dasharray="3,3"/>
+                        <text x="75" y="190" font-size="12" font-style="italic">x₁</text>
+                        <text x="145" y="190" font-size="12" font-style="italic">x₂</text>
+                        <text x="35" y="67" font-size="12" font-style="italic">f(x₁)</text>
+                        <text x="105" y="112" font-size="12" font-style="italic">f(x₂)</text>
+                    </svg>
                 </div>
             </div>
 
             <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 2.5rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem;">Monotonicity Guarantees Invertibility</h3>
-            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
-                Just like sequences, functions can be classified by their directional behavior. A function is <strong>strictly increasing</strong> if $x_1 < x_2 \implies f(x_1) < f(x_2)$. A linear function is strictly increasing if its slope $m > 0$, and strictly decreasing if $m < 0$.
-            </p>
 
             <div class="infobox">
-                <h4>📈 Theorem: Strict Monotonicity implies Injectivity</h4>
+                <h4>📈 Proposition: Strict Monotonicity implies Injectivity</h4>
                 <div class="infobox-intro">
-                    If a function is strictly monotone (always rising or always falling), it is guaranteed to be injective (1-to-1).
+                    If a function is strictly monotone (strictly increasing or strictly decreasing), then it is injective.
                 </div>
                 <p style="margin: 0; font-size: 0.95rem;">
-                    <strong>Proof:</strong> Assume $f(x)$ is strictly increasing. If we pick two different inputs $x_1 \neq x_2$, one must be smaller (say, $x_1 < x_2$). Because the function strictly increases, $f(x_1) < f(x_2)$. Since the outputs are unequal, no two inputs ever share an output. Therefore, the function is injective. $\blacksquare$
+                    <strong>Proof:</strong> Assume $f(x)$ is strictly increasing. We have to show that for two different inputs $x_1 \neq x_2$, the outputs are also different. $\blacksquare$
                 </p>
             </div>
 
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                Because a non-flat linear function ($m \neq 0$) is strictly monotonic, we know it is injective.
+            </p>
+
+            <div class="worked-example-box">
+                <h4>🔄 Finding the Inverse of a Linear Function</h4>
+                <p style="margin-bottom: 0.5rem;">
+                    If $m \neq 0$, the function $f(x) = mx + b$ has an inverse:
+                </p>
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.1rem;">
+                    $$y = mx + b \implies x = \frac{1}{m}y - \frac{b}{m}$$
+                </div>
+                <p style="margin-top: 0.5rem; margin-bottom: 0;">
+                    Renaming the independent variable by $x$ gives us the inverse function: $f^{-1}(x) = \frac{1}{m}x - \frac{b}{m}$.
+                </p>
+            </div>
 
             <!-- SECTION 3: POWER FUNCTIONS -->
             <h2 id="section-power">3. Power Functions: The Even/Odd Divide</h2>
 
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
-                Power functions take the form $f(x) = x^n$ where $n > 1$ is a natural number. Their behavior radically splits depending on whether $n$ is even or odd.
+                The simplest power functions are given by the formula $f(x) = x^n$, where $n > 1$ is a natural number.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                The natural domain of power functions with a natural exponent $n$ is the set of all real numbers $\mathbb{R}$.
             </p>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+
                 <!-- Even Powers -->
                 <div style="background: #ffffff; padding: 1.5rem; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
-                    <h4 style="margin: 0 0 0.75rem 0; color: #0f172a; font-size: 1.1rem; border-bottom: 2px solid #cbd5e1; padding-bottom: 0.5rem;">Even Powers ($n = 2m$)</h4>
+                    <h4 style="margin: 0 0 1rem 0; color: #0f172a; font-size: 1.15rem; border-bottom: 2px solid #cbd5e1; padding-bottom: 0.5rem;">Even Powers ($n = 2m$)</h4>
+
+                    <!-- SVG: Even Symmetry -->
+                    <div style="display: flex; justify-content: center; margin-bottom: 1.5rem;">
+                        <svg viewBox="0 0 250 200" width="100%" style="max-width: 250px; font-family: system-ui, sans-serif;">
+                            <!-- Axes -->
+                            <line x1="125" y1="180" x2="125" y2="20" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow_small_even)"/>
+                            <line x1="20" y1="160" x2="230" y2="160" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow_small_even)"/>
+                            <text x="235" y="165" font-size="12" font-weight="bold" fill="#475569">x</text>
+                            <text x="110" y="15" font-size="12" font-weight="bold" fill="#475569">y</text>
+
+                            <!-- Parabola -->
+                            <path d="M 45 30 Q 125 220 205 30" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+
+                            <!-- Points showing symmetry -->
+                            <circle cx="75" cy="74" r="4" fill="#0f172a"/>
+                            <circle cx="175" cy="74" r="4" fill="#0f172a"/>
+                            <line x1="75" y1="160" x2="75" y2="74" stroke="#cbd5e1" stroke-dasharray="3,3"/>
+                            <line x1="175" y1="160" x2="175" y2="74" stroke="#cbd5e1" stroke-dasharray="3,3"/>
+                            <line x1="125" y1="74" x2="175" y2="74" stroke="#cbd5e1" stroke-dasharray="3,3"/>
+
+                            <!-- Labels -->
+                            <text x="68" y="178" font-size="12" font-style="italic">-x</text>
+                            <text x="171" y="178" font-size="12" font-style="italic">x</text>
+                            <text x="132" y="70" font-size="12" font-style="italic">f(-x) = f(x)</text>
+
+                            <defs>
+                                <marker id="arrow_small_even" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/>
+                                </marker>
+                            </defs>
+                        </svg>
+                    </div>
+
                     <ul style="margin: 0; padding-left: 1.25rem; color: #334155; line-height: 1.6; font-size: 0.95rem;">
-                        <li style="margin-bottom: 0.5rem;"><strong>Symmetry:</strong> $f(-x) = f(x)$. The graph is mirror-symmetric across the $y$-axis (an <em>even function</em>).</li>
-                        <li style="margin-bottom: 0.5rem;"><strong>Range:</strong> It never dips below zero; the range is restricted strictly to $[0, \infty)$.</li>
-                        <li><strong>Invertibility:</strong> Because $f(-1) = f(1) = 1$, it fails the horizontal line test. It is <strong>not injective</strong>. To create an inverse (the even root $\sqrt[2m]{x}$), we must artificially restrict the domain to $X = [0, \infty)$ so it becomes strictly increasing.</li>
+                        <li style="margin-bottom: 0.5rem;"><strong>Symmetry:</strong> Power functions with even $n = 2m$ have the property $f(-x) = (-x)^{2m} = x^{2m} = f(x)$.</li>
+                        <li style="margin-bottom: 0.5rem;"><strong>Range:</strong> They take only non-negative values, so their range is $[0, \infty)$.</li>
+                        <li><strong>Invertibility:</strong> Because $f(-1) = f(1)$, even power functions are not injective.</li>
                     </ul>
                 </div>
 
                 <!-- Odd Powers -->
                 <div style="background: #ffffff; padding: 1.5rem; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
-                    <h4 style="margin: 0 0 0.75rem 0; color: #0f172a; font-size: 1.1rem; border-bottom: 2px solid #cbd5e1; padding-bottom: 0.5rem;">Odd Powers ($n = 2m + 1$)</h4>
+                    <h4 style="margin: 0 0 1rem 0; color: #0f172a; font-size: 1.15rem; border-bottom: 2px solid #cbd5e1; padding-bottom: 0.5rem;">Odd Powers ($n = 2m + 1$)</h4>
+
+                    <!-- SVG: Odd Symmetry -->
+                    <div style="display: flex; justify-content: center; margin-bottom: 1.5rem;">
+                        <svg viewBox="0 0 250 200" width="100%" style="max-width: 250px; font-family: system-ui, sans-serif;">
+                            <!-- Axes -->
+                            <line x1="125" y1="190" x2="125" y2="10" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow_small_odd)"/>
+                            <line x1="20" y1="100" x2="230" y2="100" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow_small_odd)"/>
+                            <text x="235" y="105" font-size="12" font-weight="bold" fill="#475569">x</text>
+                            <text x="110" y="12" font-size="12" font-weight="bold" fill="#475569">y</text>
+
+                            <!-- Cubic -->
+                            <path d="M 60 190 C 95 110, 115 100, 125 100 C 135 100, 155 90, 190 10" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+
+                            <!-- Points showing symmetry -->
+                            <circle cx="85" cy="165.7" r="4" fill="#0f172a"/>
+                            <circle cx="165" cy="34.3" r="4" fill="#0f172a"/>
+                            <line x1="85" y1="100" x2="85" y2="165.7" stroke="#cbd5e1" stroke-dasharray="3,3"/>
+                            <line x1="165" y1="100" x2="165" y2="34.3" stroke="#cbd5e1" stroke-dasharray="3,3"/>
+
+                            <line x1="125" y1="165.7" x2="85" y2="165.7" stroke="#cbd5e1" stroke-dasharray="3,3"/>
+                            <line x1="125" y1="34.3" x2="165" y2="34.3" stroke="#cbd5e1" stroke-dasharray="3,3"/>
+
+                            <!-- Labels -->
+                            <text x="77" y="93" font-size="12" font-style="italic">-x</text>
+                            <text x="161" y="117" font-size="12" font-style="italic">x</text>
+                            <text x="132" y="28" font-size="12" font-style="italic">f(x)</text>
+                            <text x="65" y="180" font-size="12" font-style="italic">f(-x) = -f(x)</text>
+
+                            <defs>
+                                <marker id="arrow_small_odd" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/>
+                                </marker>
+                            </defs>
+                        </svg>
+                    </div>
+
                     <ul style="margin: 0; padding-left: 1.25rem; color: #334155; line-height: 1.6; font-size: 0.95rem;">
-                        <li style="margin-bottom: 0.5rem;"><strong>Symmetry:</strong> $f(-x) = -f(x)$. The graph is point-symmetric with respect to the origin (an <em>odd function</em>).</li>
-                        <li style="margin-bottom: 0.5rem;"><strong>Range:</strong> It covers the entire vertical spectrum; the range is $\mathbb{R}$.</li>
-                        <li><strong>Invertibility:</strong> Odd powers are <strong>strictly increasing</strong> across their entire natural domain $\mathbb{R}$. By our theorem above, this guarantees they are naturally injective. The inverse function ($\sqrt[2m+1]{x}$) exists everywhere without restricting the domain.</li>
+                        <li style="margin-bottom: 0.5rem;"><strong>Symmetry:</strong> Power functions with odd $n = 2m + 1$ have the property $f(-x) = -f(x)$.</li>
+                        <li style="margin-bottom: 0.5rem;"><strong>Range:</strong> They do not have the same non-negative restriction; their range spans the entire set of real numbers, $\mathbb{R}$.</li>
+                        <li><strong>Invertibility:</strong> Odd power functions are strictly increasing throughout their entire natural domain $\mathbb{R}$.</li>
                     </ul>
                 </div>
             </div>
@@ -208,14 +495,54 @@
             <h2 id="section-polynomial">4. Polynomials and Rational Functions</h2>
 
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
-                By combining power functions with scalar multiplication and addition, we build <strong>polynomials</strong>:
+                By combining power functions with scalar multiplication and addition, we build <strong>polynomial functions</strong>. A polynomial function of order $n$ is given by the formula:
             </p>
             <div style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
-                $$f(x) = a_n x^n + a_{n-1} x^{n-1} + \dots + a_1 x + a_0$$
+                $$f(x) = \sum_{k=0}^{n} a_k x^k = a_n x^n + a_{n-1} x^{n-1} + \dots + a_1 x + a_0$$
             </div>
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
-                The natural domain of any polynomial is the set of all real numbers $\mathbb{R}$. If $x_0$ is a root of the polynomial (meaning $f(x_0) = 0$), the polynomial can be factored cleanly into $f(x) = (x - x_0)g(x)$ using long division.
+                where $a_0, \dots, a_n$ are real parameters called the coefficients, and $a_n \neq 0$ is the leading coefficient.
             </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                A number $x_0$ from the domain is called a <strong>zero</strong> or <strong>root</strong> of the function if $f(x_0) = 0$.
+            </p>
+
+            <!-- SVG: Polynomial Roots -->
+            <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                <div style="text-align: center; margin-bottom: 1rem;">
+                    <span style="font-weight: 700; color: #0f172a; font-size: 1.1rem;">Polynomial Roots: Intersections with the $x$-axis</span>
+                </div>
+                <div style="display: flex; justify-content: center; overflow-x: auto;">
+                    <svg viewBox="0 0 500 250" width="100%" style="max-width: 500px; font-family: system-ui, sans-serif;">
+                        <!-- Axes -->
+                        <line x1="50" y1="125" x2="450" y2="125" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow_poly)"/>
+                        <line x1="250" y1="230" x2="250" y2="20" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow_poly)"/>
+                        <text x="460" y="130" font-size="14" font-weight="bold" fill="#475569">x</text>
+                        <text x="230" y="25" font-size="14" font-weight="bold" fill="#475569">y</text>
+
+                        <!-- Cubic Curve (e.g., x^3 - x) -->
+                        <path d="M 50 230 C 150 20, 200 20, 250 125 C 300 230, 350 230, 450 20" fill="none" stroke="#2563eb" stroke-width="3"/>
+
+                        <!-- Roots -->
+                        <circle cx="127" cy="125" r="5" fill="#dc2626"/>
+                        <circle cx="250" cy="125" r="5" fill="#dc2626"/>
+                        <circle cx="373" cy="125" r="5" fill="#dc2626"/>
+
+                        <!-- Labels -->
+                        <text x="127" y="145" font-size="13" font-style="italic" font-weight="bold" fill="#b91c1c" text-anchor="middle">x₁</text>
+                        <text x="265" y="145" font-size="13" font-style="italic" font-weight="bold" fill="#b91c1c">x₂</text>
+                        <text x="373" y="145" font-size="13" font-style="italic" font-weight="bold" fill="#b91c1c" text-anchor="middle">x₃</text>
+
+                        <text x="350" y="60" font-size="14" font-style="italic" font-weight="bold" fill="#1d4ed8">y = f(x)</text>
+
+                        <defs>
+                            <marker id="arrow_poly" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/>
+                            </marker>
+                        </defs>
+                    </svg>
+                </div>
+            </div>
 
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
                 A <strong>rational function</strong> is formed by taking the ratio of two polynomials:
@@ -223,9 +550,42 @@
             <div style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
                 $$f(x) = \frac{p(x)}{q(x)}$$
             </div>
-            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-bottom: 2.5rem;">
-                The natural domain of a rational function is all real numbers <em>except</em> the roots of the denominator polynomial $q(x)$. Negative power functions like $f(x) = x^{-n} = \frac{1}{x^n}$ are just specialized rational functions where the domain must strictly exclude $x = 0$.
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                where $p(x)$ and $q(x)$ are polynomials, and $q(x)$ is not the zero polynomial.
             </p>
+
+            <!-- SVG: Rational Asymptote -->
+            <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0 2.5rem 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                <div style="text-align: center; margin-bottom: 1rem;">
+                    <span style="font-weight: 700; color: #0f172a; font-size: 1.1rem;">Rational Functions and Domain Exclusions (Asymptotes)</span>
+                </div>
+                <div style="display: flex; justify-content: center; overflow-x: auto;">
+                    <svg viewBox="0 0 500 250" width="100%" style="max-width: 500px; font-family: system-ui, sans-serif;">
+                        <!-- Axes -->
+                        <line x1="50" y1="125" x2="450" y2="125" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow_rat)"/>
+                        <line x1="150" y1="230" x2="150" y2="20" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow_rat)"/>
+                        <text x="460" y="130" font-size="14" font-weight="bold" fill="#475569">x</text>
+                        <text x="130" y="25" font-size="14" font-weight="bold" fill="#475569">y</text>
+
+                        <!-- Asymptote -->
+                        <line x1="280" y1="20" x2="280" y2="230" stroke="#ea580c" stroke-width="2" stroke-dasharray="6,4"/>
+                        <text x="290" y="225" font-size="13" font-weight="bold" fill="#ea580c">Excluded Root (q(x) = 0)</text>
+
+                        <!-- Hyperbola Curves -->
+                        <path d="M 50 145 Q 260 145 270 230" fill="none" stroke="#2563eb" stroke-width="3"/>
+                        <path d="M 290 20 Q 300 105 450 105" fill="none" stroke="#2563eb" stroke-width="3"/>
+
+                        <!-- Label -->
+                        <text x="350" y="80" font-size="14" font-style="italic" font-weight="bold" fill="#1d4ed8">f(x) = p(x) / q(x)</text>
+
+                        <defs>
+                            <marker id="arrow_rat" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/>
+                            </marker>
+                        </defs>
+                    </svg>
+                </div>
+            </div>
 
             <!-- FOOTER NAVIGATION -->
             <div class="footer-nav" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
