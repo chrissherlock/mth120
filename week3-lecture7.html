@@ -435,13 +435,14 @@
             </p>
 
             <!-- SECTION 3: POWER FUNCTIONS -->
+            <!-- SECTION 3: POWER FUNCTIONS -->
             <h2 id="section-power">3. Power Functions: The Even/Odd Divide</h2>
 
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
-                The simplest power functions are given by the formula $f(x) = x^n$, where $n > 1$ is a natural number.
+                Now that we understand how straight lines behave, we can step up our algebraic complexity. In calculus and real analysis, we frequently encounter functions where our variable $x$ is multiplied or raised to higher exponents. These are known as <strong>power functions</strong>, given by the general form $f(x) = x^n$ where $n > 1$ is a natural number.
             </p>
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
-                The natural domain of power functions with a natural exponent $n$ is the set of all real numbers $\mathbb{R}$.
+                The term "power" comes directly from the exponent $n$ to which the base variable $x$ is raised. Familiar examples include the squaring function ($f(x) = x^2$) and the cubing function ($f(x) = x^3$). While their algebraic formulas look deceptively simple, their global behavior, graph symmetry, and invertibility radically split depending on whether the exponent $n$ is even or odd.
             </p>
 
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
@@ -483,9 +484,9 @@
                     </div>
 
                     <ul style="margin: 0; padding-left: 1.25rem; color: #334155; line-height: 1.6; font-size: 0.95rem;">
-                        <li style="margin-bottom: 0.5rem;"><strong>Symmetry:</strong> Power functions with even $n = 2m$ have the property $f(-x) = (-x)^{2m} = x^{2m} = f(x)$.</li>
-                        <li style="margin-bottom: 0.5rem;"><strong>Range:</strong> They take only non-negative values, so their range is $[0, \infty)$.</li>
-                        <li><strong>Invertibility:</strong> Because $f(-1) = f(1)$, even power functions are not injective.</li>
+                        <li style="margin-bottom: 0.5rem;"><strong>Symmetry (Even Functions):</strong> $f(-x) = (-x)^{2m} = x^{2m} = f(x)$. Negating the input does not change the output, making the graph mirror-symmetric across the $y$-axis.</li>
+                        <li style="margin-bottom: 0.5rem;"><strong>Restricted Range:</strong> Because an even power swallows negative signs, outputs can never dip below zero. The range is strictly restricted to $[0, \infty)$.</li>
+                        <li><strong>The Invertibility Problem:</strong> Even powers fail the horizontal line test (e.g., $(-2)^2 = 2^2 = 4$). They suffer from <em>collisions</em>, meaning they are not injective. To build an inverse (like the even root $\sqrt[2m]{x}$), we must artificially restrict the domain to $X = [0, \infty)$ so the curve only moves in one direction.</li>
                     </ul>
                 </div>
 
@@ -529,9 +530,9 @@
                     </div>
 
                     <ul style="margin: 0; padding-left: 1.25rem; color: #334155; line-height: 1.6; font-size: 0.95rem;">
-                        <li style="margin-bottom: 0.5rem;"><strong>Symmetry:</strong> Power functions with odd $n = 2m + 1$ have the property $f(-x) = -f(x)$.</li>
-                        <li style="margin-bottom: 0.5rem;"><strong>Range:</strong> They do not have the same non-negative restriction; their range spans the entire set of real numbers, $\mathbb{R}$.</li>
-                        <li><strong>Invertibility:</strong> Odd power functions are strictly increasing throughout their entire natural domain $\mathbb{R}$.</li>
+                        <li style="margin-bottom: 0.5rem;"><strong>Symmetry (Odd Functions):</strong> $f(-x) = (-x)^{2m+1} = -x^{2m+1} = -f(x)$. Negating the input negates the entire output, making the graph point-symmetric with respect to the origin.</li>
+                        <li style="margin-bottom: 0.5rem;"><strong>Full Range:</strong> Odd powers preserve signs, allowing outputs to span the entire vertical spectrum. Their range is $\mathbb{R}$.</li>
+                        <li><strong>Naturally Invertible:</strong> Odd power functions are strictly increasing across their entire natural domain $\mathbb{R}$. By our monotonicity theorem, this guarantees they have <em>zero collisions</em> (injectivity) naturally. Their inverse, the $(2m+1)$-st root $g(x) = \sqrt[2m+1]{x}$, exists everywhere without needing any domain surgery.</li>
                     </ul>
                 </div>
             </div>
