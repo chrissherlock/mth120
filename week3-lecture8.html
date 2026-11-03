@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 3, Lecture 8: Transcendental Functions | MTHS120</title>
+    <!-- KaTeX Integration -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+    <style>
+        :root {
+            --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
+            --accent: #d97706; --accent-hover: #b45309;
+            --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { max-width: 100%; overflow-x: hidden; }
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; width: 100%; }
+        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: nowrap; gap: 1rem; }
+        .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
+
+        .intro-lead { font-size: 1.1rem; color: #1e293b; line-height: 1.7; margin-bottom: 1.5rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); border: 1px solid var(--border); border-left-width: 4px; }
+        .toc-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.75rem; margin: 1.75rem 0 2.5rem 0; }
+        .toc-box h4 { margin: 0 0 0.75rem 0; color: #92400e; font-size: 1.05rem; }
+        .toc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.5rem 1.5rem; margin: 0; padding-left: 1.25rem; }
+        .toc-grid li { margin-bottom: 0.35rem; font-size: 0.95rem; }
+        .toc-grid a { color: #b45309; text-decoration: none; font-weight: 500; }
+        .toc-grid a:hover { text-decoration: underline; color: var(--accent-hover); }
+
+        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+        h3 { color: #1e293b; margin-top: 1.5rem; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+
+        .infobox { background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.25rem 0 1.75rem 0; }
+        .infobox h4 { margin: 0 0 0.85rem 0; color: #0f172a; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-ui); }
+        .notation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 0.85rem 1.75rem; font-size: 0.95rem; }
+        .notation-item { display: grid; grid-template-columns: minmax(130px, max-content) 1fr; gap: 0.75rem; align-items: center; }
+        .notation-sym { font-weight: 600; color: var(--accent); white-space: nowrap; display: flex; justify-content: center; align-items: center; text-align: center; }
+        .notation-desc { min-width: 0; word-break: break-word; line-height: 1.5; color: #334155; }
+        .infobox-intro { font-size: 0.93rem; color: #475569; line-height: 1.6; margin: 0 0 1.25rem 0; padding-bottom: 0.85rem; border-bottom: 1px solid #e2e8f0; }
+
+        .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; border: 1px solid var(--border); border-left-width: 4px; }
+        .aside-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #b45309; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .aside-box h4 { margin-top: 0; color: #b45309; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .aside-box p, .aside-box li, .infobox p, .infobox li { color: #0f172a !important; }
+
+        .worked-example-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .worked-example-box h4 { margin-top: 0; color: #047857; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .worked-example-box p, .worked-example-box li { color: #0f172a !important; }
+
+        /* Mobile-first layout adjustment */
+        @media (max-width: 768px) {
+            .katex-display { overflow-x: auto !important; overflow-y: hidden !important; -webkit-overflow-scrolling: touch !important; max-width: 100% !important; padding: 0.25rem 0 !important; }
+            body { background: #ffffff; padding: 1rem 0.75rem; }
+            .container { max-width: 100%; margin: 0; }
+            .module-content { background: transparent; padding: 0; border: none; border-radius: 0; box-shadow: none; margin-bottom: 1rem; }
+            .header { padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+            ol, ul { padding-left: 1.25rem !important; margin-left: 0 !important; }
+            .header > .nav-btn-group, .footer-nav { display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; width: 100% !important; gap: 0.5rem !important; }
+            .header > .nav-btn-group a, .header > .nav-btn-group span, .footer-nav a, .footer-nav span { flex: 1 1 0 !important; min-width: 0 !important; text-align: center !important; padding: 0.55rem 0.4rem !important; font-size: 0.82rem !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
+            p, div, li, blockquote { word-break: break-word; overflow-wrap: break-word; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- TOP NAVIGATION HEADER -->
+        <div class="header" style="border-bottom: 2px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.25rem;">
+            <div class="nav-btn-group" style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; width: 100%;">
+                <a href="week3-lecture7.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&larr; Lecture 7</a>
+                <a href="week3.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&uarr; Week 3 Hub</a>
+                <a href="week3-lecture9.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">Lecture 9 &rarr;</a>
+            </div>
+            <div style="text-align: center; width: 100%; min-width: 0;">
+                <h1 style="margin: 0; line-height: 1.3; font-size: 1.5rem;">Week 3, Lecture 8: Transcendental Functions</h1>
+            </div>
+        </div>
+
+        <div class="module-content">
+            <!-- HERO IMAGE -->
+            <div style="margin-bottom: 2rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);">
+                <img src="images/chapter3-hero.jpg" alt="Week 3: Functions - UNE Campus Discovery Trail" style="width: 100%; height: auto; display: block;">
+            </div>
+
+            <div style="margin: 2.25rem 0 2.5rem 0;">
+                <h3 style="margin-top: 0; color: #0f172a; font-size: 1.3rem;">
+                    Welcome to Lecture 8: Beyond Algebra
+                </h3>
+                <p style="margin: 0 0 1.15rem 0; color: #334155; line-height: 1.75; font-size: 1rem;">
+                    In Lecture 7, we built our foundation on algebraic functions: linear equations, power functions, polynomials, and rational expressions. These are the "building blocks" of early mathematics because they can be computed using a finite sequence of additions, subtractions, multiplications, divisions, and root extractions.
+                </p>
+                <p style="margin: 0 0 1.15rem 0; color: #334155; line-height: 1.75; font-size: 1rem;">
+                    However, nature does not restrict itself to algebra. Sound waves oscillate periodically. Bacteria populations compound and multiply. To model these phenomena, we need a new class of functions that transcend standard polynomial algebra. These are known as <strong>Transcendental Functions</strong>.
+                </p>
+                <p style="margin: 0 0 1.15rem 0; color: #334155; line-height: 1.75; font-size: 1rem;">
+                    Today, we will formalize exponential growth, demystify the natural logarithm, and establish the geometric and analytical rules governing trigonometric waveforms and their inverses.
+                </p>
+            </div>
+
+            <!-- TABLE OF CONTENTS -->
+            <div class="toc-box">
+                <h4>📌 Lecture 8 Topics</h4>
+                <ul class="toc-grid">
+                    <li><a href="#section-exponential">1. Exponential Functions</a></li>
+                    <li><a href="#section-logarithm">2. Logarithmic Functions and Base $e$</a></li>
+                    <li><a href="#section-trig">3. Trigonometric Functions: Sine and Cosine</a></li>
+                    <li><a href="#section-inv-trig">4. Inverse Trigonometric Functions</a></li>
+                </ul>
+            </div>
+
+            <!-- SECTION 1: EXPONENTIAL FUNCTIONS -->
+            <h2 id="section-exponential">1. Exponential Functions</h2>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
+                Unlike a power function ($x^n$) where the base varies and the exponent is constant, an <strong>exponential function</strong> locks the base in place and lets the exponent vary.
+            </p>
+
+            <div class="definition-box">
+                <h4 style="margin: 0 0 0.5rem 0; color: #b45309; font-size: 1.05rem;">Definition: Exponential Function</h4>
+                <p style="margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.6;">
+                    For any positive real number $a > 0$ with $a \neq 1$, the exponential function is given by:
+                    $$f(x) = a^x$$
+                </p>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                This function is defined for all real numbers (its natural domain is $\mathbb{R}$). While it is easy to understand $a^x$ when $x$ is a rational fraction like $p/q$, evaluating it for irrational exponents (like $a^{\sqrt{2}}$ or $a^\pi$) requires "filling the gaps" with limits to ensure the resulting function is smooth and unbroken.
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+                <div style="background: #ffffff; padding: 1.5rem; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+                    <h4 style="margin: 0 0 0.75rem 0; color: #0f172a; font-size: 1.1rem; border-bottom: 2px solid #cbd5e1; padding-bottom: 0.5rem;">Core Properties</h4>
+                    <ul style="margin: 0; padding-left: 1.25rem; color: #334155; line-height: 1.6; font-size: 0.95rem;">
+                        <li style="margin-bottom: 0.5rem;"><strong>Range:</strong> Exponential functions only output strictly positive numbers. Range: $(0, \infty)$.</li>
+                        <li style="margin-bottom: 0.5rem;"><strong>Monotonicity:</strong> If $a > 1$, the function is <em>strictly increasing</em>. If $0 < a < 1$, it is <em>strictly decreasing</em>.</li>
+                        <li><strong>Rules of Exponents:</strong> For any real $x, y$: <br> $a^{x+y} = a^x a^y \quad$ and $\quad (a^x)^y = a^{xy}$</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- SECTION 2: LOGARITHMIC FUNCTIONS -->
+            <h2 id="section-logarithm">2. Logarithmic Functions and Base $e$</h2>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
+                Because $f(x) = a^x$ is strictly monotone across its entire domain, our theorem from Lecture 7 guarantees that it is <strong>injective</strong>. Because its range is $(0, \infty)$, it is surjective onto the positive real numbers. Therefore, it has a well-defined inverse function, called the <strong>logarithm</strong>.
+            </p>
+
+            <div class="infobox">
+                <h4>🔄 The Logarithmic Inverse</h4>
+                <div class="infobox-intro">
+                    The function $\log_a x$ answers the question: "To what power must I raise the base $a$ to obtain $x$?"
+                </div>
+                <p style="margin: 0; font-size: 1.05rem; text-align: center; color: #0f172a; font-weight: bold;">
+                    $\log_a x = y \iff a^y = x$
+                </p>
+                <p style="margin: 1rem 0 0 0; font-size: 0.95rem; color: #475569;">
+                    The domain of the logarithm is strictly the positive real numbers $(0, \infty)$, and its range is $\mathbb{R}$.
+                </p>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                Because logarithms are the inverse of exponents, they inherit structural rules that flip the behavior of multiplication and addition:
+            </p>
+            <ul style="color: #334155; line-height: 1.75; font-size: 1.05rem; padding-left: 1.25rem;">
+                <li>$\log_a(xy) = \log_a x + \log_a y$</li>
+                <li>$\log_a(x^c) = c \log_a x$</li>
+            </ul>
+
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 2.5rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem;">Euler's Number and the Natural Logarithm</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
+                In Week 2, we evaluated a special limit using the Monotone Convergence Theorem: $\lim_{n \to \infty} (1 + 1/n)^n$. We proved that this sequence converges to an irrational constant, <strong>Euler's Number ($e \approx 2.718...$)</strong>.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                When $e$ is used as the base of an exponential function ($f(x) = e^x$), its inverse is so fundamental to calculus that it receives a special name: the <strong>Natural Logarithm</strong>, denoted as $\ln x$.
+            </p>
+
+            <!-- SECTION 3: TRIGONOMETRIC FUNCTIONS -->
+            <h2 id="section-trig">3. Trigonometric Functions: Sine and Cosine</h2>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
+                The fundamental trigonometric functions are rooted in geometry, specifically the unit circle (a circle of radius 1 centered at the origin). If we draw a ray from the origin forming an angle $\theta$ (measured in radians) with the positive $x$-axis, it intersects the unit circle at exactly one point.
+            </p>
+            <ul style="color: #334155; line-height: 1.75; font-size: 1.05rem; padding-left: 1.25rem;">
+                <li>$\cos \theta$ is defined as the $x$-coordinate of this intersection point.</li>
+                <li>$\sin \theta$ is defined as the $y$-coordinate of this intersection point.</li>
+            </ul>
+
+            <div class="aside-box">
+                <h4>📐 Core Trigonometric Identities</h4>
+                <p style="margin-bottom: 0.5rem;">Because the unit circle has the equation $x^2 + y^2 = 1$, we immediately get the <strong>Pythagorean Identity</strong>:</p>
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.1rem; font-weight: bold; color: #0f172a;">
+                    $$\sin^2 \theta + \cos^2 \theta = 1$$
+                </div>
+                <p style="margin-top: 1rem; margin-bottom: 0.5rem;">Additionally, because adding $2\pi$ radians constitutes a full rotation back to the starting point, these functions are <strong>periodic</strong>:</p>
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.1rem; color: #0f172a;">
+                    $$\sin(\theta + 2\pi) = \sin \theta \quad \text{and} \quad \cos(\theta + 2\pi) = \cos \theta$$
+                </div>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                You must also be familiar with the Addition Theorems, which govern how sine and cosine behave when angles are combined:
+            </p>
+            <div style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem;">
+                $$\sin(\theta + \phi) = \sin \theta \cos \phi + \cos \theta \sin \phi$$
+                <br>
+                $$\cos(\theta + \phi) = \cos \theta \cos \phi - \sin \theta \sin \phi$$
+            </div>
+
+            <h3 style="color: #0f172a; font-size: 1.15rem; margin-top: 2.5rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem;">The Tangent Function</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
+                The tangent function is constructed as the ratio of sine to cosine: $\tan \theta = \frac{\sin \theta}{\cos \theta}$. Its natural domain excludes the points where $\cos \theta = 0$ (such as $\pi/2, 3\pi/2$, etc.), but its range spans all real numbers $\mathbb{R}$.
+            </p>
+
+
+            <!-- SECTION 4: INVERSE TRIGONOMETRIC FUNCTIONS -->
+            <h2 id="section-inv-trig">4. Inverse Trigonometric Functions</h2>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
+                Because sine and cosine are periodic, they bounce back and forth between $-1$ and $1$. They are incredibly <em>non-injective</em>, meaning they spectacularly fail the horizontal line test.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-bottom: 2rem;">
+                To create inverse functions, we must artificially restrict their domains to a single interval where they act monotonically (strictly increasing or decreasing).
+            </p>
+
+            <div class="worked-example-box" style="margin-bottom: 2.5rem;">
+                <h4>🎯 Domain Restrictions for Invertibility</h4>
+                <ul style="margin: 0.5rem 0 0 1.25rem; padding: 0; color: #334155; line-height: 1.6; font-size: 0.95rem;">
+                    <li style="margin-bottom: 0.75rem;">
+                        <strong>Arcsine ($\arcsin x$):</strong> We restrict the sine function to the domain $[-\frac{\pi}{2}, \frac{\pi}{2}]$. On this interval, it strictly climbs from $-1$ to $1$. <br>
+                        <em>Inverse mapping:</em> $\arcsin: [-1, 1] \to [-\frac{\pi}{2}, \frac{\pi}{2}]$.
+                    </li>
+                    <li style="margin-bottom: 0.75rem;">
+                        <strong>Arccosine ($\arccos x$):</strong> We restrict the cosine function to the domain $[0, \pi]$. On this interval, it strictly falls from $1$ down to $-1$. <br>
+                        <em>Inverse mapping:</em> $\arccos: [-1, 1] \to [0, \pi]$.
+                    </li>
+                    <li>
+                        <strong>Arctangent ($\arctan x$):</strong> We restrict the tangent function to the open interval $(-\frac{\pi}{2}, \frac{\pi}{2})$, between its two vertical asymptotes. Here, it strictly increases from $-\infty$ to $\infty$. <br>
+                        <em>Inverse mapping:</em> $\arctan: \mathbb{R} \to (-\frac{\pi}{2}, \frac{\pi}{2})$.
+                    </li>
+                </ul>
+            </div>
+
+            <!-- FOOTER NAVIGATION -->
+            <div class="footer-nav" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                <a href="week3-lecture7.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&larr; Lecture 7</a>
+                <a href="week3.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&uarr; Week 3 Hub</a>
+                <a href="week3-lecture9.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">Lecture 9 &rarr;</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
