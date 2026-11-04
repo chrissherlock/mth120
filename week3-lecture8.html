@@ -1072,16 +1072,176 @@
                 In university mathematics exams, calculators are often banned or useless because you are expected to know exact values like $\cos(\pi) = -1$ or $\sin(\pi/6) = \frac{1}{2}$. You never need to memorize a giant table if you understand two simple geometric pictures:
             </p>
 
-            <h4 style="color: #0f172a; margin-top: 1.5rem;">1. The Four Cardinal Compass Points ($0, \frac{\pi}{2}, \pi, \frac{3\pi}{2}$)</h4>
+            <h4 style="color: #0f172a; margin-top: 1.5rem;">1. The Extremes: Finding $0^\circ$ and $90^\circ$ (The Compass Points)</h4>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
-                Just picture where you are standing on the unit circle and read off your $(x, y) = (\cos \theta, \sin \theta)$ coordinates:
+                If you try to draw a right-angled triangle with an angle of $0^\circ$ or $90^\circ$, the triangle collapses into a flat line and standard trigonometry breaks down. But on the Unit Circle, these are the easiest points of all! Just picture where you are standing and read off your $(x, y) = (\cos \theta, \sin \theta)$ coordinates:
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin: 1.5rem 0;">
+                <!-- 0 Degrees Box -->
+                <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid #3b82f6; border-radius: 8px; padding: 1.25rem;">
+                    <div style="font-weight: 800; color: #1d4ed8; font-size: 0.95rem; margin-bottom: 0.4rem;">
+                        Starting Line: $0^\circ$ ($0$ radians)
+                    </div>
+                    <p style="margin: 0 0 0.5rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                        You haven't moved. You are standing at the far-right edge of the circle (East). Your GPS coordinates are exactly <strong>$(1, 0)$</strong>.
+                    </p>
+                    <ul style="margin: 0; padding-left: 1.25rem; color: #475569; font-size: 0.9rem; line-height: 1.6;">
+                        <li><strong>$\cos(0^\circ) = 1$:</strong> Your horizontal distance from the center is the full radius $1$.</li>
+                        <li><strong>$\sin(0^\circ) = 0$:</strong> You are flat on the ground axis; you have zero vertical height.</li>
+                    </ul>
+                </div>
+
+                <!-- 90 Degrees Box -->
+                <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid #ef4444; border-radius: 8px; padding: 1.25rem;">
+                    <div style="font-weight: 800; color: #b91c1c; font-size: 0.95rem; margin-bottom: 0.4rem;">
+                        Top of the Wheel: $90^\circ$ ($\frac{\pi}{2}$ radians)
+                    </div>
+                    <p style="margin: 0 0 0.5rem 0; font-size: 0.95rem; color: #334155; line-height: 1.6;">
+                        You walked a quarter-circle counter-clockwise to the very top (North). Your GPS coordinates are exactly <strong>$(0, 1)$</strong>.
+                    </p>
+                    <ul style="margin: 0; padding-left: 1.25rem; color: #475569; font-size: 0.9rem; line-height: 1.6;">
+                        <li><strong>$\cos(90^\circ) = 0$:</strong> You are dead center horizontally; your shadow drops straight down to $0$ on the x-axis.</li>
+                        <li><strong>$\sin(90^\circ) = 1$:</strong> You are at the absolute maximum height of the Ferris wheel ($1$).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                You can apply this exact same logic to the other two compass points:
             </p>
             <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem;">
-                <li><strong>At $\theta = 0$ (East):</strong> You are at $(1, 0) \implies \cos(0) = 1, \quad \sin(0) = 0$.</li>
-                <li><strong>At $\theta = \frac{\pi}{2}$ (North, $90^\circ$):</strong> You are at $(0, 1) \implies \cos\left(\frac{\pi}{2}\right) = 0, \quad \sin\left(\frac{\pi}{2}\right) = 1$.</li>
-                <li><strong>At $\theta = \pi$ (West, $180^\circ$):</strong> You are at $(-1, 0) \implies \cos(\pi) = -1, \quad \sin(\pi) = 0$.</li>
-                <li><strong>At $\theta = \frac{3\pi}{2}$ (South, $270^\circ$):</strong> You are at $(0, -1) \implies \cos\left(\frac{3\pi}{2}\right) = 0, \quad \sin\left(\frac{3\pi}{2}\right) = -1$.</li>
+                <li><strong>At $180^\circ$ ($\pi$ radians, West):</strong> You are at $(-1, 0) \implies \cos(180^\circ) = -1, \quad \sin(180^\circ) = 0$.</li>
+                <li><strong>At $270^\circ$ ($\frac{3\pi}{2}$ radians, South):</strong> You are at $(0, -1) \implies \cos(270^\circ) = 0, \quad \sin(270^\circ) = -1$.</li>
             </ul>
+
+            <!-- ================================================================= -->
+            <!-- ANIMATED SVG: COLLAPSING THE TRIANGLE AT 0 AND 90 DEGREES         -->
+            <!-- ================================================================= -->
+            <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-top: 4px solid #8b5cf6; border-radius: 10px; padding: 1.5rem; margin: 2rem 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <span style="font-size: 0.9rem; font-weight: 800; color: #5b21b6; text-transform: uppercase; letter-spacing: 0.05em;">
+                        Animated Visualization: The Collapse of SOH-CAH-TOA
+                    </span>
+                    <p style="margin: 0.5rem 0 0 0; color: #475569; font-size: 0.95rem;">
+                        Watch the horizontal shadow (Cosine) and vertical height (Sine) as the angle sweeps between $0^\circ$ and $90^\circ$. Notice how the triangle perfectly flattens out at the extremes!
+                    </p>
+                </div>
+
+                <div style="display: flex; justify-content: center; align-items: center; position: relative;">
+                    <svg id="uc-anim-svg" viewBox="0 0 360 320" width="100%" style="max-width: 380px; font-family: system-ui, sans-serif; overflow: visible;">
+                        <defs>
+                            <marker id="anim-arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                <path d="M 0 1 L 8 5 L 0 9 z" fill="#94a3b8"/>
+                            </marker>
+                        </defs>
+
+                        <!-- Static Background / Axes -->
+                        <line x1="20" y1="280" x2="340" y2="280" stroke="#94a3b8" stroke-width="2" marker-end="url(#anim-arr)"/>
+                        <line x1="60" y1="300" x2="60" y2="20" stroke="#94a3b8" stroke-width="2" marker-end="url(#anim-arr)"/>
+                        <text x="345" y="275" font-size="14" font-weight="700" fill="#64748b">x</text>
+                        <text x="45" y="25" font-size="14" font-weight="700" fill="#64748b">y</text>
+
+                        <!-- First Quadrant Arc (Radius = 220, Center = 60, 280) -->
+                        <path d="M 280 280 A 220 220 0 0 0 60 60" fill="none" stroke="#cbd5e1" stroke-width="3" stroke-dasharray="6,4"/>
+
+                        <!-- Axis Landmarks -->
+                        <circle cx="280" cy="280" r="4" fill="#94a3b8"/>
+                        <text x="280" y="302" font-size="12" font-weight="700" fill="#64748b" text-anchor="middle">(1, 0)</text>
+
+                        <circle cx="60" cy="60" r="4" fill="#94a3b8"/>
+                        <text x="40" y="64" font-size="12" font-weight="700" fill="#64748b" text-anchor="end">(0, 1)</text>
+
+                        <!-- Dynamic Angle Arc (Green) -->
+                        <path id="uc-angle-arc" d="" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+
+                        <!-- Dynamic Triangle Elements -->
+                        <line id="uc-cos-line" x1="60" y1="280" x2="280" y2="280" stroke="#2563eb" stroke-width="4.5"/>
+                        <line id="uc-sin-line" x1="280" y1="280" x2="280" y2="280" stroke="#dc2626" stroke-width="4.5"/>
+                        <line id="uc-hyp-line" x1="60" y1="280" x2="280" y2="280" stroke="#0f172a" stroke-width="2.5"/>
+                        <circle id="uc-point" cx="280" cy="280" r="6" fill="#0f172a" stroke="#ffffff" stroke-width="2"/>
+
+                        <!-- Dynamic Readouts -->
+                        <text id="uc-cos-text" x="170" y="302" font-size="14" font-weight="800" fill="#2563eb" text-anchor="middle">cos = 1.00</text>
+                        <text id="uc-sin-text" x="290" y="170" font-size="14" font-weight="800" fill="#dc2626" text-anchor="start">sin = 0.00</text>
+                        <text id="uc-angle-text" x="115" y="265" font-size="15" font-weight="800" fill="#047857">θ = 0°</text>
+                    </svg>
+                </div>
+
+                <script>
+                    (function() {
+                        const cosLine = document.getElementById('uc-cos-line');
+                        const sinLine = document.getElementById('uc-sin-line');
+                        const hypLine = document.getElementById('uc-hyp-line');
+                        const point = document.getElementById('uc-point');
+                        const cosText = document.getElementById('uc-cos-text');
+                        const sinText = document.getElementById('uc-sin-text');
+                        const angleText = document.getElementById('uc-angle-text');
+                        const angleArc = document.getElementById('uc-angle-arc');
+
+                        const cx = 60;
+                        const cy = 280;
+                        const r = 220;
+                        const arcR = 40; // Size of the green angle wedge
+
+                        function animate() {
+                            // Creates a smooth oscillation between 0 and 90 degrees
+                            const time = Date.now() / 1500;
+                            // Math.sin oscillates between -1 and 1. Scale and shift to [0, 1]
+                            // Using Math.sin allows the animation to naturally pause and reverse at the extremes!
+                            const progress = (Math.sin(time) + 1) / 2;
+
+                            const angleDeg = progress * 90;
+                            const angleRad = angleDeg * (Math.PI / 180);
+
+                            // Calculate Cartesian coordinates
+                            const x = cx + r * Math.cos(angleRad);
+                            const y = cy - r * Math.sin(angleRad);
+
+                            // Update Triangle DOM Lines
+                            cosLine.setAttribute('x2', x);
+
+                            sinLine.setAttribute('x1', x);
+                            sinLine.setAttribute('x2', x);
+                            sinLine.setAttribute('y1', cy);
+                            sinLine.setAttribute('y2', y);
+
+                            hypLine.setAttribute('x2', x);
+                            hypLine.setAttribute('y2', y);
+
+                            point.setAttribute('cx', x);
+                            point.setAttribute('cy', y);
+
+                            // Update Green Angle Arc Wedge
+                            const arcX = cx + arcR * Math.cos(angleRad);
+                            const arcY = cy - arcR * Math.sin(angleRad);
+                            // SVG Arc syntax: M cx,cy L (startx,starty) A rx,ry x-axis-rotation large-arc-flag sweep-flag (endx,endy) Z
+                            const arcPath = `M ${cx},${cy} L ${cx + arcR},${cy} A ${arcR},${arcR} 0 0 0 ${arcX},${arcY} Z`;
+                            if (angleDeg > 0.5) {
+                                angleArc.setAttribute('d', arcPath);
+                            } else {
+                                angleArc.setAttribute('d', ""); // Hide arc when perfectly flat
+                            }
+
+                            // Update Dynamic Floating Text Positions
+                            cosText.setAttribute('x', cx + (x - cx) / 2);
+                            // Prevent sine text from drifting too far left when triangle collapses
+                            sinText.setAttribute('x', Math.max(x + 10, cx + 15));
+                            sinText.setAttribute('y', cy - (cy - y) / 2 + 5);
+
+                            // Update Numerical Values
+                            cosText.textContent = `cos = ${Math.cos(angleRad).toFixed(2)}`;
+                            sinText.textContent = `sin = ${Math.sin(angleRad).toFixed(2)}`;
+                            angleText.textContent = `θ = ${Math.round(angleDeg)}°`;
+
+                            requestAnimationFrame(animate);
+                        }
+
+                        // Kick off loop
+                        requestAnimationFrame(animate);
+                    })();
+                </script>
+            </div>
 
             <h4 style="color: #0f172a; margin-top: 1.5rem;">2. The Three Famous First-Quadrant Angles ($\frac{\pi}{6}, \frac{\pi}{4}, \frac{\pi}{3}$) &amp; The $\frac{\sqrt{n}}{2}$ Pattern</h4>
             <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
