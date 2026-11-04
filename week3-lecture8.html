@@ -1295,6 +1295,78 @@
             </div>
 
             <!-- ================================================================= -->
+            <!-- 3. ASTC QUADRANT SIGNS (ALL STATIONS TO CENTRAL)                  -->
+            <!-- ================================================================= -->
+            <h4 style="color: #0f172a; margin-top: 2.5rem;">3. Beyond the First Quadrant: The ASTC Rule ("All Stations To Central")</h4>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                The $\frac{\sqrt{n}}{2}$ trick gives you the exact numbers for the first quadrant. To find values in the other three quadrants, you just mirror the first-quadrant number and determine if it should be positive or negative.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Because $\cos(\theta)$ is your $x$-coordinate and $\sin(\theta)$ is your $y$-coordinate, their signs are dictated entirely by which quadrant you are standing in. This gives rise to the <strong>ASTC Rule</strong> (often remembered as <em>"All Stations To Central"</em> or <em>"All Students Take Calculus"</em>), tracing counter-clockwise from Quadrant I:
+            </p>
+
+            <!-- ASTC 2x2 CARTESIAN GRID -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; max-width: 600px; margin: 2rem auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid #cbd5e1;">
+
+                <!-- QUADRANT II (Top Left) -->
+                <div style="padding: 1.5rem; border-right: 3px solid #94a3b8; border-bottom: 3px solid #94a3b8; text-align: center; background: #f8fafc;">
+                    <div style="font-size: 0.8rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Quadrant II</div>
+                    <div style="font-size: 2.5rem; font-weight: 900; color: #dc2626; margin-bottom: 0.5rem; line-height: 1;">S</div>
+                    <div style="font-size: 1.1rem; font-weight: 800; color: #0f172a; margin-bottom: 0.5rem;">Sine is Positive</div>
+                    <p style="margin: 0; font-size: 0.85rem; color: #475569; line-height: 1.5;">
+                        (Stations)<br>
+                        $x < 0$, $y > 0$<br>
+                        $\sin(+)$, $\cos(-)$, $\tan(-)$
+                    </p>
+                </div>
+
+                <!-- QUADRANT I (Top Right) -->
+                <div style="padding: 1.5rem; border-bottom: 3px solid #94a3b8; text-align: center; background: #f0fdf4;">
+                    <div style="font-size: 0.8rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Quadrant I</div>
+                    <div style="font-size: 2.5rem; font-weight: 900; color: #059669; margin-bottom: 0.5rem; line-height: 1;">A</div>
+                    <div style="font-size: 1.1rem; font-weight: 800; color: #0f172a; margin-bottom: 0.5rem;">ALL are Positive</div>
+                    <p style="margin: 0; font-size: 0.85rem; color: #475569; line-height: 1.5;">
+                        (All)<br>
+                        $x > 0$, $y > 0$<br>
+                        $\sin(+)$, $\cos(+)$, $\tan(+)$
+                    </p>
+                </div>
+
+                <!-- QUADRANT III (Bottom Left) -->
+                <div style="padding: 1.5rem; border-right: 3px solid #94a3b8; text-align: center; background: #fffbeb;">
+                    <div style="font-size: 0.8rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Quadrant III</div>
+                    <div style="font-size: 2.5rem; font-weight: 900; color: #d97706; margin-bottom: 0.5rem; line-height: 1;">T</div>
+                    <div style="font-size: 1.1rem; font-weight: 800; color: #0f172a; margin-bottom: 0.5rem;">Tangent is Positive</div>
+                    <p style="margin: 0; font-size: 0.85rem; color: #475569; line-height: 1.5;">
+                        (To)<br>
+                        $x < 0$, $y < 0$<br>
+                        $\sin(-)$, $\cos(-)$, $\tan(+)$
+                    </p>
+                </div>
+
+                <!-- QUADRANT IV (Bottom Right) -->
+                <div style="padding: 1.5rem; text-align: center; background: #eff6ff;">
+                    <div style="font-size: 0.8rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem;">Quadrant IV</div>
+                    <div style="font-size: 2.5rem; font-weight: 900; color: #2563eb; margin-bottom: 0.5rem; line-height: 1;">C</div>
+                    <div style="font-size: 1.1rem; font-weight: 800; color: #0f172a; margin-bottom: 0.5rem;">Cosine is Positive</div>
+                    <p style="margin: 0; font-size: 0.85rem; color: #475569; line-height: 1.5;">
+                        (Central)<br>
+                        $x > 0$, $y < 0$<br>
+                        $\sin(-)$, $\cos(+)$, $\tan(-)$
+                    </p>
+                </div>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                <strong>Putting it into practice:</strong> If you need to find $\cos\left(\frac{4\pi}{3}\right)$:
+            </p>
+            <ol style="margin: 0 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem; padding: 0;">
+                <li>Identify the reference angle: $\frac{4\pi}{3}$ is just $\frac{\pi}{3}$ pushed into another quadrant. From your table, the value for $\cos\left(\frac{\pi}{3}\right)$ is $\frac{1}{2}$.</li>
+                <li>Identify the quadrant: $\frac{4\pi}{3}$ is past $\pi$ (a half-circle) but before $\frac{3\pi}{2}$, landing it in <strong>Quadrant III</strong>.</li>
+                <li>Apply ASTC: In Quadrant III (<strong>T</strong>o), only Tangent is positive. Therefore, Cosine must be negative. Result: $\mathbf{-\frac{1}{2}}$.</li>
+            </ol>
+
+            <!-- ================================================================= -->
             <!-- 3.5 UNROLLING THE CIRCLE INTO WAVES (GRAPHS OF SIN & COS)         -->
             <!-- ================================================================= -->
             <h3 style="color: #0f172a; margin-top: 2.5rem;" id="trig-wave-graphs">3.5 Unrolling the Circle: The Wave Graphs of $\sin(x)$ and $\cos(x)$</h3>
