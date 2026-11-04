@@ -1984,7 +1984,6 @@
                             <circle cx="400" cy="370" r="4.5" fill="#d97706" stroke="#ffffff" stroke-width="1"/>
                         </svg>
                     </div>
-
                 </div>
 
                 <!-- ARCTAN -->
@@ -1996,8 +1995,115 @@
                         <li><strong>Range (Output):</strong> $\left(-\frac{\pi}{2}, \frac{\pi}{2}\right)$ (Strictly between the horizontal asymptotes $y = -\frac{\pi}{2}$ and $y = \frac{\pi}{2}$).</li>
                         <li><strong>Rosetta Stone:</strong> $y = \arctan(x) \iff \tan(y) = x$ where $-\frac{\pi}{2} < y < \frac{\pi}{2}$.</li>
                     </ul>
+
+                <!-- ================================================================= -->
+                <!-- SVG DIAGRAM: THE ARCTAN GRAPH y = arctan(x)                       -->
+                <!-- ================================================================= -->
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 1.5rem; margin: 1.75rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.03);">
+                    <div style="text-align: center; margin-bottom: 1rem;">
+                        <span style="font-size: 0.85rem; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em;">
+                            Figure: The Arctangent Graph y = arctan(x) (Domain: ℝ, Range: (−π/2, π/2))
+                        </span>
+                    </div>
+
+                    <svg viewBox="0 0 520 440" width="100%" style="max-width: 480px; height: auto; display: block; margin: 0 auto; font-family: system-ui, sans-serif;">
+                        <defs>
+                            <marker id="arctan-axis-arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                <path d="M 0 1 L 8 5 L 0 9 z" fill="#64748b"/>
+                            </marker>
+                        </defs>
+
+                        <!-- Background Grid Lines -->
+                        <line x1="120" y1="40" x2="120" y2="400" stroke="#f1f5f9" stroke-width="1"/>
+                        <line x1="190" y1="40" x2="190" y2="400" stroke="#f1f5f9" stroke-width="1"/>
+                        <line x1="330" y1="40" x2="330" y2="400" stroke="#f1f5f9" stroke-width="1"/>
+                        <line x1="400" y1="40" x2="400" y2="400" stroke="#f1f5f9" stroke-width="1"/>
+
+                        <!-- Horizontal Asymptotes at y = pi/2 and y = -pi/2 -->
+                        <line x1="60" y1="90" x2="460" y2="90" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="5,4"/>
+                        <text x="244" y="84" font-size="11" font-weight="700" fill="#dc2626" text-anchor="end">y = π/2</text>
+
+                        <line x1="60" y1="350" x2="460" y2="350" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="5,4"/>
+                        <text x="244" y="364" font-size="11" font-weight="700" fill="#dc2626" text-anchor="end">y = −π/2</text>
+
+                        <!-- Main Axes (Center at x=260, y=220) -->
+                        <line x1="50" y1="220" x2="475" y2="220" stroke="#334155" stroke-width="2.2" marker-end="url(#arctan-axis-arr)"/>
+                        <line x1="260" y1="420" x2="260" y2="25" stroke="#334155" stroke-width="2.2" marker-end="url(#arctan-axis-arr)"/>
+                        <text x="483" y="224" font-size="13" font-weight="bold" fill="#334155">x</text>
+                        <text x="272" y="22" font-size="13" font-weight="bold" fill="#334155">y</text>
+
+                        <!-- X-Axis Ticks & Labels (-1, 0, 1) -->
+                        <line x1="190" y1="215" x2="190" y2="225" stroke="#334155" stroke-width="1.8"/>
+                        <text x="190" y="242" font-size="12" font-weight="700" fill="#475569" text-anchor="middle">−1</text>
+
+                        <text x="248" y="237" font-size="12" font-weight="700" fill="#475569">0</text>
+
+                        <line x1="330" y1="215" x2="330" y2="225" stroke="#334155" stroke-width="1.8"/>
+                        <text x="330" y="242" font-size="12" font-weight="700" fill="#475569" text-anchor="middle">1</text>
+
+                        <!-- Y-Axis Ticks & Labels (1, -1) -->
+                        <line x1="255" y1="155" x2="265" y2="155" stroke="#334155" stroke-width="1.8"/>
+                        <text x="244" y="159" font-size="12" font-weight="700" fill="#475569" text-anchor="end">1</text>
+
+                        <line x1="255" y1="285" x2="265" y2="285" stroke="#334155" stroke-width="1.8"/>
+                        <text x="244" y="289" font-size="12" font-weight="700" fill="#475569" text-anchor="end">−1</text>
+
+                        <!-- Dynamically Generated Arctan Curve Path -->
+                        <path id="arctan-curve"
+                              fill="none"
+                              stroke="#059669"
+                              stroke-width="3"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"/>
+
+                        <!-- Origin Marker -->
+                        <circle cx="260" cy="220" r="4.5" fill="#059669" stroke="#ffffff" stroke-width="1"/>
+                    </svg>
+
+                    <script>
+                    (() => {
+                        const path = document.getElementById('arctan-curve');
+                        if (!path) return;
+
+                        // Graph coordinate system
+                        const originX = 260;
+                        const originY = 220;
+
+                        const scaleX = 70;
+                        const scaleY = 260 / Math.PI;
+
+                        // Sample the actual mathematical function.
+                        const samples = 400;
+                        const minPixelX = 60;
+                        const maxPixelX = 460;
+
+                        const points = [];
+
+                        for (let i = 0; i <= samples; i++) {
+
+                            const px = minPixelX +
+                                       (maxPixelX - minPixelX) * i / samples;
+
+                            // Convert screen X to mathematical X.
+                            const x = (px - originX) / scaleX;
+
+                            // Calculate the actual arctangent.
+                            const y = Math.atan(x);
+
+                            // Convert mathematical coordinates to SVG coordinates.
+                            const py = originY - y * scaleY;
+
+                            points.push(
+                                `${i === 0 ? 'M' : 'L'} ${px.toFixed(3)} ${py.toFixed(3)}`
+                            );
+                        }
+
+                        path.setAttribute('d', points.join(' '));
+                    })();
+                    </script>
                 </div>
             </div>
+
 
             <!-- ================================================================= -->
             <!-- 4.4 CANCELLATION IDENTITIES & TRAPS                               -->
