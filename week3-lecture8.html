@@ -1323,9 +1323,9 @@
             </div>
 
             <!-- ================================================================= -->
-            <!-- SECTION 4: TANGENT, SECANT, AND INVERSE TRIG FUNCTIONS (GROUND-UP)-->
+            <!-- SECTION 4: TANGENT, SECANT, AND INVERSE TRIG FUNCTIONS (EXPANDED) -->
             <!-- ================================================================= -->
-            <h2 id="section-other-trig-inverse" style="margin-top: 3.5rem;">4. Tangent, Secant, and Inverse Trigonometric Functions: Slopes and Restricted Domains</h2>
+            <h2 id="section-other-trig-inverse" style="margin-top: 3.5rem;">4. Tangent, Secant, and Inverse Trigonometric Functions: Slopes, Asymptotes &amp; Inversion</h2>
 
             <h3 style="color: #0f172a; margin-top: 1.5rem;" id="trig-tangent-secant">4.1 Tangent and Reciprocal Functions: Slopes and Intercepts</h3>
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
@@ -1340,7 +1340,7 @@
                     <div style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #2563eb; margin-bottom: 0.35rem;">Slope Definition</div>
                     <div style="font-size: 1.3rem; font-weight: 800; color: #0f172a; margin-bottom: 0.75rem;">$$\tan(x) = \frac{\sin(x)}{\cos(x)}$$</div>
                     <p style="margin: 0; color: #334155; font-size: 0.95rem; line-height: 1.6;">
-                        <strong>Geometric Meaning:</strong> Tangent is the <em>slope</em> ($\frac{\text{rise}}{\text{run}} = \frac{\sin x}{\cos x}$) of the ray connecting the origin to your position on the unit circle. Geometrically, it is the length of the vertical line tangent to the circle at $(1,0)$ intercepted by that ray.
+                        <strong>Geometric Meaning:</strong> Tangent is the <em>slope</em> ($\frac{\text{rise}}{\text{run}} = \frac{\sin x}{\cos x}$) of the ray connecting the origin to your position on the unit circle. Unlike sine and cosine, tangent has a <strong>period of $\pi$</strong> (not $2\pi$) because the ray points in opposite directions for angles differing by $\pi$.
                     </p>
                 </div>
 
@@ -1351,24 +1351,142 @@
                         $$\sec(x) = \frac{1}{\cos(x)}, \quad \csc(x) = \frac{1}{\sin(x)}, \quad \cot(x) = \frac{\cos(x)}{\sin(x)}$$
                     </div>
                     <p style="margin: 0; color: #334155; font-size: 0.95rem; line-height: 1.6;">
-                        <strong>Geometric Meaning:</strong> Secant ($\sec$), cosecant ($\csc$), and cotangent ($\cot$) are simply the multiplicative inverses (reciprocals) of cosine, sine, and tangent.
+                        <strong>Geometric Meaning:</strong> Secant ($\sec$), cosecant ($\csc$), and cotangent ($\cot$) are the multiplicative inverses of cosine, sine, and tangent. Whenever cosine approaches zero, secant shoots off toward infinity.
                     </p>
                 </div>
             </div>
 
-            <!-- THE ASYMPTOTIC DANGER ZONE -->
-            <h4 style="color: #0f172a; margin-top: 2rem;">Where Do Tangent and Secant Explode? (Vertical Asymptotes)</h4>
-            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
-                Because $\tan(x) = \frac{\sin(x)}{\cos(x)}$ and $\sec(x) = \frac{1}{\cos(x)}$ both feature $\cos(x)$ in their denominators, they possess inherent structural weaknesses. Whenever an input $x$ causes the cosine to evaluate to zero ($\cos(x) = 0$), the denominator vanishes and division by zero occurs!
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
-                Cosine equals zero at the North and South poles of the unit circle: $x = \frac{\pi}{2}, \frac{3\pi}{2}, -\frac{\pi}{2}, \dots$. As $x$ approaches any of these odd multiples of $\frac{\pi}{2}$, the denominator shrinks toward zero while the numerator stays near $1$ or $-1$, forcing the function to explode toward $\pm\infty$. This creates an infinite repeating family of <strong>vertical asymptotes</strong> at:
-            </p>
-            <div style="text-align: center; margin: 1rem 0; font-size: 1.15rem; font-weight: 700; color: #b91c1c;">
-                $$x = \frac{\pi}{2} + k\pi \quad (k \in \mathbb{Z})$$
+            <!-- ================================================================= -->
+            <!-- SVG DIAGRAM: THE TANGENT GRAPH & VERTICAL ASYMPTOTES              -->
+            <!-- ================================================================= -->
+            <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 1.5rem; margin: 1.75rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.03);">
+                <div style="text-align: center; margin-bottom: 0.75rem;">
+                    <span style="font-size: 0.85rem; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em;">
+                        Figure: The Tangent Graph $y = \tan(\theta)$ Across $[-2\pi, 2\pi]$ ($[-360^\circ, 360^\circ]$)
+                    </span>
+                </div>
+
+                <svg viewBox="0 0 740 350" width="100%" style="height: auto; display: block; font-family: Georgia, 'Times New Roman', serif;">
+                    <defs>
+                        <!-- Clip path matching the exact bounding box so branches terminate cleanly at the border -->
+                        <clipPath id="tan-plot-clip">
+                            <rect x="40" y="54" width="640" height="262"/>
+                        </clipPath>
+                    </defs>
+
+                    <!-- Title: tan(theta) -->
+                    <text x="360" y="34" font-size="22" fill="#0f172a" text-anchor="middle">
+                        tan(<tspan font-style="italic">θ</tspan>)
+                    </text>
+
+                    <!-- Vertical Asymptotes at -270° (-3π/2), -90° (-π/2), 90° (π/2), 270° (3π/2) -->
+                    <line x1="120" y1="54" x2="120" y2="316" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="6,6"/>
+                    <line x1="280" y1="54" x2="280" y2="316" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="6,6"/>
+                    <line x1="440" y1="54" x2="440" y2="316" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="6,6"/>
+                    <line x1="600" y1="54" x2="600" y2="316" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="6,6"/>
+
+                    <!-- Main Axes: Horizontal at y=0 (y_px=210), Vertical at theta=0 (x_px=360) -->
+                    <line x1="40" y1="210" x2="680" y2="210" stroke="#888888" stroke-width="1.8"/>
+                    <line x1="360" y1="54" x2="360" y2="316" stroke="#888888" stroke-width="1.8"/>
+
+                    <!-- Theta Axis Label -->
+                    <text x="698" y="217" font-size="22" font-style="italic" fill="#0f172a">θ</text>
+
+                    <!-- Y-Axis Ticks & Labels (-2, -1, 1, 2, 3) -->
+                    <g font-family="system-ui, sans-serif" font-size="13" fill="#475569">
+                        <!-- y = 3 (y_px = 66) -->
+                        <line x1="360" y1="66" x2="370" y2="66" stroke="#888888" stroke-width="1"/>
+                        <text x="351" y="70" text-anchor="end">3</text>
+
+                        <!-- y = 2 (y_px = 114) -->
+                        <line x1="360" y1="114" x2="370" y2="114" stroke="#888888" stroke-width="1"/>
+                        <text x="351" y="118" text-anchor="end">2</text>
+
+                        <!-- y = 1 (y_px = 162) -->
+                        <line x1="360" y1="162" x2="370" y2="162" stroke="#888888" stroke-width="1"/>
+                        <text x="351" y="166" text-anchor="end">1</text>
+
+                        <!-- y = -1 (y_px = 258) -->
+                        <line x1="360" y1="258" x2="370" y2="258" stroke="#888888" stroke-width="1"/>
+                        <text x="351" y="262" text-anchor="end">-1</text>
+
+                        <!-- y = -2 (y_px = 306) -->
+                        <line x1="360" y1="306" x2="370" y2="306" stroke="#888888" stroke-width="1"/>
+                        <text x="351" y="310" text-anchor="end">-2</text>
+                    </g>
+
+                    <!-- X-Axis Ticks & Labels (Degrees + Radians) -->
+                    <g font-family="system-ui, sans-serif" font-size="12.5" fill="#475569" text-anchor="middle">
+                        <!-- -360° (-2π) -->
+                        <line x1="40" y1="203" x2="40" y2="217" stroke="#888888" stroke-width="1"/>
+                        <text x="40" y="232" font-weight="600" fill="#0f172a">−2π</text>
+                        <text x="40" y="246" font-size="11" fill="#64748b">(-360°)</text>
+
+                        <!-- -270° (-3π/2) -->
+                        <rect x="92" y="216" width="56" height="34" fill="#ffffff" fill-opacity="0.88"/>
+                        <text x="120" y="232" font-weight="600" fill="#b91c1c">−3π/2</text>
+                        <text x="120" y="246" font-size="11" fill="#64748b">(-270°)</text>
+
+                        <!-- -180° (-π) -->
+                        <line x1="200" y1="203" x2="200" y2="217" stroke="#888888" stroke-width="1"/>
+                        <rect x="175" y="218" width="50" height="32" fill="#ffffff" fill-opacity="0.88"/>
+                        <text x="200" y="232" font-weight="600" fill="#0f172a">−π</text>
+                        <text x="200" y="246" font-size="11" fill="#64748b">(-180°)</text>
+
+                        <!-- -90° (-π/2) -->
+                        <rect x="254" y="216" width="52" height="34" fill="#ffffff" fill-opacity="0.88"/>
+                        <text x="280" y="232" font-weight="600" fill="#b91c1c">−π/2</text>
+                        <text x="280" y="246" font-size="11" fill="#64748b">(-90°)</text>
+
+                        <!-- 90° (π/2) -->
+                        <rect x="416" y="216" width="48" height="34" fill="#ffffff" fill-opacity="0.88"/>
+                        <text x="440" y="232" font-weight="600" fill="#b91c1c">π/2</text>
+                        <text x="440" y="246" font-size="11" fill="#64748b">(90°)</text>
+
+                        <!-- 180° (π) -->
+                        <line x1="520" y1="203" x2="520" y2="217" stroke="#888888" stroke-width="1"/>
+                        <rect x="498" y="218" width="44" height="32" fill="#ffffff" fill-opacity="0.88"/>
+                        <text x="520" y="232" font-weight="600" fill="#0f172a">π</text>
+                        <text x="520" y="246" font-size="11" fill="#64748b">(180°)</text>
+
+                        <!-- 270° (3π/2) -->
+                        <rect x="574" y="216" width="52" height="34" fill="#ffffff" fill-opacity="0.88"/>
+                        <text x="600" y="232" font-weight="600" fill="#b91c1c">3π/2</text>
+                        <text x="600" y="246" font-size="11" fill="#64748b">(270°)</text>
+
+                        <!-- 360° (2π) -->
+                        <line x1="680" y1="203" x2="680" y2="217" stroke="#888888" stroke-width="1"/>
+                        <text x="680" y="232" font-weight="600" fill="#0f172a">2π</text>
+                        <text x="680" y="246" font-size="11" fill="#64748b">(360°)</text>
+                    </g>
+
+                    <!-- 5 Mathematically Sampled Branches of y = tan(theta) -->
+                    <g clip-path="url(#tan-plot-clip)" fill="none" stroke="#ff2a6d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <!-- Branch 1: [-360°, -270°) -->
+                        <path d="M 40.0 210.0 L 42.9 207.2 L 45.9 204.4 L 48.8 201.6 L 51.8 198.7 L 54.7 195.7 L 57.7 192.6 L 60.6 189.4 L 63.6 186.1 L 66.5 182.5 L 69.5 178.7 L 72.4 174.5 L 75.3 170.1 L 78.3 165.1 L 81.2 159.6 L 84.2 153.4 L 87.1 146.3 L 90.1 137.9 L 93.0 128.0 L 96.0 116.0 L 98.9 100.8 L 101.9 81.0 L 104.8 54.0"/>
+
+                        <!-- Branch 2: (-270°, -90°) centered at -180° -->
+                        <path d="M 141.7 316.0 L 144.7 300.9 L 147.8 289.0 L 150.9 279.2 L 154.0 271.0 L 157.0 263.9 L 160.1 257.8 L 163.2 252.3 L 166.3 247.4 L 169.4 242.9 L 172.4 238.8 L 175.5 235.0 L 178.6 231.4 L 181.7 228.1 L 184.8 224.8 L 187.8 221.7 L 190.9 218.7 L 194.0 215.7 L 197.1 212.8 L 200.1 209.9 L 203.2 207.0 L 206.3 204.0 L 209.4 201.1 L 212.5 198.0 L 215.5 194.9 L 218.6 191.6 L 221.7 188.2 L 224.8 184.6 L 227.9 180.8 L 230.9 176.6 L 234.0 172.1 L 237.1 167.2 L 240.2 161.7 L 243.2 155.5 L 246.3 148.3 L 249.4 139.9 L 252.5 130.0 L 255.6 117.8 L 258.6 102.3 L 261.7 82.1 L 264.8 54.0"/>
+
+                        <!-- Branch 3 (Principal Branch): (-90°, 90°) centered at 0° -->
+                        <path d="M 301.7 316.0 L 304.7 300.9 L 307.8 289.0 L 310.9 279.2 L 314.0 271.0 L 317.0 263.9 L 320.1 257.8 L 323.2 252.3 L 326.3 247.4 L 329.4 242.9 L 332.4 238.8 L 335.5 235.0 L 338.6 231.4 L 341.7 228.1 L 344.8 224.8 L 347.8 221.7 L 350.9 218.7 L 354.0 215.7 L 357.1 212.8 L 360.1 209.9 L 363.2 207.0 L 366.3 204.0 L 369.4 201.1 L 372.5 198.0 L 375.5 194.9 L 378.6 191.6 L 381.7 188.2 L 384.8 184.6 L 387.9 180.8 L 390.9 176.6 L 394.0 172.1 L 397.1 167.2 L 400.2 161.7 L 403.2 155.5 L 406.3 148.3 L 409.4 139.9 L 412.5 130.0 L 415.6 117.8 L 418.6 102.3 L 421.7 82.1 L 424.8 54.0"/>
+
+                        <!-- Branch 4: (90°, 270°) centered at 180° -->
+                        <path d="M 461.7 316.0 L 464.7 300.9 L 467.8 289.0 L 470.9 279.2 L 474.0 271.0 L 477.0 263.9 L 480.1 257.8 L 483.2 252.3 L 486.3 247.4 L 489.4 242.9 L 492.4 238.8 L 495.5 235.0 L 498.6 231.4 L 501.7 228.1 L 504.8 224.8 L 507.8 221.7 L 510.9 218.7 L 514.0 215.7 L 517.1 212.8 L 520.1 209.9 L 523.2 207.0 L 526.3 204.0 L 529.4 201.1 L 532.5 198.0 L 535.5 194.9 L 538.6 191.6 L 541.7 188.2 L 544.8 184.6 L 547.9 180.8 L 550.9 176.6 L 554.0 172.1 L 557.1 167.2 L 560.2 161.7 L 563.2 155.5 L 566.3 148.3 L 569.4 139.9 L 572.5 130.0 L 575.6 117.8 L 578.6 102.3 L 581.7 82.1 L 584.8 54.0"/>
+
+                        <!-- Branch 5: (270°, 360°] -->
+                        <path d="M 621.7 316.0 L 624.3 302.8 L 627.0 292.0 L 629.6 283.0 L 632.3 275.4 L 634.9 268.7 L 637.6 262.8 L 640.2 257.6 L 642.9 252.9 L 645.5 248.6 L 648.2 244.6 L 650.8 241.0 L 653.5 237.5 L 656.1 234.3 L 658.8 231.2 L 661.4 228.3 L 664.1 225.5 L 666.7 222.8 L 669.4 220.1 L 672.0 217.6 L 674.7 215.0 L 677.3 212.5 L 680.0 210.0"/>
+                    </g>
+
+                    <!-- Outer Pink Border Frame (drawn last so it sits cleanly over clipped curve ends) -->
+                    <rect x="40" y="54" width="640" height="262" fill="none" stroke="#f9a8d4" stroke-width="1.5"/>
+                </svg>
             </div>
+
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
-                Therefore, the <strong>natural domain of $\tan(x)$ and $\sec(x)$</strong> is all real numbers $\mathbb{R}$ <em>excluding</em> those vertical walls.
+                Therefore, the <strong>natural domain of $\tan(x)$</strong> is all real numbers $\mathbb{R}$ <em>excluding</em> the odd multiples of $\frac{\pi}{2}$:
+                $$\text{Domain}(\tan) = \mathbb{R} \setminus \left\{ \frac{\pi}{2} + k\pi : k \in \mathbb{Z} \right\}$$
+                Its range spans the entire real line: $\text{Range}(\tan) = (-\infty, \infty)$.
             </p>
 
             <!-- ================================================================= -->
@@ -1388,7 +1506,7 @@
                     🚨 The Violation of Injectivity
                 </div>
                 <p style="margin: 0; color: #4c0519; font-size: 0.95rem; line-height: 1.65;">
-                    Recall from Lecture 7 that a function <strong>must be injective (one-to-one)</strong> to have an inverse. Because periodic waves hit the exact same $y$-values over and over again, $\sin(x)$ <strong>fails the Horizontal Line Test catastrophically</strong>. If we tried to build an inverse without modification, one input output would point to a messy, infinite set of angles—destroying the definition of a function!
+                    Recall from Lecture 7 that a function <strong>must be injective (one-to-one)</strong> to have an inverse. Because periodic waves hit the exact same $y$-values over and over again, $\sin(x)$ <strong>fails the Horizontal Line Test catastrophically</strong>. If we tried to build an inverse without modification, one output point would map back to a messy, infinite set of angles—destroying the definition of a function!
                 </p>
             </div>
 
@@ -1397,7 +1515,59 @@
             </p>
 
             <!-- ================================================================= -->
-            <!-- 4.3 RESTRICTED ARCSIN, ARCCOS, ARCTAN                             -->
+            <!-- SVG DIAGRAM: SURGICALLY SLICING THE SINE WAVE FOR ARCSIN          -->
+            <!-- ================================================================= -->
+            <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 1.5rem; margin: 1.75rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.03);">
+                <div style="text-align: center; margin-bottom: 1rem;">
+                    <span style="font-size: 0.85rem; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em;">
+                        Figure: Surgically Slicing the Sine Wave to Build an Injective Branch for $\arcsin(x)$
+                    </span>
+                </div>
+
+                <svg viewBox="0 0 720 240" width="100%" style="height: auto; display: block; font-family: system-ui, sans-serif;">
+                    <defs>
+                        <marker id="arcsin-w-arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                            <path d="M 0 1 L 8 5 L 0 9 z" fill="#64748b"/>
+                        </marker>
+                    </defs>
+
+                    <!-- Faded dead branches outside [-pi/2, pi/2] -->
+                    <!-- Left dead branch: x from 60 to 220 -->
+                    <path d="M 60 120 C 100 180, 140 180, 220 120" fill="none" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3,3"/>
+                    <!-- Right dead branch: x from 500 to 660 -->
+                    <path d="M 500 120 C 580 60, 620 60, 660 120" fill="none" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3,3"/>
+
+                    <!-- Highlighted Central Branch: x from 220 to 500 ([-pi/2, pi/2]) -->
+                    <rect x="220" y="25" width="280" height="190" fill="#f0fdf4" fill-opacity="0.5" stroke="#bbf7d0" stroke-width="1"/>
+                    <path d="M 220 120 C 270 40, 450 200, 500 120" fill="none" stroke="#059669" stroke-width="3.5"/>
+
+                    <!-- Boundary Cutoff Lines -->
+                    <line x1="220" y1="20" x2="220" y2="220" stroke="#059669" stroke-width="2" stroke-dasharray="4,2"/>
+                    <line x1="500" y1="20" x2="500" y2="220" stroke="#059669" stroke-width="2" stroke-dasharray="4,2"/>
+
+                    <!-- Axes -->
+                    <line x1="50" y1="120" x2="685" y2="120" stroke="#64748b" stroke-width="1.8" marker-end="url(#arcsin-w-arr)"/>
+                    <line x1="360" y1="225" x2="360" y2="20" stroke="#64748b" stroke-width="1.8" marker-end="url(#arcsin-w-arr)"/>
+                    <text x="695" y="124" font-size="13" font-weight="bold" fill="#475569">x</text>
+                    <text x="345" y="22" font-size="13" font-weight="bold" fill="#475569">y</text>
+
+                    <!-- X-Axis Labels -->
+                    <text x="360" y="136" font-size="11" font-weight="700" fill="#334155" text-anchor="middle">0</text>
+                    <text x="220" y="136" font-size="11" font-weight="800" fill="#047857" text-anchor="middle">−π/2</text>
+                    <text x="500" y="136" font-size="11" font-weight="800" fill="#047857" text-anchor="middle">π/2</text>
+
+                    <!-- Y-Axis Labels -->
+                    <text x="350" y="45" font-size="11.5" font-weight="800" fill="#0f172a" text-anchor="end">+1</text>
+                    <text x="350" y="195" font-size="11.5" font-weight="800" fill="#0f172a" text-anchor="end">−1</text>
+
+                    <!-- Badge -->
+                    <rect x="250" y="8" width="220" height="24" rx="4" fill="#ecfdf5" stroke="#10b981" stroke-width="1"/>
+                    <text x="360" y="23.5" font-size="10" font-weight="800" fill="#047857" text-anchor="middle">SELECTED MONOTONIC BRANCH FOR ARCSIN</text>
+                </svg>
+            </div>
+
+            <!-- ================================================================= -->
+            <!-- 4.3 THE THREE CORE INVERSE TRIG FUNCTIONS                         -->
             <!-- ================================================================= -->
             <h3 style="color: #0f172a; margin-top: 2.5rem;" id="trig-restricted-definitions">4.3 The Three Core Inverse Trigonometric Functions</h3>
 
@@ -1408,7 +1578,7 @@
                     <h4 style="margin: 0 0 0.4rem 0; color: #0369a1; font-size: 1.1rem;">1. Arcsine ($y = \arcsin(x)$ or $y = \sin^{-1}(x)$)</h4>
                     <ul style="margin: 0; padding-left: 1.25rem; color: #334155; font-size: 0.95rem; line-height: 1.7;">
                         <li><strong>Restriction Slice:</strong> We restrict $\sin(x)$ to the interval $\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]$ (the right half of the unit circle, spanning from South to North). On this slice, sine climbs strictly from $-1$ to $+1$.</li>
-                        <li><strong>Domain (Input):</strong> $[-1, 1]$ <em>(You cannot take the arcsine of $2$!).</em></li>
+                        <li><strong>Domain (Input):</strong> $[-1, 1]$ <em>(You cannot take the arcsine of $2$!).</i></li>
                         <li><strong>Range (Output):</strong> $\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]$ (Angles in Quadrants I and IV).</li>
                         <li><strong>Rosetta Stone:</strong> $y = \arcsin(x) \iff \sin(y) = x$ where $-\frac{\pi}{2} \le y \le \frac{\pi}{2}$.</li>
                     </ul>
@@ -1430,7 +1600,7 @@
                     <h4 style="margin: 0 0 0.4rem 0; color: #047857; font-size: 1.1rem;">3. Arctangent ($y = \arctan(x)$ or $y = \tan^{-1}(x)$)</h4>
                     <ul style="margin: 0; padding-left: 1.25rem; color: #334155; font-size: 0.95rem; line-height: 1.7;">
                         <li><strong>Restriction Slice:</strong> We restrict $\tan(x)$ to the open interval $\left(-\frac{\pi}{2}, \frac{\pi}{2}\right)$, between its two central vertical asymptotes. On this slice, tangent sweeps continuously from $-\infty$ to $+\infty$.</li>
-                        <li><strong>Domain (Input):</strong> $\mathbb{R} = (-\infty, \infty)$ <em>(You can take the arctangent of any real number!).</em></li>
+                        <li><strong>Domain (Input):</strong> $\mathbb{R} = (-\infty, \infty)$ <em>(You can take the arctangent of any real number!).</i></li>
                         <li><strong>Range (Output):</strong> $\left(-\frac{\pi}{2}, \frac{\pi}{2}\right)$ (Strictly between the horizontal asymptotes $y = -\frac{\pi}{2}$ and $y = \frac{\pi}{2}$).</li>
                         <li><strong>Rosetta Stone:</strong> $y = \arctan(x) \iff \tan(y) = x$ where $-\frac{\pi}{2} < y < \frac{\pi}{2}$.</li>
                     </ul>
@@ -1439,14 +1609,51 @@
             </div>
 
             <!-- ================================================================= -->
-            <!-- 4.4 WORKED EXAMPLES                                               -->
+            <!-- 4.4 CANCELLATION IDENTITIES & TRAPS                               -->
+            <!-- ================================================================= -->
+            <h3 style="color: #0f172a; margin-top: 2.5rem;" id="trig-cancellation-identities">4.4 Mutual Annihilation: When Do Inverse Trig Functions Cancel?</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                Just as with logarithms, composing a trig function with its restricted inverse yields cancellation—provided the input stays within the legal domain/range bounds:
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin: 1.5rem 0;">
+                <!-- Identity Group 1 -->
+                <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid #0284c7; border-radius: 8px; padding: 1.25rem;">
+                    <div style="font-weight: 800; color: #0369a1; font-size: 0.95rem; margin-bottom: 0.4rem;">
+                        Trig of an Inverse (Always Works on Domain)
+                    </div>
+                    <div style="font-size: 1.05rem; font-weight: 700; color: #0f172a; margin: 0.5rem 0;">
+                        $$\sin(\arcsin x) = x \quad (\forall x \in [-1, 1])$$
+                        $$\tan(\arctan x) = x \quad (\forall x \in \mathbb{R})$$
+                    </div>
+                    <p style="margin: 0; font-size: 0.9rem; color: #475569; line-height: 1.55;">
+                        Because the inner function ($\arcsin x$) restricts its output strictly to the valid domain branch, feeding it into $\sin(\cdot)$ always annihilates cleanly.
+                    </p>
+                </div>
+
+                <!-- Identity Group 2 (The Trap) -->
+                <div style="background: #fff1f2; border: 1px solid #fecdd3; border-left: 4px solid #e11d48; border-radius: 8px; padding: 1.25rem;">
+                    <div style="font-weight: 800; color: #be123c; font-size: 0.95rem; margin-bottom: 0.4rem;">
+                        ⚠️ Inverse of a Trig (The Range Trap!)
+                    </div>
+                    <div style="font-size: 1.05rem; font-weight: 700; color: #0f172a; margin: 0.5rem 0;">
+                        $$\arcsin(\sin x) = x \quad \text{ONLY IF } x \in \left[-\frac{\pi}{2}, \frac{\pi}{2}\right]$$
+                    </div>
+                    <p style="margin: 0; font-size: 0.9rem; color: #4c0519; line-height: 1.55;">
+                        <strong>Classic Exam Trap:</strong> What is $\arcsin(\sin(\pi))$? A careless student writes $\pi$. But $\pi \approx 3.14$, which is outside the range $\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]$! Correct answer: $\sin(\pi) = 0 \implies \arcsin(0) = \mathbf{0}$, not $\pi$.
+                    </p>
+                </div>
+            </div>
+
+            <!-- ================================================================= -->
+            <!-- 4.5 WORKED EXAMPLES                                               -->
             <!-- ================================================================= -->
             <div class="worked-example-box" style="margin-top: 2rem;">
                 <h4>🎯 Worked Examples: Evaluating Inverse Trig Expressions &amp; Composite Functions</h4>
 
                 <p style="margin-bottom: 0.5rem;"><strong>Example 1 (Evaluating Exact Inverse Trig Values):</strong> Find the exact value of $\arcsin\left(-\frac{\sqrt{3}}{2}\right)$ in radians.</p>
                 <ol style="margin: 0 0 1.25rem 1.25rem; padding: 0; font-size: 0.95rem; line-height: 1.7;">
-                    <li><strong>Translate to a sine question:</strong> Let $y = \arcsin\left(-\frac{\sqrt{3}}{2}\right)$. This means we want $\sin(y) = -\frac{\sqrt{3}}{2}$ subject to the range restriction $y \in \left[-\frac{\pi}{2}, \frac{\pi}{2}\end{right]$.</li>
+                    <li><strong>Translate to a sine question:</strong> Let $y = \arcsin\left(-\frac{\sqrt{3}}{2}\right)$. This means we want $\sin(y) = -\frac{\sqrt{3}}{2}$ subject to the range restriction $y \in \left[-\frac{\pi}{2}, \frac{\pi}{2}\right]$.</li>
                     <li><strong>Consult special angle values:</strong> We know from our first-quadrant table that $\sin\left(\frac{\pi}{3}\right) = \frac{\sqrt{3}}{2}$. Because our target is <em>negative</em> and our range is restricted to Quadrant IV (clockwise rotation), we take the negative angle:
                         $$y = -\frac{\pi}{3}.$$
                     </li>
