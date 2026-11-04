@@ -16,6 +16,7 @@
             --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
         *, *::before, *::after { box-sizing: border-box; }
+        p, ul, ol, div { margin-top: 0; margin-bottom: 1.15rem; }
         html, body { max-width: 100%; overflow-x: hidden; }
         body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
         .container { max-width: 1200px; margin: 0 auto; width: 100%; }
@@ -2103,6 +2104,7 @@
                     </script>
                 </div>
             </div>
+            </div>
 
 
             <!-- ================================================================= -->
@@ -2167,6 +2169,37 @@
                     </li>
                 </ol>
             </div>
+
+            <!-- LECTURE SUMMARY -->
+            <h2 id="section-summary" style="margin-top: 3.5rem;">Summary: Transcending Algebraic Boundaries</h2>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
+                We have officially moved beyond the finite operations of polynomials and rational curves. This lecture expanded our mathematical universe into transcendental functions—equations that describe continuous growth, decay, and periodic oscillation, requiring infinite processes to fully define.
+            </p>
+
+            <div class="infobox" style="border-left-color: #3b82f6; background-color: #eff6ff; border: 1px solid #bfdbfe;">
+                <h4 style="color: #1e3a8a;">🎓 Key Takeaways from Lecture 8</h4>
+                <ul style="margin: 0; padding-left: 1.25rem; color: #1e3a8a; line-height: 1.6; font-size: 0.95rem;">
+                    <li style="margin-bottom: 0.5rem;"><strong>Exponentials and Logarithms:</strong> We established \(e^x\) and \(\ln(x)\) as the ultimate inverse pair, demonstrating how logarithms dismantle exponential growth and rely on strict domain boundaries (\(x > 0\)).</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>The Power of Restriction:</strong> Periodic functions like sine and cosine fail the Horizontal Line Test catastrophically. To invent their inverses, we had to artificially slice their domains down to single, strictly monotonic intervals (e.g., \([-\frac{\pi}{2}, \frac{\pi}{2}]\) for sine).</li>
+                    <li><strong>The Amnesia Trap (Mutual Annihilation):</strong> We uncovered the hidden dangers of evaluating inverse trigonometric composites. While \(f(f^{-1}(x)) = x\) is safe, applying an inverse to a trig function—like \(\arcsin(\sin(x))\)—requires extreme caution because the inverse function will aggressively snap any starting angle back into its legal restricted zone.</li>
+                </ul>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.5rem;">
+                <strong>Where does this fit into the overall course?</strong>
+            </p>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                In Lecture 7, we built the rigid, static structures of algebraic functions. Today, we expanded our toolkit to include the curves that model the dynamics of the natural world: compounding rates and rhythmic waves.
+            </p>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                Right now, these transcendental functions are just shapes on a graph and rules of cancellation. But as we step into calculus, these specific functions become the stars of the show. The natural exponential function \(e^x\) will emerge as a unique curve that is its own derivative, and the restricted geometry of inverse trigonometric functions will provide elegant solutions to otherwise impossible integrals.
+            </p>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                By mastering domain restrictions and cancellation traps today, you have secured the analytical reflexes needed to navigate the continuous limits and derivatives we will unleash on these curves tomorrow.
+            </p>
 
             <!-- FOOTER NAVIGATION -->
             <div class="footer-nav" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
