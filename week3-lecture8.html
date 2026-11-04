@@ -1855,6 +1855,65 @@
                         <li><strong>Range (Output):</strong> $\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]$ (Angles in Quadrants I and IV).</li>
                         <li><strong>Rosetta Stone:</strong> $y = \arcsin(x) \iff \sin(y) = x$ where $-\frac{\pi}{2} \le y \le \frac{\pi}{2}$.</li>
                     </ul>
+
+                    <!-- ================================================================= -->
+                    <!-- SVG DIAGRAM: THE ARCSIN GRAPH y = arcsin(x)                        -->
+                    <!-- ================================================================= -->
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 1.5rem; margin: 1.75rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.03);">
+                        <div style="text-align: center; margin-bottom: 1rem;">
+                            <span style="font-size: 0.85rem; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em;">
+                                Figure: The Arcsine Graph $y = \arcsin(x)$ (Domain $[-1, 1]$, Range $\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]$)
+                            </span>
+                        </div>
+
+                        <svg viewBox="0 0 520 440" width="100%" style="max-width: 480px; height: auto; display: block; margin: 0 auto; font-family: system-ui, sans-serif;">
+                            <defs>
+                                <marker id="arcsin-axis-arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                    <path d="M 0 1 L 8 5 L 0 9 z" fill="#64748b"/>
+                                </marker>
+                            </defs>
+
+                            <!-- Background Grid Lines -->
+                            <line x1="120" y1="40" x2="120" y2="400" stroke="#f1f5f9" stroke-width="1"/>
+                            <line x1="190" y1="40" x2="190" y2="400" stroke="#f1f5f9" stroke-width="1"/>
+                            <line x1="330" y1="40" x2="330" y2="400" stroke="#f1f5f9" stroke-width="1"/>
+                            <line x1="400" y1="40" x2="400" y2="400" stroke="#f1f5f9" stroke-width="1"/>
+
+                            <!-- Horizontal Grid Lines for pi/2 and -pi/2 -->
+                            <line x1="60" y1="90" x2="460" y2="90" stroke="#f1f5f9" stroke-width="1"/>
+                            <line x1="60" y1="350" x2="460" y2="350" stroke="#f1f5f9" stroke-width="1"/>
+
+                            <!-- Main Axes (Center at x=260, y=220) -->
+                            <line x1="50" y1="220" x2="475" y2="220" stroke="#334155" stroke-width="2.2" marker-end="url(#arcsin-axis-arr)"/>
+                            <line x1="260" y1="420" x2="260" y2="25" stroke="#334155" stroke-width="2.2" marker-end="url(#arcsin-axis-arr)"/>
+                            <text x="483" y="224" font-size="13" font-weight="bold" fill="#334155">x</text>
+                            <text x="272" y="22" font-size="13" font-weight="bold" fill="#334155">y</text>
+
+                            <!-- X-Axis Ticks & Labels (-1, 0, 1) -->
+                            <line x1="120" y1="215" x2="120" y2="225" stroke="#334155" stroke-width="1.8"/>
+                            <text x="120" y="242" font-size="12" font-weight="700" fill="#475569" text-anchor="middle">−1</text>
+
+                            <text x="248" y="237" font-size="12" font-weight="700" fill="#475569">0</text>
+
+                            <line x1="400" y1="215" x2="400" y2="225" stroke="#334155" stroke-width="1.8"/>
+                            <text x="400" y="242" font-size="12" font-weight="700" fill="#475569" text-anchor="middle">1</text>
+
+                            <!-- Y-Axis Ticks & Labels (-pi/2, pi/2) -->
+                            <line x1="255" y1="90" x2="265" y2="90" stroke="#334155" stroke-width="1.8"/>
+                            <text x="244" y="94" font-size="11.5" font-weight="800" fill="#475569" text-anchor="end">π/2</text>
+
+                            <line x1="255" y1="350" x2="265" y2="350" stroke="#334155" stroke-width="1.8"/>
+                            <text x="244" y="354" font-size="11.5" font-weight="800" fill="#475569" text-anchor="end">−π/2</text>
+
+                            <!-- Flawlessly Sampled Increasing Arcsin Curve Passing Cleanly Through Origin (260, 220) -->
+                            <path d="M 120.0 350.0 L 120.3 344.8 L 121.1 339.6 L 122.5 334.4 L 124.4 329.2 L 126.9 324.0 L 129.8 318.8 L 133.3 313.6 L 137.3 308.4 L 141.8 303.2 L 146.7 298.0 L 152.1 292.8 L 157.9 287.6 L 164.2 282.4 L 170.8 277.2 L 177.7 272.0 L 185.0 266.8 L 192.6 261.6 L 200.4 256.4 L 208.5 251.2 L 216.7 246.0 L 225.2 240.8 L 233.8 235.6 L 242.5 230.4 L 251.2 225.2 L 260.0 220.0 L 268.8 214.8 L 277.5 209.6 L 286.2 204.4 L 294.8 199.2 L 303.3 194.0 L 311.5 188.8 L 319.6 183.6 L 327.4 178.4 L 335.0 173.2 L 342.3 168.0 L 349.2 162.8 L 355.8 157.6 L 362.1 152.4 L 367.9 147.2 L 373.3 142.0 L 378.2 136.8 L 382.7 131.6 L 386.7 126.4 L 390.2 121.2 L 393.1 116.0 L 395.6 110.8 L 397.5 105.6 L 398.9 100.4 L 399.7 95.2 L 400.0 90.0" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+                            <!-- Landmark Dots: (-1, -pi/2), (0, 0), (1, pi/2) -->
+                            <circle cx="120" cy="350" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="1"/>
+                            <circle cx="260" cy="220" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="1"/>
+                            <circle cx="400" cy="90" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="1"/>
+                        </svg>
+                    </div>
                 </div>
 
                 <!-- ARCCOS -->
@@ -1866,6 +1925,66 @@
                         <li><strong>Range (Output):</strong> $[0, \pi]$ (Angles in Quadrants I and II).</li>
                         <li><strong>Rosetta Stone:</strong> $y = \arccos(x) \iff \cos(y) = x$ where $0 \le y \le \pi$.</li>
                     </ul>
+
+                    <!-- ================================================================= -->
+                    <!-- SVG DIAGRAM: THE ARCCOS GRAPH y = arccos(x)                       -->
+                    <!-- ================================================================= -->
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 1.5rem; margin: 1.75rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.03);">
+                        <div style="text-align: center; margin-bottom: 1rem;">
+                            <span style="font-size: 0.85rem; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em;">
+                                Figure: The Arccosine Graph $y = \arccos(x)$ (Domain $[-1, 1]$, Range $[0, \pi]$)
+                            </span>
+                        </div>
+
+                        <svg viewBox="0 0 520 440" width="100%" style="max-width: 480px; height: auto; display: block; margin: 0 auto; font-family: system-ui, sans-serif;">
+                            <defs>
+                                <marker id="arccos-axis-arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                    <path d="M 0 1 L 8 5 L 0 9 z" fill="#64748b"/>
+                                </marker>
+                            </defs>
+
+                            <!-- Background Grid Lines -->
+                            <line x1="120" y1="40" x2="120" y2="400" stroke="#f1f5f9" stroke-width="1"/>
+                            <line x1="190" y1="40" x2="190" y2="400" stroke="#f1f5f9" stroke-width="1"/>
+                            <line x1="330" y1="40" x2="330" y2="400" stroke="#f1f5f9" stroke-width="1"/>
+                            <line x1="400" y1="40" x2="400" y2="400" stroke="#f1f5f9" stroke-width="1"/>
+
+                            <!-- Horizontal Grid Lines for pi/2 and pi -->
+                            <line x1="60" y1="220" x2="460" y2="220" stroke="#f1f5f9" stroke-width="1"/>
+                            <line x1="60" y1="70" x2="460" y2="70" stroke="#f1f5f9" stroke-width="1"/>
+
+                            <!-- Main Axes (y-axis at x=260, x-axis at bottom y=370 for [0, pi] range) -->
+                            <line x1="50" y1="370" x2="475" y2="370" stroke="#334155" stroke-width="2.2" marker-end="url(#arccos-axis-arr)"/>
+                            <line x1="260" y1="410" x2="260" y2="25" stroke="#334155" stroke-width="2.2" marker-end="url(#arccos-axis-arr)"/>
+                            <text x="483" y="374" font-size="13" font-weight="bold" fill="#334155">x</text>
+                            <text x="272" y="22" font-size="13" font-weight="bold" fill="#334155">y</text>
+
+                            <!-- X-Axis Ticks & Labels (-1, 0, 1) -->
+                            <line x1="120" y1="365" x2="120" y2="375" stroke="#334155" stroke-width="1.8"/>
+                            <text x="120" y="392" font-size="12" font-weight="700" fill="#475569" text-anchor="middle">−1</text>
+
+                            <text x="248" y="387" font-size="12" font-weight="700" fill="#475569">0</text>
+
+                            <line x1="400" y1="365" x2="400" y2="375" stroke="#334155" stroke-width="1.8"/>
+                            <text x="400" y="392" font-size="12" font-weight="700" fill="#475569" text-anchor="middle">1</text>
+
+                            <!-- Y-Axis Ticks & Labels (pi/2, pi) -->
+                            <line x1="255" y1="220" x2="265" y2="220" stroke="#334155" stroke-width="1.8"/>
+                            <text x="244" y="224" font-size="11.5" font-weight="800" fill="#475569" text-anchor="end">π/2</text>
+
+                            <line x1="255" y1="70" x2="265" y2="70" stroke="#334155" stroke-width="1.8"/>
+                            <text x="244" y="74" font-size="11.5" font-weight="800" fill="#475569" text-anchor="end">π</text>
+
+                            <!-- Flawlessly Sampled Arccos Curve with Vertical Tangents at Boundaries -->
+                            <path d="M 400.0 370.0 L 399.7 364.0 L 398.9 358.0 L 397.5 352.0 L 395.6 346.0 L 393.1 340.0 L 390.2 334.0 L 386.7 328.0 L 382.7 322.0 L 378.2 316.0 L 373.3 310.0 L 367.9 304.0 L 362.1 298.0 L 355.8 292.0 L 349.2 286.0 L 342.3 280.0 L 335.0 274.0 L 327.4 268.0 L 319.6 262.0 L 311.5 256.0 L 303.3 250.0 L 294.8 244.0 L 286.2 238.0 L 277.5 232.0 L 268.8 226.0 L 260.0 220.0 L 251.2 214.0 L 242.5 208.0 L 233.8 202.0 L 225.2 196.0 L 216.7 190.0 L 208.5 184.0 L 200.4 178.0 L 192.6 172.0 L 185.0 166.0 L 177.7 160.0 L 170.8 154.0 L 164.2 148.0 L 157.9 142.0 L 152.1 136.0 L 146.7 130.0 L 141.8 124.0 L 137.3 118.0 L 133.3 112.0 L 129.8 106.0 L 126.9 100.0 L 124.4 94.0 L 122.5 88.0 L 121.1 82.0 L 120.3 76.0 L 120.0 70.0" fill="none" stroke="#d97706" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+                            <!-- Landmark Dots: (-1, pi), (0, pi/2), (1, 0) -->
+                            <circle cx="120" cy="70" r="4.5" fill="#d97706" stroke="#ffffff" stroke-width="1"/>
+                            <circle cx="260" cy="220" r="4.5" fill="#d97706" stroke="#ffffff" stroke-width="1"/>
+                            <circle cx="400" cy="370" r="4.5" fill="#d97706" stroke="#ffffff" stroke-width="1"/>
+                        </svg>
+                    </div>
+
                 </div>
 
                 <!-- ARCTAN -->
