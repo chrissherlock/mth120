@@ -1747,54 +1747,70 @@
             </p>
 
             <!-- ================================================================= -->
-            <!-- SVG DIAGRAM: SURGICALLY SLICING THE SINE WAVE FOR ARCSIN          -->
+            <!-- SVG DIAGRAM: THE ARCSIN GRAPH y = arcsin(x)                        -->
             <!-- ================================================================= -->
             <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 1.5rem; margin: 1.75rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.03);">
                 <div style="text-align: center; margin-bottom: 1rem;">
                     <span style="font-size: 0.85rem; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em;">
-                        Figure: Surgically Slicing the Sine Wave to Build an Injective Branch for $\arcsin(x)$
+                        Figure: The Arcsine Graph $y = \arcsin(x)$ (Domain $[-1, 1]$, Range $\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]$)
                     </span>
                 </div>
 
-                <svg viewBox="0 0 720 240" width="100%" style="height: auto; display: block; font-family: system-ui, sans-serif;">
+                <svg viewBox="0 0 520 440" width="100%" style="max-width: 480px; height: auto; display: block; margin: 0 auto; font-family: system-ui, sans-serif;">
                     <defs>
-                        <marker id="arcsin-w-arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                        <marker id="arcsin-axis-arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
                             <path d="M 0 1 L 8 5 L 0 9 z" fill="#64748b"/>
                         </marker>
                     </defs>
 
-                    <!-- Faded dead branches outside [-pi/2, pi/2] -->
-                    <!-- Left dead branch: x from 60 to 220 -->
-                    <path d="M 60 120 C 100 180, 140 180, 220 120" fill="none" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3,3"/>
-                    <!-- Right dead branch: x from 500 to 660 -->
-                    <path d="M 500 120 C 580 60, 620 60, 660 120" fill="none" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3,3"/>
+                    <!-- Background Grid Lines (x = -1, -0.5, 0.5, 1) -->
+                    <line x1="120" y1="40" x2="120" y2="400" stroke="#f1f5f9" stroke-width="1"/>
+                    <line x1="190" y1="40" x2="190" y2="400" stroke="#f1f5f9" stroke-width="1"/>
+                    <line x1="330" y1="40" x2="330" y2="400" stroke="#f1f5f9" stroke-width="1"/>
+                    <line x1="400" y1="40" x2="400" y2="400" stroke="#f1f5f9" stroke-width="1"/>
 
-                    <!-- Highlighted Central Branch: x from 220 to 500 ([-pi/2, pi/2]) -->
-                    <rect x="220" y="25" width="280" height="190" fill="#f0fdf4" fill-opacity="0.5" stroke="#bbf7d0" stroke-width="1"/>
-                    <path d="M 220 120 C 270 40, 450 200, 500 120" fill="none" stroke="#059669" stroke-width="3.5"/>
+                    <!-- Background Grid Lines (y = pi/2, 1, -1, -pi/2) -->
+                    <line x1="60" y1="90" x2="460" y2="90" stroke="#f1f5f9" stroke-width="1"/>
+                    <line x1="60" y1="137.2" x2="460" y2="137.2" stroke="#f1f5f9" stroke-width="1"/>
+                    <line x1="60" y1="302.8" x2="460" y2="302.8" stroke="#f1f5f9" stroke-width="1"/>
+                    <line x1="60" y1="350" x2="460" y2="350" stroke="#f1f5f9" stroke-width="1"/>
 
-                    <!-- Boundary Cutoff Lines -->
-                    <line x1="220" y1="20" x2="220" y2="220" stroke="#059669" stroke-width="2" stroke-dasharray="4,2"/>
-                    <line x1="500" y1="20" x2="500" y2="220" stroke="#059669" stroke-width="2" stroke-dasharray="4,2"/>
+                    <!-- Main Axes (Center at x=260, y=220) -->
+                    <line x1="50" y1="220" x2="475" y2="220" stroke="#334155" stroke-width="2.2" marker-end="url(#arcsin-axis-arr)"/>
+                    <line x1="260" y1="420" x2="260" y2="25" stroke="#334155" stroke-width="2.2" marker-end="url(#arcsin-axis-arr)"/>
+                    <text x="483" y="224" font-size="13" font-weight="bold" fill="#334155">x</text>
+                    <text x="272" y="22" font-size="13" font-weight="bold" fill="#334155">y</text>
 
-                    <!-- Axes -->
-                    <line x1="50" y1="120" x2="685" y2="120" stroke="#64748b" stroke-width="1.8" marker-end="url(#arcsin-w-arr)"/>
-                    <line x1="360" y1="225" x2="360" y2="20" stroke="#64748b" stroke-width="1.8" marker-end="url(#arcsin-w-arr)"/>
-                    <text x="695" y="124" font-size="13" font-weight="bold" fill="#475569">x</text>
-                    <text x="345" y="22" font-size="13" font-weight="bold" fill="#475569">y</text>
+                    <!-- X-Axis Ticks & Labels (-1, 0, 1) -->
+                    <line x1="120" y1="215" x2="120" y2="225" stroke="#334155" stroke-width="1.8"/>
+                    <text x="120" y="242" font-size="12" font-weight="700" fill="#475569" text-anchor="middle">−1</text>
 
-                    <!-- X-Axis Labels -->
-                    <text x="360" y="136" font-size="11" font-weight="700" fill="#334155" text-anchor="middle">0</text>
-                    <text x="220" y="136" font-size="11" font-weight="800" fill="#047857" text-anchor="middle">−π/2</text>
-                    <text x="500" y="136" font-size="11" font-weight="800" fill="#047857" text-anchor="middle">π/2</text>
+                    <text x="248" y="237" font-size="12" font-weight="700" fill="#475569">0</text>
 
-                    <!-- Y-Axis Labels -->
-                    <text x="350" y="45" font-size="11.5" font-weight="800" fill="#0f172a" text-anchor="end">+1</text>
-                    <text x="350" y="195" font-size="11.5" font-weight="800" fill="#0f172a" text-anchor="end">−1</text>
+                    <line x1="400" y1="215" x2="400" y2="225" stroke="#334155" stroke-width="1.8"/>
+                    <text x="400" y="242" font-size="12" font-weight="700" fill="#475569" text-anchor="middle">1</text>
 
-                    <!-- Badge -->
-                    <rect x="250" y="8" width="220" height="24" rx="4" fill="#ecfdf5" stroke="#10b981" stroke-width="1"/>
-                    <text x="360" y="23.5" font-size="10" font-weight="800" fill="#047857" text-anchor="middle">SELECTED MONOTONIC BRANCH FOR ARCSIN</text>
+                    <!-- Y-Axis Ticks & Labels (1, -1) : 130 / (pi/2) = 82.76 px per unit -->
+                    <line x1="255" y1="137.2" x2="265" y2="137.2" stroke="#334155" stroke-width="1.8"/>
+                    <text x="244" y="141.2" font-size="12" font-weight="700" fill="#475569" text-anchor="end">1</text>
+
+                    <line x1="255" y1="302.8" x2="265" y2="302.8" stroke="#334155" stroke-width="1.8"/>
+                    <text x="244" y="306.8" font-size="12" font-weight="700" fill="#475569" text-anchor="end">−1</text>
+
+                    <!-- pi/2 and -pi/2 helper lines -->
+                    <line x1="60" y1="90" x2="460" y2="90" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+                    <text x="244" y="94" font-size="11" font-weight="600" fill="#64748b" text-anchor="end">π/2</text>
+
+                    <line x1="60" y1="350" x2="460" y2="350" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+                    <text x="244" y="354" font-size="11" font-weight="600" fill="#64748b" text-anchor="end">−π/2</text>
+
+                    <!-- Arcsin curve: sampled as (x, y) = (260 + 140 sin t, 220 - (130/(pi/2)) t), t in [-pi/2, pi/2] -->
+                    <path d="M 120.0 350.0 L 120.4 343.5 L 121.7 337.0 L 123.9 330.5 L 126.9 324.0 L 130.7 317.5 L 135.3 311.0 L 140.6 304.5 L 146.7 298.0 L 153.5 291.5 L 161.0 285.0 L 169.1 278.5 L 177.7 272.0 L 186.9 265.5 L 196.4 259.0 L 206.4 252.5 L 216.7 246.0 L 227.3 239.5 L 238.1 233.0 L 249.0 226.5 L 260.0 220.0 L 271.0 213.5 L 281.9 207.0 L 292.7 200.5 L 303.3 194.0 L 313.6 187.5 L 323.6 181.0 L 333.1 174.5 L 342.3 168.0 L 350.9 161.5 L 359.0 155.0 L 366.5 148.5 L 373.3 142.0 L 379.4 135.5 L 384.7 129.0 L 389.3 122.5 L 393.1 116.0 L 396.1 109.5 L 398.3 103.0 L 399.6 96.5 L 400.0 90.0" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+                    <!-- Endpoint and origin markers -->
+                    <circle cx="120" cy="350" r="4" fill="#2563eb"/>
+                    <circle cx="260" cy="220" r="4" fill="#2563eb"/>
+                    <circle cx="400" cy="90" r="4" fill="#2563eb"/>
                 </svg>
             </div>
 
