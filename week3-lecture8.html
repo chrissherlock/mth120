@@ -780,14 +780,386 @@
                 </p>
                 <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">Where does $e$ come from? Recall from Week 2 (Lecture 5) that we proved the sequence $a_n = \left(1 + \frac{1}{n}\right)^n$ is strictly increasing and bounded above by $3$. By the Monotone Convergence Theorem, its limit defines $e$:</p>
                 <div style="text-align: center; margin: 1.25rem 0; font-size: 1.2rem; color: #0f172a; font-weight: 700">$$e = \lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^n \approx 2.71828\dots$$</div>
+
+                <!-- ================================================================= -->
+                <!-- 1.6 THE NATURAL BASE e (EXPANDED)                                 -->
+                <!-- ================================================================= -->
+                <h3 style="color: #0f172a; margin-top: 2.5rem" id="exp-euler-e">1.6 Euler's Number $e$: Why Calculus Prefers $e^x$ Over $2^x$ or $10^x$</h3>
                 <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
-                    <strong>The Geometric Secret of $e^x$:</strong>
-                    Every exponential curve $y = a^x$ passes through the anchor point $(0, 1)$, but each base crosses that point at a different steepness (slope). If you graph $y = 2^x$, the slope of the curve as it crosses $(0, 1)$ is slightly flat (slope $\approx 0.693$). If you graph $y = 3^x$, the slope at $(0, 1)$ is slightly too steep (slope $\approx 1.099$).
-                    <strong>The base $e \approx 2.718$ is the exact "Goldilocks" base where the curve $y = e^x$ crosses $(0, 1)$ at a clean $45^\circ$ angle with a slope of exactly $1$!</strong>
-                    Even better, at
-                    <em>every</em>
-                    point on $y = e^x$, the slope of the curve is equal to its height $e^x$.
+                    Out of all possible bases $a > 1$, there is one special irrational number that serves as the natural currency of calculus:
+                    <strong>Euler's number $e \approx 2.718281828\dots$</strong>
+                    .
                 </p>
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">Where does $e$ come from? Recall from Week 2 (Lecture 5) that we proved the sequence $a_n = \left(1 + \frac{1}{n}\right)^n$ is strictly increasing and bounded above by $3$. By the Monotone Convergence Theorem, its limit defines $e$:</p>
+                <div style="text-align: center; margin: 1.25rem 0; font-size: 1.2rem; color: #0f172a; font-weight: 700">$$e = \lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^n \approx 2.71828\dots$$</div>
+
+                <h4 style="color: #0f172a; margin-top: 2rem">The Geometric Secret of $e^x$: The Search for the Perfect Slope</h4>
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">Every exponential curve $y = a^x$ behaves geometrically the exact same way at the $y$-axis: it passes through the universal anchor point $(0, 1)$. However, each base crosses that point at a uniquely different steepness (slope). If you zoom in infinitely close to $(0,1)$, the curve looks like a straight line. The steepness of that line depends entirely on the base $a$.</p>
+
+                <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 1.05rem">
+                    <li style="margin-bottom: 0.5rem">
+                        <strong>Base $2$ is too slow:</strong>
+                        If you graph $y = 2^x$, the slope of the curve as it crosses $(0, 1)$ is slightly flat, measuring approximately $0.693$.
+                    </li>
+                    <li style="margin-bottom: 0.5rem">
+                        <strong>Base $3$ is too fast:</strong>
+                        If you graph $y = 3^x$, the curve climbs more aggressively. Its slope at $(0, 1)$ is slightly too steep, measuring approximately $1.099$.
+                    </li>
+                    <li>
+                        <strong>Base $e$ is the "Goldilocks" Base:</strong>
+                        The irrational number $e \approx 2.718$ is the precise, perfect balance point between $2$ and $3$. The curve $y = e^x$ crosses $(0, 1)$ at a pristine $45^\circ$ angle, giving it a
+                        <strong>slope of exactly $1$</strong>
+                        .
+                    </li>
+                </ul>
+
+                <div style="background: #fffbeb; border: 1px solid #fde68a; border-left: 5px solid #d97706; border-radius: 8px; padding: 1.35rem 1.5rem; margin: 1.75rem 0">
+                    <div style="font-weight: 800; color: #b45309; font-size: 1rem; margin-bottom: 0.5rem">⚙️ A Sneak Peek at Calculus: Why a Slope of 1 Matters</div>
+                    <p style="margin: 0 0 0.75rem 0; color: #78350f; font-size: 0.95rem; line-height: 1.65">
+                        If the slope of $y = e^x$ at $x = 0$ is exactly $1$, a beautiful mathematical chain reaction occurs. Because exponential functions turn addition into multiplication ($e^{x+h} = e^x \cdot e^h$), the slope at
+                        <em>any</em>
+                        other point on the curve is just the slope at zero scaled up by the height of the curve.
+                    </p>
+                    <p style="margin: 0; color: #78350f; font-size: 0.95rem; line-height: 1.65">
+                        Since the baseline slope is $1$, scaling it by $e^x$ just gives you $e^x$. This creates the ultimate property of the natural exponential function:
+                        <strong>At every single point on the curve $y = e^x$, the exact steepness of the slope is completely equal to its current vertical height!</strong>
+                    </p>
+                </div>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                    This property—where the rate of growth is identical to the amount currently present ($y' = y$)—is the holy grail of differential equations. It is why $e$ governs radioactive decay, bacterial population modeling, and continuously compounding interest. You
+                    <em>can</em>
+                    model these phenomena using base $2$ or base $10$, but you will constantly have to multiply your equations by messy corrective constants (like $\ln(2) \approx 0.693$). By using base $e$, the mathematics becomes perfectly clean.
+                </p>
+
+                <!-- ================================================================= -->
+                <!-- INTERACTIVE SIMULATOR: HUNTING THE GOLDEN BASE                    -->
+                <!-- ================================================================= -->
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-top: 5px solid #0f172a; border-radius: 10px; padding: 1.5rem; margin: 2.5rem 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05)">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 1rem; margin-bottom: 1.5rem">
+                        <div>
+                            <h3 style="margin: 0 0 0.25rem 0; color: #0f172a; font-size: 1.25rem">Interactive Simulator: Hunting the Golden Base</h3>
+                            <div style="font-size: 0.9rem; color: #64748b; font-weight: 600">Scenario: Finding the precise growth rate required for continuous calculus modeling.</div>
+                        </div>
+                    </div>
+
+                    <!-- 1. NAVIGATION & SCENARIO PREVIEW -->
+                    <div style="display: flex; gap: 1rem; align-items: stretch; margin-bottom: 1.5rem; flex-wrap: wrap">
+                        <div style="flex: 0 0 auto; display: flex; flex-direction: column; gap: 0.5rem; justify-content: center">
+                            <button id="sim-btn-prev" onclick="simBase.stepBack()" style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600; color: #334155; transition: opacity 0.2s">&larr; Prev</button>
+                            <button id="sim-btn-next" onclick="simBase.stepForward()" style="background: #0284c7; border: 1px solid #0369a1; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600; color: #ffffff; transition: opacity 0.2s">Next &rarr;</button>
+                        </div>
+                        <div style="flex: 1; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 1rem">
+                            <div style="font-size: 0.8rem; font-weight: 800; color: #0369a1; text-transform: uppercase; margin-bottom: 0.25rem">Current Objective</div>
+                            <div id="sim-preview-text" style="color: #334155; font-size: 0.95rem; line-height: 1.5"></div>
+                        </div>
+                    </div>
+
+                    <!-- 2. LIVE STATE TELEMETRY -->
+                    <div style="display: flex; flex-wrap: wrap; gap: 1rem; background: #0f172a; border-radius: 6px; padding: 0.75rem 1rem; margin-bottom: 1.5rem; color: #f8fafc; font-family: monospace; font-size: 0.9rem">
+                        <div style="flex: 1; min-width: 120px">
+                            <span style="color: #94a3b8">MODE:</span>
+                            <span id="sim-mode-readout" style="color: #38bdf8; font-weight: bold"></span>
+                        </div>
+                        <div style="flex: 1; min-width: 120px">
+                            <span style="color: #94a3b8">BASE (a):</span>
+                            <span id="sim-base-readout" style="color: #fbbf24; font-weight: bold"></span>
+                        </div>
+                        <div style="flex: 1; min-width: 120px">
+                            <span style="color: #94a3b8">SLOPE AT (0,1):</span>
+                            <span id="sim-slope-readout" style="color: #34d399; font-weight: bold"></span>
+                        </div>
+                    </div>
+
+                    <!-- 3. SYNCHRONIZED VISUAL CANVAS & SLIDER -->
+                    <div style="display: grid; grid-template-columns: minmax(300px, 2fr) minmax(250px, 1fr); gap: 1.5rem; margin-bottom: 1.5rem">
+                        <!-- Canvas and Controls -->
+                        <div style="display: flex; flex-direction: column; gap: 1rem">
+                            <div style="border: 1px solid #cbd5e1; border-radius: 8px; overflow: hidden; background: #ffffff">
+                                <svg id="sim-canvas" viewBox="0 0 500 350" width="100%" style="display: block; font-family: system-ui, sans-serif">
+                                    <defs>
+                                        <clipPath id="sim-clip">
+                                            <rect x="0" y="0" width="500" height="350" />
+                                        </clipPath>
+                                        <marker id="sim-arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                            <path d="M 0 1 L 8 5 L 0 9 z" fill="#64748b" />
+                                        </marker>
+                                    </defs>
+                                    <g clip-path="url(#sim-clip)">
+                                        <!-- Grid & Asymptote -->
+                                        <line x1="0" y1="280" x2="500" y2="280" stroke="#f1f5f9" stroke-width="1" />
+                                        <line x1="0" y1="200" x2="500" y2="200" stroke="#f1f5f9" stroke-width="1" />
+                                        <line x1="0" y1="120" x2="500" y2="120" stroke="#f1f5f9" stroke-width="1" />
+                                        <line x1="0" y1="40" x2="500" y2="40" stroke="#f1f5f9" stroke-width="1" />
+
+                                        <line id="sim-asymptote" x1="0" y1="280" x2="500" y2="280" stroke="#ef4444" stroke-width="2" stroke-dasharray="5,4" opacity="0.3" />
+
+                                        <!-- Axes -->
+                                        <line x1="20" y1="280" x2="480" y2="280" stroke="#64748b" stroke-width="2" marker-end="url(#sim-arr)" />
+                                        <line x1="250" y1="330" x2="250" y2="20" stroke="#64748b" stroke-width="2" marker-end="url(#sim-arr)" />
+                                        <text x="485" y="284" font-size="12" font-weight="bold" fill="#475569">x</text>
+                                        <text x="235" y="25" font-size="12" font-weight="bold" fill="#475569">y</text>
+
+                                        <!-- Base e Reference Curve (Ghost) -->
+                                        <path id="sim-ref-curve" d="" fill="none" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4,4" opacity="0" />
+                                        <text id="sim-ref-text" x="400" y="30" font-size="10" font-weight="bold" fill="#94a3b8" opacity="0">y = eˣ Reference</text>
+
+                                        <!-- Tangent Line -->
+                                        <line id="sim-tangent" x1="0" y1="0" x2="0" y2="0" stroke="#10b981" stroke-width="2" stroke-dasharray="6,4" />
+
+                                        <!-- Main Exponential Curve -->
+                                        <path id="sim-curve" d="" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round" />
+
+                                        <!-- Anchor Point (0,1) -->
+                                        <circle cx="250" cy="200" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="1.5" />
+                                        <text x="240" y="195" font-size="11" font-weight="bold" fill="#dc2626" text-anchor="end">(0, 1)</text>
+
+                                        <!-- Moving Landmark Point (1, a) -->
+                                        <circle id="sim-point-a" cx="330" cy="0" r="4.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.5" />
+                                        <text id="sim-point-a-text" x="340" y="0" font-size="11" font-weight="bold" fill="#2563eb">(1, a)</text>
+                                    </g>
+                                </svg>
+                            </div>
+
+                            <!-- Manual Override Slider -->
+                            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 1rem">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; font-size: 0.85rem; font-weight: 700; color: #334155">
+                                    <div style="display: flex; align-items: center; gap: 0.75rem">
+                                        <span>Manual Base Adjustment:</span>
+                                        <button onclick="simBase.cancelManual()" style="background: #e2e8f0; border: 1px solid #cbd5e1; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: 800; cursor: pointer; color: #475569; text-transform: uppercase; letter-spacing: 0.05em; transition: background 0.2s">Reset</button>
+                                    </div>
+                                    <span id="sim-slider-val">a = 2.0</span>
+                                </div>
+                                <input type="range" id="sim-slider" min="0.1" max="4.0" step="0.01" value="2.0" style="width: 100%; cursor: pointer" oninput="simBase.applyManualBase(this.value)" />
+
+                                <!-- Dimension Toggles -->
+                                <div style="display: flex; gap: 1.5rem; margin-top: 1rem; font-size: 0.85rem; color: #475569; font-weight: 600">
+                                    <label style="display: flex; align-items: center; gap: 0.35rem; cursor: pointer">
+                                        <input type="checkbox" id="sim-toggle-tangent" checked onchange="simBase.renderCanvas()" />
+                                        Show Tangent Line at x=0
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 0.35rem; cursor: pointer">
+                                        <input type="checkbox" id="sim-toggle-ref" onchange="simBase.renderCanvas()" />
+                                        Show y=eˣ Reference
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4. PAIRED ANALYTICAL PANES -->
+                        <div style="display: flex; flex-direction: column; gap: 1rem">
+                            <div style="flex: 1; background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.25rem; border-radius: 6px">
+                                <h4 style="margin: 0 0 0.5rem 0; color: #047857; font-size: 1rem">What Is Happening</h4>
+                                <p id="sim-pane-what" style="margin: 0; color: #166534; font-size: 0.9rem; line-height: 1.6"></p>
+                            </div>
+                            <div style="flex: 1; background: #fffbeb; border: 1px solid #fde68a; border-left: 5px solid #d97706; padding: 1.25rem; border-radius: 6px">
+                                <h4 style="margin: 0 0 0.5rem 0; color: #b45309; font-size: 1rem">Why The System Does This</h4>
+                                <p id="sim-pane-why" style="margin: 0; color: #78350f; font-size: 0.9rem; line-height: 1.6"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+                        const simBase = (function () {
+                            const steps = [
+                                {
+                                    base: 2.0,
+                                    mode: "GEOMETRIC GROWTH",
+                                    summary: "We begin with base 2, simulating standard geometric doubling.",
+                                    what: "The curve y = 2ˣ is strictly increasing. It anchors at (0,1) and scales its height by a factor of 2 for every 1 unit moved right.",
+                                    why: "We need a baseline to compare growth rates. Base 2 is computationally simple, but its tangent slope at the y-intercept is ~0.693, which forces us to carry messy scaling constants during calculus operations.",
+                                },
+                                {
+                                    base: 0.5,
+                                    mode: "EXPONENTIAL DECAY",
+                                    summary: "We invert the base to 0.5, creating a mirror reflection across the y-axis.",
+                                    what: "The curve y = (0.5)ˣ is strictly decreasing, decaying asymptotically toward y = 0 as x grows. It is the exact horizontal reflection of y = 2ˣ.",
+                                    why: "This geometric reflection visually proves the reciprocal exponent law: a⁻ˣ = (1/a)ˣ. We rely on this specific decay regime to model radioactive half-lives and cooling temperatures safely.",
+                                },
+                                {
+                                    base: 1.0,
+                                    mode: "FLATLINE ANOMALY",
+                                    summary: "We test the boundary constraint a = 1, triggering the flatline anomaly.",
+                                    what: "The exponential curve collapses entirely into a flat horizontal line y = 1. The tangent slope instantly drops to exactly 0 everywhere.",
+                                    why: "A base of 1 destroys the strict monotonicity of the system. Without monotonicity, the function fails the Horizontal Line Test (losing injectivity) and fundamentally cannot possess a logarithmic inverse.",
+                                },
+                                {
+                                    base: 2.718,
+                                    mode: "THE GOLDEN SLOPE (e)",
+                                    summary: "We dial precisely into Euler's number (e ≈ 2.718), unlocking the core engine of calculus.",
+                                    what: "The curve y = eˣ crosses the central anchor point (0,1) with a tangent slope of exactly 1.000.",
+                                    why: "By achieving a perfect 1:1 ratio between the function's height and its growth rate, base e mathematically eliminates all arbitrary scaling constants. The system's rate of change is now flawlessly synchronized with its current state (y' = y).",
+                                },
+                            ];
+
+                            let currentStepIndex = 0;
+                            let currentBase = steps[0].base;
+                            let isManual = false;
+
+                            const cx = 250;
+                            const cy = 280;
+                            const scaleX = 80;
+                            const scaleY = 80;
+
+                            function updateButtons() {
+                                const btnPrev = document.getElementById("sim-btn-prev");
+                                const btnNext = document.getElementById("sim-btn-next");
+
+                                // Disable Prev if at start (and not returning from manual mode)
+                                const isAtStart = currentStepIndex === 0;
+                                const isAtEnd = currentStepIndex === steps.length - 1;
+
+                                btnPrev.disabled = isAtStart && !isManual;
+                                btnNext.disabled = isAtEnd && !isManual;
+
+                                [btnPrev, btnNext].forEach((btn) => {
+                                    btn.style.opacity = btn.disabled ? "0.4" : "1";
+                                    btn.style.cursor = btn.disabled ? "not-allowed" : "pointer";
+                                });
+                            }
+
+                            function updateState() {
+                                const step = steps[currentStepIndex];
+                                if (!isManual) {
+                                    currentBase = step.base;
+                                    document.getElementById("sim-slider").value = currentBase;
+                                }
+
+                                document.getElementById("sim-slider-val").textContent = `a = ${currentBase.toFixed(3)}`;
+
+                                let mode = step.mode;
+                                let what = step.what;
+                                let why = step.why;
+                                let summary = step.summary;
+
+                                if (isManual) {
+                                    summary = "Manual override engaged. Freely exploring the domain of bases.";
+                                    if (currentBase === 1) {
+                                        mode = "FLATLINE ANOMALY";
+                                        what = "The curve has collapsed into y = 1.";
+                                        why = "Injectivity is destroyed. The system cannot be inverted.";
+                                    } else if (currentBase < 1) {
+                                        mode = "EXPONENTIAL DECAY";
+                                        what = "The base is a fraction between 0 and 1, forcing strict decay toward the asymptote y = 0.";
+                                        why = "Multiplicative compounding with a fraction inherently shrinks the output size as inputs move forward.";
+                                    } else {
+                                        mode = "GEOMETRIC GROWTH";
+                                        what = "The base exceeds 1, driving strictly increasing growth.";
+                                        why = "Multiplicative compounding continuously scales the output higher. The larger the base, the steeper the tangent slope at (0,1).";
+                                        if (Math.abs(currentBase - 2.718) < 0.05) {
+                                            mode = "NEAR BASE e";
+                                            why = "You are approaching the natural base of calculus, where the slope synchronizes perfectly with the height.";
+                                        }
+                                    }
+                                }
+
+                                document.getElementById("sim-mode-readout").textContent = mode;
+                                document.getElementById("sim-base-readout").textContent = currentBase.toFixed(3);
+                                document.getElementById("sim-slope-readout").textContent = currentBase === 1 ? "0.000" : Math.log(currentBase).toFixed(3);
+
+                                document.getElementById("sim-preview-text").textContent = summary;
+                                document.getElementById("sim-pane-what").textContent = what;
+                                document.getElementById("sim-pane-why").textContent = why;
+
+                                updateButtons();
+                                renderCanvas();
+                            }
+
+                            function renderCanvas() {
+                                const curvePath = document.getElementById("sim-curve");
+                                const tangentLine = document.getElementById("sim-tangent");
+                                const pointA = document.getElementById("sim-point-a");
+                                const pointAText = document.getElementById("sim-point-a-text");
+
+                                const showTangent = document.getElementById("sim-toggle-tangent").checked;
+                                const showRef = document.getElementById("sim-toggle-ref").checked;
+
+                                const points = [];
+                                for (let px = 0; px <= 500; px += 2) {
+                                    const mathX = (px - cx) / scaleX;
+                                    const mathY = Math.pow(currentBase, mathX);
+                                    const py = cy - mathY * scaleY;
+                                    points.push(`${px === 0 ? "M" : "L"} ${px.toFixed(1)} ${py.toFixed(1)}`);
+                                }
+                                curvePath.setAttribute("d", points.join(" "));
+
+                                const p1X = cx + 1 * scaleX;
+                                const p1Y = cy - currentBase * scaleY;
+                                pointA.setAttribute("cy", p1Y);
+                                pointAText.setAttribute("y", p1Y + 15);
+                                pointAText.textContent = `(1, ${currentBase.toFixed(2)})`;
+
+                                if (showTangent && currentBase > 0) {
+                                    const slope = Math.log(currentBase);
+                                    const mX1 = -3,
+                                        mY1 = slope * mX1 + 1;
+                                    const mX2 = 3,
+                                        mY2 = slope * mX2 + 1;
+                                    tangentLine.setAttribute("x1", cx + mX1 * scaleX);
+                                    tangentLine.setAttribute("y1", cy - mY1 * scaleY);
+                                    tangentLine.setAttribute("x2", cx + mX2 * scaleX);
+                                    tangentLine.setAttribute("y2", cy - mY2 * scaleY);
+                                    tangentLine.style.display = "block";
+                                } else {
+                                    tangentLine.style.display = "none";
+                                }
+
+                                const refCurve = document.getElementById("sim-ref-curve");
+                                const refText = document.getElementById("sim-ref-text");
+                                if (showRef) {
+                                    const refPoints = [];
+                                    for (let px = 0; px <= 500; px += 5) {
+                                        const mathX = (px - cx) / scaleX;
+                                        const mathY = Math.exp(mathX);
+                                        const py = cy - mathY * scaleY;
+                                        refPoints.push(`${px === 0 ? "M" : "L"} ${px.toFixed(1)} ${py.toFixed(1)}`);
+                                    }
+                                    refCurve.setAttribute("d", refPoints.join(" "));
+                                    refCurve.style.opacity = "1";
+                                    refText.style.opacity = "1";
+                                } else {
+                                    refCurve.style.opacity = "0";
+                                    refText.style.opacity = "0";
+                                }
+                            }
+
+                            return {
+                                init: function () {
+                                    updateState();
+                                },
+                                stepForward: function () {
+                                    if (currentStepIndex < steps.length - 1) {
+                                        isManual = false;
+                                        currentStepIndex++;
+                                        updateState();
+                                    }
+                                },
+                                stepBack: function () {
+                                    if (currentStepIndex > 0 || isManual) {
+                                        isManual = false;
+                                        currentStepIndex = Math.max(0, currentStepIndex - 1);
+                                        updateState();
+                                    }
+                                },
+                                applyManualBase: function (val) {
+                                    isManual = true;
+                                    currentBase = parseFloat(val);
+                                    updateState();
+                                },
+                                cancelManual: function () {
+                                    isManual = false;
+                                    updateState();
+                                },
+                                renderCanvas: renderCanvas,
+                            };
+                        })();
+
+                        window.addEventListener("DOMContentLoaded", simBase.init);
+                        if (document.readyState === "complete" || document.readyState === "interactive") {
+                            setTimeout(simBase.init, 1);
+                        }
+                    </script>
+                </div>
 
                 <!-- ================================================================= -->
                 <!-- 1.7 WORKED EXAMPLES                                               -->
