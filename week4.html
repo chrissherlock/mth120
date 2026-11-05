@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 4: Limits & Continuity | MTHS120</title>
+    <!-- KaTeX Integration -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+    <style>
+        :root {
+            --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
+            --accent: #059669; --accent-hover: #047857; /* Switching accent to green for Week 4 Calculus Frontier */
+            --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
+
+        .intro-lead { font-size: 1.05rem; color: #1e293b; line-height: 1.75; margin-bottom: 2rem; background: #f8fafc; padding: 1.75rem; border-radius: 8px; border: 1px solid var(--border); border-left: 5px solid var(--accent); }
+        .intro-lead h3 { margin-top: 0; margin-bottom: 0.75rem; color: #0f172a; font-size: 1.25rem; }
+        .intro-lead p { margin: 0 0 1rem 0; }
+        .intro-lead p:last-child { margin-bottom: 0; }
+
+        .orientation-section { margin: 2rem 0 2.5rem 0; color: #334155; line-height: 1.75; font-size: 1rem; }
+        .orientation-section h3 { margin-top: 0; color: #0f172a; font-size: 1.25rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; margin-bottom: 1rem; }
+        .orientation-section p { margin-bottom: 1.15rem; }
+
+        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+        h3 { color: #1e293b; margin-top: 1.5rem; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+
+        .lecture-card { background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+        .lecture-card:hover { transform: translateY(-2px); box-shadow: 0 6px 12px -2px rgba(0,0,0,0.08); border-color: var(--accent); }
+        .lecture-card h3 { margin-top: 0; color: #0f172a; }
+        .lecture-badge { display: inline-block; background: var(--accent); color: white; padding: 0.2rem 0.55rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem; }
+
+        .assessment-alert { background: #eff6ff; border: 1px solid #bfdbfe; border-left: 5px solid #3b82f6; padding: 1.5rem; border-radius: 8px; margin: 2rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .assessment-alert h3 { margin: 0 0 0.5rem 0; color: #1d4ed8; font-size: 1.25rem; display: flex; align-items: center; gap: 0.5rem; }
+        .assessment-alert p { margin: 0; color: #1e3a8a; font-size: 1.05rem; line-height: 1.6; }
+
+        /* Mobile-first adjustments */
+        @media (max-width: 768px) {
+            .katex-display { overflow-x: auto !important; overflow-y: hidden !important; -webkit-overflow-scrolling: touch !important; max-width: 100% !important; padding: 0.25rem 0 !important; }
+            body { background: #ffffff; padding: 1rem 0.75rem; }
+            .container { max-width: 100%; margin: 0; }
+            .module-content { background: transparent; padding: 0; border: none; border-radius: 0; box-shadow: none; margin-bottom: 1rem; }
+            .header { padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+            .header > div:last-child, .nav-btn-group { display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; width: 100% !important; gap: 0.5rem !important; }
+            .header > div:last-child a, .nav-btn-group a { flex: 1 1 0 !important; min-width: 0 !important; text-align: center !important; padding: 0.55rem 0.4rem !important; font-size: 0.82rem !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
+            p, div, li, blockquote { word-break: break-word; overflow-wrap: break-word; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- TOP NAVIGATION HEADER -->
+        <div class="header" style="border-bottom: 2px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.25rem;">
+            <div class="nav-btn-group" style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; width: 100%;">
+                <a href="week3.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&larr; Prev Week</a>
+                <a href="index.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&#8962; Curriculum Index</a>
+                <a href="week5.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">Next Week &rarr;</a>
+            </div>
+            <div style="text-align: center; width: 100%; min-width: 0;">
+                <h1 style="margin: 0; line-height: 1.3; font-size: 1.5rem;">Week 4 Overview Hub</h1>
+            </div>
+        </div>
+
+        <div class="module-content">
+            <!-- HERO IMAGE -->
+            <div style="margin-bottom: 2rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);">
+                <img src="images/chapter4-hero.jpg" alt="Week 4: Limits & Continuity - UNE Campus Discovery Trail" style="width: 100%; height: auto; display: block;">
+            </div>
+
+            <!-- EMPATHETIC ORIENTATION LEAD -->
+            <div class="intro-lead">
+                <h3>Welcome to Week 4: The Calculus Frontier</h3>
+                <p>
+                    Up until this point, mathematics has been a study of static states. You've evaluated functions at specific, fixed inputs. You've solved algebra for exact answers. But what happens when an input is strictly forbidden—like dividing by zero—yet we still desperately need to know how the system behaves <em>right next to it</em>?
+                </p>
+                <p>
+                    This week, we cross the boundary into dynamic mathematics. We introduce the <strong>Limit</strong>—the foundational mechanism that powers all of calculus. By learning to track where a function is "intending" to go, rather than just where it arrives, we gain the ability to analyze jumps, bridge holes in our domains, and mathematically define what it means for a line to be truly continuous.
+                </p>
+            </div>
+
+            <!-- PROSE-DRIVEN ROADMAP -->
+            <div class="orientation-section">
+                <h3>The Big Picture: Navigating Jumps and Holes</h3>
+                <p>
+                    <strong>Lecture 9 (The Limit of a Function)</strong> kicks off our journey. We will formalize the notation $\lim_{x \to c} f(x)$ and learn how to evaluate functions as they approach a point from the left and the right. We will encounter removable discontinuities (holes) and vertical asymptotes, learning how algebraic manipulation can save us when direct substitution results in $\frac{0}{0}$.
+                </p>
+                <p>
+                    In <strong>Lecture 10 (Continuity and the IVT)</strong>, we leverage our new understanding of limits to construct a flawless mathematical definition of an "unbroken" curve. If a curve is continuous, it grants us a massive mathematical superpower: the <em>Intermediate Value Theorem (IVT)</em>, which allows us to prove that equations have solutions even when we can't perfectly calculate them.
+                </p>
+                <p>
+                    In <strong>Lecture 11 (Limits at Infinity & Asymptotes)</strong>, we look at the far horizons of the Cartesian plane. What happens to a system as time $t \to \infty$? We will use limits to formally identify horizontal asymptotes and determine the ultimate, long-term behavior of rational and exponential functions.
+                </p>
+            </div>
+
+            <!-- ASSESSMENT ALERT -->
+            <div class="assessment-alert">
+                <h3>🔍 Heads Up: Quiz 2 Approaching</h3>
+                <p>
+                    With Assignment 1 behind us, your next milestone is <strong>Quiz 2</strong> at the end of Week 4. It will focus entirely on evaluating limits, identifying discontinuities, and applying the Intermediate Value Theorem. Ensure you've completed the Week 4 tutorial sheets to build up your algebraic limit reflexes before attempting the quiz.
+                </p>
+            </div>
+
+            <!-- WEEK 4 PODCAST COMPONENT -->
+            <div id="podcast" class="podcast-card" style="background: var(--card); border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.03);">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.75rem;">
+                    <div>
+                        <span style="display: inline-block; background: #ecfdf5; color: #065f46; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.2rem 0.55rem; border-radius: 4px; margin-bottom: 0.35rem; border: 1px solid #a7f3d0;">
+                            🎧 Weekly Kickoff (Week 4 Overview)
+                        </span>
+                        <h3 style="margin: 0; color: #0f172a; font-size: 1.15rem;">The Ghost of 0/0 and the Invention of Calculus</h3>
+                        <p style="margin: 0.25rem 0 0 0; font-size: 0.9rem; color: #64748b;">
+                            How do you calculate speed at a single frozen instant of time? We discuss the historical crisis of dividing zero by zero, how Newton and Leibniz bypassed the rules of algebra using limits, and why understanding "nearness" is the secret to unlocking differential calculus.
+                        </p>
+                    </div>
+                    <a href="#"
+                       style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.4rem 0.75rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.82rem; white-space: nowrap; display: inline-flex; align-items: center; gap: 0.35rem;">
+                        <span>⬇ Download / Open</span>
+                    </a>
+                </div>
+                <div style="width: 100%; margin-top: 0.5rem;">
+                    <audio controls preload="metadata" style="width: 100%; height: 42px; border-radius: 6px;">
+                        <!-- Placeholder for Week 4 audio -->
+                        <source src="#" type="audio/mp4">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            </div>
+
+            <div style="margin: 2rem 0;">
+                <h2 style="margin-top: 0;">Weekly Lecture Modules</h2>
+                <p style="color: #475569; font-size: 1.05rem;">Select a lecture module below to begin:</p>
+            </div>
+
+            <!-- LECTURE 9 CARD -->
+            <div class="lecture-card">
+                <span class="lecture-badge">Lecture 9</span>
+                <h3><a href="week4-lecture9.html" style="color: inherit; text-decoration: none;">The Limit of a Function &rarr;</a></h3>
+                <p style="color: #334155; margin-bottom: 1rem;">
+                    We introduce the concept of the mathematical limit. Learn how to track a function's intended destination, evaluate limits algebraically, and handle tricky scenarios where direct substitution fails.
+                </p>
+                <div>
+                    <a href="week4-lecture9.html" style="background: var(--accent); color: white; padding: 0.45rem 0.9rem; border-radius: 5px; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Open Lecture 9 &rarr;</a>
+                </div>
+            </div>
+
+            <!-- LECTURE 10 CARD -->
+            <div class="lecture-card">
+                <span class="lecture-badge">Lecture 10</span>
+                <h3><a href="week4-lecture10.html" style="color: inherit; text-decoration: none;">Continuity & The Intermediate Value Theorem &rarr;</a></h3>
+                <p style="color: #334155; margin-bottom: 1rem;">
+                    What does it truly mean for a curve to be 'unbroken'? We bridge limits and functions to formally define continuity and explore powerful guarantees like the Intermediate Value Theorem.
+                </p>
+                <div>
+                    <a href="week4-lecture10.html" style="background: var(--accent); color: white; padding: 0.45rem 0.9rem; border-radius: 5px; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Open Lecture 10 &rarr;</a>
+                </div>
+            </div>
+
+            <!-- LECTURE 11 CARD -->
+            <div class="lecture-card">
+                <span class="lecture-badge">Lecture 11</span>
+                <h3><a href="week4-lecture11.html" style="color: inherit; text-decoration: none;">Limits at Infinity & Asymptotes &rarr;</a></h3>
+                <p style="color: #334155; margin-bottom: 1rem;">
+                    Analyze the end-behavior of functions. We cast limits out to $+\infty$ and $-\infty$ to rigorously define horizontal asymptotes and determine which term "wins" in complex rational functions.
+                </p>
+                <div>
+                    <a href="week4-lecture11.html" style="background: var(--accent); color: white; padding: 0.45rem 0.9rem; border-radius: 5px; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Open Lecture 11 &rarr;</a>
+                </div>
+            </div>
+
+            <!-- FOOTER NAVIGATION -->
+            <div class="footer-nav" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                <a href="week3.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&larr; Prev Week</a>
+                <a href="index.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&#8962; Curriculum Index</a>
+                <a href="week5.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">Next Week &rarr;</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
