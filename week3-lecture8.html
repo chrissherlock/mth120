@@ -1209,13 +1209,80 @@
                 </div>
 
                 <!-- ================================================================= -->
-                <!-- SECTION 2: LOGARITHMIC FUNCTIONS AND BASE e (MASSIVELY EXPANDED)  -->
+                <!-- SECTION 2: LOGARITHMIC FUNCTIONS AND BASE e                      -->
                 <!-- ================================================================= -->
                 <h2 id="section-logarithmic" style="margin-top: 3.5rem">2. Logarithmic Functions and Base $e$: Running Exponents in Reverse</h2>
 
-                <h3 style="color: #0f172a; margin-top: 1.5rem" id="log-intuition">2.1 Demystifying the Logarithm: The "Exponent Hunter"</h3>
+                <h3 style="color: #0f172a; margin-top: 1.5rem" id="log-history">2.1 The Historical Origins of Logarithms: Napier's 20-Year Quest</h3>
+                <div style="margin: 1.5rem 0 2rem 0; overflow: auto">
+                    <!-- Right-aligned Floating Thumbnails Wrap Container -->
+                    <div style="float: right; width: 260px; margin: 0 0 1rem 1.75rem; display: flex; flex-direction: column; gap: 1rem">
+                        <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0.75rem; text-align: center; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02)">
+                            <img src="images/napier.jpg" alt="Portrait of John Napier" style="width: 100%; height: auto; border-radius: 4px; display: block; margin-bottom: 0.5rem" />
+                            <div style="font-size: 0.8rem; font-weight: 700; color: #475569"><a href="https://en.wikipedia.org/wiki/John_Napier" target="_blank" style="color: #0284c7; text-decoration: none">John Napier (1550–1617)</a></div>
+                            <div style="font-size: 0.75rem; color: #64748b; margin-top: 0.35rem; line-height: 1.4">Scottish mathematician who spent 20 years developing logarithms.</div>
+                        </div>
+                        <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0.75rem; text-align: center; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02)">
+                            <img src="images/logarithms_book_napier.jpg" alt="Title page of Napier's Mirifici Logarithmorum Canonis Descriptio (1614)" style="width: 100%; height: auto; border-radius: 4px; display: block; margin-bottom: 0.5rem" />
+                            <div style="font-size: 0.8rem; font-weight: 700; color: #475569"><a href="https://en.wikipedia.org/wiki/Mirifici_Logarithmorum_Canonis_Descriptio" target="_blank" style="color: #0284c7; text-decoration: none">Mirifici Logarithmorum Canonis Descriptio (1614)</a></div>
+                            <div style="font-size: 0.75rem; color: #64748b; margin-top: 0.35rem; line-height: 1.4">Title page of Napier's 1614 breakthrough work introducing logarithm tables.</div>
+                        </div>
+                    </div>
+
+                    <!-- Main Narrative Flow wrapping around the float -->
+                    <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 0">
+                        Before calculators, computers, or even the widespread use of decimals, astronomers and navigators calculated the positions of stars, planets, and ocean trade routes entirely by hand. During the late 16th century, figures like
+                        <a href="https://en.wikipedia.org/wiki/Johannes_Kepler" target="_blank" style="color: #0284c7; text-decoration: none">Johannes Kepler</a>
+                        faced a massive astronomical crisis: tracking planetary orbits required multiplying and dividing multi-digit numbers with extreme precision. Doing 8-digit multiplication by hand took days, and a single arithmetic error meant months of calculations had to be discarded. Scientists desperately needed a shortcut to turn brutal multiplication into simple addition.
+                    </p>
+                    <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                        Enter
+                        <a href="https://en.wikipedia.org/wiki/John_Napier" target="_blank" style="color: #0284c7; text-decoration: none"><strong>John Napier</strong></a>
+                        , the eighth Laird of Merchiston, a Scottish landowner, theologian, and mathematician. Napier spent roughly twenty years in secret working on a way to simplify calculation. He understood a fundamental principle of exponents:
+                        <em>multiplying numbers is the same as adding their exponents</em>
+                        (for example, $10^2 \times 10^3 = 10^{2+3} = 10^5$).
+                    </p>
+                    <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                        The word
+                        <strong>logarithm</strong>
+                        was coined by John Napier from two Greek words:
+                        <em>logos</em>
+                        , meaning ratio or proportion, and
+                        <em>arithmos</em>
+                        , meaning number. Literally translated, a logarithm is a
+                        <strong>"ratio-number."</strong>
+                        Napier chose this name because his original mathematical tables were designed to track how geometric ratios (like the proportional steps of a scaling sequence) corresponded to equal arithmetic steps (counting numbers). By turning the relationship between multiplying ratios into a running index of numbers, he created a system where adding the "ratio-numbers" together gave the exact equivalent of multiplying the underlying values.
+                    </p>
+                    <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                        In 1614, Napier published his breakthrough masterpiece at his own expense—
+                        <a href="https://en.wikipedia.org/wiki/Mirifici_Logarithmorum_Canonis_Descriptio" target="_blank" style="color: #0284c7; text-decoration: none"><em>Mirifici Logarithmorum Canonis Descriptio</em></a>
+                        ("A Description of the Admirable Table of Logarithms"). Working entirely without modern algebraic notation, Napier spent years calculating these values by hand using a geometric model of moving points.
+                    </p>
+                    <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">Napier's tables did not feature logarithms in the modern Base 10 or Base $e$ sense; rather, they used a decaying proportional scale that mapped geometric sequences to arithmetic sequences. The book contained a brief introduction explaining how to use the tables to turn complex multiplication and division into simple addition and subtraction, followed by dozens of pages of dense calculation tables that changed European science forever.</p>
+                    <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                        Shortly after Napier's book appeared, the English mathematician
+                        <a href="https://en.wikipedia.org/wiki/Henry_Briggs_(mathematician)" target="_blank" style="color: #0284c7; text-decoration: none">Henry Briggs</a>
+                        , a professor at Gresham College in London, was so profoundly struck by the discovery that he rode on horseback all the way to Edinburgh to meet Napier in person. During their historic 1615 and 1616 meetings, Briggs suggested shifting from Napier's original system to a much more intuitive decimal baseline where $\log_{10}(1) = 0$ and $\log_{10}(10) = 1$. Napier warmly endorsed the proposal.
+                    </p>
+                    <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                        Briggs took on the staggering computational burden of calculating these new tables by hand, eventually publishing his monumental work
+                        <em>Arithmetica Logarithmica</em>
+                        in 1624. It contained common logarithms for numbers from 1 to 20,000 and from 90,000 to 100,000, calculated out to an astonishing 14 decimal places.
+                    </p>
+                    <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-bottom: 0">
+                        These Base 10 tables became an instant international sensation. The great astronomer
+                        <a href="https://en.wikipedia.org/wiki/Johannes_Kepler" target="_blank" style="color: #0284c7; text-decoration: none">Johannes Kepler</a>
+                        used them to complete his definitive
+                        <em>Rudolphine Tables</em>
+                        , revolutionizing celestial mechanics. Centuries later, the French mathematician Pierre-Simon Laplace famously observed that logarithms, by shortening the exhausting labor of manual calculation,
+                        <strong>"doubled the life of the astronomer,"</strong>
+                        allowing science, engineering, and global navigation to flourish centuries before the invention of electronic computers.
+                    </p>
+                </div>
+
+                <h3 style="color: #0f172a; margin-top: 2.5rem" id="log-intuition">2.2 Demystifying the Logarithm: The "Exponent Hunter"</h3>
                 <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
-                    For many students, the word $\log$ triggers an instant mental block. It looks like a strange computer command rather than a mathematical operation. To strip away the mystery, memorize this single sentence:
+                    For many students, the word $\log$ triggers an instant mental block. To strip away the mystery, memorize this single sentence:
                     <strong>a logarithm is just an exponent</strong>
                     .
                 </p>
@@ -1224,12 +1291,12 @@
                     <em>exponent</em>
                     $x$ as its input and outputs a
                     <em>scaled number</em>
-                    $y$. But what if we know the final scaled number $y$, and we need to hunt down the hidden exponent $x$ that produced it?
+                    $y$. But what if we know the final scaled number $y$, and we need to hunt down the hidden exponent $x$ that produced it? That "exponent hunter" is the logarithm.
                 </p>
                 <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
                     In Lecture 7, we proved that any strictly monotonic function is
                     <strong>injective</strong>
-                    (one-to-one) and therefore possesses a unique inverse function when restricted to its range. Because $f: \mathbb{R} \to (0, \infty)$ defined by $f(x) = a^x$ ($a > 0, a \neq 1$) is strictly monotonic and surjective onto $(0, \infty)$, it is a
+                    (one-to-one) and therefore possesses a unique inverse function. Because $f: \mathbb{R} \to (0, \infty)$ defined by $f(x) = a^x$ ($a > 0, a \neq 1$) is strictly monotonic and surjective onto $(0, \infty)$, it is a
                     <strong>perfect bijection</strong>
                     . Its inverse function $f^{-1}: (0, \infty) \to \mathbb{R}$ is called the
                     <strong>logarithm with base $a$</strong>
@@ -1258,9 +1325,9 @@
                 </div>
 
                 <!-- ================================================================= -->
-                <!-- 2.2 MUTUAL ANNIHILATION & THE DOMAIN WALL                         -->
+                <!-- 2.3 MUTUAL ANNIHILATION & THE DOMAIN WALL                         -->
                 <!-- ================================================================= -->
-                <h3 style="color: #0f172a; margin-top: 2.5rem" id="log-cancellation">2.2 Mutual Annihilation &amp; The Strict Domain Barrier ($x > 0$)</h3>
+                <h3 style="color: #0f172a; margin-top: 2.5rem" id="log-cancellation">2.3 Mutual Annihilation &amp; The Strict Domain Barrier ($x > 0$)</h3>
                 <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
                     Because $f(x) = a^x$ and $f^{-1}(x) = \log_a(x)$ are exact inverse functions, applying one immediately after the other cancels both operations out, leaving your original input untouched. However, you must pay close attention to
                     <em>which</em>
@@ -1311,9 +1378,9 @@
                 </div>
 
                 <!-- ================================================================= -->
-                <!-- 2.3 GEOMETRIC REFLECTION ACROSS y = x                             -->
+                <!-- 2.4 GEOMETRIC REFLECTION ACROSS y = x                             -->
                 <!-- ================================================================= -->
-                <h3 style="color: #0f172a; margin-top: 2.5rem" id="log-geometry">2.3 Geometric Mirroring: Reflecting Across $y = x$</h3>
+                <h3 style="color: #0f172a; margin-top: 2.5rem" id="log-geometry">2.4 Geometric Mirroring: Reflecting Across $y = x$</h3>
                 <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">As we established in Lecture 7, the graph of any inverse function $f^{-1}(x)$ is obtained by reflecting the original graph $f(x)$ across the diagonal mirror line $y = x$. Every coordinate pair $(u, v)$ on $y = a^x$ swaps to become $(v, u)$ on $y = \log_a(x)$:</p>
                 <ul style="margin: 0.5rem 0 1.5rem 1.25rem; color: #334155; line-height: 1.75; font-size: 1rem">
                     <li>
@@ -1487,9 +1554,9 @@
                 </div>
 
                 <!-- ================================================================= -->
-                <!-- 2.4 ALGEBRAIC LAWS OF LOGARITHMS & PROOFS                         -->
+                <!-- 2.5 ALGEBRAIC LAWS OF LOGARITHMS & PROOFS                         -->
                 <!-- ================================================================= -->
-                <h3 style="color: #0f172a; margin-top: 2.5rem" id="log-laws">2.4 The Algebraic Laws of Logarithms: Translating Exponents</h3>
+                <h3 style="color: #0f172a; margin-top: 2.5rem" id="log-laws">2.5 The Algebraic Laws of Logarithms: Translating Exponents</h3>
                 <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
                     If you have ever felt intimidated or completely lost when looking at logarithm rules, take a deep breath. You are completely normal, and you are in exactly the right place. These laws often look like an alien language of shifting letters and arbitrary rules. But here is the comforting truth:
                     <strong>you already know these laws.</strong>
@@ -1634,7 +1701,6 @@
                     </div>
 
                     <!-- LAW 3: POWER -->
-                    <!-- LAW 3: POWER -->
                     <div style="background: #ffffff; border: 1px solid #cbd5e1; border-left: 5px solid #d97706; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02)">
                         <h4 style="margin: 0 0 0.5rem 0; color: #b45309; font-size: 1.15rem">3. The Power Law (The "Pull-Down" Trick): Turning Powers into Multipliers</h4>
                         <div style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin-bottom: 1rem">$$\log_a(x^p) = p \cdot \log_a(x)$$</div>
@@ -1763,9 +1829,9 @@
                 </div>
 
                 <!-- ================================================================= -->
-                <!-- 2.5 THE NATURAL LOGARITHM ln(x) AND CHANGE OF BASE                -->
+                <!-- 2.6 THE NATURAL LOGARITHM ln(x) AND CHANGE OF BASE                -->
                 <!-- ================================================================= -->
-                <h3 style="color: #0f172a; margin-top: 2.5rem" id="log-natural-base-e">2.5 The Natural Logarithm ($\ln x$) and the Change of Base Formula</h3>
+                <h3 style="color: #0f172a; margin-top: 2.5rem" id="log-natural-base-e">2.6 The Natural Logarithm ($\ln x$) and the Change of Base Formula</h3>
                 <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
                     Just as $e^x$ is the natural exponential function of calculus, its inverse function—the logarithm with base $e$—is called the
                     <strong>natural logarithm</strong>
@@ -1809,7 +1875,7 @@
                 <div style="text-align: center; margin: 1rem 0; font-size: 1.2rem; font-weight: 700; color: #047857">$$a^x = \left(e^{\ln a}\right)^x = e^{x \ln(a)}$$</div>
 
                 <!-- ================================================================= -->
-                <!-- 2.6 WORKED EXAMPLES                                               -->
+                <!-- 2.7 WORKED EXAMPLES                                               -->
                 <!-- ================================================================= -->
                 <div class="worked-example-box" style="margin-top: 2rem">
                     <h4>🎯 Worked Examples: Logarithmic Domains, Equations &amp; Inverses</h4>
