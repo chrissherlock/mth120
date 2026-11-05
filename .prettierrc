@@ -1,0 +1,8 @@
+{
+  "printWidth": 9999,
+  "tabWidth": 4,
+  "useTabs": false,
+  "singleAttributePerLine": false,
+  "htmlWhitespaceSensitivity": "ignore",
+  "bracketSameLine": true
+}
