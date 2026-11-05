@@ -2399,17 +2399,123 @@
                 </div>
 
                 <h4 style="color: #0f172a; margin-top: 1.5rem">2. The Three Famous First-Quadrant Angles ($\frac{\pi}{6}, \frac{\pi}{4}, \frac{\pi}{3}$) &amp; The $\frac{\sqrt{n}}{2}$ Pattern</h4>
-                <p style="color: #334155; line-height: 1.75; font-size: 1rem">Where do strange numbers like $\frac{\sqrt{2}}{2}$ and $\frac{\sqrt{3}}{2}$ come from? Directly from Pythagoras' Theorem ($a^2 + b^2 = 1^2$):</p>
-                <ul style="margin: 0.5rem 0 1.25rem 1.25rem; color: #334155; line-height: 1.75; font-size: 0.98rem">
-                    <li>
-                        <strong>At $\theta = \frac{\pi}{4}$ ($45^\circ$):</strong>
-                        The angle slices the first quadrant exactly in half, so the horizontal base and vertical height are equal ($x = y$). By Pythagoras: $x^2 + x^2 = 1^2 \implies 2x^2 = 1 \implies x = \frac{1}{\sqrt{2}} = \frac{\sqrt{2}}{2}$. Thus, $\cos\left(\frac{\pi}{4}\right) = \sin\left(\frac{\pi}{4}\right) = \frac{\sqrt{2}}{2}$.
-                    </li>
-                    <li>
-                        <strong>At $\theta = \frac{\pi}{6}$ ($30^\circ$) and $\theta = \frac{\pi}{3}$ ($60^\circ$):</strong>
-                        Slicing an equilateral triangle of side length $1$ in half gives a short side of $\frac{1}{2}$ and a long side of $\sqrt{1^2 - (1/2)^2} = \frac{\sqrt{3}}{2}$.
-                    </li>
-                </ul>
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">Where do exact values like $\frac{\sqrt{2}}{2}$ and $\frac{\sqrt{3}}{2}$ come from? They are derived directly from Pythagoras' Theorem ($a^2 + b^2 = 1^2$) using two fundamental geometric building blocks:</p>
+
+                <!-- SIDE-BY-SIDE GEOMETRIC TRIANGLE DERIVATIONS -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 1.5rem 0">
+                    <!-- TRIANGLE 1: 30-60-90 -->
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-top: 4px solid #2563eb; border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03)">
+                        <h4 style="margin: 0 0 0.5rem 0; color: #1d4ed8; font-size: 1.15rem">Step-by-Step Geometric Derivation: The $30^\circ\text{--}60^\circ\text{--}90^\circ$ Triangle ($\frac{\pi}{6}$ &amp; $\frac{\pi}{3}$)</h4>
+                        <p style="margin: 0 0 1rem 0; font-size: 0.95rem; color: #475569; line-height: 1.6">Instead of memorizing values, we construct them using pure Euclidean geometry. Here is the exact mathematical proof and step-by-step working:</p>
+
+                        <!-- SVG Diagram for Working -->
+                        <div style="display: flex; justify-content: center; margin-bottom: 1.25rem">
+                            <svg viewBox="0 0 240 160" width="100%" style="max-width: 220px; font-family: system-ui, sans-serif">
+                                <polygon points="30,140 130,20 130,140" fill="#eff6ff" stroke="#2563eb" stroke-width="2.2" stroke-linejoin="round" />
+                                <polyline points="118,140 118,128 130,128" fill="none" stroke="#64748b" stroke-width="1.2" />
+                                <text x="70" y="70" font-size="12" font-weight="700" fill="#1d4ed8">2</text>
+                                <text x="75" y="156" font-size="12" font-weight="700" fill="#1d4ed8">1</text>
+                                <text x="138" y="85" font-size="12" font-weight="700" fill="#dc2626">$\sqrt{3}$</text>
+                                <text x="40" y="130" font-size="11" font-weight="700" fill="#047857">60° (π/3)</text>
+                                <text x="105" y="42" font-size="11" font-weight="700" fill="#047857">30° (π/6)</text>
+                            </svg>
+                        </div>
+
+                        <ol style="margin: 0; padding-left: 1.25rem; font-size: 0.95rem; color: #334155; line-height: 1.8">
+                            <li>
+                                <strong>Start with an Equilateral Triangle:</strong>
+                                Begin with a triangle where all three sides are equal in length ($s = 2$) and all interior angles equal $60^\circ$ ($\frac{\pi}{3}$ radians).
+                            </li>
+                            <li>
+                                <strong>Bisect the Vertex and Base:</strong>
+                                Drop an altitude (perpendicular line) straight down from the top vertex to the base. This splits the equilateral triangle into two identical right-angled triangles.
+                            </li>
+                            <li>
+                                <strong>Determine the New Side Lengths:</strong>
+                                <ul style="margin: 0.35rem 0 0.5rem 1.25rem; color: #475569">
+                                    <li>
+                                        <strong>Hypotenuse ($c$):</strong>
+                                        Remains $2$ (the original side of the equilateral triangle).
+                                    </li>
+                                    <li>
+                                        <strong>Base ($a$):</strong>
+                                        Halved to $\frac{2}{2} = 1$.
+                                    </li>
+                                    <li>
+                                        <strong>Vertical Height ($b$):</strong>
+                                        Unknown altitude $h$.
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Solve for Height ($h$) Using Pythagoras' Theorem ($a^2 + b^2 = c^2$):</strong>
+                                $$1^2 + h^2 = 2^2 \implies 1 + h^2 = 4 \implies h^2 = 3 \implies h = \sqrt{3}$$
+                            </li>
+                            <li>
+                                <strong>Extract the Ratios for $30^\circ$ ($\frac{\pi}{6}$) — Looking from the Top Angle:</strong>
+                                <ul style="margin: 0.35rem 0 0.5rem 1.25rem; color: #475569">
+                                    <li><strong>$\sin(30^\circ) = \frac{\text{Opposite}}{\text{Hypotenuse}} = \frac{1}{2}$</strong></li>
+                                    <li><strong>$\cos(30^\circ) = \frac{\text{Adjacent}}{\text{Hypotenuse}} = \frac{\sqrt{3}}{2}$</strong></li>
+                                    <li><strong>$\tan(30^\circ) = \frac{\text{Opposite}}{\text{Adjacent}} = \frac{1}{\sqrt{3}} = \frac{\sqrt{3}}{3}$</strong></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Extract the Ratios for $60^\circ$ ($\frac{\pi}{3}$) — Looking from the Bottom-Left Angle:</strong>
+                                <ul style="margin: 0.35rem 0 0 1.25rem; color: #475569">
+                                    <li><strong>$\sin(60^\circ) = \frac{\text{Opposite}}{\text{Hypotenuse}} = \frac{\sqrt{3}}{2}$</strong></li>
+                                    <li><strong>$\cos(60^\circ) = \frac{\text{Adjacent}}{\text{Hypotenuse}} = \frac{1}{2}$</strong></li>
+                                    <li><strong>$\tan(60^\circ) = \frac{\text{Opposite}}{\text{Adjacent}} = \frac{\sqrt{3}}{1} = \sqrt{3}$</strong></li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <!-- TRIANGLE 2: 45-45-90 -->
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-top: 4px solid #d97706; border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03)">
+                        <h4 style="margin: 0 0 0.5rem 0; color: #b45309; font-size: 1.15rem">Step-by-Step Geometric Derivation: The $45^\circ\text{--}45^\circ\text{--}90^\circ$ Triangle ($\frac{\pi}{4}$)</h4>
+                        <p style="margin: 0 0 1rem 0; font-size: 0.95rem; color: #475569; line-height: 1.6">Just like the $30^\circ\text{--}60^\circ\text{--}90^\circ$ triangle, we can derive all exact ratios for $45^\circ$ ($\frac{\pi}{4}$ radians) using simple plane geometry and the Pythagorean theorem. Here is the step-by-step working:</p>
+
+                        <!-- SVG Diagram for Working -->
+                        <div style="display: flex; justify-content: center; margin-bottom: 1.25rem">
+                            <svg viewBox="0 0 240 160" width="100%" style="max-width: 220px; font-family: system-ui, sans-serif">
+                                <polygon points="30,130 30,30 130,130" fill="#fffbeb" stroke="#d97706" stroke-width="2.2" stroke-linejoin="round" />
+                                <polyline points="30,118 42,118 42,130" fill="none" stroke="#64748b" stroke-width="1.2" />
+                                <text x="68" y="72" font-size="12" font-weight="700" fill="#b45309">$\sqrt{2}$</text>
+                                <text x="14" y="85" font-size="12" font-weight="700" fill="#b45309">1</text>
+                                <text x="75" y="146" font-size="12" font-weight="700" fill="#b45309">1</text>
+                                <text x="44" y="120" font-size="10.5" font-weight="700" fill="#047857">45°</text>
+                                <text x="44" y="48" font-size="10.5" font-weight="700" fill="#047857">45°</text>
+                            </svg>
+                        </div>
+
+                        <ol style="margin: 0; padding-left: 1.25rem; font-size: 0.95rem; color: #334155; line-height: 1.8">
+                            <li>
+                                <strong>Start with a Square:</strong>
+                                Begin with a square where each side has a standardized length of $1$. All four interior angles are right angles ($90^\circ$).
+                            </li>
+                            <li>
+                                <strong>Slice Along the Diagonal:</strong>
+                                Draw a diagonal line from one corner to the opposite corner. This splits the square into two identical isosceles right-angled triangles.
+                            </li>
+                            <li>
+                                <strong>Determine the Angles:</strong>
+                                Because the square's corners are $90^\circ$ and the diagonal bisects them exactly in half, the two acute angles of the resulting triangle are each $\frac{90^\circ}{2} = 45^\circ$ ($\frac{\pi}{4}$ radians).
+                            </li>
+                            <li>
+                                <strong>Solve for the Hypotenuse ($c$) Using Pythagoras' Theorem ($a^2 + b^2 = c^2$):</strong>
+                                $$1^2 + 1^2 = c^2 \implies 1 + 1 = c^2 \implies c^2 = 2 \implies c = \sqrt{2}$$
+                            </li>
+                            <li>
+                                <strong>Extract the Exact Ratios for $45^\circ$ ($\frac{\pi}{4}$):</strong>
+                                <ul style="margin: 0.35rem 0 0 1.25rem; color: #475569">
+                                    <li><strong>$\sin(45^\circ) = \frac{\text{Opposite}}{\text{Hypotenuse}} = \frac{1}{\sqrt{2}} = \frac{\sqrt{2}}{2}$</strong></li>
+                                    <li><strong>$\cos(45^\circ) = \frac{\text{Adjacent}}{\text{Hypotenuse}} = \frac{1}{\sqrt{2}} = \frac{\sqrt{2}}{2}$</strong></li>
+                                    <li><strong>$\tan(45^\circ) = \frac{\text{Opposite}}{\text{Adjacent}} = \frac{1}{1} = 1$</strong></li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
 
                 <!-- THE HAND TRICK / SQRT(N)/2 TABLE -->
                 <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0">
