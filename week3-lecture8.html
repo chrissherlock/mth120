@@ -1489,59 +1489,277 @@
                 <!-- ================================================================= -->
                 <!-- 2.4 ALGEBRAIC LAWS OF LOGARITHMS & PROOFS                         -->
                 <!-- ================================================================= -->
-                <h3 style="color: #0f172a; margin-top: 2.5rem" id="log-laws">2.4 The Algebraic Laws of Logarithms: Turning Multiplication into Addition</h3>
+                <h3 style="color: #0f172a; margin-top: 2.5rem" id="log-laws">2.4 The Algebraic Laws of Logarithms: Translating Exponents</h3>
                 <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
-                    Why did Scottish mathematician John Napier spend twenty years inventing logarithms in 1614? Because multiplying and dividing huge numbers by hand is brutal, whereas adding and subtracting is easy! Since exponential functions turn
-                    <em>addition into multiplication</em>
-                    ($a^{u+v} = a^u \cdot a^v$), their inverse function—the logarithm—runs that machine backward:
-                    <strong>logarithms turn multiplication into addition, division into subtraction, and powers into scalar multiples!</strong>
+                    If you have ever felt intimidated or completely lost when looking at logarithm rules, take a deep breath. You are completely normal, and you are in exactly the right place. These laws often look like an alien language of shifting letters and arbitrary rules. But here is the comforting truth:
+                    <strong>you already know these laws.</strong>
+                </p>
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                    Remember our golden rule from Section 2.1:
+                    <em>a logarithm is just an exponent</em>
+                    . Therefore, every single "Logarithm Law" is simply an old, familiar "Exponent Law" written from a different perspective. Back in 1614, mathematicians realized that if they converted giant, messy numbers into their exponents (their logarithms), they could do complex arithmetic much faster. Let's walk through exactly how this works, step by step.
                 </p>
 
-                <div style="overflow-x: auto; margin: 1.5rem 0">
-                    <table style="width: 100%; border-collapse: collapse; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; text-align: left">
-                        <thead>
-                            <tr style="background: #f8fafc; border-bottom: 2px solid #cbd5e1; color: #0f172a">
-                                <th style="padding: 0.85rem 1rem">Logarithm Law ($x, y > 0$)</th>
-                                <th style="padding: 0.85rem 1rem">Formula</th>
-                                <th style="padding: 0.85rem 1rem">One-Line Proof via Exponents ($u = \log_a x, v = \log_a y$)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="border-bottom: 1px solid #e2e8f0">
-                                <td style="padding: 0.85rem 1rem; font-weight: 700; color: #0f172a">1. Product-to-Sum</td>
-                                <td style="padding: 0.85rem 1rem; color: #047857; font-weight: 600">$\log_a(xy) = \log_a(x) + \log_a(y)$</td>
-                                <td style="padding: 0.85rem 1rem; color: #334155">Since $x = a^u$ and $y = a^v$, $xy = a^u a^v = a^{u+v} \implies \log_a(xy) = u + v$.</td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid #e2e8f0">
-                                <td style="padding: 0.85rem 1rem; font-weight: 700; color: #0f172a">2. Quotient-to-Difference</td>
-                                <td style="padding: 0.85rem 1rem; color: #047857; font-weight: 600">$\log_a\left(\frac{x}{y}\right) = \log_a(x) - \log_a(y)$</td>
-                                <td style="padding: 0.85rem 1rem; color: #334155">Since $\frac{x}{y} = \frac{a^u}{a^v} = a^{u-v}$, taking $\log_a$ of both sides yields $u - v$.</td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid #e2e8f0">
-                                <td style="padding: 0.85rem 1rem; font-weight: 700; color: #0f172a">3. Power Pull-Down</td>
-                                <td style="padding: 0.85rem 1rem; color: #047857; font-weight: 600">$\log_a(x^p) = p \log_a(x) \quad (p \in \mathbb{R})$</td>
-                                <td style="padding: 0.85rem 1rem; color: #334155">Since $x^p = (a^u)^p = a^{pu}$, taking $\log_a$ of both sides yields $pu = p\log_a(x)$.</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.85rem 1rem; font-weight: 700; color: #0f172a">4. Reciprocal Flip</td>
-                                <td style="padding: 0.85rem 1rem; color: #047857; font-weight: 600">$\log_a\left(\frac{1}{x}\right) = -\log_a(x)$</td>
-                                <td style="padding: 0.85rem 1rem; color: #334155">Special case of the Power Rule with $p = -1$: $\log_a(x^{-1}) = -\log_a(x)$.</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div style="display: flex; flex-direction: column; gap: 1.5rem; margin: 2rem 0">
+                    <!-- LAW 1: PRODUCT -->
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-left: 5px solid #0284c7; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02)">
+                        <h4 style="margin: 0 0 0.5rem 0; color: #0369a1; font-size: 1.15rem">1. The Product Law: Turning Multiplication into Addition</h4>
+                        <div style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin-bottom: 1rem">$$\log_a(x \cdot y) = \log_a(x) + \log_a(y)$$</div>
+
+                        <p style="margin: 0 0 1rem 0; color: #334155; font-size: 1rem; line-height: 1.7">
+                            <strong>The Intuition (The "Exponent Detector"):</strong>
+                            Think of a logarithm as an "exponent detector." When you feed a number into a logarithm, it strips away the base and hands you back just the exponent. To see why this law works, let's look at how you naturally multiply numbers using base 10:
+                        </p>
+                        <ul style="margin: 0 0 1.25rem 1.25rem; color: #334155; font-size: 1rem; line-height: 1.7">
+                            <li>
+                                <strong>The raw numbers:</strong>
+                                Imagine you want to multiply $100 \times 1,000$.
+                            </li>
+                            <li>
+                                <strong>The exponent view:</strong>
+                                You already know that $100$ is $10^2$ (its exponent is $2$), and $1,000$ is $10^3$ (its exponent is $3$).
+                            </li>
+                            <li>
+                                <strong>The multiplication step:</strong>
+                                When you multiply $10^2 \times 10^3$, you don't actually multiply the exponents together. You just
+                                <em>add</em>
+                                them together to get $10^5$ (which is $100,000$). The absolute golden rule for exponents is that
+                                <strong>multiplying the bases means adding their exponents</strong>
+                                ($2 + 3 = 5$).
+                            </li>
+                            <li>
+                                <strong>The logarithm view:</strong>
+                                Because a logarithm is just a tool that isolates the exponent, it obeys that exact same rule. If you ask a base-10 logarithm to find the exponent of $(100 \times 1,000)$, it finds the exponent of $100$, finds the exponent of $1,000$, and adds them together!
+                            </li>
+                        </ul>
+
+                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 1.25rem; margin-bottom: 1.75rem">
+                            <p style="margin: 0 0 0.5rem 0; color: #334155; font-size: 0.95rem; font-weight: 600">Written out in mathematical notation, that exact thought process looks like this:</p>
+                            <div style="font-size: 1.05rem; color: #0f172a; line-height: 1.8">$$ \begin{aligned} \log_{10}(100 \times 1,000) &= \log_{10}(100) + \log_{10}(1,000) \\ \log_{10}(100,000) &= 2 + 3 \\ \mathbf{5} &= \mathbf{5} \end{aligned} $$</div>
+                        </div>
+
+                        <p style="margin: 0 0 1rem 0; color: #334155; font-size: 1rem; line-height: 1.7">
+                            <strong>Locking in the Mechanism with Base 2:</strong>
+                            Let's trace this exact same logic with base 2 to prove it isn't just a base-10 trick. Suppose we want to multiply $8 \times 4$.
+                        </p>
+                        <ul style="margin: 0 0 1.25rem 1.25rem; color: #334155; font-size: 1rem; line-height: 1.7">
+                            <li>
+                                <strong>The Exponents:</strong>
+                                We know $8 = 2^3$ and $4 = 2^2$.
+                            </li>
+                            <li>
+                                <strong>The Logarithms:</strong>
+                                Therefore, $\log_2(8) = 3$ and $\log_2(4) = 2$.
+                            </li>
+                            <li>
+                                <strong>The Product:</strong>
+                                If we multiply the raw numbers, $8 \times 4 = 32$. If we count our powers of two ($2, 4, 8, 16, 32$), we know that $32$ is $2^5$. Therefore, its logarithm is $5$.
+                            </li>
+                            <li>
+                                <strong>The Law in Action:</strong>
+                                Does adding the individual exponents give us the exact exponent of the total? Yes! $3 + 2 = 5$.
+                            </li>
+                        </ul>
+
+                        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 1.25rem">
+                            <p style="margin: 0 0 0.5rem 0; color: #166534; font-size: 0.95rem; font-weight: 600">The mathematical translation for Base 2:</p>
+                            <div style="font-size: 1.05rem; color: #065f46; line-height: 1.8">$$ \begin{aligned} \log_2(8 \times 4) &= \log_2(8) + \log_2(4) \\ \log_2(32) &= 3 + 2 \\ \mathbf{5} &= \mathbf{5} \end{aligned} $$</div>
+                        </div>
+                    </div>
+
+                    <!-- LAW 2: QUOTIENT -->
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-left: 5px solid #059669; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02)">
+                        <h4 style="margin: 0 0 0.5rem 0; color: #047857; font-size: 1.15rem">2. The Quotient Law: Turning Division into Subtraction</h4>
+                        <div style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin-bottom: 1rem">$$\log_a\left(\frac{x}{y}\right) = \log_a(x) - \log_a(y)$$</div>
+
+                        <p style="margin: 0 0 1rem 0; color: #334155; font-size: 1rem; line-height: 1.7">
+                            <strong>The Intuition (The "Exponent Detector" strikes again):</strong>
+                            Just as multiplication forces you to add exponents, division forces you to subtract them. Let's look at how division works with our familiar base 10:
+                        </p>
+                        <ul style="margin: 0 0 1.25rem 1.25rem; color: #334155; font-size: 1rem; line-height: 1.7">
+                            <li>
+                                <strong>The raw numbers:</strong>
+                                Imagine you want to divide $100,000 \div 100$.
+                            </li>
+                            <li>
+                                <strong>The exponent view:</strong>
+                                You know that $100,000$ is $10^5$ (its exponent is $5$), and $100$ is $10^2$ (its exponent is $2$).
+                            </li>
+                            <li>
+                                <strong>The division step:</strong>
+                                When you calculate $\frac{10^5}{10^2}$, you don't actually do long division. You just
+                                <em>subtract</em>
+                                the bottom exponent from the top exponent to get $10^3$ (which is $1,000$). The golden rule here is that
+                                <strong>dividing the bases means subtracting their exponents</strong>
+                                ($5 - 2 = 3$).
+                            </li>
+                            <li>
+                                <strong>The logarithm view:</strong>
+                                Once again, our "exponent detector" does exactly what you just did in your head. To find the exponent of a division problem, it finds the exponent of the top number, finds the exponent of the bottom number, and subtracts them!
+                            </li>
+                        </ul>
+
+                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 1.25rem; margin-bottom: 1.75rem">
+                            <p style="margin: 0 0 0.5rem 0; color: #334155; font-size: 0.95rem; font-weight: 600">Written out in mathematical notation, that exact thought process looks like this:</p>
+                            <div style="font-size: 1.05rem; color: #0f172a; line-height: 1.8">$$ \begin{aligned} \log_{10}\left(\frac{100,000}{100}\right) &= \log_{10}(100,000) - \log_{10}(100) \\ \log_{10}(1,000) &= 5 - 2 \\ \mathbf{3} &= \mathbf{3} \end{aligned} $$</div>
+                        </div>
+
+                        <p style="margin: 0 0 1rem 0; color: #334155; font-size: 1rem; line-height: 1.7">
+                            <strong>Locking in the Mechanism with Base 2:</strong>
+                            Let's prove this works exactly the same way for base 2. Suppose we want to divide $32 \div 4$.
+                        </p>
+                        <ul style="margin: 0 0 1.25rem 1.25rem; color: #334155; font-size: 1rem; line-height: 1.7">
+                            <li>
+                                <strong>The Exponents:</strong>
+                                We know $32 = 2^5$ and $4 = 2^2$.
+                            </li>
+                            <li>
+                                <strong>The Logarithms:</strong>
+                                Therefore, $\log_2(32) = 5$ and $\log_2(4) = 2$.
+                            </li>
+                            <li>
+                                <strong>The Quotient:</strong>
+                                If we divide the raw numbers, $32 \div 4 = 8$. We know that $8$ is $2^3$. Therefore, its logarithm must be $3$.
+                            </li>
+                            <li>
+                                <strong>The Law in Action:</strong>
+                                Does subtracting the individual exponents give us the exact exponent of the result? Yes! $5 - 2 = 3$.
+                            </li>
+                        </ul>
+
+                        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 1.25rem">
+                            <p style="margin: 0 0 0.5rem 0; color: #166534; font-size: 0.95rem; font-weight: 600">The mathematical translation for Base 2:</p>
+                            <div style="font-size: 1.05rem; color: #065f46; line-height: 1.8">$$ \begin{aligned} \log_2\left(\frac{32}{4}\right) &= \log_2(32) - \log_2(4) \\ \log_2(8) &= 5 - 2 \\ \mathbf{3} &= \mathbf{3} \end{aligned} $$</div>
+                        </div>
+                    </div>
+
+                    <!-- LAW 3: POWER -->
+                    <!-- LAW 3: POWER -->
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-left: 5px solid #d97706; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02)">
+                        <h4 style="margin: 0 0 0.5rem 0; color: #b45309; font-size: 1.15rem">3. The Power Law (The "Pull-Down" Trick): Turning Powers into Multipliers</h4>
+                        <div style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin-bottom: 1rem">$$\log_a(x^p) = p \cdot \log_a(x)$$</div>
+
+                        <p style="margin: 0 0 1rem 0; color: #334155; font-size: 1rem; line-height: 1.7">
+                            <strong>The Intuition (Repeated Addition):</strong>
+                            This is arguably the most powerful tool in all of pre-calculus because it rescues variables trapped up in the exponent and drops them down to the ground floor as normal multipliers. To see why this is totally legal, let's use base 10 and look at $100^3$:
+                        </p>
+                        <ul style="margin: 0 0 1.25rem 1.25rem; color: #334155; font-size: 1rem; line-height: 1.7">
+                            <li>
+                                <strong>The expanded view:</strong>
+                                You already know that $100^3$ literally just means $100 \times 100 \times 100$.
+                            </li>
+                            <li>
+                                <strong>Using the Product Law:</strong>
+                                Based on Law 1, we know our "exponent detector" turns multiplication into addition. So, $\log_{10}(100 \times 100 \times 100)$ becomes $\log_{10}(100) + \log_{10}(100) + \log_{10}(100)$.
+                            </li>
+                            <li>
+                                <strong>The shortcut:</strong>
+                                What is the mathematical shortcut for adding the exact same thing three times?
+                                <em>Multiplying by 3!</em>
+                                Since $\log_{10}(100)$ is $2$, adding $2 + 2 + 2$ is just $3 \times 2$.
+                            </li>
+                            <li>
+                                <strong>The pull-down trick:</strong>
+                                Instead of writing all that expansion out, you can just grab the exponent $3$, pull it down to the front of the logarithm, and multiply.
+                            </li>
+                        </ul>
+
+                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 1.25rem; margin-bottom: 1.75rem">
+                            <p style="margin: 0 0 0.5rem 0; color: #334155; font-size: 0.95rem; font-weight: 600">Written out in mathematical notation, the pull-down trick looks like this:</p>
+                            <div style="font-size: 1.05rem; color: #0f172a; line-height: 1.8">$$ \begin{aligned} \log_{10}(100^3) &= 3 \cdot \log_{10}(100) \\ \log_{10}(1,000,000) &= 3 \cdot 2 \\ \mathbf{6} &= \mathbf{6} \end{aligned} $$</div>
+                        </div>
+
+                        <p style="margin: 0 0 1rem 0; color: #334155; font-size: 1rem; line-height: 1.7">
+                            <strong>Locking in the Mechanism with Base 2:</strong>
+                            Let's verify this trick with base 2 to prove it works universally. Suppose we want to find the logarithm of $8^2$.
+                        </p>
+                        <ul style="margin: 0 0 1.25rem 1.25rem; color: #334155; font-size: 1rem; line-height: 1.7">
+                            <li>
+                                <strong>The manual way:</strong>
+                                First, calculate the power. $8^2 = 64$. Now, what power of $2$ gives $64$? If we count our powers of two ($2, 4, 8, 16, 32, 64$), we find it is $2^6$. So the true exponent is $6$.
+                            </li>
+                            <li>
+                                <strong>The pull-down way:</strong>
+                                Instead of bothering to figure out that $8^2$ is $64$, we just pull the $2$ down to the front: $2 \times \log_2(8)$.
+                            </li>
+                            <li>
+                                <strong>The result:</strong>
+                                We already know $\log_2(8)$ is $3$ (since $2^3 = 8$). So we just multiply $2 \times 3$, which gives us $6$ instantly!
+                            </li>
+                        </ul>
+
+                        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 1.25rem">
+                            <p style="margin: 0 0 0.5rem 0; color: #166534; font-size: 0.95rem; font-weight: 600">The mathematical translation for Base 2:</p>
+                            <div style="font-size: 1.05rem; color: #065f46; line-height: 1.8">$$ \begin{aligned} \log_2(8^2) &= 2 \cdot \log_2(8) \\ \log_2(64) &= 2 \cdot 3 \\ \mathbf{6} &= \mathbf{6} \end{aligned} $$</div>
+                        </div>
+                    </div>
+
+                    <!-- LAW 4: RECIPROCAL -->
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-left: 5px solid #7c3aed; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02)">
+                        <h4 style="margin: 0 0 0.5rem 0; color: #6d28d9; font-size: 1.15rem">4. The Reciprocal Flip: Fractions are just Negative Exponents</h4>
+                        <div style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin-bottom: 1rem">$$\log_a\left(\frac{1}{x}\right) = -\log_a(x)$$</div>
+
+                        <p style="margin: 0 0 1rem 0; color: #334155; font-size: 1rem; line-height: 1.7">
+                            <strong>The Intuition (The Power Law Shortcut):</strong>
+                            This law isn't actually a new rule at all—it is just an incredibly useful shortcut built directly from the Power Law we just learned.
+                        </p>
+                        <ul style="margin: 0 0 1.25rem 1.25rem; color: #334155; font-size: 1rem; line-height: 1.7">
+                            <li>
+                                <strong>The fraction view:</strong>
+                                Remember from Section 1.2 that a negative exponent just means "divide by the base." So, writing the fraction $\frac{1}{100}$ is mathematically identical to writing $100^{-1}$.
+                            </li>
+                            <li>
+                                <strong>The pull-down step:</strong>
+                                If we ask our exponent detector for $\log_{10}\left(\frac{1}{100}\right)$, we can just rewrite it as $\log_{10}(100^{-1})$. Now, use the Power Law! We grab that $-1$ and pull it down to the front: $-1 \cdot \log_{10}(100)$.
+                            </li>
+                            <li>
+                                <strong>The result:</strong>
+                                The logarithm of a fraction is exactly the same thing as the negative logarithm of the flipped whole number! Since $\log_{10}(100)$ is $2$, the answer is simply $-2$.
+                            </li>
+                        </ul>
+
+                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 1.25rem; margin-bottom: 1.75rem">
+                            <p style="margin: 0 0 0.5rem 0; color: #334155; font-size: 0.95rem; font-weight: 600">Written out in mathematical notation, that exact thought process looks like this:</p>
+                            <div style="font-size: 1.05rem; color: #0f172a; line-height: 1.8">$$ \begin{aligned} \log_{10}\left(\frac{1}{100}\right) &= - \log_{10}(100) \\ \log_{10}(10^{-2}) &= -(2) \\ \mathbf{-2} &= \mathbf{-2} \end{aligned} $$</div>
+                        </div>
+
+                        <p style="margin: 0 0 1rem 0; color: #334155; font-size: 1rem; line-height: 1.7">
+                            <strong>Locking in the Mechanism with Base 2:</strong>
+                            Let's verify this trick with base 2. Suppose you are in an exam and need to find the logarithm of the fraction $\frac{1}{8}$.
+                        </p>
+                        <ul style="margin: 0 0 1.25rem 1.25rem; color: #334155; font-size: 1rem; line-height: 1.7">
+                            <li>
+                                <strong>The manual way:</strong>
+                                What power of $2$ gives $\frac{1}{8}$? We know $2^3 = 8$, so to force the $8$ into the denominator, the exponent must be negative: $2^{-3} = \frac{1}{8}$. The true exponent is $-3$.
+                            </li>
+                            <li>
+                                <strong>The flip trick:</strong>
+                                Instead of doing that mental gymnastics and worrying about negative fractions, just flip the fraction upside down and stick a negative sign in front: $-\log_2(8)$.
+                            </li>
+                            <li>
+                                <strong>The result:</strong>
+                                We already know $\log_2(8)$ is $3$. Throwing the negative sign on it gives us $-3$ instantly!
+                            </li>
+                        </ul>
+
+                        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 1.25rem">
+                            <p style="margin: 0 0 0.5rem 0; color: #166534; font-size: 0.95rem; font-weight: 600">The mathematical translation for Base 2:</p>
+                            <div style="font-size: 1.05rem; color: #065f46; line-height: 1.8">$$ \begin{aligned} \log_2\left(\frac{1}{8}\right) &= - \log_2(8) \\ \log_2(2^{-3}) &= -(3) \\ \mathbf{-3} &= \mathbf{-3} \end{aligned} $$</div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- WARNING: NON-EXISTENT LOG LAWS -->
-                <div style="background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #b45309; border-radius: 8px; padding: 1.15rem 1.5rem; margin: 1.5rem 0">
-                    <div style="color: #b45309; font-weight: 800; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem">🚫 Beware of Counterfeit Logarithm Laws!</div>
-                    <p style="margin: 0; color: #334155; font-size: 0.95rem; line-height: 1.6">
-                        Logarithms do
-                        <strong>not</strong>
-                        distribute over addition or subtraction, and a quotient of logs is
-                        <strong>not</strong>
-                        a difference! Never write these false equations in an exam:
+                <div style="background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #b45309; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 2rem 0">
+                    <div style="color: #b45309; font-weight: 800; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem">🚫 Beware of Counterfeit Logarithm Laws!</div>
+                    <p style="margin: 0 0 1rem 0; color: #334155; font-size: 1rem; line-height: 1.6">
+                        When you are first learning this, it is very tempting to "invent" math rules that look correct but are totally false.
+                        <strong>Logarithms do not behave like standard multiplication, so you cannot "distribute" them across a bracket.</strong>
                     </p>
-                    <div style="text-align: center; margin: 0.65rem 0 0.25rem 0; font-size: 1.05rem; color: #b91c1c; font-weight: 700">$$\log_a(x + y) \neq \log_a(x) + \log_a(y) \qquad \text{and} \qquad \frac{\log_a(x)}{\log_a(y)} \neq \log_a(x - y)$$</div>
+                    <ul style="margin: 0; padding-left: 1.25rem; color: #b91c1c; font-size: 1.05rem; font-weight: 600; line-height: 1.75">
+                        <li>$\log_a(x + y)$ DOES NOT EQUAL $\log_a(x) + \log_a(y)$. (You cannot distribute a log over addition).</li>
+                        <li>$\frac{\log_a(x)}{\log_a(y)}$ DOES NOT EQUAL $\log_a(x - y)$. (A fraction of two logs is not subtraction).</li>
+                    </ul>
                 </div>
 
                 <!-- ================================================================= -->
@@ -1562,16 +1780,24 @@
                 </p>
 
                 <h4 style="color: #0f172a; margin-top: 1.75rem">The Change of Base Formula: Why You Only Ever Need One Logarithm</h4>
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">In standard mathematics and programming, you are frequently handed logarithms in strange bases, like $\log_2(32)$ or $\log_7(50)$. The problem is that calculus only plays nicely with the natural base $e$. Furthermore, your physical calculator and standard programming libraries typically only compute the natural logarithm ($\ln$) or the common logarithm ($\log_{10}$).</p>
                 <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
-                    Here is a remarkable fact:
+                    To evaluate a strange base, you have to translate it into a language your tools understand. The Change of Base formula allows you to rip out the old, awkward base and replace it with any new base you want. Because calculus demands base $e$, we almost exclusively convert things into natural logarithms ($\ln$). Here is a remarkable fact:
                     <em>every logarithm $\log_a(x)$, regardless of its base $a$, is just a vertically scaled copy of the natural logarithm $\ln(x)$!</em>
                 </p>
+
                 <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.35rem 1.5rem; margin: 1.25rem 0">
-                    <div style="font-weight: 800; color: #0f172a; font-size: 1rem; margin-bottom: 0.5rem">Theorem (Change of Base Formula)</div>
+                    <div style="font-weight: 800; color: #0f172a; font-size: 1rem; margin-bottom: 0.5rem">Theorem (Change of Base Formula) & The "Basement Trick"</div>
                     <p style="margin: 0 0 0.75rem 0; color: #334155; font-size: 0.95rem">For any valid bases $a, b > 0$ ($a, b \neq 1$) and any $x > 0$:</p>
                     <div style="text-align: center; margin: 0.75rem 0; font-size: 1.2rem; color: #0284c7; font-weight: 700">$$\log_a(x) = \frac{\log_b(x)}{\log_b(a)} = \frac{\ln(x)}{\ln(a)}$$</div>
+                    <p style="margin: 0.75rem 0 0.75rem 0; color: #334155; font-size: 0.95rem">
+                        <strong>Visual Mnemonic:</strong>
+                        Look at the original expression $\log_a(x)$. The target number $x$ is written normally, but the base $a$ is written as a subscript, physically lower down. When you apply the formula, that physical relationship stays exactly the same: the $x$ stays on top in the numerator ($\ln(x)$), and the base $a$ goes down into the
+                        <strong>basement</strong>
+                        (the denominator: $\ln(a)$).
+                    </p>
                     <p style="margin: 0.75rem 0 0 0; color: #475569; font-size: 0.92rem; line-height: 1.65">
-                        <strong>3-Step Proof:</strong>
+                        <strong>3-Step Proof (Using Exponents):</strong>
                         1. Let $y = \log_a(x)$. By the Rosetta Stone equivalence, this means $a^y = x$.
                         <br />
                         2. Take the natural logarithm $\ln(\cdot)$ of both sides: $\ln(a^y) = \ln(x)$.
@@ -1589,7 +1815,41 @@
                     <h4>🎯 Worked Examples: Logarithmic Domains, Equations &amp; Inverses</h4>
 
                     <p style="margin-bottom: 0.5rem">
-                        <strong>Example 1 (Finding the Natural Domain of a Composite Logarithm):</strong>
+                        <strong>Example 1 (Converting to Compute a Value):</strong>
+                        Calculate $\log_2(8)$ using the Change of Base formula.
+                    </p>
+                    <ol style="margin: 0 0 1.25rem 1.25rem; padding: 0; font-size: 0.95rem; line-height: 1.7">
+                        <li>
+                            <strong>Use the basement trick:</strong>
+                            Rewrite it using natural logs: $$\log_2(8) = \frac{\ln(8)}{\ln(2)}$$
+                        </li>
+                        <li>
+                            <strong>Simplify the numerator:</strong>
+                            Since $8 = 2^3$, we can rewrite the top: $$\frac{\ln(2^3)}{\ln(2)}$$
+                        </li>
+                        <li>
+                            <strong>Apply the Power Law:</strong>
+                            Pull the $3$ down to the front: $$\frac{3 \cdot \ln(2)}{\ln(2)}$$
+                        </li>
+                        <li>
+                            <strong>Cancel:</strong>
+                            The $\ln(2)$ terms cancel out perfectly, leaving exactly
+                            <strong>$3$</strong>
+                            .
+                        </li>
+                    </ol>
+
+                    <p style="margin-bottom: 0.5rem; border-top: 1px solid #bbf7d0; padding-top: 1rem">
+                        <strong>Example 2 (The Calculus Prep):</strong>
+                        Prepare the function $f(x) = \log_5(x)$ for differentiation.
+                    </p>
+                    <ul style="margin: 0 0 1.25rem 1.25rem; padding: 0; font-size: 0.95rem; line-height: 1.7">
+                        <li>Calculus formulas do not work on base $5$. Before you do any calculus, use the Change of Base formula to rewrite the function: $$f(x) = \frac{\ln(x)}{\ln(5)}$$</li>
+                        <li>Because $\ln(5)$ is just a constant number, this is the exact same thing as writing $f(x) = \left(\frac{1}{\ln 5}\right) \cdot \ln(x)$. Now it is a standard natural logarithm that you can easily differentiate!</li>
+                    </ul>
+
+                    <p style="margin-bottom: 0.5rem; border-top: 1px solid #bbf7d0; padding-top: 1rem">
+                        <strong>Example 3 (Finding the Natural Domain of a Composite Logarithm):</strong>
                         Find the natural domain of $f(x) = \ln(x^2 - 9)$.
                     </p>
                     <ol style="margin: 0 0 1.25rem 1.25rem; padding: 0; font-size: 0.95rem; line-height: 1.7">
@@ -1609,7 +1869,7 @@
                     </ol>
 
                     <p style="margin-bottom: 0.5rem; border-top: 1px solid #bbf7d0; padding-top: 1rem">
-                        <strong>Example 2 (Solving a Logarithmic Equation &amp; Checking for Extraneous Roots):</strong>
+                        <strong>Example 4 (Solving a Logarithmic Equation &amp; Checking for Extraneous Roots):</strong>
                         Solve $\log_2(x) + \log_2(x - 2) = 3$.
                     </p>
                     <ol style="margin: 0 0 1.25rem 1.25rem; padding: 0; font-size: 0.95rem; line-height: 1.7">
@@ -1636,7 +1896,7 @@
                     </ol>
 
                     <p style="margin-bottom: 0.5rem; border-top: 1px solid #bbf7d0; padding-top: 1rem">
-                        <strong>Example 3 (Inverting a Shifted Exponential Function):</strong>
+                        <strong>Example 5 (Inverting a Shifted Exponential Function):</strong>
                         Find the inverse $f^{-1}(x)$ of $f(x) = 3 \cdot e^{2x - 1} + 5$.
                     </p>
                     <ol style="margin: 0; padding-left: 1.25rem; font-size: 0.95rem; line-height: 1.7">
