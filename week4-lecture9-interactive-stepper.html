@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Practice: Continuity & The IVT | MTHS120</title>
+
+        <!-- KaTeX Integration -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+        <style>
+            :root {
+                --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
+                --accent: #047857; --accent-hover: #065f46;
+                --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            }
+            *, *::before, *::after { box-sizing: border-box; }
+            body { font-family: var(--font-ui); background: var(--bg); color: var(--text); padding: 2rem; margin: 0; line-height: 1.6; }
+            .container { max-width: 850px; margin: 0 auto; }
+
+            .header-nav { display: flex; gap: 0.5rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+            .header-nav a { background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; transition: background 0.2s; }
+            .header-nav a:hover { background: #e2e8f0; }
+
+            h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-bottom: 2rem; color: #0f172a; font-size: 1.75rem; }
+
+            .problem-card { background: var(--card); padding: 2rem; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+            .problem-header { font-weight: 800; color: #047857; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.85rem; margin-bottom: 1rem; border-bottom: 2px solid #bbf7d0; padding-bottom: 0.5rem; }
+            .problem-text { margin: 0 0 1.5rem 0; font-size: 1.05rem; color: #334155; }
+
+            .options { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; }
+            .option-label { display: flex; gap: 1rem; align-items: flex-start; padding: 1rem 1.25rem; border: 1px solid var(--border); border-radius: 6px; cursor: pointer; transition: all 0.2s ease; font-size: 0.95rem; color: #1e293b; }
+            .option-label:hover { background: #f8fafc; border-color: #94a3b8; }
+            .option-label input[type="radio"] { cursor: pointer; transform: scale(1.15); margin-top: 0.25rem; }
+
+            .btn-check { background: var(--accent); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.95rem; transition: background 0.2s; }
+            .btn-check:hover { background: var(--accent-hover); }
+
+            .feedback { margin-top: 1.5rem; padding: 1.25rem; border-radius: 6px; display: none; font-size: 0.95rem; line-height: 1.6; }
+            .feedback.correct { display: block; background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid #10b981; color: #065f46; }
+            .feedback.incorrect { display: block; background: #fef2f2; border: 1px solid #fecaca; border-left: 4px solid #ef4444; color: #991b1b; }
+
+            .feedback strong { display: block; margin-bottom: 0.5rem; font-size: 1.05rem; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header-nav">
+                <a href="week4-lecture9.html">&larr; Back to Lecture 9</a>
+                <a href="week4.html">&uarr; Week 4 Hub</a>
+            </div>
+
+            <h2>Practice Problems: Continuity & The IVT</h2>
+
+            <!-- PROBLEM 1 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 1: The Epsilon-Delta Machine</div>
+                <p class="problem-text">You are operating a machine governed by the linear function $f(x) = 5x - 2$. Your perfect target output is $f(3) = 13$. The adversary demands an output tolerance of $\epsilon = 0.5$. What is the required input tolerance $\delta$ around $x_0 = 3$ to mathematically guarantee $|f(x) - 13| < 0.5$?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q1" value="a"> <span>$\delta = 0.5$</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="b"> <span>$\delta = 0.1$</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="c"> <span>$\delta = 2.5$</span></label>
+                    <label class="option-label"><input type="radio" name="q1" value="d"> <span>$\delta = 0.05$</span></label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q1', 'b', 'fb1')">Check Answer</button>
+                <div class="feedback" id="fb1" data-correct-text="Substitute the function into the output error inequality: $|(5x - 2) - 13| < 0.5$. Simplifying gives $|5x - 15| < 0.5$. Factor out the slope (5) to get $5|x - 3| < 0.5$. Divide both sides by 5 to isolate the input error: $|x - 3| < 0.1$. Therefore, $\delta = 0.1$."></div>
+            </div>
+
+            <!-- PROBLEM 2 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 2: Anatomy of the Discontinuity Jailbreak</div>
+                <p class="problem-text">Consider the step function $H(x)$ which equals $0$ for $x < 0$ and $1$ for $x \ge 0$. We want to prove it is discontinuous at $x_0 = 0$. The adversary sets $\epsilon = 0.2$ around the target output $H(0) = 1$. Why does the defender's $\delta$-trap fail?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q2" value="a"> <span>Because $H(0)$ evaluates to $1$, which is larger than $\epsilon$.</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="b"> <span>Because the $\epsilon$-corridor is too wide, allowing the function to escape the top boundary.</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="c"> <span>Because any $\delta$-window around $x=0$, no matter how tiny, will include negative $x$ inputs. These output $0$, which completely misses the $[0.8, 1.2]$ required corridor.</span></label>
+                    <label class="option-label"><input type="radio" name="q2" value="d"> <span>Because the domain of the function does not include negative numbers.</span></label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q2', 'c', 'fb2')">Check Answer</button>
+                <div class="feedback" id="fb2" data-correct-text="The $\delta$-fence must work for <em>all</em> inputs $x$ strictly within the interval $(-\delta, \delta)$. Because this interval is centered on $0$, it will always capture negative numbers. The function evaluates to $0$ for all those negative numbers, which is a full distance of $1.0$ away from the target output of $1$, destroying the $\epsilon = 0.2$ guarantee."></div>
+            </div>
+
+            <!-- PROBLEM 3 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 3: Intermediate Value Theorem Guarantees</div>
+                <p class="problem-text">Suppose $f(x)$ is a strictly continuous function on the closed interval $[1, 5]$. You are given that $f(1) = -4$ and $f(5) = 12$. Which of the following statements is mathematically guaranteed by the IVT?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q3" value="a"> <span>There is exactly one root where $f(x) = 0$ in the interval $(1, 5)$.</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="b"> <span>There is at least one number $c \in (1, 5)$ such that $f(c) = 7$.</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="c"> <span>The function must be strictly increasing on the interval $[1, 5]$.</span></label>
+                    <label class="option-label"><input type="radio" name="q3" value="d"> <span>The function will reach a maximum value of $12$ and a minimum of $-4$.</span></label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q3', 'b', 'fb3')">Check Answer</button>
+                <div class="feedback" id="fb3" data-correct-text="The IVT guarantees that a continuous function will take on <em>every single value</em> strictly between its endpoints. Since $7$ is between $-4$ and $12$, the function must hit $7$ at least once. Note that (A) is incorrect because the IVT only guarantees <em>at least one</em> root, not uniqueness (the curve could cross zero multiple times)."></div>
+            </div>
+
+            <!-- PROBLEM 4 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 4: The IVT Domain Trap</div>
+                <p class="problem-text">Consider the function $g(x) = \frac{1}{x-3}$. We evaluate the function at $x = 2$ and $x = 4$, finding $g(2) = -1$ and $g(4) = 1$. Because $0$ lies between $-1$ and $1$, does the IVT guarantee that a root $g(c) = 0$ exists in the interval $(2, 4)$?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q4" value="a"> <span>Yes, because the endpoints have opposite signs.</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="b"> <span>No, because rational functions cannot have roots.</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="c"> <span>No, because $g(x)$ is undefined and discontinuous at $x = 3$, which lies inside the interval $[2, 4]$, shattering the IVT requirement.</span></label>
+                    <label class="option-label"><input type="radio" name="q4" value="d"> <span>Yes, because the function is continuous at both $x=2$ and $x=4$.</span></label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q4', 'c', 'fb4')">Check Answer</button>
+                <div class="feedback" id="fb4" data-correct-text="The IVT strictly requires the function to be continuous across the <em>entire closed interval</em>. Because $g(x)$ has a vertical asymptote at $x = 3$ (causing division by zero), the curve breaks completely in the middle of our interval. The continuity contract is void, and the IVT cannot be applied."></div>
+            </div>
+
+            <!-- PROBLEM 5 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 5: Translating Quantifiers</div>
+                <p class="problem-text">In the formal definition of continuity ($\forall \epsilon > 0, \exists \delta > 0$), what is the strict logical meaning of the $\exists$ (Existential) quantifier applied to $\delta$?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q5" value="a"> <span>It means a single, universal $\delta$ value will work for all possible functions.</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="b"> <span>It means the defender only needs to prove that at least one valid, positive $\delta$ <em>can be calculated</em> in response to the specific $\epsilon$ chosen by the adversary.</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="c"> <span>It means the adversary gets to choose both $\epsilon$ and $\delta$.</span></label>
+                    <label class="option-label"><input type="radio" name="q5" value="d"> <span>It implies that $\delta$ must always be exactly equal to $\epsilon$.</span></label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q5', 'b', 'fb5')">Check Answer</button>
+                <div class="feedback" id="fb5" data-correct-text="The existential quantifier ($\exists$) means 'there exists'. In the context of the game, it means the defender doesn't have to guess a magical $\delta$ that works for every scenario—they simply must possess a formula (a strategy) to calculate at least one safe $\delta$ boundary based on whatever specific $\epsilon$ the adversary throws at them."></div>
+            </div>
+
+            <!-- PROBLEM 6 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 6: Existence of Roots</div>
+                <p class="problem-text">Let $f(x) = x^3 + x - 1$. You evaluate $f(0) = -1$ and $f(1) = 1$. What does the Intermediate Value Theorem allow you to conclude?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q6" value="a"> <span>The equation $x^3 + x - 1 = 0$ has exactly one root on the interval $(0, 1)$.</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="b"> <span>The equation $x^3 + x - 1 = 0$ has at least one root on the interval $(0, 1)$.</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="c"> <span>The limit of the function as $x$ approaches $0.5$ is $0$.</span></label>
+                    <label class="option-label"><input type="radio" name="q6" value="d"> <span>The function is discontinuous at $x = 0.5$.</span></label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q6', 'b', 'fb6')">Check Answer</button>
+                <div class="feedback" id="fb6" data-correct-text="Because $f(x)$ is a polynomial, it is continuous everywhere. The endpoints yield $f(0) = -1$ (negative) and $f(1) = 1$ (positive). Since $0$ is strictly between $-1$ and $1$, the IVT guarantees <em>at least one</em> root $c$ exists in $(0, 1)$ where $f(c) = 0$. (It does not guarantee uniqueness without further testing via derivatives)."></div>
+            </div>
+
+            <!-- PROBLEM 7 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 7: Epsilon-Delta for a Negative Slope</div>
+                <p class="problem-text">You are testing continuity for $f(x) = -2x + 5$ at $x_0 = 1$. The target output is $f(1) = 3$. If the adversary chooses $\epsilon = 0.4$, what is the strictly required $\delta$?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q7" value="a"> <span>$\delta = 0.8$</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="b"> <span>$\delta = -0.2$</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="c"> <span>$\delta = 0.4$</span></label>
+                    <label class="option-label"><input type="radio" name="q7" value="d"> <span>$\delta = 0.2$</span></label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q7', 'd', 'fb7')">Check Answer</button>
+                <div class="feedback" id="fb7" data-correct-text="Set up the error inequality: $|(-2x + 5) - 3| < 0.4 \implies |-2x + 2| < 0.4$. When factoring out the slope, you must take its absolute value! $|-2| \cdot |x - 1| < 0.4 \implies 2|x - 1| < 0.4 \implies |x - 1| < 0.2$. The required delta is $0.2$. (Tolerance distances must always be positive)."></div>
+            </div>
+
+            <!-- PROBLEM 8 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 8: Geometric Meaning of the Delta Fence</div>
+                <p class="problem-text">In the formal definition of continuity, what does the inequality $|x - x_0| < \delta$ represent geometrically on a graph?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q8" value="a"> <span>A horizontal corridor of width $2\delta$ centered around the y-axis.</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="b"> <span>A vertical corridor (or window) of total width $2\delta$, centered around the target input $x_0$ on the x-axis.</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="c"> <span>A circle of radius $\delta$ around the point $(x_0, f(x_0))$.</span></label>
+                    <label class="option-label"><input type="radio" name="q8" value="d"> <span>The slope of the tangent line at $x_0$.</span></label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q8', 'b', 'fb8')">Check Answer</button>
+                <div class="feedback" id="fb8" data-correct-text="Absolute value measures distance. $|x - x_0| < \delta$ dictates that the distance between any input $x$ and the target $x_0$ must be less than $\delta$. Geometrically, this restricts us to a vertical window spanning from $x_0 - \delta$ to $x_0 + \delta$, creating a total width of $2\delta$."></div>
+            </div>
+
+            <!-- PROBLEM 9 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 9: Geometric Meaning of the Epsilon Corridor</div>
+                <p class="problem-text">Similarly, what does the inequality $|f(x) - f(x_0)| < \epsilon$ represent geometrically?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q9" value="a"> <span>A horizontal corridor of total height $2\epsilon$, forming a strict ceiling and floor centered around the target output $f(x_0)$.</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="b"> <span>A vertical asymptote at $x = \epsilon$.</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="c"> <span>The maximum rate of change (derivative) allowed.</span></label>
+                    <label class="option-label"><input type="radio" name="q9" value="d"> <span>The minimum possible distance between the curve and the x-axis.</span></label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q9', 'a', 'fb9')">Check Answer</button>
+                <div class="feedback" id="fb9" data-correct-text="The inequality $|f(x) - f(x_0)| < \epsilon$ restricts the y-values (outputs). It forces every output to lie strictly between $f(x_0) - \epsilon$ and $f(x_0) + \epsilon$, drawing a horizontal safety corridor of height $2\epsilon$."></div>
+            </div>
+
+            <!-- PROBLEM 10 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 10: Removable Discontinuities</div>
+                <p class="problem-text">Suppose a function $g(x)$ is defined such that $\lim_{x \to 3} g(x) = 5$, but the actual evaluated function gives $g(3) = 8$. What type of discontinuity exists at $x = 3$?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q10" value="a"> <span>An infinite discontinuity (vertical asymptote).</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="b"> <span>A jump discontinuity.</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="c"> <span>A removable discontinuity (a hole with a displaced point).</span></label>
+                    <label class="option-label"><input type="radio" name="q10" value="d"> <span>The function is actually continuous.</span></label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q10', 'c', 'fb10')">Check Answer</button>
+                <div class="feedback" id="fb10" data-correct-text="Because the limit exists (the curve approaches a single destination of $y=5$ from both sides), but the actual function value is displaced to $y=8$, this is a 'removable' discontinuity. The curve has a single point missing, which has been relocated elsewhere."></div>
+            </div>
+
+            <!-- PROBLEM 11 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 11: Jump Discontinuities</div>
+                <p class="problem-text">If you calculate the left-hand limit of $f(x)$ as $x \to 2^-$ and get $4$, and calculate the right-hand limit as $x \to 2^+$ and get $7$, what can you conclude about the function at $x=2$?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q11" value="a"> <span>It has a jump discontinuity because the left and right trajectories arrive at different destinations.</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="b"> <span>It has a removable discontinuity (a hole).</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="c"> <span>It is continuous, but not differentiable.</span></label>
+                    <label class="option-label"><input type="radio" name="q11" value="d"> <span>The overall limit $\lim_{x\to 2} f(x)$ exists and is $5.5$.</span></label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q11', 'a', 'fb11')">Check Answer</button>
+                <div class="feedback" id="fb11" data-correct-text="When the left-hand and right-hand limits both exist as finite numbers but do not equal each other, the graph physically breaks and 'jumps' across a vertical gap. The overarching limit does not exist."></div>
+            </div>
+
+            <!-- PROBLEM 12 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 12: Shrinking the Delta Fence</div>
+                <p class="problem-text">You are defending a continuous function. The adversary sets $\epsilon = 0.5$. You calculate that an input tolerance of $\delta = 0.1$ perfectly traps the function. If you decide to be extra cautious and use $\delta = 0.05$ instead, what happens?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q12" value="a"> <span>The proof breaks because $\delta$ must be exactly equal to the threshold value.</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="b"> <span>The proof still works. Any smaller positive $\delta$ will force the inputs even closer to the target, keeping the outputs safely inside the $\epsilon$-corridor.</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="c"> <span>The output error will double, violating the $\epsilon$ boundary.</span></label>
+                    <label class="option-label"><input type="radio" name="q12" value="d"> <span>The function will become discontinuous.</span></label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q12', 'b', 'fb12')">Check Answer</button>
+                <div class="feedback" id="fb12" data-correct-text="The $\delta$ in the definition is a <em>maximum allowable</em> error for the input. If $\delta = 0.1$ keeps you safe, then any stricter (smaller) positive tolerance like $\delta = 0.05$ will also keep you safe. The definition requires <em>a</em> valid delta to exist, not a unique one."></div>
+            </div>
+
+            <!-- PROBLEM 13 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 13: Bisection Method Logic</div>
+                <p class="problem-text">You are using the bisection algorithm to find a root of a continuous function $f(x)$ on the interval $[0, 4]$. You know $f(0)$ is negative and $f(4)$ is positive. You check the midpoint $c = 2$, and find that $f(2)$ is <em>positive</em>. What is your new, smaller interval guaranteed to contain the root?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q13" value="a"> <span>$[2, 4]$</span></label>
+                    <label class="option-label"><input type="radio" name="q13" value="b"> <span>$[0, 4]$</span></label>
+                    <label class="option-label"><input type="radio" name="q13" value="c"> <span>$[0, 2]$</span></label>
+                    <label class="option-label"><input type="radio" name="q13" value="d"> <span>The root no longer exists.</span></label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q13', 'c', 'fb13')">Check Answer</button>
+                <div class="feedback" id="fb13" data-correct-text="To trap the root using the IVT, you must maintain an interval where one endpoint yields a negative output and the other yields a positive output. Since $f(0)$ is negative and $f(2)$ is positive, the root must lie in the left half: $[0, 2]$."></div>
+            </div>
+
+            <!-- PROBLEM 14 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 14: The IVT and Polynomials</div>
+                <p class="problem-text">Why is the Intermediate Value Theorem always safe to use on any standard polynomial function (e.g., $f(x) = x^4 - 3x^2 + 2$) over any closed interval $[a, b]$?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q14" value="a"> <span>Because polynomials always evaluate to positive numbers.</span></label>
+                    <label class="option-label"><input type="radio" name="q14" value="b"> <span>Because polynomials are mathematically continuous everywhere on the real number line ($\mathbb{R}$).</span></label>
+                    <label class="option-label"><input type="radio" name="q14" value="c"> <span>Because polynomials are always strictly increasing.</span></label>
+                    <label class="option-label"><input type="radio" name="q14" value="d"> <span>Because polynomials never cross the x-axis.</span></label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q14', 'b', 'fb14')">Check Answer</button>
+                <div class="feedback" id="fb14" data-correct-text="Polynomials have no denominators (no division by zero) and no even roots (no imaginary gaps). They are smooth, unbroken curves defined for all real numbers, meaning the continuity requirement of the IVT is automatically satisfied on any interval you choose."></div>
+            </div>
+
+            <!-- PROBLEM 15 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 15: Real-World IVT</div>
+                <p class="problem-text">At 8:00 AM, the outside temperature was $15^\circ\text{C}$. At 12:00 PM, the temperature was $25^\circ\text{C}$. Assuming temperature changes continuously, what does the IVT guarantee?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q15" value="a"> <span>The temperature rose exactly $2.5^\circ\text{C}$ every hour.</span></label>
+                    <label class="option-label"><input type="radio" name="q15" value="b"> <span>At some exact moment between 8:00 AM and 12:00 PM, the temperature was exactly $20.3^\circ\text{C}$.</span></label>
+                    <label class="option-label"><input type="radio" name="q15" value="c"> <span>The maximum temperature of the day was $25^\circ\text{C}$.</span></label>
+                    <label class="option-label"><input type="radio" name="q15" value="d"> <span>The temperature never dropped below $15^\circ\text{C}$ during that time.</span></label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q15', 'b', 'fb15')">Check Answer</button>
+                <div class="feedback" id="fb15" data-correct-text="Because temperature is a continuous physical quantity, it cannot teleport from 15 to 25. It must pass through every single intermediate value (including 20.3) at least once along the way."></div>
+            </div>
+
+            <!-- PROBLEM 16 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 16: The Role of the Adversary</div>
+                <p class="problem-text">In the $\epsilon$-$\delta$ proof game, what does the adversary's choice of $\epsilon$ represent?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q16" value="a"> <span>The exact point on the x-axis where we are evaluating the limit.</span></label>
+                    <label class="option-label"><input type="radio" name="q16" value="b"> <span>The maximum allowable error boundary around the target output.</span></label>
+                    <label class="option-label"><input type="radio" name="q16" value="c"> <span>The steepness of the tangent line.</span></label>
+                    <label class="option-label"><input type="radio" name="q16" value="d"> <span>The required precision of our input dial.</span></label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q16', 'b', 'fb16')">Check Answer</button>
+                <div class="feedback" id="fb16" data-correct-text="The adversary chooses $\epsilon$ (epsilon) to set the strict horizontal corridor around the target y-value. It represents the maximum allowable output error. Our job as the defender is to find the input precision ($\delta$) that satisfies their demand."></div>
+            </div>
+
+            <!-- PROBLEM 17 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 17: Algebraic Hole Evaluation</div>
+                <p class="problem-text">Consider $f(x) = \frac{x^2 - 16}{x - 4}$. The function is undefined at $x=4$ (yielding $\frac{0}{0}$). If you factor the numerator and cancel the problematic term, what is the intended limit as $x \to 4$?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q17" value="a"> <span>$0$</span></label>
+                    <label class="option-label"><input type="radio" name="q17" value="b"> <span>Does not exist (Vertical Asymptote)</span></label>
+                    <label class="option-label"><input type="radio" name="q17" value="c"> <span>$8$</span></label>
+                    <label class="option-label"><input type="radio" name="q17" value="d"> <span>$4$</span></label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q17', 'c', 'fb17')">Check Answer</button>
+                <div class="feedback" id="fb17" data-correct-text="Factoring a difference of squares gives $\frac{(x-4)(x+4)}{x-4}$. Canceling the $(x-4)$ terms leaves the simplified curve $x+4$. Plugging in $x=4$ yields $4+4=8$. The limit exists, proving this is a removable discontinuity (a hole) at $(4, 8)$."></div>
+            </div>
+
+            <!-- PROBLEM 18 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 18: Same-Sign IVT Trap</div>
+                <p class="problem-text">You test a continuous function $f(x)$ on $[2, 6]$ and find $f(2) = 4$ and $f(6) = 10$. Both outputs are positive. Does this guarantee that $f(x)$ has NO roots in the interval?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q18" value="a"> <span>Yes, because the IVT proves the function stays above the x-axis.</span></label>
+                    <label class="option-label"><input type="radio" name="q18" value="b"> <span>No, the IVT simply provides no guarantee either way. The curve could dip below zero and come back up, or it could stay entirely positive.</span></label>
+                    <label class="option-label"><input type="radio" name="q18" value="c"> <span>Yes, because continuous functions cannot change direction.</span></label>
+                    <label class="option-label"><input type="radio" name="q18" value="d"> <span>No, because the IVT always guarantees at least one root.</span></label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q18', 'b', 'fb18')">Check Answer</button>
+                <div class="feedback" id="fb18" data-correct-text="The IVT is an existence theorem, not a restrictor. If the endpoints have the same sign, the IVT goes silent. It doesn't mean a root doesn't exist (the function might be a parabola dipping down and crossing twice); it just means the IVT cannot guarantee it."></div>
+            </div>
+
+            <!-- PROBLEM 19 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 19: Fractional Linear Delta</div>
+                <p class="problem-text">For the function $f(x) = \frac{1}{2}x + 4$, the adversary chooses $\epsilon = 0.1$. What $\delta$ is required?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q19" value="a"> <span>$\delta = 0.1$</span></label>
+                    <label class="option-label"><input type="radio" name="q19" value="b"> <span>$\delta = 0.05$</span></label>
+                    <label class="option-label"><input type="radio" name="q19" value="c"> <span>$\delta = 0.2$</span></label>
+                    <label class="option-label"><input type="radio" name="q19" value="d"> <span>$\delta = 2.0$</span></label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q19', 'c', 'fb19')">Check Answer</button>
+                <div class="feedback" id="fb19" data-correct-text="For a linear function $mx+b$, the relationship is $\delta = \epsilon / |m|$. Here, $m = 1/2$. Dividing $\epsilon$ by $1/2$ is the same as multiplying by $2$. So, $\delta = 0.1 \times 2 = 0.2$. Because the slope is shallow, you can afford a wider input tolerance."></div>
+            </div>
+
+            <!-- PROBLEM 20 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 20: Transcendental Root Proving</div>
+                <p class="problem-text">Let $f(x) = \cos(x) - x$. You evaluate the interval $[0, \frac{\pi}{2}]$. Given $f(0) = 1$ and $f(\frac{\pi}{2}) = -\frac{\pi}{2}$, what does the IVT conclude?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q20" value="a"> <span>The IVT cannot be applied because $\cos(x)$ is not algebraic.</span></label>
+                    <label class="option-label"><input type="radio" name="q20" value="b"> <span>There is at least one root $c$ in $(0, \frac{\pi}{2})$ where $\cos(c) = c$.</span></label>
+                    <label class="option-label"><input type="radio" name="q20" value="c"> <span>The function is undefined at $\frac{\pi}{2}$.</span></label>
+                    <label class="option-label"><input type="radio" name="q20" value="d"> <span>The root must be exactly halfway at $\frac{\pi}{4}$.</span></label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q20', 'b', 'fb20')">Check Answer</button>
+                <div class="feedback" id="fb20" data-correct-text="Both $\cos(x)$ and $x$ are continuous everywhere, so their difference is continuous. Since $f(0)$ is positive ($1$) and $f(\frac{\pi}{2})$ is negative ($-\approx 1.57$), a root exists. Setting $f(c) = 0$ means $\cos(c) - c = 0$, which proves that the curve $y=\cos(x)$ and the line $y=x$ intersect at least once in this interval!"></div>
+            </div>
+
+            <!-- PROBLEM 21 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 21: Three Pillars of Continuity</div>
+                <p class="problem-text">A function $f(x)$ is considered fully continuous at a point $x=c$ only if three conditions are met. Which of the following is NOT one of those three conditions?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q21" value="a"> <span>The function value $f(c)$ must be defined.</span></label>
+                    <label class="option-label"><input type="radio" name="q21" value="b"> <span>The overall limit $\lim_{x\to c} f(x)$ must exist.</span></label>
+                    <label class="option-label"><input type="radio" name="q21" value="c"> <span>The function must have a derivative (slope) of $0$ at $x=c$.</span></label>
+                    <label class="option-label"><input type="radio" name="q21" value="d"> <span>The limit $\lim_{x\to c} f(x)$ must equal the function value $f(c)$.</span></label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q21', 'c', 'fb21')">Check Answer</button>
+                <div class="feedback" id="fb21" data-correct-text="Continuity requires the destination the curve is heading toward (the limit) to perfectly match the actual point plotted there (the function value). Having a slope of $0$ is a feature of local extrema (peaks/valleys) in calculus, not a requirement for continuity."></div>
+            </div>
+
+            <!-- PROBLEM 22 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 22: Exponential IVT</div>
+                <p class="problem-text">Consider $f(x) = e^x - 4$ on the interval $[0, 2]$. We know $e^0 = 1$ and $e^2 \approx 7.389$. Thus, $f(0) = -3$ and $f(2) \approx 3.389$. Does $e^x = 4$ have a solution in this interval?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q22" value="a"> <span>Yes, because $f(x)$ is continuous and changes sign from negative to positive.</span></label>
+                    <label class="option-label"><input type="radio" name="q22" value="b"> <span>No, because $e$ is an irrational number.</span></label>
+                    <label class="option-label"><input type="radio" name="q22" value="c"> <span>No, because exponential functions are strictly increasing.</span></label>
+                    <label class="option-label"><input type="radio" name="q22" value="d"> <span>Yes, but only if we expand the interval to include negative numbers.</span></label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q22', 'a', 'fb22')">Check Answer</button>
+                <div class="feedback" id="fb22" data-correct-text="Exponential functions are continuous everywhere. Because the endpoints of $e^x - 4$ yield a negative and a positive result, the IVT guarantees it crosses zero, which proves a solution to $e^x = 4$ exists within $[0, 2]$. (In fact, the exact solution is $x = \ln(4) \approx 1.386$)."></div>
+            </div>
+
+            <!-- PROBLEM 23 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 23: The Universality of the Formula</div>
+                <p class="problem-text">In the formal $\epsilon$-$\delta$ definition ($\forall \epsilon > 0, \exists \delta > 0 \dots$), why is the $\forall$ (Universal quantifier) placed on $\epsilon$ instead of $\delta$?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q23" value="a"> <span>Because the input error ($\delta$) is always larger than the output error ($\epsilon$).</span></label>
+                    <label class="option-label"><input type="radio" name="q23" value="b"> <span>Because to prove absolute continuity, the defense must hold up against <em>every conceivable</em> level of precision the adversary demands, no matter how microscopic.</span></label>
+                    <label class="option-label"><input type="radio" name="q23" value="c"> <span>Because we are proving the existence of the y-axis.</span></label>
+                    <label class="option-label"><input type="radio" name="q23" value="d"> <span>Because the definition was written before the invention of limits.</span></label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q23', 'b', 'fb23')">Check Answer</button>
+                <div class="feedback" id="fb23" data-correct-text="The $\forall$ (For All) on $\epsilon$ ensures the function has no microscopic breaks. If we only had to prove it worked for <em>one</em> specific $\epsilon$ (like $\epsilon = 1.0$), a function with a tiny jump of $0.1$ would falsely pass as continuous. Demanding survival against <em>all</em> $\epsilon > 0$ makes the continuity check mathematically airtight."></div>
+            </div>
+
+            <!-- PROBLEM 24 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 24: Non-Linear Epsilon-Delta Scaling</div>
+                <p class="problem-text">For a strictly increasing curve that curves upward (like $f(x) = x^2$ for $x > 0$), what happens to the required $\delta$ window as you move further to the right along the x-axis, assuming the adversary's $\epsilon$ remains the same?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q24" value="a"> <span>The $\delta$ window remains exactly the same size.</span></label>
+                    <label class="option-label"><input type="radio" name="q24" value="b"> <span>The $\delta$ window must become wider.</span></label>
+                    <label class="option-label"><input type="radio" name="q24" value="c"> <span>The $\delta$ window must become narrower (stricter).</span></label>
+                    <label class="option-label"><input type="radio" name="q24" value="d"> <span>$\delta$ becomes negative.</span></label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q24', 'c', 'fb24')">Check Answer</button>
+                <div class="feedback" id="fb24" data-correct-text="As the parabola curves upward, it gets steeper. A steeper slope means that tiny changes in the input ($x$) cause massive, aggressive changes in the output ($y$). To prevent the function from blowing past the adversary's fixed $\epsilon$ ceiling, you must tighten your grip on the input dial, requiring a much narrower $\delta$."></div>
+            </div>
+
+            <!-- PROBLEM 25 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 25: The Grand Arc of Calculus</div>
+                <p class="problem-text">Why did mathematicians spend centuries developing this rigorous $\epsilon$-$\delta$ definition of continuity instead of just trusting the intuition of "drawing a line without lifting your pencil"?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q25" value="a"> <span>Because drawing lines on paper is imprecise.</span></label>
+                    <label class="option-label"><input type="radio" name="q25" value="b"> <span>To ensure that instantaneous rates of change (derivatives) could be calculated safely without accidentally measuring across invisible microscopic holes or jumps.</span></label>
+                    <label class="option-label"><input type="radio" name="q25" value="c"> <span>To prove that straight lines are polynomials.</span></label>
+                    <label class="option-label"><input type="radio" name="q25" value="d"> <span>Because Isaac Newton demanded it.</span></label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q25', 'b', 'fb25')">Check Answer</button>
+                <div class="feedback" id="fb25" data-correct-text="Differential calculus relies entirely on zooming in on a curve until it looks like a straight line to measure its slope. If human intuition failed and the curve actually contained an invisible, infinitely small fracture, the calculus calculation would collapse. The $\epsilon$-$\delta$ framework provides the absolute, ironclad mathematical warranty that the curve is truly unbroken."></div>
+            </div>
+
+        </div>
+
+        <script>
+            function checkAnswer(qName, correctVal, feedbackId) {
+                const selected = document.querySelector(`input[name="${qName}"]:checked`);
+                const feedback = document.getElementById(feedbackId);
+
+                if (!selected) {
+                    alert('Please select an option before checking your answer.');
+                    return;
+                }
+
+                if (selected.value === correctVal) {
+                    feedback.className = 'feedback correct';
+                    // Reset to original correct text if they previously got it wrong
+                    if (feedback.innerHTML.includes('Incorrect')) {
+                        feedback.innerHTML = '<strong>Correct!</strong> ' + feedback.getAttribute('data-correct-text');
+                    } else if (!feedback.hasAttribute('data-correct-text')) {
+                        // Store the original correct explanation
+                        feedback.setAttribute('data-correct-text', feedback.innerHTML.replace(/<strong.*?>.*?<\\/strong>\s*/, ''));
+                    }
+                } else {
+                    if (!feedback.hasAttribute('data-correct-text')) {
+                        feedback.setAttribute('data-correct-text', feedback.innerHTML.replace(/<strong.*?>.*?<\\/strong>\s*/, ''));
+                    }
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = '<strong>Incorrect.</strong> Review the core logic of the $\\epsilon\\text{-}\\delta$ definition and the strict rules of the IVT, then try again.';
+                }
+            }
+        </script>
+    </body>
+</html>

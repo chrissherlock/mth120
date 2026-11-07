@@ -1,666 +1,198 @@
 #!/usr/bin/env python3
+
 import os
-import re
 
-STEPPER_FILENAME = "week3-lecture8-interactive-stepper.html"
-LECTURE_FILENAME = "week3-lecture8.html"
+LECTURE_FILE = "week4-lecture9.html"
+PRACTICE_FILE = "week4-lecture9-practice.html"
 
-# The raw HTML string for the interactive stepper
-STEPPER_HTML = r"""<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MTHS120 Interactive Stepper: Week 3 Lecture 8</title>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
-
-    <style>
-        :root {
-            --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
-            --accent: #d97706; --accent-hover: #b45309; --accent-light: #fef3c7;
-            --success: #10b981; --success-bg: #d1fae5;
-            --danger: #ef4444; --danger-bg: #fee2e2;
-            --info: #3b82f6; --info-bg: #dbeafe;
-            --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        }
-
-        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
-        .container { max-width: 900px; margin: 0 auto; }
-
-        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-        .back-link { background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; transition: background 0.2s; white-space: nowrap; }
-        .back-link:hover { background: #e2e8f0; color: #0f172a; }
-
-        .telemetry-bar { background: var(--card); border: 1px solid var(--border); padding: 1rem; border-radius: 8px; display: flex; gap: 1.5rem; margin-bottom: 2rem; font-size: 0.9rem; font-family: monospace; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-        .tel-stat { display: flex; flex-direction: column; }
-        .tel-label { color: #64748b; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem; }
-        .tel-val { font-weight: bold; color: var(--accent); font-size: 1.1rem; }
-
-        .stage-container { background: var(--card); border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 8px; padding: 2rem; margin-bottom: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-        .scenario-title { font-size: 1.25rem; font-weight: bold; color: #1e293b; margin-top: 0; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.75rem; }
-        .scenario-context { font-size: 1.05rem; color: #334155; margin-bottom: 1.5rem; }
-
-        .options-grid { display: grid; gap: 0.75rem; margin-bottom: 1.5rem; }
-        .option-btn { background: #f1f5f9; border: 1px solid var(--border); border-radius: 6px; padding: 1rem 1.25rem; text-align: left; font-size: 1rem; cursor: pointer; transition: all 0.2s; font-family: var(--font-ui); color: var(--text); }
-        .option-btn:hover { background: var(--accent-light); border-color: var(--accent); }
-        .option-btn.selected { background: var(--accent-light); border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
-        .option-btn.correct { background: var(--success-bg); border-color: var(--success); color: #065f46; }
-        .option-btn.wrong { background: var(--danger-bg); border-color: var(--danger); color: #991b1b; }
-
-        .analysis-container { display: none; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem; border-top: 2px dashed #e2e8f0; padding-top: 1.5rem; animation: fadeIn 0.4s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .pane { padding: 1.25rem; border-radius: 6px; border: 1px solid; }
-        .pane-what { background: #f0fdf4; border-color: #bbf7d0; border-left: 4px solid var(--success); }
-        .pane-why { background: #eff6ff; border-color: #bfdbfe; border-left: 4px solid var(--info); }
-        .pane h4 { margin: 0 0 0.75rem 0; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; }
-        .pane-what h4 { color: #047857; }
-        .pane-why h4 { color: #1d4ed8; }
-        .pane p { margin: 0; font-size: 0.95rem; line-height: 1.5; color: #334155; }
-
-        .stepper-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; }
-        .action-btn { background: var(--accent); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: background 0.2s; }
-        .action-btn:hover { background: var(--accent-hover); }
-        .action-btn:disabled { background: #cbd5e1; cursor: not-allowed; }
-        .nav-btn { background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.75rem 1.25rem; border-radius: 6px; font-weight: bold; cursor: pointer; }
-        .nav-btn:hover:not(:disabled) { background: #e2e8f0; }
-        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        @media (max-width: 640px) {
-            .analysis-container { grid-template-columns: 1fr; }
-            .telemetry-bar { flex-wrap: wrap; }
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <div class="header">
-        <div>
-            <h1 style="margin:0; font-size:1.75rem; color:#0f172a;">MTHS120 Interactive Stepper</h1>
-            <p style="margin:0.25rem 0 0 0; color:#475569;">Week 3 Lecture 8: Transcendental Functions</p>
-        </div>
-        <div>
-            <a href="week3-lecture8.html" class="back-link">&larr; Back to Lecture 8</a>
-        </div>
-    </div>
-
-    <div class="telemetry-bar">
-        <div class="tel-stat">
-            <span class="tel-label">Active Phase</span>
-            <span class="tel-val" id="tel-phase">1 / 25</span>
-        </div>
-        <div class="tel-stat">
-            <span class="tel-label">Current Mode</span>
-            <span class="tel-val" id="tel-mode">Awaiting Input</span>
-        </div>
-        <div class="tel-stat">
-            <span class="tel-label">Score</span>
-            <span class="tel-val" id="tel-score">0</span>
-        </div>
-    </div>
-
-    <div class="stage-container">
-        <h2 class="scenario-title" id="stage-title">Loading...</h2>
-        <div class="scenario-context" id="stage-context"></div>
-
-        <div class="options-grid" id="options-container"></div>
-
-        <div class="analysis-container" id="analysis-panes">
-            <div class="pane pane-what">
-                <h4>What Is Happening</h4>
-                <p id="text-what"></p>
-            </div>
-            <div class="pane pane-why">
-                <h4>Why The System Does This</h4>
-                <p id="text-why"></p>
-            </div>
-        </div>
-
-        <div class="stepper-controls">
-            <button class="nav-btn" id="btn-prev" onclick="stepPrevious()" disabled>Prev</button>
-            <button class="action-btn" id="btn-submit" onclick="evaluateSelection()">Submit Verification</button>
-            <button class="nav-btn" id="btn-next" onclick="stepNext()" style="display:none;">Next Step ➔</button>
-        </div>
-    </div>
-</div>
-
-<script>
-    const courseData = [
-        {
-            title: "Phase 1: The Great Variable Swap",
-            context: "<strong>Scenario:</strong> You are analyzing two functions: $f(x) = x^3$ and $g(x) = 3^x$. How do their fundamental growth mechanisms differ?",
-            options: [
-                "They are structurally identical; the variable position does not affect the output.",
-                "$f(x)$ exhibits multiplicative compounding, while $g(x)$ relies on additive scaling.",
-                "$f(x)$ is a power function relying on additive scaling of the base, while $g(x)$ is an exponential function relying on multiplicative compounding.",
-                "$f(x)$ is an exponential function, and $g(x)$ is a polynomial."
-            ],
-            correct: 2,
-            what: "In $f(x) = x^3$, the base is the variable. In $g(x) = 3^x$, the base is fixed and the exponent is the variable.",
-            why: "Moving the variable into the exponent fundamentally shifts the operation from growing a geometric shape (like a cube's volume) to continuous compounding, where every step multiplies the current total by the base."
-        },
-        {
-            title: "Phase 2: Walking Backward (Negative Exponents)",
-            context: "<strong>Scenario:</strong> You are plotting the exponential decay function $f(x) = 2^x$ for negative inputs. What is the exact output of $f(-3)$?",
-            options: [
-                "$-8$",
-                "$\\frac{1}{8}$",
-                "$-6$",
-                "$\\frac{1}{6}$"
-            ],
-            correct: 1,
-            what: "Stepping backwards in the domain forces division in the range. $2^{-3} = \\frac{1}{2^3} = \\frac{1}{8}$.",
-            why: "A negative exponent does not make the output negative. Because exponential functions map $\\mathbb{R} \\to (0, \\infty)$, the output is always strictly positive, representing a fractional division of the base."
-        },
-        {
-            title: "Phase 3: The Half-Step (Rational Exponents)",
-            context: "<strong>Scenario:</strong> You need to compute $9^{1/2}$. Geometrically, what does a fractional exponent of $1/2$ represent?",
-            options: [
-                "Dividing the base by 2.",
-                "Squaring the base.",
-                "Finding the halfway stepping stone that, when multiplied by itself, equals the base (the square root).",
-                "Finding the reciprocal of the base."
-            ],
-            correct: 2,
-            what: "By exponent laws, $a^{1/2} \\cdot a^{1/2} = a^1$. For base 9, $3 \\cdot 3 = 9$, so $9^{1/2} = 3$.",
-            why: "To bridge the discrete integers, rational exponents split the multiplication step into roots. The denominator of the fraction dictates the root index."
-        },
-        {
-            title: "Phase 4: Sealing the Gaps (Irrational Exponents)",
-            context: "<strong>Scenario:</strong> The system requires the evaluation of $2^{\\pi}$. Since you cannot multiply a number by itself $\\pi$ times, how does mathematics legally define this value?",
-            options: [
-                "It is left undefined, creating a hole in the graph.",
-                "It is rounded to $2^3$.",
-                "It is defined as the limit of the sequence $2^{3.1}, 2^{3.14}, 2^{3.141}\\dots$ using rational approximations.",
-                "It is defined by converting $\\pi$ into a fraction."
-            ],
-            correct: 2,
-            what: "We trap the irrational number $\\pi$ with a sequence of rational numbers $q_n \\to \\pi$. We then evaluate the limit $\\lim_{n \\to \\infty} 2^{q_n}$.",
-            why: "The Monotone Convergence Theorem guarantees that this bounded, increasing sequence of rational powers converges to a unique real limit, seamlessly sealing the holes in the continuum."
-        },
-        {
-            title: "Phase 5: The Domain Barrier",
-            context: "<strong>Scenario:</strong> You attempt to define an exponential function $h(x) = (-4)^x$. Why does standard real analysis reject this base?",
-            options: [
-                "Negative bases grow too quickly.",
-                "For inputs like $x = 1/2$, the output is $\\sqrt{-4}$, which does not exist in the real numbers, creating infinitely many holes.",
-                "Negative numbers cannot have integer exponents.",
-                "The function becomes perfectly flat."
-            ],
-            correct: 1,
-            what: "Any fraction with an even denominator (like $1/2, 1/4, 3/4$) will attempt to take an even root of a negative number.",
-            why: "To ensure the exponential function $a^x$ forms a continuous, unbroken curve across the entire real domain $\\mathbb{R}$, the base $a$ must be strictly positive ($a > 0$)."
-        },
-        {
-            title: "Phase 6: The Flatline Anomaly",
-            context: "<strong>Scenario:</strong> Why is the base $a = 1$ excluded from the definition of an exponential function $f(x) = a^x$?",
-            options: [
-                "Because $1^x = 1$, generating a flat horizontal line that fails the horizontal line test and cannot be inverted.",
-                "Because dividing by 1 is undefined.",
-                "Because $1$ raised to a negative power is negative.",
-                "Because it grows too slowly to be useful."
-            ],
-            correct: 0,
-            what: "The function collapses into $y = 1$ for all real $x$.",
-            why: "A flat line destroys strict monotonicity. Without strict monotonicity, the function is not injective (one-to-one), which means a logarithmic inverse is mathematically impossible."
-        },
-        {
-            title: "Phase 7: The Algebraic Engine",
-            context: "<strong>Scenario:</strong> You observe a graph of $y = 5^x$. If you shift the graph to the left by 2 units to create $y = 5^{x+2}$, what is the equivalent vertical scaling effect?",
-            options: [
-                "The graph shifts up by 2 units.",
-                "The vertical height is multiplied by 2.",
-                "The vertical height is multiplied by 25.",
-                "The vertical height is divided by 25."
-            ],
-            correct: 2,
-            what: "By the addition-to-product law, $5^{x+2} = 5^x \\cdot 5^2 = 25 \\cdot 5^x$.",
-            why: "Exponential functions act as a bridge between operations: they turn additive domain shifts (left/right) into multiplicative range scaling (stretching/compressing)."
-        },
-        {
-            title: "Phase 8: The Golden Slope",
-            context: "<strong>Scenario:</strong> Why does calculus overwhelmingly prefer Euler's number $e \\approx 2.718$ as a base over 2 or 10?",
-            options: [
-                "Because $e$ is an integer.",
-                "Because the graph of $y = e^x$ crosses the y-intercept $(0,1)$ with a perfect slope of 1, meaning its rate of change exactly equals its height everywhere.",
-                "Because $e$ is easier to type on a calculator.",
-                "Because base 2 and base 10 do not have logarithmic inverses."
-            ],
-            correct: 1,
-            what: "Base 2 crosses too flat (slope $\\approx 0.693$), and base 3 crosses too steeply (slope $\\approx 1.099$). Base $e$ hits the 'Goldilocks' slope of exactly 1.",
-            why: "When the base slope is 1, the derivative $y'$ perfectly matches the function $y$. This eliminates messy scaling constants when differentiating, making $e^x$ the natural currency of calculus."
-        },
-        {
-            title: "Phase 9: The Exponent Hunter",
-            context: "<strong>Scenario:</strong> John Napier coined the term 'logarithm'. In modern terms, if you evaluate $y = \\log_a(x)$, what does $y$ fundamentally represent?",
-            options: [
-                "The base of the equation.",
-                "The ratio of $x$ to $a$.",
-                "The exponent to which the base $a$ must be raised to produce $x$.",
-                "The reciprocal of $x$."
-            ],
-            correct: 2,
-            what: "By the Rosetta Stone definition, $y = \\log_a(x) \\iff a^y = x$.",
-            why: "A logarithm is just an exponent. It is a mathematical 'exponent detector' that strips away the base and hands you back the power."
-        },
-        {
-            title: "Phase 10: The Domain Trap",
-            context: "<strong>Scenario:</strong> A student attempts to evaluate $\\log_2(-8) = -3$. Why is this an illegal operation?",
-            options: [
-                "Because logs cannot output negative numbers.",
-                "Because $2^{-3} = \\frac{1}{8}$, which is positive; there is no real exponent that turns a positive base into a negative output.",
-                "Because base 2 is too small.",
-                "Because the student forgot to take the absolute value."
-            ],
-            correct: 1,
-            what: "Exponential functions $a^x$ always output positive numbers. Therefore, their inverse (the logarithm) can only accept strictly positive inputs.",
-            why: "When generating inverses, Domain and Range swap. The exponential range $(0, \\infty)$ becomes the logarithmic domain. You can never feed zero or a negative number into a logarithm."
-        },
-        {
-            title: "Phase 11: Geometric Mirroring",
-            context: "<strong>Scenario:</strong> You graph $f(x) = 10^x$ and its inverse $f^{-1}(x) = \\log_{10}(x)$. The exponential curve has a horizontal asymptote at $y=0$. What structural landmark exists on the logarithmic curve?",
-            options: [
-                "A horizontal asymptote at $y=1$.",
-                "A vertical asymptote at $x=0$, where the curve plunges to $-\\infty$ as it approaches the y-axis.",
-                "A vertical asymptote at $x=1$.",
-                "No asymptotes."
-            ],
-            correct: 1,
-            what: "Reflecting the horizontal line $y=0$ across the diagonal $y=x$ creates the vertical line $x=0$.",
-            why: "Because exponential decay paths ($x \\to -\\infty$) hug the x-axis, logarithmic functions mirror this behavior by aggressively hugging the y-axis as inputs approach zero from the right."
-        },
-        {
-            title: "Phase 12: The Product Law",
-            context: "<strong>Scenario:</strong> You are evaluating $\\log_2(16 \\times 8)$. According to the Logarithmic Product Law, how does the function process this multiplication?",
-            options: [
-                "It multiplies the logarithms: $\\log_2(16) \\times \\log_2(8)$.",
-                "It splits the multiplication into addition: $\\log_2(16) + \\log_2(8)$.",
-                "It ignores the 8.",
-                "It divides the logarithms."
-            ],
-            correct: 1,
-            what: "The exponent of a product is the sum of the exponents: $4 + 3 = 7$.",
-            why: "Because logs are just exponents, they obey exponent laws in reverse. Multiplying bases means adding their powers, so the logarithm translates multiplication in its domain to addition in its range."
-        },
-        {
-            title: "Phase 13: The Power Pull-Down",
-            context: "<strong>Scenario:</strong> You need to solve for $x$ in the equation $5^x = 100$. By taking the common logarithm $\\log_{10}$ of both sides, what rule allows you to isolate $x$?",
-            options: [
-                "The Quotient Rule.",
-                "The Power Law, which allows you to pull the exponent $x$ down to the front: $x \\cdot \\log_{10}(5) = \\log_{10}(100)$.",
-                "The Addition Law.",
-                "The Change of Base Law."
-            ],
-            correct: 1,
-            what: "The expression $\\log(a^p)$ is equivalent to $p \\cdot \\log(a)$.",
-            why: "An exponent inside an exponent implies 'a power of a power', which mathematically translates to multiplication. This 'pull-down' trick is the primary tool used to rescue variables trapped in exponents."
-        },
-        {
-            title: "Phase 14: The Reciprocal Flip",
-            context: "<strong>Scenario:</strong> You encounter the expression $\\log_a(\\frac{1}{x})$. How can this be simplified using the Power Law?",
-            options: [
-                "It evaluates to $0$.",
-                "It is equivalent to $-\\log_a(x)$, because $\\frac{1}{x} = x^{-1}$ and the $-1$ pulls down.",
-                "It is undefined.",
-                "It is equivalent to $\\frac{1}{\\log_a(x)}$."
-            ],
-            correct: 1,
-            what: "Writing the fraction as a negative exponent allows the Power Law to extract the negative sign.",
-            why: "The logarithm of a fraction is exactly the negative logarithm of its reciprocal. Fractions represent negative powers, and the logarithm perfectly detects and extracts that minus sign."
-        },
-        {
-            title: "Phase 15: The Basement Trick (Change of Base)",
-            context: "<strong>Scenario:</strong> Your calculator only computes the natural logarithm ($\\ln$). You need to compute $\\log_7(50)$. Applying the Change of Base formula, what is the correct input?",
-            options: [
-                "$\\ln(50) - \\ln(7)$",
-                "$\\frac{\\ln(7)}{\\ln(50)}$",
-                "$\\frac{\\ln(50)}{\\ln(7)}$",
-                "$\\ln(50 \\times 7)$"
-            ],
-            correct: 2,
-            what: "The target number (50) stays on top, and the old base (7) goes into the 'basement' (denominator).",
-            why: "Every logarithm $\\log_a(x)$ is simply a vertically scaled copy of the natural logarithm $\\ln(x)$. The scaling factor is always $\\frac{1}{\\ln(a)}$."
-        },
-        {
-            title: "Phase 16: The Circular Tape Measure (Radians)",
-            context: "<strong>Scenario:</strong> You walk exactly one full lap around the Unit Circle (radius 1). Why does calculus define this angle as $2\\pi$ radians instead of $360^\\circ$?",
-            options: [
-                "Because $2\\pi$ is an easier number to divide.",
-                "Because radians measure the literal physical arc length traveled along the rim of the unit circle ($C = 2\\pi r$).",
-                "Because degrees are only for triangles.",
-                "Because it was a convention chosen by Newton."
-            ],
-            correct: 1,
-            what: "A full circle circumference is $2\\pi(1) = 2\\pi$. An angle in radians maps directly to that linear distance.",
-            why: "Calculus requires inputs (angles) and outputs (lengths) to exist on the exact same real-number scale. Degrees are arbitrary Babylonian wedges; radians are pure, dimensional lengths."
-        },
-        {
-            title: "Phase 17: The Ferris Wheel Coordinates",
-            context: "<strong>Scenario:</strong> You rotate an angle of $\\theta$ around the Unit Circle. What do the functions $\\cos(\\theta)$ and $\\sin(\\theta)$ physically represent?",
-            options: [
-                "The tangent line and the secant line.",
-                "The area of the sector and the arc length.",
-                "Your exact $(x, y)$ GPS coordinates: Cosine is your horizontal shadow, Sine is your vertical height.",
-                "The ratio of the opposite side to the adjacent side."
-            ],
-            correct: 2,
-            what: "By setting the hypotenuse (radius) to 1, the adjacent side becomes $x/1 = x = \\cos(\\theta)$, and the opposite side becomes $y/1 = y = \\sin(\\theta)$.",
-            why: "The Unit Circle definition frees trigonometry from the confines of $90^\\circ$ triangles, allowing angles to rotate endlessly into negative numbers and multiple laps while simply tracking a 2D coordinate."
-        },
-        {
-            title: "Phase 18: Special Angles ($45^\\circ$ / $\\pi/4$)",
-            context: "<strong>Scenario:</strong> Slicing a $1 \\times 1$ square along its diagonal creates a $45^\\circ-45^\\circ-90^\\circ$ triangle. What is the value of $\\sin(\\pi/4)$ derived from this geometry?",
-            options: [
-                "$\\frac{1}{2}$",
-                "$\\frac{\\sqrt{3}}{2}$",
-                "$\\frac{\\sqrt{2}}{2}$",
-                "$1$"
-            ],
-            correct: 2,
-            what: "The hypotenuse is $\\sqrt{1^2+1^2} = \\sqrt{2}$. Sine is Opposite / Hypotenuse = $1 / \\sqrt{2}$, which rationalizes to $\\frac{\\sqrt{2}}{2}$.",
-            why: "This geometric truth mathematically locks in the $\\frac{\\sqrt{n}}{2}$ memory pattern for the first quadrant, specifically occupying the $n=2$ slot."
-        },
-        {
-            title: "Phase 19: The ASTC Rule",
-            context: "<strong>Scenario:</strong> You are evaluating $\\cos(\\frac{4\\pi}{3})$. The reference angle $\\frac{\\pi}{3}$ gives a ratio of $\\frac{1}{2}$. Using the ASTC rule (All Stations To Central), what is the final exact value?",
-            options: [
-                "$\\frac{1}{2}$",
-                "$-\\frac{1}{2}$",
-                "$\\frac{\\sqrt{3}}{2}$",
-                "$-\\frac{\\sqrt{3}}{2}$"
-            ],
-            correct: 1,
-            what: "The angle $\\frac{4\\pi}{3}$ lies in Quadrant III. Under the ASTC rule (T), only Tangent is positive here. Thus, Cosine must be negative.",
-            why: "In Quadrant III, you are on the left side of the y-axis, meaning your horizontal coordinate (Cosine) is physically in the negative $x$ territory."
-        },
-        {
-            title: "Phase 20: Symmetry of Waves",
-            context: "<strong>Scenario:</strong> Examining the graphs of the unrolled trigonometric waves, you note that $\\cos(-x) = \\cos(x)$ and $\\sin(-x) = -\\sin(x)$. What does this mean structurally?",
-            options: [
-                "Both functions are Odd.",
-                "Cosine is an Even function (y-axis symmetry), and Sine is an Odd function (origin symmetry).",
-                "Both functions fail the vertical line test.",
-                "Cosine is shifted up by 1."
-            ],
-            correct: 1,
-            what: "Walking clockwise (negative angle) yields the exact same horizontal shadow as walking counter-clockwise, making cosine Even. However, it yields a negative vertical height, making sine Odd.",
-            why: "This geometric symmetry governs how negative signs are extracted or absorbed during trigonometric calculus proofs and Fourier analysis."
-        },
-        {
-            title: "Phase 21: The Master Identity",
-            context: "<strong>Scenario:</strong> You are handed the equation $\\sin^2(x) + \\cos^2(x) = 1$. What is the geometric origin of this universal identity?",
-            options: [
-                "It is a derivative rule.",
-                "It is the direct application of Pythagoras' Theorem ($a^2 + b^2 = c^2$) to the right triangle formed inside the Unit Circle with hypotenuse 1.",
-                "It is derived from the Binomial Theorem.",
-                "It is an arbitrary scaling constant."
-            ],
-            correct: 1,
-            what: "The legs of the triangle are $|\\cos x|$ and $|\\sin x|$. Squaring them and adding them must equal the square of the radius, which is $1^2 = 1$.",
-            why: "This identity holds for every single real number $x$. It allows mathematicians to instantly convert between sine and cosine without changing the underlying geometry."
-        },
-        {
-            title: "Phase 22: The Injectivity Crisis",
-            context: "<strong>Scenario:</strong> You need to find the inverse function of $\\sin(x)$. However, $\\sin(0) = 0$, $\\sin(\\pi) = 0$, and $\\sin(2\\pi) = 0$. What structural disaster does this cause for the inverse?",
-            options: [
-                "It makes the inverse a tangent function.",
-                "It violates Injectivity (fails the Horizontal Line Test). An inverse cannot map the output $0$ back to infinitely many different inputs simultaneously.",
-                "It causes division by zero.",
-                "It makes the function too steep."
-            ],
-            correct: 1,
-            what: "Because the wave repeats infinitely, horizontal lines slice through multiple peaks and troughs, proving it is not one-to-one.",
-            why: "To qualify for an inverse, a function must possess a strict 1-to-1 mapping. Without intervention, attempting to invert a wave destroys the fundamental definition of a mathematical function."
-        },
-        {
-            title: "Phase 23: Surgical Domain Restriction",
-            context: "<strong>Scenario:</strong> To rescue the inverse sine function ($\\arcsin x$), analysts slice the infinite sine wave down to a single, unbroken monotonic hill. What is the standard restricted domain used?",
-            options: [
-                "$[0, \\pi]$",
-                "$(-\\infty, \\infty)$",
-                "$\\left[-\\frac{\\pi}{2}, \\frac{\\pi}{2}\\right]$",
-                "$[0, 2\\pi]$"
-            ],
-            correct: 2,
-            what: "This interval represents the right half of the unit circle, from the bottom South pole to the top North pole. It perfectly covers the entire range $[-1, 1]$ exactly once.",
-            why: "By artificially restricting the domain to $\\left[-\\frac{\\pi}{2}, \\frac{\\pi}{2}\\right]$, the sub-function becomes strictly increasing (injective), safely enabling the creation of $\\arcsin(x)$."
-        },
-        {
-            title: "Phase 24: Arctangent Asymptotes",
-            context: "<strong>Scenario:</strong> The tangent function has vertical asymptotes at $\\pm \\frac{\\pi}{2}$. When you create the inverse function $y = \\arctan(x)$, what happens to these boundaries?",
-            options: [
-                "They remain vertical asymptotes.",
-                "They disappear completely.",
-                "They reflect across $y=x$ to become horizontal asymptotes at $y = \\frac{\\pi}{2}$ and $y = -\\frac{\\pi}{2}$.",
-                "They cause the arctangent to evaluate to zero."
-            ],
-            correct: 2,
-            what: "The domain of $\\tan(x)$ excludes $\\pm \\frac{\\pi}{2}$. When inverted, the Domain and Range swap, meaning the restricted range of $\\arctan(x)$ is the open interval $(-\\frac{\\pi}{2}, \\frac{\\pi}{2})$.",
-            why: "Because tangent explodes to infinity as it approaches $\\frac{\\pi}{2}$, arctangent stretches horizontally to infinity as its outputs slowly approach the horizontal ceiling of $\\frac{\\pi}{2}$."
-        },
-        {
-            title: "Phase 25: The Range Trap (Cancellation)",
-            context: "<strong>Scenario:</strong> A student writes $\\arcsin(\\sin(\\pi)) = \\pi$. You must grade this. Is it correct?",
-            options: [
-                "Yes, because an inverse always cancels the original function perfectly.",
-                "No. $\\sin(\\pi) = 0$, and $\\arcsin(0) = 0$. The restricted range of arcsine forces the answer back into $[-\\frac{\\pi}{2}, \\frac{\\pi}{2}]$.",
-                "No, because the answer should be $-\\pi$.",
-                "Yes, but only if you are in degree mode."
-            ],
-            correct: 1,
-            what: "The inner function evaluates first: $\\sin(\\pi) = 0$. The outer function $\\arcsin(0)$ then searches strictly within its legal output range $[-\\frac{\\pi}{2}, \\frac{\\pi}{2}]$ for the angle that yields 0, which is exactly $0$.",
-            why: "Inverse trig functions suffer from 'amnesia'. They do not remember the original angle if it started outside their restricted domain. They will ruthlessly snap the result back into their legal principal zone."
-        }
-    ];
-
-    let currentIndex = 0;
-    let selectedOption = null;
-    let phaseScore = 0;
-    let hasAnsweredCurrent = false;
-
-    const elTitle = document.getElementById("stage-title");
-    const elContext = document.getElementById("stage-context");
-    const elOptions = document.getElementById("options-container");
-    const elPanes = document.getElementById("analysis-panes");
-    const elWhat = document.getElementById("text-what");
-    const elWhy = document.getElementById("text-why");
-    const elBtnSubmit = document.getElementById("btn-submit");
-    const elBtnNext = document.getElementById("btn-next");
-    const elBtnPrev = document.getElementById("btn-prev");
-
-    const telPhase = document.getElementById("tel-phase");
-    const telMode = document.getElementById("tel-mode");
-    const telScore = document.getElementById("tel-score");
-
-    function renderMath() {
-        if (typeof renderMathInElement !== 'undefined') {
-            renderMathInElement(document.body, {
-                delimiters: [
-                    {left: '$$', right: '$$', display: true},
-                    {left: '$', right: '$', display: false}
-                ],
-                throwOnError: false
-            });
-        }
-    }
-
-    function buildStep() {
-        const data = courseData[currentIndex];
-
-        elTitle.innerHTML = data.title;
-        elContext.innerHTML = data.context;
-
-        elOptions.innerHTML = "";
-        data.options.forEach((opt, idx) => {
-            const btn = document.createElement("button");
-            btn.className = "option-btn";
-            btn.innerHTML = opt;
-            btn.onclick = () => selectOption(idx, btn);
-            elOptions.appendChild(btn);
-        });
-
-        elPanes.style.display = "none";
-        elBtnSubmit.style.display = "block";
-        elBtnNext.style.display = "none";
-        elBtnSubmit.disabled = true;
-
-        selectedOption = null;
-        hasAnsweredCurrent = false;
-
-        telPhase.innerText = `${currentIndex + 1} / ${courseData.length}`;
-        telMode.innerText = "Awaiting Input";
-        telMode.style.color = "var(--text)";
-
-        elBtnPrev.disabled = currentIndex === 0;
-
-        renderMath();
-    }
-
-    function selectOption(idx, btnNode) {
-        if (hasAnsweredCurrent) return;
-
-        const buttons = elOptions.querySelectorAll(".option-btn");
-        buttons.forEach(b => b.classList.remove("selected"));
-
-        btnNode.classList.add("selected");
-        selectedOption = idx;
-        elBtnSubmit.disabled = false;
-    }
-
-    function evaluateSelection() {
-        if (selectedOption === null || hasAnsweredCurrent) return;
-
-        const data = courseData[currentIndex];
-        const buttons = elOptions.querySelectorAll(".option-btn");
-
-        hasAnsweredCurrent = true;
-        elBtnSubmit.style.display = "none";
-        elBtnNext.style.display = "block";
-        elBtnNext.innerText = currentIndex === courseData.length - 1 ? "Complete Verification" : "Next Step ➔";
-
-        if (selectedOption === data.correct) {
-            buttons[selectedOption].classList.add("correct");
-            phaseScore++;
-            telScore.innerText = phaseScore;
-            telMode.innerText = "Verified Valid";
-            telMode.style.color = "var(--success)";
-        } else {
-            buttons[selectedOption].classList.add("wrong");
-            buttons[data.correct].classList.add("correct");
-            telMode.innerText = "Structural Error";
-            telMode.style.color = "var(--danger)";
-        }
-
-        elWhat.innerHTML = data.what;
-        elWhy.innerHTML = data.why;
-        elPanes.style.display = "grid";
-
-        renderMath();
-    }
-
-    function stepNext() {
-        if (currentIndex < courseData.length - 1) {
-            currentIndex++;
-            buildStep();
-        } else {
-            elTitle.innerHTML = "System Verified: Diagnostics Complete";
-            elContext.innerHTML = `<strong>Final Diagnostic Score: ${phaseScore} / ${courseData.length}</strong><br><br>You have successfully modeled the continuous dynamics of transcendental functions. By mastering compounding exponents, identifying logarithmic domain constraints, and utilizing artificial domain restrictions to tame periodic waves, your analytical reflexes are now fully prepared for differential calculus.`;
-            elOptions.innerHTML = "";
-            elPanes.style.display = "none";
-            elBtnNext.style.display = "none";
-            elBtnPrev.style.display = "none";
-
-            telMode.innerText = "Simulation Ended";
-            telMode.style.color = "var(--info)";
-        }
-    }
-
-    function stepPrevious() {
-        if (currentIndex > 0) {
-            currentIndex--;
-            buildStep();
-        }
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-        buildStep();
-    });
-</script>
-
-</body>
-</html>
-"""
-
-def generate_stepper():
-    with open(STEPPER_FILENAME, "w", encoding="utf-8") as f:
-        f.write(STEPPER_HTML)
-    print(f"Created {STEPPER_FILENAME} successfully.")
-
-def update_lecture_file():
-    if not os.path.exists(LECTURE_FILENAME):
-        print(f"Error: {LECTURE_FILENAME} not found.")
+def create_practice_file():
+    """Generates the interactive practice problems page for Lecture 9."""
+    if os.path.exists(PRACTICE_FILE):
+        print(f"Skipping creation: {PRACTICE_FILE} already exists.")
         return
 
-    with open(LECTURE_FILENAME, "r", encoding="utf-8") as f:
+    template = """<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Practice Problems: Continuity & IVT | MTHS120</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+        <style>
+            :root {
+                --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
+                --accent: #0284c7; --font-ui: ui-sans-serif, system-ui, -apple-system, sans-serif;
+            }
+            body { font-family: var(--font-ui); background: var(--bg); color: var(--text); padding: 2rem; margin: 0; line-height: 1.6; }
+            .container { max-width: 800px; margin: 0 auto; }
+
+            .header-nav { display: flex; gap: 0.5rem; margin-bottom: 2rem; }
+            .header-nav a { background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; }
+            .header-nav a:hover { background: #e2e8f0; }
+
+            .problem-card { background: var(--card); padding: 2rem; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+            .problem-header { font-weight: 800; color: #0284c7; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.85rem; margin-bottom: 1rem; border-bottom: 2px solid #e0f2fe; padding-bottom: 0.5rem; }
+
+            .options { display: flex; flex-direction: column; gap: 0.75rem; margin: 1.5rem 0; }
+            .option-label { display: flex; gap: 0.75rem; align-items: baseline; padding: 1rem; border: 1px solid var(--border); border-radius: 6px; cursor: pointer; transition: background 0.2s; }
+            .option-label:hover { background: #f1f5f9; }
+            input[type="radio"] { cursor: pointer; transform: scale(1.1); margin-top: 0.25rem; }
+
+            .btn-check { background: var(--accent); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.95rem; }
+            .btn-check:hover { background: #0369a1; }
+
+            .feedback { margin-top: 1.5rem; padding: 1rem; border-radius: 6px; display: none; font-size: 0.95rem; line-height: 1.6; }
+            .feedback.correct { display: block; background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid #10b981; color: #065f46; }
+            .feedback.incorrect { display: block; background: #fef2f2; border: 1px solid #fecaca; border-left: 4px solid #ef4444; color: #991b1b; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header-nav">
+                <a href="week4-lecture9.html">&larr; Back to Lecture 9</a>
+                <a href="week4.html">&uarr; Week 4 Hub</a>
+            </div>
+
+            <h2 style="border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-bottom: 2rem; color: #0f172a;">Practice Problems: Continuity & The IVT</h2>
+
+            <!-- Problem 1 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 1: Epsilon-Delta Factory Control</div>
+                <p>You are controlling a machine governed by the linear function $f(x) = 4x - 1$. Your target output is $7$ when your dial is set to $x_0 = 2$. If the safety inspector demands an output tolerance of $\epsilon = 0.1$, what is the strictly required input tolerance $\delta$ to guarantee $|f(x) - 7| < \epsilon$?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q1" value="a"> $\delta = 0.4$</label>
+                    <label class="option-label"><input type="radio" name="q1" value="b"> $\delta = 0.1$</label>
+                    <label class="option-label"><input type="radio" name="q1" value="c"> $\delta = 0.025$</label>
+                    <label class="option-label"><input type="radio" name="q1" value="d"> $\delta = 0.05$</label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q1', 'c', 'fb1')">Check Answer</button>
+                <div class="feedback" id="fb1">
+                    <strong style="display: block; margin-bottom: 0.5rem;">Correct!</strong>
+                    To find the input tolerance $\delta$, substitute the function into the output error inequality: $|(4x - 1) - 7| < 0.1$. Simplifying gives $|4x - 8| < 0.1$. Factor out the slope to get $4|x - 2| < 0.1$. Dividing by 4 yields $|x - 2| < 0.025$. Thus, the required $\delta$ is $0.025$.
+                </div>
+            </div>
+
+            <!-- Problem 2 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 2: The IVT Trap</div>
+                <p>Consider the function $f(x) = \frac{1}{x}$. We evaluate the endpoints on the interval $[-1, 1]$ and find $f(-1) = -1$ and $f(1) = 1$. Because $0$ lies between $-1$ and $1$, does the Intermediate Value Theorem guarantee that $f(x) = 0$ has a root inside $[-1, 1]$?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q2" value="a"> Yes, because $f(-1)$ is negative and $f(1)$ is positive.</label>
+                    <label class="option-label"><input type="radio" name="q2" value="b"> No, because the function is discontinuous at $x = 0$, shattering the IVT requirement.</label>
+                    <label class="option-label"><input type="radio" name="q2" value="c"> Yes, because rational functions are continuous on their natural domains.</label>
+                    <label class="option-label"><input type="radio" name="q2" value="d"> No, because $f(0)$ evaluates to $1$.</label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q2', 'b', 'fb2')">Check Answer</button>
+                <div class="feedback" id="fb2">
+                    <strong style="display: block; margin-bottom: 0.5rem;">Correct!</strong>
+                    The Intermediate Value Theorem <em>strictly requires</em> the function to be unbroken (continuous) across the entire closed interval. Because $f(x) = \frac{1}{x}$ has a vertical asymptote at $x = 0$, the curve breaks completely, and the guarantee is destroyed.
+                </div>
+            </div>
+
+            <!-- Problem 3 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 3: Analyzing Discontinuity</div>
+                <p>A function is defined as $H(x) = 0$ for $x < 0$, and $H(x) = 1$ for $x \ge 0$. The adversary sets an error tolerance of $\epsilon = 0.2$ around the target output $f(0) = 1$. Why does the limit fail as $x \to 0$?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q3" value="a"> The left-hand branch outputs 0, dropping completely outside the $1 \pm 0.2$ corridor regardless of how small $\delta$ becomes.</label>
+                    <label class="option-label"><input type="radio" name="q3" value="b"> The function grows unbounded toward $+\infty$.</label>
+                    <label class="option-label"><input type="radio" name="q3" value="c"> The error tolerance $\epsilon$ must be negative to trap the left branch.</label>
+                    <label class="option-label"><input type="radio" name="q3" value="d"> The right-hand branch oscillates infinitely.</label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q3', 'a', 'fb3')">Check Answer</button>
+                <div class="feedback" id="fb3">
+                    <strong style="display: block; margin-bottom: 0.5rem;">Correct!</strong>
+                    Any input window ($\delta$) around $0$ will capture some negative $x$ values. For all negative $x$ values, the function outputs $0$, which is $1.0$ units away from the target output of $1$. This blatantly violates the strict $0.2$ error boundary, proving a jump discontinuity.
+                </div>
+            </div>
+
+        </div>
+
+        <script>
+            function checkAnswer(qName, correctVal, feedbackId) {
+                const selected = document.querySelector(`input[name="${qName}"]:checked`);
+                const feedback = document.getElementById(feedbackId);
+
+                if (!selected) {
+                    alert('Please select an option before checking your answer.');
+                    return;
+                }
+
+                if (selected.value === correctVal) {
+                    feedback.className = 'feedback correct';
+                    // Reset to original correct text if they previously got it wrong
+                    if (feedback.innerHTML.includes('Incorrect')) {
+                        feedback.innerHTML = '<strong style="display: block; margin-bottom: 0.5rem;">Correct!</strong>' + feedback.getAttribute('data-correct-text');
+                    } else if (!feedback.hasAttribute('data-correct-text')) {
+                        // Store the original correct explanation
+                        feedback.setAttribute('data-correct-text', feedback.innerHTML.replace(/<strong.*?>.*?<\\/strong>/, ''));
+                    }
+                } else {
+                    if (!feedback.hasAttribute('data-correct-text')) {
+                        feedback.setAttribute('data-correct-text', feedback.innerHTML.replace(/<strong.*?>.*?<\\/strong>/, ''));
+                    }
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = '<strong style="display: block; margin-bottom: 0.5rem;">Incorrect.</strong> Review the definition of continuity and the IVT constraints, then try again.';
+                }
+            }
+        </script>
+    </body>
+</html>"""
+
+    with open(PRACTICE_FILE, 'w', encoding='utf-8') as f:
+        f.write(template)
+    print(f"Created: {PRACTICE_FILE}")
+
+
+def update_lecture_page():
+    """Injects the navigation links and knowledge check block into the lecture HTML."""
+    if not os.path.exists(LECTURE_FILE):
+        print(f"Error: {LECTURE_FILE} not found in the current directory.")
+        return
+
+    with open(LECTURE_FILE, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # 1. Safely update any trailing Week 3 references to Lecture 9 (robust against resets)
-    content = re.sub(r'href=["\']week3-lecture9\.html["\']', 'href="week4-lecture9.html"', content)
+    # 1. Inject links into Header and Footer navigation
+    target_hub_link = '<a href="week4.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&uarr; Week 4 Hub</a>'
+    practice_link_html = '<a href="week4-lecture9-practice.html" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">✎ Practice Problems</a>'
 
-    # 2. Inject Stepper Launch Buttons directly into both the Header and Footer .nav-btn-group
-    # Using a slightly different approach to match the exact HTML in your file reliably.
+    if practice_link_html not in content:
+        # Replaces occurrences in both header and footer
+        replacement = f"{target_hub_link}\n                    {practice_link_html}"
+        content = content.replace(target_hub_link, replacement)
+        print("Injected practice problem links into navigation.")
+    else:
+        print("Practice problem links already exist in navigation.")
 
-    btn_link = f'\n                <a href="{STEPPER_FILENAME}" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">✎ Practice Problems</a>'
-
-    # Check if the practice problems button is already present in the nav groups
-    if "✎ Practice Problems" not in content:
-        # Top header
-        content = re.sub(
-            r'(<div class="nav-btn-group"[^>]*>[\s\S]*?)(\n\s*<a href="week4-lecture9\.html")',
-            lambda m: m.group(1) + btn_link + m.group(2),
-            content,
-            count=1
-        )
-
-        # Bottom footer
-        content = re.sub(
-            r'(<div class="footer-nav"[^>]*>[\s\S]*?)(\n\s*<a href="week4-lecture9\.html")',
-            lambda m: m.group(1) + btn_link + m.group(2),
-            content,
-            count=1
-        )
-
-
-    # 3. Inject the large Main Stepper Banner immediately before the footer
-    injection_block = f"""
+    # 2. Inject Interactive Knowledge Check right before the footer navigation
+    knowledge_check_block = """
                 <!-- INTERACTIVE KNOWLEDGE CHECK -->
-                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; border-radius: 8px; padding: 1.5rem; margin: 2rem 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center; text-align: center;">
-                    <h3 style="margin: 0 0 0.5rem 0; color: #047857; font-size: 1.35rem;">🧠 Interactive Knowledge Check</h3>
+                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; border-radius: 8px; padding: 1.5rem; margin: 2.5rem 0 2rem 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <h3 style="margin: 0 0 0.5rem 0; color: #047857; font-size: 1.35rem;">🧠 Practice Problems</h3>
                     <p style="margin: 0 0 1.25rem 0; color: #065f46; font-size: 1.05rem; max-width: 600px;">
-                        Before moving on to calculus, test your reflexes on domain traps, log rules, and inverse trig restrictions with this 25-step interactive diagnostic.
+                        Test your reflexes on the $\epsilon\text{-}\delta$ definition, discontinuity jailbreaks, and the Intermediate Value Theorem.
                     </p>
-                    <a href="{STEPPER_FILENAME}" target="_blank" style="background: #10b981; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 1.05rem; transition: background 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                        Launch Interactive Stepper &rarr;
+                    <a href="week4-lecture9-practice.html" style="background: #10b981; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 1.05rem; transition: background 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        Launch Practice Problems &rarr;
                     </a>
                 </div>
-"""
+
+                <!-- FOOTER NAVIGATION -->"""
+
     if "<!-- INTERACTIVE KNOWLEDGE CHECK -->" not in content:
-        content = re.sub(
-            r"(<!-- FOOTER NAVIGATION -->)",
-            lambda m: injection_block + "\n                " + m.group(1),
-            content,
-            count=1
-        )
+        content = content.replace("<!-- FOOTER NAVIGATION -->", knowledge_check_block)
+        print("Injected Practice Problems section at bottom of lecture.")
+    else:
+        print("Practice Problems section already exists at bottom of lecture.")
 
-    with open(LECTURE_FILENAME, "w", encoding="utf-8") as f:
+    with open(LECTURE_FILE, 'w', encoding='utf-8') as f:
         f.write(content)
-    print(f"Successfully generated stepper and fully updated {LECTURE_FILENAME}.")
-
+    print(f"Successfully updated {LECTURE_FILE}.")
 
 if __name__ == "__main__":
-    generate_stepper()
-    update_lecture_file()
+    create_practice_file()
+    update_lecture_page()
