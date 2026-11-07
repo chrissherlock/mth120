@@ -1719,6 +1719,36 @@
                     })();
                 </script>
 
+                <!-- LECTURE SUMMARY -->
+                <h2 id="section-summary" style="margin-top: 3.5rem">Summary: The Power of Continuity</h2>
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">We have officially bridged the gap between the discrete sequence limits of Week 2 and the fluid, unbroken curves of Week 3. By transforming our intuition about physical error control into the rigorous $\epsilon\text{-}\delta$ framework, we built an airtight mathematical guarantee for unbroken functions.</p>
+
+                <div class="infobox" style="border-left-color: #3b82f6; background-color: #eff6ff; border: 1px solid #bfdbfe">
+                    <h4 style="color: #1e3a8a">🎓 Key Takeaways from Lecture 9</h4>
+                    <ul style="margin: 0; padding-left: 1.25rem; color: #1e3a8a; line-height: 1.6; font-size: 0.95rem">
+                        <li style="margin-bottom: 0.5rem">
+                            <strong>The $\epsilon\text{-}\delta$ Game:</strong>
+                            Continuity at a point means that for <em>any</em> output tolerance $\epsilon$ chosen by an adversary, we can always secure a matching input tolerance $\delta$ to trap the function.
+                        </li>
+                        <li style="margin-bottom: 0.5rem">
+                            <strong>Discontinuity &amp; Jailbreaks:</strong>
+                            When a function features a jump or a break, no shrinking of $\delta$ can prevent the output from violating a strict $\epsilon$-corridor, proving discontinuity.
+                        </li>
+                        <li style="margin-bottom: 0.5rem">
+                            <strong>The Intermediate Value Theorem (IVT):</strong>
+                            Continuous curves cannot teleport. If a function is continuous on $[a, b]$, it is guaranteed to hit every value between $f(a)$ and $f(b)$, making it a powerful secret weapon for proving roots exist.
+                        </li>
+                    </ul>
+                </div>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.5rem">
+                    <strong>Where does this fit into the overall course?</strong>
+                </p>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">Right now, continuity has given us the absolute certainty that curves behave predictably under magnification and that solutions to complex equations exist in the real world.</p>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">As we move forward into Lecture 10, we will build upon this foundation to study the formal definition of derivatives and rates of change, turning our static microscopic inspection of curves into active dynamic measurement tools.</p>
+
                 <!-- FOOTER NAVIGATION -->
                 <div class="footer-nav" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap">
                     <a href="week3-lecture8.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&larr; Lecture 8</a>
