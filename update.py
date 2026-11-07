@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
-import json
 import os
-import sys
-import subprocess
+import re
 
-html_template = """<!DOCTYPE html>
+STEPPER_FILENAME = "week3-lecture8-interactive-stepper.html"
+LECTURE_FILENAME = "week3-lecture8.html"
+
+# The raw HTML string for the interactive stepper
+STEPPER_HTML = r"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MTHS120 Interactive Stepper: Week 2 Lecture 6</title>
+    <title>MTHS120 Interactive Stepper: Week 3 Lecture 8</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
@@ -79,17 +81,17 @@ html_template = """<!DOCTYPE html>
     <div class="header">
         <div>
             <h1 style="margin:0; font-size:1.75rem; color:#0f172a;">MTHS120 Interactive Stepper</h1>
-            <p style="margin:0.25rem 0 0 0; color:#475569;">Week 2 Lecture 6: Recursive Sequences and Divergence to Infinity</p>
+            <p style="margin:0.25rem 0 0 0; color:#475569;">Week 3 Lecture 8: Transcendental Functions</p>
         </div>
         <div>
-            <a href="week2-lecture6.html" class="back-link">&larr; Back to Lecture 6</a>
+            <a href="week3-lecture8.html" class="back-link">&larr; Back to Lecture 8</a>
         </div>
     </div>
 
     <div class="telemetry-bar">
         <div class="tel-stat">
             <span class="tel-label">Active Phase</span>
-            <span class="tel-val" id="tel-phase">1 / 5</span>
+            <span class="tel-val" id="tel-phase">1 / 25</span>
         </div>
         <div class="tel-stat">
             <span class="tel-label">Current Mode</span>
@@ -127,7 +129,333 @@ html_template = """<!DOCTYPE html>
 </div>
 
 <script>
-    const courseData = {course_data_json};
+    const courseData = [
+        {
+            title: "Phase 1: The Great Variable Swap",
+            context: "<strong>Scenario:</strong> You are analyzing two functions: $f(x) = x^3$ and $g(x) = 3^x$. How do their fundamental growth mechanisms differ?",
+            options: [
+                "They are structurally identical; the variable position does not affect the output.",
+                "$f(x)$ exhibits multiplicative compounding, while $g(x)$ relies on additive scaling.",
+                "$f(x)$ is a power function relying on additive scaling of the base, while $g(x)$ is an exponential function relying on multiplicative compounding.",
+                "$f(x)$ is an exponential function, and $g(x)$ is a polynomial."
+            ],
+            correct: 2,
+            what: "In $f(x) = x^3$, the base is the variable. In $g(x) = 3^x$, the base is fixed and the exponent is the variable.",
+            why: "Moving the variable into the exponent fundamentally shifts the operation from growing a geometric shape (like a cube's volume) to continuous compounding, where every step multiplies the current total by the base."
+        },
+        {
+            title: "Phase 2: Walking Backward (Negative Exponents)",
+            context: "<strong>Scenario:</strong> You are plotting the exponential decay function $f(x) = 2^x$ for negative inputs. What is the exact output of $f(-3)$?",
+            options: [
+                "$-8$",
+                "$\\frac{1}{8}$",
+                "$-6$",
+                "$\\frac{1}{6}$"
+            ],
+            correct: 1,
+            what: "Stepping backwards in the domain forces division in the range. $2^{-3} = \\frac{1}{2^3} = \\frac{1}{8}$.",
+            why: "A negative exponent does not make the output negative. Because exponential functions map $\\mathbb{R} \\to (0, \\infty)$, the output is always strictly positive, representing a fractional division of the base."
+        },
+        {
+            title: "Phase 3: The Half-Step (Rational Exponents)",
+            context: "<strong>Scenario:</strong> You need to compute $9^{1/2}$. Geometrically, what does a fractional exponent of $1/2$ represent?",
+            options: [
+                "Dividing the base by 2.",
+                "Squaring the base.",
+                "Finding the halfway stepping stone that, when multiplied by itself, equals the base (the square root).",
+                "Finding the reciprocal of the base."
+            ],
+            correct: 2,
+            what: "By exponent laws, $a^{1/2} \\cdot a^{1/2} = a^1$. For base 9, $3 \\cdot 3 = 9$, so $9^{1/2} = 3$.",
+            why: "To bridge the discrete integers, rational exponents split the multiplication step into roots. The denominator of the fraction dictates the root index."
+        },
+        {
+            title: "Phase 4: Sealing the Gaps (Irrational Exponents)",
+            context: "<strong>Scenario:</strong> The system requires the evaluation of $2^{\\pi}$. Since you cannot multiply a number by itself $\\pi$ times, how does mathematics legally define this value?",
+            options: [
+                "It is left undefined, creating a hole in the graph.",
+                "It is rounded to $2^3$.",
+                "It is defined as the limit of the sequence $2^{3.1}, 2^{3.14}, 2^{3.141}\\dots$ using rational approximations.",
+                "It is defined by converting $\\pi$ into a fraction."
+            ],
+            correct: 2,
+            what: "We trap the irrational number $\\pi$ with a sequence of rational numbers $q_n \\to \\pi$. We then evaluate the limit $\\lim_{n \\to \\infty} 2^{q_n}$.",
+            why: "The Monotone Convergence Theorem guarantees that this bounded, increasing sequence of rational powers converges to a unique real limit, seamlessly sealing the holes in the continuum."
+        },
+        {
+            title: "Phase 5: The Domain Barrier",
+            context: "<strong>Scenario:</strong> You attempt to define an exponential function $h(x) = (-4)^x$. Why does standard real analysis reject this base?",
+            options: [
+                "Negative bases grow too quickly.",
+                "For inputs like $x = 1/2$, the output is $\\sqrt{-4}$, which does not exist in the real numbers, creating infinitely many holes.",
+                "Negative numbers cannot have integer exponents.",
+                "The function becomes perfectly flat."
+            ],
+            correct: 1,
+            what: "Any fraction with an even denominator (like $1/2, 1/4, 3/4$) will attempt to take an even root of a negative number.",
+            why: "To ensure the exponential function $a^x$ forms a continuous, unbroken curve across the entire real domain $\\mathbb{R}$, the base $a$ must be strictly positive ($a > 0$)."
+        },
+        {
+            title: "Phase 6: The Flatline Anomaly",
+            context: "<strong>Scenario:</strong> Why is the base $a = 1$ excluded from the definition of an exponential function $f(x) = a^x$?",
+            options: [
+                "Because $1^x = 1$, generating a flat horizontal line that fails the horizontal line test and cannot be inverted.",
+                "Because dividing by 1 is undefined.",
+                "Because $1$ raised to a negative power is negative.",
+                "Because it grows too slowly to be useful."
+            ],
+            correct: 0,
+            what: "The function collapses into $y = 1$ for all real $x$.",
+            why: "A flat line destroys strict monotonicity. Without strict monotonicity, the function is not injective (one-to-one), which means a logarithmic inverse is mathematically impossible."
+        },
+        {
+            title: "Phase 7: The Algebraic Engine",
+            context: "<strong>Scenario:</strong> You observe a graph of $y = 5^x$. If you shift the graph to the left by 2 units to create $y = 5^{x+2}$, what is the equivalent vertical scaling effect?",
+            options: [
+                "The graph shifts up by 2 units.",
+                "The vertical height is multiplied by 2.",
+                "The vertical height is multiplied by 25.",
+                "The vertical height is divided by 25."
+            ],
+            correct: 2,
+            what: "By the addition-to-product law, $5^{x+2} = 5^x \\cdot 5^2 = 25 \\cdot 5^x$.",
+            why: "Exponential functions act as a bridge between operations: they turn additive domain shifts (left/right) into multiplicative range scaling (stretching/compressing)."
+        },
+        {
+            title: "Phase 8: The Golden Slope",
+            context: "<strong>Scenario:</strong> Why does calculus overwhelmingly prefer Euler's number $e \\approx 2.718$ as a base over 2 or 10?",
+            options: [
+                "Because $e$ is an integer.",
+                "Because the graph of $y = e^x$ crosses the y-intercept $(0,1)$ with a perfect slope of 1, meaning its rate of change exactly equals its height everywhere.",
+                "Because $e$ is easier to type on a calculator.",
+                "Because base 2 and base 10 do not have logarithmic inverses."
+            ],
+            correct: 1,
+            what: "Base 2 crosses too flat (slope $\\approx 0.693$), and base 3 crosses too steeply (slope $\\approx 1.099$). Base $e$ hits the 'Goldilocks' slope of exactly 1.",
+            why: "When the base slope is 1, the derivative $y'$ perfectly matches the function $y$. This eliminates messy scaling constants when differentiating, making $e^x$ the natural currency of calculus."
+        },
+        {
+            title: "Phase 9: The Exponent Hunter",
+            context: "<strong>Scenario:</strong> John Napier coined the term 'logarithm'. In modern terms, if you evaluate $y = \\log_a(x)$, what does $y$ fundamentally represent?",
+            options: [
+                "The base of the equation.",
+                "The ratio of $x$ to $a$.",
+                "The exponent to which the base $a$ must be raised to produce $x$.",
+                "The reciprocal of $x$."
+            ],
+            correct: 2,
+            what: "By the Rosetta Stone definition, $y = \\log_a(x) \\iff a^y = x$.",
+            why: "A logarithm is just an exponent. It is a mathematical 'exponent detector' that strips away the base and hands you back the power."
+        },
+        {
+            title: "Phase 10: The Domain Trap",
+            context: "<strong>Scenario:</strong> A student attempts to evaluate $\\log_2(-8) = -3$. Why is this an illegal operation?",
+            options: [
+                "Because logs cannot output negative numbers.",
+                "Because $2^{-3} = \\frac{1}{8}$, which is positive; there is no real exponent that turns a positive base into a negative output.",
+                "Because base 2 is too small.",
+                "Because the student forgot to take the absolute value."
+            ],
+            correct: 1,
+            what: "Exponential functions $a^x$ always output positive numbers. Therefore, their inverse (the logarithm) can only accept strictly positive inputs.",
+            why: "When generating inverses, Domain and Range swap. The exponential range $(0, \\infty)$ becomes the logarithmic domain. You can never feed zero or a negative number into a logarithm."
+        },
+        {
+            title: "Phase 11: Geometric Mirroring",
+            context: "<strong>Scenario:</strong> You graph $f(x) = 10^x$ and its inverse $f^{-1}(x) = \\log_{10}(x)$. The exponential curve has a horizontal asymptote at $y=0$. What structural landmark exists on the logarithmic curve?",
+            options: [
+                "A horizontal asymptote at $y=1$.",
+                "A vertical asymptote at $x=0$, where the curve plunges to $-\\infty$ as it approaches the y-axis.",
+                "A vertical asymptote at $x=1$.",
+                "No asymptotes."
+            ],
+            correct: 1,
+            what: "Reflecting the horizontal line $y=0$ across the diagonal $y=x$ creates the vertical line $x=0$.",
+            why: "Because exponential decay paths ($x \\to -\\infty$) hug the x-axis, logarithmic functions mirror this behavior by aggressively hugging the y-axis as inputs approach zero from the right."
+        },
+        {
+            title: "Phase 12: The Product Law",
+            context: "<strong>Scenario:</strong> You are evaluating $\\log_2(16 \\times 8)$. According to the Logarithmic Product Law, how does the function process this multiplication?",
+            options: [
+                "It multiplies the logarithms: $\\log_2(16) \\times \\log_2(8)$.",
+                "It splits the multiplication into addition: $\\log_2(16) + \\log_2(8)$.",
+                "It ignores the 8.",
+                "It divides the logarithms."
+            ],
+            correct: 1,
+            what: "The exponent of a product is the sum of the exponents: $4 + 3 = 7$.",
+            why: "Because logs are just exponents, they obey exponent laws in reverse. Multiplying bases means adding their powers, so the logarithm translates multiplication in its domain to addition in its range."
+        },
+        {
+            title: "Phase 13: The Power Pull-Down",
+            context: "<strong>Scenario:</strong> You need to solve for $x$ in the equation $5^x = 100$. By taking the common logarithm $\\log_{10}$ of both sides, what rule allows you to isolate $x$?",
+            options: [
+                "The Quotient Rule.",
+                "The Power Law, which allows you to pull the exponent $x$ down to the front: $x \\cdot \\log_{10}(5) = \\log_{10}(100)$.",
+                "The Addition Law.",
+                "The Change of Base Law."
+            ],
+            correct: 1,
+            what: "The expression $\\log(a^p)$ is equivalent to $p \\cdot \\log(a)$.",
+            why: "An exponent inside an exponent implies 'a power of a power', which mathematically translates to multiplication. This 'pull-down' trick is the primary tool used to rescue variables trapped in exponents."
+        },
+        {
+            title: "Phase 14: The Reciprocal Flip",
+            context: "<strong>Scenario:</strong> You encounter the expression $\\log_a(\\frac{1}{x})$. How can this be simplified using the Power Law?",
+            options: [
+                "It evaluates to $0$.",
+                "It is equivalent to $-\\log_a(x)$, because $\\frac{1}{x} = x^{-1}$ and the $-1$ pulls down.",
+                "It is undefined.",
+                "It is equivalent to $\\frac{1}{\\log_a(x)}$."
+            ],
+            correct: 1,
+            what: "Writing the fraction as a negative exponent allows the Power Law to extract the negative sign.",
+            why: "The logarithm of a fraction is exactly the negative logarithm of its reciprocal. Fractions represent negative powers, and the logarithm perfectly detects and extracts that minus sign."
+        },
+        {
+            title: "Phase 15: The Basement Trick (Change of Base)",
+            context: "<strong>Scenario:</strong> Your calculator only computes the natural logarithm ($\\ln$). You need to compute $\\log_7(50)$. Applying the Change of Base formula, what is the correct input?",
+            options: [
+                "$\\ln(50) - \\ln(7)$",
+                "$\\frac{\\ln(7)}{\\ln(50)}$",
+                "$\\frac{\\ln(50)}{\\ln(7)}$",
+                "$\\ln(50 \\times 7)$"
+            ],
+            correct: 2,
+            what: "The target number (50) stays on top, and the old base (7) goes into the 'basement' (denominator).",
+            why: "Every logarithm $\\log_a(x)$ is simply a vertically scaled copy of the natural logarithm $\\ln(x)$. The scaling factor is always $\\frac{1}{\\ln(a)}$."
+        },
+        {
+            title: "Phase 16: The Circular Tape Measure (Radians)",
+            context: "<strong>Scenario:</strong> You walk exactly one full lap around the Unit Circle (radius 1). Why does calculus define this angle as $2\\pi$ radians instead of $360^\\circ$?",
+            options: [
+                "Because $2\\pi$ is an easier number to divide.",
+                "Because radians measure the literal physical arc length traveled along the rim of the unit circle ($C = 2\\pi r$).",
+                "Because degrees are only for triangles.",
+                "Because it was a convention chosen by Newton."
+            ],
+            correct: 1,
+            what: "A full circle circumference is $2\\pi(1) = 2\\pi$. An angle in radians maps directly to that linear distance.",
+            why: "Calculus requires inputs (angles) and outputs (lengths) to exist on the exact same real-number scale. Degrees are arbitrary Babylonian wedges; radians are pure, dimensional lengths."
+        },
+        {
+            title: "Phase 17: The Ferris Wheel Coordinates",
+            context: "<strong>Scenario:</strong> You rotate an angle of $\\theta$ around the Unit Circle. What do the functions $\\cos(\\theta)$ and $\\sin(\\theta)$ physically represent?",
+            options: [
+                "The tangent line and the secant line.",
+                "The area of the sector and the arc length.",
+                "Your exact $(x, y)$ GPS coordinates: Cosine is your horizontal shadow, Sine is your vertical height.",
+                "The ratio of the opposite side to the adjacent side."
+            ],
+            correct: 2,
+            what: "By setting the hypotenuse (radius) to 1, the adjacent side becomes $x/1 = x = \\cos(\\theta)$, and the opposite side becomes $y/1 = y = \\sin(\\theta)$.",
+            why: "The Unit Circle definition frees trigonometry from the confines of $90^\\circ$ triangles, allowing angles to rotate endlessly into negative numbers and multiple laps while simply tracking a 2D coordinate."
+        },
+        {
+            title: "Phase 18: Special Angles ($45^\\circ$ / $\\pi/4$)",
+            context: "<strong>Scenario:</strong> Slicing a $1 \\times 1$ square along its diagonal creates a $45^\\circ-45^\\circ-90^\\circ$ triangle. What is the value of $\\sin(\\pi/4)$ derived from this geometry?",
+            options: [
+                "$\\frac{1}{2}$",
+                "$\\frac{\\sqrt{3}}{2}$",
+                "$\\frac{\\sqrt{2}}{2}$",
+                "$1$"
+            ],
+            correct: 2,
+            what: "The hypotenuse is $\\sqrt{1^2+1^2} = \\sqrt{2}$. Sine is Opposite / Hypotenuse = $1 / \\sqrt{2}$, which rationalizes to $\\frac{\\sqrt{2}}{2}$.",
+            why: "This geometric truth mathematically locks in the $\\frac{\\sqrt{n}}{2}$ memory pattern for the first quadrant, specifically occupying the $n=2$ slot."
+        },
+        {
+            title: "Phase 19: The ASTC Rule",
+            context: "<strong>Scenario:</strong> You are evaluating $\\cos(\\frac{4\\pi}{3})$. The reference angle $\\frac{\\pi}{3}$ gives a ratio of $\\frac{1}{2}$. Using the ASTC rule (All Stations To Central), what is the final exact value?",
+            options: [
+                "$\\frac{1}{2}$",
+                "$-\\frac{1}{2}$",
+                "$\\frac{\\sqrt{3}}{2}$",
+                "$-\\frac{\\sqrt{3}}{2}$"
+            ],
+            correct: 1,
+            what: "The angle $\\frac{4\\pi}{3}$ lies in Quadrant III. Under the ASTC rule (T), only Tangent is positive here. Thus, Cosine must be negative.",
+            why: "In Quadrant III, you are on the left side of the y-axis, meaning your horizontal coordinate (Cosine) is physically in the negative $x$ territory."
+        },
+        {
+            title: "Phase 20: Symmetry of Waves",
+            context: "<strong>Scenario:</strong> Examining the graphs of the unrolled trigonometric waves, you note that $\\cos(-x) = \\cos(x)$ and $\\sin(-x) = -\\sin(x)$. What does this mean structurally?",
+            options: [
+                "Both functions are Odd.",
+                "Cosine is an Even function (y-axis symmetry), and Sine is an Odd function (origin symmetry).",
+                "Both functions fail the vertical line test.",
+                "Cosine is shifted up by 1."
+            ],
+            correct: 1,
+            what: "Walking clockwise (negative angle) yields the exact same horizontal shadow as walking counter-clockwise, making cosine Even. However, it yields a negative vertical height, making sine Odd.",
+            why: "This geometric symmetry governs how negative signs are extracted or absorbed during trigonometric calculus proofs and Fourier analysis."
+        },
+        {
+            title: "Phase 21: The Master Identity",
+            context: "<strong>Scenario:</strong> You are handed the equation $\\sin^2(x) + \\cos^2(x) = 1$. What is the geometric origin of this universal identity?",
+            options: [
+                "It is a derivative rule.",
+                "It is the direct application of Pythagoras' Theorem ($a^2 + b^2 = c^2$) to the right triangle formed inside the Unit Circle with hypotenuse 1.",
+                "It is derived from the Binomial Theorem.",
+                "It is an arbitrary scaling constant."
+            ],
+            correct: 1,
+            what: "The legs of the triangle are $|\\cos x|$ and $|\\sin x|$. Squaring them and adding them must equal the square of the radius, which is $1^2 = 1$.",
+            why: "This identity holds for every single real number $x$. It allows mathematicians to instantly convert between sine and cosine without changing the underlying geometry."
+        },
+        {
+            title: "Phase 22: The Injectivity Crisis",
+            context: "<strong>Scenario:</strong> You need to find the inverse function of $\\sin(x)$. However, $\\sin(0) = 0$, $\\sin(\\pi) = 0$, and $\\sin(2\\pi) = 0$. What structural disaster does this cause for the inverse?",
+            options: [
+                "It makes the inverse a tangent function.",
+                "It violates Injectivity (fails the Horizontal Line Test). An inverse cannot map the output $0$ back to infinitely many different inputs simultaneously.",
+                "It causes division by zero.",
+                "It makes the function too steep."
+            ],
+            correct: 1,
+            what: "Because the wave repeats infinitely, horizontal lines slice through multiple peaks and troughs, proving it is not one-to-one.",
+            why: "To qualify for an inverse, a function must possess a strict 1-to-1 mapping. Without intervention, attempting to invert a wave destroys the fundamental definition of a mathematical function."
+        },
+        {
+            title: "Phase 23: Surgical Domain Restriction",
+            context: "<strong>Scenario:</strong> To rescue the inverse sine function ($\\arcsin x$), analysts slice the infinite sine wave down to a single, unbroken monotonic hill. What is the standard restricted domain used?",
+            options: [
+                "$[0, \\pi]$",
+                "$(-\\infty, \\infty)$",
+                "$\\left[-\\frac{\\pi}{2}, \\frac{\\pi}{2}\\right]$",
+                "$[0, 2\\pi]$"
+            ],
+            correct: 2,
+            what: "This interval represents the right half of the unit circle, from the bottom South pole to the top North pole. It perfectly covers the entire range $[-1, 1]$ exactly once.",
+            why: "By artificially restricting the domain to $\\left[-\\frac{\\pi}{2}, \\frac{\\pi}{2}\\right]$, the sub-function becomes strictly increasing (injective), safely enabling the creation of $\\arcsin(x)$."
+        },
+        {
+            title: "Phase 24: Arctangent Asymptotes",
+            context: "<strong>Scenario:</strong> The tangent function has vertical asymptotes at $\\pm \\frac{\\pi}{2}$. When you create the inverse function $y = \\arctan(x)$, what happens to these boundaries?",
+            options: [
+                "They remain vertical asymptotes.",
+                "They disappear completely.",
+                "They reflect across $y=x$ to become horizontal asymptotes at $y = \\frac{\\pi}{2}$ and $y = -\\frac{\\pi}{2}$.",
+                "They cause the arctangent to evaluate to zero."
+            ],
+            correct: 2,
+            what: "The domain of $\\tan(x)$ excludes $\\pm \\frac{\\pi}{2}$. When inverted, the Domain and Range swap, meaning the restricted range of $\\arctan(x)$ is the open interval $(-\\frac{\\pi}{2}, \\frac{\\pi}{2})$.",
+            why: "Because tangent explodes to infinity as it approaches $\\frac{\\pi}{2}$, arctangent stretches horizontally to infinity as its outputs slowly approach the horizontal ceiling of $\\frac{\\pi}{2}$."
+        },
+        {
+            title: "Phase 25: The Range Trap (Cancellation)",
+            context: "<strong>Scenario:</strong> A student writes $\\arcsin(\\sin(\\pi)) = \\pi$. You must grade this. Is it correct?",
+            options: [
+                "Yes, because an inverse always cancels the original function perfectly.",
+                "No. $\\sin(\\pi) = 0$, and $\\arcsin(0) = 0$. The restricted range of arcsine forces the answer back into $[-\\frac{\\pi}{2}, \\frac{\\pi}{2}]$.",
+                "No, because the answer should be $-\\pi$.",
+                "Yes, but only if you are in degree mode."
+            ],
+            correct: 1,
+            what: "The inner function evaluates first: $\\sin(\\pi) = 0$. The outer function $\\arcsin(0)$ then searches strictly within its legal output range $[-\\frac{\\pi}{2}, \\frac{\\pi}{2}]$ for the angle that yields 0, which is exactly $0$.",
+            why: "Inverse trig functions suffer from 'amnesia'. They do not remember the original angle if it started outside their restricted domain. They will ruthlessly snap the result back into their legal principal zone."
+        }
+    ];
 
     let currentIndex = 0;
     let selectedOption = null;
@@ -240,7 +568,7 @@ html_template = """<!DOCTYPE html>
             buildStep();
         } else {
             elTitle.innerHTML = "System Verified: Diagnostics Complete";
-            elContext.innerHTML = `<strong>Final Diagnostic Score: ${phaseScore} / ${courseData.length}</strong><br><br>You have successfully traced the structural framework of Recursive Sequences and Divergence to Infinity. By mastering the existence prerequisite, error contraction, and the $M$-$N$ threshold logic, you have completely dismantled the concept of chaotic and infinite behavior in discrete space.`;
+            elContext.innerHTML = `<strong>Final Diagnostic Score: ${phaseScore} / ${courseData.length}</strong><br><br>You have successfully modeled the continuous dynamics of transcendental functions. By mastering compounding exponents, identifying logarithmic domain constraints, and utilizing artificial domain restrictions to tame periodic waves, your analytical reflexes are now fully prepared for differential calculus.`;
             elOptions.innerHTML = "";
             elPanes.style.display = "none";
             elBtnNext.style.display = "none";
@@ -264,137 +592,75 @@ html_template = """<!DOCTYPE html>
 </script>
 
 </body>
-</html>"""
+</html>
+"""
 
-# 2. Define the Lecture 6 Course Data
-course_data = [
-    {
-        "title": "Phase 1: The Blind Algebra Trap",
-        "context": "<strong>Scenario:</strong> You are given a sequence $a_{n+1} = 3a_n - 4$. You blindly set $L = 3L - 4$ and solve for $L = 2$. Why is this algebraically correct answer completely meaningless without further proof?",
-        "options": [
-            "Because 2 is not a natural number.",
-            "Because the sequence might be oscillating instead of converging.",
-            "Because the algebraic equation $L = f(L)$ is only valid if you have independently proven that the limit $L$ exists first.",
-            "Because the algebra did not account for the starting value $a_1$."
-        ],
-        "correct": 2,
-        "what": "Algebra blindly assumes that $a_n$ and $a_{n+1}$ both reach a flat, finite number $L$. If the sequence actually shoots off to infinity, the math will still give you a false, finite answer (like the Fibonacci sequence returning 0).",
-        "why": "Existence before algebra is a non-negotiable law in real analysis. You must use tools like the Monotone Convergence Theorem (proving it is bounded and monotonic) to guarantee $L$ exists before you are legally allowed to invoke the equation $L = f(L)$."
-    },
-    {
-        "title": "Phase 2: Error Contraction (The Shrinking Gap)",
-        "context": "<strong>Scenario:</strong> A sequence $a_n$ bounces around its target $T$. You prove that the absolute error at step $n+1$ is always $\\text{Error}_{n+1} = \\frac{1}{3} \\text{Error}_n$. Why does this guarantee that the sequence converges to $T$?",
-        "options": [
-            "Because the error is now a decreasing monotonic sequence bounded strictly above by 0.",
-            "Because multiplying by a positive fraction less than 1 repeatedly forces the error to shrink exactly to zero.",
-            "Because the target $T$ is shrinking to meet the error.",
-            "Because the sequence is no longer recursive."
-        ],
-        "correct": 1,
-        "what": "By chopping the distance to the target by at least a fraction of $\\frac{1}{3}$ on every single step, the error sequence takes the form of a geometric decay $(\\frac{1}{3})^n$, which evaluates to exactly 0 at infinity.",
-        "why": "When a sequence oscillates, it is not monotonic, meaning the standard MCT is useless. Error Contraction bypasses the sequence's path entirely and focuses solely on the size of the gap to the target. If the gap reaches 0, you have hit the target."
-    },
-    {
-        "title": "Phase 3: The 4-Step Strategy (Finding the Ceiling)",
-        "context": "<strong>Scenario:</strong> You are evaluating $x_{n+1} = \\sqrt{6 + x_n}$. You do some scratch-work ($L = \\sqrt{6+L}$) and find the potential limits are $3$ and $-2$. Since $x_n$ is positive, you suspect the limit is $3$. What is your immediate next move in the formal proof?",
-        "options": [
-            "Write the formal equation $\\lim x_{n+1} = \\lim \\sqrt{6 + x_n}$ and declare the answer is 3.",
-            "Use the $M$-$N$ threshold test to show it diverges.",
-            "Use Mathematical Induction to prove that $x_n < 3$ for all $n$ to establish the ceiling.",
-            "Prove that the error contracts."
-        ],
-        "correct": 2,
-        "what": "Your scratch-work gave you the \"cheat code\"—it told you exactly what number to use for the ceiling. You now execute Step 1 of the 4-Step Strategy: use induction to formally prove that 3 is an unbreakable upper bound.",
-        "why": "You cannot claim the limit is 3 until you prove the limit exists. By proving it is bounded by 3, and then proving it is monotonic, you satisfy the MCT. Only then does your scratch-work become mathematically legal."
-    },
-    {
-        "title": "Phase 4: Defining Infinity ($M$-Threshold)",
-        "context": "<strong>Scenario:</strong> To formally prove that $a_n = n^3$ diverges to infinity, the skeptic hands you a massive threshold $M = 1,000,000$. What is the correct cutoff index $N$ that mathematically breaks this ceiling?",
-        "options": [
-            "$$N > 100$$",
-            "$$N > \\sqrt[3]{M}$$",
-            "$$N > M^3$$",
-            "$$N = M$$"
-        ],
-        "correct": 1,
-        "what": "To break the ceiling, we need $n^3 > M$. Taking the cube root of both sides gives $n > \\sqrt[3]{M}$. Thus, our cutoff $N$ must be chosen to be greater than the cube root of the given threshold.",
-        "why": "The $M$-$N$ definition requires you to find a specific step where the sequence permanently crosses the boundary. For $M = 1,000,000$, $\\sqrt[3]{1,000,000} = 100$. Any term after the 100th step (e.g., step 101) will permanently exceed 1 million."
-    },
-    {
-        "title": "Phase 5: The Race (Geometric vs Linear)",
-        "context": "<strong>Scenario:</strong> You are racing a geometric algorithm $a_n = 2^n$ against a linear algorithm $b_n = 1000n$. Why does $2^n$ mathematically obliterate $1000n$ as $n \\to \\infty$?",
-        "options": [
-            "Because 2 is an even number.",
-            "Because expanding $2^n$ as $(1+1)^n$ via the Binomial Formula exposes a hidden $n^2$ term, which strictly grows faster than the linear $n$ in the denominator.",
-            "Because linear growth eventually flattens out and becomes a constant.",
-            "Because the linear function has a larger starting coefficient ($1000$)."
-        ],
-        "correct": 1,
-        "what": "The Binomial Formula expands $2^n$ into $1 + n + \\frac{n(n-1)}{2} + \\dots$. When you divide this expansion by $n$ to analyze the ratio $\\frac{2^n}{n}$, the $\\frac{n(n-1)}{2}$ term reduces to something that still has an $n$ in the numerator, meaning it goes to infinity.",
-        "why": "Geometric sequences compound. By cracking open the exponent with the Binomial Trick, we mathematically proved that a geometric sequence always contains a higher-order polynomial engine ($n^2, n^3, \\dots$) hidden inside it, making it infinitely more powerful than any linear equation."
-    }
-]
+def generate_stepper():
+    with open(STEPPER_FILENAME, "w", encoding="utf-8") as f:
+        f.write(STEPPER_HTML)
+    print(f"Created {STEPPER_FILENAME} successfully.")
 
-# 3. Write the Stepper HTML File
-final_stepper_html = html_template.replace("{course_data_json}", json.dumps(course_data, indent=4))
-stepper_filename = "week2-lecture6-interactive-stepper.html"
+def update_lecture_file():
+    if not os.path.exists(LECTURE_FILENAME):
+        print(f"Error: {LECTURE_FILENAME} not found.")
+        return
 
-with open(stepper_filename, "w", encoding="utf-8") as f:
-    f.write(final_stepper_html)
-print(f"Created: {stepper_filename}")
+    with open(LECTURE_FILENAME, "r", encoding="utf-8") as f:
+        content = f.read()
 
-# 4. Patch week2-lecture6.html
-lecture_filename = "week2-lecture6.html"
+    # 1. Safely update any trailing Week 3 references to Lecture 9 (robust against resets)
+    content = re.sub(r'href=["\']week3-lecture9\.html["\']', 'href="week4-lecture9.html"', content)
 
-nav_replacement = """<a href="week2-lecture6-interactive-stepper.html" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">✎ Practice Problems</a>
-                <span style="background: #f1f5f9; color: #94a3b8; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; font-weight: 600; font-size: 0.88rem; cursor: not-allowed; text-align: center; white-space: nowrap;">Next Lecture &rarr;</span>"""
+    # 2. Inject Stepper Launch Buttons directly into both the Header and Footer .nav-btn-group
+    # Using a slightly different approach to match the exact HTML in your file reliably.
 
-nav_target = '<span style="background: #f1f5f9; color: #94a3b8; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; font-weight: 600; font-size: 0.88rem; cursor: not-allowed; text-align: center; white-space: nowrap;">Next Lecture &rarr;</span>'
+    btn_link = f'\n                <a href="{STEPPER_FILENAME}" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">✎ Practice Problems</a>'
 
-cta_target = "<!-- FOOTER NAVIGATION -->"
-cta_replacement = """<!-- INTERACTIVE STEPPER CTA -->
-            <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.75rem; margin-bottom: 2.5rem; border-radius: 6px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
-                <h4 style="margin: 0 0 0.75rem 0; color: #047857; font-size: 1.15rem;">Ready to test your understanding?</h4>
-                <p style="margin: 0 0 1.25rem 0; color: #334155; font-size: 1.02rem;">Work through the progressive interactive problems to lock in these foundational concepts.</p>
-                <a href="week2-lecture6-interactive-stepper.html" style="display: inline-block; background: #10b981; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 1rem; transition: background 0.2s;">
-                    Launch Interactive Problem Stepper ➔
-                </a>
-            </div>
+    # Check if the practice problems button is already present in the nav groups
+    if "✎ Practice Problems" not in content:
+        # Top header
+        content = re.sub(
+            r'(<div class="nav-btn-group"[^>]*>[\s\S]*?)(\n\s*<a href="week4-lecture9\.html")',
+            lambda m: m.group(1) + btn_link + m.group(2),
+            content,
+            count=1
+        )
 
-            <!-- FOOTER NAVIGATION -->"""
+        # Bottom footer
+        content = re.sub(
+            r'(<div class="footer-nav"[^>]*>[\s\S]*?)(\n\s*<a href="week4-lecture9\.html")',
+            lambda m: m.group(1) + btn_link + m.group(2),
+            content,
+            count=1
+        )
 
-if os.path.exists(lecture_filename):
-    with open(lecture_filename, "r", encoding="utf-8") as f:
-        lecture_html = f.read()
 
-    # Idempotency check: Only patch if the links don't already exist
-    if "week2-lecture6-interactive-stepper.html" not in lecture_html:
-        # Inject Nav Link
-        lecture_html = lecture_html.replace(nav_target, nav_replacement)
+    # 3. Inject the large Main Stepper Banner immediately before the footer
+    injection_block = f"""
+                <!-- INTERACTIVE KNOWLEDGE CHECK -->
+                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; border-radius: 8px; padding: 1.5rem; margin: 2rem 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <h3 style="margin: 0 0 0.5rem 0; color: #047857; font-size: 1.35rem;">🧠 Interactive Knowledge Check</h3>
+                    <p style="margin: 0 0 1.25rem 0; color: #065f46; font-size: 1.05rem; max-width: 600px;">
+                        Before moving on to calculus, test your reflexes on domain traps, log rules, and inverse trig restrictions with this 25-step interactive diagnostic.
+                    </p>
+                    <a href="{STEPPER_FILENAME}" target="_blank" style="background: #10b981; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 1.05rem; transition: background 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        Launch Interactive Stepper &rarr;
+                    </a>
+                </div>
+"""
+    if "<!-- INTERACTIVE KNOWLEDGE CHECK -->" not in content:
+        content = re.sub(
+            r"(<!-- FOOTER NAVIGATION -->)",
+            lambda m: injection_block + "\n                " + m.group(1),
+            content,
+            count=1
+        )
 
-        # Inject CTA
-        lecture_html = lecture_html.replace(cta_target, cta_replacement)
+    with open(LECTURE_FILENAME, "w", encoding="utf-8") as f:
+        f.write(content)
+    print(f"Successfully generated stepper and fully updated {LECTURE_FILENAME}.")
 
-        with open(lecture_filename, "w", encoding="utf-8") as f:
-            f.write(lecture_html)
-        print(f"Patched: {lecture_filename} (Navigation and CTA injected)")
-    else:
-        print(f"Skipped: {lecture_filename} (Already contains the practice problem links)")
-else:
-    print(f"Error: {lecture_filename} not found in the current directory.")
 
-# 5. Execute Git Commands Automatically
-print("\\nExecuting Git commands...")
-try:
-    script_name = os.path.basename(sys.argv[0])
-    files_to_add = ["week2-lecture6-interactive-stepper.html", "week2-lecture6.html"]
-
-    if os.path.exists(script_name):
-        files_to_add.append(script_name)
-
-    subprocess.run(["git", "add"] + files_to_add, check=True)
-    subprocess.run(["git", "commit", "-m", "Add interactive stepper to Week 2 Lecture 6\n\nGenerate week2-lecture6-interactive-stepper.html and automatically patch week2-lecture6.html to include navigational and call-to-action links to the newly generated problems."], check=True)
-    subprocess.run(["git", "push"], check=True)
-    print("Git operations completed successfully.")
-except Exception as e:
-    print(f"Git operations failed. Please run them manually. Error: {e}")
+if __name__ == "__main__":
+    generate_stepper()
+    update_lecture_file()
