@@ -454,6 +454,306 @@
                 Just like with sequence limits, this is a formal game. The adversary hands you an impossibly tight output margin ($\epsilon$), and you must calculate a specific input window ($\delta$) that acts as a secure mathematical fence.
             </p>
 
+            <!-- ================================================================= -->
+            <!-- INTERACTIVE WIDGET: 4-CLAUSE EPSILON-DELTA STEPPER                -->
+            <!-- ================================================================= -->
+            <div class="stepper-walkthrough" id="cdef-walkthrough" style="margin: 2.5rem 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+
+                <style>
+                    #cdef-walkthrough .telemetry-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                        gap: 0.75rem;
+                        background: #0f172a;
+                        padding: 1rem 1.25rem;
+                        border-top-left-radius: 10px;
+                        border-top-right-radius: 10px;
+                    }
+                    #cdef-walkthrough .telemetry-card {
+                        display: flex;
+                        flex-direction: column;
+                    }
+                    #cdef-walkthrough .telemetry-label {
+                        font-size: 0.7rem;
+                        text-transform: uppercase;
+                        letter-spacing: 0.05em;
+                        color: #94a3b8;
+                        font-weight: 700;
+                        margin-bottom: 0.25rem;
+                    }
+                    #cdef-walkthrough .telemetry-badge {
+                        font-family: monospace;
+                        font-size: 0.95rem;
+                        font-weight: 700;
+                    }
+                    #cdef-walkthrough .formula-stage-wrap {
+                        background: #1e293b;
+                        padding: 1.25rem 1.5rem;
+                        border-bottom: 1px solid #334155;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        overflow-x: auto;
+                    }
+                    #cdef-walkthrough .formula-display {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        flex-wrap: nowrap;
+                    }
+                    #cdef-walkthrough .formula-chunk {
+                        background: #334155;
+                        color: #94a3b8;
+                        padding: 0.5rem 0.85rem;
+                        border-radius: 6px;
+                        font-family: monospace;
+                        font-size: 1rem;
+                        font-weight: 700;
+                        cursor: pointer;
+                        transition: all 0.2s ease;
+                        border: 1px solid transparent;
+                        white-space: nowrap;
+                    }
+                    #cdef-walkthrough .formula-chunk:hover {
+                        background: #475569;
+                        color: #ffffff;
+                    }
+                    #cdef-walkthrough .formula-chunk.active {
+                        background: #0284c7;
+                        color: #ffffff;
+                        border-color: #38bdf8;
+                        box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.3);
+                    }
+                    #cdef-walkthrough .formula-chunk.completed {
+                        background: #065f46;
+                        color: #d1fae5;
+                        border-color: #10b981;
+                    }
+                    #cdef-walkthrough .formula-sep {
+                        color: #94a3b8;
+                        font-family: monospace;
+                        font-weight: bold;
+                    }
+                    @media (max-width: 640px) {
+                        #cdef-walkthrough .analysis-panes {
+                            grid-template-columns: 1fr !important;
+                        }
+                    }
+                </style>
+
+                <div class="telemetry-grid">
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Active Clause</span>
+                        <span class="telemetry-badge" id="cdef-tel-clause" style="color: #38bdf8;">1. The Challenge (∀ϵ > 0)</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Quantifier</span>
+                        <span class="telemetry-badge" id="cdef-tel-quant" style="color: #38bdf8;">Universal (∀)</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Logical Role</span>
+                        <span class="telemetry-badge" id="cdef-tel-role" style="color: #38bdf8;">Given Output Tolerance</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Scope &amp; Dependency</span>
+                        <span class="telemetry-badge" id="cdef-tel-scope" style="color: #38bdf8;">Arbitrary positive real</span>
+                    </div>
+                </div>
+
+                <div class="formula-stage-wrap">
+                    <div class="formula-display">
+                        <div class="formula-chunk active" id="cdef-chunk-0" onclick="cdefSim.setStep(0)">∀ϵ > 0</div>
+                        <span class="formula-sep">,</span>
+                        <div class="formula-chunk" id="cdef-chunk-1" onclick="cdefSim.setStep(1)">∃δ > 0</div>
+                        <span class="formula-sep" style="font-size: 0.95rem; margin: 0 0.2rem; color: #94a3b8;">such that</span>
+                        <div class="formula-chunk" id="cdef-chunk-2" onclick="cdefSim.setStep(2)">∀x ∈ X, |x - x₀| &lt; δ</div>
+                        <span class="formula-sep">$$\implies$$</span>
+                        <div class="formula-chunk" id="cdef-chunk-3" onclick="cdefSim.setStep(3)">|f(x) - f(x₀)| &lt; ϵ</div>
+                    </div>
+                </div>
+
+                <div class="canvas-container" style="background: #ffffff; padding: 1.5rem; border-bottom: 1px solid #cbd5e1;">
+                    <svg id="cdef-canvas" viewBox="0 0 740 280" style="width: 100%; max-width: 680px; display: block; margin: 0 auto;">
+                        <defs>
+                            <marker id="cdef-arr" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                <path d="M 0 1 L 8 5 L 0 9 z" fill="#64748b"/>
+                            </marker>
+                        </defs>
+
+                        <!-- Axes -->
+                        <line x1="50" y1="240" x2="690" y2="240" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#cdef-arr)"/>
+                        <line x1="80" y1="260" x2="80" y2="20" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#cdef-arr)"/>
+                        <text x="700" y="244" font-size="13" font-weight="700" fill="#64748b">x</text>
+                        <text x="70" y="20" font-size="13" font-weight="700" fill="#64748b" text-anchor="end">y</text>
+
+                        <!-- Baseline Target Lines -->
+                        <line x1="80" y1="130" x2="360" y2="130" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4"/>
+                        <line x1="360" y1="240" x2="360" y2="130" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4"/>
+                        <text x="72" y="134" font-size="13" font-weight="800" fill="#0f172a" text-anchor="end">f(x₀)</text>
+                        <text x="360" y="258" font-size="13" font-weight="800" fill="#0f172a" text-anchor="middle">x₀</text>
+
+                        <!-- STEP 0: Epsilon Band -->
+                        <g id="cdef-layer-eps" style="opacity: 0; transition: opacity 0.4s ease;">
+                            <rect x="80" y="70" width="600" height="120" fill="#f0f9ff" fill-opacity="0.8"/>
+                            <line x1="80" y1="70" x2="680" y2="70" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="5,3"/>
+                            <line x1="80" y1="190" x2="680" y2="190" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="5,3"/>
+                            <text x="72" y="74" font-size="11" font-weight="700" fill="#0284c7" text-anchor="end">f(x₀) + ε</text>
+                            <text x="72" y="194" font-size="11" font-weight="700" fill="#0284c7" text-anchor="end">f(x₀) - ε</text>
+                        </g>
+
+                        <!-- STEP 1: Delta Band & Bounding Box -->
+                        <g id="cdef-layer-delta" style="opacity: 0; transition: opacity 0.4s ease;">
+                            <rect x="260" y="20" width="200" height="220" fill="#f0fdf4" fill-opacity="0.6"/>
+                            <line x1="260" y1="20" x2="260" y2="240" stroke="#4ade80" stroke-width="1.5" stroke-dasharray="5,3"/>
+                            <line x1="460" y1="20" x2="460" y2="240" stroke="#4ade80" stroke-width="1.5" stroke-dasharray="5,3"/>
+                            <text x="260" y="258" font-size="11" font-weight="700" fill="#16a34a" text-anchor="middle">x₀ - δ</text>
+                            <text x="460" y="258" font-size="11" font-weight="700" fill="#16a34a" text-anchor="middle">x₀ + δ</text>
+
+                            <!-- Intersection Box -->
+                            <rect x="260" y="70" width="200" height="120" fill="#dcfce7" stroke="#10b981" stroke-width="2"/>
+                        </g>
+
+                        <!-- The Curve -->
+                        <path d="M 80 250 Q 250 180 360 130 T 680 40" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
+
+                        <!-- Target Point (x_0, f(x_0)) -->
+                        <circle cx="360" cy="130" r="5" fill="#ef4444"/>
+
+                        <!-- STEP 2: Test Input x -->
+                        <g id="cdef-layer-testx" style="opacity: 0; transition: opacity 0.4s ease;">
+                            <line x1="420" y1="240" x2="420" y2="108" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="4,4"/>
+                            <circle cx="420" cy="240" r="4.5" fill="#8b5cf6"/>
+                            <text x="420" y="258" font-size="13" font-weight="800" fill="#7c3aed" text-anchor="middle">x</text>
+                        </g>
+
+                        <!-- STEP 3: Test Output f(x) -->
+                        <g id="cdef-layer-testy" style="opacity: 0; transition: opacity 0.4s ease;">
+                            <line x1="420" y1="108" x2="80" y2="108" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="4,4"/>
+                            <circle cx="420" cy="108" r="5" fill="#7c3aed"/>
+                            <circle cx="80" cy="108" r="4.5" fill="#8b5cf6"/>
+                            <text x="72" y="112" font-size="13" font-weight="800" fill="#7c3aed" text-anchor="end">f(x)</text>
+
+                            <!-- Success Checkmark -->
+                            <circle cx="485" cy="108" r="10" fill="#10b981"/>
+                            <path d="M 481 108 L 484 112 L 490 104" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+                            <text x="502" y="112" font-size="12" font-weight="700" fill="#059669">Safely inside ε-band!</text>
+                        </g>
+
+                    </svg>
+                </div>
+
+                <div class="controls-pane" style="display: flex; gap: 2rem; padding: 1.5rem; background: #f8fafc; border-bottom: 1px solid #cbd5e1; align-items: center;">
+                    <div class="nav-buttons" style="display: flex; gap: 0.5rem; min-width: 140px;">
+                        <button id="btn-cdef-prev" onclick="cdefSim.step(-1)" disabled style="background: #e2e8f0; color: #475569; border: 1px solid #cbd5e1; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600; cursor: pointer;">&larr; Prev</button>
+                        <button id="btn-cdef-next" onclick="cdefSim.step(1)" style="background: #d97706; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600; cursor: pointer;">Next &rarr;</button>
+                    </div>
+                    <div class="step-summary" id="cdef-step-summary" style="flex-grow: 1; font-size: 0.97rem; color: #334155; line-height: 1.5;"></div>
+                </div>
+
+                <div class="analysis-panes" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #cbd5e1;">
+                    <div class="pane" style="background: #ffffff; padding: 1.5rem;">
+                        <h4 style="margin-top: 0; color: #15803d; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 800;">Mathematical Mechanics</h4>
+                        <div id="cdef-pane-what" style="font-size: 0.95rem; color: #334155; line-height: 1.6;"></div>
+                    </div>
+                    <div class="pane" style="background: #ffffff; padding: 1.5rem;">
+                        <h4 style="margin-top: 0; color: #1d4ed8; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 800;">Logical Rationale</h4>
+                        <div id="cdef-pane-why" style="font-size: 0.95rem; color: #334155; line-height: 1.6;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                const cdefSim = (function() {
+                    let currentStep = 0;
+
+                    const data = [
+                        {
+                            clause: "1. The Challenge (∀ϵ > 0)", quant: "Universal (∀)", role: "Given Output Tolerance", scope: "Arbitrary positive real",
+                            summary: "The adversary selects an arbitrary output error tolerance ε > 0. A horizontal band is drawn around the target output f(x₀).",
+                            what: "A blue horizontal ribbon spans from f(x₀) - ε to f(x₀) + ε. Mathematically, this represents the strict inequality |f(x) - f(x₀)| < ε.",
+                            why: "Continuity means we can hit the target within ANY required precision. We must accept this ε as a fixed constant for the rest of the proof. We cannot negotiate it.",
+                            showEps: true, showDelta: false, showX: false, showY: false
+                        },
+                        {
+                            clause: "2. The Response (∃δ > 0)", quant: "Existential (∃)", role: "Required Input Precision", scope: "Dependent on ε",
+                            summary: "We calculate a corresponding input tolerance δ > 0. A vertical band is drawn around the target input x₀.",
+                            what: "A green vertical ribbon spans from x₀ - δ to x₀ + δ. Where the two ribbons cross, an unbreakable bounding box is formed around the target point.",
+                            why: "This is our control dial. By analyzing the function's behavior (often working backward from the ε inequality on scratch paper), we find exactly how tightly we must restrict x to keep f(x) safe.",
+                            showEps: true, showDelta: true, showX: false, showY: false
+                        },
+                        {
+                            clause: "3. The Test Input (∀x, |x-x₀|<δ)", quant: "Universal (∀)", role: "Domain Restriction", scope: "Any valid input in the δ-window",
+                            summary: "We select an arbitrary test input x that sits strictly inside our chosen δ-window on the x-axis.",
+                            what: "A test point x appears inside the green bounds (x₀ - δ < x < x₀ + δ). We project this input up to find where it lands on our function curve.",
+                            why: "We cannot just test one point and call it a day. The '∀' quantifier demands that our mathematical guarantee holds for every single possible input that satisfies our strict precision requirement.",
+                            showEps: true, showDelta: true, showX: true, showY: false
+                        },
+                        {
+                            clause: "4. The Guarantee (|f(x)-f(x₀)|<ϵ)", quant: "Implication (⇒)", role: "Output Safety", scope: "The Epsilon Corridor",
+                            summary: "We evaluate the function at our test input x. The resulting output f(x) lands safely inside the blue ε-corridor.",
+                            what: "The output f(x) projects back to the y-axis, proving it sits strictly between f(x₀) - ε and f(x₀) + ε. The curve exits the box strictly through the green side walls, never breaching the blue ceiling or floor.",
+                            why: "Because this holds true for ANY x in the δ-window, and we can mathematically find a valid δ for ANY ε the adversary chooses, the function is rigorously proven to be continuous at x₀.",
+                            showEps: true, showDelta: true, showX: true, showY: true
+                        }
+                    ];
+
+                    function updateUI() {
+                        const stepData = data[currentStep];
+
+                        // Update Telemetry
+                        document.getElementById('cdef-tel-clause').textContent = stepData.clause;
+                        document.getElementById('cdef-tel-quant').textContent = stepData.quant;
+                        document.getElementById('cdef-tel-role').textContent = stepData.role;
+                        document.getElementById('cdef-tel-scope').textContent = stepData.scope;
+
+                        // Update Formula Chunks
+                        for (let i = 0; i < 4; i++) {
+                            const chunk = document.getElementById(`cdef-chunk-${i}`);
+                            if (i === currentStep) {
+                                chunk.className = "formula-chunk active";
+                            } else if (i < currentStep) {
+                                chunk.className = "formula-chunk completed";
+                            } else {
+                                chunk.className = "formula-chunk";
+                            }
+                        }
+
+                        // Update Texts
+                        document.getElementById('cdef-step-summary').textContent = stepData.summary;
+                        document.getElementById('cdef-pane-what').textContent = stepData.what;
+                        document.getElementById('cdef-pane-why').textContent = stepData.why;
+
+                        // Update Buttons
+                        document.getElementById('btn-cdef-prev').disabled = currentStep === 0;
+                        document.getElementById('btn-cdef-next').disabled = currentStep === 3;
+                        document.getElementById('btn-cdef-prev').style.opacity = currentStep === 0 ? "0.4" : "1";
+                        document.getElementById('btn-cdef-next').style.opacity = currentStep === 3 ? "0.4" : "1";
+
+                        // Update SVG Layers
+                        document.getElementById('cdef-layer-eps').style.opacity = stepData.showEps ? "1" : "0";
+                        document.getElementById('cdef-layer-delta').style.opacity = stepData.showDelta ? "1" : "0";
+                        document.getElementById('cdef-layer-testx').style.opacity = stepData.showX ? "1" : "0";
+                        document.getElementById('cdef-layer-testy').style.opacity = stepData.showY ? "1" : "0";
+                    }
+
+                    return {
+                        step: function(dir) {
+                            currentStep += dir;
+                            updateUI();
+                        },
+                        setStep: function(idx) {
+                            currentStep = idx;
+                            updateUI();
+                        },
+                        init: function() {
+                            updateUI();
+                        }
+                    };
+                })();
+
+                document.addEventListener('DOMContentLoaded', cdefSim.init);
+            </script>
+
             <!-- SECTION 3: DISCONTINUITY -->
             <h2 id="section-discontinuity">3. When Continuity Fails (Discontinuity)</h2>
 
