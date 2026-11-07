@@ -85,17 +85,42 @@
             </div>
 
             <div style="margin: 2.25rem 0 2.5rem 0;">
-                <h3 style="margin-top: 0; color: #0f172a; font-size: 1.3rem;">
+                <h3 style="margin-top: 0; color: #0f172a; font-size: 1.35rem;">
                     Welcome to Lecture 9: The Anatomy of Unbroken Curves
                 </h3>
-                <p style="margin: 0 0 1.15rem 0; color: #334155; line-height: 1.75; font-size: 1rem;">
-                    We intuitively know what it means for a line to be "continuous"—you can draw it with a pencil without lifting the tip off the paper. But intuition is not enough in mathematics. How do we rigorously guarantee that a curve has no microscopic holes, no sudden jumps, and no infinite breaks?
+
+                <p style="margin: 0 0 1.15rem 0; color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                    If the transition into this week's material feels a little daunting, take a deep breath—you are exactly where you need to be, and you have already done the hardest work.
                 </p>
-                <p style="margin: 0 0 1.15rem 0; color: #334155; line-height: 1.75; font-size: 1rem;">
-                    In Week 2, we mastered the $\epsilon$-$N$ definition of limits for sequences, where we chased numbers out to infinity. Today, we bring that same rigorous trapping mechanism to functions. Instead of traveling out to $n \to \infty$, we will zoom in on a single specific point ($x_0$).
+
+                <p style="margin: 0 0 1.15rem 0; color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                    Over the first two weeks, you mastered the rigorous $\epsilon\text{-}N$ definition of limits. You learned how to mathematically trap isolated, discrete stepping stones (sequences) as they marched out to infinity. Then, in Week 3, we stepped back to look at the fluid, connected mappings of the natural world: exponential growth, logarithms, and trigonometric waves.
                 </p>
-                <p style="margin: 0 0 1.15rem 0; color: #334155; line-height: 1.75; font-size: 1rem;">
-                    In this lecture, we introduce the formal $\epsilon$-$\delta$ (epsilon-delta) definition of continuity, explore how to control output errors by restricting input errors, and look at the profound guarantees that continuity provides, such as the Intermediate Value Theorem.
+
+                <p style="margin: 0 0 1.5rem 0; color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                    Today, <strong>we merge those two worlds together</strong>. We are taking the airtight logical traps you built in Week 2 and aiming them directly at the smooth curves you explored in Week 3.
+                </p>
+
+                <!-- COURSE STRUCTURE & REASSURANCE BOX -->
+                <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid #0284c7; border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                    <div style="font-size: 0.85rem; font-weight: 800; color: #0369a1; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">
+                        🗺️ How This Fits Into The Grand Arc
+                    </div>
+                    <p style="margin: 0 0 0.85rem 0; color: #334155; line-height: 1.65; font-size: 0.98rem;">
+                        We all intuitively know what it means for a line to be "continuous"—you can draw it with a pencil without lifting the tip off the paper. But intuition is a dangerous foundation for differential calculus. To measure instantaneous rates of change (derivatives) safely, we need an absolute, mathematical guarantee that a curve has no microscopic holes, no sudden jumps, and no invisible breaks.
+                    </p>
+                    <ul style="margin: 0; padding-left: 1.25rem; color: #334155; line-height: 1.7; font-size: 0.98rem;">
+                        <li style="margin-bottom: 0.5rem;">
+                            <strong>The Shift in Focus:</strong> Instead of chasing an index $n \to \infty$ like we did with sequences, we are now zooming in with a microscope on a <em>single, specific target point</em> ($x \to c$) on a continuous graph.
+                        </li>
+                        <li>
+                            <strong>Why It Matters for the Future:</strong> Defining continuity rigorously using the new $\epsilon\text{-}\delta$ (epsilon-delta) framework unlocks massive mathematical superpowers. It leads directly to the <strong>Intermediate Value Theorem</strong>, which gives us the ability to guarantee that solutions to impossible equations actually exist in the real world, setting the definitive stage for calculus.
+                        </li>
+                    </ul>
+                </div>
+
+                <p style="margin: 0; color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                    If the upcoming $\epsilon\text{-}\delta$ notation looks intimidating, remember: it is just a translation of the exact same two-player target game you already won in Week 2. You are simply learning how to control an output error ($\epsilon$) by placing a strict physical fence around your input ($\delta$). Let's break it down step-by-step.
                 </p>
             </div>
 
@@ -114,32 +139,287 @@
             <h2 id="section-error-control">1. The Physical Intuition: Controlling the Error</h2>
 
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
-                In practice, we rarely have perfectly exact inputs. Imagine a firefighter shooting a water jet to hit a specific window. A small error in the angle of the hose (the <strong>input</strong>, $x$) creates a corresponding error in where the water lands (the <strong>output</strong>, $y$).
+                If you are feeling nervous about the sudden appearance of the Greek letters $\epsilon$ (epsilon) and $\delta$ (delta), let me share a secret with you: this entire concept is not about abstract, floating symbols. It is a highly practical idea about <strong>operating a machine safely</strong>.
             </p>
+
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
-                The central question of continuity is: <em>Can we guarantee a desired output precision by demanding a sufficiently strict input precision?</em>
+                Imagine you are operating a sensitive factory machine. You have a dial (your <strong>input</strong>, $x$) that controls the temperature of a chemical oven (your <strong>output</strong>, $f(x)$). You want the oven to sit at a perfect, specific target temperature $f(x_0)$. To achieve this, you need to set the dial to exactly $x_0$.
             </p>
-            <ul style="color: #334155; line-height: 1.75; font-size: 1.05rem; padding-left: 1.25rem;">
-                <li>Let $\epsilon$ (epsilon) be the maximum acceptable error in our <strong>output</strong>: $|f(x) - f(x_0)| < \epsilon$.</li>
-                <li>Let $\delta$ (delta) be the strict tolerance we place on our <strong>input</strong>: $|x - x_0| < \delta$.</li>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                But in the real world, human hands shake, and instruments have micro-wobbles. You can almost never set the dial to <em>exactly</em> $x_0$. A microscopic error on your input dial inevitably creates an error in the oven's output temperature.
+            </p>
+
+            <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid #0284c7; border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                <div style="font-size: 1.05rem; font-weight: 800; color: #0369a1; margin-bottom: 0.5rem;">
+                    The Central Question of Continuity
+                </div>
+                <p style="margin: 0; color: #334155; line-height: 1.65; font-size: 0.98rem;">
+                    If your boss demands that the oven temperature must stay within a strict, tiny safety margin to prevent a fire, can you calculate <em>exactly how steady your hand needs to be on the dial</em> to guarantee success?
+                </p>
+            </div>
+
+            <h3 style="color: #0f172a; margin-top: 2rem; font-size: 1.15rem;">Translating the Factory to Mathematics</h3>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                In mathematics, we measure "error" as a physical distance using absolute value. Let's translate our factory machine into formal notation:
+            </p>
+
+            <ul style="color: #334155; line-height: 1.75; font-size: 1.05rem; padding-left: 1.25rem; margin-bottom: 1.5rem;">
+                <li style="margin-bottom: 0.75rem;">
+                    <strong>The Output Tolerance ($\epsilon$):</strong> Let $\epsilon$ (epsilon) be the maximum acceptable error in our <strong>output</strong>. If the boss says the temperature can't be off by more than $\epsilon$, we write that as a distance:
+                    <span style="font-weight: 600; color: #0f172a; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">$|f(x) - f(x_0)| < \epsilon$</span>.
+                </li>
+                <li>
+                    <strong>The Input Tolerance ($\delta$):</strong> Let $\delta$ (delta) be the strict tolerance we place on our <strong>input</strong> dial. We demand that our dial is within $\delta$ distance of the perfect setting:
+                    <span style="font-weight: 600; color: #0f172a; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px;">$|x - x_0| < \delta$</span>.
+                </li>
             </ul>
 
-            <div class="worked-example-box">
-                <h4>🎯 Example: Controlling a Linear Function</h4>
-                <p style="margin-bottom: 0.5rem;">Suppose we are working with a linear function $f(x) = mx + b$ (where $m \neq 0$). We want to ensure our output is within an $\epsilon$-corridor around our target $f(x_0)$.</p>
-                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.1rem;">
-                    $$|f(x) - f(x_0)| < \epsilon$$
-                </div>
-                <p style="margin-bottom: 0.5rem;">Let's expand the function algebraically:</p>
-                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.1rem;">
-                    $$|(mx + b) - (mx_0 + b)| = |m(x - x_0)| = |m| \cdot |x - x_0| < \epsilon$$
-                </div>
-                <p style="margin-bottom: 0.5rem;">If we divide by the slope $|m|$, we isolate the input distance:</p>
-                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.1rem; color: #065f46; font-weight: bold;">
-                    $$|x - x_0| < \frac{\epsilon}{|m|}$$
-                </div>
-                <p style="margin-bottom: 0;"><strong>The Verdict:</strong> We successfully found our input tolerance! If we restrict our input $x$ such that its distance to $x_0$ is strictly less than $\delta = \frac{\epsilon}{|m|}$, we mathematically guarantee that the output error will be less than $\epsilon$.</p>
+            <div class="aside-box" style="background: #f0fdf4; border-color: #bbf7d0; border-left-color: #10b981;">
+                <h4 style="color: #047857;">💡 The Big Realization</h4>
+                <p style="margin-bottom: 0; color: #065f46 !important; font-size: 0.95rem; line-height: 1.6;">
+                    To prove a function is continuous, you just have to prove that you can always find a safe $\delta$ for <em>any</em> $\epsilon$ the boss demands. If the boss says $\epsilon = 0.1$, you might find $\delta = 0.05$. If they demand tighter precision like $\epsilon = 0.002$, you might have to tighten your grip to $\delta = 0.001$. As long as a safe $\delta$ <em>exists</em>, the curve is mathematically unbroken!
+                </p>
             </div>
+
+            <div class="worked-example-box" style="margin-top: 2rem;">
+                <h4 style="color: #047857; margin-bottom: 1rem;">🎯 Concrete Example: Controlling a Linear Machine</h4>
+                <p style="margin-bottom: 0.75rem; color: #334155; font-size: 0.98rem; line-height: 1.6;">
+                    Let's put this to work on a concrete function. Suppose our machine is governed by the equation $f(x) = 3x + 5$.
+                </p>
+                <p style="margin-bottom: 0.75rem; color: #334155; font-size: 0.98rem; line-height: 1.6;">
+                    Our target input is $x_0 = 2$. Therefore, our perfect target output is $f(2) = 3(2) + 5 = 11$. The boss demands that our output stays strictly within an $\epsilon$-corridor around $11$.
+                </p>
+
+                <p style="font-weight: 700; color: #0f172a; margin-top: 1.25rem; font-size: 1rem;">Step 1: Set up the Output Error</p>
+                <div style="text-align: center; margin: 0.5rem 0 1rem 0; font-size: 1.1rem; color: #0f172a;">
+                    $$|f(x) - 11| < \epsilon$$
+                </div>
+
+                <p style="font-weight: 700; color: #0f172a; margin-top: 1.25rem; font-size: 1rem;">Step 2: Plug in the function and simplify</p>
+                <p style="margin-bottom: 0.5rem; color: #334155; font-size: 0.95rem;">Substitute $3x + 5$ in for $f(x)$:</p>
+                <div style="text-align: center; margin: 0.5rem 0 1rem 0; font-size: 1.1rem; color: #0f172a;">
+                    $$|(3x + 5) - 11| < \epsilon$$
+                </div>
+                <p style="margin-bottom: 0.5rem; color: #334155; font-size: 0.95rem;">Combine the numbers:</p>
+                <div style="text-align: center; margin: 0.5rem 0 1rem 0; font-size: 1.1rem; color: #0f172a;">
+                    $$|3x - 6| < \epsilon$$
+                </div>
+
+                <p style="font-weight: 700; color: #0f172a; margin-top: 1.25rem; font-size: 1rem;">Step 3: Factor it to expose the Input Error</p>
+                <p style="margin-bottom: 0.5rem; color: #334155; font-size: 0.95rem;">Notice that $3$ is a common factor. Let's pull it out of the absolute value:</p>
+                <div style="text-align: center; margin: 0.5rem 0 1rem 0; font-size: 1.1rem; color: #0f172a;">
+                    $$3 \cdot |x - 2| < \epsilon$$
+                </div>
+
+                <p style="font-weight: 700; color: #0f172a; margin-top: 1.25rem; font-size: 1rem;">Step 4: Isolate the Input Error ($|x - x_0|$)</p>
+                <p style="margin-bottom: 0.5rem; color: #334155; font-size: 0.95rem;">Divide both sides by $3$:</p>
+                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.15rem; color: #065f46; font-weight: bold; background: #ffffff; padding: 0.5rem; border-radius: 6px; border: 1px dashed #a7f3d0; display: inline-block; width: 100%;">
+                    $$|x - 2| < \frac{\epsilon}{3}$$
+                </div>
+
+                <div style="margin-top: 1.25rem; border-top: 1px solid #bbf7d0; padding-top: 1rem;">
+                    <p style="margin-bottom: 0.5rem; color: #065f46 !important; font-size: 0.98rem; line-height: 1.6;">
+                        <strong>The Verdict:</strong> Look at the left side of that final equation—$|x - 2|$ is <em>exactly</em> our input error (the distance between our dial $x$ and the target $2$).
+                    </p>
+                    <p style="margin-bottom: 0; color: #065f46 !important; font-size: 0.98rem; line-height: 1.6;">
+                        We successfully found our tolerance! If we restrict our dial such that its error is strictly less than <strong>$\delta = \frac{\epsilon}{3}$</strong>, we mathematically guarantee that the oven's temperature error will be safely less than $\epsilon$. Because the function scales the input by $3$ (the slope), we simply had to make our input control $3$ times stricter.
+                    </p>
+                </div>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                <em>(Note: For any generic linear function $f(x) = mx + b$, this same logical process proves that setting your input tolerance to $\delta = \frac{\epsilon}{|m|}$ will always securely trap the output.)</em>
+            </p>
+
+            <!-- ================================================================= -->
+            <!-- VISUALIZATION: THE EPSILON ENVELOPE (GLOBAL CONTINUITY)           -->
+            <!-- ================================================================= -->
+            <div style="background: #ffffff; border: 1px solid var(--border, #cbd5e1); border-radius: 12px; padding: 1.5rem; margin: 2.5rem 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); font-family: system-ui, -apple-system, sans-serif;">
+
+                <div style="margin-bottom: 1.5rem;">
+                    <span style="font-size: 0.85rem; font-weight: 800; color: #0284c7; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.25rem;">Global Continuity</span>
+                    <h3 style="margin: 0 0 0.5rem 0; color: #0f172a; font-size: 1.25rem;">The $\epsilon$-Envelope (The Continuous Tube)</h3>
+                    <p style="margin: 0; color: #334155; font-size: 0.95rem; line-height: 1.6;">
+                        If we apply a strict output error margin ($\pm\epsilon$) to <em>every single point</em> along the curve, the individual $\epsilon$-$\delta$ bounding boxes merge together. They form a continuous, flexible tube that perfectly hugs the contour of the function. As long as the curve never tears or jumps, it will stay safely insulated inside this envelope.
+                    </p>
+                </div>
+
+                <div style="display: flex; justify-content: center; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; overflow: hidden; position: relative;">
+
+                    <svg viewBox="0 0 800 350" style="width: 100%; max-width: 760px; height: auto; display: block;">
+                        <defs>
+                            <!-- Native SVG ClipPath ensures scaling never detaches the tube from the box -->
+                            <clipPath id="tube-clip">
+                                <rect id="tube-clip-rect" x="0" y="-50" width="0" height="450" />
+                            </clipPath>
+                            <!-- Dimension Arrowheads -->
+                            <marker id="dim-arrow-blue" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                                <path d="M 0 2 L 6 5 L 0 8 z" fill="#0284c7"/>
+                            </marker>
+                            <marker id="dim-arrow-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                                <path d="M 0 2 L 6 5 L 0 8 z" fill="#15803d"/>
+                            </marker>
+                        </defs>
+
+                        <!-- Background Axes -->
+                        <line x1="80" y1="175" x2="720" y2="175" stroke="#94a3b8" stroke-width="1.5"/>
+                        <line x1="100" y1="320" x2="100" y2="30" stroke="#94a3b8" stroke-width="1.5"/>
+                        <text x="730" y="180" font-size="14" font-weight="bold" fill="#64748b">x</text>
+                        <text x="95" y="20" font-size="14" font-weight="bold" fill="#64748b" text-anchor="end">y</text>
+
+                        <!-- The Static Function Curve (Base) - Drawn via JS to match perfectly -->
+                        <path id="gc-curve-base" d="" fill="none" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4,4"/>
+
+                        <!-- The Shaded Epsilon Tube (Revealed by clipPath animation) -->
+                        <g id="gc-tube-reveal" clip-path="url(#tube-clip)">
+                            <!-- Filled Envelope -->
+                            <path id="gc-env-fill" d="" fill="#e0f2fe" opacity="0.6"/>
+
+                            <!-- Upper Boundary: f(x) + ε -->
+                            <path id="gc-env-top" d="" fill="none" stroke="#38bdf8" stroke-width="2"/>
+
+                            <!-- Lower Boundary: f(x) - ε -->
+                            <path id="gc-env-bot" d="" fill="none" stroke="#38bdf8" stroke-width="2"/>
+
+                            <!-- Main Solid Curve -->
+                            <path id="gc-curve" d="" fill="none" stroke="#0f172a" stroke-width="3"/>
+                        </g>
+
+                        <!-- The Sweeping Epsilon-Delta Box -->
+                        <g id="gc-sweeping-group">
+                            <!-- Dynamic Local Bounding Box -->
+                            <rect id="gc-box" x="0" y="0" width="40" height="80" fill="#dcfce7" stroke="#10b981" stroke-width="2" opacity="0.9"/>
+
+                            <!-- Center Target Point -->
+                            <circle id="gc-dot" cx="0" cy="0" r="5" fill="#ef4444"/>
+
+                            <!-- Sweeping x_0 Line -->
+                            <line id="gc-x0" x1="0" y1="320" x2="0" y2="30" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.5"/>
+                            <text id="gc-lbl-x0" x="0" y="340" font-size="14" font-weight="bold" fill="#ef4444" text-anchor="middle">x₀</text>
+
+                            <!-- EPSILON (ε) Vertical Label -->
+                            <line id="gc-eps-line" x1="0" y1="0" x2="0" y2="0" stroke="#0284c7" stroke-width="1.5" marker-start="url(#dim-arrow-blue)" marker-end="url(#dim-arrow-blue)"/>
+                            <text id="gc-lbl-eps" x="0" y="0" font-size="13" font-weight="bold" fill="#0284c7" text-anchor="start">ε</text>
+
+                            <!-- DELTA (δ) Horizontal Label -->
+                            <line id="gc-delta-line" x1="0" y1="0" x2="0" y2="0" stroke="#15803d" stroke-width="1.5" marker-start="url(#dim-arrow-green)" marker-end="url(#dim-arrow-green)"/>
+                            <text id="gc-lbl-delta" x="0" y="0" font-size="13" font-weight="bold" fill="#15803d" text-anchor="middle">δ</text>
+                        </g>
+                    </svg>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem;">
+                    <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid #16a34a; padding: 1rem; border-radius: 6px;">
+                        <h4 style="margin: 0 0 0.4rem 0; color: #15803d; font-size: 0.95rem;">Local Control (The Box)</h4>
+                        <p style="margin: 0; color: #166534; font-size: 0.9rem; line-height: 1.5;">
+                            At any specific snapshot in time ($x_0$), you enforce continuity by creating a rigid bounding box of width <strong>$2\delta$</strong> and height <strong>$2\epsilon$</strong>. As long as the curve exits strictly through the side walls, that single point is unbroken.
+                        </p>
+                    </div>
+                    <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-left: 4px solid #2563eb; padding: 1rem; border-radius: 6px;">
+                        <h4 style="margin: 0 0 0.4rem 0; color: #1d4ed8; font-size: 0.95rem;">Global Envelope (The Tube)</h4>
+                        <p style="margin: 0; color: #1e3a8a; font-size: 0.9rem; line-height: 1.5;">
+                            When you sweep that exact same rule across the entire domain, the individual boxes paint a continuous "tube" of radius $\epsilon$ around the function. A continuous function never punctures its own envelope.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                (function() {
+                    // Mathematical parameters for the curve
+                    const startX = 100;
+                    const endX = 700;
+                    const centerY = 175;
+                    const amplitude = 90;
+                    const epsilon = 45; // Vertical radius of the tube
+                    const delta = 22;   // Horizontal radius of the sweeping box
+                    const frequency = (2 * Math.PI) / 400; // One full wave every 400px
+
+                    // 1. Generate the static SVG paths mathematically
+                    let dCurve = "";
+                    let ptsTop = [];
+                    let ptsBot = [];
+
+                    for (let x = startX; x <= endX; x += 2) {
+                        let y = centerY - amplitude * Math.sin((x - startX) * frequency);
+                        dCurve += (x === startX ? "M " : "L ") + `${x},${y} `;
+                        ptsTop.push(`${x},${y - epsilon}`);
+                        ptsBot.push(`${x},${y + epsilon}`);
+                    }
+
+                    document.getElementById('gc-curve-base').setAttribute('d', dCurve);
+                    document.getElementById('gc-curve').setAttribute('d', dCurve);
+                    document.getElementById('gc-env-top').setAttribute('d', "M " + ptsTop.join(" L "));
+                    document.getElementById('gc-env-bot').setAttribute('d', "M " + ptsBot.join(" L "));
+
+                    // The filled envelope connects the top path rightwards and the bottom path leftwards
+                    const dFill = "M " + ptsTop.join(" L ") + " L " + ptsBot.reverse().join(" L ") + " Z";
+                    document.getElementById('gc-env-fill').setAttribute('d', dFill);
+
+                    // 2. Animate the sweeping box along the exact same function
+                    let startTime = null;
+
+                    function animateSweep(timestamp) {
+                        if (!startTime) startTime = timestamp;
+                        const elapsed = timestamp - startTime;
+
+                        // Creates a smooth sweeping motion oscillating between 0 and 1
+                        const progress = (Math.sin(elapsed / 1500) + 1) / 2;
+
+                        const cx = startX + progress * (endX - startX);
+                        const cy = centerY - amplitude * Math.sin((cx - startX) * frequency);
+
+                        // Update the Box
+                        const box = document.getElementById('gc-box');
+                        box.setAttribute('x', cx - delta);
+                        box.setAttribute('y', cy - epsilon);
+                        box.setAttribute('width', delta * 2);
+                        box.setAttribute('height', epsilon * 2);
+
+                        // Update the Center Dot
+                        document.getElementById('gc-dot').setAttribute('cx', cx);
+                        document.getElementById('gc-dot').setAttribute('cy', cy);
+
+                        // Update the Vertical x_0 Line
+                        const x0Line = document.getElementById('gc-x0');
+                        x0Line.setAttribute('x1', cx);
+                        x0Line.setAttribute('x2', cx);
+                        document.getElementById('gc-lbl-x0').setAttribute('x', cx);
+
+                        // Update the external EPSILON (ε) vertical indicator
+                        const epsLine = document.getElementById('gc-eps-line');
+                        epsLine.setAttribute('x1', cx + delta + 6);
+                        epsLine.setAttribute('x2', cx + delta + 6);
+                        epsLine.setAttribute('y1', cy);
+                        epsLine.setAttribute('y2', cy - epsilon);
+
+                        const epsLbl = document.getElementById('gc-lbl-eps');
+                        epsLbl.setAttribute('x', cx + delta + 12);
+                        epsLbl.setAttribute('y', cy - epsilon / 2 + 4);
+
+                        // Update the external DELTA (δ) horizontal indicator
+                        const delLine = document.getElementById('gc-delta-line');
+                        delLine.setAttribute('x1', cx);
+                        delLine.setAttribute('x2', cx + delta);
+                        delLine.setAttribute('y1', cy + epsilon + 8);
+                        delLine.setAttribute('y2', cy + epsilon + 8);
+
+                        const delLbl = document.getElementById('gc-lbl-delta');
+                        delLbl.setAttribute('x', cx + delta / 2);
+                        delLbl.setAttribute('y', cy + epsilon + 22);
+
+                        // Reveal the tube securely using SVG coordinates
+                        document.getElementById('tube-clip-rect').setAttribute('width', cx);
+
+                        requestAnimationFrame(animateSweep);
+                    }
+
+                    // Start animation loop
+                    requestAnimationFrame(animateSweep);
+                })();
+            </script>
 
             <!-- SECTION 2: THE FORMAL DEFINITION -->
             <h2 id="section-formal-def">2. The Formal $\epsilon$-$\delta$ Definition</h2>
