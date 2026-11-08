@@ -981,7 +981,11 @@
                 <h2 id="section-one-sided">3. One-Sided Limits &amp; The Rendezvous Criterion</h2>
 
                 <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
-                    On a one-dimensional number line, there are two distinct directions from which you can walk toward a target point $x = c$: you can walk from the left (through numbers smaller than $c$), or you can walk from the right (through numbers larger than $c$).
+                    Why do we need one-sided limits? Because many physical systems and mathematical functions do not behave the same way from all directions. Think of a thermostat kicking on at exactly 20 degrees, or a tax bracket jumping to a new rate at exactly $80,000. These systems have a hard cutoff where the rules fundamentally change depending on which side of the boundary you are standing on.
+                </p>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                    On a one-dimensional number line, there are two distinct directions from which you can walk toward a target point $x = c$: you can approach from the negative side (through numbers smaller than $c$), or you can approach from the positive side (through numbers larger than $c$). By splitting the $\epsilon$-$\delta$ game in half, we can lock onto the trajectory of a function even if it suffers a massive structural jump at $c$.
                 </p>
 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin: 1.5rem 0">
@@ -991,6 +995,9 @@
                             The superscript minus sign ($c^-$) means we restrict our $\delta$-window strictly to inputs <strong>less than $c$</strong>:
                         </p>
                         <div style="font-weight: 700; color: #0f172a; font-size: 0.95rem; text-align: center; background: #e0f2fe; padding: 0.35rem; border-radius: 4px">$c - \delta < x < c \implies |f(x) - L| < \epsilon$</div>
+                        <p style="margin: 0.5rem 0 0 0; color: #334155; font-size: 0.93rem; line-height: 1.55">
+                            We are forcing the adversary to only play the game on the left side of the number line.
+                        </p>
                     </div>
 
                     <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid #8b5cf6; border-radius: 8px; padding: 1.25rem">
@@ -999,6 +1006,9 @@
                             The superscript plus sign ($c^+$) means we restrict our $\delta$-window strictly to inputs <strong>greater than $c$</strong>:
                         </p>
                         <div style="font-weight: 700; color: #0f172a; font-size: 0.95rem; text-align: center; background: #ede9fe; padding: 0.35rem; border-radius: 4px">$c < x < c + \delta \implies |f(x) - L| < \epsilon$</div>
+                        <p style="margin: 0.5rem 0 0 0; color: #334155; font-size: 0.93rem; line-height: 1.55">
+                            We are forcing the adversary to only play the game on the right side of the number line.
+                        </p>
                     </div>
                 </div>
 
@@ -1015,6 +1025,85 @@
                     <p style="margin-bottom: 0">
                         Imagine two engineering crews building a bridge across a canyon toward $x = c$, one starting from the west bank ($x \to c^-$) and one from the east bank ($x \to c^+$). If both crews build toward the exact same altitude $L$, the bridge aligns—even if the final center bolt at $x = c$ hasn't been installed yet (a removable hole). But if the west crew builds at altitude $2$ and the east crew builds at altitude $5$ (a jump discontinuity), the bridge fails to meet, and the overall limit <strong>Does Not Exist (DNE)</strong>.
                     </p>
+                </div>
+
+                <!-- WORKED EXAMPLE: ONE-SIDED LIMITS -->
+                <div class="worked-example-box" style="margin-top: 2rem;">
+                    <h4 style="color: #047857; margin-bottom: 0.75rem">🎯 Worked Example: The Absolute Value Jump</h4>
+                    <p style="margin-bottom: 0.75rem; font-size: 0.98rem; line-height: 1.6;">
+                        Consider the function $f(x) = \frac{|x|}{x}$. What happens when we evaluate the limit as $x$ approaches $0$? Because the absolute value behaves differently for positive and negative numbers, we are forced to check both sides independently.
+                    </p>
+
+                    <p style="margin-bottom: 0.5rem; font-size: 0.95rem; line-height: 1.6;">
+                        <strong>1. The Left-Hand Limit ($x \to 0^-$):</strong>
+                        When approaching from the left, $x$ is a negative number. The absolute value of a negative number flips its sign ($|x| = -x$).
+                    </p>
+                    <div style="text-align: center; margin: 0.75rem 0; font-size: 1.05rem">$$\lim_{x \to 0^-} \frac{-x}{x} = \lim_{x \to 0^-} (-1) = \mathbf{-1}$$</div>
+
+                    <p style="margin-bottom: 0.5rem; font-size: 0.95rem; line-height: 1.6;">
+                        <strong>2. The Right-Hand Limit ($x \to 0^+$):</strong>
+                        When approaching from the right, $x$ is a positive number, so the absolute value does nothing ($|x| = x$).
+                    </p>
+                    <div style="text-align: center; margin: 0.75rem 0; font-size: 1.05rem">$$\lim_{x \to 0^+} \frac{x}{x} = \lim_{x \to 0^+} (1) = \mathbf{1}$$</div>
+
+                    <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid #bbf7d0;">
+                        <p style="margin: 0; font-size: 0.98rem; font-weight: 600; color: #991b1b;">
+                            <strong>The Verdict:</strong> Because $-1 \neq 1$, the two directional crews are building toward completely different altitudes. The Rendezvous Criterion fails, meaning the overall two-sided limit $\lim_{x \to 0} \frac{|x|}{x}$ <strong>Does Not Exist (DNE)</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- SVG GRAPH FOR ONE SIDED LIMIT -->
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 1.5rem; margin: 2rem 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05)">
+                    <div style="margin-bottom: 1.25rem">
+                        <span style="font-size: 0.85rem; font-weight: 800; color: #4f46e5; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.25rem">Visualizing the Jump</span>
+                        <h3 style="margin: 0 0 0.4rem 0; color: #0f172a; font-size: 1.2rem">Approaching from Opposite Directions</h3>
+                        <p style="margin: 0; color: #334155; font-size: 0.94rem; line-height: 1.6">
+                            Notice how the dashed approach vectors aim at entirely different open holes depending on which side of the $y$-axis they originate from.
+                        </p>
+                    </div>
+
+                    <svg viewBox="0 0 600 300" style="width: 100%; max-width: 560px; height: auto; display: block; margin: 0 auto; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px" role="img" aria-label="Graph of absolute value of x over x showing a jump from -1 to 1">
+                        <defs>
+                            <marker id="arrow-left" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                                <path d="M0 1 L5 3 L0 5" fill="none" stroke="#0284c7" stroke-width="1.5" />
+                            </marker>
+                            <marker id="arrow-right" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto-start-reverse">
+                                <path d="M0 1 L5 3 L0 5" fill="none" stroke="#8b5cf6" stroke-width="1.5" />
+                            </marker>
+                        </defs>
+
+                        <!-- Grid & Axes -->
+                        <line x1="50" y1="150" x2="550" y2="150" stroke="#94a3b8" stroke-width="1.5" />
+                        <line x1="300" y1="260" x2="300" y2="40" stroke="#94a3b8" stroke-width="1.5" />
+                        <text x="560" y="154" font-size="13" font-weight="bold" fill="#64748b">x</text>
+                        <text x="290" y="30" font-size="13" font-weight="bold" fill="#64748b">y</text>
+
+                        <!-- Axis Labels -->
+                        <text x="285" y="94" font-size="12" font-weight="bold" fill="#475569" text-anchor="end">1</text>
+                        <text x="285" y="214" font-size="12" font-weight="bold" fill="#475569" text-anchor="end">-1</text>
+                        <line x1="296" y1="90" x2="304" y2="90" stroke="#64748b" stroke-width="1.5" />
+                        <line x1="296" y1="210" x2="304" y2="210" stroke="#64748b" stroke-width="1.5" />
+
+                        <!-- Left Branch (y = -1) -->
+                        <line x1="100" y1="210" x2="295" y2="210" stroke="#0284c7" stroke-width="3.5" />
+                        <circle cx="300" cy="210" r="5" fill="#ffffff" stroke="#0284c7" stroke-width="2.5" />
+
+                        <!-- Right Branch (y = 1) -->
+                        <line x1="305" y1="90" x2="500" y2="90" stroke="#8b5cf6" stroke-width="3.5" />
+                        <circle cx="300" cy="90" r="5" fill="#ffffff" stroke="#8b5cf6" stroke-width="2.5" />
+
+                        <!-- Approach Arrows -->
+                        <line x1="180" y1="190" x2="260" y2="190" stroke="#0284c7" stroke-width="2" marker-end="url(#arrow-left)" stroke-dasharray="4,3"/>
+                        <text x="220" y="180" font-size="12" font-weight="bold" fill="#0284c7" text-anchor="middle">x → 0⁻</text>
+
+                        <line x1="420" y1="70" x2="340" y2="70" stroke="#8b5cf6" stroke-width="2" marker-start="url(#arrow-right)" stroke-dasharray="4,3"/>
+                        <text x="380" y="60" font-size="12" font-weight="bold" fill="#8b5cf6" text-anchor="middle">x → 0⁺</text>
+
+                        <!-- Formula Label -->
+                        <rect x="70" y="45" width="105" height="40" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+                        <text x="122.5" y="70" font-size="14" font-weight="bold" fill="#0f172a" text-anchor="middle" font-family="monospace">f(x)=|x|/x</text>
+                    </svg>
                 </div>
 
                 <!-- ================================================================= -->
