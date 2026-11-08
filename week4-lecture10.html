@@ -359,61 +359,6 @@
                     This is where we must upgrade the $\epsilon\text{-}\delta$ game. In Lecture 9, our input fence was defined by $|x - c| < \delta$, meaning the distance between our test input $x$ and the target $c$ had to be less than delta. That old rule legally allowed $x$ to equal $c$ (a distance of exactly zero). To investigate limits safely, we must actively forbid the machine from ever touching the broken point. We do this by declaring that the distance between $x$ and $c$ must be <strong>strictly greater than zero</strong>.
                 </p>
 
-                <!-- SVG: PUNCTURED NEIGHBORHOOD VISUALIZATION -->
-                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 1.5rem; margin: 2rem 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05)">
-                    <div style="margin-bottom: 1.25rem">
-                        <span style="font-size: 0.85rem; font-weight: 800; color: #0284c7; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.25rem">Geometric Anatomy</span>
-                        <h3 style="margin: 0 0 0.4rem 0; color: #0f172a; font-size: 1.2rem">The Punctured $\delta$-Window Ignores the Hole</h3>
-                        <p style="margin: 0; color: #334155; font-size: 0.95rem; line-height: 1.6">
-                            Notice that at $x = c$, the curve has an open hole at height $L$, and the actual defined point $f(c)$ has been displaced upward. Because the limit uses a <strong>punctured neighborhood</strong> ($x \neq c$), the displaced point is completely ignored—the limit evaluates strictly to $L$.
-                        </p>
-                    </div>
-
-                    <svg viewBox="0 0 680 310" style="width: 100%; max-width: 640px; height: auto; display: block; margin: 0 auto; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px" role="img" aria-label="Punctured neighborhood diagram showing a limit L at a removable discontinuity">
-                        <!-- Epsilon Corridor -->
-                        <rect x="70" y="95" width="560" height="80" fill="#e0f2fe" opacity="0.7" />
-                        <line x1="70" y1="95" x2="630" y2="95" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="5,4" />
-                        <line x1="70" y1="175" x2="630" y2="175" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="5,4" />
-                        <text x="62" y="99" font-size="11" font-weight="bold" fill="#0369a1" text-anchor="end">L + ε</text>
-                        <text x="62" y="179" font-size="11" font-weight="bold" fill="#0369a1" text-anchor="end">L − ε</text>
-
-                        <!-- Delta Window -->
-                        <rect x="270" y="25" width="140" height="235" fill="#dcfce7" opacity="0.5" />
-                        <line x1="270" y1="25" x2="270" y2="260" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="5,4" />
-                        <line x1="410" y1="25" x2="410" y2="260" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="5,4" />
-                        <text x="270" y="280" font-size="11" font-weight="bold" fill="#15803d" text-anchor="middle">c − δ</text>
-                        <text x="410" y="280" font-size="11" font-weight="bold" fill="#15803d" text-anchor="middle">c + δ</text>
-
-                        <!-- Axes -->
-                        <line x1="50" y1="260" x2="640" y2="260" stroke="#64748b" stroke-width="1.5" />
-                        <line x1="70" y1="280" x2="70" y2="20" stroke="#64748b" stroke-width="1.5" />
-                        <text x="650" y="264" font-size="13" font-weight="bold" fill="#475569">x</text>
-                        <text x="60" y="18" font-size="13" font-weight="bold" fill="#475569">y</text>
-
-                        <!-- Center Target Lines -->
-                        <line x1="70" y1="135" x2="340" y2="135" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="3,3" />
-                        <line x1="340" y1="135" x2="340" y2="260" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3,3" />
-                        <text x="62" y="139" font-size="13" font-weight="800" fill="#0f172a" text-anchor="end">L</text>
-                        <text x="340" y="280" font-size="13" font-weight="800" fill="#dc2626" text-anchor="middle">c</text>
-
-                        <!-- Function Curve -->
-                        <path d="M 95 235 Q 230 190 340 135 T 595 35" fill="none" stroke="#0f172a" stroke-width="3.2" />
-
-                        <!-- Displaced Point f(c) -->
-                        <circle cx="340" cy="52" r="5.5" fill="#dc2626" />
-                        <text x="352" y="56" font-size="12" font-weight="bold" fill="#dc2626">f(c) (Displaced — Ignored by Limit!)</text>
-
-                        <!-- Open Hole at (c, L) -->
-                        <circle cx="340" cy="135" r="6" fill="#ffffff" stroke="#0f172a" stroke-width="2.5" />
-
-                        <!-- Punctured x-axis interval highlight -->
-                        <line x1="270" y1="260" x2="334" y2="260" stroke="#16a34a" stroke-width="4" />
-                        <line x1="346" y1="260" x2="410" y2="260" stroke="#16a34a" stroke-width="4" />
-                        <circle cx="340" cy="260" r="5.5" fill="#ffffff" stroke="#dc2626" stroke-width="2.5" />
-                        <text x="340" y="298" font-size="11" font-weight="bold" fill="#dc2626" text-anchor="middle">x ≠ c (Punctured at c)</text>
-                    </svg>
-                </div>
-
                 <div class="definition-box">
                     <h4 style="margin: 0 0 0.5rem 0; color: #b45309; font-size: 1.05rem">Definition: The Limit of a Function ($\lim_{x \to c} f(x) = L$)</h4>
                     <p style="margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.6">
