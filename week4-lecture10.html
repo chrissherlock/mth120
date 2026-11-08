@@ -1070,8 +1070,33 @@
                     </ul>
                 </div>
 
+                <!-- TEXT EXPLANATION: LIMIT LAWS -->
+                <h3 style="color: #0f172a; font-size: 1.25rem; margin-top: 2.5rem; margin-bottom: 0.75rem">The "Lego Brick" Theory of Limits</h3>
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 0">
+                    If we had to play the rigorous $\epsilon\text{-}\delta$ game every single time we encountered a new function, calculus would grind to a halt. The Algebraic Limit Laws are our escape hatch. They guarantee that once you have proven the limits of basic, fundamental building blocks (like $f(x) = x$ or $g(x) = c$), you can snap them together like Lego bricks to build massive, complicated functions without ever having to touch an $\epsilon$ or $\delta$ again.
+                </p>
+
                 <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
-                    Notice the crucial warning on the Quotient Law: it only works when the denominator limit $M \neq 0$. What happens when $M = 0$? There are two distinct possibilities:
+                    Let's unpack what these laws actually allow us to do on the factory floor:
+                </p>
+
+                <ul style="color: #334155; line-height: 1.75; font-size: 1.05rem; padding-left: 1.25rem; margin-bottom: 1.5rem">
+                    <li style="margin-bottom: 0.75rem;">
+                        <strong>The Sum &amp; Difference Law (Divide and Conquer):</strong> If you have a massive polynomial like $x^3 + 4x^2 - 7$, you do not need to evaluate the entire monstrous machine at once. This law gives you the legal right to split the limit into three separate, tiny limits. You evaluate the $x^3$ machine, the $4x^2$ machine, and the $-7$ machine individually, and then just add their final output targets together.
+                    </li>
+                    <li style="margin-bottom: 0.75rem;">
+                        <strong>The Constant Multiple Law (Volume Knobs):</strong> If a function is being multiplied by a constant number (like $5x^2$), that constant is just a volume knob. It doesn't change the underlying structure of the $x^2$ machine. This law lets you completely pull the constant out of the limit, evaluate the core machine, and then multiply the final answer by $5$.
+                    </li>
+                    <li style="margin-bottom: 0.75rem;">
+                        <strong>The Product Law (Independent Assembly Lines):</strong> If two machines are feeding into each other via multiplication, you can find the target output of the first machine, find the target output of the second machine, and simply multiply those targets. This is how we know the limit of $x^2$ is just the limit of $x$ multiplied by itself.
+                    </li>
+                    <li>
+                        <strong style="color: #991b1b;">The Quotient Law (The Danger Zone):</strong> Division is beautifully cooperative—<strong>until it isn't</strong>. You are perfectly allowed to split a fraction and take the limit of the top and bottom separately. However, this is the <em>only</em> law with a massive warning label: the bottom limit cannot equal zero.
+                    </li>
+                </ul>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                    So, what actually happens when $M = 0$ and the Quotient Law breaks? There are two distinct possibilities:
                 </p>
 
                 <ol style="color: #334155; line-height: 1.75; font-size: 1.02rem; margin-bottom: 1.75rem">
