@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Week 4, Lecture 10 Practice Problems: Limits of Functions | MTHS120</title>
+        <!-- KaTeX Integration -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            onload="
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        { left: '$$', right: '$$', display: true },
+                        { left: '$', right: '$', display: false },
+                    ],
+                })
+            "></script>
+        <style>
+            :root {
+                --bg: #f8fafc;
+                --text: #0f172a;
+                --card: #ffffff;
+                --border: #cbd5e1;
+                --accent: #10b981;
+                --accent-hover: #059669;
+                --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            }
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+            }
+            html,
+            body {
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+            body {
+                font-family: var(--font-ui);
+                background: var(--bg);
+                color: var(--text);
+                line-height: 1.6;
+                margin: 0;
+                padding: 2rem;
+            }
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                width: 100%;
+            }
+            .header {
+                border-bottom: 2px solid var(--border);
+                padding-bottom: 1rem;
+                margin-bottom: 2rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                flex-wrap: nowrap;
+                gap: 1rem;
+            }
+            .module-content {
+                background: var(--card);
+                padding: 2rem;
+                border-radius: 8px;
+                box-shadow:
+                    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+                    0 2px 4px -1px rgba(0, 0, 0, 0.03);
+                margin-bottom: 2rem;
+                border: 1px solid var(--border);
+            }
+            h2 {
+                border-bottom: 2px solid var(--border);
+                padding-bottom: 0.5rem;
+                margin-top: 2.5rem;
+                color: #0f172a;
+                font-family: var(--font-ui);
+                scroll-margin-top: 2rem;
+            }
+            h3 {
+                color: #1e293b;
+                margin-top: 1.5rem;
+                font-family: var(--font-ui);
+                scroll-margin-top: 2rem;
+            }
+            .problem-card {
+                background: #f8fafc;
+                border: 1px solid var(--border);
+                border-left: 5px solid #0284c7;
+                border-radius: 8px;
+                padding: 1.5rem;
+                margin: 1.5rem 0;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            }
+            .problem-card h4 {
+                margin: 0 0 0.75rem 0;
+                color: #0369a1;
+                font-size: 1.1rem;
+            }
+            .options-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 0.75rem;
+                margin: 1rem 0;
+            }
+            .option-btn {
+                background: #ffffff;
+                border: 1px solid var(--border);
+                padding: 0.75rem 1rem;
+                border-radius: 6px;
+                font-weight: 500;
+                font-size: 0.95rem;
+                text-align: left;
+                cursor: pointer;
+                transition: all 0.2s;
+                color: #334155;
+            }
+            .option-btn:hover {
+                background: #f1f5f9;
+                border-color: #94a3b8;
+            }
+            .option-btn.correct {
+                background: #f0fdf4 !important;
+                border-color: #10b981 !important;
+                color: #065f46 !important;
+                font-weight: 600;
+            }
+            .option-btn.incorrect {
+                background: #fef2f2 !important;
+                border-color: #ef4444 !important;
+                color: #991b1b !important;
+            }
+            .feedback-box {
+                margin-top: 1rem;
+                padding: 1rem;
+                border-radius: 6px;
+                font-size: 0.95rem;
+                display: none;
+            }
+            .feedback-box.correct {
+                background: #f0fdf4;
+                border: 1px solid #bbf7d0;
+                color: #065f46;
+            }
+            .feedback-box.incorrect {
+                background: #fef2f2;
+                border: 1px solid #fecaca;
+                color: #991b1b;
+            }
+            .hint-toggle {
+                background: none;
+                border: none;
+                color: #d97706;
+                font-weight: 600;
+                cursor: pointer;
+                padding: 0;
+                margin-top: 0.5rem;
+                font-size: 0.9rem;
+                text-decoration: underline;
+            }
+            .hint-box {
+                margin-top: 0.5rem;
+                padding: 0.75rem;
+                background: #fffbeb;
+                border: 1px solid #fde68a;
+                border-radius: 6px;
+                font-size: 0.9rem;
+                color: #92400e;
+                display: none;
+            }
+            @media (max-width: 768px) {
+                body { padding: 1rem 0.75rem; }
+                .container { max-width: 100%; margin: 0; }
+                .module-content { background: transparent; padding: 0; border: none; box-shadow: none; }
+                .header { padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <!-- TOP NAVIGATION HEADER -->
+            <div class="header" style="border-bottom: 2px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.25rem">
+                <div class="nav-btn-group" style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; width: 100%">
+                    <a href="week4-lecture10.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&larr; Lecture 10 Hub</a>
+                    <a href="week4.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&uarr; Week 4 Hub</a>
+                    <a href="week4-lecture11.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">Lecture 11 &rarr;</a>
+                </div>
+                <div style="text-align: center; width: 100%; min-width: 0">
+                    <h1 style="margin: 0; line-height: 1.3; font-size: 1.5rem">Week 4, Lecture 10: Practice Problem Set (20 Questions)</h1>
+                </div>
+            </div>
+
+            <div class="module-content">
+                <p style="font-size: 1.05rem; color: #334155; line-height: 1.7; margin-bottom: 2rem;">
+                    Welcome to the comprehensive practice module for Week 4, Lecture 10. Work through these 20 scaffolded questions covering punctured neighborhoods, indeterminate forms ($\frac{0}{0}$), factoring, radical conjugation, one-sided limits, the Rendezvous Criterion, limit laws, and the Squeeze Theorem. Click any option for instant feedback and detailed explanations.
+                </p>
+
+                <!-- MODULE 1: PUNCTURED NEIGHBORHOODS & DEFINITIONS -->
+                <h2>Module 1: Punctured Neighborhoods &amp; Formal Definitions</h2>
+
+                <!-- Q1 -->
+                <div class="problem-card" id="q1">
+                    <h4>Question 1: The Punctured Neighborhood Constraint</h4>
+                    <p>What is the primary mathematical purpose of the inequality $0 < |x - c| < \delta$ in the formal definition of a limit, compared to the continuity condition $|x - c| < \delta$?</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer('q1', 0, false)">A) It forces the function to be continuous at $x = c$.</button>
+                        <button class="option-btn" onclick="checkAnswer('q1', 1, true)">B) It creates a punctured neighborhood, strictly forbidding $x = c$ so we can evaluate limits at holes.</button>
+                        <button class="option-btn" onclick="checkAnswer('q1', 2, false)">C) It ensures the limit value $L$ is always equal to $f(c)$.</button>
+                        <button class="option-btn" onclick="checkAnswer('q1', 3, false)">D) It guarantees that the denominator can never equal zero anywhere on the real line.</button>
+                    </div>
+                    <button class="hint-toggle" onclick="toggleHint('q1')">💡 Toggle Hint</button>
+                    <div class="hint-box" id="q1-hint">Think about what happens when $x = c$ causes $\frac{0}{0}$. Why do we want to exclude $x = c$ from our test window?</div>
+                    <div class="feedback-box" id="q1-feedback"></div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="problem-card" id="q2">
+                    <h4>Question 2: Ignoring Displaced Points</h4>
+                    <p>Suppose a function $f(x)$ has an open hole at $x = 2$ where the limit trajectory aims at $L = 5$, but the actual function value is defined separately as $f(2) = 10$. What does $\lim_{x \to 2} f(x)$ evaluate to?</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer('q2', 0, false)">A) $10$, because function values always override limits.</button>
+                        <button class="option-btn" onclick="checkAnswer('q2', 1, true)">B) $5$, because limits use a punctured neighborhood and completely ignore what happens at $x = c$.</button>
+                        <button class="option-btn" onclick="checkAnswer('q2', 2, false)">C) The limit Does Not Exist (DNE) because $f(2) \neq L$.</button>
+                        <button class="option-btn" onclick="checkAnswer('q2', 3, false)">D) $7.5$, the average of the hole and the displaced point.</button>
+                    </div>
+                    <button class="hint-toggle" onclick="toggleHint('q2')">💡 Toggle Hint</button>
+                    <div class="hint-box" id="q2-hint">Review the geometric anatomy diagram in Section 1. Does a limit care about where $f(c)$ is plotted?</div>
+                    <div class="feedback-box" id="q2-feedback"></div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="problem-card" id="q3">
+                    <h4>Question 3: Adversary vs. Defender Roles</h4>
+                    <p>In the $\epsilon\text{-}\delta$ game defining limits, what is the role of the Adversary who chooses $\epsilon > 0$?</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer('q3', 0, false)">A) To calculate the exact numerical limit $L$.</button>
+                        <button class="option-btn" onclick="checkAnswer('q3', 1, true)">B) To challenge your proof by handing you an arbitrarily tight output error corridor $\epsilon$.</button>
+                        <button class="option-btn" onclick="checkAnswer('q3', 2, false)">C) To forbid $x$ from ever approaching $c$.</button>
+                        <button class="option-btn" onclick="checkAnswer('q3', 3, false)">D) To factor polynomials and rationalize radicals.</button>
+                    </div>
+                    <button class="hint-toggle" onclick="toggleHint('q3')">💡 Toggle Hint</button>
+                    <div class="hint-box" id="q3-hint">Recall Player 1 from our game mechanics in Lecture 9 and Lecture 10.</div>
+                    <div class="feedback-box" id="q3-feedback"></div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="problem-card" id="q4">
+                    <h4>Question 4: Domain Requirements for Limits</h4>
+                    <p>For a two-sided limit $\lim_{x \to c} f(x)$ to be meaningfully evaluated, what must be true about the domain of $f(x)$?</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer('q4', 0, false)">A) The function must be continuous across the entire real number line.</button>
+                        <button class="option-btn" onclick="checkAnswer('q4', 1, true)">B) The function must be defined on an open interval containing $c$, except possibly at $c$ itself.</button>
+                        <button class="option-btn" onclick="checkAnswer('q4', 2, false)">C) The function must be a polynomial of degree 2 or higher.</button>
+                        <button class="option-btn" onclick="checkAnswer('q4', 3, false)">D) $f(c)$ must equal zero.</button>
+                    </div>
+                    <button class="hint-toggle" onclick="toggleHint('q4')">💡 Toggle Hint</button>
+                    <div class="hint-box" id="q4-hint">Check the formal definition box in Section 1. What interval requirement is stated right at the beginning?</div>
+                    <div class="feedback-box" id="q4-feedback"></div>
+                </div>
+
+
+                <!-- MODULE 2: FACTORING & INDETERMINATE FORMS -->
+                <h2>Module 2: Algebraic Surgery &amp; Factoring ($\frac{0}{0}$)</h2>
+
+                <!-- Q5 -->
+                <div class="problem-card" id="q5">
+                    <h4>Question 5: Basic Polynomial Factoring Limit</h4>
+                    <p>Evaluate the limit: $$\lim_{x \to 4} \frac{x^2 - 16}{x - 4}$$</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer('q5', 0, false)">A) $0$</button>
+                        <button class="option-btn" onclick="checkAnswer('q5', 1, false)">B) $4$</button>
+                        <button class="option-btn" onclick="checkAnswer('q5', 2, true)">C) $8$</button>
+                        <button class="option-btn" onclick="checkAnswer('q5', 3, false)">D) Does Not Exist (DNE)</button>
+                    </div>
+                    <button class="hint-toggle" onclick="toggleHint('q5')">💡 Toggle Hint</button>
+                    <div class="hint-box" id="q5-hint">Factor the numerator as a difference of squares: $x^2 - 16 = (x - 4)(x + 4)$. Then cancel $(x - 4)$.</div>
+                    <div class="feedback-box" id="q5-feedback"></div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="problem-card" id="q6">
+                    <h4>Question 6: Quadratic Factoring</h4>
+                    <p>Evaluate the limit: $$\lim_{x \to -2} \frac{x^2 + 5x + 6}{x + 2}$$</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer('q6', 0, true)">A) $1$</button>
+                        <button class="option-btn" onclick="checkAnswer('q6', 1, false)">B) $-1$</button>
+                        <button class="option-btn" onclick="checkAnswer('q6', 2, false)">C) $2$</button>
+                        <button class="option-btn" onclick="checkAnswer('q6', 3, false)">D) $0$</button>
+                    </div>
+                    <button class="hint-toggle" onclick="toggleHint('q6')">💡 Toggle Hint</button>
+                    <div class="hint-box" id="q6-hint">Factor the numerator $x^2 + 5x + 6$ into $(x + 2)(x + 3)$.</div>
+                    <div class="feedback-box" id="q6-feedback"></div>
+                </div>
+
+                <!-- Q7 -->
+                <div class="problem-card" id="q7">
+                    <h4>Question 7: Difference of Cubes</h4>
+                    <p>Evaluate the limit: $$\lim_{x \to 2} \frac{x^3 - 8}{x - 2}$$</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer('q7', 0, false)">A) $4$</button>
+                        <button class="option-btn" onclick="checkAnswer('q7', 1, false)">B) $6$</button>
+                        <button class="option-btn" onclick="checkAnswer('q7', 2, true)">C) $12$</button>
+                        <button class="option-btn" onclick="checkAnswer('q7', 3, false)">D) $0$</button>
+                    </div>
+                    <button class="hint-toggle" onclick="toggleHint('q7')">💡 Toggle Hint</button>
+                    <div class="hint-box" id="q7-hint">Recall the difference of cubes formula: $a^3 - b^3 = (a - b)(a^2 + ab + b^2)$. Here $a = x, b = 2$.</div>
+                    <div class="feedback-box" id="q7-feedback"></div>
+                </div>
+
+                <!-- Q8 -->
+                <div class="problem-card" id="q8">
+                    <h4>Question 8: Non-Zero over Zero Asymptote</h4>
+                    <p>Evaluate the limit: $$\lim_{x \to 3^+} \frac{x + 5}{x - 3}$$</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer('q8', 0, false)">A) $0$</button>
+                        <button class="option-btn" onclick="checkAnswer('q8', 1, false)">B) $8$</button>
+                        <button class="option-btn" onclick="checkAnswer('q8', 2, true)">C) $+\infty$</button>
+                        <button class="option-btn" onclick="checkAnswer('q8', 3, false)">D) $-\infty$</button>
+                    </div>
+                    <button class="hint-toggle" onclick="toggleHint('q8')">💡 Toggle Hint</button>
+                    <div class="hint-box" id="q8-hint">Direct substitution gives $\frac{8}{0^+}$. A positive number divided by an infinitesimally small positive number shoots to positive infinity!</div>
+                    <div class="feedback-box" id="q8-feedback"></div>
+                </div>
+
+
+                <!-- MODULE 3: RADICAL CONJUGATION -->
+                <h2>Module 3: Radical Conjugation &amp; Rationalization</h2>
+
+                <!-- Q9 -->
+                <div class="problem-card" id="q9">
+                    <h4>Question 9: Basic Radical Conjugate</h4>
+                    <p>Evaluate the limit: $$\lim_{x \to 0} \frac{\sqrt{x + 16} - 4}{x}$$</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer('q9', 0, false)">A) $0$</button>
+                        <button class="option-btn" onclick="checkAnswer('q9', 1, false)">B) $\frac{1}{4}$</button>
+                        <button class="option-btn" onclick="checkAnswer('q9', 2, true)">C) $\frac{1}{8}$</button>
+                        <button class="option-btn" onclick="checkAnswer('q9', 3, false)">D) $8$</button>
+                    </div>
+                    <button class="hint-toggle" onclick="toggleHint('q9')">💡 Toggle Hint</button>
+                    <div class="hint-box" id="q9-hint">Multiply numerator and denominator by the conjugate $\sqrt{x + 16} + 4$. The numerator simplifies to $(x + 16) - 16 = x$.</div>
+                    <div class="feedback-box" id="q9-feedback"></div>
+                </div>
+
+                <!-- Q10 -->
+                <div class="problem-card" id="q10">
+                    <h4>Question 10: Shifted Radical Conjugate</h4>
+                    <p>Evaluate the limit: $$\lim_{x \to 5} \frac{\sqrt{x - 1} - 2}{x - 5}$$</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer('q10', 0, false)">A) $\frac{1}{2}$</button>
+                        <button class="option-btn" onclick="checkAnswer('q10', 1, true)">B) $\frac{1}{4}$</button>
+                        <button class="option-btn" onclick="checkAnswer('q10', 2, false)">C) $2$</button>
+                        <button class="option-btn" onclick="checkAnswer('q10', 3, false)">D) $0$</button>
+                    </div>
+                    <button class="hint-toggle" onclick="toggleHint('q10')">💡 Toggle Hint</button>
+                    <div class="hint-box" id="q10-hint">Multiply top and bottom by $\sqrt{x - 1} + 2$. The numerator becomes $(x - 1) - 4 = x - 5$, which cancels $(x - 5)$ in the denominator.</div>
+                    <div class="feedback-box" id="q10-feedback"></div>
+                </div>
+
+                <!-- Q11 -->
+                <div class="problem-card" id="q11">
+                    <h4>Question 11: Radical in Denominator</h4>
+                    <p>Evaluate the limit: $$\lim_{x \to 0} \frac{x}{\sqrt{x + 4} - 2}$$</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer('q11', 0, false)">A) $2$</button>
+                        <button class="option-btn" onclick="checkAnswer('q11', 1, false)">B) $\frac{1}{4}$</button>
+                        <button class="option-btn" onclick="checkAnswer('q11', 2, true)">C) $4$</button>
+                        <button class="option-btn" onclick="checkAnswer('q11', 3, false)">D) $0$</button>
+                    </div>
+                    <button class="hint-toggle" onclick="toggleHint('q11')">💡 Toggle Hint</button>
+                    <div class="hint-box" id="q11-hint">Multiply numerator and denominator by the conjugate of the denominator: $\sqrt{x + 4} + 2$.</div>
+                    <div class="feedback-box" id="q11-feedback"></div>
+                </div>
+
+                <!-- Q12 -->
+                <div class="problem-card" id="q12">
+                    <h4>Question 12: Complex Conjugate Form</h4>
+                    <p>Evaluate the limit: $$\lim_{x \to 1} \frac{\sqrt{8 + x} - 3}{x - 1}$$</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer('q12', 0, false)">A) $\frac{1}{3}$</button>
+                        <button class="option-btn" onclick="checkAnswer('q12', 1, true)">B) $\frac{1}{6}$</button>
+                        <button class="option-btn" onclick="checkAnswer('q12', 2, false)">C) $6$</button>
+                        <button class="option-btn" onclick="checkAnswer('q12', 3, false)">D) $3$</button>
+                    </div>
+                    <button class="hint-toggle" onclick="toggleHint('q12')">💡 Toggle Hint</button>
+                    <div class="hint-box" id="q12-hint">Conjugate is $\sqrt{8 + x} + 3$. Numerator simplifies to $(8 + x) - 9 = x - 1$.</div>
+                    <div class="feedback-box" id="q12-feedback"></div>
+                </div>
+
+
+                <!-- MODULE 4: ONE-SIDED LIMITS & RENDEZVOUS CRITERION -->
+                <h2>Module 4: One-Sided Limits &amp; The Rendezvous Criterion</h2>
+
+                <!-- Q13 -->
+                <div class="problem-card" id="q13">
+                    <h4>Question 13: Absolute Value Left-Hand Limit</h4>
+                    <p>Evaluate the left-hand limit: $$\lim_{x \to 0^-} \frac{|x|}{x}$$</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer('q13', 0, false)">A) $1$</button>
+                        <button class="option-btn" onclick="checkAnswer('q13', 1, true)">B) $-1$</button>
+                        <button class="option-btn" onclick="checkAnswer('q13', 2, false)">C) $0$</button>
+                        <button class="option-btn" onclick="checkAnswer('q13', 3, false)">D) Does Not Exist (DNE)</button>
+                    </div>
+                    <button class="hint-toggle" onclick="toggleHint('q13')">💡 Toggle Hint</button>
+                    <div class="hint-box" id="q13-hint">For $x < 0$, $|x| = -x$. Thus $\frac{-x}{x} = -1$.</div>
+                    <div class="feedback-box" id="q13-feedback"></div>
+                </div>
+
+                <!-- Q14 -->
+                <div class="problem-card" id="q14">
+                    <h4>Question 14: Rendezvous Criterion Failure</h4>
+                    <p>Given a piecewise function where $\lim_{x \to c^-} f(x) = 5$ and $\lim_{x \to c^+} f(x) = 8$, what can we conclude about $\lim_{x \to c} f(x)$?</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer('q14', 0, false)">A) The limit is $6.5$.</button>
+                        <button class="option-btn" onclick="checkAnswer('q14', 1, false)">B) The limit is $5$.</button>
+                        <button class="option-btn" onclick="checkAnswer('q14', 2, true)">C) The two-sided limit Does Not Exist (DNE) because the one-sided limits disagree.</button>
+                        <button class="option-btn" onclick="checkAnswer('q14', 3, false)">D) The limit is $8$.</button>
+                    </div>
+                    <button class="hint-toggle" onclick="toggleHint('q14')">💡 Toggle Hint</button>
+                    <div class="hint-box" id="q14-hint">Check the Rendezvous Criterion in Section 3. Do the bridge crews meet?</div>
+                    <div class="feedback-box" id="q14-feedback"></div>
+                </div>
+
+                <!-- Q15 -->
+                <div class="problem-card" id="q15">
+                    <h4>Question 15: Piecewise Function Limit</h4>
+                    <p>Let $f(x) = \begin{cases} x^2 + 1 & \text{if } x < 2 \\ 3x - 1 & \text{if } x \ge 2 \end{cases}$. What is $\lim_{x \to 2^-} f(x)$?</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer('q15', 0, false)">A) $3$</button>
+                        <button class="option-btn" onclick="checkAnswer('q15', 1, true)">B) $5$</button>
+                        <button class="option-btn" onclick="checkAnswer('q15', 2, false)">C) $2$</button>
+                        <button class="option-btn" onclick="checkAnswer('q15', 3, false)">D) $4$</button>
+                    </div>
+                    <button class="hint-toggle" onclick="toggleHint('q15')">💡 Toggle Hint</button>
+                    <div class="hint-box" id="q15-hint">For $x < 2$, use the first sub-function $x^2 + 1$ and substitute $x = 2$.</div>
+                    <div class="feedback-box" id="q15-feedback"></div>
+                </div>
+
+                <!-- Q16 -->
+                <div class="problem-card" id="q16">
+                    <h4>Question 16: Two-Sided Piecewise Check</h4>
+                    <p>Using the same piecewise function from Question 15 ($f(x) = x^2+1$ for $x < 2$ and $3x-1$ for $x \ge 2$), does $\lim_{x \to 2} f(x)$ exist?</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer('q16', 0, true)">A) Yes, because both left-hand and right-hand limits equal $5$.</button>
+                        <button class="option-btn" onclick="checkAnswer('q16', 1, false)">B) No, because there is a jump discontinuity.</button>
+                        <button class="option-btn" onclick="checkAnswer('q16', 2, false)">C) No, because $f(2)$ is undefined.</button>
+                        <button class="option-btn" onclick="checkAnswer('q16', 3, false)">D) Yes, with a limit of $2$.</button>
+                    </div>
+                    <button class="hint-toggle" onclick="toggleHint('q16')">💡 Toggle Hint</button>
+                    <div class="hint-box" id="q16-hint">Calculate both $\lim_{x \to 2^-} (x^2+1) = 5$ and $\lim_{x \to 2^+} (3x-1) = 5$. Compare them!</div>
+                    <div class="feedback-box" id="q16-feedback"></div>
+                </div>
+
+
+                <!-- MODULE 5: THE SQUEEZE THEOREM & LIMIT LAWS -->
+                <h2>Module 5: Limit Laws &amp; The Squeeze Theorem</h2>
+
+                <!-- Q17 -->
+                <div class="problem-card" id="q17">
+                    <h4>Question 17: Squeeze Theorem Application</h4>
+                    <p>If $3x \le f(x) \le x^3 + 2x$ for all $x$, what is $\lim_{x \to 1} f(x)$?</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer('q17', 0, true)">A) $3$</button>
+                        <button class="option-btn" onclick="checkAnswer('q17', 1, false)">B) $1$</button>
+                        <button class="option-btn" onclick="checkAnswer('q17', 2, false)">C) $2$</button>
+                        <button class="option-btn" onclick="checkAnswer('q17', 3, false)">D) Limit Does Not Exist</button>
+                    </div>
+                    <button class="hint-toggle" onclick="toggleHint('q17')">💡 Toggle Hint</button>
+                    <div class="hint-box" id="q17-hint">Evaluate the limit of the floor $3(1) = 3$ and ceiling $(1)^3 + 2(1) = 3$ as $x \to 1$.</div>
+                    <div class="feedback-box" id="q17-feedback"></div>
+                </div>
+
+                <!-- Q18 -->
+                <div class="problem-card" id="q18">
+                    <h4>Question 18: Landmark Trigonometric Limit</h4>
+                    <p>Evaluate the fundamental limit: $$\lim_{x \to 0} \frac{\sin(x)}{x}$$</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer('q18', 0, false)">A) $0$</button>
+                        <button class="option-btn" onclick="checkAnswer('q18', 1, true)">B) $1$</button>
+                        <button class="option-btn" onclick="checkAnswer('q18', 2, false)">C) $\infty$</button>
+                        <button class="option-btn" onclick="checkAnswer('q18', 3, false)">D) Undefined</button>
+                    </div>
+                    <button class="hint-toggle" onclick="toggleHint('q18')">💡 Toggle Hint</button>
+                    <div class="hint-box" id="q18-hint">Proved via the Squeeze Theorem in Section 5 (trapped between $\cos(x)$ and $1$).</div>
+                    <div class="feedback-box" id="q18-feedback"></div>
+                </div>
+
+                <!-- Q19 -->
+                <div class="problem-card" id="q19">
+                    <h4>Question 19: Scaled Trig Limit</h4>
+                    <p>Evaluate the limit: $$\lim_{x \to 0} \frac{\sin(5x)}{x}$$</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer('q19', 0, false)">A) $1$</button>
+                        <button class="option-btn" onclick="checkAnswer('q19', 1, false)">B) $\frac{1}{5}$</button>
+                        <button class="option-btn" onclick="checkAnswer('q19', 2, true)">C) $5$</button>
+                        <button class="option-btn" onclick="checkAnswer('q19', 3, false)">D) $0$</button>
+                    </div>
+                    <button class="hint-toggle" onclick="toggleHint('q19')">💡 Toggle Hint</button>
+                    <div class="hint-box" id="q19-hint">Multiply top and bottom by $5$: $\frac{5\sin(5x)}{5x} = 5 \cdot \frac{\sin(5x)}{5x}$. As $5x \to 0$, this evaluates to $5 \cdot 1 = 5$.</div>
+                    <div class="feedback-box" id="q19-feedback"></div>
+                </div>
+
+                <!-- Q20 -->
+                <div class="problem-card" id="q20">
+                    <h4>Question 20: Limit Law Quotient Failure</h4>
+                    <p>If $\lim_{x \to c} f(x) = 4$ and $\lim_{x \to c} g(x) = 0$, what can we immediately state about $\lim_{x \to c} \frac{f(x)}{g(x)}$?</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer('q20', 0, false)">A) The limit is $0$ because numerator is $4$.</button>
+                        <button class="option-btn" onclick="checkAnswer('q20', 1, false)">B) The limit is $\infty$ always.</button>
+                        <button class="option-btn" onclick="checkAnswer('q20', 2, true)">C) The Quotient Law cannot be applied directly because the denominator limit is zero (producing a $\frac{4}{0}$ asymptote or indeterminate form).</button>
+                        <button class="option-btn" onclick="checkAnswer('q20', 3, false)">D) The limit is $1$.</button>
+                    </div>
+                    <button class="hint-toggle" onclick="toggleHint('q20')">💡 Toggle Hint</button>
+                    <div class="hint-box" id="q20-hint">Review Section 4 on the Quotient Law warning label ($M \neq 0$).</div>
+                    <div class="feedback-box" id="q20-feedback"></div>
+                </div>
+
+                <!-- FOOTER NAVIGATION -->
+                <div class="footer-nav" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap">
+                    <a href="week4-lecture10.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&larr; Lecture 10 Hub</a>
+                    <a href="week4.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&uarr; Week 4 Hub</a>
+                    <a href="week4-lecture11.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">Lecture 11 &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function checkAnswer(cardId, selectedIdx, isCorrect) {
+                const card = document.getElementById(cardId);
+                const buttons = card.querySelectorAll('.option-btn');
+                const feedback = card.querySelector('.feedback-box');
+
+                buttons.forEach((btn, idx) => {
+                    btn.disabled = true;
+                    if (idx === selectedIdx) {
+                        btn.className = isCorrect ? 'option-btn correct' : 'option-btn incorrect';
+                    } else if (btn.getAttribute('onclick').includes('true')) {
+                        btn.className = 'option-btn correct';
+                    }
+                });
+
+                feedback.style.display = 'block';
+                if (isCorrect) {
+                    feedback.className = 'feedback-box correct';
+                    feedback.innerHTML = '<strong>✅ Correct!</strong> Excellent work applying the limit concepts.';
+                } else {
+                    feedback.className = 'feedback-box incorrect';
+                    feedback.innerHTML = '<strong>❌ Incorrect.</strong> Review the hint and the corresponding lecture section for details.';
+                }
+            }
+
+            function toggleHint(cardId) {
+                const hintBox = document.getElementById(cardId + '-hint');
+                hintBox.style.display = hintBox.style.display === 'block' ? 'none' : 'block';
+            }
+        </script>
+    </body>
+</html>
