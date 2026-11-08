@@ -1,0 +1,1141 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Week 4, Lecture 10: Limits of Functions | MTHS120</title>
+        <!-- KaTeX Integration -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            onload="
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        { left: '$$', right: '$$', display: true },
+                        { left: '$', right: '$', display: false },
+                    ],
+                })
+            "></script>
+        <style>
+            :root {
+                --bg: #f8fafc;
+                --text: #0f172a;
+                --card: #ffffff;
+                --border: #cbd5e1;
+                --accent: #d97706;
+                --accent-hover: #b45309;
+                --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            }
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+            }
+            html,
+            body {
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+            body {
+                font-family: var(--font-ui);
+                background: var(--bg);
+                color: var(--text);
+                line-height: 1.6;
+                margin: 0;
+                padding: 2rem;
+            }
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                width: 100%;
+            }
+            .header {
+                border-bottom: 2px solid var(--border);
+                padding-bottom: 1rem;
+                margin-bottom: 2rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                flex-wrap: nowrap;
+                gap: 1rem;
+            }
+            .module-content {
+                background: var(--card);
+                padding: 2rem;
+                border-radius: 8px;
+                box-shadow:
+                    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+                    0 2px 4px -1px rgba(0, 0, 0, 0.03);
+                margin-bottom: 2rem;
+                border: 1px solid var(--border);
+            }
+
+            .intro-lead {
+                font-size: 1.1rem;
+                color: #1e293b;
+                line-height: 1.7;
+                margin-bottom: 1.5rem;
+                background: #f1f5f9;
+                padding: 1.5rem;
+                border-radius: 6px;
+                border-left: 4px solid var(--accent);
+                border: 1px solid var(--border);
+                border-left-width: 4px;
+            }
+            .toc-box {
+                background: #fffbeb;
+                border: 1px solid #fde68a;
+                border-left: 5px solid var(--accent);
+                border-radius: 6px;
+                padding: 1.25rem 1.75rem;
+                margin: 1.75rem 0 2.5rem 0;
+            }
+            .toc-box h4 {
+                margin: 0 0 0.75rem 0;
+                color: #92400e;
+                font-size: 1.05rem;
+            }
+            .toc-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                gap: 0.5rem 1.5rem;
+                margin: 0;
+                padding-left: 1.25rem;
+            }
+            .toc-grid li {
+                margin-bottom: 0.35rem;
+                font-size: 0.95rem;
+            }
+            .toc-grid a {
+                color: #b45309;
+                text-decoration: none;
+                font-weight: 500;
+            }
+            .toc-grid a:hover {
+                text-decoration: underline;
+                color: var(--accent-hover);
+            }
+
+            h2 {
+                border-bottom: 2px solid var(--border);
+                padding-bottom: 0.5rem;
+                margin-top: 2.5rem;
+                color: #0f172a;
+                font-family: var(--font-ui);
+                scroll-margin-top: 2rem;
+            }
+            h3 {
+                color: #1e293b;
+                margin-top: 1.5rem;
+                font-family: var(--font-ui);
+                scroll-margin-top: 2rem;
+            }
+
+            .infobox {
+                background: #f8fafc;
+                border: 1px solid var(--border);
+                border-left: 5px solid var(--accent);
+                border-radius: 6px;
+                padding: 1.25rem 1.5rem;
+                margin: 1.25rem 0 1.75rem 0;
+            }
+            .infobox h4 {
+                margin: 0 0 0.85rem 0;
+                color: #0f172a;
+                font-size: 1rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-family: var(--font-ui);
+            }
+            .definition-box {
+                background: #f8fafc;
+                border-left: 4px solid var(--accent);
+                padding: 1rem 1.5rem;
+                margin: 1rem 0;
+                border-radius: 0 6px 6px 0;
+                border: 1px solid var(--border);
+                border-left-width: 4px;
+            }
+            .aside-box {
+                background: #fffbeb;
+                border: 1px solid #fde68a;
+                border-left: 4px solid #b45309;
+                padding: 1.25rem 1.5rem;
+                margin: 1.5rem 0;
+                border-radius: 0 6px 6px 0;
+            }
+            .aside-box h4 {
+                margin-top: 0;
+                color: #b45309;
+                font-size: 1rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            .aside-box p,
+            .aside-box li,
+            .infobox p,
+            .infobox li {
+                color: #0f172a !important;
+            }
+
+            .worked-example-box {
+                background: #f0fdf4;
+                border: 1px solid #bbf7d0;
+                border-left: 5px solid #10b981;
+                padding: 1.25rem 1.5rem;
+                margin: 1.5rem 0;
+                border-radius: 0 6px 6px 0;
+            }
+            .worked-example-box h4 {
+                margin-top: 0;
+                color: #047857;
+                font-size: 1rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            .worked-example-box p,
+            .worked-example-box li {
+                color: #0f172a !important;
+            }
+
+            /* Mobile-first layout adjustment */
+            @media (max-width: 768px) {
+                .katex-display {
+                    overflow-x: auto !important;
+                    overflow-y: hidden !important;
+                    -webkit-overflow-scrolling: touch !important;
+                    max-width: 100% !important;
+                    padding: 0.25rem 0 !important;
+                }
+                body {
+                    background: #ffffff;
+                    padding: 1rem 0.75rem;
+                }
+                .container {
+                    max-width: 100%;
+                    margin: 0;
+                }
+                .module-content {
+                    background: transparent;
+                    padding: 0;
+                    border: none;
+                    border-radius: 0;
+                    box-shadow: none;
+                    margin-bottom: 1rem;
+                }
+                .header {
+                    padding-bottom: 0.75rem;
+                    margin-bottom: 1.25rem;
+                }
+                ol,
+                ul {
+                    padding-left: 1.25rem !important;
+                    margin-left: 0 !important;
+                }
+                .header > .nav-btn-group,
+                .footer-nav {
+                    display: flex !important;
+                    flex-direction: row !important;
+                    flex-wrap: nowrap !important;
+                    width: 100% !important;
+                    gap: 0.5rem !important;
+                }
+                .header > .nav-btn-group a,
+                .header > .nav-btn-group span,
+                .footer-nav a,
+                .footer-nav span {
+                    flex: 1 1 0 !important;
+                    min-width: 0 !important;
+                    text-align: center !important;
+                    padding: 0.55rem 0.4rem !important;
+                    font-size: 0.82rem !important;
+                    white-space: nowrap !important;
+                    overflow: hidden !important;
+                    text-overflow: ellipsis !important;
+                }
+                p,
+                div,
+                li,
+                blockquote {
+                    word-break: break-word;
+                    overflow-wrap: break-word;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <!-- TOP NAVIGATION HEADER -->
+            <div class="header" style="border-bottom: 2px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.25rem">
+                <div class="nav-btn-group" style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; width: 100%">
+                    <a href="week4-lecture9.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&larr; Lecture 9</a>
+                    <a href="week4.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&uarr; Week 4 Hub</a>
+                    <a href="week4-lecture10-practice.html" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">✎ Practice Problems</a>
+                    <a href="week4-lecture11.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">Lecture 11 &rarr;</a>
+                </div>
+                <div style="text-align: center; width: 100%; min-width: 0">
+                    <h1 style="margin: 0; line-height: 1.3; font-size: 1.5rem">Week 4, Lecture 10: Limits of Functions</h1>
+                </div>
+            </div>
+
+            <div class="module-content">
+                <!-- HERO IMAGE -->
+                <div
+                    style="
+                        margin-bottom: 2rem;
+                        border-radius: 8px;
+                        overflow: hidden;
+                        border: 1px solid var(--border);
+                        box-shadow:
+                            0 4px 6px -1px rgba(0, 0, 0, 0.05),
+                            0 2px 4px -1px rgba(0, 0, 0, 0.03);
+                    ">
+                    <img src="images/chapter3-hero.jpg" alt="Week 4: Limits of Functions" style="width: 100%; height: auto; display: block" />
+                </div>
+
+                <div style="margin: 2.25rem 0 2.5rem 0">
+                    <h3 style="margin-top: 0; color: #0f172a; font-size: 1.35rem">Welcome to Lecture 10: Walking Up to the Edge of the Abyss</h3>
+
+                    <p style="margin: 0 0 1.15rem 0; color: #334155; line-height: 1.75; font-size: 1.05rem">In Lecture 9, you learned how to prove that a curve is unbroken at a point $x_0$ using the $\epsilon\text{-}\delta$ game. That worked beautifully whenever $x_0$ was a safe, well-behaved input where the function value $f(x_0)$ actually existed.</p>
+
+                    <p style="margin: 0 0 1.15rem 0; color: #334155; line-height: 1.75; font-size: 1.05rem">
+                        But what happens when the point we care about most is a
+                        <strong>mathematical crime scene</strong>
+                        ? What if plugging in $x = c$ causes a division-by-zero explosion ($\frac{0}{0}$), leaving a microscopic hole punched right through our graph?
+                    </p>
+
+                    <p style="margin: 0 0 1.5rem 0; color: #334155; line-height: 1.75; font-size: 1.05rem">
+                        Today, we upgrade our $\epsilon\text{-}\delta$ microscope into a tool that can inspect the exact edge of a hole without ever falling in:
+                        <strong>The Limit of a Function</strong>
+                        .
+                    </p>
+
+                    <!-- COURSE STRUCTURE & REASSURANCE BOX -->
+                    <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid #0284c7; border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02)">
+                        <div style="font-size: 0.85rem; font-weight: 800; color: #0369a1; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem">🗺️ How This Fits Into The Grand Arc</div>
+                        <p style="margin: 0 0 0.85rem 0; color: #334155; line-height: 1.65; font-size: 0.98rem">All of differential calculus is built on a single paradox: to find the instantaneous speed of an object at a single moment in time, we have to divide an infinitely small distance ($\Delta y \to 0$) by an infinitely small time interval ($\Delta x \to 0$). Algebra says $\frac{0}{0}$ is illegal. Limits make it legal.</p>
+                        <ul style="margin: 0; padding-left: 1.25rem; color: #334155; line-height: 1.7; font-size: 0.98rem">
+                            <li style="margin-bottom: 0.5rem">
+                                <strong>The Punctured Neighborhood:</strong>
+                                By adding one tiny constraint ($0 < |x - c| < \delta$) to the $\epsilon\text{-}\delta$ definition you already know from Lecture 9, we forbid $x$ from ever equaling $c$. We only care about the <em>journey</em> toward $c$, never the arrival.
+                            </li>
+                            <li>
+                                <strong>Surgical Precision:</strong>
+                                Because $x \neq c$, we gain the legal right to factor, rationalize, and cancel out the exact $(x - c)$ terms causing the $\frac{0}{0}$ explosion—allowing us to calculate the exact height of a missing point.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- TABLE OF CONTENTS -->
+                <div class="toc-box">
+                    <h4>📌 Lecture 10 Topics</h4>
+                    <ul class="toc-grid">
+                        <li><a href="#section-punctured">1. The Punctured Neighborhood &amp; Formal Definition</a></li>
+                        <li><a href="#section-stepper">2. Interactive Lab: Resolving Indeterminate Forms</a></li>
+                        <li><a href="#section-one-sided">3. One-Sided Limits &amp; The Rendezvous Criterion</a></li>
+                        <li><a href="#section-algebra">4. Limit Laws &amp; Algebraic Surgery ($\frac{0}{0}$)</a></li>
+                        <li><a href="#section-squeeze">5. Trapping Wild Curves: The Squeeze Theorem</a></li>
+                    </ul>
+                </div>
+
+                <!-- SECTION 1: THE PUNCTURED NEIGHBORHOOD -->
+                <h2 id="section-punctured">1. The Punctured Neighborhood &amp; Formal Definition</h2>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                    Consider the rational function $f(x) = \frac{x^2 - 4}{x - 2}$. If you plug in $x = 2$, the numerator becomes $0$ and the denominator becomes $0$, producing the undefined expression $\frac{0}{0}$. The machine is broken at $x = 2$.
+                </p>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                    Yet if you plug in $x = 1.999$, the machine smoothly outputs $3.999$. If you plug in $x = 2.001$, it outputs $4.001$. Both sides of the curve are clearly aiming straight at a target height of $L = 4$. How do we state this rigorously when $f(2)$ does not exist?
+                </p>
+
+                <div class="definition-box">
+                    <h4 style="margin: 0 0 0.5rem 0; color: #b45309; font-size: 1.05rem">Definition: The Limit of a Function ($\lim_{x \to c} f(x) = L$)</h4>
+                    <p style="margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.6">
+                        Let $f$ be defined on an open interval containing $c$, except possibly at $c$ itself. We say that the
+                        <strong>limit of $f(x)$ as $x$ approaches $c$ is $L$</strong>
+                        , written $\lim_{x \to c} f(x) = L$, if for every positive number $\epsilon > 0$, there exists a positive number $\delta > 0$ such that for all $x$ in the domain:
+                    </p>
+                    <div style="text-align: center; margin: 1rem 0; font-size: 1.1rem; font-weight: bold; color: #0f172a">$$\forall \epsilon > 0, \ \exists \delta > 0 \text{ such that } \mathbf{0 < |x - c| < \delta} \implies |f(x) - L| < \epsilon$$</div>
+                </div>
+
+                <!-- COMPARISON: CONTINUITY VS LIMIT -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin: 1.75rem 0">
+                    <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-top: 4px solid #64748b; border-radius: 8px; padding: 1.25rem">
+                        <span style="font-size: 0.75rem; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.35rem">Lecture 9: Continuity at $c$</span>
+                        <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.5rem; font-size: 1rem">$|x - c| < \delta \implies |f(x) - f(c)| < \epsilon$</div>
+                        <p style="margin: 0; color: #334155; font-size: 0.92rem; line-height: 1.55">
+                            Allows $x = c$ (distance $0$). Requires the actual point $f(c)$ to exist and serve as the target center of the $\epsilon$-corridor.
+                        </p>
+                    </div>
+
+                    <div style="background: #fffbeb; border: 1px solid #fde68a; border-top: 4px solid #d97706; border-radius: 8px; padding: 1.25rem">
+                        <span style="font-size: 0.75rem; font-weight: 800; color: #b45309; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.35rem">Lecture 10: Limit as $x \to c$</span>
+                        <div style="font-weight: 700; color: #0f172a; margin-bottom: 0.5rem; font-size: 1rem">$0 < |x - c| < \delta \implies |f(x) - L| < \epsilon$</div>
+                        <p style="margin: 0; color: #334155; font-size: 0.92rem; line-height: 1.55">
+                            The clause <strong>$0 < |x - c|$</strong> creates a <em>punctured neighborhood</em>. It strictly forbids $x = c$, testing only the surrounding points $(c - \delta, c) \cup (c, c + \delta)$.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- SVG: PUNCTURED NEIGHBORHOOD VISUALIZATION -->
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 1.5rem; margin: 2rem 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05)">
+                    <div style="margin-bottom: 1.25rem">
+                        <span style="font-size: 0.85rem; font-weight: 800; color: #0284c7; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.25rem">Geometric Anatomy</span>
+                        <h3 style="margin: 0 0 0.4rem 0; color: #0f172a; font-size: 1.2rem">The Punctured $\delta$-Window Ignores the Hole</h3>
+                        <p style="margin: 0; color: #334155; font-size: 0.95rem; line-height: 1.6">
+                            Notice that at $x = c$, the curve has an open hole at height $L$, and the actual defined point $f(c)$ has been displaced upward. Because the limit uses a <strong>punctured neighborhood</strong> ($x \neq c$), the displaced point is completely ignored—the limit evaluates strictly to $L$.
+                        </p>
+                    </div>
+
+                    <svg viewBox="0 0 680 310" style="width: 100%; max-width: 640px; height: auto; display: block; margin: 0 auto; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px" role="img" aria-label="Punctured neighborhood diagram showing a limit L at a removable discontinuity">
+                        <!-- Epsilon Corridor -->
+                        <rect x="70" y="95" width="560" height="80" fill="#e0f2fe" opacity="0.7" />
+                        <line x1="70" y1="95" x2="630" y2="95" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="5,4" />
+                        <line x1="70" y1="175" x2="630" y2="175" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="5,4" />
+                        <text x="62" y="99" font-size="11" font-weight="bold" fill="#0369a1" text-anchor="end">L + ε</text>
+                        <text x="62" y="179" font-size="11" font-weight="bold" fill="#0369a1" text-anchor="end">L − ε</text>
+
+                        <!-- Delta Window -->
+                        <rect x="270" y="25" width="140" height="235" fill="#dcfce7" opacity="0.5" />
+                        <line x1="270" y1="25" x2="270" y2="260" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="5,4" />
+                        <line x1="410" y1="25" x2="410" y2="260" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="5,4" />
+                        <text x="270" y="280" font-size="11" font-weight="bold" fill="#15803d" text-anchor="middle">c − δ</text>
+                        <text x="410" y="280" font-size="11" font-weight="bold" fill="#15803d" text-anchor="middle">c + δ</text>
+
+                        <!-- Axes -->
+                        <line x1="50" y1="260" x2="640" y2="260" stroke="#64748b" stroke-width="1.5" />
+                        <line x1="70" y1="280" x2="70" y2="20" stroke="#64748b" stroke-width="1.5" />
+                        <text x="650" y="264" font-size="13" font-weight="bold" fill="#475569">x</text>
+                        <text x="60" y="18" font-size="13" font-weight="bold" fill="#475569">y</text>
+
+                        <!-- Center Target Lines -->
+                        <line x1="70" y1="135" x2="340" y2="135" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="3,3" />
+                        <line x1="340" y1="135" x2="340" y2="260" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3,3" />
+                        <text x="62" y="139" font-size="13" font-weight="800" fill="#0f172a" text-anchor="end">L</text>
+                        <text x="340" y="280" font-size="13" font-weight="800" fill="#dc2626" text-anchor="middle">c</text>
+
+                        <!-- Function Curve -->
+                        <path d="M 95 235 Q 230 190 340 135 T 595 35" fill="none" stroke="#0f172a" stroke-width="3.2" />
+
+                        <!-- Displaced Point f(c) -->
+                        <circle cx="340" cy="52" r="5.5" fill="#dc2626" />
+                        <text x="352" y="56" font-size="12" font-weight="bold" fill="#dc2626">f(c) (Displaced — Ignored by Limit!)</text>
+
+                        <!-- Open Hole at (c, L) -->
+                        <circle cx="340" cy="135" r="6" fill="#ffffff" stroke="#0f172a" stroke-width="2.5" />
+
+                        <!-- Punctured x-axis interval highlight -->
+                        <line x1="270" y1="260" x2="334" y2="260" stroke="#16a34a" stroke-width="4" />
+                        <line x1="346" y1="260" x2="410" y2="260" stroke="#16a34a" stroke-width="4" />
+                        <circle cx="340" cy="260" r="5.5" fill="#ffffff" stroke="#dc2626" stroke-width="2.5" />
+                        <text x="340" y="298" font-size="11" font-weight="bold" fill="#dc2626" text-anchor="middle">x ≠ c (Punctured at c)</text>
+                    </svg>
+                </div>
+
+                <!-- ================================================================= -->
+                <!-- SECTION 2: DIRECTED NARRATIVE STEPPER (3-MODE LIMIT LAB)          -->
+                <!-- ================================================================= -->
+                <h2 id="section-stepper">2. Interactive Lab: Resolving Indeterminate Forms</h2>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                    How do we actually find the target height $L$ when direct substitution gives $\frac{0}{0}$ or an infinite oscillation? Because the punctured neighborhood guarantees $x \neq c$, we can replace the broken function with an identical "twin" function that has the hole patched. Step through the three core resolution architectures below.
+                </p>
+
+                <div
+                    id="lim-stepper-lab"
+                    style="
+                        margin: 2rem 0 2.5rem 0;
+                        border: 1px solid #cbd5e1;
+                        border-radius: 12px;
+                        overflow: hidden;
+                        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+                        background: #ffffff;
+                    ">
+                    <style>
+                        #lim-stepper-lab .mode-bar {
+                            background: #1e293b;
+                            padding: 0.85rem 1.25rem;
+                            display: flex;
+                            flex-wrap: wrap;
+                            gap: 0.5rem;
+                            align-items: center;
+                            border-bottom: 1px solid #334155;
+                        }
+                        #lim-stepper-lab .mode-label {
+                            font-size: 0.75rem;
+                            font-weight: 800;
+                            text-transform: uppercase;
+                            letter-spacing: 0.05em;
+                            color: #94a3b8;
+                            margin-right: 0.5rem;
+                        }
+                        #lim-stepper-lab .mode-btn {
+                            background: #334155;
+                            color: #cbd5e1;
+                            border: 1px solid #475569;
+                            padding: 0.45rem 0.85rem;
+                            border-radius: 6px;
+                            font-size: 0.85rem;
+                            font-weight: 600;
+                            cursor: pointer;
+                            transition: all 0.2s;
+                        }
+                        #lim-stepper-lab .mode-btn:hover {
+                            background: #475569;
+                            color: #ffffff;
+                        }
+                        #lim-stepper-lab .mode-btn.active {
+                            background: #d97706;
+                            color: #ffffff;
+                            border-color: #f59e0b;
+                        }
+                        #lim-stepper-lab .telemetry-bar {
+                            display: grid;
+                            grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+                            gap: 0.75rem;
+                            background: #0f172a;
+                            padding: 0.9rem 1.25rem;
+                        }
+                        #lim-stepper-lab .tel-item {
+                            display: flex;
+                            flex-direction: column;
+                        }
+                        #lim-stepper-lab .tel-key {
+                            font-size: 0.68rem;
+                            text-transform: uppercase;
+                            letter-spacing: 0.05em;
+                            color: #94a3b8;
+                            font-weight: 700;
+                            margin-bottom: 0.2rem;
+                        }
+                        #lim-stepper-lab .tel-val {
+                            font-family: monospace;
+                            font-size: 0.9rem;
+                            font-weight: 700;
+                            color: #38bdf8;
+                        }
+                        #lim-stepper-lab .nav-strip {
+                            display: flex;
+                            gap: 1.5rem;
+                            padding: 1.25rem 1.5rem;
+                            background: #f8fafc;
+                            border-bottom: 1px solid #cbd5e1;
+                            align-items: center;
+                            flex-wrap: wrap;
+                        }
+                        #lim-stepper-lab .btn-group {
+                            display: flex;
+                            gap: 0.45rem;
+                            flex-shrink: 0;
+                        }
+                        #lim-stepper-lab .step-btn {
+                            padding: 0.5rem 0.9rem;
+                            border-radius: 6px;
+                            font-weight: 600;
+                            font-size: 0.88rem;
+                            cursor: pointer;
+                            border: 1px solid #cbd5e1;
+                            background: #ffffff;
+                            color: #334155;
+                        }
+                        #lim-stepper-lab .step-btn.primary {
+                            background: #d97706;
+                            color: #ffffff;
+                            border-color: #d97706;
+                        }
+                        #lim-stepper-lab .step-btn:disabled {
+                            opacity: 0.4;
+                            cursor: not-allowed;
+                        }
+                        #lim-stepper-lab .dual-panes {
+                            display: grid;
+                            grid-template-columns: 1fr 1fr;
+                            gap: 1px;
+                            background: #cbd5e1;
+                        }
+                        @media (max-width: 640px) {
+                            #lim-stepper-lab .dual-panes {
+                                grid-template-columns: 1fr;
+                            }
+                        }
+                    </style>
+
+                    <!-- Comparative Dimension Toggles -->
+                    <div class="mode-bar">
+                        <span class="mode-label">Resolution Architecture:</span>
+                        <button class="mode-btn active" id="lim-mode-0" onclick="limitLab.selectArchitecture(0)">1. Factoring &amp; Cancellation</button>
+                        <button class="mode-btn" id="lim-mode-1" onclick="limitLab.selectArchitecture(1)">2. Radical Conjugation</button>
+                        <button class="mode-btn" id="lim-mode-2" onclick="limitLab.selectArchitecture(2)">3. Squeeze Envelope</button>
+                    </div>
+
+                    <!-- Live State Telemetry -->
+                    <div class="telemetry-bar">
+                        <div class="tel-item">
+                            <span class="tel-key">Active Expression</span>
+                            <span class="tel-val" id="lim-tel-expr">(x² - 4) / (x - 2)</span>
+                        </div>
+                        <div class="tel-item">
+                            <span class="tel-key">Current Phase</span>
+                            <span class="tel-val" id="lim-tel-phase" style="color: #fbbf24">Step 1 / 4: Direct Probe</span>
+                        </div>
+                        <div class="tel-item">
+                            <span class="tel-key">Domain Constraint</span>
+                            <span class="tel-val" id="lim-tel-domain" style="color: #4ade80">0 &lt; |x - 2| &lt; δ</span>
+                        </div>
+                        <div class="tel-item">
+                            <span class="tel-key">Output Status</span>
+                            <span class="tel-val" id="lim-tel-status" style="color: #f87171">0/0 Indeterminate</span>
+                        </div>
+                    </div>
+
+                    <!-- Navigation + Inline Preview Panel -->
+                    <div class="nav-strip">
+                        <div class="btn-group">
+                            <button class="step-btn" id="lim-btn-prev" onclick="limitLab.advanceStep(-1)">&larr; Prev</button>
+                            <button class="step-btn primary" id="lim-btn-next" onclick="limitLab.advanceStep(1)">Next &rarr;</button>
+                            <button class="step-btn" onclick="limitLab.resetWalkthrough()">Reset</button>
+                        </div>
+                        <div id="lim-inline-preview" style="flex: 1; min-width: 240px; font-size: 0.95rem; color: #1e293b; line-height: 1.55"></div>
+                    </div>
+
+                    <!-- Synchronized Visual Canvas -->
+                    <div style="padding: 1.5rem; background: #ffffff; border-bottom: 1px solid #cbd5e1">
+                        <svg id="lim-svg-canvas" viewBox="0 0 720 260" style="width: 100%; max-width: 680px; height: auto; display: block; margin: 0 auto">
+                            <!-- Axes -->
+                            <line x1="60" y1="220" x2="660" y2="220" stroke="#94a3b8" stroke-width="1.5" />
+                            <line x1="120" y1="245" x2="120" y2="20" stroke="#94a3b8" stroke-width="1.5" />
+                            <text x="670" y="224" font-size="13" font-weight="bold" fill="#64748b">x</text>
+                            <text x="110" y="20" font-size="13" font-weight="bold" fill="#64748b" text-anchor="end">y</text>
+
+                            <!-- Dynamic Squeeze Envelopes (Visible in Mode 2) -->
+                            <g id="lim-layer-squeeze" style="opacity: 0; transition: opacity 0.3s">
+                                <path d="M 160 30 Q 360 220 560 30" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5,4" />
+                                <path d="M 160 250 Q 360 190 560 250" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5,4" />
+                                <text x="568" y="34" font-size="11" font-weight="bold" fill="#64748b">+x² (Upper Bound)</text>
+                                <text x="568" y="248" font-size="11" font-weight="bold" fill="#64748b">−x² (Lower Bound)</text>
+                            </g>
+
+                            <!-- Target Guidelines -->
+                            <line id="lim-guide-y" x1="120" y1="100" x2="360" y2="100" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.4" />
+                            <line id="lim-guide-x" x1="360" y1="100" x2="360" y2="220" stroke="#d97706" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.6" />
+                            <text id="lim-lbl-target-y" x="110" y="104" font-size="13" font-weight="800" fill="#0284c7" text-anchor="end">L = 4</text>
+                            <text id="lim-lbl-target-x" x="360" y="240" font-size="13" font-weight="800" fill="#b45309" text-anchor="middle">c = 2</text>
+
+                            <!-- Main Function Path -->
+                            <path id="lim-main-curve" d="M 160 190 L 560 10" fill="none" stroke="#0f172a" stroke-width="3.2" />
+
+                            <!-- Patched Twin Overlay (Step 2+) -->
+                            <path id="lim-twin-curve" d="M 160 190 L 560 10" fill="none" stroke="#10b981" stroke-width="3.5" stroke-dasharray="6,4" opacity="0" />
+
+                            <!-- Approaching Arrows (Step 3) -->
+                            <g id="lim-layer-arrows" style="opacity: 0; transition: opacity 0.3s">
+                                <line x1="280" y1="220" x2="345" y2="220" stroke="#16a34a" stroke-width="3.5" />
+                                <line x1="440" y1="220" x2="375" y2="220" stroke="#16a34a" stroke-width="3.5" />
+                                <circle cx="360" cy="100" r="14" fill="none" stroke="#10b981" stroke-width="2.5" stroke-dasharray="3,3" />
+                            </g>
+
+                            <!-- Hole / Target Marker -->
+                            <circle id="lim-hole-dot" cx="360" cy="100" r="6.5" fill="#ffffff" stroke="#dc2626" stroke-width="2.5" />
+
+                            <!-- Formula Callout Banner inside SVG -->
+                            <rect x="390" y="145" width="295" height="52" rx="6" fill="#f8fafc" stroke="#cbd5e1" />
+                            <text id="lim-svg-banner-title" x="405" y="165" font-size="11" font-weight="800" fill="#64748b">ACTIVE TRANSFORMATION</text>
+                            <text id="lim-svg-banner-math" x="405" y="185" font-family="monospace" font-size="13" font-weight="bold" fill="#0f172a">f(2) = (4 - 4) / (2 - 2) = 0/0</text>
+                        </svg>
+                    </div>
+
+                    <!-- Paired Analytical Panes -->
+                    <div class="dual-panes">
+                        <div style="background: #ffffff; padding: 1.5rem">
+                            <h4 style="margin: 0 0 0.5rem 0; color: #047857; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 800">1. What Is Happening</h4>
+                            <div id="lim-pane-what" style="font-size: 0.94rem; color: #334155; line-height: 1.6"></div>
+                        </div>
+                        <div style="background: #ffffff; padding: 1.5rem">
+                            <h4 style="margin: 0 0 0.5rem 0; color: #1d4ed8; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 800">2. Why The System Does This</h4>
+                            <div id="lim-pane-why" style="font-size: 0.94rem; color: #334155; line-height: 1.6"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    const limitLab = (function () {
+                        let activeArch = 0;
+                        let activeStep = 0;
+
+                        const architectures = [
+                            {
+                                expr: "(x² - 4) / (x - 2)",
+                                domain: "0 < |x - 2| < δ",
+                                targetX: "c = 2",
+                                targetY: "L = 4",
+                                curvePath: "M 160 190 L 560 10",
+                                holeY: 100,
+                                squeeze: false,
+                                steps: [
+                                    {
+                                        phase: "Step 1 / 4: Direct Probe",
+                                        status: "0/0 Indeterminate",
+                                        statusColor: "#f87171",
+                                        banner: "f(2) = (2² - 4)/(2 - 2) = 0/0",
+                                        preview: "We begin by testing direct substitution at x = 2 to see if the function is continuous or if a singularity blocks evaluation. Both numerator and denominator collapse to zero, signaling a removable hole.",
+                                        what: "Plugging x = 2 into (x² - 4)/(x - 2) produces 0 in the numerator and 0 in the denominator. On the canvas, this appears as an open red-rimmed puncture at (2, 4).",
+                                        why: "A 0/0 result is not a dead end; it is an indeterminate form. Because both top and bottom vanish simultaneously at x = 2, Polynomial Remainder Theorem guarantees they share a common factor of (x - 2)."
+                                    },
+                                    {
+                                        phase: "Step 2 / 4: Factor Numerator",
+                                        status: "Exposing Culprit",
+                                        statusColor: "#fbbf24",
+                                        banner: "[(x - 2)(x + 2)] / (x - 2)",
+                                        preview: "Next, we rewrite the numerator using the difference of squares so the zero-producing factor (x - 2) is explicitly isolated in both the numerator and denominator.",
+                                        what: "The quadratic term (x² - 4) is factored into (x - 2)(x + 2). The expression now reads [(x - 2)(x + 2)] / (x - 2), visibly pairing the two problem terms.",
+                                        why: "We cannot cancel terms inside sums or differences. Factoring converts the numerator into a pure product, isolating the exact algebraic component responsible for the division-by-zero error."
+                                    },
+                                    {
+                                        phase: "Step 3 / 4: Punctured Cancellation",
+                                        status: "Twin Function Active",
+                                        statusColor: "#38bdf8",
+                                        banner: "Since x ≠ 2: f(x) = x + 2",
+                                        preview: "Using the punctured neighborhood guarantee (x ≠ 2), we legally cancel the (x - 2) terms to reveal the continuous twin function g(x) = x + 2.",
+                                        what: "Because 0 < |x - 2| < δ strictly forbids x = 2, the quantity (x - 2) is a non-zero number and cancels to 1. The green dashed line g(x) = x + 2 illuminates over our original curve.",
+                                        why: "In standard algebra, canceling 0/0 is illegal. In a limit, we only inspect x values approaching 2 (like 1.9999), where (x - 2) is non-zero. Thus f(x) and g(x) = x + 2 are 100% identical everywhere inside the punctured neighborhood."
+                                    },
+                                    {
+                                        phase: "Step 4 / 4: Limit Evaluation",
+                                        status: "Converged: L = 4",
+                                        statusColor: "#4ade80",
+                                        banner: "lim (x + 2) = 2 + 2 = 4",
+                                        preview: "Finally, because the simplified twin function g(x) = x + 2 is continuous at x = 2, we evaluate it directly to lock in the exact limit L = 4.",
+                                        what: "We substitute x = 2 into the continuous twin g(x) = x + 2, yielding 2 + 2 = 4. The green approach arrows converge cleanly onto the target height L = 4.",
+                                        why: "Two functions that agree everywhere on a punctured neighborhood must share the exact same limit. Patching the hole via g(x) lets us use simple continuity (Lecture 9) to solve a broken limit (Lecture 10)."
+                                    }
+                                ]
+                            },
+                            {
+                                expr: "(√(x + 4) - 2) / x",
+                                domain: "0 < |x - 0| < δ",
+                                targetX: "c = 0",
+                                targetY: "L = 0.25",
+                                curvePath: "M 140 165 Q 340 120 580 85",
+                                holeY: 122,
+                                squeeze: false,
+                                steps: [
+                                    {
+                                        phase: "Step 1 / 4: Direct Probe",
+                                        status: "0/0 Indeterminate",
+                                        statusColor: "#f87171",
+                                        banner: "f(0) = (√4 - 2) / 0 = 0/0",
+                                        preview: "We test x = 0 in the radical quotient. Both the radical numerator (√4 - 2) and the denominator x collapse to zero, creating an indeterminate hole at x = 0.",
+                                        what: "Substituting x = 0 yields (2 - 2)/0 = 0/0. The curve is smooth on both sides of x = 0, but has a missing point at c = 0.",
+                                        why: "Because the numerator contains a square root, standard polynomial factoring cannot immediately extract the hidden factor of x. We need a technique that clears the radical."
+                                    },
+                                    {
+                                        phase: "Step 2 / 4: Multiply by Conjugate",
+                                        status: "Rationalizing Numerator",
+                                        statusColor: "#fbbf24",
+                                        banner: "× (√(x+4) + 2) / (√(x+4) + 2)",
+                                        preview: "We multiply the top and bottom by the radical conjugate (√(x + 4) + 2) to exploit the difference-of-squares identity (a - b)(a + b) = a² - b².",
+                                        what: "Multiplying the numerator (√(x + 4) - 2) by (√(x + 4) + 2) squares the root, simplifying the top to (x + 4) - 4 = x. The expression becomes x / [x(√(x + 4) + 2)].",
+                                        why: "The conjugate is chosen specifically because its middle cross-terms cancel out, stripping away the square root in the numerator and exposing the bare factor of x."
+                                    },
+                                    {
+                                        phase: "Step 3 / 4: Punctured Cancellation",
+                                        status: "Twin Function Active",
+                                        statusColor: "#38bdf8",
+                                        banner: "Since x ≠ 0: 1 / (√(x+4) + 2)",
+                                        preview: "Because the limit operates in a punctured neighborhood where x ≠ 0, we cancel the exposed x in the numerator against the x in the denominator.",
+                                        what: "Dividing top and bottom by the non-zero value x leaves the continuous twin function g(x) = 1 / (√(x + 4) + 2), illuminated in green on the graph.",
+                                        why: "Notice that we never expanded the denominator! Keeping the denominator factored allowed the problem term x to sit out front, ready for immediate cancellation."
+                                    },
+                                    {
+                                        phase: "Step 4 / 4: Limit Evaluation",
+                                        status: "Converged: L = 1/4",
+                                        statusColor: "#4ade80",
+                                        banner: "1 / (√4 + 2) = 1 / 4 = 0.25",
+                                        preview: "With the zero-divisor eliminated, the twin function is continuous at x = 0. We substitute x = 0 directly to obtain L = 1/4.",
+                                        what: "Plugging x = 0 into 1 / (√(x + 4) + 2) gives 1 / (2 + 2) = 1/4 (0.25). Both sides of the curve meet at height L = 0.25.",
+                                        why: "Whereas the original minus sign caused a 0/0 subtraction, the conjugate's plus sign safely adds 2 + 2 = 4 in the denominator, completing the limit."
+                                    }
+                                ]
+                            },
+                            {
+                                expr: "x² · sin(1 / x)",
+                                domain: "0 < |x - 0| < δ",
+                                targetX: "c = 0",
+                                targetY: "L = 0",
+                                curvePath: "M 160 55 C 220 230, 260 60, 300 185 C 325 110, 345 160, 360 140 C 375 160, 395 110, 420 185 C 460 60, 500 230, 560 55",
+                                holeY: 140,
+                                squeeze: true,
+                                steps: [
+                                    {
+                                        phase: "Step 1 / 4: Direct Probe",
+                                        status: "Wild Oscillation",
+                                        statusColor: "#f87171",
+                                        banner: "sin(1/0) → Infinite Oscillation",
+                                        preview: "We inspect x²·sin(1/x) as x → 0. Direct substitution fails because 1/x shoots to infinity, causing sin(1/x) to oscillate infinitely fast between -1 and 1.",
+                                        what: "As x approaches 0, the inner term sin(1/x) never settles on a single number. Algebraic factoring and conjugates are useless here.",
+                                        why: "Because sin(1/x) has no limit on its own, we cannot use the Product Law (lim A · lim B). We need a geometric trap rather than an algebraic cancellation."
+                                    },
+                                    {
+                                        phase: "Step 2 / 4: Build Bounding Cage",
+                                        status: "Envelopes Established",
+                                        statusColor: "#fbbf24",
+                                        banner: "-1 ≤ sin(1/x) ≤ 1",
+                                        preview: "We exploit the universal physical boundary of the sine wave: no matter how chaotic its input angle is, sine can never exceed 1 or drop below -1.",
+                                        what: "We start with the inequality -1 ≤ sin(1/x) ≤ 1, which holds for every x ≠ 0 in our punctured neighborhood.",
+                                        why: "Even though we cannot predict the exact phase of sin(1/x) near zero, bounding its amplitude gives us two solid walls to trap the oscillation."
+                                    },
+                                    {
+                                        phase: "Step 3 / 4: Scale by Damping Factor",
+                                        status: "Funnel Active",
+                                        statusColor: "#38bdf8",
+                                        banner: "-x² ≤ x²·sin(1/x) ≤ +x²",
+                                        preview: "We multiply all three parts of the inequality by x² (which is strictly positive for x ≠ 0), creating a parabolic funnel that crushes the wave toward zero.",
+                                        what: "The dashed grey parabolas g(x) = -x² (floor) and h(x) = +x² (ceiling) appear on the canvas, trapping our oscillating curve strictly between them.",
+                                        why: "Because x² ≥ 0, multiplying across the inequality preserves the direction of the ≤ signs, locking f(x) inside a narrowing parabolic cage."
+                                    },
+                                    {
+                                        phase: "Step 4 / 4: Squeeze Convergence",
+                                        status: "Converged: L = 0",
+                                        statusColor: "#4ade80",
+                                        banner: "lim(-x²) = 0 = lim(+x²) ⇒ L = 0",
+                                        preview: "As x → 0, both the upper parabola (+x²) and lower parabola (-x²) converge to 0, leaving the trapped middle function nowhere else to go.",
+                                        what: "Since lim(x→0) (-x²) = 0 and lim(x→0) (+x²) = 0, the Squeeze Theorem forces lim(x→0) x²·sin(1/x) = 0.",
+                                        why: "Even infinite frequency oscillation is defeated when its amplitude is crushed to zero by a pinching envelope."
+                                    }
+                                ]
+                            }
+                        ];
+
+                        function syncView() {
+                            const arch = architectures[activeArch];
+                            const st = arch.steps[activeStep];
+
+                            for (let i = 0; i < 3; i++) {
+                                document.getElementById("lim-mode-" + i).className = i === activeArch ? "mode-btn active" : "mode-btn";
+                            }
+
+                            document.getElementById("lim-tel-expr").textContent = arch.expr;
+                            const phaseEl = document.getElementById("lim-tel-phase");
+                            phaseEl.textContent = st.phase;
+                            document.getElementById("lim-tel-domain").textContent = arch.domain;
+                            const statusEl = document.getElementById("lim-tel-status");
+                            statusEl.textContent = st.status;
+                            statusEl.style.color = st.statusColor;
+
+                            document.getElementById("lim-inline-preview").textContent = st.preview;
+                            document.getElementById("lim-pane-what").textContent = st.what;
+                            document.getElementById("lim-pane-why").textContent = st.why;
+
+                            document.getElementById("lim-btn-prev").disabled = activeStep === 0;
+                            document.getElementById("lim-btn-next").disabled = activeStep === 3;
+
+                            // Update SVG
+                            document.getElementById("lim-main-curve").setAttribute("d", arch.curvePath);
+                            document.getElementById("lim-twin-curve").setAttribute("d", arch.curvePath);
+                            document.getElementById("lim-twin-curve").style.opacity = activeStep >= 2 && !arch.squeeze ? "1" : "0";
+                            document.getElementById("lim-layer-squeeze").style.opacity = arch.squeeze && activeStep >= 1 ? "1" : "0";
+                            document.getElementById("lim-layer-arrows").style.opacity = activeStep === 3 ? "1" : "0";
+
+                            document.getElementById("lim-hole-dot").setAttribute("cy", arch.holeY);
+                            document.getElementById("lim-hole-dot").setAttribute("stroke", activeStep === 3 ? "#10b981" : "#dc2626");
+                            document.getElementById("lim-guide-y").setAttribute("y1", arch.holeY);
+                            document.getElementById("lim-guide-y").setAttribute("y2", arch.holeY);
+                            document.getElementById("lim-guide-x").setAttribute("y1", arch.holeY);
+                            document.getElementById("lim-lbl-target-y").setAttribute("y", arch.holeY + 4);
+                            document.getElementById("lim-lbl-target-y").textContent = arch.targetY;
+                            document.getElementById("lim-lbl-target-x").textContent = arch.targetX;
+
+                            document.getElementById("lim-svg-banner-math").textContent = st.banner;
+                        }
+
+                        return {
+                            selectArchitecture: function (idx) {
+                                activeArch = idx;
+                                activeStep = 0;
+                                syncView();
+                            },
+                            advanceStep: function (delta) {
+                                const next = activeStep + delta;
+                                if (next >= 0 && next <= 3) {
+                                    activeStep = next;
+                                    syncView();
+                                }
+                            },
+                            resetWalkthrough: function () {
+                                activeStep = 0;
+                                syncView();
+                            }
+                        };
+                    })();
+
+                    document.addEventListener("DOMContentLoaded", function () {
+                        limitLab.resetWalkthrough();
+                    });
+                </script>
+
+                <!-- ================================================================= -->
+                <!-- SECTION 3: ONE-SIDED LIMITS & THE RENDEZVOUS CRITERION            -->
+                <!-- ================================================================= -->
+                <h2 id="section-one-sided">3. One-Sided Limits &amp; The Rendezvous Criterion</h2>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                    On a one-dimensional number line, there are two distinct directions from which you can walk toward a target point $x = c$: you can walk from the left (through numbers smaller than $c$), or you can walk from the right (through numbers larger than $c$).
+                </p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin: 1.5rem 0">
+                    <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid #0284c7; border-radius: 8px; padding: 1.25rem">
+                        <h4 style="margin: 0 0 0.4rem 0; color: #0369a1; font-size: 1rem">Left-Hand Limit ($\lim_{x \to c^-} f(x) = L$)</h4>
+                        <p style="margin: 0 0 0.5rem 0; color: #334155; font-size: 0.93rem; line-height: 1.55">
+                            The superscript minus sign ($c^-$) means we restrict our $\delta$-window strictly to inputs <strong>less than $c$</strong>:
+                        </p>
+                        <div style="font-weight: 700; color: #0f172a; font-size: 0.95rem; text-align: center; background: #e0f2fe; padding: 0.35rem; border-radius: 4px">$c - \delta < x < c \implies |f(x) - L| < \epsilon$</div>
+                    </div>
+
+                    <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid #8b5cf6; border-radius: 8px; padding: 1.25rem">
+                        <h4 style="margin: 0 0 0.4rem 0; color: #6d28d9; font-size: 1rem">Right-Hand Limit ($\lim_{x \to c^+} f(x) = L$)</h4>
+                        <p style="margin: 0 0 0.5rem 0; color: #334155; font-size: 0.93rem; line-height: 1.55">
+                            The superscript plus sign ($c^+$) means we restrict our $\delta$-window strictly to inputs <strong>greater than $c$</strong>:
+                        </p>
+                        <div style="font-weight: 700; color: #0f172a; font-size: 0.95rem; text-align: center; background: #ede9fe; padding: 0.35rem; border-radius: 4px">$c < x < c + \delta \implies |f(x) - L| < \epsilon$</div>
+                    </div>
+                </div>
+
+                <div class="definition-box" style="background: #fffbeb; border-color: #fde68a; border-left: 5px solid #d97706">
+                    <h4 style="margin: 0 0 0.4rem 0; color: #92400e; font-size: 1.05rem">🤝 The Rendezvous Criterion (Existence of a Two-Sided Limit)</h4>
+                    <p style="margin: 0; color: #0f172a; font-size: 0.96rem; line-height: 1.6">
+                        A two-sided limit $\lim_{x \to c} f(x) = L$ exists <strong>if and only if</strong> both one-sided limits exist and arrive at the exact same destination $L$:
+                    </p>
+                    <div style="text-align: center; margin: 0.85rem 0 0.25rem 0; font-size: 1.1rem; font-weight: bold; color: #0f172a">$$\lim_{x \to c} f(x) = L \iff \lim_{x \to c^-} f(x) = \lim_{x \to c^+} f(x) = L$$</div>
+                </div>
+
+                <div class="aside-box">
+                    <h4>🌉 The Bridge Construction Analogy</h4>
+                    <p style="margin-bottom: 0">
+                        Imagine two engineering crews building a bridge across a canyon toward $x = c$, one starting from the west bank ($x \to c^-$) and one from the east bank ($x \to c^+$). If both crews build toward the exact same altitude $L$, the bridge aligns—even if the final center bolt at $x = c$ hasn't been installed yet (a removable hole). But if the west crew builds at altitude $2$ and the east crew builds at altitude $5$ (a jump discontinuity), the bridge fails to meet, and the overall limit <strong>Does Not Exist (DNE)</strong>.
+                    </p>
+                </div>
+
+                <!-- ================================================================= -->
+                <!-- SECTION 4: LIMIT LAWS & ALGEBRAIC SURGERY                         -->
+                <!-- ================================================================= -->
+                <h2 id="section-algebra">4. Limit Laws &amp; Algebraic Surgery ($\frac{0}{0}$)</h2>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                    Once we know that two individual limits $\lim_{x \to c} f(x) = L$ and $\lim_{x \to c} g(x) = M$ exist as finite real numbers, we do not need to play the $\epsilon\text{-}\delta$ game from scratch every time we combine them. The <strong>Algebraic Limit Laws</strong> guarantee that limits respect standard arithmetic:
+                </p>
+
+                <div class="infobox">
+                    <h4>⚙️ The Fundamental Limit Laws (Assuming $\lim_{x \to c} f(x) = L$ and $\lim_{x \to c} g(x) = M$)</h4>
+                    <ul style="margin: 0; padding-left: 1.25rem; line-height: 1.8; font-size: 0.96rem">
+                        <li><strong>Sum &amp; Difference Law:</strong> $\lim_{x \to c} [f(x) \pm g(x)] = L \pm M$</li>
+                        <li><strong>Constant Multiple Law:</strong> $\lim_{x \to c} [k \cdot f(x)] = k \cdot L$ (for any constant $k \in \mathbb{R}$)</li>
+                        <li><strong>Product Law:</strong> $\lim_{x \to c} [f(x) \cdot g(x)] = L \cdot M$</li>
+                        <li><strong>Quotient Law:</strong> $\lim_{x \to c} \frac{f(x)}{g(x)} = \frac{L}{M}$, <em>provided that the denominator limit is non-zero ($M \neq 0$)</em>.</li>
+                    </ul>
+                </div>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                    Notice the crucial warning on the Quotient Law: it only works when the denominator limit $M \neq 0$. What happens when $M = 0$? There are two distinct possibilities:
+                </p>
+
+                <ol style="color: #334155; line-height: 1.75; font-size: 1.02rem; margin-bottom: 1.75rem">
+                    <li style="margin-bottom: 0.65rem">
+                        <strong>Case 1: Non-Zero over Zero ($\frac{L}{0}$ where $L \neq 0$):</strong>
+                        The fraction blows up toward $+\infty$ or $-\infty$ (a vertical asymptote, which we will master in Lecture 11). The finite limit <strong>Does Not Exist</strong>.
+                    </li>
+                    <li>
+                        <strong>Case 2: Zero over Zero ($\frac{0}{0}$ Indeterminate Form):</strong>
+                        Both numerator and denominator vanish at $x = c$. This signals a hidden common factor! We perform algebraic surgery to cancel the zero-producing factor before applying the Quotient Law.
+                    </li>
+                </ol>
+
+                <!-- WORKED EXAMPLE 1: FACTORING -->
+                <div class="worked-example-box">
+                    <h4 style="color: #047857; margin-bottom: 0.75rem">🎯 Worked Example 1: Resolving $\frac{0}{0}$ by Factoring</h4>
+                    <p style="margin-bottom: 0.75rem; font-size: 0.98rem">
+                        Evaluate the limit: $$\lim_{x \to 3} \frac{x^2 - 2x - 3}{x - 3}$$
+                    </p>
+                    <p style="margin-bottom: 0.5rem; font-size: 0.95rem">
+                        <strong>Step 1 (Check Direct Substitution):</strong> Plugging in $x = 3$ gives $\frac{3^2 - 2(3) - 3}{3 - 3} = \frac{9 - 6 - 3}{0} = \frac{0}{0}$. Because we get $\frac{0}{0}$, we know $(x - 3)$ must be a factor of the numerator.
+                    </p>
+                    <p style="margin-bottom: 0.5rem; font-size: 0.95rem">
+                        <strong>Step 2 (Factor and Cancel):</strong> Factor the quadratic numerator $x^2 - 2x - 3 = (x - 3)(x + 1)$:
+                    </p>
+                    <div style="text-align: center; margin: 0.75rem 0; font-size: 1.05rem">$$\lim_{x \to 3} \frac{(x - 3)(x + 1)}{x - 3}$$</div>
+                    <p style="margin-bottom: 0.5rem; font-size: 0.95rem">
+                        <strong>Step 3 (Invoke the Punctured Neighborhood):</strong> Because $\lim_{x \to 3}$ examines only $0 < |x - 3| < \delta$, we are guaranteed that $x \neq 3$, so $x - 3 \neq 0$. We legally cancel $(x - 3)$ and evaluate the continuous twin function:
+                    </p>
+                    <div style="text-align: center; margin: 0.75rem 0 0.25rem 0; font-size: 1.1rem; font-weight: bold; color: #065f46">$$\lim_{x \to 3} (x + 1) = 3 + 1 = 4$$</div>
+                </div>
+
+                <!-- WORKED EXAMPLE 2: CONJUGATE -->
+                <div class="worked-example-box">
+                    <h4 style="color: #047857; margin-bottom: 0.75rem">🎯 Worked Example 2: Resolving $\frac{0}{0}$ by Radical Conjugation</h4>
+                    <p style="margin-bottom: 0.75rem; font-size: 0.98rem">
+                        Evaluate the limit: $$\lim_{x \to 0} \frac{\sqrt{x + 9} - 3}{x}$$
+                    </p>
+                    <p style="margin-bottom: 0.5rem; font-size: 0.95rem">
+                        <strong>Step 1 (Check Direct Substitution):</strong> Plugging in $x = 0$ yields $\frac{\sqrt{9} - 3}{0} = \frac{0}{0}$.
+                    </p>
+                    <p style="margin-bottom: 0.5rem; font-size: 0.95rem">
+                        <strong>Step 2 (Multiply by the Conjugate):</strong> Multiply numerator and denominator by the conjugate $\sqrt{x + 9} + 3$:
+                    </p>
+                    <div style="text-align: center; margin: 0.75rem 0; font-size: 1.05rem">$$\lim_{x \to 0} \frac{(\sqrt{x + 9} - 3)(\sqrt{x + 9} + 3)}{x(\sqrt{x + 9} + 3)} = \lim_{x \to 0} \frac{(x + 9) - 9}{x(\sqrt{x + 9} + 3)} = \lim_{x \to 0} \frac{x}{x(\sqrt{x + 9} + 3)}$$</div>
+                    <p style="margin-bottom: 0.5rem; font-size: 0.95rem">
+                        <strong>Step 3 (Cancel $x$ and Evaluate):</strong> Since $x \neq 0$, cancel $x$ from top and bottom, then substitute $x = 0$:
+                    </p>
+                    <div style="text-align: center; margin: 0.75rem 0 0.25rem 0; font-size: 1.1rem; font-weight: bold; color: #065f46">$$\lim_{x \to 0} \frac{1}{\sqrt{x + 9} + 3} = \frac{1}{\sqrt{9} + 3} = \frac{1}{6}$$</div>
+                </div>
+
+                <!-- ================================================================= -->
+                <!-- SECTION 5: THE SQUEEZE THEOREM                                    -->
+                <!-- ================================================================= -->
+                <h2 id="section-squeeze">5. Trapping Wild Curves: The Squeeze Theorem</h2>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                    Sometimes a function is too wild for algebraic factoring, yet still converges to a single point. When a function $f(x)$ oscillates rapidly near $c$, we can prove its limit by trapping it between a floor function $g(x)$ and a ceiling function $h(x)$ that pinch together at the target point.
+                </p>
+
+                <div class="definition-box" style="border-left-color: #4f46e5">
+                    <h4 style="margin: 0 0 0.5rem 0; color: #4f46e5; font-size: 1.05rem">Theorem: The Squeeze (Sandwich) Theorem</h4>
+                    <p style="margin: 0; color: #334155; font-size: 0.95rem; line-height: 1.6">
+                        Suppose that $g(x) \le f(x) \le h(x)$ for all $x$ in a punctured neighborhood around $c$. If the outer bounding functions converge to the exact same limit $L$ as $x \to c$:
+                    </p>
+                    <div style="text-align: center; margin: 0.85rem 0; font-size: 1.1rem; font-weight: bold; color: #0f172a">$$\lim_{x \to c} g(x) = \lim_{x \to c} h(x) = L \implies \lim_{x \to c} f(x) = L$$</div>
+                </div>
+
+                <!-- MATHEMATICALLY ACCURATE SQUEEZE THEOREM SVG -->
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 1.5rem; margin: 2rem 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05)">
+                    <div style="margin-bottom: 1rem">
+                        <span style="font-size: 0.85rem; font-weight: 800; color: #4f46e5; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.25rem">Visual Proof</span>
+                        <h3 style="margin: 0 0 0.4rem 0; color: #0f172a; font-size: 1.2rem">Pinching an Infinite Oscillation: $-x^2 \le x^2 \cos(20/x) \le x^2$</h3>
+                        <p style="margin: 0; color: #334155; font-size: 0.94rem; line-height: 1.6">
+                            As $x \to 0$, $\cos(20/x)$ oscillates between $-1$ and $+1$ infinitely many times. However, because its amplitude is multiplied by $x^2$, the entire wave is crushed between the upper parabola $h(x) = x^2$ and lower parabola $g(x) = -x^2$, forcing the limit at $x = 0$ to be $0$.
+                        </p>
+                    </div>
+
+                    <svg id="squeeze-plot-svg" viewBox="0 0 640 300" style="width: 100%; max-width: 600px; height: auto; display: block; margin: 0 auto; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px" role="img" aria-label="Graph of the Squeeze Theorem showing x squared cos(20/x) trapped between plus and minus x squared">
+                        <line x1="40" y1="150" x2="600" y2="150" stroke="#94a3b8" stroke-width="1.5" />
+                        <line x1="320" y1="280" x2="320" y2="20" stroke="#94a3b8" stroke-width="1.5" />
+                        <text x="610" y="154" font-size="13" font-weight="bold" fill="#475569">x</text>
+                        <text x="310" y="18" font-size="13" font-weight="bold" fill="#475569">y</text>
+
+                        <path id="sq-upper-env" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,4" />
+                        <path id="sq-lower-env" fill="none" stroke="#0284c7" stroke-width="2" stroke-dasharray="5,4" />
+                        <path id="sq-osc-curve" fill="none" stroke="#4f46e5" stroke-width="2.2" />
+
+                        <circle cx="320" cy="150" r="5.5" fill="#10b981" stroke="#ffffff" stroke-width="2" />
+                        <text x="530" y="42" font-size="12" font-weight="bold" fill="#dc2626">h(x) = +x²</text>
+                        <text x="530" y="268" font-size="12" font-weight="bold" fill="#0284c7">g(x) = −x²</text>
+                        <text x="332" y="140" font-size="12" font-weight="bold" fill="#047857">Pinched at (0, 0)</text>
+                    </svg>
+                </div>
+
+                <script>
+                    (function () {
+                        const upPath = document.getElementById("sq-upper-env");
+                        const dnPath = document.getElementById("sq-lower-env");
+                        const oscPath = document.getElementById("sq-osc-curve");
+                        if (!upPath || !dnPath || !oscPath) return;
+
+                        const cx = 320;
+                        const cy = 150;
+                        const scaleX = 240;
+                        const scaleY = 120;
+
+                        let dUp = [];
+                        let dDn = [];
+                        let dOsc = [];
+                        const steps = 800;
+
+                        for (let i = 0; i <= steps; i++) {
+                            const x = -1 + (2 * i) / steps;
+                            const px = cx + x * scaleX;
+                            const envY = x * x;
+                            const pyUp = cy - envY * scaleY;
+                            const pyDn = cy + envY * scaleY;
+
+                            dUp.push((i === 0 ? "M " : "L ") + px.toFixed(2) + " " + pyUp.toFixed(2));
+                            dDn.push((i === 0 ? "M " : "L ") + px.toFixed(2) + " " + pyDn.toFixed(2));
+
+                            const val = Math.abs(x) < 0.003 ? 0 : x * x * Math.cos(22 / x);
+                            const pyOsc = cy - val * scaleY;
+                            dOsc.push((i === 0 ? "M " : "L ") + px.toFixed(2) + " " + pyOsc.toFixed(2));
+                        }
+
+                        upPath.setAttribute("d", dUp.join(" "));
+                        dnPath.setAttribute("d", dDn.join(" "));
+                        oscPath.setAttribute("d", dOsc.join(" "));
+                    })();
+                </script>
+
+                <div class="aside-box" style="background: #f0fdf4; border-color: #bbf7d0; border-left-color: #10b981">
+                    <h4 style="color: #047857">🌟 Landmark Geometric Squeeze: $\lim_{x \to 0} \frac{\sin(x)}{x} = 1$</h4>
+                    <p style="margin-bottom: 0; font-size: 0.95rem; line-height: 1.6">
+                        By trapping a sector of the Unit Circle between an inner triangle and an outer tangent triangle (where $x$ is measured in radians), the Squeeze Theorem establishes the most famous limit in trigonometry:
+                        $$\cos(x) \le \frac{\sin(x)}{x} \le 1 \implies \lim_{x \to 0} \frac{\sin(x)}{x} = 1$$
+                        This tells us that near $x = 0$, the sine wave $\sin(x)$ and the straight line $y = x$ become indistinguishable!
+                    </p>
+                </div>
+
+                <!-- LECTURE SUMMARY -->
+                <h2 id="section-summary" style="margin-top: 3.5rem">Summary: Inspecting the Unreachable</h2>
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                    By introducing the punctured neighborhood ($0 < |x - c| < \delta$), we liberated our analysis from requiring $f(c)$ to exist. Whether a curve has a missing hole from a $\frac{0}{0}$ division or oscillates rapidly near a point, limits allow us to lock onto the exact destination of the trajectory.
+                </p>
+
+                <div class="infobox" style="border-left-color: #3b82f6; background-color: #eff6ff; border: 1px solid #bfdbfe">
+                    <h4 style="color: #1e3a8a">🎓 Key Takeaways from Lecture 10</h4>
+                    <ul style="margin: 0; padding-left: 1.25rem; color: #1e3a8a; line-height: 1.6; font-size: 0.95rem">
+                        <li style="margin-bottom: 0.5rem">
+                            <strong>The Punctured Neighborhood ($0 < |x - c| < \delta$):</strong>
+                            A limit tests the behavior of $f(x)$ near $c$, strictly excluding $x = c$ itself.
+                        </li>
+                        <li style="margin-bottom: 0.5rem">
+                            <strong>The Rendezvous Criterion:</strong>
+                            The two-sided limit $\lim_{x \to c} f(x) = L$ exists if and only if the left-hand limit ($\lim_{x \to c^-} f(x)$) and right-hand limit ($\lim_{x \to c^+} f(x)$) both exist and equal $L$.
+                        </li>
+                        <li style="margin-bottom: 0.5rem">
+                            <strong>Algebraic Surgery on $\frac{0}{0}$:</strong>
+                            Because $x \neq c$, we can factor or rationalize expressions and legally cancel the zero-producing factor $(x - c)$ to evaluate the continuous twin function.
+                        </li>
+                        <li>
+                            <strong>The Squeeze Theorem:</strong>
+                            When a function oscillates wildly near $c$, bounding it between two functions $g(x) \le f(x) \le h(x)$ that share the same limit $L$ forces $\lim_{x \to c} f(x) = L$.
+                        </li>
+                    </ul>
+                </div>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.5rem">
+                    In <strong>Lecture 11</strong>, we will push this concept to the ultimate horizon: investigating what happens when a function blows up to $+\infty$ at a vertical asymptote, or marches out to $x \to \pm\infty$ along a horizontal asymptote.
+                </p>
+
+                <!-- INTERACTIVE KNOWLEDGE CHECK -->
+                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; border-radius: 8px; padding: 1.5rem; margin: 2rem 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <h3 style="margin: 0 0 0.5rem 0; color: #047857; font-size: 1.35rem;">🧠 Practice Problems</h3>
+                    <p style="margin: 0 0 1.25rem 0; color: #065f46; font-size: 1.05rem; max-width: 600px;">
+                        Test your mastery of punctured neighborhoods, one-sided limits, algebraic $\frac{0}{0}$ resolution, and the Squeeze Theorem.
+                    </p>
+                    <a href="week4-lecture10-practice.html" style="background: #10b981; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 1.05rem; transition: background 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        Launch Practice Problems &rarr;
+                    </a>
+                </div>
+
+                <!-- FOOTER NAVIGATION -->
+                <div class="footer-nav" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap">
+                    <a href="week4-lecture9.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&larr; Lecture 9</a>
+                    <a href="week4.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&uarr; Week 4 Hub</a>
+                    <a href="week4-lecture10-practice.html" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">✎ Practice Problems</a>
+                    <a href="week4-lecture11.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">Lecture 11 &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
