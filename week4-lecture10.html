@@ -1154,24 +1154,145 @@
                 <h2 id="section-squeeze">5. Trapping Wild Curves: The Squeeze Theorem</h2>
 
                 <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
-                    Sometimes a function is too wild for algebraic factoring, yet still converges to a single point. When a function $f(x)$ oscillates rapidly near $c$, we can prove its limit by trapping it between a floor function $g(x)$ and a ceiling function $h(x)$ that pinch together at the target point.
+                    In Section 4, we solved $\frac{0}{0}$ limits using algebraic surgery—factoring polynomials or multiplying by conjugates until the problem term canceled out. Those tools work wonderfully when a function is built from clean algebraic pieces.
                 </p>
 
-                <div class="definition-box" style="border-left-color: #4f46e5">
-                    <h4 style="margin: 0 0 0.5rem 0; color: #4f46e5; font-size: 1.05rem">Theorem: The Squeeze (Sandwich) Theorem</h4>
-                    <p style="margin: 0; color: #334155; font-size: 0.95rem; line-height: 1.6">
-                        Suppose that $g(x) \le f(x) \le h(x)$ for all $x$ in a punctured neighborhood around $c$. If the outer bounding functions converge to the exact same limit $L$ as $x \to c$:
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                    But what happens when you encounter a function that is so chaotic near $x = c$ that <strong>algebra has nothing to factor</strong>, and <strong>the Limit Laws are illegal to use</strong>?
+                </p>
+
+                <h3 style="color: #0f172a; font-size: 1.25rem; margin-top: 2rem; margin-bottom: 0.75rem">When the "Lego Brick" Laws Break Down</h3>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 0">
+                    Consider the following limit as $x$ approaches $0$:
+                </p>
+
+                <div style="text-align: center; margin: 1.25rem 0; font-size: 1.15rem; font-weight: bold; color: #0f172a">
+                    $$\lim_{x \to 0} \left[ x^2 \cos\left(\frac{20}{x}\right) \right]$$
+                </div>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                    At first glance, your instinct might be to use the Product Law from Section 4 to split this into two separate limits: $\left(\lim_{x \to 0} x^2\right) \cdot \left(\lim_{x \to 0} \cos\left(\frac{20}{x}\right)\right)$, and say that "$0 \text{ times anything is } 0$." <strong>Stop! That is a mathematical trap.</strong>
+                </p>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                    Remember the strict legal fine print on the Product Law: you are only allowed to split a limit apart if <em>both individual limits exist as finite numbers</em>. Look at what happens to the two pieces of our function as $x$ gets microscopic ($x = 0.1, 0.001, 0.00001$):
+                </p>
+
+                <ul style="color: #334155; line-height: 1.75; font-size: 1.05rem; padding-left: 1.25rem; margin-bottom: 1.5rem">
+                    <li style="margin-bottom: 0.75rem;">
+                        <strong style="color: #991b1b;">Piece 1: The Wild Oscillator $\cos\left(\frac{20}{x}\right)$ Has No Limit:</strong>
+                        When $x$ gets tiny, dividing $20$ by $x$ produces a massive number ($200$, $20{,}000$, $2{,}000{,}000$). Feeding an exploding angle into cosine forces the wave to bounce wildly back and forth between $-1$ and $+1$ infinitely many times on its way to $x = 0$. Because it never settles on a single value, $\lim_{x \to 0} \cos\left(\frac{20}{x}\right)$ <strong>Does Not Exist (DNE)</strong>. Therefore, the Product Law is completely off-limits!
+                    </li>
+                    <li>
+                        <strong style="color: #047857;">Piece 2: The Crushing Multiplier $x^2$ Shrinks the Wave:</strong>
+                        Even though the cosine wave is oscillating at an infinite frenzy, its output is being multiplied by $x^2$. When $x = 0.01$, $x^2 = 0.0001$, which means the wave is only allowed to bounce between $-0.0001$ and $+0.0001$. As $x \to 0$, the $x^2$ term acts like a hydraulic press, crushing the height of those wild oscillations down to zero!
+                    </li>
+                </ul>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                    How do we prove that the answer is $0$ without using the Product Law? Instead of trying to track the chaotic function directly, we build a cage around it.
+                </p>
+
+                <!-- INTUITIVE ANALOGY BOX -->
+                <div class="aside-box" style="margin: 2rem 0;">
+                    <h4>🐕 The Physical Intuition: Two Hikers and a Hyperactive Dog</h4>
+                    <p style="margin-bottom: 0.75rem; line-height: 1.65;">
+                        Imagine two calm hikers—a <strong>Left Guard ($g(x)$)</strong> and a <strong>Right Guard ($h(x)$)</strong>—walking along a mountain trail. Between them is a hyperactive dog, <strong>$f(x)$</strong>, zig-zagging wildly back and forth across the path. The dog is darting around so erratically that you cannot predict its exact angle at any given second.
                     </p>
-                    <div style="text-align: center; margin: 0.85rem 0; font-size: 1.1rem; font-weight: bold; color: #0f172a">$$\lim_{x \to c} g(x) = \lim_{x \to c} h(x) = L \implies \lim_{x \to c} f(x) = L$$</div>
+                    <p style="margin-bottom: 0; line-height: 1.65;">
+                        However, there is one rule: <strong>the dog is trapped strictly between the two hikers</strong>. Up ahead at mile marker $x = c$, the trail narrows into a tiny single-file turnstile at altitude $L$. If both the Left Guard and the Right Guard walk through that exact same turnstile at altitude $L$, where is the dog forced to go? Even though the dog is still wiggling, the space between the two hikers shrinks to zero, physically forcing the dog through the exact same point $L$!
+                    </p>
+                </div>
+
+                <!-- FORMAL DEFINITION BOX -->
+                <div class="definition-box" style="border-left-color: #4f46e5">
+                    <h4 style="margin: 0 0 0.5rem 0; color: #4f46e5; font-size: 1.05rem">Theorem: The Squeeze (Sandwich / Pinching) Theorem</h4>
+                    <p style="margin: 0; color: #334155; font-size: 0.95rem; line-height: 1.6">
+                        Suppose that for all $x$ in a punctured neighborhood around $c$ (where $x \neq c$), a function $f(x)$ is trapped between a lower function $g(x)$ and an upper function $h(x)$:
+                    </p>
+                    <div style="text-align: center; margin: 0.75rem 0; font-size: 1.08rem; font-weight: bold; color: #0f172a">
+                        $$g(x) \le f(x) \le h(x)$$
+                    </div>
+                    <p style="margin: 0; color: #334155; font-size: 0.95rem; line-height: 1.6">
+                        If both the lower bound and the upper bound converge to the <strong>exact same limit $L$</strong> as $x \to c$, then $f(x)$ is forced to converge to $L$ as well:
+                    </p>
+                    <div style="text-align: center; margin: 0.85rem 0 0.25rem 0; font-size: 1.1rem; font-weight: bold; color: #0f172a">
+                        $$\lim_{x \to c} g(x) = \lim_{x \to c} h(x) = L \implies \lim_{x \to c} f(x) = L$$
+                    </div>
+                </div>
+
+                <!-- NON-CARD EXPLANATION OF THE THEOREM -->
+                <h3 style="color: #0f172a; font-size: 1.25rem; margin-top: 2.5rem; margin-bottom: 0.75rem">Decoding the Three Rules of the Squeeze</h3>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 0">
+                    To use the Squeeze Theorem successfully on an exam or in a proof, you must verify that three specific conditions are met. Let's translate what the formula above is actually demanding:
+                </p>
+
+                <ol style="color: #334155; line-height: 1.75; font-size: 1.05rem; padding-left: 1.35rem; margin-bottom: 1.75rem">
+                    <li style="margin-bottom: 0.85rem;">
+                        <strong>Rule 1: Build a Valid Floor and Ceiling ($g(x) \le f(x) \le h(x)$):</strong>
+                        You must surround your complicated mystery function $f(x)$ with a lower function $g(x)$ (the floor) and an upper function $h(x)$ (the ceiling). Notice that this inequality only needs to hold in a <em>punctured neighborhood</em> ($x \neq c$). Even if $f(x)$ explodes and is completely undefined at $x = c$ itself, the cage still works!
+                    </li>
+                    <li style="margin-bottom: 0.85rem;">
+                        <strong>Rule 2: Pick Simple Guards You Can Actually Solve:</strong>
+                        The entire point of the Squeeze Theorem is to trade a terrifying function (like $x^2 \cos(20/x)$) for two easy functions (like $-x^2$ and $+x^2$) that have no wild oscillations, allowing you to evaluate their limits effortlessly.
+                    </li>
+                    <li>
+                        <strong>Rule 3: The Floor and Ceiling Must Pinch Together ($\lim g(x) = \lim h(x) = L$):</strong>
+                        This is the most critical requirement. As $x \to c$, the floor limit and the ceiling limit must arrive at the <strong>exact same number $L$</strong>. What if your floor approaches $2$ and your ceiling approaches $5$? Then at $x = c$, the gap between the floor and ceiling is still $3$ units wide! Your middle function $f(x)$ still has room to bounce around inside that gap, so the Squeeze Theorem tells you nothing. They <em>must</em> pinch shut at a single point.
+                    </li>
+                </ol>
+
+                <!-- STEP-BY-STEP WORKED EXAMPLE -->
+                <div class="worked-example-box" style="margin-top: 2rem;">
+                    <h4 style="color: #047857; margin-bottom: 0.75rem">🎯 Worked Example: How to Build the Squeeze Inequality from Scratch</h4>
+                    <p style="margin-bottom: 0.75rem; font-size: 0.98rem; line-height: 1.6;">
+                        When beginners first see the Squeeze Theorem, their biggest question is: <em>"Where do the floor function $g(x)$ and ceiling function $h(x)$ come from? Do I just guess them?"</em>
+                    </p>
+                    <p style="margin-bottom: 1rem; font-size: 0.98rem; line-height: 1.6;">
+                        <strong>No! You never guess.</strong> You build the cage step-by-step starting from a known physical boundary of sine or cosine. Let's prove that $\lim_{x \to 0} x^2 \cos\left(\frac{20}{x}\right) = 0$.
+                    </p>
+
+                    <p style="margin-bottom: 0.35rem; font-size: 0.95rem; line-height: 1.6;">
+                        <strong>Step 1: Start with the universal boundary of Sine or Cosine</strong><br />
+                        No matter how crazy the angle $\frac{20}{x}$ gets (for any $x \neq 0$), the cosine of any real number can never rise above $+1$ or drop below $-1$. Write that fact down as a three-part inequality:
+                    </p>
+                    <div style="text-align: center; margin: 0.65rem 0 1rem 0; font-size: 1.05rem">
+                        $$-1 \le \cos\left(\frac{20}{x}\right) \le 1$$
+                    </div>
+
+                    <p style="margin-bottom: 0.35rem; font-size: 0.95rem; line-height: 1.6;">
+                        <strong>Step 2: Multiply all three parts to reconstruct $f(x)$ in the middle</strong><br />
+                        Our original function is $x^2 \cos\left(\frac{20}{x}\right)$, so we need an $x^2$ in the middle. Multiply the left, middle, and right parts of the inequality by $x^2$. (<em>Crucial check:</em> Because $x^2 > 0$ for all $x \neq 0$, multiplying by $x^2$ is guaranteed to be positive, so the $\le$ signs do <strong>not</strong> flip!)
+                    </p>
+                    <div style="text-align: center; margin: 0.65rem 0 1rem 0; font-size: 1.05rem">
+                        $$-x^2 \le x^2 \cos\left(\frac{20}{x}\right) \le x^2$$
+                    </div>
+
+                    <p style="margin-bottom: 0.35rem; font-size: 0.95rem; line-height: 1.6;">
+                        <strong>Step 3: Evaluate the limits of your new Floor and Ceiling</strong><br />
+                        Look at the outer edges of our inequality: we just built our floor $g(x) = -x^2$ and our ceiling $h(x) = +x^2$! Let's take the limit of both outer guards as $x \to 0$:
+                    </p>
+                    <div style="text-align: center; margin: 0.65rem 0 1rem 0; font-size: 1.05rem">
+                        $$\lim_{x \to 0} (-x^2) = 0 \quad \text{and} \quad \lim_{x \to 0} (+x^2) = 0$$
+                    </div>
+
+                    <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid #bbf7d0;">
+                        <p style="margin: 0; font-size: 0.98rem; color: #065f46; line-height: 1.6;">
+                            <strong>Step 4: State the Squeeze Conclusion:</strong> Because $-x^2 \le x^2 \cos(20/x) \le x^2$ for all $x \neq 0$, and both the floor and ceiling converge to the exact same height of $0$, the Squeeze Theorem guarantees that:
+                            $$\lim_{x \to 0} x^2 \cos\left(\frac{20}{x}\right) = \mathbf{0}$$
+                        </p>
+                    </div>
                 </div>
 
                 <!-- MATHEMATICALLY ACCURATE SQUEEZE THEOREM SVG -->
                 <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 1.5rem; margin: 2rem 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05)">
                     <div style="margin-bottom: 1rem">
-                        <span style="font-size: 0.85rem; font-weight: 800; color: #4f46e5; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.25rem">Visual Proof</span>
-                        <h3 style="margin: 0 0 0.4rem 0; color: #0f172a; font-size: 1.2rem">Pinching an Infinite Oscillation: $-x^2 \le x^2 \cos(20/x) \le x^2$</h3>
+                        <span style="font-size: 0.85rem; font-weight: 800; color: #4f46e5; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.25rem">Visualizing the Pinch</span>
+                        <h3 style="margin: 0 0 0.4rem 0; color: #0f172a; font-size: 1.2rem">The Parabolic Funnel: $-x^2 \le x^2 \cos(20/x) \le x^2$</h3>
                         <p style="margin: 0; color: #334155; font-size: 0.94rem; line-height: 1.6">
-                            As $x \to 0$, $\cos(20/x)$ oscillates between $-1$ and $+1$ infinitely many times. However, because its amplitude is multiplied by $x^2$, the entire wave is crushed between the upper parabola $h(x) = x^2$ and lower parabola $g(x) = -x^2$, forcing the limit at $x = 0$ to be $0$.
+                            Follow the purple wave from the outer edges inward toward $x = 0$. Even though the wave oscillates faster and faster as it nears the center, the red ceiling ($h(x) = +x^2$) and blue floor ($g(x) = -x^2$) clamp down like a vise, crushing the wave into the green pinch point at $(0, 0)$.
                         </p>
                     </div>
 
@@ -1181,14 +1302,14 @@
                         <text x="610" y="154" font-size="13" font-weight="bold" fill="#475569">x</text>
                         <text x="310" y="18" font-size="13" font-weight="bold" fill="#475569">y</text>
 
-                        <path id="sq-upper-env" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,4" />
-                        <path id="sq-lower-env" fill="none" stroke="#0284c7" stroke-width="2" stroke-dasharray="5,4" />
+                        <path id="sq-upper-env" fill="none" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="5,4" />
+                        <path id="sq-lower-env" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-dasharray="5,4" />
                         <path id="sq-osc-curve" fill="none" stroke="#4f46e5" stroke-width="2.2" />
 
-                        <circle cx="320" cy="150" r="5.5" fill="#10b981" stroke="#ffffff" stroke-width="2" />
-                        <text x="530" y="42" font-size="12" font-weight="bold" fill="#dc2626">h(x) = +x²</text>
-                        <text x="530" y="268" font-size="12" font-weight="bold" fill="#0284c7">g(x) = −x²</text>
-                        <text x="332" y="140" font-size="12" font-weight="bold" fill="#047857">Pinched at (0, 0)</text>
+                        <circle cx="320" cy="150" r="6" fill="#10b981" stroke="#ffffff" stroke-width="2" />
+                        <text x="515" y="42" font-size="12" font-weight="bold" fill="#dc2626">Ceiling: h(x) = +x²</text>
+                        <text x="515" y="268" font-size="12" font-weight="bold" fill="#0284c7">Floor: g(x) = −x²</text>
+                        <text x="332" y="138" font-size="12" font-weight="bold" fill="#047857">Pinched at L = 0!</text>
                     </svg>
                 </div>
 
@@ -1230,12 +1351,35 @@
                     })();
                 </script>
 
-                <div class="aside-box" style="background: #f0fdf4; border-color: #bbf7d0; border-left-color: #10b981">
-                    <h4 style="color: #047857">🌟 Landmark Geometric Squeeze: $\lim_{x \to 0} \frac{\sin(x)}{x} = 1$</h4>
-                    <p style="margin-bottom: 0; font-size: 0.95rem; line-height: 1.6">
-                        By trapping a sector of the Unit Circle between an inner triangle and an outer tangent triangle (where $x$ is measured in radians), the Squeeze Theorem establishes the most famous limit in trigonometry:
-                        $$\cos(x) \le \frac{\sin(x)}{x} \le 1 \implies \lim_{x \to 0} \frac{\sin(x)}{x} = 1$$
-                        This tells us that near $x = 0$, the sine wave $\sin(x)$ and the straight line $y = x$ become indistinguishable!
+                <!-- WHY IT MATTERS FOR CALCULUS (NON-CARD + CALLOUT) -->
+                <h3 style="color: #0f172a; font-size: 1.25rem; margin-top: 2.5rem; margin-bottom: 0.75rem">Why Is the Squeeze Theorem So Important for Calculus?</h3>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 0">
+                    You might be wondering if the Squeeze Theorem is just a clever trick for taming weird oscillating waves. In reality, <strong>the Squeeze Theorem is the single mathematical key that unlocks all of trigonometric calculus</strong>.
+                </p>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                    Next week, when we learn how to calculate the derivative (the instantaneous rate of change) of $\sin(x)$ and $\cos(x)$ to model pendulums, soundwaves, and orbits, the entire proof comes down to evaluating one famous limit:
+                </p>
+
+                <div style="text-align: center; margin: 1.25rem 0; font-size: 1.2rem; font-weight: bold; color: #0f172a">
+                    $$\lim_{x \to 0} \frac{\sin(x)}{x} = 1 \quad \text{(where $x$ is in radians)}$$
+                </div>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                    Think about what happens if you try to solve $\lim_{x \to 0} \frac{\sin(x)}{x}$ using the tools from Section 4. Plugging in $x = 0$ gives $\frac{\sin(0)}{0} = \frac{0}{0}$. It is an indeterminate hole! Worse yet, $\sin(x)$ is a transcendental wave, not a polynomial—you cannot factor an $x$ out of $\sin(x)$, and there are no square roots to rationalize. Algebra hits a dead end.
+                </p>
+
+                <div class="aside-box" style="background: #f0fdf4; border-color: #bbf7d0; border-left-color: #10b981; margin-top: 1.5rem;">
+                    <h4 style="color: #047857">🌟 How the Squeeze Theorem Saves Trigonometry</h4>
+                    <p style="margin-bottom: 0.75rem; font-size: 0.95rem; line-height: 1.65;">
+                        By comparing the areas of three shapes on the Unit Circle—an inner triangle, a circular pie sector, and an outer tangent triangle—mathematicians proved that for any small non-zero angle $x$ (measured in radians), the ratio $\frac{\sin(x)}{x}$ is always trapped between $\cos(x)$ and $1$:
+                    </p>
+                    <div style="text-align: center; margin: 0.75rem 0; font-size: 1.08rem; font-weight: bold;">
+                        $$\underbrace{\cos(x)}_{\text{Floor } g(x)} \le \frac{\sin(x)}{x} \le \underbrace{1}_{\text{Ceiling } h(x)}$$
+                    </div>
+                    <p style="margin-bottom: 0; font-size: 0.95rem; line-height: 1.65;">
+                        Look at the two guards as $x \to 0$: the ceiling stays at $\lim_{x \to 0} 1 = \mathbf{1}$, and because cosine is continuous, the floor rises to $\lim_{x \to 0} \cos(x) = \cos(0) = \mathbf{1}$. Both guards pinch together at $1$, forcing $\lim_{x \to 0} \frac{\sin(x)}{x} = 1$. Geometrically, this means that if you zoom in with a microscope near $x = 0$, the curve $\sin(x)$ and the straight line $y = x$ look completely identical!
                     </p>
                 </div>
 
