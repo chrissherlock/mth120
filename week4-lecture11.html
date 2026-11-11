@@ -436,8 +436,13 @@
                 <h2 id="section-rational">2. The "Dominant Power" Race (Rational Functions)</h2>
 
                 <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
-                    When dealing with rational functions (a polynomial divided by a polynomial) like $f(x) = \frac{3x^2 - 4x + 5}{7x^2 + 1}$, finding the limit at infinity is literally a race between the numerator and the denominator. As $x$ grows into the billions, lower-power terms like $-4x$ and $+5$ become mathematically irrelevant microscopic dust compared to the massive gravity of $x^2$.
+                    When dealing with rational functions (a polynomial divided by a polynomial) like $f(x) = \frac{3x^2 - 4x + 5}{7x^2 + 1}$, finding the limit at infinity is literally a tug-of-war between the numerator and the denominator.
                 </p>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                    <strong>Why do only the highest powers matter?</strong> Imagine a billionaire who has exactly $\$1{,}000{,}000{,}000$ and $5$ cents. If you ask them for their net worth, they don't mention the $5$ cents. As $x$ grows into the billions, lower-power terms like $-4x$ and $+5$ become mathematically irrelevant microscopic dust compared to the massive gravity of $x^2$. The limit is entirely decided by the leading terms.
+                </p>
+
                 <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
                     To evaluate these limits rigorously, we use a single algebraic trick: <strong>divide every single term by the highest power of $x$ found in the denominator</strong>. This instantly crushes all the irrelevant lower-power terms into zero using our Foundational Rule.
                 </p>
@@ -446,33 +451,70 @@
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.25rem; margin: 2rem 0">
 
                     <!-- CASE 1: Bottom Heavy -->
-                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem; border-top: 4px solid #3b82f6;">
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem; border-top: 4px solid #3b82f6; display: flex; flex-direction: column;">
                         <h4 style="margin: 0 0 0.5rem 0; color: #1d4ed8; font-size: 1.05rem;">Case 1: Bottom Heavy (Denominator Wins)</h4>
-                        <p style="margin: 0 0 0.75rem 0; color: #475569; font-size: 0.92rem; line-height: 1.5;">If the highest power is in the denominator, the bottom explodes faster than the top. The fraction collapses to $0$.</p>
-                        <div style="text-align: center; background: #f8fafc; padding: 0.5rem; border-radius: 6px; font-weight: bold; color: #0f172a; margin-bottom: 0.75rem;">
-                            $$\lim_{x \to \infty} \frac{4x}{x^3 + 1}$$
+                        <p style="margin: 0 0 0.75rem 0; color: #475569; font-size: 0.92rem; line-height: 1.5; flex-grow: 1;">If the highest power is in the denominator, the bottom explodes faster than the top. The fraction collapses to $0$.</p>
+                        <div style="text-align: center; background: #f8fafc; padding: 0.5rem; border-radius: 6px; font-weight: bold; color: #0f172a; margin-bottom: 1rem;">
+                            $$\lim_{x \to \infty} \frac{4x}{x^3 + 1} = 0$$
                         </div>
-                        <p style="margin: 0; color: #3b82f6; font-size: 0.9rem; font-weight: 600;">Result: Horizontal Asymptote at $y = 0$.</p>
+                        <!-- SVG DIAGRAM -->
+                        <svg viewBox="0 0 200 120" style="width: 100%; height: auto; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 1rem; display: block;" role="img" aria-label="Graph of a bottom-heavy curve decaying to y = 0">
+                            <!-- Axes -->
+                            <line x1="20" y1="90" x2="180" y2="90" stroke="#94a3b8" stroke-width="1.5" />
+                            <line x1="40" y1="100" x2="40" y2="20" stroke="#94a3b8" stroke-width="1.5" />
+                            <!-- Curve -->
+                            <path d="M 40 30 Q 70 30, 90 75 T 180 88" fill="none" stroke="#3b82f6" stroke-width="2.5" />
+                            <!-- Asymptote Label -->
+                            <text x="175" y="85" font-size="10" font-weight="bold" fill="#1d4ed8" text-anchor="end">y = 0</text>
+                        </svg>
+                        <p style="margin: 0; color: #3b82f6; font-size: 0.9rem; font-weight: 600; text-align: center;">Result: Horizontal Asymptote at $y = 0$.</p>
                     </div>
 
                     <!-- CASE 2: Equal Powers -->
-                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem; border-top: 4px solid #10b981;">
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem; border-top: 4px solid #10b981; display: flex; flex-direction: column;">
                         <h4 style="margin: 0 0 0.5rem 0; color: #047857; font-size: 1.05rem;">Case 2: A Dead Tie (Equal Powers)</h4>
-                        <p style="margin: 0 0 0.75rem 0; color: #475569; font-size: 0.92rem; line-height: 1.5;">If the highest power is identical on top and bottom, the limit settles at the ratio of their leading coefficients.</p>
-                        <div style="text-align: center; background: #f8fafc; padding: 0.5rem; border-radius: 6px; font-weight: bold; color: #0f172a; margin-bottom: 0.75rem;">
-                            $$\lim_{x \to \infty} \frac{\mathbf{3}x^2 - 1}{\mathbf{7}x^2 + 5x}$$
+                        <p style="margin: 0 0 0.75rem 0; color: #475569; font-size: 0.92rem; line-height: 1.5; flex-grow: 1;">If the highest power is identical on top and bottom, the limit settles at the ratio of their leading coefficients.</p>
+                        <div style="text-align: center; background: #f8fafc; padding: 0.5rem; border-radius: 6px; font-weight: bold; color: #0f172a; margin-bottom: 1rem;">
+                            $$\lim_{x \to \infty} \frac{\mathbf{3}x^2 - 1}{\mathbf{7}x^2 + 5x} = \frac{3}{7}$$
                         </div>
-                        <p style="margin: 0; color: #10b981; font-size: 0.9rem; font-weight: 600;">Result: Horizontal Asymptote at $y = 3/7$.</p>
+                        <!-- SVG DIAGRAM -->
+                        <svg viewBox="0 0 200 120" style="width: 100%; height: auto; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 1rem; display: block;" role="img" aria-label="Graph of an equal-powers curve leveling off at a non-zero asymptote">
+                            <!-- Axes -->
+                            <line x1="20" y1="100" x2="180" y2="100" stroke="#94a3b8" stroke-width="1.5" />
+                            <line x1="40" y1="110" x2="40" y2="20" stroke="#94a3b8" stroke-width="1.5" />
+                            <!-- Asymptote Line -->
+                            <line x1="20" y1="50" x2="180" y2="50" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4,3" />
+                            <!-- Curve -->
+                            <path d="M 40 100 Q 70 55, 100 52 T 180 50" fill="none" stroke="#10b981" stroke-width="2.5" />
+                            <!-- Asymptote Label -->
+                            <text x="175" y="45" font-size="10" font-weight="bold" fill="#047857" text-anchor="end">y = 3/7</text>
+                        </svg>
+                        <p style="margin: 0; color: #10b981; font-size: 0.9rem; font-weight: 600; text-align: center;">Result: Horizontal Asymptote at $y = 3/7$.</p>
                     </div>
 
                     <!-- CASE 3: Top Heavy -->
-                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem; border-top: 4px solid #ef4444;">
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem; border-top: 4px solid #ef4444; display: flex; flex-direction: column;">
                         <h4 style="margin: 0 0 0.5rem 0; color: #b91c1c; font-size: 1.05rem;">Case 3: Top Heavy (Numerator Wins)</h4>
-                        <p style="margin: 0 0 0.75rem 0; color: #475569; font-size: 0.92rem; line-height: 1.5;">If the highest power is in the numerator, the top overpowers the bottom. The function shoots to $\infty$ (or $-\infty$).</p>
-                        <div style="text-align: center; background: #f8fafc; padding: 0.5rem; border-radius: 6px; font-weight: bold; color: #0f172a; margin-bottom: 0.75rem;">
-                            $$\lim_{x \to \infty} \frac{x^5}{2x^2 - 1}$$
+                        <p style="margin: 0 0 0.75rem 0; color: #475569; font-size: 0.92rem; line-height: 1.5; flex-grow: 1;">If the highest power is in the numerator, the top overpowers the bottom. The function shoots to $\infty$ (or $-\infty$).</p>
+                        <div style="text-align: center; background: #f8fafc; padding: 0.5rem; border-radius: 6px; font-weight: bold; color: #0f172a; margin-bottom: 1rem;">
+                            $$\lim_{x \to \infty} \frac{x^5}{2x^2 - 1} = \infty$$
                         </div>
-                        <p style="margin: 0; color: #ef4444; font-size: 0.9rem; font-weight: 600;">Result: No Horizontal Asymptote (Limit DNE).</p>
+                        <!-- SVG DIAGRAM -->
+                        <svg viewBox="0 0 200 120" style="width: 100%; height: auto; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 1rem; display: block;" role="img" aria-label="Graph of a top-heavy curve accelerating to infinity with no asymptote">
+                            <defs>
+                                <marker id="arrow-up" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                                    <path d="M 0 1 L 8 5 L 0 9 z" fill="#ef4444" />
+                                </marker>
+                            </defs>
+                            <!-- Axes -->
+                            <line x1="20" y1="100" x2="180" y2="100" stroke="#94a3b8" stroke-width="1.5" />
+                            <line x1="40" y1="110" x2="40" y2="20" stroke="#94a3b8" stroke-width="1.5" />
+                            <!-- Curve -->
+                            <path d="M 40 100 Q 100 95, 130 20" fill="none" stroke="#ef4444" stroke-width="2.5" marker-end="url(#arrow-up)" />
+                            <!-- Label -->
+                            <text x="140" y="30" font-size="14" font-weight="bold" fill="#b91c1c">∞</text>
+                        </svg>
+                        <p style="margin: 0; color: #ef4444; font-size: 0.9rem; font-weight: 600; text-align: center;">Result: No Asymptote (Limit DNE).</p>
                     </div>
                 </div>
 
