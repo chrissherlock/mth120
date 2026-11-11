@@ -304,7 +304,7 @@
                     <p style="margin: 0 0 1.15rem 0; color: #334155; line-height: 1.75; font-size: 1.05rem">
                         In Lecture 10, we used limits as a microscope to inspect exactly what happens at a specific, localized, microscopic point (like $x = 2$). But there is an entirely different way to use limits: <strong>as a telescope</strong>.
                     </p>
-                    
+
                     <p style="margin: 0 0 1.15rem 0; color: #334155; line-height: 1.75; font-size: 1.05rem">
                         What happens to a physical system after a million years? Does an electrical circuit charge forever, or does its voltage eventually hit a hard ceiling? If you launch a spacecraft, does its velocity keep increasing infinitely, or does it flatline at a terminal speed? This is the study of <strong>end behavior</strong>.
                     </p>
@@ -339,8 +339,73 @@
                 <h2 id="section-horizontal">1. Limits at Infinity (Horizontal Asymptotes)</h2>
 
                 <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
-                    When we say "take the limit as $x \to \infty$", we are asking a simple question: if we plug in larger and larger numbers ($x=10$, $x=100$, $x=1{,}000{,}000$), does the output $f(x)$ eventually stabilize and flatten out at a specific height $L$?
+                    In all our previous limit problems, $x$ was approaching a fixed, physical coordinate like $x = 2$ or $x = 0$. But infinity ($\infty$) is not a coordinate. You cannot plot it on a graph, and you can never arrive there. Infinity is a <em>direction</em>. When we say "take the limit as $x \to \infty$", we are asking a question about long-term stability: if we let a system run forever—plugging in $x=10$, then $x=100$, then $x=1{,}000{,}000$—does the output $f(x)$ eventually settle down and flatten out at a specific height $L$?
                 </p>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                    Think of a skydiver jumping out of a plane. At first, gravity accelerates them rapidly. But as they fall, air resistance pushes back harder and harder. They don't accelerate to infinite speed; their velocity eventually flatlines at exactly 120 mph (their terminal velocity). No matter how many more seconds they fall ($x \to \infty$), their speed will never exceed that invisible ceiling. In mathematics, that long-term ceiling is called a <strong>Horizontal Asymptote</strong>.
+                </p>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                    <em>(Myth-busting note: A common misconception is that a curve can never cross its asymptote. This is false! A function can cross its horizontal asymptote millions of times, like a dampening pendulum swinging back and forth across its resting point. A horizontal asymptote only guarantees that the curve will eventually get trapped arbitrarily close to that height in the extreme long run.)</em>
+                </p>
+
+                <!-- SVG GRAPH: DAMPENING PENDULUM / CROSSING ASYMPTOTE -->
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 1.5rem; margin: 2rem 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05)">
+                    <div style="margin-bottom: 1.25rem">
+                        <span style="font-size: 0.85rem; font-weight: 800; color: #d97706; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.25rem">Visualizing the Infinite Horizon</span>
+                        <h3 style="margin: 0 0 0.4rem 0; color: #0f172a; font-size: 1.2rem">Crossing the Horizontal Asymptote</h3>
+                        <p style="margin: 0; color: #334155; font-size: 0.95rem; line-height: 1.6">
+                            Notice how the blue curve (representing a dampening system, like a pendulum) violently crosses the dashed red asymptote $y = L$ early on. But as $x \to \infty$, the oscillations die out, and the curve gets permanently trapped microscopically close to the horizon limit $L$.
+                        </p>
+                    </div>
+
+                    <svg id="asymptote-damp-svg" viewBox="0 0 680 260" style="width: 100%; max-width: 640px; height: auto; display: block; margin: 0 auto; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px" role="img" aria-label="Graph showing a dampening wave crossing a horizontal asymptote multiple times before settling on it">
+                        <defs>
+                            <marker id="arrow-inf" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                <path d="M 0 1 L 8 5 L 0 9 z" fill="#64748b" />
+                            </marker>
+                        </defs>
+
+                        <!-- Axes -->
+                        <line x1="50" y1="220" x2="650" y2="220" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow-inf)" />
+                        <line x1="80" y1="240" x2="80" y2="20" stroke="#94a3b8" stroke-width="1.5" />
+                        <text x="660" y="224" font-size="13" font-weight="bold" fill="#64748b">x → ∞</text>
+                        <text x="70" y="20" font-size="13" font-weight="bold" fill="#64748b" text-anchor="end">y</text>
+
+                        <!-- Horizontal Asymptote -->
+                        <line x1="80" y1="120" x2="650" y2="120" stroke="#dc2626" stroke-width="2" stroke-dasharray="6,4" />
+                        <text x="72" y="124" font-size="13" font-weight="800" fill="#b91c1c" text-anchor="end">L</text>
+                        <text x="530" y="110" font-size="12" font-weight="bold" fill="#b91c1c">y = L (Asymptote)</text>
+
+                        <!-- Dynamic Curve -->
+                        <path id="dampening-curve" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+
+                    <script>
+                        (function () {
+                            const curve = document.getElementById("dampening-curve");
+                            if (!curve) return;
+
+                            const startX = 80;
+                            const endX = 650;
+                            const L = 120; // y-level of asymptote
+
+                            let pts = [];
+                            for (let x = startX; x <= endX; x++) {
+                                // Create a dampening effect: large amplitude at start, decaying exponentially
+                                let t = (x - startX) / 20;
+                                // prevent division by zero or massive spikes by adding an offset to t
+                                let amplitude = 180 / (t + 1.5);
+
+                                let y = L - amplitude * Math.cos(t * 1.5);
+                                pts.push((x === startX ? "M " : "L ") + x.toFixed(2) + " " + y.toFixed(2));
+                            }
+
+                            curve.setAttribute("d", pts.join(" "));
+                        })();
+                    </script>
+                </div>
 
                 <div class="definition-box" style="border-left-color: #0284c7;">
                     <h4 style="margin: 0 0 0.5rem 0; color: #0369a1; font-size: 1.05rem">Definition: Horizontal Asymptote</h4>
@@ -354,8 +419,11 @@
 
                 <div class="aside-box" style="background: #f0fdf4; border-color: #bbf7d0; border-left-color: #10b981">
                     <h4 style="color: #047857">💡 The Foundational Rule of Infinity</h4>
+                    <p style="margin-bottom: 0.75rem; color: #065f46 !important; font-size: 0.95rem; line-height: 1.6">
+                        Before we can analyze massive, complicated polynomials, we need one atomic truth to build upon. Think about a single pizza of fixed size $C$. If you divide that pizza among $2$ people, they each get a half. Divide it among $100$ people, they get a crumb. If you divide that exact same finite pizza among an <em>infinite</em> number of people ($x \to \infty$), everyone gets exactly zero pizza.
+                    </p>
                     <p style="margin-bottom: 0; color: #065f46 !important; font-size: 0.95rem; line-height: 1.6">
-                        If you take a constant pizza (size $C$) and divide it among an infinite number of people ($x \to \infty$), everyone gets exactly zero pizza. This gives us our most critical building block for evaluating end behavior:
+                        This physical intuition translates into the most critical mathematical building block for evaluating end behavior. Any finite constant divided by an infinitely growing variable gets crushed to zero:
                     </p>
                     <div style="text-align: center; margin: 0.85rem 0 0 0; font-size: 1.1rem; font-weight: bold; color: #065f46">
                         $$\lim_{x \to \pm\infty} \frac{C}{x^n} = 0 \quad \text{(for any rational number } n > 0 \text{)}$$
@@ -368,7 +436,7 @@
                 <h2 id="section-rational">2. The "Dominant Power" Race (Rational Functions)</h2>
 
                 <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
-                    When dealing with rational functions (a polynomial divided by a polynomial) like $f(x) = \frac{3x^2 - 4x + 5}{7x^2 + 1}$, finding the limit at infinity is literally a race between the numerator and the denominator. As $x$ grows into the billions, lower-power terms like $-4x$ and $+5$ become mathematically irrelevant microscopic dust compared to the massive gravity of $x^2$. 
+                    When dealing with rational functions (a polynomial divided by a polynomial) like $f(x) = \frac{3x^2 - 4x + 5}{7x^2 + 1}$, finding the limit at infinity is literally a race between the numerator and the denominator. As $x$ grows into the billions, lower-power terms like $-4x$ and $+5$ become mathematically irrelevant microscopic dust compared to the massive gravity of $x^2$.
                 </p>
                 <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
                     To evaluate these limits rigorously, we use a single algebraic trick: <strong>divide every single term by the highest power of $x$ found in the denominator</strong>. This instantly crushes all the irrelevant lower-power terms into zero using our Foundational Rule.
@@ -376,7 +444,7 @@
 
                 <!-- 3 CASES GRID -->
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.25rem; margin: 2rem 0">
-                    
+
                     <!-- CASE 1: Bottom Heavy -->
                     <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem; border-top: 4px solid #3b82f6;">
                         <h4 style="margin: 0 0 0.5rem 0; color: #1d4ed8; font-size: 1.05rem;">Case 1: Bottom Heavy (Denominator Wins)</h4>
@@ -469,7 +537,7 @@
                 <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
                     Imagine you have $1$ invested at a 100% annual interest rate. If the bank compounds your interest once a year, you get $2$. If they compound it every month, you get slightly more. What if they compound it <strong>continuously</strong>, an infinite number of times per second? Does your wealth shoot to infinity?
                 </p>
-                
+
                 <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
                     No! It hits a horizontal asymptote. As the number of compounding periods ($n$) approaches infinity, the total payout flatlines at exactly $e$. This is the absolute ceiling of continuous growth.
                 </p>
