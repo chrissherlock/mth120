@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Week 4, Lecture 11: Limits at Infinity & Asymptotes | MTHS120</title>
+        <!-- KaTeX Integration -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            onload="
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        { left: '$$', right: '$$', display: true },
+                        { left: '$', right: '$', display: false },
+                    ],
+                })
+            "></script>
+        <style>
+            :root {
+                --bg: #f8fafc;
+                --text: #0f172a;
+                --card: #ffffff;
+                --border: #cbd5e1;
+                --accent: #d97706;
+                --accent-hover: #b45309;
+                --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            }
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+            }
+            html,
+            body {
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+            body {
+                font-family: var(--font-ui);
+                background: var(--bg);
+                color: var(--text);
+                line-height: 1.6;
+                margin: 0;
+                padding: 2rem;
+            }
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                width: 100%;
+            }
+            .header {
+                border-bottom: 2px solid var(--border);
+                padding-bottom: 1rem;
+                margin-bottom: 2rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                flex-wrap: nowrap;
+                gap: 1rem;
+            }
+            .module-content {
+                background: var(--card);
+                padding: 2rem;
+                border-radius: 8px;
+                box-shadow:
+                    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+                    0 2px 4px -1px rgba(0, 0, 0, 0.03);
+                margin-bottom: 2rem;
+                border: 1px solid var(--border);
+            }
+
+            .intro-lead {
+                font-size: 1.1rem;
+                color: #1e293b;
+                line-height: 1.7;
+                margin-bottom: 1.5rem;
+                background: #f1f5f9;
+                padding: 1.5rem;
+                border-radius: 6px;
+                border-left: 4px solid var(--accent);
+                border: 1px solid var(--border);
+                border-left-width: 4px;
+            }
+            .toc-box {
+                background: #fffbeb;
+                border: 1px solid #fde68a;
+                border-left: 5px solid var(--accent);
+                border-radius: 6px;
+                padding: 1.25rem 1.75rem;
+                margin: 1.75rem 0 2.5rem 0;
+            }
+            .toc-box h4 {
+                margin: 0 0 0.75rem 0;
+                color: #92400e;
+                font-size: 1.05rem;
+            }
+            .toc-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                gap: 0.5rem 1.5rem;
+                margin: 0;
+                padding-left: 1.25rem;
+            }
+            .toc-grid li {
+                margin-bottom: 0.35rem;
+                font-size: 0.95rem;
+            }
+            .toc-grid a {
+                color: #b45309;
+                text-decoration: none;
+                font-weight: 500;
+            }
+            .toc-grid a:hover {
+                text-decoration: underline;
+                color: var(--accent-hover);
+            }
+
+            h2 {
+                border-bottom: 2px solid var(--border);
+                padding-bottom: 0.5rem;
+                margin-top: 2.5rem;
+                color: #0f172a;
+                font-family: var(--font-ui);
+                scroll-margin-top: 2rem;
+            }
+            h3 {
+                color: #1e293b;
+                margin-top: 1.5rem;
+                font-family: var(--font-ui);
+                scroll-margin-top: 2rem;
+            }
+
+            .infobox {
+                background: #f8fafc;
+                border: 1px solid var(--border);
+                border-left: 5px solid var(--accent);
+                border-radius: 6px;
+                padding: 1.25rem 1.5rem;
+                margin: 1.25rem 0 1.75rem 0;
+            }
+            .infobox h4 {
+                margin: 0 0 0.85rem 0;
+                color: #0f172a;
+                font-size: 1rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-family: var(--font-ui);
+            }
+            .definition-box {
+                background: #f8fafc;
+                border-left: 4px solid var(--accent);
+                padding: 1rem 1.5rem;
+                margin: 1rem 0;
+                border-radius: 0 6px 6px 0;
+                border: 1px solid var(--border);
+                border-left-width: 4px;
+            }
+            .aside-box {
+                background: #fffbeb;
+                border: 1px solid #fde68a;
+                border-left: 4px solid #b45309;
+                padding: 1.25rem 1.5rem;
+                margin: 1.5rem 0;
+                border-radius: 0 6px 6px 0;
+            }
+            .aside-box h4 {
+                margin-top: 0;
+                color: #b45309;
+                font-size: 1rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            .aside-box p,
+            .aside-box li,
+            .infobox p,
+            .infobox li {
+                color: #0f172a !important;
+            }
+
+            .worked-example-box {
+                background: #f0fdf4;
+                border: 1px solid #bbf7d0;
+                border-left: 5px solid #10b981;
+                padding: 1.25rem 1.5rem;
+                margin: 1.5rem 0;
+                border-radius: 0 6px 6px 0;
+            }
+            .worked-example-box h4 {
+                margin-top: 0;
+                color: #047857;
+                font-size: 1rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            .worked-example-box p,
+            .worked-example-box li {
+                color: #0f172a !important;
+            }
+
+            /* Mobile-first layout adjustment */
+            @media (max-width: 768px) {
+                .katex-display {
+                    overflow-x: auto !important;
+                    overflow-y: hidden !important;
+                    -webkit-overflow-scrolling: touch !important;
+                    max-width: 100% !important;
+                    padding: 0.25rem 0 !important;
+                }
+                body {
+                    background: #ffffff;
+                    padding: 1rem 0.75rem;
+                }
+                .container {
+                    max-width: 100%;
+                    margin: 0;
+                }
+                .module-content {
+                    background: transparent;
+                    padding: 0;
+                    border: none;
+                    border-radius: 0;
+                    box-shadow: none;
+                    margin-bottom: 1rem;
+                }
+                .header {
+                    padding-bottom: 0.75rem;
+                    margin-bottom: 1.25rem;
+                }
+                ol,
+                ul {
+                    padding-left: 1.25rem !important;
+                    margin-left: 0 !important;
+                }
+                .header > .nav-btn-group,
+                .footer-nav {
+                    display: flex !important;
+                    flex-direction: row !important;
+                    flex-wrap: nowrap !important;
+                    width: 100% !important;
+                    gap: 0.5rem !important;
+                }
+                .header > .nav-btn-group a,
+                .header > .nav-btn-group span,
+                .footer-nav a,
+                .footer-nav span {
+                    flex: 1 1 0 !important;
+                    min-width: 0 !important;
+                    text-align: center !important;
+                    padding: 0.55rem 0.4rem !important;
+                    font-size: 0.82rem !important;
+                    white-space: nowrap !important;
+                    overflow: hidden !important;
+                    text-overflow: ellipsis !important;
+                }
+                p,
+                div,
+                li,
+                blockquote {
+                    word-break: break-word;
+                    overflow-wrap: break-word;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <!-- TOP NAVIGATION HEADER -->
+            <div class="header" style="border-bottom: 2px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.25rem">
+                <div class="nav-btn-group" style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; width: 100%">
+                    <a href="week4-lecture10.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&larr; Lecture 10</a>
+                    <a href="week4.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&uarr; Week 4 Hub</a>
+                    <a href="week4-lecture11-practice.html" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">✎ Practice Problems</a>
+                    <a href="week5.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">Week 5 &rarr;</a>
+                </div>
+                <div style="text-align: center; width: 100%; min-width: 0">
+                    <h1 style="margin: 0; line-height: 1.3; font-size: 1.5rem">Week 4, Lecture 11: Limits at Infinity & Asymptotes</h1>
+                </div>
+            </div>
+
+            <div class="module-content">
+                <!-- HERO IMAGE -->
+                <div
+                    style="
+                        margin-bottom: 2rem;
+                        border-radius: 8px;
+                        overflow: hidden;
+                        border: 1px solid var(--border);
+                        box-shadow:
+                            0 4px 6px -1px rgba(0, 0, 0, 0.05),
+                            0 2px 4px -1px rgba(0, 0, 0, 0.03);
+                    ">
+                    <img src="images/chapter4-hero.jpg" alt="Week 4: Limits at Infinity" style="width: 100%; height: auto; display: block" />
+                </div>
+
+                <div style="margin: 2.25rem 0 2.5rem 0">
+                    <h3 style="margin-top: 0; color: #0f172a; font-size: 1.35rem">Welcome to Lecture 11: The Long Run</h3>
+
+                    <p style="margin: 0 0 1.15rem 0; color: #334155; line-height: 1.75; font-size: 1.05rem">
+                        In Lecture 10, we used limits as a microscope to inspect exactly what happens at a specific, localized, microscopic point (like $x = 2$). But there is an entirely different way to use limits: <strong>as a telescope</strong>.
+                    </p>
+                    
+                    <p style="margin: 0 0 1.15rem 0; color: #334155; line-height: 1.75; font-size: 1.05rem">
+                        What happens to a physical system after a million years? Does an electrical circuit charge forever, or does its voltage eventually hit a hard ceiling? If you launch a spacecraft, does its velocity keep increasing infinitely, or does it flatline at a terminal speed? This is the study of <strong>end behavior</strong>.
+                    </p>
+
+                    <p style="margin: 0 0 1.5rem 0; color: #334155; line-height: 1.75; font-size: 1.05rem">
+                        Today, we aim our limit telescope out toward the absolute edge of the universe: $\lim_{x \to \infty}$. By the end of this lecture, you will be able to mathematically prove the existence of <strong>Horizontal Asymptotes</strong> (ceilings on long-term growth) and <strong>Vertical Asymptotes</strong> (places where the system violently explodes to infinity).
+                    </p>
+
+                    <!-- COURSE STRUCTURE & REASSURANCE BOX -->
+                    <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid #0284c7; border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02)">
+                        <div style="font-size: 0.85rem; font-weight: 800; color: #0369a1; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem">🗺️ How This Fits Into The Grand Arc</div>
+                        <p style="margin: 0 0 0.85rem 0; color: #334155; line-height: 1.65; font-size: 0.98rem">
+                            This lecture ties together our sequence work from Week 2 and our function work from Week 3. In Week 2, we tracked sequences $a_n$ as the index $n \to \infty$ jumping through whole numbers $1, 2, 3...$. Now, we track continuous functions $f(x)$ as $x \to \infty$ sweeping through every decimal on the real number line.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- TABLE OF CONTENTS -->
+                <div class="toc-box">
+                    <h4>📌 Lecture 11 Topics</h4>
+                    <ul class="toc-grid">
+                        <li><a href="#section-horizontal">1. Limits at Infinity (Horizontal Asymptotes)</a></li>
+                        <li><a href="#section-rational">2. The "Dominant Power" Race (Rational Functions)</a></li>
+                        <li><a href="#section-vertical">3. Infinite Limits (Vertical Asymptotes)</a></li>
+                        <li><a href="#section-e-limit">4. The Ultimate Horizon: The Limit Definition of $e$</a></li>
+                    </ul>
+                </div>
+
+                <!-- ================================================================= -->
+                <!-- SECTION 1: LIMITS AT INFINITY & HORIZONTAL ASYMPTOTES             -->
+                <!-- ================================================================= -->
+                <h2 id="section-horizontal">1. Limits at Infinity (Horizontal Asymptotes)</h2>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                    When we say "take the limit as $x \to \infty$", we are asking a simple question: if we plug in larger and larger numbers ($x=10$, $x=100$, $x=1{,}000{,}000$), does the output $f(x)$ eventually stabilize and flatten out at a specific height $L$?
+                </p>
+
+                <div class="definition-box" style="border-left-color: #0284c7;">
+                    <h4 style="margin: 0 0 0.5rem 0; color: #0369a1; font-size: 1.05rem">Definition: Horizontal Asymptote</h4>
+                    <p style="margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.6">
+                        The line $y = L$ is a <strong>horizontal asymptote</strong> of the curve $y = f(x)$ if either:
+                    </p>
+                    <div style="text-align: center; margin: 1rem 0; font-size: 1.1rem; font-weight: bold; color: #0f172a">
+                        $$\lim_{x \to \infty} f(x) = L \quad \text{or} \quad \lim_{x \to -\infty} f(x) = L$$
+                    </div>
+                </div>
+
+                <div class="aside-box" style="background: #f0fdf4; border-color: #bbf7d0; border-left-color: #10b981">
+                    <h4 style="color: #047857">💡 The Foundational Rule of Infinity</h4>
+                    <p style="margin-bottom: 0; color: #065f46 !important; font-size: 0.95rem; line-height: 1.6">
+                        If you take a constant pizza (size $C$) and divide it among an infinite number of people ($x \to \infty$), everyone gets exactly zero pizza. This gives us our most critical building block for evaluating end behavior:
+                    </p>
+                    <div style="text-align: center; margin: 0.85rem 0 0 0; font-size: 1.1rem; font-weight: bold; color: #065f46">
+                        $$\lim_{x \to \pm\infty} \frac{C}{x^n} = 0 \quad \text{(for any rational number } n > 0 \text{)}$$
+                    </div>
+                </div>
+
+                <!-- ================================================================= -->
+                <!-- SECTION 2: THE DOMINANT POWER RACE                                -->
+                <!-- ================================================================= -->
+                <h2 id="section-rational">2. The "Dominant Power" Race (Rational Functions)</h2>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                    When dealing with rational functions (a polynomial divided by a polynomial) like $f(x) = \frac{3x^2 - 4x + 5}{7x^2 + 1}$, finding the limit at infinity is literally a race between the numerator and the denominator. As $x$ grows into the billions, lower-power terms like $-4x$ and $+5$ become mathematically irrelevant microscopic dust compared to the massive gravity of $x^2$. 
+                </p>
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                    To evaluate these limits rigorously, we use a single algebraic trick: <strong>divide every single term by the highest power of $x$ found in the denominator</strong>. This instantly crushes all the irrelevant lower-power terms into zero using our Foundational Rule.
+                </p>
+
+                <!-- 3 CASES GRID -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.25rem; margin: 2rem 0">
+                    
+                    <!-- CASE 1: Bottom Heavy -->
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem; border-top: 4px solid #3b82f6;">
+                        <h4 style="margin: 0 0 0.5rem 0; color: #1d4ed8; font-size: 1.05rem;">Case 1: Bottom Heavy (Denominator Wins)</h4>
+                        <p style="margin: 0 0 0.75rem 0; color: #475569; font-size: 0.92rem; line-height: 1.5;">If the highest power is in the denominator, the bottom explodes faster than the top. The fraction collapses to $0$.</p>
+                        <div style="text-align: center; background: #f8fafc; padding: 0.5rem; border-radius: 6px; font-weight: bold; color: #0f172a; margin-bottom: 0.75rem;">
+                            $$\lim_{x \to \infty} \frac{4x}{x^3 + 1}$$
+                        </div>
+                        <p style="margin: 0; color: #3b82f6; font-size: 0.9rem; font-weight: 600;">Result: Horizontal Asymptote at $y = 0$.</p>
+                    </div>
+
+                    <!-- CASE 2: Equal Powers -->
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem; border-top: 4px solid #10b981;">
+                        <h4 style="margin: 0 0 0.5rem 0; color: #047857; font-size: 1.05rem;">Case 2: A Dead Tie (Equal Powers)</h4>
+                        <p style="margin: 0 0 0.75rem 0; color: #475569; font-size: 0.92rem; line-height: 1.5;">If the highest power is identical on top and bottom, the limit settles at the ratio of their leading coefficients.</p>
+                        <div style="text-align: center; background: #f8fafc; padding: 0.5rem; border-radius: 6px; font-weight: bold; color: #0f172a; margin-bottom: 0.75rem;">
+                            $$\lim_{x \to \infty} \frac{\mathbf{3}x^2 - 1}{\mathbf{7}x^2 + 5x}$$
+                        </div>
+                        <p style="margin: 0; color: #10b981; font-size: 0.9rem; font-weight: 600;">Result: Horizontal Asymptote at $y = 3/7$.</p>
+                    </div>
+
+                    <!-- CASE 3: Top Heavy -->
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem; border-top: 4px solid #ef4444;">
+                        <h4 style="margin: 0 0 0.5rem 0; color: #b91c1c; font-size: 1.05rem;">Case 3: Top Heavy (Numerator Wins)</h4>
+                        <p style="margin: 0 0 0.75rem 0; color: #475569; font-size: 0.92rem; line-height: 1.5;">If the highest power is in the numerator, the top overpowers the bottom. The function shoots to $\infty$ (or $-\infty$).</p>
+                        <div style="text-align: center; background: #f8fafc; padding: 0.5rem; border-radius: 6px; font-weight: bold; color: #0f172a; margin-bottom: 0.75rem;">
+                            $$\lim_{x \to \infty} \frac{x^5}{2x^2 - 1}$$
+                        </div>
+                        <p style="margin: 0; color: #ef4444; font-size: 0.9rem; font-weight: 600;">Result: No Horizontal Asymptote (Limit DNE).</p>
+                    </div>
+                </div>
+
+                <!-- WORKED EXAMPLE -->
+                <div class="worked-example-box">
+                    <h4 style="color: #047857; margin-bottom: 0.75rem">🎯 Worked Example: Rigorous Evaluation</h4>
+                    <p style="margin-bottom: 0.75rem; font-size: 0.98rem;">
+                        Evaluate the limit rigorously: $$\lim_{x \to \infty} \frac{3x^2 - x - 2}{5x^2 + 4x + 1}$$
+                    </p>
+                    <p style="margin-bottom: 0.5rem; font-size: 0.95rem">
+                        <strong>Step 1:</strong> Identify the highest power in the denominator. Here, it is $x^2$. Divide every single term by $x^2$.
+                    </p>
+                    <div style="text-align: center; margin: 0.75rem 0; font-size: 1.05rem">
+                        $$\lim_{x \to \infty} \frac{\frac{3x^2}{x^2} - \frac{x}{x^2} - \frac{2}{x^2}}{\frac{5x^2}{x^2} + \frac{4x}{x^2} + \frac{1}{x^2}}$$
+                    </div>
+                    <p style="margin-bottom: 0.5rem; font-size: 0.95rem">
+                        <strong>Step 2:</strong> Simplify the fractions algebraically.
+                    </p>
+                    <div style="text-align: center; margin: 0.75rem 0; font-size: 1.05rem">
+                        $$\lim_{x \to \infty} \frac{3 - \frac{1}{x} - \frac{2}{x^2}}{5 + \frac{4}{x} + \frac{1}{x^2}}$$
+                    </div>
+                    <p style="margin-bottom: 0.5rem; font-size: 0.95rem">
+                        <strong>Step 3:</strong> Apply the Foundational Rule of Infinity. As $x \to \infty$, any term with an $x$ remaining in its denominator collapses to $0$.
+                    </p>
+                    <div style="text-align: center; margin: 0.75rem 0 0.25rem 0; font-size: 1.1rem; font-weight: bold; color: #065f46">
+                        $$= \frac{3 - 0 - 0}{5 + 0 + 0} = \frac{3}{5}$$
+                    </div>
+                </div>
+
+                <!-- ================================================================= -->
+                <!-- SECTION 3: VERTICAL ASYMPTOTES                                    -->
+                <!-- ================================================================= -->
+                <h2 id="section-vertical">3. Infinite Limits (Vertical Asymptotes)</h2>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                    In Lecture 10, we saw that when a fraction evaluates to $\frac{0}{0}$, we have a removable hole. But what happens if a fraction evaluates to a non-zero number divided by zero, like $\frac{5}{0}$?
+                </p>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                    Imagine taking a fixed $5$ units of mass and packing it into a space that is shrinking closer and closer to $0$ volume ($x = 0.1$, then $0.001$, then $0.000001$). The resulting density shoots toward infinity! This creates a <strong>Vertical Asymptote</strong>. The limit technically "Does Not Exist" (because infinity is not a real number), but we use the infinity symbol to describe the exact direction of the explosion.
+                </p>
+
+                <div class="definition-box" style="border-left-color: #8b5cf6;">
+                    <h4 style="margin: 0 0 0.5rem 0; color: #6d28d9; font-size: 1.05rem">Definition: Vertical Asymptote</h4>
+                    <p style="margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.6">
+                        The line $x = a$ is a <strong>vertical asymptote</strong> of the curve $y = f(x)$ if at least one of the following is true:
+                    </p>
+                    <div style="text-align: center; margin: 1rem 0; font-size: 1.1rem; font-weight: bold; color: #0f172a">
+                        $$\lim_{x \to a^-} f(x) = \pm\infty \quad \text{or} \quad \lim_{x \to a^+} f(x) = \pm\infty$$
+                    </div>
+                </div>
+
+                <!-- ================================================================= -->
+                <!-- SECTION 4: THE ULTIMATE HORIZON (LIMIT DEF OF e)                  -->
+                <!-- ================================================================= -->
+                <h2 id="section-e-limit">4. The Ultimate Horizon: The Limit Definition of $e$</h2>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                    In Week 3, we teased that the most important constant in calculus is Euler's number, $e \approx 2.71828$. We can now formally construct $e$ using limits at infinity.
+                </p>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                    Imagine you have $1$ invested at a 100% annual interest rate. If the bank compounds your interest once a year, you get $2$. If they compound it every month, you get slightly more. What if they compound it <strong>continuously</strong>, an infinite number of times per second? Does your wealth shoot to infinity?
+                </p>
+                
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                    No! It hits a horizontal asymptote. As the number of compounding periods ($n$) approaches infinity, the total payout flatlines at exactly $e$. This is the absolute ceiling of continuous growth.
+                </p>
+
+                <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; padding: 1.75rem; margin: 2rem 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); text-align: center;">
+                    <h3 style="margin: 0 0 1rem 0; color: #0f172a; font-size: 1.25rem">The Formal Definition of Euler's Number</h3>
+                    <div style="font-size: 1.5rem; font-weight: bold; color: #b45309; margin: 1rem 0;">
+                        $$e = \lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^n$$
+                    </div>
+                </div>
+
+                <!-- LECTURE SUMMARY -->
+                <h2 id="section-summary" style="margin-top: 3.5rem">Summary: The Edges of the Universe</h2>
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                    We have now unlocked the ability to track a system at its extreme edges. We use limits at infinity to find flatlining horizontal asymptotes, and we use one-sided limits to safely track the explosive vertical asymptotes where the math divides by zero.
+                </p>
+
+                <div class="infobox" style="border-left-color: #3b82f6; background-color: #eff6ff; border: 1px solid #bfdbfe">
+                    <h4 style="color: #1e3a8a">🎓 Key Takeaways from Lecture 11</h4>
+                    <ul style="margin: 0; padding-left: 1.25rem; color: #1e3a8a; line-height: 1.6; font-size: 0.95rem">
+                        <li style="margin-bottom: 0.5rem">
+                            <strong>Limits at Infinity ($x \to \infty$):</strong> Tell us the long-term end behavior of the function, revealing Horizontal Asymptotes ($y = L$).
+                        </li>
+                        <li style="margin-bottom: 0.5rem">
+                            <strong>The Dominant Power Race:</strong> For rational functions, divide every term by the highest power of $x$ in the denominator to quickly crush irrelevant terms to zero.
+                        </li>
+                        <li style="margin-bottom: 0.5rem">
+                            <strong>Infinite Limits (The $\frac{c}{0}$ Explosion):</strong> When a non-zero number is divided by zero, the function density shoots to $\pm\infty$, creating a Vertical Asymptote.
+                        </li>
+                        <li>
+                            <strong>Continuous Compounding:</strong> Euler's number $e$ is formally defined as the horizontal asymptote of $\left(1 + \frac{1}{n}\right)^n$ as $n \to \infty$.
+                        </li>
+                    </ul>
+                </div>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.5rem">
+                    You have now mastered the mechanics of Limits, Continuity, and Asymptotes. Next week, we will finally use the limit telescope to solve the 300-year-old tangent line problem, giving birth to <strong>Differential Calculus</strong>.
+                </p>
+
+                <!-- INTERACTIVE KNOWLEDGE CHECK -->
+                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; border-radius: 8px; padding: 1.5rem; margin: 2rem 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <h3 style="margin: 0 0 0.5rem 0; color: #047857; font-size: 1.35rem;">🧠 Practice Problems</h3>
+                    <p style="margin: 0 0 1.25rem 0; color: #065f46; font-size: 1.05rem; max-width: 600px;">
+                        Test your mastery of horizontal asymptotes, the dominant power race, and vertical asymptotes.
+                    </p>
+                    <a href="week4-lecture11-practice.html" style="background: #10b981; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 1.05rem; transition: background 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        Launch Practice Problems &rarr;
+                    </a>
+                </div>
+
+                <!-- FOOTER NAVIGATION -->
+                <div class="footer-nav" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap">
+                    <a href="week4-lecture10.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&larr; Lecture 10</a>
+                    <a href="week4.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&uarr; Week 4 Hub</a>
+                    <a href="week4-lecture11-practice.html" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">✎ Practice Problems</a>
+                    <a href="week5.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">Week 5 &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
