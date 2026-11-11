@@ -567,6 +567,77 @@
                     </div>
                 </div>
 
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                    But how do we know if the function shoots up to $+\infty$ or plunges down to $-\infty$? Since the denominator is shrinking to zero, its <em>sign</em> (positive or negative) determines the direction of the explosion. We must test the left-hand and right-hand limits independently using a sign analysis chart.
+                </p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.25rem; margin: 2rem 0">
+                    <!-- Example 1: Opposite Directions -->
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem; border-top: 4px solid #8b5cf6; display: flex; flex-direction: column;">
+                        <h4 style="margin: 0 0 0.5rem 0; color: #6d28d9; font-size: 1.05rem;">Opposite Directions: $f(x) = \frac{1}{x}$</h4>
+                        <p style="margin: 0 0 0.75rem 0; color: #475569; font-size: 0.92rem; line-height: 1.5; flex-grow: 1;">As $x \to 0^+$, we divide $1$ by a tiny positive number ($+\infty$). As $x \to 0^-$, we divide $1$ by a tiny negative number ($-\infty$).</p>
+
+                        <!-- SVG 1 -->
+                        <svg viewBox="0 0 200 160" style="width: 100%; height: auto; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 0.5rem; display: block;" role="img" aria-label="Graph of 1/x showing vertical asymptote at x=0">
+                            <!-- Axes -->
+                            <line x1="20" y1="80" x2="180" y2="80" stroke="#94a3b8" stroke-width="1.5" />
+                            <line x1="100" y1="140" x2="100" y2="20" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4,3" /> <!-- Asymptote -->
+                            <!-- Curve Right -->
+                            <path d="M 105 20 Q 105 75, 180 75" fill="none" stroke="#8b5cf6" stroke-width="2.5" />
+                            <!-- Curve Left -->
+                            <path d="M 95 140 Q 95 85, 20 85" fill="none" stroke="#8b5cf6" stroke-width="2.5" />
+                            <!-- Labels -->
+                            <text x="110" y="30" font-size="12" font-weight="bold" fill="#6d28d9">+∞</text>
+                            <text x="70" y="135" font-size="12" font-weight="bold" fill="#6d28d9">-∞</text>
+                        </svg>
+                        <div style="text-align: center; font-weight: bold; color: #0f172a; font-size: 0.9rem;">
+                            $\lim_{x \to 0} \frac{1}{x} = \text{DNE}$
+                        </div>
+                    </div>
+
+                    <!-- Example 2: Same Direction -->
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem; border-top: 4px solid #8b5cf6; display: flex; flex-direction: column;">
+                        <h4 style="margin: 0 0 0.5rem 0; color: #6d28d9; font-size: 1.05rem;">Same Direction: $f(x) = \frac{1}{x^2}$</h4>
+                        <p style="margin: 0 0 0.75rem 0; color: #475569; font-size: 0.92rem; line-height: 1.5; flex-grow: 1;">Because $x^2$ is always positive, dividing $1$ by a tiny positive or negative number both result in a massive positive output ($+\infty$).</p>
+
+                        <!-- SVG 2 -->
+                        <svg viewBox="0 0 200 160" style="width: 100%; height: auto; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 0.5rem; display: block;" role="img" aria-label="Graph of 1/x^2 showing vertical asymptote at x=0">
+                            <!-- Axes -->
+                            <line x1="20" y1="130" x2="180" y2="130" stroke="#94a3b8" stroke-width="1.5" />
+                            <line x1="100" y1="140" x2="100" y2="20" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4,3" /> <!-- Asymptote -->
+                            <!-- Curve Right -->
+                            <path d="M 105 20 Q 105 125, 180 125" fill="none" stroke="#8b5cf6" stroke-width="2.5" />
+                            <!-- Curve Left -->
+                            <path d="M 95 20 Q 95 125, 20 125" fill="none" stroke="#8b5cf6" stroke-width="2.5" />
+                            <!-- Labels -->
+                            <text x="110" y="30" font-size="12" font-weight="bold" fill="#6d28d9">+∞</text>
+                            <text x="70" y="30" font-size="12" font-weight="bold" fill="#6d28d9">+∞</text>
+                        </svg>
+                        <div style="text-align: center; font-weight: bold; color: #0f172a; font-size: 0.9rem;">
+                            $\lim_{x \to 0} \frac{1}{x^2} = +\infty$
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WORKED EXAMPLE: SIGN ANALYSIS -->
+                <div class="worked-example-box" style="margin-top: 2rem;">
+                    <h4 style="color: #047857; margin-bottom: 0.75rem">🎯 Worked Example: Sign Analysis at a Vertical Asymptote</h4>
+                    <p style="margin-bottom: 0.75rem; font-size: 0.98rem; line-height: 1.6;">
+                        Evaluate the one-sided limits for $f(x) = \frac{x + 2}{x - 3}$ at $x = 3$.
+                    </p>
+                    <p style="margin-bottom: 0.5rem; font-size: 0.95rem; line-height: 1.6;">
+                        <strong>1. The Left-Hand Limit ($x \to 3^-$):</strong>
+                        Imagine plugging in $x = 2.99$. The numerator $x + 2$ is roughly $5$ (Positive). The denominator $x - 3$ is $2.99 - 3 = -0.01$ (Tiny Negative). A positive constant divided by a tiny negative number shoots to negative infinity.
+                    </p>
+                    <div style="text-align: center; margin: 0.75rem 0; font-size: 1.05rem">$$\lim_{x \to 3^-} \frac{x + 2}{x - 3} = \frac{[+]}{[-]} = \mathbf{-\infty}$$</div>
+
+                    <p style="margin-bottom: 0.5rem; font-size: 0.95rem; line-height: 1.6;">
+                        <strong>2. The Right-Hand Limit ($x \to 3^+$):</strong>
+                        Imagine plugging in $x = 3.01$. The numerator is roughly $5$ (Positive). The denominator is $3.01 - 3 = +0.01$ (Tiny Positive). A positive constant divided by a tiny positive number shoots to positive infinity.
+                    </p>
+                    <div style="text-align: center; margin: 0.75rem 0; font-size: 1.05rem">$$\lim_{x \to 3^+} \frac{x + 2}{x - 3} = \frac{[+]}{[+]} = \mathbf{+\infty}$$</div>
+                </div>
+
                 <!-- ================================================================= -->
                 <!-- SECTION 4: THE ULTIMATE HORIZON (LIMIT DEF OF e)                  -->
                 <!-- ================================================================= -->
