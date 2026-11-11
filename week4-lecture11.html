@@ -648,17 +648,109 @@
                 </p>
 
                 <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
-                    Imagine you have $1$ invested at a 100% annual interest rate. If the bank compounds your interest once a year, you get $2$. If they compound it every month, you get slightly more. What if they compound it <strong>continuously</strong>, an infinite number of times per second? Does your wealth shoot to infinity?
+                    Imagine you have $1$ invested at a 100% annual interest rate. If the bank compounds your interest once a year, your wealth grows by $(1 + \frac{1}{1})^1 = \$2.00$. If they compound it every month, it grows by $(1 + \frac{1}{12})^{12} = \$2.61$. What if they compound it <strong>continuously</strong>, an infinite number of times per second? Does your wealth shoot to infinity?
                 </p>
 
                 <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
-                    No! It hits a horizontal asymptote. As the number of compounding periods ($n$) approaches infinity, the total payout flatlines at exactly $e$. This is the absolute ceiling of continuous growth.
+                    Let's look at the mathematics. As $n \to \infty$, the fraction $\frac{1}{n}$ gets crushed to zero, meaning the base of our expression $(1 + \frac{1}{n})$ gets closer and closer to exactly $1$. However, the exponent $n$ is simultaneously growing to infinity. This creates one of the most famous battles in calculus: the <strong>$1^\infty$ Indeterminate Form</strong>.
+                </p>
+
+                <ul style="color: #334155; line-height: 1.75; font-size: 1.05rem; padding-left: 1.25rem; margin-bottom: 1.5rem">
+                    <li style="margin-bottom: 0.5rem;">The base wants to shrink the output (because $1$ to any power is $1$).</li>
+                    <li>The exponent wants to explode the output (because any number slightly bigger than $1$ raised to infinity explodes to $\infty$).</li>
+                </ul>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                    Who wins? Neither. They perfectly balance each other out, locking into a horizontal asymptote. The total payout flatlines at exactly $e$. This is the absolute mathematical ceiling of continuous growth.
                 </p>
 
                 <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; padding: 1.75rem; margin: 2rem 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); text-align: center;">
                     <h3 style="margin: 0 0 1rem 0; color: #0f172a; font-size: 1.25rem">The Formal Definition of Euler's Number</h3>
                     <div style="font-size: 1.5rem; font-weight: bold; color: #b45309; margin: 1rem 0;">
                         $$e = \lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^n$$
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 2rem 0; align-items: stretch;">
+                    <!-- Data Table -->
+                    <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;">
+                        <div style="background: #f1f5f9; padding: 0.75rem 1rem; border-bottom: 1px solid #e2e8f0; font-weight: bold; color: #1e293b; text-align: center;">
+                            Numerical Convergence
+                        </div>
+                        <table style="width: 100%; border-collapse: collapse; text-align: center; font-size: 0.95rem; color: #334155;">
+                            <thead>
+                                <tr style="background: #f8fafc; border-bottom: 2px solid #cbd5e1;">
+                                    <th style="padding: 0.75rem;">$n$ (Compounding)</th>
+                                    <th style="padding: 0.75rem;">$(1 + \frac{1}{n})^n$</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid #e2e8f0;">
+                                    <td style="padding: 0.75rem;">1 (Yearly)</td>
+                                    <td style="padding: 0.75rem;">2.00000</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #e2e8f0;">
+                                    <td style="padding: 0.75rem;">12 (Monthly)</td>
+                                    <td style="padding: 0.75rem;">2.61304</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #e2e8f0;">
+                                    <td style="padding: 0.75rem;">365 (Daily)</td>
+                                    <td style="padding: 0.75rem;">2.71457</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #e2e8f0;">
+                                    <td style="padding: 0.75rem;">10,000</td>
+                                    <td style="padding: 0.75rem;">2.71815</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #e2e8f0; background: #fffbeb;">
+                                    <td style="padding: 0.75rem; font-weight: bold; color: #b45309;">$\to \infty$</td>
+                                    <td style="padding: 0.75rem; font-weight: bold; color: #b45309;">$e \approx 2.71828$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- SVG Graph -->
+                    <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <h4 style="margin: 0 0 1rem 0; color: #1e293b; font-size: 0.95rem; text-align: center;">Graphical Asymptote</h4>
+                        <svg viewBox="0 0 300 200" style="width: 100%; max-width: 280px; height: auto;" role="img" aria-label="Graph showing (1 + 1/x)^x approaching horizontal asymptote y = e">
+                            <defs>
+                                <marker id="arrow-e" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                    <path d="M 0 1 L 8 5 L 0 9 z" fill="#64748b" />
+                                </marker>
+                            </defs>
+                            <!-- Axes -->
+                            <line x1="30" y1="170" x2="280" y2="170" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow-e)" />
+                            <line x1="40" y1="180" x2="40" y2="20" stroke="#94a3b8" stroke-width="1.5" />
+
+                            <!-- Asymptote y = e -->
+                            <line x1="40" y1="60" x2="280" y2="60" stroke="#d97706" stroke-width="2" stroke-dasharray="5,3" />
+                            <text x="35" y="64" font-size="12" font-weight="bold" fill="#b45309" text-anchor="end">e</text>
+
+                            <!-- Origin & Labels -->
+                            <text x="35" y="174" font-size="11" fill="#64748b" text-anchor="end">0</text>
+                            <text x="285" y="185" font-size="12" font-weight="bold" fill="#64748b">n → ∞</text>
+
+                            <!-- Curve generation -->
+                            <path id="e-curve" fill="none" stroke="#0284c7" stroke-width="2.5" />
+                        </svg>
+                        <script>
+                            (function() {
+                                const curve = document.getElementById("e-curve");
+                                if (!curve) return;
+
+                                let pts = [];
+                                // Uniformly plot n from 1 to 100 to reveal the true mathematical shape of the curve
+                                for (let n = 1; n <= 100; n++) {
+                                    let x = 40 + ((n - 1) / 99) * 240;
+                                    let val = Math.pow(1 + 1/n, n);
+
+                                    // e (2.718) maps to 170 - 110 = 60
+                                    let y = 170 - (val * 40.46);
+                                    pts.push((n === 1 ? "M " : "L ") + x.toFixed(2) + " " + y.toFixed(2));
+                                }
+                                curve.setAttribute("d", pts.join(" "));
+                            })();
+                        </script>
                     </div>
                 </div>
 
