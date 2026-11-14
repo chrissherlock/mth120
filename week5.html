@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 5: Derivatives & Optimisation | MTHS120</title>
+    <!-- KaTeX Integration -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+    <style>
+        :root {
+            --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
+            --accent: #d97706; --accent-hover: #b45309;
+            --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
+
+        .intro-lead { font-size: 1.05rem; color: #1e293b; line-height: 1.75; margin-bottom: 2rem; background: #f8fafc; padding: 1.75rem; border-radius: 8px; border: 1px solid var(--border); border-left: 5px solid var(--accent); }
+        .intro-lead h3 { margin-top: 0; margin-bottom: 0.75rem; color: #0f172a; font-size: 1.25rem; }
+        .intro-lead p { margin: 0 0 1rem 0; }
+        .intro-lead p:last-child { margin-bottom: 0; }
+
+        .orientation-section { margin: 2rem 0 2.5rem 0; color: #334155; line-height: 1.75; font-size: 1rem; }
+        .orientation-section h3 { margin-top: 0; color: #0f172a; font-size: 1.25rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; margin-bottom: 1rem; }
+        .orientation-section p { margin-bottom: 1.15rem; }
+
+        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+        h3 { color: #1e293b; margin-top: 1.5rem; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+
+        .lecture-card { background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+        .lecture-card:hover { transform: translateY(-2px); box-shadow: 0 6px 12px -2px rgba(0,0,0,0.08); border-color: var(--accent); }
+        .lecture-card h3 { margin-top: 0; color: #0f172a; }
+        .lecture-badge { display: inline-block; background: var(--accent); color: white; padding: 0.2rem 0.55rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem; }
+
+        .assessment-alert { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.5rem; border-radius: 8px; margin: 2rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .assessment-alert.critical { background: #fef2f2; border-color: #fecaca; border-left-color: #ef4444; }
+        .assessment-alert.critical h3 { color: #b91c1c; }
+        .assessment-alert.critical p { color: #7f1d1d; }
+        .assessment-alert h3 { margin: 0 0 0.5rem 0; color: #047857; font-size: 1.25rem; display: flex; align-items: center; gap: 0.5rem; }
+        .assessment-alert p { margin: 0; color: #065f46; font-size: 1.05rem; line-height: 1.6; }
+
+        /* Mobile-first adjustments */
+        @media (max-width: 768px) {
+            .katex-display { overflow-x: auto !important; overflow-y: hidden !important; -webkit-overflow-scrolling: touch !important; max-width: 100% !important; padding: 0.25rem 0 !important; }
+            body { background: #ffffff; padding: 1rem 0.75rem; }
+            .container { max-width: 100%; margin: 0; }
+            .module-content { background: transparent; padding: 0; border: none; border-radius: 0; box-shadow: none; margin-bottom: 1rem; }
+            .header { padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+            .header > div:last-child, .nav-btn-group { display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; width: 100% !important; gap: 0.5rem !important; }
+            .header > div:last-child a, .nav-btn-group a { flex: 1 1 0 !important; min-width: 0 !important; text-align: center !important; padding: 0.55rem 0.4rem !important; font-size: 0.82rem !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
+            p, div, li, blockquote { word-break: break-word; overflow-wrap: break-word; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- TOP NAVIGATION HEADER -->
+        <div class="header" style="border-bottom: 2px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.25rem;">
+            <div class="nav-btn-group" style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; width: 100%;">
+                <a href="week4.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&larr; Prev Week</a>
+                <a href="index.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&#8962; Curriculum Index</a>
+                <a href="week6.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">Next Week &rarr;</a>
+            </div>
+            <div style="text-align: center; width: 100%; min-width: 0;">
+                <h1 style="margin: 0; line-height: 1.3; font-size: 1.5rem;">Week 5 Overview Hub</h1>
+            </div>
+        </div>
+
+        <div class="module-content">
+            <!-- HERO IMAGE -->
+            <div style="margin-bottom: 2rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);">
+                <img src="images/chapter5-hero.jpg" alt="Week 5: Derivatives & Optimisation - UNE Mechanical Labs" style="width: 100%; height: auto; display: block;">
+            </div>
+
+            <!-- EMPATHETIC ORIENTATION LEAD -->
+            <div class="intro-lead">
+                <h3>Welcome to Week 5: Activating the Machine</h3>
+                <p>
+                    The launchpad we built with limits is about to ignite. In Week 4, we studied the rigorous edge of the mathematical abyss, learning to approach discontinuities and infinities using the $\epsilon\text{-}\delta$ telescope. We mapped static snapshots of unbroken curves.
+                </p>
+                <p>
+                    This week, we hit the accelerator. We take that exact same limit machinery and aim it at a 300-year-old question: <em>how do we measure instantaneous change?</em> By shrinking the distance between two points on a secant line down to zero, we unlock the tangent line and officially enter the world of <strong>Differential Calculus</strong>.
+                </p>
+            </div>
+
+            <!-- CRITICAL DATES ALERT -->
+            <div class="assessment-alert critical">
+                <h3>⚠️ Critical Administrative Deadline</h3>
+                <p>
+                    Week 5 commences on <strong>24 March 2025</strong>, which is officially <strong>Census Day</strong>. Please ensure all your enrolment and financial arrangements for Trimester 1 are finalized prior to this date.
+                </p>
+            </div>
+
+            <!-- PROSE-DRIVEN ROADMAP -->
+            <div class="orientation-section">
+                <h3>The Big Picture: Moving from Secants to Optimisation</h3>
+                <p>
+                    <strong>Lecture 13 (Derivatives of Elementary Functions)</strong> moves us away from computing limits from first principles. Instead, we build our "Lego brick" rules for differentiation: the Power, Product, Quotient, and Chain rules, allowing us to compute instantaneous rates of change for any algebraic or transcendental function on the fly.
+                </p>
+                <p>
+                    In <strong>Lecture 14 (Monotone Functions and Concavity)</strong>, we learn to read a function's mind. By tracking the sign of the first derivative $f'(x)$ and the second derivative $f''(x)$, we can perfectly map where a curve is climbing, falling, or changing its structural bend (points of inflection).
+                </p>
+                <p>
+                    In <strong>Lecture 15 (Application: Optimisation)</strong>, we deploy our new analytical tools into the real world. We will hunt down absolute and relative extrema—the exact mathematical peaks and valleys (stationary points and critical points) where natural systems and business models operate at peak efficiency.
+                </p>
+            </div>
+
+            <!-- ASSESSMENT ALERT -->
+            <div class="assessment-alert">
+                <h3>📝 Heads Up: Assignment 3 is Due</h3>
+                <p>
+                    Your primary deliverable this week is <strong>Assignment 3</strong>, a mandatory problem-solving set focusing heavily on your mastery of differentiation techniques and early optimisation applications.
+                </p>
+            </div>
+
+            <!-- WEEK 5 PODCAST COMPONENT -->
+            <div id="podcast" class="podcast-card" style="background: var(--card); border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.03);">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.75rem;">
+                    <div>
+                        <span style="display: inline-block; background: #fef3c7; color: #92400e; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.2rem 0.55rem; border-radius: 4px; margin-bottom: 0.35rem; border: 1px solid #fde68a;">
+                            🎧 Weekly Kickoff (Week 5 Overview)
+                        </span>
+                        <h3 style="margin: 0; color: #0f172a; font-size: 1.15rem;">Rates of Change and the Machinery of Optimisation</h3>
+                        <p style="margin: 0.25rem 0 0 0; font-size: 0.9rem; color: #64748b;">
+                            We transition from the static to the dynamic. Discover how shrinking a secant line produces the derivative, why the Chain Rule behaves like nesting gears, and how we hunt down peaks and valleys using the First and Second Derivative Tests.
+                        </p>
+                    </div>
+                    <a href="#"
+                       style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.4rem 0.75rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.82rem; white-space: nowrap; display: inline-flex; align-items: center; gap: 0.35rem;">
+                        <span>⬇ Download / Open</span>
+                    </a>
+                </div>
+                <div style="width: 100%; margin-top: 0.5rem;">
+                    <audio controls preload="metadata" style="width: 100%; height: 42px; border-radius: 6px;">
+                        <!-- Placeholder for Week 5 audio -->
+                        <source src="#" type="audio/mp4">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            </div>
+
+            <div style="margin: 2rem 0;">
+                <h2 style="margin-top: 0;">Weekly Lecture Modules</h2>
+                <p style="color: #475569; font-size: 1.05rem;">Select a lecture module below to begin:</p>
+            </div>
+
+            <!-- LECTURE 13 CARD -->
+            <div class="lecture-card">
+                <span class="lecture-badge">Lecture 13</span>
+                <h3><a href="week5-lecture13.html" style="color: inherit; text-decoration: none;">Derivatives of Elementary Functions &rarr;</a></h3>
+                <p style="color: #334155; margin-bottom: 1.0rem;">
+                    Bypass limit calculations by mastering the algebraic rules of differentiation. We cover the Power rule, Product and Quotient mechanics, and the all-important Chain rule for nested functions.
+                </p>
+                <div>
+                    <a href="week5-lecture13.html" style="background: var(--accent); color: white; padding: 0.45rem 0.9rem; border-radius: 5px; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Open Lecture 13 &rarr;</a>
+                </div>
+            </div>
+
+            <!-- LECTURE 14 CARD -->
+            <div class="lecture-card">
+                <span class="lecture-badge">Lecture 14</span>
+                <h3><a href="week5-lecture14.html" style="color: inherit; text-decoration: none;">Monotone Functions & Concavity &rarr;</a></h3>
+                <p style="color: #334155; margin-bottom: 1.0rem;">
+                    Learn to reconstruct the physical shape of a curve by analyzing its telemetry. We use the first derivative to track increasing/decreasing intervals and the second derivative to find points of inflection and structural bends.
+                </p>
+                <div>
+                    <a href="week5-lecture14.html" style="background: var(--accent); color: white; padding: 0.45rem 0.9rem; border-radius: 5px; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Open Lecture 14 &rarr;</a>
+                </div>
+            </div>
+
+            <!-- LECTURE 15 CARD -->
+            <div class="lecture-card">
+                <span class="lecture-badge">Lecture 15</span>
+                <h3><a href="week5-lecture15.html" style="color: inherit; text-decoration: none;">Application: Optimisation &rarr;</a></h3>
+                <p style="color: #334155; margin-bottom: 1.0rem;">
+                    Apply calculus to the real world by finding the exact points where systems peak or bottom out. Master the identification of stationary points, critical points, and the deployment of the First and Second Derivative Tests.
+                </p>
+                <div>
+                    <a href="week5-lecture15.html" style="background: var(--accent); color: white; padding: 0.45rem 0.9rem; border-radius: 5px; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Open Lecture 15 &rarr;</a>
+                </div>
+            </div>
+
+            <!-- FOOTER NAVIGATION -->
+            <div class="footer-nav" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                <a href="week4.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&larr; Prev Week</a>
+                <a href="index.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&#8962; Curriculum Index</a>
+                <a href="week6.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">Next Week &rarr;</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

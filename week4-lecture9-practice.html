@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Practice Problems: Continuity & IVT | MTHS120</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+        <style>
+            :root {
+                --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
+                --accent: #0284c7; --font-ui: ui-sans-serif, system-ui, -apple-system, sans-serif;
+            }
+            body { font-family: var(--font-ui); background: var(--bg); color: var(--text); padding: 2rem; margin: 0; line-height: 1.6; }
+            .container { max-width: 800px; margin: 0 auto; }
+
+            .header-nav { display: flex; gap: 0.5rem; margin-bottom: 2rem; }
+            .header-nav a { background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; }
+            .header-nav a:hover { background: #e2e8f0; }
+
+            .problem-card { background: var(--card); padding: 2rem; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+            .problem-header { font-weight: 800; color: #0284c7; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.85rem; margin-bottom: 1rem; border-bottom: 2px solid #e0f2fe; padding-bottom: 0.5rem; }
+
+            .options { display: flex; flex-direction: column; gap: 0.75rem; margin: 1.5rem 0; }
+            .option-label { display: flex; gap: 0.75rem; align-items: baseline; padding: 1rem; border: 1px solid var(--border); border-radius: 6px; cursor: pointer; transition: background 0.2s; }
+            .option-label:hover { background: #f1f5f9; }
+            input[type="radio"] { cursor: pointer; transform: scale(1.1); margin-top: 0.25rem; }
+
+            .btn-check { background: var(--accent); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.95rem; }
+            .btn-check:hover { background: #0369a1; }
+
+            .feedback { margin-top: 1.5rem; padding: 1rem; border-radius: 6px; display: none; font-size: 0.95rem; line-height: 1.6; }
+            .feedback.correct { display: block; background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid #10b981; color: #065f46; }
+            .feedback.incorrect { display: block; background: #fef2f2; border: 1px solid #fecaca; border-left: 4px solid #ef4444; color: #991b1b; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header-nav">
+                <a href="week4-lecture9.html">&larr; Back to Lecture 9</a>
+                <a href="week4.html">&uarr; Week 4 Hub</a>
+            </div>
+
+            <h2 style="border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-bottom: 2rem; color: #0f172a;">Practice Problems: Continuity & The IVT</h2>
+
+            <!-- Problem 1 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 1: Epsilon-Delta Factory Control</div>
+                <p>You are controlling a machine governed by the linear function $f(x) = 4x - 1$. Your target output is $7$ when your dial is set to $x_0 = 2$. If the safety inspector demands an output tolerance of $\epsilon = 0.1$, what is the strictly required input tolerance $\delta$ to guarantee $|f(x) - 7| < \epsilon$?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q1" value="a"> $\delta = 0.4$</label>
+                    <label class="option-label"><input type="radio" name="q1" value="b"> $\delta = 0.1$</label>
+                    <label class="option-label"><input type="radio" name="q1" value="c"> $\delta = 0.025$</label>
+                    <label class="option-label"><input type="radio" name="q1" value="d"> $\delta = 0.05$</label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q1', 'c', 'fb1')">Check Answer</button>
+                <div class="feedback" id="fb1">
+                    <strong style="display: block; margin-bottom: 0.5rem;">Correct!</strong>
+                    To find the input tolerance $\delta$, substitute the function into the output error inequality: $|(4x - 1) - 7| < 0.1$. Simplifying gives $|4x - 8| < 0.1$. Factor out the slope to get $4|x - 2| < 0.1$. Dividing by 4 yields $|x - 2| < 0.025$. Thus, the required $\delta$ is $0.025$.
+                </div>
+            </div>
+
+            <!-- Problem 2 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 2: The IVT Trap</div>
+                <p>Consider the function $f(x) = rac{1}{x}$. We evaluate the endpoints on the interval $[-1, 1]$ and find $f(-1) = -1$ and $f(1) = 1$. Because $0$ lies between $-1$ and $1$, does the Intermediate Value Theorem guarantee that $f(x) = 0$ has a root inside $[-1, 1]$?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q2" value="a"> Yes, because $f(-1)$ is negative and $f(1)$ is positive.</label>
+                    <label class="option-label"><input type="radio" name="q2" value="b"> No, because the function is discontinuous at $x = 0$, shattering the IVT requirement.</label>
+                    <label class="option-label"><input type="radio" name="q2" value="c"> Yes, because rational functions are continuous on their natural domains.</label>
+                    <label class="option-label"><input type="radio" name="q2" value="d"> No, because $f(0)$ evaluates to $1$.</label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q2', 'b', 'fb2')">Check Answer</button>
+                <div class="feedback" id="fb2">
+                    <strong style="display: block; margin-bottom: 0.5rem;">Correct!</strong>
+                    The Intermediate Value Theorem <em>strictly requires</em> the function to be unbroken (continuous) across the entire closed interval. Because $f(x) = rac{1}{x}$ has a vertical asymptote at $x = 0$, the curve breaks completely, and the guarantee is destroyed.
+                </div>
+            </div>
+
+            <!-- Problem 3 -->
+            <div class="problem-card">
+                <div class="problem-header">Problem 3: Analyzing Discontinuity</div>
+                <p>A function is defined as $H(x) = 0$ for $x < 0$, and $H(x) = 1$ for $x \ge 0$. The adversary sets an error tolerance of $\epsilon = 0.2$ around the target output $f(0) = 1$. Why does the limit fail as $x 	o 0$?</p>
+                <div class="options">
+                    <label class="option-label"><input type="radio" name="q3" value="a"> The left-hand branch outputs 0, dropping completely outside the $1 \pm 0.2$ corridor regardless of how small $\delta$ becomes.</label>
+                    <label class="option-label"><input type="radio" name="q3" value="b"> The function grows unbounded toward $+\infty$.</label>
+                    <label class="option-label"><input type="radio" name="q3" value="c"> The error tolerance $\epsilon$ must be negative to trap the left branch.</label>
+                    <label class="option-label"><input type="radio" name="q3" value="d"> The right-hand branch oscillates infinitely.</label>
+                </div>
+                <button class="btn-check" onclick="checkAnswer('q3', 'a', 'fb3')">Check Answer</button>
+                <div class="feedback" id="fb3">
+                    <strong style="display: block; margin-bottom: 0.5rem;">Correct!</strong>
+                    Any input window ($\delta$) around $0$ will capture some negative $x$ values. For all negative $x$ values, the function outputs $0$, which is $1.0$ units away from the target output of $1$. This blatantly violates the strict $0.2$ error boundary, proving a jump discontinuity.
+                </div>
+            </div>
+
+        </div>
+
+        <script>
+            function checkAnswer(qName, correctVal, feedbackId) {
+                const selected = document.querySelector(`input[name="${qName}"]:checked`);
+                const feedback = document.getElementById(feedbackId);
+
+                if (!selected) {
+                    alert('Please select an option before checking your answer.');
+                    return;
+                }
+
+                if (selected.value === correctVal) {
+                    feedback.className = 'feedback correct';
+                    // Reset to original correct text if they previously got it wrong
+                    if (feedback.innerHTML.includes('Incorrect')) {
+                        feedback.innerHTML = '<strong style="display: block; margin-bottom: 0.5rem;">Correct!</strong>' + feedback.getAttribute('data-correct-text');
+                    } else if (!feedback.hasAttribute('data-correct-text')) {
+                        // Store the original correct explanation
+                        feedback.setAttribute('data-correct-text', feedback.innerHTML.replace(/<strong.*?>.*?<\/strong>/, ''));
+                    }
+                } else {
+                    if (!feedback.hasAttribute('data-correct-text')) {
+                        feedback.setAttribute('data-correct-text', feedback.innerHTML.replace(/<strong.*?>.*?<\/strong>/, ''));
+                    }
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = '<strong style="display: block; margin-bottom: 0.5rem;">Incorrect.</strong> Review the definition of continuity and the IVT constraints, then try again.';
+                }
+            }
+        </script>
+    </body>
+</html>

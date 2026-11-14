@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 6: Integration | MTHS120</title>
+    <!-- KaTeX Integration -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+    <style>
+        :root {
+            --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
+            --accent: #d97706; --accent-hover: #b45309;
+            --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
+
+        .intro-lead { font-size: 1.05rem; color: #1e293b; line-height: 1.75; margin-bottom: 2rem; background: #f8fafc; padding: 1.75rem; border-radius: 8px; border: 1px solid var(--border); border-left: 5px solid var(--accent); }
+        .intro-lead h3 { margin-top: 0; margin-bottom: 0.75rem; color: #0f172a; font-size: 1.25rem; }
+        .intro-lead p { margin: 0 0 1rem 0; }
+        .intro-lead p:last-child { margin-bottom: 0; }
+
+        .orientation-section { margin: 2rem 0 2.5rem 0; color: #334155; line-height: 1.75; font-size: 1rem; }
+        .orientation-section h3 { margin-top: 0; color: #0f172a; font-size: 1.25rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; margin-bottom: 1rem; }
+        .orientation-section p { margin-bottom: 1.15rem; }
+
+        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+        h3 { color: #1e293b; margin-top: 1.5rem; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+
+        .lecture-card { background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+        .lecture-card:hover { transform: translateY(-2px); box-shadow: 0 6px 12px -2px rgba(0,0,0,0.08); border-color: var(--accent); }
+        .lecture-card h3 { margin-top: 0; color: #0f172a; }
+        .lecture-badge { display: inline-block; background: var(--accent); color: white; padding: 0.2rem 0.55rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem; }
+
+        .assessment-alert { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.5rem; border-radius: 8px; margin: 2rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .assessment-alert h3 { margin: 0 0 0.5rem 0; color: #047857; font-size: 1.25rem; display: flex; align-items: center; gap: 0.5rem; }
+        .assessment-alert p { margin: 0; color: #065f46; font-size: 1.05rem; line-height: 1.6; }
+
+        /* Mobile-first adjustments */
+        @media (max-width: 768px) {
+            .katex-display { overflow-x: auto !important; overflow-y: hidden !important; -webkit-overflow-scrolling: touch !important; max-width: 100% !important; padding: 0.25rem 0 !important; }
+            body { background: #ffffff; padding: 1rem 0.75rem; }
+            .container { max-width: 100%; margin: 0; }
+            .module-content { background: transparent; padding: 0; border: none; border-radius: 0; box-shadow: none; margin-bottom: 1rem; }
+            .header { padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+            .header > div:last-child, .nav-btn-group { display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; width: 100% !important; gap: 0.5rem !important; }
+            .header > div:last-child a, .nav-btn-group a { flex: 1 1 0 !important; min-width: 0 !important; text-align: center !important; padding: 0.55rem 0.4rem !important; font-size: 0.82rem !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
+            p, div, li, blockquote { word-break: break-word; overflow-wrap: break-word; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- TOP NAVIGATION HEADER -->
+        <div class="header" style="border-bottom: 2px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.25rem;">
+            <div class="nav-btn-group" style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; width: 100%;">
+                <a href="week5.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&larr; Prev Week</a>
+                <a href="index.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&#8962; Curriculum Index</a>
+                <a href="week7.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">Next Week &rarr;</a>
+            </div>
+            <div style="text-align: center; width: 100%; min-width: 0;">
+                <h1 style="margin: 0; line-height: 1.3; font-size: 1.5rem;">Week 6 Overview Hub</h1>
+            </div>
+        </div>
+
+        <div class="module-content">
+            <!-- HERO IMAGE -->
+            <div style="margin-bottom: 2rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);">
+                <img src="images/chapter6-hero.jpg" alt="Week 6: Integration - Accumulating Area" style="width: 100%; height: auto; display: block;">
+            </div>
+
+            <!-- EMPATHETIC ORIENTATION LEAD -->
+            <div class="intro-lead">
+                <h3>Welcome to Week 6: The Accumulation of Change</h3>
+                <p>
+                    If differentiation (Week 5) is about dissecting a process to find its instantaneous rate of change, integration is about putting the pieces back together. How do we take a variable rate of change—like a fluctuating speed—and reconstruct the total distance travelled?
+                </p>
+                <p>
+                    This week, we learn to compute the accumulation of quantities by finding the area under a curve. We will build this concept from the ground up using microscopic rectangles, before unlocking one of the most profound discoveries in human history: the theorem that proves differentiation and integration are perfect mathematical inverses.
+                </p>
+            </div>
+
+            <!-- PROSE-DRIVEN ROADMAP -->
+            <div class="orientation-section">
+                <h3>The Big Picture: Slicing, Summing, and Solving</h3>
+                <p>
+                    In <strong>Lecture 16 (Integration)</strong>, we tackle the problem of measuring non-standard shapes. We sandwich the area under a curve between upper and lower staircases (Darboux sums). By taking the limit as the number of slices approaches infinity, we capture the exact area, officially defining the <em>Definite Riemann Integral</em>.
+                </p>
+                <p>
+                    <strong>Lecture 17 (Properties of the Definite Integral)</strong> establishes the physical laws of this new tool. We learn how to split areas into smaller adjacent regions, apply linearity, and use the Mean Value Theorem of Integral Calculus to find the exact "average height" of a fluctuating wave.
+                </p>
+                <p>
+                    Finally, in <strong>Lecture 18 (The Fundamental Theorem of Calculus)</strong>, we bypass the exhausting process of summing infinite rectangles. We discover that to find the exact area under a curve, we simply need to find the function's <em>antiderivative</em> (primitive) and evaluate its boundaries. This theorem beautifully bridges Week 5 and Week 6.
+                </p>
+            </div>
+
+            <!-- ASSESSMENT ALERT -->
+            <div class="assessment-alert">
+                <h3>📝 Heads Up: Assignment 4 is Due</h3>
+                <p>
+                    For the week commencing <strong>31 March 2025</strong>, your primary deliverable is <strong>Assignment 4</strong>. This assignment will test your understanding of accumulation, definite integrals, and the Fundamental Theorem of Calculus.
+                </p>
+            </div>
+
+            <!-- WEEK 6 PODCAST COMPONENT -->
+            <div id="podcast" class="podcast-card" style="background: var(--card); border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.03);">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.75rem;">
+                    <div>
+                        <span style="display: inline-block; background: #fef3c7; color: #92400e; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.2rem 0.55rem; border-radius: 4px; margin-bottom: 0.35rem; border: 1px solid #fde68a;">
+                            🎧 Weekly Kickoff (Week 6 Overview)
+                        </span>
+                        <h3 style="margin: 0; color: #0f172a; font-size: 1.15rem;">From Rectangles to the Fundamental Theorem</h3>
+                        <p style="margin: 0.25rem 0 0 0; font-size: 0.9rem; color: #64748b;">
+                            How do we measure the area of a curved shape? We discuss slicing regions into microscopic rectangles, tracking upper and lower bounds, and revealing the beautiful 17th-century theorem that bridges derivatives and integrals.
+                        </p>
+                    </div>
+                    <a href="#"
+                       style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.4rem 0.75rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.82rem; white-space: nowrap; display: inline-flex; align-items: center; gap: 0.35rem;">
+                        <span>⬇ Download / Open</span>
+                    </a>
+                </div>
+                <div style="width: 100%; margin-top: 0.5rem;">
+                    <audio controls preload="metadata" style="width: 100%; height: 42px; border-radius: 6px;">
+                        <!-- Placeholder for Week 6 audio -->
+                        <source src="#" type="audio/mp4">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            </div>
+
+            <div style="margin: 2rem 0;">
+                <h2 style="margin-top: 0;">Weekly Lecture Modules</h2>
+                <p style="color: #475569; font-size: 1.05rem;">Select a lecture module below to begin:</p>
+            </div>
+
+            <!-- LECTURE 16 CARD -->
+            <div class="lecture-card">
+                <span class="lecture-badge">Lecture 16</span>
+                <h3><a href="week6-lecture16.html" style="color: inherit; text-decoration: none;">Integration &rarr;</a></h3>
+                <p style="color: #334155; margin-bottom: 1.0rem;">
+                    Construct the concept of area analytically. We use Darboux and Riemann sums to sandwich irregular regions between rectangular staircases, pushing the limits of summation to define the exact definite integral.
+                </p>
+                <div>
+                    <a href="week6-lecture16.html" style="background: var(--accent); color: white; padding: 0.45rem 0.9rem; border-radius: 5px; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Open Lecture 16 &rarr;</a>
+                </div>
+            </div>
+
+            <!-- LECTURE 17 CARD -->
+            <div class="lecture-card">
+                <span class="lecture-badge">Lecture 17</span>
+                <h3><a href="week6-lecture17.html" style="color: inherit; text-decoration: none;">Properties of the Definite Integral &rarr;</a></h3>
+                <p style="color: #334155; margin-bottom: 1.0rem;">
+                    Understand the geometric and algebraic rules of integration. We explore linearity, splitting integration intervals, bounding areas via the comparison principle, and finding the average value of a continuous function.
+                </p>
+                <div>
+                    <a href="week6-lecture17.html" style="background: var(--accent); color: white; padding: 0.45rem 0.9rem; border-radius: 5px; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Open Lecture 17 &rarr;</a>
+                </div>
+            </div>
+
+            <!-- LECTURE 18 CARD -->
+            <div class="lecture-card">
+                <span class="lecture-badge">Lecture 18</span>
+                <h3><a href="week6-lecture18.html" style="color: inherit; text-decoration: none;">The Fundamental Theorem of Calculus &rarr;</a></h3>
+                <p style="color: #334155; margin-bottom: 1.0rem;">
+                    Discover the profound link between rate of change and accumulation. We define the accumulation function, introduce antiderivatives (primitives), and learn to calculate exact areas effortlessly by inverting the derivative.
+                </p>
+                <div>
+                    <a href="week6-lecture18.html" style="background: var(--accent); color: white; padding: 0.45rem 0.9rem; border-radius: 5px; text-decoration: none; font-weight: 600; font-size: 0.88rem;">Open Lecture 18 &rarr;</a>
+                </div>
+            </div>
+
+            <!-- FOOTER NAVIGATION -->
+            <div class="footer-nav" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                <a href="week5.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&larr; Prev Week</a>
+                <a href="index.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">&#8962; Curriculum Index</a>
+                <a href="week7.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap;">Next Week &rarr;</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
