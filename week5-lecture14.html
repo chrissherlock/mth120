@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 5, Lecture 14: Monotone Functions & Concavity | MTHS120</title>
+    <!-- KaTeX Integration -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+    <style>
+        :root {
+            --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
+            --accent: #d97706; --accent-hover: #b45309;
+            --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { max-width: 100%; overflow-x: hidden; }
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; width: 100%; }
+
+        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: nowrap; gap: 1rem; }
+        .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
+
+        .intro-lead { font-size: 1.1rem; color: #1e293b; line-height: 1.7; margin-bottom: 1.5rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); border: 1px solid var(--border); }
+        .toc-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.75rem; margin: 1.75rem 0 2.5rem 0; }
+        .toc-box h4 { margin: 0 0 0.75rem 0; color: #92400e; font-size: 1.05rem; }
+        .toc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.5rem 1.5rem; margin: 0; padding-left: 1.25rem; }
+        .toc-grid li { margin-bottom: 0.35rem; font-size: 0.95rem; }
+        .toc-grid a { color: #b45309; text-decoration: none; font-weight: 500; }
+        .toc-grid a:hover { text-decoration: underline; color: var(--accent-hover); }
+
+        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+        h3 { color: #1e293b; margin-top: 1.5rem; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+
+        .infobox { background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.25rem 0 1.75rem 0; }
+        .infobox h4 { margin: 0 0 0.85rem 0; color: #0f172a; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-ui); }
+
+        .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; border: 1px solid var(--border); }
+        .aside-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #b45309; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .aside-box h4 { margin-top: 0; color: #b45309; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .aside-box p, .aside-box li, .infobox p, .infobox li { color: #0f172a !important; }
+
+        .worked-example-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .worked-example-box h4 { margin: 0 0 0.85rem 0; color: #047857; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .worked-example-box p, .worked-example-box li { color: #0f172a !important; }
+
+        /* Mobile-first layout adjustment */
+        @media (max-width: 768px) {
+            .katex-display { overflow-x: auto !important; overflow-y: hidden !important; -webkit-overflow-scrolling: touch !important; max-width: 100% !important; padding: 0.25rem 0 !important; }
+            body { background: #ffffff; padding: 1rem 0.75rem; }
+            .container { max-width: 100%; margin: 0; }
+            .module-content { background: transparent; padding: 0; border: none; border-radius: 0; box-shadow: none; margin-bottom: 1rem; }
+            .header { padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+            ol, ul { padding-left: 1.25rem !important; margin-left: 0 !important; }
+            .header > .nav-btn-group, .footer-nav { display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; width: 100% !important; gap: 0.5rem !important; }
+            .header > .nav-btn-group a, .footer-nav a { flex: 1 1 0 !important; min-width: 0 !important; text-align: center !important; padding: 0.55rem 0.4rem !important; font-size: 0.82rem !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
+            p, div, li, blockquote { word-break: break-word; overflow-wrap: break-word; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- TOP NAVIGATION HEADER -->
+        <div class="header" style="border-bottom: 2px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.25rem">
+            <div class="nav-btn-group" style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; width: 100%">
+                <a href="week5-lecture13.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&larr; Lecture 13</a>
+                <a href="week5.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&uarr; Week 5 Hub</a>
+                <a href="week5-lecture14-practice.html" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">✎ Practice Problems</a>
+                <a href="week5-lecture15.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">Lecture 15 &rarr;</a>
+            </div>
+            <div style="text-align: center; width: 100%; min-width: 0">
+                <h1 style="margin: 0; line-height: 1.3; font-size: 1.5rem">Week 5, Lecture 14: Monotone Functions &amp; Concavity</h1>
+            </div>
+        </div>
+
+        <div class="module-content">
+            <!-- HERO IMAGE -->
+            <div style="margin-bottom: 2rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);">
+                <img src="images/chapter5-hero.jpg" alt="Week 5: Monotone Functions and Concavity" style="width: 100%; height: auto; display: block" />
+            </div>
+
+            <div style="margin: 2.25rem 0 2.5rem 0">
+                <h3 style="margin-top: 0; color: #0f172a; font-size: 1.35rem">Welcome to Lecture 14: Reading the Telemetry of a Curve</h3>
+
+                <p style="margin: 0 0 1.15rem 0; color: #334155; line-height: 1.75; font-size: 1.05rem">
+                    In Lecture 13, you mastered the mechanical rules of differentiation. You can now take a raw mathematical equation and instantly generate a new formula representing its rate of change. But what does that new formula actually <em>tell</em> us about the original physical system?
+                </p>
+
+                <p style="margin: 0 0 1.5rem 0; color: #334155; line-height: 1.75; font-size: 1.05rem">
+                    Today, we step back from the algebra and return to the geometry. By analyzing the signs (positive or negative) of a function's first and second derivatives, you can perfectly reconstruct the physical shape of its graph without ever plotting points. The derivatives act as a continuous telemetry stream, telling us exactly where the curve is climbing, falling, peaking, or bending[cite: 4].
+                </p>
+
+                <!-- COURSE STRUCTURE BOX -->
+                <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid #0284c7; border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02)">
+                    <div style="font-size: 0.85rem; font-weight: 800; color: #0369a1; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem">🗺️ The Three Layers of Telemetry</div>
+                    <ul style="margin: 0; padding-left: 1.25rem; color: #334155; line-height: 1.7; font-size: 0.98rem">
+                        <li style="margin-bottom: 0.5rem">
+                            <strong>The Position $f(x)$:</strong> Tells us exactly <em>where</em> the system is at a given moment.
+                        </li>
+                        <li style="margin-bottom: 0.5rem">
+                            <strong>The Velocity $f'(x)$:</strong> Tells us if the system is <em>increasing</em> (moving up) or <em>decreasing</em> (moving down).
+                        </li>
+                        <li>
+                            <strong>The Acceleration $f''(x)$:</strong> Tells us if the system is <em>bending upward</em> (concave up) or <em>bending downward</em> (concave down)[cite: 4].
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- TABLE OF CONTENTS -->
+            <div class="toc-box">
+                <h4>📌 Lecture 14 Topics</h4>
+                <ul class="toc-grid">
+                    <li><a href="#section-first-deriv">1. The First Derivative: Tracking Increase &amp; Decrease</a></li>
+                    <li><a href="#section-critical">2. Critical Points &amp; The First Derivative Test</a></li>
+                    <li><a href="#section-concavity">3. The Second Derivative: Bending and Concavity</a></li>
+                    <li><a href="#section-second-test">4. The Second Derivative Test</a></li>
+                    <li><a href="#section-interactive">5. Interactive Lab: Reconstructing the Curve</a></li>
+                </ul>
+            </div>
+
+            <!-- WEEK 5 LECTURE 14 PODCAST COMPONENT -->
+            <div id="podcast" class="podcast-card" style="background: var(--card); border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem 0; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.75rem;">
+                    <div>
+                        <span style="display: inline-block; background: #fef3c7; color: #92400e; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.2rem 0.55rem; border-radius: 4px; margin-bottom: 0.35rem; border: 1px solid #fde68a;">
+                            🎧 Deep Dive Podcast
+                        </span>
+                        <h3 style="margin: 0; color: #0f172a; font-size: 1.15rem;">Mapping the Topography of Functions</h3>
+                        <p style="margin: 0.25rem 0 0 0; font-size: 0.9rem; color: #64748b;">
+                            How do we read a function's mind? We explore the Mean Value Theorem, how the first derivative acts as a compass for increasing and decreasing behavior, and how the second derivative tracks structural bending and inflection points.
+                        </p>
+                    </div>
+                    <a href="#" target="_blank" rel="noopener noreferrer"
+                       style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.4rem 0.75rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.82rem; white-space: nowrap; display: inline-flex; align-items: center; gap: 0.35rem; transition: background 0.2s;">
+                        <span>⬇ Download / Open</span>
+                    </a>
+                </div>
+                <div style="width: 100%; margin-top: 0.5rem;">
+                    <audio controls preload="metadata" style="width: 100%; height: 42px; border-radius: 6px;">
+                        <source src="#" type="audio/mp4">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            </div>
+
+            <!-- SECTION 1: THE FIRST DERIVATIVE -->
+            <h2 id="section-first-deriv">1. The First Derivative: Tracking Increase &amp; Decrease</h2>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                If the derivative $f'(x)$ represents the slope of the tangent line, its sign is incredibly informative. A positive slope means the curve is aiming upward; a negative slope means it is aiming downward.
+            </p>
+
+            <div class="definition-box" style="border-left-color: #10b981; background: #f0fdf4;">
+                <h4 style="margin: 0 0 0.5rem 0; color: #047857; font-size: 1.1rem">Theorem 14: Monotonicity</h4>
+                <p style="margin: 0 0 0.5rem 0; color: #065f46; font-size: 0.95rem; line-height: 1.6">
+                    Suppose the function $f$ is continuous on $[a, b]$ and differentiable on $(a, b)$.
+                </p>
+                <ul style="margin: 0; padding-left: 1.25rem; color: #065f46; line-height: 1.6; font-size: 0.95rem">
+                    <li>If <strong>$f'(x) > 0$</strong> for all $x \in (a, b)$, then $f$ is <strong>strictly increasing</strong> on $[a, b]$.</li>
+                    <li>If <strong>$f'(x) < 0$</strong> for all $x \in (a, b)$, then $f$ is <strong>strictly decreasing</strong> on $[a, b]$.</li>
+                    <li>If <strong>$f'(x) = 0$</strong> for all $x \in (a, b)$, then $f$ is perfectly <strong>constant</strong> on $[a, b]$[cite: 4].</li>
+                </ul>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.5rem">
+                To prove this rigorously, mathematicians rely on a foundational concept called the <strong>Mean Value Theorem (MVT)</strong>. Geometrically, the MVT states that if you draw a secant line connecting two points on a smooth curve, there must exist at least one point $c$ strictly between them where the instantaneous tangent is perfectly parallel to the secant line[cite: 4].
+            </p>
+
+            <!-- VISUALIZATION: MEAN VALUE THEOREM -->
+            <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin: 2.5rem 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+                <div style="margin-bottom: 1.5rem">
+                    <span style="font-size: 0.85rem; font-weight: 800; color: #0284c7; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.25rem">Geometric Intuition</span>
+                    <h3 style="margin: 0 0 0.5rem 0; color: #0f172a; font-size: 1.25rem">The Mean Value Theorem</h3>
+                    <p style="margin: 0; color: #334155; font-size: 0.95rem; line-height: 1.6">
+                        If your average speed on a road trip was 100 km/h, the MVT guarantees that your speedometer must have struck exactly 100 km/h at least once during the journey. The secant line (average rate of change) guarantees the existence of a parallel tangent line (instantaneous rate of change).
+                    </p>
+                </div>
+
+                <div style="display: flex; justify-content: center; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem;">
+                    <svg viewBox="0 0 600 280" style="width: 100%; max-width: 560px; height: auto; display: block;" role="img" aria-label="Mean Value Theorem Diagram">
+                        <!-- Axes -->
+                        <line x1="40" y1="240" x2="560" y2="240" stroke="#94a3b8" stroke-width="1.5" />
+                        <line x1="60" y1="260" x2="60" y2="20" stroke="#94a3b8" stroke-width="1.5" />
+                        <text x="570" y="244" font-size="12" font-weight="bold" fill="#64748b">x</text>
+                        <text x="50" y="20" font-size="12" font-weight="bold" fill="#64748b" text-anchor="end">y</text>
+
+                        <!-- Curve -->
+                        <path d="M 100 200 Q 200 60, 300 100 T 500 50" fill="none" stroke="#0f172a" stroke-width="2.5" />
+
+                        <!-- Secant Line -->
+                        <line x1="100" y1="200" x2="500" y2="50" stroke="#d97706" stroke-width="1.5" stroke-dasharray="5,4" />
+
+                        <!-- Secant Points -->
+                        <circle cx="100" cy="200" r="5" fill="#d97706" />
+                        <circle cx="500" cy="50" r="5" fill="#d97706" />
+
+                        <!-- Parallel Tangent Line (at approx x = 250, y = 92) -->
+                        <line x1="170" y1="122" x2="330" y2="62" stroke="#0284c7" stroke-width="2" />
+                        <circle cx="250" cy="92" r="5" fill="#0284c7" />
+
+                        <!-- Projections to X axis -->
+                        <line x1="100" y1="200" x2="100" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+                        <line x1="500" y1="50" x2="500" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+                        <line x1="250" y1="92" x2="250" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+
+                        <!-- Projections to Y axis -->
+                        <line x1="100" y1="200" x2="60" y2="200" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+                        <line x1="500" y1="50" x2="60" y2="50" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+
+                        <!-- Labels -->
+                        <text x="100" y="258" font-size="12" font-style="italic" fill="#0f172a" text-anchor="middle">a</text>
+                        <text x="500" y="258" font-size="12" font-style="italic" fill="#0f172a" text-anchor="middle">b</text>
+                        <text x="250" y="258" font-size="12" font-style="italic" font-weight="bold" fill="#0284c7" text-anchor="middle">c</text>
+                        <text x="55" y="204" font-size="12" font-style="italic" fill="#0f172a" text-anchor="end">f(a)</text>
+                        <text x="55" y="54" font-size="12" font-style="italic" fill="#0f172a" text-anchor="end">f(b)</text>
+
+                        <!-- Formula -->
+                        <text x="360" y="40" font-size="13" font-family="monospace" font-weight="bold" fill="#0284c7">f'(c) = [f(b) - f(a)] / (b - a)</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- SECTION 2: CRITICAL POINTS -->
+            <h2 id="section-critical">2. Critical Points &amp; The First Derivative Test</h2>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                If the derivative is positive when the curve is rising, and negative when the curve is falling, what happens at the exact peak of a mountain or the very bottom of a valley? The tangent line must perfectly flatten out. Its slope becomes exactly zero[cite: 4].
+            </p>
+
+            <div class="definition-box" style="border-left-color: #ef4444; background: #fef2f2;">
+                <h4 style="margin: 0 0 0.5rem 0; color: #b91c1c; font-size: 1.1rem">Stationary vs. Critical Points</h4>
+                <ul style="margin: 0; padding-left: 1.25rem; color: #7f1d1d; line-height: 1.6; font-size: 0.95rem">
+                    <li style="margin-bottom: 0.5rem"><strong>Stationary Points:</strong> Any point where the derivative equals zero ($f'(x) = 0$). The tangent is completely horizontal.</li>
+                    <li><strong>Critical Points:</strong> A broader category that includes all stationary points, PLUS any points where the derivative is <em>undefined</em> (such as sharp, jagged corners like the absolute value function $f(x) = |x|$ at $x = 0$)[cite: 4].</li>
+                </ul>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.5rem">
+                <strong>Theorem 18:</strong> If a function $f$ has a relative extremum (a local peak or valley) at $x = c$, then $x = c$ MUST be a critical point[cite: 4]. However, the reverse is not always true. Sometimes a curve flattens out to a zero slope but then keeps going up (like a terrace on a mountain). To verify if a critical point is truly a peak or valley, we use the First Derivative Test.
+            </p>
+
+            <!-- FIRST DERIVATIVE TEST -->
+            <div class="worked-example-box" style="margin-top: 2rem;">
+                <h4 style="color: #047857; margin-bottom: 0.5rem">📈 Theorem 19: The First Derivative Test</h4>
+                <p style="margin-bottom: 0.75rem; font-size: 0.95rem; line-height: 1.6;">
+                    Let $f$ be continuous at a critical point $x = c$, and differentiable in the surrounding neighborhood. Check the sign of the derivative just before and just after $c$:
+                </p>
+                <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.95rem; line-height: 1.6;">
+                    <li style="margin-bottom: 0.5rem">If $f'(x)$ changes from <strong>positive to negative</strong> across $c$, the curve rose to a peak and fell. It is a <strong>Relative Maximum</strong>.</li>
+                    <li style="margin-bottom: 0.5rem">If $f'(x)$ changes from <strong>negative to positive</strong> across $c$, the curve fell into a valley and rose. It is a <strong>Relative Minimum</strong>.</li>
+                    <li>If $f'(x)$ <strong>does not change sign</strong> (e.g., positive to positive), the point is merely a flat terrace, not an extremum[cite: 4].</li>
+                </ul>
+            </div>
+
+            <!-- SECTION 3: THE SECOND DERIVATIVE -->
+            <h2 id="section-concavity">3. The Second Derivative: Bending and Concavity</h2>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                Velocity (the first derivative) tells us if we are moving up or down. But what if we track the <em>rate of change of the rate of change</em>? Taking the derivative of the derivative yields the <strong>Second Derivative</strong>, denoted $f''(x)$ or $\frac{d^2f}{dx^2}$.
+            </p>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                In physics, this is <em>acceleration</em>. In geometry, this tracks the <strong>structural bending</strong> of the curve, known as concavity[cite: 4].
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin: 1.5rem 0">
+                <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-top: 4px solid #3b82f6; border-radius: 8px; padding: 1.25rem">
+                    <h4 style="margin: 0 0 0.4rem 0; color: #1d4ed8; font-size: 1rem">Concave Up ($f''(x) > 0$)</h4>
+                    <p style="margin: 0; color: #334155; font-size: 0.93rem; line-height: 1.55">
+                        The slopes are strictly increasing. The curve bends upward like a bowl holding water. Any secant line connecting two points on this section will physically lie <em>above</em> the graph[cite: 4].
+                    </p>
+                </div>
+                <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-top: 4px solid #ef4444; border-radius: 8px; padding: 1.25rem">
+                    <h4 style="margin: 0 0 0.4rem 0; color: #b91c1c; font-size: 1rem">Concave Down ($f''(x) < 0$)</h4>
+                    <p style="margin: 0; color: #334155; font-size: 0.93rem; line-height: 1.55">
+                        The slopes are strictly decreasing. The curve bends downward like an umbrella. Any secant line connecting two points on this section will physically lie <em>below</em> the graph[cite: 4].
+                    </p>
+                </div>
+            </div>
+
+            <div class="aside-box">
+                <h4>🔀 Points of Inflection</h4>
+                <p style="margin-bottom: 0">
+                    What happens at the exact boundary where a curve transitions from being a bowl (concave up) to an umbrella (concave down)? The structural bending briefly zeroes out. If the function has a continuous second derivative across this boundary, it must be that $f''(x) = 0$. These transitional boundaries are called <strong>Points of Inflection</strong>[cite: 4].
+                </p>
+            </div>
+
+            <!-- SECTION 4: SECOND DERIVATIVE TEST -->
+            <h2 id="section-second-test">4. The Second Derivative Test</h2>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                Because the second derivative maps out the "bowls" and "umbrellas" of a function, it gives us a lightning-fast alternative for classifying stationary points without having to check points on either side.
+            </p>
+
+            <div class="definition-box" style="border-left-color: #f59e0b; background: #fffbeb;">
+                <h4 style="margin: 0 0 0.5rem 0; color: #b45309; font-size: 1.1rem">Theorem 20: The Second Derivative Test</h4>
+                <p style="margin: 0 0 0.5rem 0; color: #92400e; font-size: 0.95rem; line-height: 1.6">
+                    Assume $f$ is twice differentiable at a stationary point $x = c$ (meaning $f'(c) = 0$).
+                </p>
+                <ul style="margin: 0; padding-left: 1.25rem; color: #92400e; line-height: 1.6; font-size: 0.95rem">
+                    <li style="margin-bottom: 0.5rem">If $f''(c) > 0$, the curve is a bowl bending upward. The flat spot at $c$ must be the bottom of the bowl: a <strong>Relative Minimum</strong>.</li>
+                    <li style="margin-bottom: 0.5rem">If $f''(c) < 0$, the curve is an umbrella bending downward. The flat spot at $c$ must be the top of the umbrella: a <strong>Relative Maximum</strong>.</li>
+                    <li>If $f''(c) = 0$, the test is <strong>inconclusive</strong>. You must revert to the First Derivative Test to manually check the slopes on either side[cite: 4].</li>
+                </ul>
+            </div>
+
+            <!-- ================================================================= -->
+            <!-- INTERACTIVE WIDGET: DIMENSIONAL CURVE RECONSTRUCTOR               -->
+            <!-- ================================================================= -->
+            <h2 id="section-interactive">5. Interactive Lab: Reconstructing the Curve</h2>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                Let's trace a physical object moving through space according to a cubic equation. Use the controls below to slide a tracker along the curve, and toggle the dimensional views to see exactly how the first derivative ($f'$) and second derivative ($f''$) perfectly predict the physical shape of the original function.
+            </p>
+
+            <div class="stepper-walkthrough" id="curve-walkthrough" style="margin: 2.5rem 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                <style>
+                    #curve-walkthrough .telemetry-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.75rem; background: #0f172a; padding: 1rem 1.25rem; border-top-left-radius: 10px; border-top-right-radius: 10px; }
+                    #curve-walkthrough .telemetry-card { display: flex; flex-direction: column; }
+                    #curve-walkthrough .telemetry-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: #94a3b8; font-weight: 700; margin-bottom: 0.25rem; }
+                    #curve-walkthrough .telemetry-badge { font-family: monospace; font-size: 0.95rem; font-weight: 700; }
+
+                    #curve-walkthrough .mode-bar { background: #1e293b; padding: 0.85rem 1.25rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; border-bottom: 1px solid #334155; }
+                    #curve-walkthrough .mode-btn { background: #334155; color: #cbd5e1; border: 1px solid #475569; padding: 0.45rem 0.85rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+                    #curve-walkthrough .mode-btn:hover { background: #475569; color: #ffffff; }
+                    #curve-walkthrough .mode-btn.active { background: #d97706; color: #ffffff; border-color: #f59e0b; }
+
+                    #curve-walkthrough .nav-strip { display: flex; gap: 1.5rem; padding: 1.25rem 1.5rem; background: #f8fafc; border-bottom: 1px solid #cbd5e1; align-items: center; flex-wrap: wrap; }
+                    #curve-walkthrough .step-btn { padding: 0.5rem 0.9rem; border-radius: 6px; font-weight: 600; cursor: pointer; border: 1px solid #cbd5e1; background: #ffffff; color: #334155; }
+                    #curve-walkthrough .step-btn.primary { background: #d97706; color: #ffffff; border-color: #d97706; }
+                    #curve-walkthrough .step-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+                    @media (max-width: 640px) { #curve-walkthrough .analysis-panes { grid-template-columns: 1fr !important; } }
+                </style>
+
+                <!-- Comparative Dimension Toggles -->
+                <div class="mode-bar">
+                    <span style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: #94a3b8; margin-right: 0.5rem;">View Layer:</span>
+                    <button class="mode-btn active" id="btn-mode-0" onclick="curveLab.changeMode(0)">Position $f(x)$</button>
+                    <button class="mode-btn" id="btn-mode-1" onclick="curveLab.changeMode(1)">Velocity $f'(x)$</button>
+                    <button class="mode-btn" id="btn-mode-2" onclick="curveLab.changeMode(2)">Acceleration $f''(x)$</button>
+                </div>
+
+                <!-- Live State Telemetry -->
+                <div class="telemetry-grid">
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Active Coordinate</span>
+                        <span class="telemetry-badge" id="cw-tel-coord" style="color: #fbbf24">x = -1.5</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">First Derivative Sign</span>
+                        <span class="telemetry-badge" id="cw-tel-d1" style="color: #38bdf8">Positive (Increasing)</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Second Derivative Sign</span>
+                        <span class="telemetry-badge" id="cw-tel-d2" style="color: #10b981">Negative (Concave Down)</span>
+                    </div>
+                </div>
+
+                <!-- Navigation + Inline Preview -->
+                <div class="nav-strip">
+                    <div style="display: flex; gap: 0.5rem; flex-shrink: 0;">
+                        <button class="step-btn" id="btn-cw-prev" onclick="curveLab.advanceStep(-1)" disabled>&larr; Move Left</button>
+                        <button class="step-btn primary" id="btn-cw-next" onclick="curveLab.advanceStep(1)">Move Right &rarr;</button>
+                    </div>
+                    <div id="cw-preview-text" style="flex: 1; min-width: 240px; font-size: 0.95rem; color: #1e293b; font-weight: 500;">
+                        The tracker is on a steep upward climb on the left side of the mountain. The tangent slope is extremely positive, but the structural bend is already starting to curve downward like an umbrella.
+                    </div>
+                </div>
+
+                <!-- Canvas -->
+                <div style="padding: 1.5rem; background: #ffffff; border-bottom: 1px solid #cbd5e1;">
+                    <svg id="cw-svg-canvas" viewBox="0 0 600 300" style="width: 100%; max-width: 560px; height: auto; display: block; margin: 0 auto; overflow: visible;">
+                        <!-- Grid Lines -->
+                        <line x1="50" y1="150" x2="550" y2="150" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4" />
+                        <line x1="300" y1="280" x2="300" y2="20" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4" />
+
+                        <!-- Mathematical Paths (Generated via JS to sync accurately) -->
+                        <path id="cw-path-f0" fill="none" stroke="#0f172a" stroke-width="3" />
+                        <path id="cw-path-f1" fill="none" stroke="#0284c7" stroke-width="3" style="opacity: 0;" />
+                        <path id="cw-path-f2" fill="none" stroke="#059669" stroke-width="3" style="opacity: 0;" />
+
+                        <!-- Tracking Objects -->
+                        <line id="cw-tracker-line" x1="120" y1="20" x2="120" y2="280" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,3" />
+                        <circle id="cw-tracker-dot" cx="120" cy="90" r="6" fill="#ef4444" stroke="#ffffff" stroke-width="2" />
+                        <line id="cw-tangent-line" x1="70" y1="230" x2="170" y2="-50" stroke="#d97706" stroke-width="2.5" />
+
+                        <text x="560" y="154" font-size="12" font-weight="bold" fill="#64748b">x</text>
+                        <text x="290" y="15" font-size="12" font-weight="bold" fill="#64748b" text-anchor="end">y</text>
+                    </svg>
+                </div>
+
+                <!-- Paired Analytical Panes -->
+                <div class="analysis-panes" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #cbd5e1;">
+                    <div style="background: #ffffff; padding: 1.5rem;">
+                        <h4 style="margin: 0 0 0.5rem 0; color: #15803d; font-size: 0.85rem; text-transform: uppercase; font-weight: 800">What Is Happening</h4>
+                        <div id="cw-pane-what" style="font-size: 0.95rem; color: #334155; line-height: 1.6">The raw function $f(x) = x^3 - 3x$ is rapidly increasing. The velocity graph $f'(x)$ is high in positive territory, while acceleration $f''(x)$ is deeply negative.</div>
+                    </div>
+                    <div style="background: #ffffff; padding: 1.5rem;">
+                        <h4 style="margin: 0 0 0.5rem 0; color: #1d4ed8; font-size: 0.85rem; text-transform: uppercase; font-weight: 800">Why The System Does This</h4>
+                        <div id="cw-pane-why" style="font-size: 0.95rem; color: #334155; line-height: 1.6">Because $f'(x) > 0$, the point must physically travel upward. Because $f''(x) < 0$, the <em>rate of that upward travel</em> is slowing down as it approaches the mountain peak.</div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                const curveLab = (function() {
+                    let currentStep = 0;
+                    let currentMode = 0; // 0=f, 1=f', 2=f''
+
+                    // Math parameters for f(x) = x^3 - 3x
+                    // Roots at 0, ±1.732. Extrema at ±1. Inflection at 0.
+                    const mathSteps = [
+                        { x: -1.5, title: "x = -1.5" },
+                        { x: -1.0, title: "x = -1.0 (Critical Point)" },
+                        { x: 0.0, title: "x = 0.0 (Inflection Point)" },
+                        { x: 1.0, title: "x = 1.0 (Critical Point)" },
+                        { x: 1.5, title: "x = 1.5" }
+                    ];
+
+                    const narratives = [
+                        {
+                            d1: "Positive (Increasing)", d2: "Negative (Concave Down)",
+                            prev: "The tracker is on a steep upward climb on the left side of the mountain. The tangent slope is extremely positive, but the structural bend is already curving downward like an umbrella.",
+                            what: "The raw function $f(x)$ is increasing. Toggle to Velocity to see $f'(x)$ is highly positive. Toggle to Acceleration to see $f''(x)$ is firmly negative.",
+                            why: "Because $f'(x) > 0$, the object is traveling upward. But because $f''(x) < 0$, that upward velocity is bleeding off. The system is decelerating as it approaches the peak."
+                        },
+                        {
+                            d1: "Zero (Stationary)", d2: "Negative (Concave Down)",
+                            prev: "We have hit the exact peak of the mountain. The tangent line is perfectly flat. The structure remains a downward-bending umbrella.",
+                            what: "At $x = -1$, the tangent flattens completely. Toggle to Velocity to see $f'(x)$ crosses exactly through 0. Acceleration $f''(x)$ remains negative.",
+                            why: "This is the First and Second Derivative Tests in action. $f' = 0$ identifies the stationary point, and $f'' < 0$ immediately confirms it is a Relative Maximum."
+                        },
+                        {
+                            d1: "Negative (Decreasing)", d2: "Zero (No Bending)",
+                            prev: "We are sliding down the middle of the valley. The downward velocity is at its absolute maximum speed, but the structural bend is perfectly transitioning from umbrella to bowl.",
+                            what: "The curve is plunging downward. Velocity $f'(x)$ is at its most negative point. Acceleration $f''(x)$ has crossed exactly through 0.",
+                            why: "This is a Point of Inflection. The curve stops bending downward (concave down) and prepares to bend upward (concave up) to catch the impending valley floor."
+                        },
+                        {
+                            d1: "Zero (Stationary)", d2: "Positive (Concave Up)",
+                            prev: "We have hit the exact bottom of the valley. The tangent line is flat again, but this time the curve is bending upward like a bowl.",
+                            what: "At $x = 1$, the tangent is flat. Velocity $f'(x)$ hits 0 again. Acceleration $f''(x)$ is firmly positive.",
+                            why: "Again, the Second Derivative Test: $f' = 0$ flags the stationary point, and $f'' > 0$ confirms the curve is a bowl, making this a Relative Minimum."
+                        },
+                        {
+                            d1: "Positive (Increasing)", d2: "Positive (Concave Up)",
+                            prev: "We are accelerating up the right side of the valley. Both the tangent slope and the structural bend are aiming aggressively upward.",
+                            what: "The curve blasts upward. Velocity $f'(x)$ climbs rapidly into positive territory. Acceleration $f''(x)$ is also strongly positive.",
+                            why: "When both derivatives are positive, the system is not just growing—it is compounding. It is moving upward, and its rate of upward movement is increasing."
+                        }
+                    ];
+
+                    // Coordinate transforms
+                    const cx = 300, cy = 150, scaleX = 100, scaleY = 30;
+
+                    function f0(x) { return x*x*x - 3*x; }
+                    function f1(x) { return 3*x*x - 3; }
+                    function f2(x) { return 6*x; }
+
+                    function generatePaths() {
+                        let p0=[], p1=[], p2=[];
+                        for(let i=0; i<=200; i++) {
+                            let x = -2 + (4 * i / 200); // map to -2 to 2
+                            let px = cx + x * scaleX;
+                            p0.push((i===0?"M ":"L ") + px.toFixed(1) + " " + (cy - f0(x)*scaleY).toFixed(1));
+                            p1.push((i===0?"M ":"L ") + px.toFixed(1) + " " + (cy - f1(x)*scaleY).toFixed(1));
+                            p2.push((i===0?"M ":"L ") + px.toFixed(1) + " " + (cy - f2(x)*scaleY).toFixed(1));
+                        }
+                        document.getElementById('cw-path-f0').setAttribute('d', p0.join(" "));
+                        document.getElementById('cw-path-f1').setAttribute('d', p1.join(" "));
+                        document.getElementById('cw-path-f2').setAttribute('d', p2.join(" "));
+                    }
+
+                    function updateUI() {
+                        const stepData = mathSteps[currentStep];
+                        const nar = narratives[currentStep];
+                        const x = stepData.x;
+
+                        // Update Telemetry
+                        document.getElementById('cw-tel-coord').textContent = stepData.title;
+                        document.getElementById('cw-tel-d1').textContent = nar.d1;
+                        document.getElementById('cw-tel-d2').textContent = nar.d2;
+                        document.getElementById('cw-preview-text').textContent = nar.prev;
+                        document.getElementById('cw-pane-what').innerHTML = nar.what;
+                        document.getElementById('cw-pane-why').innerHTML = nar.why;
+
+                        renderMathInElement(document.getElementById('cw-pane-what'), {delimiters: [{left: '$', right: '$', display: false}]});
+                        renderMathInElement(document.getElementById('cw-pane-why'), {delimiters: [{left: '$', right: '$', display: false}]});
+
+                        // Position Tracker Dot based on active mode
+                        let px = cx + x * scaleX;
+                        let py = cy;
+                        let slope = 0;
+                        if(currentMode === 0) { py -= f0(x) * scaleY; slope = f1(x); }
+                        else if(currentMode === 1) { py -= f1(x) * scaleY; slope = f2(x); }
+                        else if(currentMode === 2) { py -= f2(x) * scaleY; slope = 6; } // deriv of 6x is 6
+
+                        document.getElementById('cw-tracker-line').setAttribute('x1', px);
+                        document.getElementById('cw-tracker-line').setAttribute('x2', px);
+                        document.getElementById('cw-tracker-dot').setAttribute('cx', px);
+                        document.getElementById('cw-tracker-dot').setAttribute('cy', py);
+
+                        // Draw Tangent Line (scaled carefully)
+                        // visual slope = (delta Y pixels) / (delta X pixels)
+                        // math slope = delta Y / delta X
+                        // So visual slope = -slope * (scaleY/scaleX)
+                        let visualSlope = -slope * (scaleY / scaleX);
+                        let dx = 60; // 60 pixels left/right
+                        let dy = visualSlope * dx;
+
+                        document.getElementById('cw-tangent-line').setAttribute('x1', px - dx);
+                        document.getElementById('cw-tangent-line').setAttribute('y1', py - dy);
+                        document.getElementById('cw-tangent-line').setAttribute('x2', px + dx);
+                        document.getElementById('cw-tangent-line').setAttribute('y2', py + dy);
+
+                        // Buttons
+                        document.getElementById('btn-cw-prev').disabled = (currentStep === 0);
+                        document.getElementById('btn-cw-next').disabled = (currentStep === 4);
+
+                        for(let i=0; i<3; i++) {
+                            let btn = document.getElementById('btn-mode-'+i);
+                            if(i === currentMode) btn.classList.add('active');
+                            else btn.classList.remove('active');
+                        }
+                    }
+
+                    return {
+                        init: function() {
+                            generatePaths();
+                            updateUI();
+                        },
+                        advanceStep: function(dir) {
+                            currentStep += dir;
+                            updateUI();
+                        },
+                        changeMode: function(m) {
+                            currentMode = m;
+                            document.getElementById('cw-path-f0').style.opacity = (m===0) ? "1" : "0.15";
+                            document.getElementById('cw-path-f1').style.opacity = (m===1) ? "1" : "0.15";
+                            document.getElementById('cw-path-f2').style.opacity = (m===2) ? "1" : "0.15";
+                            // Recalculate tracker position
+                            updateUI();
+                        }
+                    };
+                })();
+                document.addEventListener('DOMContentLoaded', curveLab.init);
+            </script>
+
+            <!-- LECTURE SUMMARY (The Shape of Things to Come) -->
+            <h2 id="section-conclusion" style="margin-top: 3.5rem">The Shape of Things to Come</h2>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                You now possess the tools to read the hidden architecture of any continuous function. The raw equation gives you coordinates. The first derivative $f'(x)$ gives you velocity and direction. The second derivative $f''(x)$ gives you the structural tension and concavity.
+            </p>
+
+            <div class="infobox" style="border-left-color: #3b82f6; background-color: #eff6ff; border: 1px solid #bfdbfe">
+                <h4 style="color: #1e3a8a">🎓 Key Takeaways from Lecture 14</h4>
+                <ul style="margin: 0; padding-left: 1.25rem; color: #1e3a8a; line-height: 1.6; font-size: 0.95rem">
+                    <li style="margin-bottom: 0.5rem">
+                        <strong>The First Derivative Test:</strong> A stationary point ($f'(x)=0$) is a maximum if the slope changes from positive to negative, and a minimum if it changes from negative to positive.
+                    </li>
+                    <li style="margin-bottom: 0.5rem">
+                        <strong>Concavity:</strong> If $f''(x) > 0$, the curve bends upward like a bowl. If $f''(x) < 0$, it bends downward like an umbrella. Points of inflection occur where $f''(x) = 0$ and the bending reverses.
+                    </li>
+                    <li>
+                        <strong>The Second Derivative Test:</strong> At a stationary point $x=c$, a positive $f''(c)$ guarantees a local minimum (bottom of the bowl), and a negative $f''(c)$ guarantees a local maximum (top of the umbrella).
+                    </li>
+                </ul>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.5rem">
+                In <strong>Lecture 15</strong>, we will take all this telemetry machinery out into the field. We will set up real-world physical and economic models and use these exact tests to optimize them—finding the absolute peaks of efficiency and the lowest possible costs.
+            </p>
+
+            <!-- INTERACTIVE KNOWLEDGE CHECK -->
+            <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; border-radius: 8px; padding: 1.5rem; margin: 2rem 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center; text-align: center;">
+                <h3 style="margin: 0 0 0.5rem 0; color: #047857; font-size: 1.35rem;">🧠 Interactive Knowledge Check</h3>
+                <p style="margin: 0 0 1.25rem 0; color: #065f46; font-size: 1.05rem; max-width: 600px;">
+                    Test your ability to classify critical points and find intervals of concavity using the first and second derivative tests.
+                </p>
+                <a href="week5-lecture14-practice.html" target="_blank" style="background: #10b981; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 1.05rem; transition: background 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    Launch Interactive Practice &rarr;
+                </a>
+            </div>
+
+            <!-- FOOTER NAVIGATION -->
+            <div class="footer-nav" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap">
+                <a href="week5-lecture13.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&larr; Lecture 13</a>
+                <a href="week5.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&uarr; Week 5 Hub</a>
+                <a href="week5-lecture14-practice.html" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">✎ Practice Problems</a>
+                <a href="week5-lecture15.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">Lecture 15 &rarr;</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 5, Lecture 13: Derivatives of Elementary Functions | MTHS120</title>
+    <!-- KaTeX Integration -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+    <style>
+        :root {
+            --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
+            --accent: #d97706; --accent-hover: #b45309;
+            --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { max-width: 100%; overflow-x: hidden; }
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; width: 100%; }
+
+        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: nowrap; gap: 1rem; }
+        .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
+
+        .intro-lead { font-size: 1.1rem; color: #1e293b; line-height: 1.7; margin-bottom: 1.5rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); border: 1px solid var(--border); }
+        .toc-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.75rem; margin: 1.75rem 0 2.5rem 0; }
+        .toc-box h4 { margin: 0 0 0.75rem 0; color: #92400e; font-size: 1.05rem; }
+        .toc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.5rem 1.5rem; margin: 0; padding-left: 1.25rem; }
+        .toc-grid li { margin-bottom: 0.35rem; font-size: 0.95rem; }
+        .toc-grid a { color: #b45309; text-decoration: none; font-weight: 500; }
+        .toc-grid a:hover { text-decoration: underline; color: var(--accent-hover); }
+
+        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+        h3 { color: #1e293b; margin-top: 1.5rem; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+
+        .infobox { background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.25rem 0 1.75rem 0; }
+        .infobox h4 { margin: 0 0 0.85rem 0; color: #0f172a; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-ui); }
+
+        .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; border: 1px solid var(--border); }
+        .aside-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #b45309; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .aside-box h4 { margin-top: 0; color: #b45309; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .aside-box p, .aside-box li, .infobox p, .infobox li { color: #0f172a !important; }
+
+        .worked-example-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .worked-example-box h4 { margin-top: 0; color: #047857; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .worked-example-box p, .worked-example-box li { color: #0f172a !important; }
+
+        /* Mobile-first layout adjustment */
+        @media (max-width: 768px) {
+            .katex-display { overflow-x: auto !important; overflow-y: hidden !important; -webkit-overflow-scrolling: touch !important; max-width: 100% !important; padding: 0.25rem 0 !important; }
+            body { background: #ffffff; padding: 1rem 0.75rem; }
+            .container { max-width: 100%; margin: 0; }
+            .module-content { background: transparent; padding: 0; border: none; border-radius: 0; box-shadow: none; margin-bottom: 1rem; }
+            .header { padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+            ol, ul { padding-left: 1.25rem !important; margin-left: 0 !important; }
+            .header > .nav-btn-group, .footer-nav { display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; width: 100% !important; gap: 0.5rem !important; }
+            .header > .nav-btn-group a, .footer-nav a { flex: 1 1 0 !important; min-width: 0 !important; text-align: center !important; padding: 0.55rem 0.4rem !important; font-size: 0.82rem !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
+            p, div, li, blockquote { word-break: break-word; overflow-wrap: break-word; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- TOP NAVIGATION HEADER -->
+        <div class="header" style="border-bottom: 2px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.25rem">
+            <div class="nav-btn-group" style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; width: 100%">
+                <a href="week4-lecture12.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&larr; Lecture 12</a>
+                <a href="week5.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&uarr; Week 5 Hub</a>
+                <a href="week5-lecture13-practice.html" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">✎ Practice Problems</a>
+                <a href="week5-lecture14.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">Lecture 14 &rarr;</a>
+            </div>
+            <div style="text-align: center; width: 100%; min-width: 0">
+                <h1 style="margin: 0; line-height: 1.3; font-size: 1.5rem">Week 5, Lecture 13: Derivatives of Elementary Functions</h1>
+            </div>
+        </div>
+
+        <div class="module-content">
+            <!-- HERO IMAGE -->
+            <div style="margin-bottom: 2rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);">
+                <img src="images/chapter5-hero.jpg" alt="Week 5: Derivatives and Optimisation" style="width: 100%; height: auto; display: block" />
+            </div>
+
+            <div style="margin: 2.25rem 0 2.5rem 0">
+                <h3 style="margin-top: 0; color: #0f172a; font-size: 1.35rem">Welcome to Lecture 13: Building the Calculus Machine</h3>
+
+                <p style="margin: 0 0 1.15rem 0; color: #334155; line-height: 1.75; font-size: 1.05rem">
+                    In Week 4, we spent hours staring into the mathematical abyss. We used the $\epsilon\text{-}\delta$ limit definition to carefully calculate the slope of a tangent line from <em>first principles</em>. We proved that to find the instantaneous velocity at $x_0$, we had to set up a massive algebraic fraction, manually factor the numerator, cancel out the $\Delta x$, and then evaluate the limit.
+                </p>
+
+                <p style="margin: 0 0 1.5rem 0; color: #334155; line-height: 1.75; font-size: 1.05rem">
+                    If we had to do that grueling process every single time we encountered a new function in physics, economics, or engineering, science would grind to a halt. Today, we leave the manual labor behind. By applying limits to general algebraic structures just <em>one time</em>, we will forge a set of permanent "Lego brick" rules for differentiation. Once you master the Product, Quotient, and Chain rules, you will be able to instantly calculate the exact rate of change for nearly any function in the universe without ever touching an $\epsilon$ or $\delta$ again[cite: 4].
+                </p>
+
+                <!-- COURSE STRUCTURE BOX -->
+                <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid #0284c7; border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02)">
+                    <div style="font-size: 0.85rem; font-weight: 800; color: #0369a1; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem">🗺️ The Concept of the Derivative Function</div>
+                    <p style="margin: 0 0 0.85rem 0; color: #334155; line-height: 1.65; font-size: 0.98rem">
+                        Previously, we calculated the derivative $f'(x_0)$ at one specific, fixed coordinate. Now, we expand that idea. If a function $f: X \to \mathbb{R}$ is differentiable at <em>every</em> point $x \in X$, we can create a brand new function $f': X \to \mathbb{R}$ that outputs the tangent slope at <em>any</em> input $x$.
+                    </p>
+                    <p style="margin: 0; color: #334155; line-height: 1.65; font-size: 0.98rem">
+                        This derivative function is commonly denoted as $f'(x)$ or using Leibniz's differential notation $\frac{df}{dx}$. If a function $y = f(t)$ models a process over time, physicists often denote its derivative (velocity) with a dot: $\dot{y}$ or $\dot{f}(t)$[cite: 4].
+                    </p>
+                </div>
+            </div>
+
+            <!-- TABLE OF CONTENTS -->
+            <div class="toc-box">
+                <h4>📌 Lecture 13 Topics</h4>
+                <ul class="toc-grid">
+                    <li><a href="#section-powers">1. Forging the Base Parts: Powers, Sine, and Exponentials</a></li>
+                    <li><a href="#section-rules">2. The Assembly Line: Product and Quotient Rules</a></li>
+                    <li><a href="#section-chain">3. Nested Gears: The Chain Rule (Interactive Lab)</a></li>
+                    <li><a href="#section-inverse">4. Reversing the Engine: The Inverse Function Rule</a></li>
+                    <li><a href="#section-table">5. The Master Table of Elementary Derivatives</a></li>
+                </ul>
+            </div>
+
+            <!-- SECTION 1: FORGING THE BASE PARTS -->
+            <h2 id="section-powers">1. Forging the Base Parts: Powers, Sine, and Exponentials</h2>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                Before we can build complex machines, we need the basic parts. We will use the limit definition of the derivative one last time to forge the exact derivative rules for polynomials, trigonometric waves, and exponential growth[cite: 4].
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin: 2rem 0">
+
+                <!-- POWER RULE -->
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-top: 4px solid #10b981; border-radius: 8px; padding: 1.5rem">
+                    <h4 style="margin: 0 0 0.5rem 0; color: #047857; font-size: 1.05rem">The Power Rule</h4>
+                    <p style="margin: 0 0 1rem 0; color: #475569; font-size: 0.95rem; line-height: 1.6">
+                        For any power $f(x) = x^p$, we apply the limit:
+                        $$f'(x) = \lim_{\Delta x \to 0} \frac{(x + \Delta x)^p - x^p}{\Delta x}$$
+                        Using the binomial theorem, $(x + \Delta x)^p$ expands to $x^p + px^{p-1}\Delta x + o(\Delta x)$, where $o(\Delta x)$ contains all the higher powers of $\Delta x$ that crush to zero. The $x^p$ terms cancel, the $\Delta x$ divides out, and we are left with exactly:
+                    </p>
+                    <div style="text-align: center; background: #f0fdf4; padding: 0.75rem; border-radius: 6px; font-weight: 700; color: #065f46">
+                        $$f'(x) = px^{p-1}$$
+                    </div>
+                </div>
+
+                <!-- TRIGONOMETRIC WAVES -->
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-top: 4px solid #3b82f6; border-radius: 8px; padding: 1.5rem">
+                    <h4 style="margin: 0 0 0.5rem 0; color: #1d4ed8; font-size: 1.05rem">Trigonometric Waves</h4>
+                    <p style="margin: 0 0 1rem 0; color: #475569; font-size: 0.95rem; line-height: 1.6">
+                        For $f(x) = \sin x$, we use the addition formula $\sin(x + \Delta x) = \sin x \cos \Delta x + \cos x \sin \Delta x$. Using the fundamental trigonometric limits $\lim_{\Delta x \to 0} \frac{\sin \Delta x}{\Delta x} = 1$ and $\lim_{\Delta x \to 0} \frac{\cos \Delta x - 1}{\Delta x} = 0$, the equation collapses beautifully into:
+                    </p>
+                    <div style="text-align: center; background: #eff6ff; padding: 0.75rem; border-radius: 6px; font-weight: 700; color: #1e3a8a">
+                        $$\frac{d}{dx}(\sin x) = \cos x$$
+                        $$\frac{d}{dx}(\cos x) = -\sin x$$
+                    </div>
+                </div>
+
+                <!-- EXPONENTIALS -->
+                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-top: 4px solid #8b5cf6; border-radius: 8px; padding: 1.5rem">
+                    <h4 style="margin: 0 0 0.5rem 0; color: #6d28d9; font-size: 1.05rem">Exponential Growth</h4>
+                    <p style="margin: 0 0 1rem 0; color: #475569; font-size: 0.95rem; line-height: 1.6">
+                        For $f(x) = a^x$, the limit evaluates to $a^x \lim_{\Delta x \to 0} \frac{a^{\Delta x} - 1}{\Delta x}$. This limit evaluates exactly to the natural logarithm $\ln a$. If we choose Euler's number $e$ as our base, then $\ln e = 1$, revealing the most remarkable property in all of mathematics—it is its own derivative:
+                    </p>
+                    <div style="text-align: center; background: #f5f3ff; padding: 0.75rem; border-radius: 6px; font-weight: 700; color: #4c1d95">
+                        $$\frac{d}{dx}(a^x) = a^x \ln a$$
+                        $$\frac{d}{dx}(e^x) = e^x$$
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: THE ASSEMBLY LINE -->
+            <h2 id="section-rules">2. The Assembly Line: Product and Quotient Rules</h2>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                We now have our base gears. But real-world models combine these functions through addition, multiplication, and division. How do we differentiate combinations?
+            </p>
+
+            <div class="infobox">
+                <h4>⚙️ The Sum and Constant Rules</h4>
+                <ul style="margin: 0; padding-left: 1.25rem; line-height: 1.8; font-size: 0.96rem">
+                    <li><strong>Sum & Difference:</strong> $(f \pm g)'(x) = f'(x) \pm g'(x)$</li>
+                    <li><strong>Constant Multiple:</strong> $(c \cdot f)'(x) = c \cdot f'(x)$</li>
+                </ul>
+                <p style="margin: 0.75rem 0 0 0; color: #334155; font-size: 0.95rem;"><em>(The derivative of a sum is simply the sum of the derivatives. You can treat them as completely independent machines[cite: 4].)</em></p>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                However, <strong>the derivative of a product is NOT the product of the derivatives</strong>. If you have a growing population that is simultaneously increasing its consumption rate, the total consumption does not just scale simply—the two growing factors interact and magnify each other. We must use the Product Rule[cite: 4].
+            </p>
+
+            <!-- PRODUCT & QUOTIENT BOXES -->
+            <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin: 2rem 0">
+                <div class="definition-box" style="border-left-color: #d97706; background: #fffbeb;">
+                    <h4 style="margin: 0 0 0.5rem 0; color: #b45309; font-size: 1.1rem">The Product Rule</h4>
+                    <p style="margin: 0 0 0.5rem 0; color: #475569; font-size: 0.95rem; line-height: 1.6">
+                        Let $f$ and $g$ be functions that are differentiable at $x_0$. Then their product $fg$ is differentiable, and:
+                    </p>
+                    <div style="text-align: center; margin: 0.75rem 0; font-size: 1.2rem; font-weight: bold; color: #0f172a">
+                        $$(fg)' = f'g + fg'$$
+                    </div>
+                    <p style="margin: 0; color: #475569; font-size: 0.9rem; font-style: italic;">"Differentiate the first, leave the second alone, PLUS leave the first alone, differentiate the second."</p>
+                </div>
+
+                <div class="definition-box" style="border-left-color: #ef4444; background: #fef2f2;">
+                    <h4 style="margin: 0 0 0.5rem 0; color: #b91c1c; font-size: 1.1rem">The Quotient Rule</h4>
+                    <p style="margin: 0 0 0.5rem 0; color: #475569; font-size: 0.95rem; line-height: 1.6">
+                        Let $f$ and $g$ be differentiable at $x_0$, and assume $g(x_0) \neq 0$. Then the quotient $\frac{f}{g}$ is differentiable, and:
+                    </p>
+                    <div style="text-align: center; margin: 0.75rem 0; font-size: 1.2rem; font-weight: bold; color: #0f172a">
+                        $$\left(\frac{f}{g}\right)' = \frac{f'g - fg'}{g^2}$$
+                    </div>
+                    <p style="margin: 0; color: #475569; font-size: 0.9rem; font-style: italic;">"Low D-High minus High D-Low, over the square of what's below."</p>
+                </div>
+            </div>
+
+            <!-- SECTION 3: THE CHAIN RULE (INTERACTIVE) -->
+            <h2 id="section-chain">3. Nested Gears: The Chain Rule</h2>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                The most important rule in differential calculus is the <strong>Chain Rule</strong>. It allows us to differentiate <em>composite</em> functions—functions nested inside of other functions.
+            </p>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                Think of an onion with layers, or a machine nested inside a larger machine. If an inner machine $g(x)$ spins twice as fast as the input $x$, and an outer machine $f(u)$ spins three times as fast as its input $u$, the total system spins $2 \times 3 = 6$ times as fast as the original input. You simply <strong>multiply the rates of change together</strong>[cite: 4].
+            </p>
+
+            <div class="definition-box" style="border-left-color: #8b5cf6; background: #f5f3ff;">
+                <h4 style="margin: 0 0 0.5rem 0; color: #6d28d9; font-size: 1.1rem">The Chain Rule</h4>
+                <p style="margin: 0 0 0.5rem 0; color: #475569; font-size: 0.95rem; line-height: 1.6">
+                    Let $F(x) = f(g(x))$ be the composition of two functions. If $g$ is differentiable at $x_0$, and $f$ is differentiable at $y_0 = g(x_0)$, then $F(x)$ is differentiable at $x_0$, and:
+                </p>
+                <div style="text-align: center; margin: 0.75rem 0; font-size: 1.2rem; font-weight: bold; color: #0f172a">
+                    $$F'(x) = f'(g(x)) \cdot g'(x)$$
+                </div>
+                <p style="margin: 0; color: #475569; font-size: 0.9rem; font-style: italic;">"Take the derivative of the OUTSIDE (leaving the inside alone), then MULTIPLY by the derivative of the INSIDE."</p>
+            </div>
+
+            <!-- ================================================================= -->
+            <!-- INTERACTIVE WIDGET: CHAIN RULE STEPPER                            -->
+            <!-- ================================================================= -->
+            <div class="stepper-walkthrough" id="chain-walkthrough" style="margin: 2.5rem 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                <style>
+                    #chain-walkthrough .telemetry-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.75rem; background: #0f172a; padding: 1rem 1.25rem; border-top-left-radius: 10px; border-top-right-radius: 10px; }
+                    #chain-walkthrough .telemetry-card { display: flex; flex-direction: column; }
+                    #chain-walkthrough .telemetry-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: #94a3b8; font-weight: 700; margin-bottom: 0.25rem; }
+                    #chain-walkthrough .telemetry-badge { font-family: monospace; font-size: 0.95rem; font-weight: 700; }
+                    #chain-walkthrough .formula-stage-wrap { background: #1e293b; padding: 1.25rem 1.5rem; border-bottom: 1px solid #334155; display: flex; justify-content: center; align-items: center; overflow-x: auto; }
+                    #chain-walkthrough .formula-display { display: flex; align-items: center; gap: 0.5rem; flex-wrap: nowrap; font-size: 1.2rem; }
+                    #chain-walkthrough .math-element { background: transparent; padding: 0.3rem 0.6rem; border-radius: 4px; font-family: monospace; font-weight: bold; transition: all 0.3s; border: 2px solid transparent; }
+                    #chain-walkthrough .math-element.active-outer { background: rgba(56, 189, 248, 0.15); border-color: #38bdf8; color: #bae6fd; }
+                    #chain-walkthrough .math-element.active-inner { background: rgba(16, 185, 129, 0.15); border-color: #10b981; color: #a7f3d0; }
+                    #chain-walkthrough .math-element.locked { opacity: 0.5; }
+                    #chain-walkthrough .nav-strip { display: flex; gap: 1.5rem; padding: 1.25rem 1.5rem; background: #f8fafc; border-bottom: 1px solid #cbd5e1; align-items: center; flex-wrap: wrap; }
+                    #chain-walkthrough .step-btn { padding: 0.5rem 0.9rem; border-radius: 6px; font-weight: 600; cursor: pointer; border: 1px solid #cbd5e1; background: #ffffff; color: #334155; }
+                    #chain-walkthrough .step-btn.primary { background: #d97706; color: #ffffff; border-color: #d97706; }
+                    #chain-walkthrough .step-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+                    @media (max-width: 640px) { #chain-walkthrough .analysis-panes { grid-template-columns: 1fr !important; } }
+                </style>
+
+                <!-- Live State Telemetry -->
+                <div class="telemetry-grid">
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Active Phase</span>
+                        <span class="telemetry-badge" id="cr-tel-phase" style="color: #fbbf24">1. Identify Nested Functions</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Outer Function $f(u)$</span>
+                        <span class="telemetry-badge" id="cr-tel-out" style="color: #38bdf8">Waiting...</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Inner Function $g(x)$</span>
+                        <span class="telemetry-badge" id="cr-tel-in" style="color: #10b981">Waiting...</span>
+                    </div>
+                </div>
+
+                <!-- Equation Breakdown Canvas -->
+                <div class="formula-stage-wrap">
+                    <div class="formula-display" style="color: #cbd5e1;">
+                        <span id="cr-eq-lhs">F'(x) =</span>
+                        <span id="cr-eq-ddx">\frac{d}{dx} \Big[</span>
+                        <span class="math-element" id="cr-eq-out">\sin</span>
+                        <span id="cr-eq-paren-l">(</span>
+                        <span class="math-element" id="cr-eq-in">x^2</span>
+                        <span id="cr-eq-paren-r">)</span>
+                        <span id="cr-eq-bracket">\Big]</span>
+                    </div>
+                </div>
+
+                <!-- Navigation + Inline Preview -->
+                <div class="nav-strip">
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="step-btn" id="btn-cr-prev" onclick="chainSim.step(-1)" disabled>&larr; Prev</button>
+                        <button class="step-btn primary" id="btn-cr-next" onclick="chainSim.step(1)">Next Step &rarr;</button>
+                        <button class="step-btn" onclick="chainSim.reset()">Reset</button>
+                    </div>
+                    <div id="cr-preview-text" style="flex: 1; min-width: 240px; font-size: 0.95rem; color: #1e293b; font-weight: 500;">
+                        Scenario: We need to differentiate $F(x) = \sin(x^2)$. Notice that this is not multiplication; the $x^2$ is trapped inside the sine wave.
+                    </div>
+                </div>
+
+                <!-- Paired Analytical Panes -->
+                <div class="analysis-panes" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #cbd5e1;">
+                    <div style="background: #ffffff; padding: 1.5rem;">
+                        <h4 style="margin: 0 0 0.5rem 0; color: #15803d; font-size: 0.85rem; text-transform: uppercase; font-weight: 800">What Is Happening</h4>
+                        <div id="cr-pane-what" style="font-size: 0.95rem; color: #334155; line-height: 1.6">We are looking at the raw, combined function. We cannot just use the standard sine rule because the input is not a plain $x$.</div>
+                    </div>
+                    <div style="background: #ffffff; padding: 1.5rem;">
+                        <h4 style="margin: 0 0 0.5rem 0; color: #1d4ed8; font-size: 0.85rem; text-transform: uppercase; font-weight: 800">Why The System Does This</h4>
+                        <div id="cr-pane-why" style="font-size: 0.95rem; color: #334155; line-height: 1.6">To use the Chain Rule, our very first task is to mathematically dissect the composite function into two isolated machines: an inside gear and an outside gear.</div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                const chainSim = (function() {
+                    let currentStep = 0;
+
+                    const data = [
+                        {
+                            phase: "1. Identify Layers",
+                            out: "f(u) = sin(u)",
+                            in: "g(x) = x²",
+                            eqLhs: "F'(x) =",
+                            eqDdx: "\\frac{d}{dx} \\Big[",
+                            eqOut: "\\sin",
+                            eqIn: "x^2",
+                            eqParenL: "(",
+                            eqParenR: ")",
+                            eqBracket: "\\Big]",
+                            classOut: "math-element",
+                            classIn: "math-element",
+                            preview: "Step 1: Identify the nested layers. The squaring function is trapped inside the sine function.",
+                            what: "We assign the inner block to $g(x) = x^2$ (the gear that spins first), and the outer block to $f(u) = \\sin(u)$ (the gear that processes the output of the first).",
+                            why: "Calculus rules only work on pure, isolated functions. The Chain Rule requires us to separate the layers so we can process them one at a time."
+                        },
+                        {
+                            phase: "2. Differentiate Outside",
+                            out: "f'(u) = cos(u)",
+                            in: "g(x) = x² (Locked)",
+                            eqLhs: "F'(x) =",
+                            eqDdx: "",
+                            eqOut: "\\cos",
+                            eqIn: "x^2",
+                            eqParenL: "(",
+                            eqParenR: ")",
+                            eqBracket: "\\cdot \\frac{d}{dx}[x^2]",
+                            classOut: "math-element active-outer",
+                            classIn: "math-element locked",
+                            preview: "Step 2: Differentiate the OUTSIDE function, but completely leave the INSIDE function alone.",
+                            what: "We apply the derivative to the outer sine function, turning it into cosine. Notice that the inside $x^2$ remains perfectly untouched, locked inside the parentheses.",
+                            why: "You cannot peel an onion from the inside out. We calculate how fast the outer machine reacts to its input $u$, before we calculate how fast $u$ itself is changing."
+                        },
+                        {
+                            phase: "3. Differentiate Inside",
+                            out: "f'(g(x)) = cos(x²)",
+                            in: "g'(x) = 2x",
+                            eqLhs: "F'(x) =",
+                            eqDdx: "",
+                            eqOut: "\\cos",
+                            eqIn: "x^2",
+                            eqParenL: "(",
+                            eqParenR: ")",
+                            eqBracket: "\\cdot \\mathbf{2x}",
+                            classOut: "math-element",
+                            classIn: "math-element active-inner",
+                            preview: "Step 3: Multiply by the derivative of the INSIDE function.",
+                            what: "We pull the inside function $x^2$ out to the side, apply the Power Rule to get $2x$, and multiply it by our waiting outer derivative.",
+                            why: "The overall rate of change is the product of the sequential gears. If the inside gear spins at $2x$, and the outside gear spins at $\\cos(u)$, they physically multiply together."
+                        }
+                    ];
+
+                    function updateUI() {
+                        const d = data[currentStep];
+
+                        document.getElementById('cr-tel-phase').textContent = d.phase;
+                        document.getElementById('cr-tel-out').textContent = d.out;
+                        document.getElementById('cr-tel-in').textContent = d.in;
+
+                        // Re-render math content using KaTeX
+                        katex.render(d.eqLhs, document.getElementById('cr-eq-lhs'), {throwOnError: false});
+                        katex.render(d.eqDdx, document.getElementById('cr-eq-ddx'), {throwOnError: false});
+                        katex.render(d.eqOut, document.getElementById('cr-eq-out'), {throwOnError: false});
+                        katex.render(d.eqParenL, document.getElementById('cr-eq-paren-l'), {throwOnError: false});
+                        katex.render(d.eqIn, document.getElementById('cr-eq-in'), {throwOnError: false});
+                        katex.render(d.eqParenR, document.getElementById('cr-eq-paren-r'), {throwOnError: false});
+                        katex.render(d.eqBracket, document.getElementById('cr-eq-bracket'), {throwOnError: false});
+
+                        document.getElementById('cr-eq-out').className = d.classOut;
+                        document.getElementById('cr-eq-in').className = d.classIn;
+
+                        document.getElementById('cr-preview-text').textContent = d.preview;
+                        document.getElementById('cr-pane-what').innerHTML = d.what;
+                        document.getElementById('cr-pane-why').innerHTML = d.why;
+
+                        // Re-render math inside the text panes
+                        renderMathInElement(document.getElementById('cr-pane-what'), {delimiters: [{left: '$', right: '$', display: false}]});
+                        renderMathInElement(document.getElementById('cr-pane-why'), {delimiters: [{left: '$', right: '$', display: false}]});
+
+                        document.getElementById('btn-cr-prev').disabled = (currentStep === 0);
+                        document.getElementById('btn-cr-next').disabled = (currentStep === 2);
+                    }
+
+                    return {
+                        step: function(dir) {
+                            currentStep += dir;
+                            updateUI();
+                        },
+                        reset: function() {
+                            currentStep = 0;
+                            updateUI();
+                        },
+                        init: function() {
+                            updateUI();
+                        }
+                    };
+                })();
+                document.addEventListener('DOMContentLoaded', chainSim.init);
+            </script>
+
+            <!-- SECTION 4: INVERSE FUNCTIONS -->
+            <h2 id="section-inverse">4. Reversing the Engine: The Inverse Function Rule</h2>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                What if we have a function $f(x)$ whose derivative we know, and we want to find the derivative of its inverse function $g(y) = f^{-1}(y)$? Because inverse functions are perfectly mirrored across the line $y = x$, their tangent slopes are perfectly inverted[cite: 4].
+            </p>
+
+            <div class="definition-box" style="border-left-color: #0ea5e9; background: #f0f9ff;">
+                <h4 style="margin: 0 0 0.5rem 0; color: #0284c7; font-size: 1.1rem">The Inverse Function Rule</h4>
+                <p style="margin: 0 0 0.5rem 0; color: #475569; font-size: 0.95rem; line-height: 1.6">
+                    If $f(x)$ is continuous and differentiable at $x_0$ with $f'(x_0) \neq 0$, and $g(y)$ is the inverse function of $f$ in a neighborhood of $y_0 = f(x_0)$, then $g(y)$ is differentiable at $y_0$ and:
+                </p>
+                <div style="text-align: center; margin: 0.75rem 0; font-size: 1.2rem; font-weight: bold; color: #0f172a">
+                    $$g'(y_0) = \frac{1}{f'(x_0)}$$
+                </div>
+            </div>
+
+            <!-- WORKED EXAMPLE: LOGARITHM -->
+            <div class="worked-example-box">
+                <h4 style="color: #047857; margin-bottom: 0.75rem">🎯 Worked Example: The Natural Logarithm</h4>
+                <p style="margin-bottom: 0.5rem; font-size: 0.95rem">
+                    Let $g(y) = \ln y$. We know this is the inverse of the exponential function $f(x) = e^x$.
+                </p>
+                <p style="margin-bottom: 0.5rem; font-size: 0.95rem">
+                    We know that the derivative of the original function is $f'(x) = e^x$. According to our inverse rule:
+                </p>
+                <div style="text-align: center; margin: 0.75rem 0; font-size: 1.05rem">
+                    $$g'(y) = \frac{1}{f'(x)} = \frac{1}{e^x}$$
+                </div>
+                <p style="margin-bottom: 0.5rem; font-size: 0.95rem">
+                    But we need the answer in terms of the input $y$. Since $e^x = y$, we substitute $y$ back into the denominator:
+                </p>
+                <div style="text-align: center; margin: 0.75rem 0 0.25rem 0; font-size: 1.1rem; font-weight: bold; color: #065f46">
+                    $$\frac{d}{dy}(\ln y) = \frac{1}{y}$$
+                </div>
+            </div>
+
+            <!-- SECTION 5: MASTER TABLE -->
+            <h2 id="section-table">5. The Master Table of Elementary Derivatives</h2>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                Combining all our first-principles limits and inverse rules gives us the complete toolkit of standard derivatives. Memorize these base building blocks; combined with the Product, Quotient, and Chain rules, they can differentiate any elementary function[cite: 4].
+            </p>
+
+            <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; overflow: hidden; margin: 2rem 0;">
+                <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 1rem; color: #334155;">
+                    <thead>
+                        <tr style="background: #f1f5f9; border-bottom: 2px solid #cbd5e1;">
+                            <th style="padding: 1rem; color: #0f172a; width: 50%;">Function $f(x)$</th>
+                            <th style="padding: 1rem; color: #0f172a; width: 50%;">Derivative $f'(x)$</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 1rem; font-family: monospace; font-size: 1.1rem;">$$c \quad \text{(constant)}$$</td>
+                            <td style="padding: 1rem; font-family: monospace; font-size: 1.1rem; color: #d97706;">$$0$$</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0; background: #fafafa;">
+                            <td style="padding: 1rem; font-family: monospace; font-size: 1.1rem;">$$x^n$$</td>
+                            <td style="padding: 1rem; font-family: monospace; font-size: 1.1rem; color: #d97706;">$$nx^{n-1}$$</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 1rem; font-family: monospace; font-size: 1.1rem;">$$\sin x$$</td>
+                            <td style="padding: 1rem; font-family: monospace; font-size: 1.1rem; color: #d97706;">$$\cos x$$</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0; background: #fafafa;">
+                            <td style="padding: 1rem; font-family: monospace; font-size: 1.1rem;">$$\cos x$$</td>
+                            <td style="padding: 1rem; font-family: monospace; font-size: 1.1rem; color: #d97706;">$$-\sin x$$</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 1rem; font-family: monospace; font-size: 1.1rem;">$$\tan x$$</td>
+                            <td style="padding: 1rem; font-family: monospace; font-size: 1.1rem; color: #d97706;">$$\frac{1}{\cos^2 x} = \sec^2 x$$</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0; background: #fafafa;">
+                            <td style="padding: 1rem; font-family: monospace; font-size: 1.1rem;">$$e^x$$</td>
+                            <td style="padding: 1rem; font-family: monospace; font-size: 1.1rem; color: #d97706;">$$e^x$$</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 1rem; font-family: monospace; font-size: 1.1rem;">$$\ln x$$</td>
+                            <td style="padding: 1rem; font-family: monospace; font-size: 1.1rem; color: #d97706;">$$\frac{1}{x}$$</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0; background: #fafafa;">
+                            <td style="padding: 1rem; font-family: monospace; font-size: 1.1rem;">$$\arcsin x$$</td>
+                            <td style="padding: 1rem; font-family: monospace; font-size: 1.1rem; color: #d97706;">$$\frac{1}{\sqrt{1 - x^2}}$$</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 1rem; font-family: monospace; font-size: 1.1rem;">$$\arctan x$$</td>
+                            <td style="padding: 1rem; font-family: monospace; font-size: 1.1rem; color: #d97706;">$$\frac{1}{1 + x^2}$$</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- INTERACTIVE KNOWLEDGE CHECK -->
+            <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; border-radius: 8px; padding: 1.5rem; margin: 2rem 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center; text-align: center;">
+                <h3 style="margin: 0 0 0.5rem 0; color: #047857; font-size: 1.35rem;">🧠 Interactive Knowledge Check</h3>
+                <p style="margin: 0 0 1.25rem 0; color: #065f46; font-size: 1.05rem; max-width: 600px;">
+                    Drill your reflexes on the Product, Quotient, and Chain rules using randomly generated nested functions.
+                </p>
+                <a href="week5-lecture13-practice.html" target="_blank" style="background: #10b981; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 1.05rem; transition: background 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    Launch Interactive Practice &rarr;
+                </a>
+            </div>
+
+            <!-- FOOTER NAVIGATION -->
+            <div class="footer-nav" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap">
+                <a href="week4-lecture12.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&larr; Lecture 12</a>
+                <a href="week5.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&uarr; Week 5 Hub</a>
+                <a href="week5-lecture13-practice.html" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">✎ Practice Problems</a>
+                <a href="week5-lecture14.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">Lecture 14 &rarr;</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

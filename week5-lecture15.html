@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 5, Lecture 15: Application: Optimisation | MTHS120</title>
+    <!-- KaTeX Integration -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+    <style>
+        :root {
+            --bg: #f8fafc; --text: #0f172a; --card: #ffffff; --border: #cbd5e1;
+            --accent: #d97706; --accent-hover: #b45309;
+            --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { max-width: 100%; overflow-x: hidden; }
+        body { font-family: var(--font-ui); background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; width: 100%; }
+
+        .header { border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: nowrap; gap: 1rem; }
+        .module-content { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); margin-bottom: 2rem; border: 1px solid var(--border); }
+
+        .intro-lead { font-size: 1.1rem; color: #1e293b; line-height: 1.7; margin-bottom: 1.5rem; background: #f1f5f9; padding: 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); border: 1px solid var(--border); }
+        .toc-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.75rem; margin: 1.75rem 0 2.5rem 0; }
+        .toc-box h4 { margin: 0 0 0.75rem 0; color: #92400e; font-size: 1.05rem; }
+        .toc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.5rem 1.5rem; margin: 0; padding-left: 1.25rem; }
+        .toc-grid li { margin-bottom: 0.35rem; font-size: 0.95rem; }
+        .toc-grid a { color: #b45309; text-decoration: none; font-weight: 500; }
+        .toc-grid a:hover { text-decoration: underline; color: var(--accent-hover); }
+
+        h2 { border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 2.5rem; color: #0f172a; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+        h3 { color: #1e293b; margin-top: 1.5rem; font-family: var(--font-ui); scroll-margin-top: 2rem; }
+
+        .infobox { background: #f8fafc; border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 1.25rem 0 1.75rem 0; }
+        .infobox h4 { margin: 0 0 0.85rem 0; color: #0f172a; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-ui); }
+
+        .definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 6px 6px 0; border: 1px solid var(--border); }
+        .aside-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #b45309; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .aside-box h4 { margin-top: 0; color: #b45309; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .aside-box p, .aside-box li, .infobox p, .infobox li { color: #0f172a !important; }
+
+        .worked-example-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
+        .worked-example-box h4 { margin: 0 0 0.85rem 0; color: #047857; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .worked-example-box p, .worked-example-box li { color: #0f172a !important; }
+
+        /* Mobile-first layout adjustment */
+        @media (max-width: 768px) {
+            .katex-display { overflow-x: auto !important; overflow-y: hidden !important; -webkit-overflow-scrolling: touch !important; max-width: 100% !important; padding: 0.25rem 0 !important; }
+            body { background: #ffffff; padding: 1rem 0.75rem; }
+            .container { max-width: 100%; margin: 0; }
+            .module-content { background: transparent; padding: 0; border: none; border-radius: 0; box-shadow: none; margin-bottom: 1rem; }
+            .header { padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+            ol, ul { padding-left: 1.25rem !important; margin-left: 0 !important; }
+            .header > .nav-btn-group, .footer-nav { display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; width: 100% !important; gap: 0.5rem !important; }
+            .header > .nav-btn-group a, .footer-nav a { flex: 1 1 0 !important; min-width: 0 !important; text-align: center !important; padding: 0.55rem 0.4rem !important; font-size: 0.82rem !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
+            p, div, li, blockquote { word-break: break-word; overflow-wrap: break-word; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- TOP NAVIGATION HEADER -->
+        <div class="header" style="border-bottom: 2px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.25rem">
+            <div class="nav-btn-group" style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; width: 100%">
+                <a href="week5-lecture14.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&larr; Lecture 14</a>
+                <a href="week5.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&uarr; Week 5 Hub</a>
+                <a href="week5-lecture15-practice.html" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">✎ Practice Problems</a>
+                <a href="week6.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">Week 6 &rarr;</a>
+            </div>
+            <div style="text-align: center; width: 100%; min-width: 0">
+                <h1 style="margin: 0; line-height: 1.3; font-size: 1.5rem">Week 5, Lecture 15: Application: Optimisation</h1>
+            </div>
+        </div>
+
+        <div class="module-content">
+            <!-- HERO IMAGE -->
+            <div style="margin-bottom: 2rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);">
+                <img src="images/chapter5-hero.jpg" alt="Week 5: Derivatives and Optimisation" style="width: 100%; height: auto; display: block" />
+            </div>
+
+            <div style="margin: 2.25rem 0 2.5rem 0">
+                <h3 style="margin-top: 0; color: #0f172a; font-size: 1.35rem">Welcome to Lecture 15: Finding the Best of All Possible Worlds</h3>
+
+                <p style="margin: 0 0 1.15rem 0; color: #334155; line-height: 1.75; font-size: 1.05rem">
+                    In the previous lectures, we learned how to mechanically compute derivatives and how to read them like a telemetry stream to map the shape of a curve. But calculus was not invented just to draw accurate graphs. It was invented to solve problems.
+                </p>
+
+                <p style="margin: 0 0 1.5rem 0; color: #334155; line-height: 1.75; font-size: 1.05rem">
+                    In the real world, resources are scarce. Engineers want to design a structural beam that maximizes load-bearing capacity while minimizing weight. Businesses want to set a price point that maximizes total profit. Epidemiologists want to find the exact day an infection rate will peak. All of these problems boil down to a single mathematical mandate: finding the highest or lowest possible value of a function. This process is called <strong>Optimisation</strong>[cite: 4].
+                </p>
+
+                <!-- COURSE STRUCTURE BOX -->
+                <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid #0284c7; border-radius: 8px; padding: 1.5rem; margin: 1.75rem 0; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02)">
+                    <div style="font-size: 0.85rem; font-weight: 800; color: #0369a1; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem">🗺️ The Absolute Extrema Guarantee</div>
+                    <p style="margin: 0 0 0.85rem 0; color: #334155; line-height: 1.65; font-size: 0.98rem">
+                        Does a "best" or "worst" case scenario always mathematically exist? Not necessarily. If a function goes off to infinity, there is no maximum. However, we have a powerful safety net: <strong>Theorem 8 (Extreme Value Theorem)</strong>.
+                    </p>
+                    <p style="margin: 0; color: #334155; line-height: 1.65; font-size: 0.98rem">
+                        If a function is continuous on a rigidly closed interval $[a, b]$, it is mathematically guaranteed to attain an <strong>absolute maximum</strong> and an <strong>absolute minimum</strong> somewhere on that interval. Our job is simply to hunt them down[cite: 4].
+                    </p>
+                </div>
+            </div>
+
+            <!-- TABLE OF CONTENTS -->
+            <div class="toc-box">
+                <h4>📌 Lecture 15 Topics</h4>
+                <ul class="toc-grid">
+                    <li><a href="#section-extrema">1. Local vs. Global Extrema</a></li>
+                    <li><a href="#section-candidates">2. The Only Three Places to Look (Candidate Points)</a></li>
+                    <li><a href="#section-stepper">3. Interactive Optimisation (The Paddock Problem)</a></li>
+                    <li><a href="#section-warnings">4. Warnings: When the Second Derivative Test Fails</a></li>
+                </ul>
+            </div>
+
+            <!-- WEEK 5 LECTURE 15 PODCAST COMPONENT -->
+            <div id="podcast" class="podcast-card" style="background: var(--card); border: 1px solid var(--border); border-left: 5px solid var(--accent); border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0 2rem 0; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.75rem;">
+                    <div>
+                        <span style="display: inline-block; background: #fef3c7; color: #92400e; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.2rem 0.55rem; border-radius: 4px; margin-bottom: 0.35rem; border: 1px solid #fde68a;">
+                            🎧 Deep Dive Podcast
+                        </span>
+                        <h3 style="margin: 0; color: #0f172a; font-size: 1.15rem;">Hunting the Extremes: How Calculus Finds the Best and Worst Scenarios</h3>
+                        <p style="margin: 0.25rem 0 0 0; font-size: 0.9rem; color: #64748b;">
+                            Discover how to translate real-world constraints into mathematical models. We walk through the closed-interval method, analyze global vs. local extrema, and solve the classic maximization problems that define applied calculus.
+                        </p>
+                    </div>
+                    <a href="#" target="_blank" rel="noopener noreferrer"
+                       style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.4rem 0.75rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.82rem; white-space: nowrap; display: inline-flex; align-items: center; gap: 0.35rem; transition: background 0.2s;">
+                        <span>⬇ Download / Open</span>
+                    </a>
+                </div>
+                <div style="width: 100%; margin-top: 0.5rem;">
+                    <audio controls preload="metadata" style="width: 100%; height: 42px; border-radius: 6px;">
+                        <source src="#" type="audio/mp4">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            </div>
+
+            <!-- SECTION 1: LOCAL VS GLOBAL EXTREMA -->
+            <h2 id="section-extrema">1. Local vs. Global Extrema</h2>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                Before we start solving, we need to distinguish between two different types of peaks and valleys: <em>Local</em> and <em>Global</em> (also called relative and absolute).
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                Imagine hiking in a massive mountain range. You reach the top of a small hill. Relative to the immediate area around you, you are at the highest point—this is a <strong>Local Maximum</strong>. However, if you look across the horizon, there might be a massive, snow-capped summit that is the true highest point of the entire mountain range. That summit is the <strong>Global Maximum</strong>[cite: 4].
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin: 1.5rem 0">
+                <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid #8b5cf6; border-radius: 8px; padding: 1.25rem">
+                    <h4 style="margin: 0 0 0.4rem 0; color: #6d28d9; font-size: 1rem">Relative (Local) Extrema</h4>
+                    <p style="margin: 0; color: #334155; font-size: 0.93rem; line-height: 1.55">
+                        A point $c$ is a relative maximum if $f(c) \ge f(x)$ for all $x$ in some small, localized neighborhood $(a, b)$ directly surrounding $c$. It is a "turning point" in the middle of a curve[cite: 4].
+                    </p>
+                </div>
+                <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid #d97706; border-radius: 8px; padding: 1.25rem">
+                    <h4 style="margin: 0 0 0.4rem 0; color: #b45309; font-size: 1rem">Absolute (Global) Extrema</h4>
+                    <p style="margin: 0; color: #334155; font-size: 0.93rem; line-height: 1.55">
+                        A point $x_{max}$ is the absolute maximum if $f(x_{max}) \ge f(x)$ for <em>every single $x$</em> in the entire permitted domain. This is the ultimate peak of the entire system[cite: 4].
+                    </p>
+                </div>
+            </div>
+
+            <!-- SECTION 2: CANDIDATE POINTS -->
+            <h2 id="section-candidates">2. The Only Three Places to Look (Candidate Points)</h2>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                If we are looking for the absolute highest or lowest value of a function on a closed interval $[a, b]$, we do not need to test every single decimal number. We only need to check three specific types of locations.
+            </p>
+
+            <div class="definition-box" style="border-left-color: #ef4444; background: #fef2f2;">
+                <h4 style="margin: 0 0 0.5rem 0; color: #b91c1c; font-size: 1.1rem">The Closed Interval Method</h4>
+                <p style="margin: 0 0 0.5rem 0; color: #7f1d1d; font-size: 0.95rem; line-height: 1.6">
+                    To find the absolute extrema of a continuous function on a closed interval $[a, b]$, you only ever need to evaluate the function at:
+                </p>
+                <ol style="margin: 0; padding-left: 1.5rem; color: #7f1d1d; line-height: 1.6; font-size: 0.95rem">
+                    <li style="margin-bottom: 0.5rem"><strong>Stationary Points:</strong> Where $f'(x) = 0$ (the curve smoothly flattens out into a peak or valley).</li>
+                    <li style="margin-bottom: 0.5rem"><strong>Points of Non-Differentiability:</strong> Where $f'(x)$ is undefined (sharp, jagged corners or cusps).</li>
+                    <li><strong>The Boundary Endpoints:</strong> The strict cutoff edges of the domain, $x = a$ and $x = b$. The absolute highest point of a mountain trail might simply be the edge of a cliff where the trail ends, even if it isn't a "peak"[cite: 4].</li>
+                </ol>
+            </div>
+
+            <!-- ================================================================= -->
+            <!-- INTERACTIVE WIDGET: THE OPTIMISATION STEPPER                      -->
+            <!-- ================================================================= -->
+            <h2 id="section-stepper">3. Interactive Optimisation (The Paddock Problem)</h2>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                Let's apply this method to a concrete scenario. You are a farmer with exactly $100$ meters of fencing. You want to enclose a rectangular paddock against a straight river. The river acts as a natural barrier, so you only need to fence three sides (two widths and one length). <em>What dimensions should you choose to maximize the total enclosed area?</em>
+            </p>
+
+            <div class="stepper-walkthrough" id="opt-walkthrough" style="margin: 2.5rem 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                <style>
+                    #opt-walkthrough .telemetry-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.75rem; background: #0f172a; padding: 1rem 1.25rem; border-top-left-radius: 10px; border-top-right-radius: 10px; }
+                    #opt-walkthrough .telemetry-card { display: flex; flex-direction: column; }
+                    #opt-walkthrough .telemetry-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: #94a3b8; font-weight: 700; margin-bottom: 0.25rem; }
+                    #opt-walkthrough .telemetry-badge { font-family: monospace; font-size: 0.95rem; font-weight: 700; }
+
+                    #opt-walkthrough .mode-bar { background: #1e293b; padding: 0.85rem 1.25rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; border-bottom: 1px solid #334155; }
+                    #opt-walkthrough .mode-btn { background: #334155; color: #cbd5e1; border: 1px solid #475569; padding: 0.45rem 0.85rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+                    #opt-walkthrough .mode-btn:hover { background: #475569; color: #ffffff; }
+                    #opt-walkthrough .mode-btn.active { background: #d97706; color: #ffffff; border-color: #f59e0b; }
+
+                    #opt-walkthrough .nav-strip { display: flex; gap: 1.5rem; padding: 1.25rem 1.5rem; background: #f8fafc; border-bottom: 1px solid #cbd5e1; align-items: center; flex-wrap: wrap; }
+                    #opt-walkthrough .step-btn { padding: 0.5rem 0.9rem; border-radius: 6px; font-weight: 600; cursor: pointer; border: 1px solid #cbd5e1; background: #ffffff; color: #334155; }
+                    #opt-walkthrough .step-btn.primary { background: #d97706; color: #ffffff; border-color: #d97706; }
+                    #opt-walkthrough .step-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+                    @media (max-width: 640px) { #opt-walkthrough .analysis-panes { grid-template-columns: 1fr !important; } }
+                </style>
+
+                <!-- Toggle verification domains -->
+                <div class="mode-bar">
+                    <span style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: #94a3b8; margin-right: 0.5rem;">Verification Strategy:</span>
+                    <button class="mode-btn active" id="btn-optmode-0" onclick="optSim.changeMode(0)">First Derivative Test</button>
+                    <button class="mode-btn" id="btn-optmode-1" onclick="optSim.changeMode(1)">Second Derivative Test</button>
+                </div>
+
+                <!-- Live State Telemetry -->
+                <div class="telemetry-grid">
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Active Phase</span>
+                        <span class="telemetry-badge" id="opt-tel-phase" style="color: #fbbf24">1. Formulate Model</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Objective Function $A(x)$</span>
+                        <span class="telemetry-badge" id="opt-tel-func" style="color: #38bdf8">Waiting...</span>
+                    </div>
+                    <div class="telemetry-card">
+                        <span class="telemetry-label">Rigid Domain Limits</span>
+                        <span class="telemetry-badge" id="opt-tel-domain" style="color: #10b981">Waiting...</span>
+                    </div>
+                </div>
+
+                <!-- Navigation + Inline Preview -->
+                <div class="nav-strip">
+                    <div style="display: flex; gap: 0.5rem; flex-shrink: 0;">
+                        <button class="step-btn" id="btn-opt-prev" onclick="optSim.step(-1)" disabled>&larr; Prev</button>
+                        <button class="step-btn primary" id="btn-opt-next" onclick="optSim.step(1)">Next Step &rarr;</button>
+                        <button class="step-btn" onclick="optSim.reset()">Reset</button>
+                    </div>
+                    <div id="opt-preview-text" style="flex: 1; min-width: 240px; font-size: 0.95rem; color: #1e293b; font-weight: 500;">
+                        Scenario: Maximize the area of a rectangular paddock against a river using exactly $100$ meters of fencing.
+                    </div>
+                </div>
+
+                <!-- Visual Canvas: The Paddock -->
+                <div style="padding: 2rem; background: #ffffff; border-bottom: 1px solid #cbd5e1; display: flex; justify-content: center; align-items: center; min-height: 250px;">
+                    <svg id="opt-svg-canvas" viewBox="0 0 500 250" style="width: 100%; max-width: 480px; display: block; overflow: visible;">
+                        <!-- The River -->
+                        <path d="M 0 40 Q 125 30 250 40 T 500 40" fill="none" stroke="#0284c7" stroke-width="25" stroke-linecap="round" opacity="0.4" />
+                        <text x="250" y="25" font-size="14" font-weight="bold" fill="#0369a1" text-anchor="middle">R I V E R</text>
+
+                        <!-- Paddock Area Background -->
+                        <rect id="opt-paddock-bg" x="150" y="45" width="200" height="150" fill="#dcfce7" opacity="0.5" />
+
+                        <!-- Paddock Fences -->
+                        <polyline id="opt-paddock-fence" points="150,195 150,45 350,45 350,195" fill="none" stroke="#b45309" stroke-width="4" stroke-linejoin="round" />
+
+                        <!-- Dimension Labels -->
+                        <text id="opt-lbl-width" x="120" y="125" font-size="16" font-family="monospace" font-weight="bold" fill="#0f172a" text-anchor="end">x</text>
+                        <text id="opt-lbl-length" x="250" y="220" font-size="16" font-family="monospace" font-weight="bold" fill="#0f172a" text-anchor="middle">100 - 2x</text>
+
+                        <!-- Dynamic Area Readout -->
+                        <text id="opt-lbl-area" x="250" y="130" font-size="20" font-weight="bold" fill="#15803d" text-anchor="middle">Area = ?</text>
+                    </svg>
+                </div>
+
+                <!-- Paired Analytical Panes -->
+                <div class="analysis-panes" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #cbd5e1;">
+                    <div style="background: #ffffff; padding: 1.5rem;">
+                        <h4 style="margin: 0 0 0.5rem 0; color: #15803d; font-size: 0.85rem; text-transform: uppercase; font-weight: 800">What Is Happening</h4>
+                        <div id="opt-pane-what" style="font-size: 0.95rem; color: #334155; line-height: 1.6">We assign the width of the paddock to $x$. Since there are two widths, they use $2x$ meters of fencing. The remaining fence for the length is $100 - 2x$.</div>
+                    </div>
+                    <div style="background: #ffffff; padding: 1.5rem;">
+                        <h4 style="margin: 0 0 0.5rem 0; color: #1d4ed8; font-size: 0.85rem; text-transform: uppercase; font-weight: 800">Why The System Does This</h4>
+                        <div id="opt-pane-why" style="font-size: 0.95rem; color: #334155; line-height: 1.6">We cannot perform single-variable calculus on an equation with two independent variables (length and width). We use the physical constraint ($L=100$) to substitute one variable out of the equation.</div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                const optSim = (function() {
+                    let step = 0;
+                    let mode = 0; // 0=First Deriv, 1=Second Deriv
+
+                    const stepsData = [
+                        {
+                            phase: "1. Formulate Model", func: "A(x) = x(100 - 2x)", dom: "Waiting...",
+                            w: 200, h: 100, areaLabel: "Area = x(100 - 2x)",
+                            prev: "Step 1: Translate the real-world geometry into a single-variable algebraic function.",
+                            what: "We assign the width of the paddock to $x$. The length becomes $100 - 2x$. The total enclosed Area is $A(x) = \\text{width} \\times \\text{length} = x(100 - 2x) = 100x - 2x^2$.",
+                            why: "Calculus requires a single input stream. By substituting the fence constraint ($100$m total) into the Area formula, we create a function entirely dependent on one variable: $x$."
+                        },
+                        {
+                            phase: "2. Domain Constraints", func: "A(x) = 100x - 2x²", dom: "x ∈ [0, 50]",
+                            w: 400, h: 25, areaLabel: "Area = 0",
+                            prev: "Step 2: Establish the absolute boundary endpoints. What are the physical extremes of the fence?",
+                            what: "The width $x$ cannot be negative ($x \\ge 0$). If we use all $100$m on the two widths, $x = 50$, leaving $0$ for the length. Therefore, the strict domain is $x \\in [0, 50]$.",
+                            why: "This locks in the Closed Interval Method. The absolute maximum area must either be at a critical point somewhere inside $(0, 50)$, or at the exact boundary edges ($0$ or $50$)."
+                        },
+                        {
+                            phase: "3. Derivative Probe", func: "A'(x) = 100 - 4x", dom: "x ∈ [0, 50]",
+                            w: 250, h: 125, areaLabel: "Area = 1250",
+                            prev: "Step 3: Differentiate the objective function to find the instantaneous rate of change.",
+                            what: "We differentiate $A(x) = 100x - 2x^2$ using the Power Rule. The derivative is $A'(x) = 100 - 4x$.",
+                            why: "The derivative acts as our compass. By finding the exact moment where the rate of change is zero ($A'(x) = 0$), we locate the flat peak of the parabolic area curve."
+                        },
+                        {
+                            phase: "4. Lock Critical Point", func: "A'(x) = 0", dom: "x = 25",
+                            w: 250, h: 125, areaLabel: "A(25) = 1250",
+                            prev: "Step 4: Set the derivative to zero and solve for the stationary point.",
+                            what: "We set $100 - 4x = 0$ and solve. $4x = 100$, so $x = 25$. If the width is $25$, the length is $100 - 2(25) = 50$. The area is $25 \\times 50 = 1250$ sq meters.",
+                            why: "We have isolated our sole candidate point in the interior of the domain. $x = 25$ is the only place where the curve flattens out. But is it a maximum or a minimum?"
+                        },
+                        {
+                            phase: "5. Verification", func: "Check Method", dom: "x = 25 is MAX",
+                            w: 250, h: 125, areaLabel: "Global Max = 1250",
+                            prev: "Step 5: Verify the critical point using your selected derivative test.",
+                            // what/why will be set dynamically based on mode
+                        }
+                    ];
+
+                    function updateUI() {
+                        let d = stepsData[step];
+
+                        document.getElementById('opt-tel-phase').textContent = d.phase;
+                        document.getElementById('opt-tel-func').textContent = d.func;
+                        document.getElementById('opt-tel-domain').textContent = d.dom;
+                        document.getElementById('opt-preview-text').textContent = d.prev;
+
+                        // Handle dynamic SVG sizing
+                        // Center is x=250.
+                        // Width w means from 250-w/2 to 250+w/2.
+                        // Height h means from y=45 to y=45+h
+                        let cx = 250;
+                        let xStart = cx - d.w/2;
+                        let yStart = 45;
+
+                        document.getElementById('opt-paddock-bg').setAttribute('x', xStart);
+                        document.getElementById('opt-paddock-bg').setAttribute('y', yStart);
+                        document.getElementById('opt-paddock-bg').setAttribute('width', d.w);
+                        document.getElementById('opt-paddock-bg').setAttribute('height', d.h);
+
+                        let pts = `${xStart},${yStart+d.h} ${xStart},${yStart} ${xStart+d.w},${yStart} ${xStart+d.w},${yStart+d.h}`;
+                        document.getElementById('opt-paddock-fence').setAttribute('points', pts);
+
+                        document.getElementById('opt-lbl-width').setAttribute('x', xStart - 10);
+                        document.getElementById('opt-lbl-width').setAttribute('y', yStart + d.h/2 + 5);
+
+                        document.getElementById('opt-lbl-length').setAttribute('y', yStart + d.h + 20);
+
+                        document.getElementById('opt-lbl-area').setAttribute('y', yStart + d.h/2 + 7);
+                        document.getElementById('opt-lbl-area').textContent = d.areaLabel;
+
+                        let whatText = d.what;
+                        let whyText = d.why;
+
+                        // Dynamic text for Step 4 based on Mode
+                        if (step === 4) {
+                            if (mode === 0) {
+                                whatText = "<strong>First Derivative Test:</strong> Let's check a point before $x=25$ (say, $x=20$). $A'(20) = 100 - 80 = +20$. Let's check after (say, $x=30$). $A'(30) = 100 - 120 = -20$.";
+                                whyText = "Because the derivative transitions from positive (increasing) to negative (decreasing), the curve rises to a peak and falls. $x=25$ is definitively a Maximum.";
+                            } else {
+                                whatText = "<strong>Second Derivative Test:</strong> We take the derivative of $A'(x) = 100 - 4x$. The second derivative is a constant $A''(x) = -4$.";
+                                whyText = "Because $A''(25) = -4$ (which is strictly less than 0), the curve is globally concave down (bending downward like an umbrella). The stationary point at $c=25$ must be the absolute top of the umbrella (Maximum).";
+                            }
+                        }
+
+                        document.getElementById('opt-pane-what').innerHTML = whatText;
+                        document.getElementById('opt-pane-why').innerHTML = whyText;
+
+                        renderMathInElement(document.getElementById('opt-pane-what'), {delimiters: [{left: '$', right: '$', display: false}]});
+                        renderMathInElement(document.getElementById('opt-pane-why'), {delimiters: [{left: '$', right: '$', display: false}]});
+
+                        document.getElementById('btn-opt-prev').disabled = (step === 0);
+                        document.getElementById('btn-opt-next').disabled = (step === 4);
+
+                        document.getElementById('btn-optmode-0').className = (mode === 0) ? "mode-btn active" : "mode-btn";
+                        document.getElementById('btn-optmode-1').className = (mode === 1) ? "mode-btn active" : "mode-btn";
+                    }
+
+                    return {
+                        init: function() { updateUI(); },
+                        step: function(dir) { step += dir; updateUI(); },
+                        reset: function() { step = 0; updateUI(); },
+                        changeMode: function(m) { mode = m; updateUI(); }
+                    };
+                })();
+                document.addEventListener('DOMContentLoaded', optSim.init);
+            </script>
+
+            <!-- SECTION 4: WARNINGS -->
+            <h2 id="section-warnings">4. Warnings: When the Second Derivative Test Fails</h2>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                In our paddock problem, the Second Derivative Test was incredibly fast because $A''(x) = -4$ was a constant. However, as noted in Theorem 20, the Second Derivative Test is not infallible[cite: 4].
+            </p>
+
+            <div class="worked-example-box" style="border-left-color: #f59e0b; background: #fffbeb;">
+                <h4 style="color: #b45309; margin-bottom: 0.5rem">⚠️ The Inconclusive Zero: $f(x) = x^4$</h4>
+                <p style="margin-bottom: 0.75rem; font-size: 0.95rem; line-height: 1.6;">
+                    Consider the quartic function $f(x) = x^4$.
+                </p>
+                <p style="margin-bottom: 0.5rem; font-size: 0.95rem; line-height: 1.6;">
+                    The first derivative is $f'(x) = 4x^3$. We find a stationary point at $x = 0$. Is it a maximum or minimum?
+                </p>
+                <p style="margin-bottom: 0.5rem; font-size: 0.95rem; line-height: 1.6;">
+                    We try the Second Derivative Test: $f''(x) = 12x^2$. We evaluate this at our critical point: $f''(0) = 12(0)^2 = 0$.
+                </p>
+                <p style="margin-bottom: 0.5rem; font-size: 0.95rem; font-weight: bold; color: #92400e;">
+                    The test is inconclusive!
+                </p>
+                <p style="margin-bottom: 0; font-size: 0.95rem; line-height: 1.6;">
+                    Just because the second derivative is zero does <em>not</em> mean the point isn't an extremum. If we revert to the First Derivative Test, we see that $f'(-1) = -4$ (decreasing) and $f'(1) = +4$ (increasing). The curve clearly falls into a valley and rises, proving that $x=0$ is indeed a strict Relative Minimum despite the second derivative test failing[cite: 4].
+                </p>
+            </div>
+
+            <!-- LECTURE SUMMARY -->
+            <h2 id="section-summary" style="margin-top: 3.5rem">Summary: The Peak of Differential Calculus</h2>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                You have officially conquered the differential arc of this course. You started by hunting the ghost of division-by-zero, formalized the limit, and forged the algebraic rules of the derivative. Today, you wielded that machinery to solve practical, real-world constraints.
+            </p>
+
+            <div class="infobox" style="border-left-color: #3b82f6; background-color: #eff6ff; border: 1px solid #bfdbfe">
+                <h4 style="color: #1e3a8a">🎓 Key Takeaways from Lecture 15</h4>
+                <ul style="margin: 0; padding-left: 1.25rem; color: #1e3a8a; line-height: 1.6; font-size: 0.95rem">
+                    <li style="margin-bottom: 0.5rem">
+                        <strong>Global vs Local:</strong> A local extremum is a peak relative to its immediate neighborhood. A global extremum is the absolute highest/lowest point across the entire domain.
+                    </li>
+                    <li style="margin-bottom: 0.5rem">
+                        <strong>The Search Grid:</strong> To find absolute extrema on a closed interval $[a, b]$, you only check stationary points ($f'(x)=0$), points of non-differentiability, and the boundary endpoints $a$ and $b$.
+                    </li>
+                    <li>
+                        <strong>Verification is Mandatory:</strong> A stationary point is merely a candidate. You must mathematically verify its status using either the First Derivative Test (tracking slope changes) or the Second Derivative Test (evaluating concavity).
+                    </li>
+                </ul>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.5rem">
+                <strong>Where we go next:</strong> Next week, we flip the entire machine upside down. If the derivative breaks a system down to find its instantaneous rate of change, how do we put the pieces back together to find the total accumulation? Welcome to <strong>Week 6: Integration</strong>.
+            </p>
+
+            <!-- INTERACTIVE KNOWLEDGE CHECK -->
+            <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #10b981; border-radius: 8px; padding: 1.5rem; margin: 2rem 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center; text-align: center;">
+                <h3 style="margin: 0 0 0.5rem 0; color: #047857; font-size: 1.35rem;">🧠 Practice Problems</h3>
+                <p style="margin: 0 0 1.25rem 0; color: #065f46; font-size: 1.05rem; max-width: 600px;">
+                    Test your ability to optimize real-world functions, locate absolute extrema on closed intervals, and apply your verification tests.
+                </p>
+                <a href="week5-lecture15-practice.html" target="_blank" style="background: #10b981; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 1.05rem; transition: background 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    Launch Practice Problems &rarr;
+                </a>
+            </div>
+
+            <!-- FOOTER NAVIGATION -->
+            <div class="footer-nav" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap">
+                <a href="week5-lecture14.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&larr; Lecture 14</a>
+                <a href="week5.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">&uarr; Week 5 Hub</a>
+                <a href="week5-lecture15-practice.html" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">✎ Practice Problems</a>
+                <a href="week6.html" style="background: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 0.5rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.88rem; text-align: center; white-space: nowrap">Week 6 &rarr;</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
