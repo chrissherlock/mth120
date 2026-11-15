@@ -1426,6 +1426,242 @@
             })();
             </script>
 
+            <!-- HISTORICAL ASIDE: THE WEIERSTRASS MONSTER -->
+            <style>
+              .history-aside {
+                margin: 2rem 0;
+                padding: 1.5rem 1.5rem 2rem 1.5rem;
+                background: #f8fafc;
+                border: 1px solid #cbd5e1;
+                border-left: 5px solid #0284c7;
+                border-radius: 8px;
+                font-family: system-ui, -apple-system, sans-serif;
+              }
+              .timeline {
+                position: relative;
+                padding-left: 2rem;
+                margin-top: 1.5rem;
+              }
+              /* The central vertical line */
+              .timeline::before {
+                content: '';
+                position: absolute;
+                left: 0.5rem;
+                top: 0.5rem;
+                bottom: 0;
+                width: 3px;
+                background: #cbd5e1;
+                border-radius: 2px;
+              }
+              .timeline-item {
+                position: relative;
+                margin-bottom: 2rem;
+              }
+              .timeline-item:last-child {
+                margin-bottom: 0;
+              }
+              /* The dot on the timeline */
+              .timeline-item::before {
+                content: '';
+                position: absolute;
+                left: -1.82rem; /* Centers the dot on the 3px line */
+                top: 1.25rem;
+                width: 13px;
+                height: 13px;
+                border-radius: 50%;
+                background: #0284c7;
+                border: 3px solid #ffffff;
+                box-shadow: 0 0 0 1px #94a3b8;
+                z-index: 1;
+              }
+              .timeline-content {
+                background: #ffffff;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                padding: 1.25rem;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+                display: flex;
+                gap: 1.25rem;
+                align-items: flex-start;
+              }
+              @media (max-width: 600px) {
+                .timeline-content {
+                  flex-direction: column;
+                }
+              }
+              .timeline-portraits {
+                display: flex;
+                gap: 0.5rem;
+                flex-shrink: 0;
+              }
+              .timeline-portrait {
+                width: 55px;
+                height: 70px;
+                object-fit: cover;
+                border-radius: 4px;
+                border: 1px solid #cbd5e1;
+              }
+              .timeline-text h5 {
+                margin: 0 0 0.25rem 0;
+                color: #0f172a;
+                font-size: 1.05rem;
+                font-weight: 700;
+              }
+              .timeline-date {
+                font-size: 0.78rem;
+                font-weight: 700;
+                color: #0284c7;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                display: block;
+                margin-bottom: 0.5rem;
+              }
+              .timeline-text p {
+                margin: 0 0 0.75rem 0;
+                font-size: 0.9rem;
+                color: #334155;
+                line-height: 1.6;
+              }
+              .timeline-text p:last-child {
+                margin-bottom: 0;
+              }
+              .timeline-text ul {
+                margin: 0 0 0.75rem 0;
+                padding-left: 1.25rem;
+                color: #334155;
+                font-size: 0.9rem;
+                line-height: 1.6;
+              }
+              .timeline-text li {
+                margin-bottom: 0.35rem;
+              }
+            </style>
+
+            <aside class="history-aside" aria-labelledby="history-aside-title">
+              <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.75rem; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.5rem;">
+                <div>
+                  <span style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #0284c7; display: block; margin-bottom: 0.2rem;">
+                    Historical Context
+                  </span>
+                  <h4 id="history-aside-title" style="margin: 0; color: #0f172a; font-size: 1.2rem; font-weight: 700;">
+                    The Weierstrass Monster &amp; The Collapse of Intuition
+                  </h4>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                  <span style="background: #fee2e2; color: #991b1b; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 9999px;">Mathematical Crisis</span>
+                  <span style="background: #e0f2fe; color: #0369a1; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 9999px;">Real Analysis</span>
+                </div>
+              </div>
+
+              <p style="margin-bottom: 0; font-size: 0.95rem; line-height: 1.6; color: #0f172a;">
+                The history of the Weierstrass Monster—more formally known as the Weierstrass function—is one of the most disruptive chapters in the history of mathematics, representing the exact moment 19th-century mathematicians realized that human geometric intuition could no longer be trusted.
+              </p>
+
+              <!-- TIMELINE -->
+              <div class="timeline">
+
+                <!-- 1. INTUITIVE ILLUSION -->
+                <div class="timeline-item">
+                  <div class="timeline-content">
+                    <div class="timeline-portraits">
+                      <img src="images/newton.jpg" alt="Isaac Newton" class="timeline-portrait" loading="lazy">
+                      <img src="images/leibniz.jpg" alt="Gottfried Leibniz" class="timeline-portrait" loading="lazy">
+                    </div>
+                    <div class="timeline-text">
+                      <span class="timeline-date">Late 1600s – 1806</span>
+                      <h5>1. The Pre-Weierstrass Landscape: An Intuitive Illusion</h5>
+                      <p>
+                        For centuries following the invention of calculus by Isaac Newton and Gottfried Wilhelm Leibniz, mathematics was heavily tethered to physical geometry and motion. Mathematicians viewed functions primarily as curves that could be drawn smoothly with a pencil.
+                      </p>
+                      <p>
+                        Because of this visual bias, a deep-seated assumption took root: <em>If a function is continuous (meaning its graph has no breaks, jumps, or gaps), it must be differentiable (meaning it has a smooth, measurable slope) almost everywhere.</em> The belief was so strong that in 1806, the prominent French physicist and mathematician André-Marie Ampère even published a formal "proof" attempting to show that every continuous function must have a derivative everywhere, save for a few isolated points. For decades, the mathematical community accepted this as an absolute truth.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 2. HIDDEN PRECURSOR -->
+                <div class="timeline-item">
+                  <div class="timeline-content">
+                    <div class="timeline-portraits">
+                      <img src="images/bolzano.jpg" alt="Bernard Bolzano" class="timeline-portrait" loading="lazy">
+                    </div>
+                    <div class="timeline-text">
+                      <span class="timeline-date">c. 1830</span>
+                      <h5>2. The Hidden Precursor</h5>
+                      <p>
+                        Unbeknownst to the broader mathematical world, the first crack in the foundation was actually struck around 1830 by Bernard Bolzano, a Czech priest and mathematician working in intellectual isolation in Prague. Bolzano constructed the very first mathematical example of a function that was continuous everywhere yet lacked a derivative at any point.
+                      </p>
+                      <p>
+                        However, Bolzano’s work was far ahead of its time, and he never published it. His manuscript sat quietly in an archive and was not discovered until 1930—long after the mathematical world had already been upended.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 3. WEIERSTRASS UNVEILS THE MONSTER -->
+                <div class="timeline-item">
+                  <div class="timeline-content">
+                    <div class="timeline-portraits">
+                      <img src="images/weierstrass.png" alt="Karl Weierstrass" class="timeline-portrait" loading="lazy">
+                    </div>
+                    <div class="timeline-text">
+                      <span class="timeline-date">July 18, 1872</span>
+                      <h5>3. Weierstrass Unveils the Monster</h5>
+                      <p>
+                        The true turning point came when the German mathematician Karl Weierstrass read a paper before the Royal Prussian Academy of Sciences in Berlin. Weierstrass presented an explicit, algebraic formula built from an infinite series of cosine waves:
+                      </p>
+                      <div style="text-align: center; margin: 0.75rem 0;">
+                        $$f(x) = \sum_{n=0}^{\infty} a^n \cos(b^n \pi x)$$
+                      </div>
+                      <p>
+                        By ensuring that the frequency grew much faster than the amplitude shrank ($ab > 1$), Weierstrass created a fractal curve that zig-zagged infinitely at every level of magnification. He proved rigorously that his function possessed two terrifying properties:
+                      </p>
+                      <ul>
+                        <li><strong>It is continuous everywhere:</strong> You can trace the entire curve without ever lifting your pen.</li>
+                        <li><strong>It is differentiable nowhere:</strong> Every single point on the curve is a sharp, infinitely acute corner, meaning a tangent line can never be drawn.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 4. WHY IT WAS CONTROVERSIAL -->
+                <div class="timeline-item">
+                  <div class="timeline-content" style="background: #fef2f2; border-color: #fecdd3;">
+                    <div class="timeline-text">
+                      <span class="timeline-date" style="color: #9f1239;">Post-1872</span>
+                      <h5>4. Why It Was So Controversial</h5>
+                      <p>
+                        When Weierstrass unleashed his function, it caused an absolute crisis in the mathematical community. It challenged the philosophical underpinnings of how people understood math:
+                      </p>
+                      <ul>
+                        <li><strong>An "Outrage Against Common Sense":</strong> Mathematicians pride themselves on logic, but 19th-century math was still propped up by what people could picture in their minds. The French mathematician Henri Poincaré later lamented that these types of functions were created precisely to "disgrace our ordinary reasoning," calling them an outrage against common sense.</li>
+                        <li><strong>The "Lamentable Evil":</strong> Other contemporaries viewed these kinds of pathological curves not as brilliant discoveries, but as infections threatening the purity of calculus. The legendary French mathematician Charles Hermite wrote a famous letter to a colleague expressing his disgust: <em>"I turn away with fright and horror from this lamentable evil of functions which do not have derivatives."</em></li>
+                        <li><strong>The Destruction of Geometric Calculus:</strong> Until then, calculus teachers could tell students, "Just look at the curve; of course it has a slope." Weierstrass proved that a formula could describe a completely unbroken curve that defied all physical drawing and geometric reasoning. It proved that human eyes are blind to the true behavior of infinity.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 5. LEGACY -->
+                <div class="timeline-item">
+                  <div class="timeline-content">
+                    <div class="timeline-text">
+                      <span class="timeline-date">Late 19th Century &amp; Beyond</span>
+                      <h5>5. The Legacy: Birth of Rigorous Real Analysis</h5>
+                      <p>
+                        Ultimately, the Weierstrass Monster forced a revolution in mathematics known as the rigor movement or the arithmetization of analysis.
+                      </p>
+                      <p>
+                        Instead of relying on sloppy drawings, hand-waving, and notions of physical motion, mathematicians realized they had to build calculus entirely out of static, bulletproof arithmetic logic—relying on precise definitions, set theory, and the $\epsilon\text{-}\delta$ framework. What was initially treated as a bizarre, offensive "monster" ended up saving mathematics from its own logical complacency, paving the way for modern topology, fractal geometry, and advanced analysis.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </aside>
+
             <!-- LECTURE SUMMARY -->
             <h2 id="section-summary" style="margin-top: 3.5rem">Summary: The Launchpad to Calculus</h2>
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
