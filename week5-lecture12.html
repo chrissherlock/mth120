@@ -776,23 +776,105 @@
                 </div>
             </div>
 
-            <!-- SECTION 4: WHEN DIFFERENTIABILITY FAILS -->
-            <h2 id="section-differentiability">4. When Differentiability Fails</h2>
+            <!-- SECTION 5: WHEN DIFFERENTIABILITY FAILS -->
+            <h2 id="section-differentiability">5. When Differentiability Fails</h2>
 
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
-                Is every continuous function differentiable? No. In order to have a single, well-defined tangent line, the function must be "smooth". Sharp jagged corners break the machinery.
+                Up until now, we have assumed that every continuous curve has a neat, easily defined tangent line. But is this always true? If a function doesn't have any breaks or gaps in it, can we always find its derivative?
             </p>
 
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                The answer is <strong>no</strong>. In order for a derivative to exist at a specific point, the graph must be "smooth." Think about balancing a flat, straight ruler (the tangent line) on top of a curve. If you balance a ruler on the top of a smooth dome, it sits perfectly flat. There is only one stable way it can rest. But if you try to balance a ruler on the sharp tip of a pyramid, it wobbles. You could tilt it in dozens of different directions, and none of them would be the single, definitive "true" tangent line.
+            </p>
+
+            <div class="infobox" style="border-left-color: #3b82f6; background-color: #eff6ff; border: 1px solid #bfdbfe">
+                <h4 style="color: #1e3a8a">The "One True Tangent" Rule</h4>
+                <p style="margin: 0; color: #1e3a8a; line-height: 1.6; font-size: 0.95rem">
+                    Mathematically, a derivative is a limit. And remember our golden rule from Week 4: <strong>A limit only exists if the left side and the right side agree.</strong> If the calculated slope coming from the left is different from the calculated slope coming from the right, the derivative explodes and does not exist.
+                </p>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.5rem">
+                Let's look at the most famous example of a function that is perfectly connected, but impossible to differentiate at its center.
+            </p>
+
+            <!-- WORKED EXAMPLE: THE ABSOLUTE VALUE CUSP -->
             <div class="worked-example-box" style="border-left-color: #ef4444; background: #fef2f2;">
-                <h4 style="color: #b91c1c; margin-bottom: 0.5rem">⚠️ Example: The Absolute Value Cusp</h4>
-                <p style="margin-bottom: 0.75rem; font-size: 0.95rem; line-height: 1.6;">
-                    Consider $f(x) = |x|$ at $x = 0$. The function is perfectly continuous (the graph doesn't break).
+                <h4 style="color: #b91c1c; margin-bottom: 0.75rem">⚠️ Example: The Absolute Value Cusp</h4>
+
+                <p style="margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.6;">
+                    Consider the absolute value function, $f(x) = |x|$. If you draw this graph, it forms a sharp "V" shape whose lowest point hits exactly at the origin $(0,0)$. The line is completely continuous—you can draw it without lifting your pencil. But let's look at the slopes.
                 </p>
-                <p style="margin-bottom: 0.5rem; font-size: 0.95rem; line-height: 1.6;">
-                    If we evaluate the limit definition from the right ($h \to 0^+$), the slope is strictly $+1$. But if we evaluate from the left ($h \to 0^-$), the slope is strictly $-1$.
-                </p>
-                <p style="margin-bottom: 0; font-size: 0.95rem; line-height: 1.6;">
-                    Because $+1 \neq -1$, the limit does not exist. The absolute value function is <strong>not differentiable</strong> at zero. A physical system modeled by this curve would experience an infinite jolt of acceleration to instantly change direction.
+
+                <!-- CUSP DIAGRAM -->
+                <div style="background: #ffffff; border: 1px solid #fca5a5; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; display: flex; justify-content: center;">
+                    <svg viewBox="0 0 600 300" style="width: 100%; max-width: 500px; height: auto; display: block;" role="img" aria-label="Absolute Value Cusp Diagram">
+                        <!-- Axes -->
+                        <line x1="50" y1="250" x2="550" y2="250" stroke="#94a3b8" stroke-width="1.5" />
+                        <line x1="300" y1="280" x2="300" y2="20" stroke="#94a3b8" stroke-width="1.5" />
+                        <text x="540" y="240" font-size="13" font-weight="bold" fill="#64748b">x</text>
+                        <text x="285" y="30" font-size="13" font-weight="bold" fill="#64748b">y</text>
+
+                        <!-- Wobbling Tangent Lines (The "Ruler" Analogy) -->
+                        <g opacity="0.6">
+                            <!-- Flat -->
+                            <line x1="150" y1="250" x2="450" y2="250" stroke="#d97706" stroke-width="2" stroke-dasharray="5,4" />
+                            <!-- Tilted Up -->
+                            <line x1="180" y1="286" x2="420" y2="214" stroke="#d97706" stroke-width="2" stroke-dasharray="5,4" />
+                            <!-- Tilted Down -->
+                            <line x1="180" y1="214" x2="420" y2="286" stroke="#d97706" stroke-width="2" stroke-dasharray="5,4" />
+                        </g>
+
+                        <!-- Absolute Value Function f(x) = |x| -->
+                        <path d="M 100 50 L 300 250 L 500 50" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+
+                        <!-- Left Slope Indicator (m = -1) -->
+                        <line x1="150" y1="100" x2="150" y2="150" stroke="#ef4444" stroke-width="2" stroke-dasharray="3,3" />
+                        <line x1="150" y1="150" x2="200" y2="150" stroke="#ef4444" stroke-width="2" stroke-dasharray="3,3" />
+                        <text x="135" y="140" font-size="14" font-weight="bold" fill="#ef4444" text-anchor="end">Slope: -1</text>
+
+                        <!-- Right Slope Indicator (m = +1) -->
+                        <line x1="400" y1="150" x2="450" y2="150" stroke="#10b981" stroke-width="2" stroke-dasharray="3,3" />
+                        <line x1="450" y1="150" x2="450" y2="100" stroke="#10b981" stroke-width="2" stroke-dasharray="3,3" />
+                        <text x="465" y="140" font-size="14" font-weight="bold" fill="#10b981" text-anchor="start">Slope: +1</text>
+
+                        <!-- The Cusp Point -->
+                        <circle cx="300" cy="250" r="7" fill="#ef4444" stroke="#ffffff" stroke-width="2" />
+
+                        <!-- Labels -->
+                        <text x="300" y="275" font-size="13" font-weight="bold" fill="#0f172a" text-anchor="middle">x = 0</text>
+                        <text x="210" y="280" font-size="12" font-style="italic" fill="#b45309" text-anchor="end">"Wobbling" tangents</text>
+                        <path d="M 215 275 Q 260 270 280 255" fill="none" stroke="#b45309" stroke-width="1.5" marker-end="url(#arrow)" />
+
+                        <!-- Arrow Definition -->
+                        <defs>
+                            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#b45309" />
+                            </marker>
+                        </defs>
+                    </svg>
+                </div>
+
+                <p style="margin-bottom: 0.25rem; font-size: 0.95rem; font-weight: bold; color: #991b1b;">Approaching from the Left (Negative numbers):</p>
+                <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">If we look at the graph before zero, it is a straight line pointing diagonally downward. The slope is strictly $-1$.</p>
+
+                <p style="margin-bottom: 0.25rem; font-size: 0.95rem; font-weight: bold; color: #991b1b;">Approaching from the Right (Positive numbers):</p>
+                <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">If we look at the graph after zero, it is a straight line pointing diagonally upward. The slope is strictly $+1$.</p>
+
+                <p style="margin-bottom: 0.25rem; font-size: 0.95rem; font-weight: bold; color: #991b1b;">The Collision at $x = 0$:</p>
+                <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">What is the exact slope at the tip of the "V" where $x = 0$? The left-hand limit is screaming that the slope is $-1$. The right-hand limit is screaming that the slope is $+1$. Because $-1 \neq +1$, the two sides fundamentally disagree.</p>
+
+                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed #fca5a5;">
+                    <p style="margin: 0; font-size: 0.95rem; color: #991b1b;"><strong>Conclusion:</strong> Because the limit fails, the absolute value function is <strong>not differentiable</strong> at zero. If you try to calculate $f'(0)$, the answer is mathematically undefined.</p>
+                </div>
+            </div>
+
+            <div class="aside-box" style="border-left-color: #d97706; background: #fffbeb;">
+                <h4 style="color: #b45309;">🚗 The Physical Reality of a Sharp Corner</h4>
+                <p style="margin-bottom: 0; color: #0f172a; line-height: 1.6; font-size: 0.95rem">
+                    Why does the math break here? Imagine the graph $f(x) = |x|$ represents a car's physical position. The left side means the car is driving in reverse at 1 meter per second. The right side means the car is driving forward at 1 meter per second.
+                    <br><br>
+                    At exactly time $t = 0$, the sharp corner dictates that the car must instantly switch from driving backwards to driving forwards in <em>zero seconds</em>. There is no curve where the car slows down, stops, and accelerates forward. To change direction instantly requires an infinite jolt of force (infinite acceleration), which breaks the laws of physics. That is why sharp corners simply cannot have a defined instantaneous rate of change!
                 </p>
             </div>
 
