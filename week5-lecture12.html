@@ -669,23 +669,23 @@
                         let qTangentY = 2 + 0.25 * dxVal; // 2.025
                         let qTanPt = toScreen(targetX, qTangentY);
 
-                        // Non-crowding label positions for Anchor P
+                        // Safe, non-crowding label positions for Anchor P (pushed bottom-left)
                         document.getElementById('zl-anchor-dot').setAttribute('cx', pPt.px);
                         document.getElementById('zl-anchor-dot').setAttribute('cy', pPt.py);
                         let aLbl = document.getElementById('zl-anchor-lbl');
-                        aLbl.setAttribute('x', pPt.px - 65);
-                        aLbl.setAttribute('y', pPt.py + 20);
+                        aLbl.setAttribute('x', pPt.px - 75);
+                        aLbl.setAttribute('y', pPt.py + 32);
                         aLbl.textContent = `Anchor P (4, 2)`;
 
-                        // Non-crowding label positions for Target Q
+                        // Safe, non-crowding label positions for Target Q (pushed top-right)
                         document.getElementById('zl-target-dot').setAttribute('cx', qPt.px);
                         document.getElementById('zl-target-dot').setAttribute('cy', qPt.py);
                         let tLbl = document.getElementById('zl-target-lbl');
-                        tLbl.setAttribute('x', qPt.px + 10);
-                        tLbl.setAttribute('y', qPt.py - 6);
+                        tLbl.setAttribute('x', qPt.px + 18);
+                        tLbl.setAttribute('y', qPt.py - 14);
                         tLbl.textContent = `Q (4.1)`;
 
-                        // 4. Indicators (dx and dy) with safe offsets
+                        // 4. Indicators (dx and dy) with generous offsets
                         let pDx = toScreen(targetX, 2.0);
                         let dxLine = document.getElementById('zl-dx-line');
                         dxLine.setAttribute('x1', pPt.px);
@@ -701,11 +701,11 @@
 
                         let dxTxt = document.getElementById('zl-dx-text');
                         dxTxt.setAttribute('x', (pPt.px + pDx.px)/2);
-                        dxTxt.setAttribute('y', pPt.py + 18); // Safely below the dx bracket
+                        dxTxt.setAttribute('y', pPt.py + 18);
                         dxTxt.textContent = `dx = ${dxVal}`;
 
                         let dyTxt = document.getElementById('zl-dy-text');
-                        dyTxt.setAttribute('x', qTanPt.px + 10); // Safely to the right of dy line
+                        dyTxt.setAttribute('x', qTanPt.px + 16); // Safely shifted right
                         dyTxt.setAttribute('y', (pDx.py + qTanPt.py)/2 + 4);
                         let estDy = 0.25 * dxVal;
                         dyTxt.textContent = `dy = ${estDy.toFixed(3)}`;
