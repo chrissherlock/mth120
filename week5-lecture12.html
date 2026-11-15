@@ -475,6 +475,211 @@
                 Let's see this engine work in practice. We will calculate the derivative of the parabola $f(x) = x^2$ from <em>first principles</em> (meaning directly from the limit definition, without using any shortcuts).
             </p>
 
+            <!-- HISTORICAL ASIDE: THE TWO-CENTURY JOURNEY -->
+            <style>
+              .history-aside {
+                margin: 2rem 0;
+                padding: 1.5rem 1.5rem 2rem 1.5rem;
+                background: #f8fafc;
+                border: 1px solid #cbd5e1;
+                border-left: 5px solid #0284c7;
+                border-radius: 8px;
+                font-family: system-ui, -apple-system, sans-serif;
+              }
+              .timeline {
+                position: relative;
+                padding-left: 2rem;
+                margin-top: 1.5rem;
+              }
+              /* The central vertical line */
+              .timeline::before {
+                content: '';
+                position: absolute;
+                left: 0.5rem;
+                top: 0.5rem;
+                bottom: 0;
+                width: 3px;
+                background: #cbd5e1;
+                border-radius: 2px;
+              }
+              .timeline-item {
+                position: relative;
+                margin-bottom: 2rem;
+              }
+              .timeline-item:last-child {
+                margin-bottom: 0;
+              }
+              /* The dot on the timeline */
+              .timeline-item::before {
+                content: '';
+                position: absolute;
+                left: -1.82rem; /* Centers the dot on the 3px line */
+                top: 1.25rem;
+                width: 13px;
+                height: 13px;
+                border-radius: 50%;
+                background: #0284c7;
+                border: 3px solid #ffffff;
+                box-shadow: 0 0 0 1px #94a3b8;
+                z-index: 1;
+              }
+              .timeline-content {
+                background: #ffffff;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                padding: 1.25rem;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+                display: flex;
+                gap: 1.25rem;
+                align-items: flex-start;
+              }
+              @media (max-width: 600px) {
+                .timeline-content {
+                  flex-direction: column;
+                }
+              }
+              .timeline-portraits {
+                display: flex;
+                gap: 0.5rem;
+                flex-shrink: 0;
+              }
+              .timeline-portrait {
+                width: 55px;
+                height: 70px;
+                object-fit: cover;
+                border-radius: 4px;
+                border: 1px solid #cbd5e1;
+              }
+              .timeline-text h5 {
+                margin: 0 0 0.25rem 0;
+                color: #0f172a;
+                font-size: 1.05rem;
+                font-weight: 700;
+              }
+              .timeline-date {
+                font-size: 0.78rem;
+                font-weight: 700;
+                color: #0284c7;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                display: block;
+                margin-bottom: 0.5rem;
+              }
+              .timeline-text p {
+                margin: 0;
+                font-size: 0.9rem;
+                color: #334155;
+                line-height: 1.6;
+              }
+            </style>
+
+            <aside class="history-aside" aria-labelledby="history-aside-title">
+              <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.75rem; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.5rem;">
+                <div>
+                  <span style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #0284c7; display: block; margin-bottom: 0.2rem;">
+                    Historical Context
+                  </span>
+                  <h4 id="history-aside-title" style="margin: 0; color: #0f172a; font-size: 1.2rem; font-weight: 700;">
+                    A Two-Century Journey to the Limit
+                  </h4>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                  <span style="background: #e0f2fe; color: #0369a1; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 9999px;">Calculus Crisis</span>
+                  <span style="background: #f1f5f9; color: #475569; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 9999px;">Mathematical Rigor</span>
+                </div>
+              </div>
+
+              <p style="margin-bottom: 0; font-size: 0.95rem; line-height: 1.6; color: #0f172a;">
+                The limit definition of the derivative developed over two centuries as mathematicians struggled to fix a massive logical flaw at the heart of early calculus.
+              </p>
+
+              <!-- TIMELINE -->
+              <div class="timeline">
+
+                <!-- NEWTON & LEIBNIZ -->
+                <div class="timeline-item">
+                  <div class="timeline-content">
+                    <div class="timeline-portraits">
+                      <img src="images/newton.jpg" alt="Isaac Newton" class="timeline-portrait" loading="lazy">
+                      <img src="images/leibniz.jpg" alt="Gottfried Leibniz" class="timeline-portrait" loading="lazy">
+                    </div>
+                    <div class="timeline-text">
+                      <span class="timeline-date">Late 1600s</span>
+                      <h5>The Invention and the Paradox</h5>
+                      <p>
+                        When Isaac Newton and Gottfried Wilhelm Leibniz independently developed calculus, they built it on "infinitesimals"—quantities that were infinitely small but not quite zero. Leibniz introduced the notation $dx$ and $dy$ to represent these tiny steps. To calculate a tangent slope, they divided a tiny change in $y$ by a tiny change in $x$, and then simply ignored the remaining infinitesimals. They could not logically explain how a number could be non-zero during the division step, but essentially zero at the end.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- BERKELEY -->
+                <div class="timeline-item">
+                  <div class="timeline-content">
+                    <div class="timeline-portraits">
+                      <img src="images/berkeley.jpg" alt="George Berkeley" class="timeline-portrait" loading="lazy">
+                    </div>
+                    <div class="timeline-text">
+                      <span class="timeline-date">1734</span>
+                      <h5>The Philosophical Attack</h5>
+                      <p>
+                        This logical gap sparked a crisis. The philosopher Bishop George Berkeley published a famous critique of calculus called <em>The Analyst</em>, attacking the hypocritical math of infinitesimals. He mocked these vanishing increments as the "ghosts of departed quantities," pointing out that true mathematics could not rest on a division-by-zero paradox.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- D'ALEMBERT -->
+                <div class="timeline-item">
+                  <div class="timeline-content">
+                    <div class="timeline-portraits">
+                      <img src="images/alembert.jpg" alt="Jean Le Rond d'Alembert" class="timeline-portrait" loading="lazy">
+                    </div>
+                    <div class="timeline-text">
+                      <span class="timeline-date">1765</span>
+                      <h5>The Conceptual Pivot</h5>
+                      <p>
+                        The French mathematician Jean Le Rond d'Alembert was one of the first to formally argue that calculus should abandon infinitesimals entirely. He proposed that the derivative should be understood as a <strong>limit</strong>—the specific, fixed value that the secant slope approaches as the interval shrinks. However, the mathematical tools of the time were not advanced enough to translate his idea into an airtight algebraic proof.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- CAUCHY -->
+                <div class="timeline-item">
+                  <div class="timeline-content">
+                    <div class="timeline-portraits">
+                      <img src="images/cauchy.jpg" alt="Augustin-Louis Cauchy" class="timeline-portrait" loading="lazy">
+                    </div>
+                    <div class="timeline-text">
+                      <span class="timeline-date">1820s</span>
+                      <h5>The Algebraic Definition</h5>
+                      <p>
+                        Augustin-Louis Cauchy successfully bridged the gap. He provided the first rigorous algebraic definition of the derivative based entirely on limits. Cauchy formally wrote out the difference quotient $\frac{f(x+h) - f(x)}{h}$ and defined the derivative as the limit of this fraction as $h \to 0$, establishing the exact formula taught today.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- WEIERSTRASS -->
+                <div class="timeline-item">
+                  <div class="timeline-content">
+                    <div class="timeline-portraits">
+                      <img src="images/weierstrass.png" alt="Karl Weierstrass" class="timeline-portrait" loading="lazy">
+                    </div>
+                    <div class="timeline-text">
+                      <span class="timeline-date">1870s</span>
+                      <h5>The Airtight Foundation</h5>
+                      <p>
+                        While Cauchy formalized the formula, it was Karl Weierstrass who perfected the underlying logic of the limit itself. Weierstrass invented the epsilon-delta ($\epsilon-\delta$) definition of the limit. By framing limits strictly in terms of absolute inequalities and precise distances, Weierstrass proved exactly how a gap can approach zero mathematically without ever actually being divided by zero, cementing the limit definition as mathematically flawless.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </aside>
+
             <!-- WORKED EXAMPLE: FIRST PRINCIPLES -->
             <div class="worked-example-box" style="border-left-color: #10b981; background: #f0fdf4;">
                 <h4 style="color: #047857; margin-bottom: 0.75rem">🎯 Worked Example: Differentiating $f(x) = x^2$</h4>
