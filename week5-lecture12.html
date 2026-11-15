@@ -1083,6 +1083,349 @@
                 </p>
             </div>
 
+            <!-- ================================================================= -->
+            <!-- CONCEPT: THE WEIERSTRASS FUNCTION (THE MATH BEHIND THE MONSTER)   -->
+            <!-- ================================================================= -->
+            <h3 style="color: #0f172a; margin-top: 3rem;">The Mathematical Monster: How to Break Differentiability</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                To prove that continuity does not guarantee differentiability, Karl Weierstrass needed to invent a curve that possessed two deeply conflicting physical properties at the exact same time: it had to be a single, unbroken wire (continuous), but every microscopic millimeter of that wire had to be a sharp, jagged corner (nowhere differentiable).
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                He achieved this by summing an infinite series of cosine waves:
+            </p>
+
+            <div style="padding: 1.5rem; margin: 1.5rem 0; background: #f8fafc; border: 1px solid #cbd5e1; border-left: 5px solid #0f172a; border-radius: 8px;">
+                <div style="text-align: center; font-size: 1.25rem; font-weight: 600; color: #0f172a; margin-bottom: 1.25rem;">
+                    $$f(x) = \sum_{n=0}^{\infty} a^n \cos(b^n \pi x)$$
+                </div>
+                <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; color: #334155; font-weight: 700;">
+                    The Architecture of the Equation:
+                </p>
+                <ul style="margin: 0; padding-left: 1.25rem; color: #334155; font-size: 0.95rem; line-height: 1.7;">
+                    <li style="margin-bottom: 0.5rem;">
+                        <strong>The Shrinking Amplitude ($0 < a < 1$):</strong> Because $a$ is a fraction, $a^n$ rapidly shrinks toward zero as $n$ grows. Each new wave added to the sum is shorter than the last. This guarantees the infinite sum converges cleanly, ensuring the final curve has no physical breaks, jumps, or asymptotes (establishing <em>continuity</em>).
+                    </li>
+                    <li style="margin-bottom: 0.5rem;">
+                        <strong>The Exploding Frequency ($b$ is an odd integer $> 1$):</strong> The term $b^n$ multiplies the frequency, making each successive wave vibrate wildly faster than the one before it.
+                    </li>
+                    <li>
+                        <strong>The Fatal Imbalance ($ab > 1 + \frac{3}{2}\pi$):</strong> This is Weierstrass's stroke of genius. The frequency parameter $b$ grows significantly faster than the amplitude parameter $a$ shrinks. Therefore, the <em>steepness</em> (the derivative) of each new layer is larger than the previous layer. The zig-zags get tighter much faster than they get shorter, weaponizing infinity to shatter any attempt to draw a flat tangent line (destroying <em>differentiability</em>).
+                    </li>
+                </ul>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-bottom: 2rem;">
+                Use the slider below to mechanically assemble the Weierstrass function layer by layer. Pay close attention to how the "Micro Zoom" shatters the Flat Earth optical illusion we learned in Section 3.
+            </p>
+
+            <!-- ================================================================= -->
+            <!-- INTERACTIVE WIDGET: BUILDING THE WEIERSTRASS MONSTER (SLIDER)     -->
+            <!-- ================================================================= -->
+            <div id="weierstrass-widget" style="margin: 2rem 0; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); font-family: system-ui, -apple-system, sans-serif; overflow: hidden;">
+
+                <style>
+                    #weierstrass-widget .w-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; padding: 1.25rem 1.5rem; background: #0f172a; border-bottom: 1px solid #1e293b; }
+                    #weierstrass-widget .w-title { margin: 0; font-size: 1.15rem; font-weight: 800; color: #f8fafc; letter-spacing: 0.02em; }
+                    #weierstrass-widget .w-toggles { display: flex; gap: 0.5rem; background: #1e293b; padding: 0.35rem; border-radius: 8px; border: 1px solid #334155; }
+                    #weierstrass-widget .w-dim-btn { padding: 0.45rem 0.9rem; font-size: 0.85rem; font-weight: 700; border-radius: 6px; border: none; background: transparent; color: #94a3b8; cursor: pointer; transition: all 0.2s ease; }
+                    #weierstrass-widget .w-dim-btn.active { background: #3b82f6; color: #ffffff; box-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+
+                    #weierstrass-widget .w-telemetry { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1px; background: #e2e8f0; border-bottom: 1px solid #cbd5e1; }
+                    #weierstrass-widget .w-tel-card { background: #f8fafc; padding: 0.85rem 1.25rem; display: flex; flex-direction: column; gap: 0.25rem; }
+                    #weierstrass-widget .w-tel-lbl { font-size: 0.7rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
+                    #weierstrass-widget .w-tel-val { font-size: 0.95rem; font-weight: 800; color: #0f172a; font-variant-numeric: tabular-nums; }
+
+                    #weierstrass-widget .w-canvas-wrap { position: relative; width: 100%; background: #ffffff; padding: 1.5rem; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: center; }
+                    #weierstrass-widget svg { width: 100%; max-width: 800px; height: auto; display: block; border: 1px solid #e2e8f0; border-radius: 6px; background: #f8fafc; }
+
+                    /* Slider UI */
+                    #weierstrass-widget .w-slider-panel { display: flex; flex-direction: column; gap: 0.75rem; padding: 1.25rem 1.5rem; background: #f1f5f9; border-bottom: 1px solid #e2e8f0; }
+                    #weierstrass-widget .w-slider-controls { display: flex; align-items: center; gap: 0.85rem; }
+                    #weierstrass-widget .w-slider-label { font-size: 0.9rem; font-weight: 800; color: #0f172a; white-space: nowrap; margin-right: 0.5rem; }
+
+                    /* Arrow Buttons */
+                    #weierstrass-widget .w-arrow-btn { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #334155; cursor: pointer; transition: all 0.1s; padding: 0; flex-shrink: 0; }
+                    #weierstrass-widget .w-arrow-btn:hover:not(:disabled) { background: #e2e8f0; color: #0f172a; }
+                    #weierstrass-widget .w-arrow-btn:active:not(:disabled) { transform: scale(0.92); }
+                    #weierstrass-widget .w-arrow-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+                    #weierstrass-widget input[type=range] { flex-grow: 1; appearance: none; height: 6px; background: #cbd5e1; border-radius: 3px; outline: none; cursor: pointer; }
+                    #weierstrass-widget input[type=range]::-webkit-slider-thumb { appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #3b82f6; cursor: pointer; transition: transform 0.1s; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+                    #weierstrass-widget input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+                    #weierstrass-widget input[type=range]::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: #3b82f6; cursor: pointer; border: none; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+
+                    /* Locked minimum height to prevent page jumping */
+                    #weierstrass-widget .w-preview { margin: 0; font-size: 0.95rem; line-height: 1.6; color: #1e293b; border-left: 4px solid #3b82f6; padding-left: 1rem; min-height: 3rem; display: flex; align-items: center; }
+
+                    #weierstrass-widget .w-panes { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; background: #e2e8f0; }
+                    #weierstrass-widget .w-pane { background: #ffffff; padding: 1.5rem; }
+                    #weierstrass-widget .w-pane h4 { margin: 0 0 0.75rem 0; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
+                    #weierstrass-widget .w-pane-what h4 { color: #0284c7; }
+                    #weierstrass-widget .w-pane-why h4 { color: #b45309; }
+
+                    /* Locked minimum height to prevent page jumping */
+                    #weierstrass-widget .w-pane-content { min-height: 5.5rem; }
+                    #weierstrass-widget .w-pane p { margin: 0; font-size: 0.92rem; line-height: 1.65; color: #334155; }
+                </style>
+
+                <!-- HEADER & DIMENSION TOGGLES -->
+                <div class="w-header">
+                    <h3 class="w-title">Interactive Lab: Building the Weierstrass Monster</h3>
+                    <div class="w-toggles">
+                        <button id="w-toggle-macro" class="w-dim-btn active" onclick="executeDimensionSwitch('macro')">Macro View</button>
+                        <button id="w-toggle-micro" class="w-dim-btn" onclick="executeDimensionSwitch('micro')">Micro Zoom</button>
+                    </div>
+                </div>
+
+                <!-- LIVE STATE TELEMETRY -->
+                <div class="w-telemetry">
+                    <div class="w-tel-card">
+                        <span class="w-tel-lbl">Active Phase</span>
+                        <span id="w-tel-phase" class="w-tel-val">0: The Base Layer</span>
+                    </div>
+                    <div class="w-tel-card">
+                        <span class="w-tel-lbl">Total Layers (N)</span>
+                        <span id="w-tel-n" class="w-tel-val" style="color: #3b82f6;">N = 0</span>
+                    </div>
+                    <div class="w-tel-card">
+                        <span class="w-tel-lbl">Added Amplitude (aⁿ)</span>
+                        <span id="w-tel-amp" class="w-tel-val">1.000</span>
+                    </div>
+                    <div class="w-tel-card">
+                        <span class="w-tel-lbl">Added Frequency (bⁿ)</span>
+                        <span id="w-tel-freq" class="w-tel-val">1.0</span>
+                    </div>
+                    <div class="w-tel-card">
+                        <span class="w-tel-lbl">Tangent Status</span>
+                        <span id="w-tel-tan" class="w-tel-val" style="color: #10b981;">Smooth / Defined</span>
+                    </div>
+                </div>
+
+                <!-- SYNCHRONIZED VISUAL CANVAS -->
+                <div class="w-canvas-wrap">
+                    <svg id="w-svg" viewBox="0 0 800 400">
+                        <!-- Grid lines -->
+                        <g stroke="#e2e8f0" stroke-width="1">
+                            <line x1="0" y1="100" x2="800" y2="100" />
+                            <line x1="0" y1="200" x2="800" y2="200" stroke="#cbd5e1" stroke-width="1.5" />
+                            <line x1="0" y1="300" x2="800" y2="300" />
+                            <line x1="200" y1="0" x2="200" y2="400" />
+                            <line x1="400" y1="0" x2="400" y2="400" stroke="#cbd5e1" stroke-width="1.5" />
+                            <line x1="600" y1="0" x2="600" y2="400" />
+                        </g>
+                        <!-- Dynamic Curve -->
+                        <path id="w-curve" d="" fill="none" stroke="#0f172a" stroke-width="2" stroke-linejoin="round" />
+                    </svg>
+                </div>
+
+                <!-- NAVIGATION (SLIDER WITH ARROWS) & INLINE PREVIEW -->
+                <div class="w-slider-panel">
+                    <div class="w-slider-controls">
+                        <span class="w-slider-label">Inject Layers (N):</span>
+
+                        <button class="w-arrow-btn" id="w-slider-prev" onclick="executeSliderStep(-1)" aria-label="Decrease N" disabled>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+                        </button>
+
+                        <input type="range" id="w-layer-slider" min="0" max="7" value="0" step="1" oninput="executeSliderUpdate(this.value)">
+
+                        <button class="w-arrow-btn" id="w-slider-next" onclick="executeSliderStep(1)" aria-label="Increase N">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                        </button>
+
+                        <span id="w-slider-badge" style="background: #3b82f6; color: white; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: 800; font-variant-numeric: tabular-nums;">0</span>
+                    </div>
+                    <div id="w-preview" class="w-preview">
+                        We begin with N=0. The curve is a standard, smooth cosine wave: f(x) = cos(πx). It is perfectly continuous and has a well-defined tangent line everywhere.
+                    </div>
+                </div>
+
+                <!-- PAIRED ANALYTICAL PANES -->
+                <div class="w-panes">
+                    <div class="w-pane w-pane-what">
+                        <h4>What Is Happening (Mechanics)</h4>
+                        <div id="w-pane-what" class="w-pane-content">
+                            <p>The function is currently a single fundamental wave. There are no high-frequency additions yet, leaving the geometry completely smooth.</p>
+                        </div>
+                    </div>
+                    <div class="w-pane w-pane-why">
+                        <h4>Why The System Does This (Rationale)</h4>
+                        <div id="w-pane-why" class="w-pane-content">
+                            <p>This mimics standard geometric intuition. At this stage, continuity and differentiability go hand-in-hand, just as Newton and Leibniz expected.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <script>
+            (function() {
+                // Weierstrass parameters: a = 0.5 (shrinking amplitude), b = 3 (growing frequency)
+                // Constraint ab > 1 is satisfied (0.5 * 3 = 1.5 > 1).
+                const a = 0.5;
+                const b = 3;
+
+                let activeN = 0;
+                let activeView = 'macro'; // 'macro' or 'micro'
+
+                // Dynamic narrative generator based on N
+                function getNarrative(N, view) {
+                    let data = {
+                        phase: "0: The Base Layer",
+                        tanStatus: "Smooth / Defined",
+                        tanColor: "#10b981",
+                        preview: "",
+                        what: "",
+                        why: ""
+                    };
+
+                    if (N === 0) {
+                        data.phase = "0: The Base Layer";
+                        data.tanStatus = "Smooth / Defined";
+                        data.tanColor = "#10b981";
+                        if (view === 'macro') {
+                            data.preview = "We begin with N=0. The curve is a standard, smooth cosine wave. It is perfectly continuous and has a well-defined tangent line everywhere.";
+                            data.what = "The function is currently a single fundamental wave. There are no high-frequency additions yet, leaving the geometry completely smooth.";
+                            data.why = "This mimics standard geometric intuition. At this stage, continuity and differentiability go hand-in-hand, just as Newton and Leibniz expected.";
+                        } else {
+                            data.preview = "Zooming in on the N=0 curve, Local Linearity holds perfectly. The curve looks just like a flat, slanted tangent line.";
+                            data.what = "Under intense magnification, the curvature of the base wave becomes practically invisible. A ruler would balance perfectly on this line.";
+                            data.why = "Because the base function is differentiable, zooming in verifies the 'Flat Earth' optical illusion we learned in Section 3.";
+                        }
+                    }
+                    else if (N === 1) {
+                        data.phase = "1: First Harmonic Disruption";
+                        data.tanStatus = "Wobbly / Defined";
+                        data.tanColor = "#d97706";
+                        if (view === 'macro') {
+                            data.preview = "Adding N=1 injects a smaller, faster wave. The curve now has visible ripples, but it remains smooth enough to draw tangent lines.";
+                            data.what = "We added a wave with half the height (0.5) but three times the frequency (3). The overall shape is preserved, but surface texture is emerging.";
+                            data.why = "This shows how Fourier series build complexity. The curve is still differentiable because the amplitude shrank enough to absorb the increased frequency.";
+                        } else {
+                            data.preview = "Zoomed in, we can see the N=1 ripple clearly. The line is no longer perfectly straight, but the bends are smooth and predictable.";
+                            data.what = "The local line now bends slightly. The 'flat' illusion is disrupted, but you can still mathematically balance a ruler at any specific point.";
+                            data.why = "Local linearity is bending, but hasn't broken. The derivative still exists, though the slope changes more rapidly as we move along the x-axis.";
+                        }
+                    }
+                    else if (N >= 2 && N <= 4) {
+                        data.phase = `2: The Fractal Emerges (N=${N})`;
+                        data.tanStatus = "Jagged / Straining";
+                        data.tanColor = "#ef4444";
+                        if (view === 'macro') {
+                            data.preview = `At N=${N}, the curve is becoming violently jagged. Calculating a definitive slope is becoming physically and mathematically difficult.`;
+                            data.what = "The visual breaks in the line are becoming sharp enough to challenge the 'smoothness' assumption. The steepness is compounding with every layer.";
+                            data.why = "The frequency parameter 'b' is overpowering the amplitude parameter 'a'. The steepness of the new additions is growing out of control.";
+                        } else {
+                            data.preview = "Zoomed in, the curve refuses to flatten out. Instead of looking like a straight line, our highly magnified view looks like a jagged mountain range.";
+                            data.what = "No matter how closely we look, the line continues to zig-zag. The straight-line approximation is failing severely.";
+                            data.why = "Because the frequency multiplies by 3 at every step, the zig-zags get tighter much faster than they get shorter.";
+                        }
+                    }
+                    else {
+                        data.phase = `3: The Weierstrass Monster (N=${N})`;
+                        data.tanStatus = "Shattered / Undefined";
+                        data.tanColor = "#991b1b";
+                        if (view === 'macro') {
+                            data.preview = "The curve is now a continuous, unbroken line of pure static. It is physically impossible to balance a tangent ruler anywhere on this curve.";
+                            data.what = "The sum of high-frequency layers has created a curve consisting entirely of sharp cusps. We have exceeded the screen's pixel resolution, leaving pure visual noise.";
+                            data.why = "This shattered 200 years of mathematical belief. Weierstrass proved that a curve can be perfectly continuous (drawn without lifting a pen) but completely lack a derivative.";
+                        } else {
+                            data.preview = "The ultimate contradiction: at maximum zoom, the curve looks EXACTLY as jagged as it did in the Macro view! Local linearity is dead.";
+                            data.what = "We are zoomed in immensely, but the curve is just as erratic as the wide view. It possesses fractal self-similarity. There is no straight line to be found.";
+                            data.why = "Because it never smooths out into a straight line, the limit definition of the derivative collapses to 0/0 everywhere. The absolute value cusp happens at every single microscopic point!";
+                        }
+                    }
+                    return data;
+                }
+
+                function computePath(N, view) {
+                    let path = [];
+                    let xMin = view === 'macro' ? -2 : 0.15;
+                    let xMax = view === 'macro' ? 2 : 0.35;
+                    let yMin = view === 'macro' ? -2.2 : 0.0;
+                    let yMax = view === 'macro' ? 2.2 : 1.2;
+
+                    const svgWidth = 800;
+                    const svgHeight = 400;
+                    const points = 800;
+                    const dx = (xMax - xMin) / points;
+
+                    for (let i = 0; i <= points; i++) {
+                        let x = xMin + i * dx;
+                        let y = 0;
+
+                        for (let n = 0; n <= N; n++) {
+                            y += Math.pow(a, n) * Math.cos(Math.pow(b, n) * Math.PI * x);
+                        }
+
+                        let svgX = (i / points) * svgWidth;
+                        let svgY = svgHeight - ((y - yMin) / (yMax - yMin)) * svgHeight;
+
+                        path.push(`${i === 0 ? 'M' : 'L'} ${svgX.toFixed(2)} ${svgY.toFixed(2)}`);
+                    }
+                    return path.join(" ");
+                }
+
+                function formatNumber(num, isFreq) {
+                    if (isFreq && num > 9999) return num.toExponential(2);
+                    if (!isFreq && num < 0.001 && num > 0) return num.toExponential(2);
+                    return isFreq ? num.toFixed(1) : num.toFixed(3);
+                }
+
+                function renderWidget() {
+                    const data = getNarrative(activeN, activeView);
+
+                    document.getElementById('w-tel-phase').textContent = data.phase;
+                    document.getElementById('w-tel-n').textContent = `N = ${activeN}`;
+                    document.getElementById('w-slider-badge').textContent = activeN;
+
+                    document.getElementById('w-tel-amp').textContent = formatNumber(Math.pow(a, activeN), false);
+                    document.getElementById('w-tel-freq').textContent = formatNumber(Math.pow(b, activeN), true);
+
+                    const tanEl = document.getElementById('w-tel-tan');
+                    tanEl.textContent = data.tanStatus;
+                    tanEl.style.color = data.tanColor;
+
+                    document.getElementById('w-preview').textContent = data.preview;
+                    document.getElementById('w-pane-what').innerHTML = `<p>${data.what}</p>`;
+                    document.getElementById('w-pane-why').innerHTML = `<p>${data.why}</p>`;
+
+                    const pathString = computePath(activeN, activeView);
+                    document.getElementById('w-curve').setAttribute('d', pathString);
+
+                    // Sync the slider input value with activeN
+                    document.getElementById('w-layer-slider').value = activeN;
+
+                    // Toggle arrow button disabled states
+                    document.getElementById('w-slider-prev').disabled = (activeN === 0);
+                    document.getElementById('w-slider-next').disabled = (activeN === 7);
+
+                    // Toggle view styling
+                    document.getElementById('w-toggle-macro').classList.toggle('active', activeView === 'macro');
+                    document.getElementById('w-toggle-micro').classList.toggle('active', activeView === 'micro');
+                }
+
+                // Triggered by direct slider drag
+                window.executeSliderUpdate = function(val) {
+                    activeN = parseInt(val);
+                    renderWidget();
+                };
+
+                // Triggered by arrow button clicks
+                window.executeSliderStep = function(delta) {
+                    activeN = Math.max(0, Math.min(7, activeN + delta));
+                    renderWidget();
+                };
+
+                window.executeDimensionSwitch = function(viewMode) {
+                    activeView = viewMode;
+                    renderWidget();
+                };
+
+                document.addEventListener('DOMContentLoaded', renderWidget);
+            })();
+            </script>
+
             <!-- LECTURE SUMMARY -->
             <h2 id="section-summary" style="margin-top: 3.5rem">Summary: The Launchpad to Calculus</h2>
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
