@@ -126,276 +126,658 @@
                 </div>
             </div>
 
+
             <!-- SECTION 1: AVERAGE RATE OF CHANGE -->
             <h2 id="section-average">1. The Secant Line: Average Rate of Change</h2>
 
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
-                Consider a process that changes at a variable rate, like an object falling due to gravity. The height $y$ at any time $t$ follows a curve, not a straight line. If we want to find the object's speed between two times $x_0$ and $x_1$, we compute the average rate of change.
+                Consider a function $y = f(x)$ that models a process where a measurable quantity $y$ changes over time $x$, such as the distance travelled by a car. If the car moves at a perfectly constant speed, its distance is modeled by a simple linear function, and the rate of change never fluctuates.
+            </p>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                But in the real world, processes change at a <em>variable</em> rate. A car accelerates out of a driveway, brakes for a red light, and speeds up on a highway. If we want to find the car's speed over a specific time window—say, between time $x_0$ and time $x_1$—we must compute the <strong>average rate of change</strong> over that interval.
             </p>
 
             <div class="definition-box" style="border-left-color: #0284c7; background: #f0f9ff;">
                 <h4 style="margin: 0 0 0.5rem 0; color: #0369a1; font-size: 1.1rem">Average Rate of Change</h4>
                 <p style="margin: 0 0 0.5rem 0; color: #0f172a; font-size: 0.95rem; line-height: 1.6">
-                    The average rate of change over the interval $[x_0, x_1]$ is calculated as:
+                    The average rate of change over the interval $[x_0, x_1]$ is calculated by taking the change in the function's output and dividing it by the time elapsed:
                 </p>
                 <div style="text-align: center; margin: 0.75rem 0; font-size: 1.2rem; font-weight: bold; color: #0f172a">
                     $$m_{av} = \frac{f(x_1) - f(x_0)}{x_1 - x_0}$$
                 </div>
                 <p style="margin: 0; color: #334155; font-size: 0.95rem; line-height: 1.6">
-                    Geometrically, $m_{av}$ is the slope of the straight line passing through the points $(x_0, f(x_0))$ and $(x_1, f(x_1))$. Such a straight line connecting two points on a graph is called a <strong>secant line</strong>.
+                    Geometrically, if you plot the start point $(x_0, f(x_0))$ and the end point $(x_1, f(x_1))$ on the curve, $m_{av}$ represents the exact slope of the straight line passing directly through them. This straight line connecting two points on a graph is called a <strong>secant line</strong>.
                 </p>
             </div>
 
-            <!-- ================================================================= -->
-            <!-- INTERACTIVE WIDGET: SECANT TO TANGENT STEPPER                     -->
-            <!-- ================================================================= -->
-            <h2 id="section-stepper">2. Interactive Lab: Secant to Tangent</h2>
-
-            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
-                To find the instantaneous velocity at $x_0$, we need to make the interval $[x_0, x_1]$ "very small". Using the mathematical technique of limits, we can make this interval approach a length of zero. Track this process in the telemetry lab below.
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.5rem">
+                <strong>Why is it called a secant line?</strong> The term comes from the Latin <em>secare</em>, meaning "to cut." While a tangent line merely grazes the outside of a curve at a single point, a secant line actively <em>cuts through</em> the curve, bridging two distinct locations. Because it physically slices across the arc from the start to the end of a journey, its slope perfectly captures the average rate of change between those two moments, completely bypassing any peaks, valleys, or fluctuations that happen in between.
             </p>
 
-            <div class="stepper-walkthrough" id="secant-walkthrough" style="margin: 2.5rem 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+            <div class="aside-box">
+                <h4>🚗 The Physical Meaning of the Secant</h4>
+                <p style="margin-bottom: 0">
+                    If you calculate the average rate of change over a trip with varying speeds, the slope of the secant line tells you the constant velocity you <em>would have needed to travel</em> to cover the exact same distance in the exact same time. It is a single, flat average that ignores all the actual stops and accelerations along the way.
+                </p>
+            </div>
+
+            <!-- VISUALIZATION: THE SECANT LINE -->
+            <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin: 2.5rem 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+                <div style="margin-bottom: 1.5rem">
+                    <span style="font-size: 0.85rem; font-weight: 800; color: #0284c7; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.25rem">Visualizing the Math</span>
+                    <h3 style="margin: 0 0 0.5rem 0; color: #0f172a; font-size: 1.25rem">The Geometry of Average Speed</h3>
+                    <p style="margin: 0; color: #334155; font-size: 0.95rem; line-height: 1.6">
+                        The average rate of change $m_{av}$ corresponds perfectly to the slope ($\frac{\text{rise}}{\text{run}}$ or $\frac{\Delta y}{\Delta x}$) of the secant line cutting across the curve.
+                    </p>
+                </div>
+
+                <div style="display: flex; justify-content: center; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.5rem;">
+                    <svg viewBox="0 0 600 350" style="width: 100%; max-width: 560px; height: auto; display: block;" role="img" aria-label="Secant Line Diagram">
+                        <!-- Axes -->
+                        <line x1="50" y1="300" x2="550" y2="300" stroke="#94a3b8" stroke-width="1.5" />
+                        <line x1="80" y1="320" x2="80" y2="40" stroke="#94a3b8" stroke-width="1.5" />
+                        <text x="560" y="305" font-size="13" font-weight="bold" fill="#64748b">x (Time)</text>
+                        <text x="70" y="30" font-size="13" font-weight="bold" fill="#64748b" text-anchor="end">y (Position)</text>
+
+                        <!-- Curve -->
+                        <path d="M 80 285 Q 300 285 520 40" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" />
+
+                        <!-- Secant Line Highlight / Glow -->
+                        <line x1="100" y1="331.7" x2="500" y2="86.3" stroke="#fef3c7" stroke-width="12" stroke-linecap="round" />
+
+                        <!-- Secant Line (Extended exactly through P and Q) -->
+                        <line x1="100" y1="331.7" x2="500" y2="86.3" stroke="#d97706" stroke-width="3" />
+
+                        <!-- Secant Label (Rotated to match line slope of -31.5 degrees) -->
+                        <text x="110" y="315" font-size="15" font-weight="900" fill="#b45309" transform="rotate(-31.5 110 315)" letter-spacing="1">SECANT LINE</text>
+
+                        <!-- Triangle for Delta X and Delta Y -->
+                        <line x1="212" y1="263" x2="432" y2="263" stroke="#3b82f6" stroke-width="2.5" stroke-dasharray="5,4" />
+                        <line x1="432" y1="263" x2="432" y2="128" stroke="#3b82f6" stroke-width="2.5" stroke-dasharray="5,4" />
+
+                        <!-- Delta Annotations -->
+                        <text x="322" y="283" font-size="14" font-weight="bold" fill="#0284c7" text-anchor="middle">Δx = x₁ - x₀ (Run)</text>
+                        <text x="442" y="196" font-size="14" font-weight="bold" fill="#0284c7" text-anchor="start">Δy = f(x₁) - f(x₀) (Rise)</text>
+
+                        <!-- Axis Projections -->
+                        <line x1="212" y1="263" x2="212" y2="300" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="3,3" />
+                        <line x1="432" y1="128" x2="432" y2="300" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="3,3" />
+                        <line x1="212" y1="263" x2="80" y2="263" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="3,3" />
+                        <line x1="432" y1="128" x2="80" y2="128" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="3,3" />
+
+                        <!-- The Intersecting Points (with white borders to stand out) -->
+                        <circle cx="212" cy="263" r="6" fill="#d97706" stroke="#ffffff" stroke-width="2" />
+                        <circle cx="432" cy="128" r="6" fill="#d97706" stroke="#ffffff" stroke-width="2" />
+
+                        <!-- Point & Axis Labels -->
+                        <text x="212" y="320" font-size="13" font-style="italic" fill="#0f172a" text-anchor="middle">x₀</text>
+                        <text x="432" y="320" font-size="13" font-style="italic" fill="#0f172a" text-anchor="middle">x₁</text>
+                        <text x="70" y="268" font-size="13" font-style="italic" fill="#0f172a" text-anchor="end">f(x₀)</text>
+                        <text x="70" y="133" font-size="13" font-style="italic" fill="#0f172a" text-anchor="end">f(x₁)</text>
+
+                        <text x="200" y="245" font-size="13" font-weight="bold" fill="#0f172a" text-anchor="end">P(x₀, f(x₀))</text>
+                        <text x="420" y="110" font-size="13" font-weight="bold" fill="#0f172a" text-anchor="end">Q(x₁, f(x₁))</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- ANIMATED DIAGRAM -->
+            <div id="animation-walkthrough" style="margin: 2.5rem 0; font-family: var(--font-ui); background: #ffffff; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); overflow: hidden;">
                 <style>
-                    #secant-walkthrough .telemetry-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.75rem; background: #0f172a; padding: 1rem 1.25rem; border-top-left-radius: 10px; border-top-right-radius: 10px; }
-                    #secant-walkthrough .telemetry-card { display: flex; flex-direction: column; }
-                    #secant-walkthrough .telemetry-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: #94a3b8; font-weight: 700; margin-bottom: 0.25rem; }
-                    #secant-walkthrough .telemetry-badge { font-family: monospace; font-size: 0.95rem; font-weight: 700; }
-
-                    #secant-walkthrough .mode-bar { background: #1e293b; padding: 0.85rem 1.25rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; border-bottom: 1px solid #334155; }
-                    #secant-walkthrough .mode-btn { background: #334155; color: #cbd5e1; border: 1px solid #475569; padding: 0.45rem 0.85rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-                    #secant-walkthrough .mode-btn:hover { background: #475569; color: #ffffff; }
-                    #secant-walkthrough .mode-btn.active { background: #d97706; color: #ffffff; border-color: #f59e0b; }
-
-                    #secant-walkthrough .nav-strip { display: flex; gap: 1.5rem; padding: 1.25rem 1.5rem; background: #f8fafc; border-bottom: 1px solid #cbd5e1; align-items: center; flex-wrap: wrap; }
-                    #secant-walkthrough .step-btn { padding: 0.5rem 0.9rem; border-radius: 6px; font-weight: 600; cursor: pointer; border: 1px solid #cbd5e1; background: #ffffff; color: #334155; }
-                    #secant-walkthrough .step-btn.primary { background: #d97706; color: #ffffff; border-color: #d97706; }
+                    #animation-walkthrough .anim-header { background: #0f172a; padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+                    #animation-walkthrough .metric-box { display: flex; flex-direction: column; }
+                    #animation-walkthrough .metric-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #94a3b8; font-weight: 700; margin-bottom: 0.25rem; }
+                    #animation-walkthrough .metric-value { font-family: monospace; font-size: 1.15rem; font-weight: 700; color: #ffffff; }
+                    #animation-walkthrough .phase-badge { padding: 0.35rem 0.75rem; border-radius: 6px; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }
+                    .phase-secant { background: rgba(217, 119, 6, 0.2); color: #fbbf24; border: 1px solid #d97706; }
+                    .phase-tangent { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #10b981; }
                 </style>
 
-                <!-- Dimensional Toggles -->
-                <div class="mode-bar">
-                    <span style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: #94a3b8; margin-right: 0.5rem;">Select Execution Mode:</span>
-                    <button class="mode-btn active" id="btn-sec-mode-0" onclick="secSim.changeMode(0)">1. Large Interval</button>
-                    <button class="mode-btn" id="btn-sec-mode-1" onclick="secSim.changeMode(1)">2. Shrinking ($\Delta x \to 0$)</button>
-                    <button class="mode-btn" id="btn-sec-mode-2" onclick="secSim.changeMode(2)">3. The Tangent</button>
-                </div>
-
-                <!-- Live Telemetry -->
-                <div class="telemetry-grid">
-                    <div class="telemetry-card">
-                        <span class="telemetry-label">Active Phase</span>
-                        <span class="telemetry-badge" id="sec-tel-phase" style="color: #fbbf24">Average Velocity</span>
+                <!-- Live Metrics Header -->
+                <div class="anim-header">
+                    <div style="display: flex; gap: 2rem;">
+                        <div class="metric-box">
+                            <span class="metric-label">Interval (Δx)</span>
+                            <span class="metric-value" id="anim-dx">2.000 s</span>
+                        </div>
+                        <div class="metric-box">
+                            <span class="metric-label">Slope (Δy / Δx)</span>
+                            <span class="metric-value" id="anim-slope">4.000</span>
+                        </div>
                     </div>
-                    <div class="telemetry-card">
-                        <span class="telemetry-label">Time Interval ($\Delta x$)</span>
-                        <span class="telemetry-badge" id="sec-tel-dx" style="color: #38bdf8">2.00 s</span>
-                    </div>
-                    <div class="telemetry-card">
-                        <span class="telemetry-label">Calculated Slope ($m$)</span>
-                        <span class="telemetry-badge" id="sec-tel-slope" style="color: #10b981">4.00 m/s</span>
+                    <div>
+                        <div id="anim-phase" class="phase-badge phase-secant">Secant Line</div>
                     </div>
                 </div>
 
-                <!-- Navigation & Preview -->
-                <div class="nav-strip">
-                    <div id="sec-preview-text" style="flex: 1; font-size: 0.95rem; color: #1e293b; font-weight: 500;">
-                        We are measuring the vehicle's position $f(x) = x^2$ between $t=1$ and $t=3$. The wide secant line shows the average speed over those 2 seconds was 4 m/s.
-                    </div>
-                </div>
-
-                <!-- Synchronized Visual Canvas -->
-                <div style="padding: 1.5rem; background: #ffffff; border-bottom: 1px solid #cbd5e1; display: flex; justify-content: center;">
-                    <svg id="sec-svg-canvas" viewBox="0 0 500 300" style="width: 100%; max-width: 480px; overflow: visible;">
+                <!-- Canvas -->
+                <div style="padding: 2rem 1.5rem; background: #f8fafc; display: flex; justify-content: center; position: relative;">
+                    <svg id="anim-svg-canvas" viewBox="0 0 600 350" style="width: 100%; max-width: 560px; height: auto; display: block; overflow: visible;">
                         <!-- Axes -->
-                        <line x1="40" y1="260" x2="480" y2="260" stroke="#94a3b8" stroke-width="1.5" />
-                        <line x1="60" y1="280" x2="60" y2="20" stroke="#94a3b8" stroke-width="1.5" />
+                        <line x1="50" y1="300" x2="550" y2="300" stroke="#94a3b8" stroke-width="1.5" />
+                        <line x1="80" y1="320" x2="80" y2="40" stroke="#94a3b8" stroke-width="1.5" />
+                        <text x="560" y="305" font-size="13" font-weight="bold" fill="#64748b">x</text>
+                        <text x="70" y="30" font-size="13" font-weight="bold" fill="#64748b" text-anchor="end">f(x)</text>
 
                         <!-- Curve y = x^2 (mapped 0 to 4) -->
-                        <path id="sec-curve" fill="none" stroke="#0f172a" stroke-width="3" />
+                        <path id="anim-curve" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" />
 
-                        <!-- Dynamic Secant/Tangent Line -->
-                        <line id="sec-line" x1="0" y1="0" x2="0" y2="0" stroke="#d97706" stroke-width="2.5" />
+                        <!-- Dynamic Line Highlight (Semi-transparent) -->
+                        <line id="anim-line-glow" x1="0" y1="0" x2="0" y2="0" stroke="#fef3c7" stroke-width="12" stroke-linecap="round" opacity="0.5" />
 
-                        <!-- Fixed Point (x0 = 1) -->
-                        <circle cx="160" cy="245" r="6" fill="#1d4ed8" stroke="#ffffff" stroke-width="2" />
-                        <text x="172" y="255" font-size="12" font-weight="bold" fill="#1e3a8a">P(1,1)</text>
+                        <!-- Dynamic Line (Slightly transparent to reveal curve underneath) -->
+                        <line id="anim-line" x1="0" y1="0" x2="0" y2="0" stroke="#d97706" stroke-width="3" stroke-opacity="0.75" />
 
-                        <!-- Moving Point (x1) -->
-                        <circle id="sec-moving-dot" cx="0" cy="0" r="6" fill="#ef4444" stroke="#ffffff" stroke-width="2" />
+                        <!-- Fixed Point P(1,1) -->
+                        <circle cx="180" cy="255" r="6" fill="#1d4ed8" stroke="#ffffff" stroke-width="2" />
+                        <text x="165" y="245" font-size="14" font-weight="bold" fill="#1e3a8a" text-anchor="end">P</text>
 
-                        <!-- Delta X bracket -->
-                        <line id="sec-dx-line" x1="160" y1="275" x2="360" y2="275" stroke="#059669" stroke-width="2" />
-                        <line id="sec-dx-tick1" x1="160" y1="270" x2="160" y2="280" stroke="#059669" stroke-width="2" />
-                        <line id="sec-dx-tick2" x1="360" y1="270" x2="360" y2="280" stroke="#059669" stroke-width="2" />
-                        <text id="sec-dx-label" x="260" y="295" font-size="12" font-weight="bold" fill="#047857" text-anchor="middle">Δx</text>
+                        <!-- Moving Point Q -->
+                        <circle id="anim-q-dot" cx="0" cy="0" r="6" fill="#ef4444" stroke="#ffffff" stroke-width="2" />
+                        <text id="anim-q-label" x="0" y="0" font-size="14" font-weight="bold" fill="#b91c1c" text-anchor="start">Q</text>
+
+                        <!-- Tangent Label (Fades in at limit) -->
+                        <text id="anim-tangent-lbl" x="420" y="100" font-size="15" font-weight="900" fill="#10b981" opacity="0" letter-spacing="1">TANGENT LINE</text>
                     </svg>
                 </div>
 
-                <!-- Paired Analytical Panes -->
-                <div class="analysis-panes" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #cbd5e1;">
-                    <div style="background: #ffffff; padding: 1.5rem;">
-                        <h4 style="margin: 0 0 0.5rem 0; color: #15803d; font-size: 0.85rem; text-transform: uppercase; font-weight: 800">What Is Happening</h4>
-                        <div id="sec-pane-what" style="font-size: 0.95rem; color: #334155; line-height: 1.6">The interval $\Delta x$ is $2.0$. The average slope $m_{av} = \frac{3^2 - 1^2}{3 - 1} = \frac{8}{2} = 4.0$.</div>
-                    </div>
-                    <div style="background: #ffffff; padding: 1.5rem;">
-                        <h4 style="margin: 0 0 0.5rem 0; color: #1d4ed8; font-size: 0.85rem; text-transform: uppercase; font-weight: 800">Why The System Does This</h4>
-                        <div id="sec-pane-why" style="font-size: 0.95rem; color: #334155; line-height: 1.6">Because $\Delta x$ is so large, the straight secant line deeply misses the true curvature of the physical system. It is a crude average of the journey.</div>
-                    </div>
+                <!-- Explanation Pane -->
+                <div style="background: #ffffff; padding: 1.5rem; border-top: 1px solid #cbd5e1;">
+                    <p id="anim-desc" style="margin: 0; color: #334155; font-size: 0.95rem; line-height: 1.6;">
+                        As $\Delta x$ shrinks, $Q$ approaches $P$. The crude average slope converges smoothly to the exact instantaneous rate of change. The $0/0$ collision is avoided by taking the mathematical limit.
+                    </p>
                 </div>
             </div>
 
             <script>
-                const secSim = (function() {
-                    let mode = 0; // 0=Large, 1=Shrinking, 2=Tangent
+                const limitAnim = (function() {
+                    let reqId;
+                    let startTime;
+                    const duration = 4500; // 4.5 seconds for the slide
+                    const pause = 2500;    // 2.5 seconds pause at the tangent
 
-                    // Coordinate Map: x=0->60px, x=4->460px (scaleX = 100)
-                    // y=0->260px, y=16->20px (scaleY = 15)
-                    const scX = 100, scY = 15, cx = 60, cy = 260;
+                    // Coordinates: x=0->80, x=4->480 (scaleX = 100)
+                    // y=0->300, y=16->60 (scaleY = 15)
+                    const scX = 100, scY = 15, cx = 80, cy = 270;
 
                     function f(x) { return x * x; }
 
-                    function drawCurve() {
-                        let path = [];
-                        for(let x=0; x<=4; x+=0.1) {
-                            let px = cx + x * scX;
-                            let py = cy - f(x) * scY;
-                            path.push((x===0?"M ":"L ") + px.toFixed(1) + " " + py.toFixed(1));
-                        }
-                        document.getElementById('sec-curve').setAttribute('d', path.join(" "));
+                    function easeInOutCubic(t) {
+                        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
                     }
 
-                    function updateUI() {
-                        // Data mappings for modes
-                        let x1 = 3.0; // Large
-                        if(mode === 1) x1 = 1.5;
-                        if(mode === 2) x1 = 1.0001; // Limit proxy
+                    function drawCurve() {
+                        let path = [];
+                        for(let x = 0; x <= 4; x += 0.1) {
+                            let px = cx + x * scX;
+                            let py = cy - f(x) * scY;
+                            path.push((x === 0 ? "M " : "L ") + px.toFixed(1) + " " + py.toFixed(1));
+                        }
+                        document.getElementById('anim-curve').setAttribute('d', path.join(" "));
+                    }
 
+                    function animate(timestamp) {
+                        if (!startTime) startTime = timestamp;
+                        let elapsed = timestamp - startTime;
+
+                        // Loop control
+                        if (elapsed > duration + pause) {
+                            startTime = timestamp;
+                            elapsed = 0;
+                        }
+
+                        let progress = Math.min(elapsed / duration, 1.0);
+                        let eased = easeInOutCubic(progress);
+
+                        // x1 slides from 3.0 down to exactly 1.000001
+                        let x1 = 3.0 - (1.99999 * eased);
                         let dx = x1 - 1.0;
                         let slope = (f(x1) - f(1.0)) / dx;
-                        if(mode === 2) { dx = 0; slope = 2.0; } // Exact limit
 
-                        // Update Labels
-                        document.getElementById('sec-tel-dx').textContent = dx.toFixed(2) + " s";
-                        document.getElementById('sec-tel-slope').textContent = slope.toFixed(2) + " m/s";
+                        // Force exact values when progress is fully 1
+                        let isTangent = (progress === 1.0);
+                        if (isTangent) {
+                            dx = 0;
+                            slope = 2.0;
+                        }
 
-                        // Update Visuals
+                        // DOM Updates for Telemetry
+                        document.getElementById('anim-dx').textContent = dx.toFixed(3) + " s";
+                        document.getElementById('anim-slope').textContent = slope.toFixed(3);
+
+                        // Visual Updates
                         let px1 = cx + x1 * scX;
                         let py1 = cy - f(x1) * scY;
 
-                        document.getElementById('sec-moving-dot').setAttribute('cx', px1);
-                        document.getElementById('sec-moving-dot').setAttribute('cy', py1);
-                        document.getElementById('sec-moving-dot').style.opacity = (mode === 2) ? "0" : "1";
+                        let qDot = document.getElementById('anim-q-dot');
+                        let qLbl = document.getElementById('anim-q-label');
 
-                        // Draw Line extending past points
+                        qDot.setAttribute('cx', px1);
+                        qDot.setAttribute('cy', py1);
+                        qLbl.setAttribute('x', px1 + 12);
+                        qLbl.setAttribute('y', py1 - 12);
+
+                        // Fade out Q at exactly zero
+                        qDot.style.opacity = isTangent ? "0" : "1";
+                        qLbl.style.opacity = isTangent ? "0" : "1";
+
+                        // Line extending past P and Q
                         let visSlope = -slope * (scY / scX);
-                        // from x=0.5 to x=3.5
-                        let lx1 = cx + 0.5 * scX;
-                        let ly1 = (cy - f(1.0)*scY) + visSlope * (0.5 - 1.0) * scX;
-                        let lx2 = cx + 3.5 * scX;
-                        let ly2 = (cy - f(1.0)*scY) + visSlope * (3.5 - 1.0) * scX;
+                        let lx1 = cx + 0.3 * scX;
+                        let ly1 = (cy - f(1.0)*scY) + visSlope * (0.3 - 1.0) * scX;
+                        let lx2 = cx + 3.8 * scX;
+                        let ly2 = (cy - f(1.0)*scY) + visSlope * (3.8 - 1.0) * scX;
 
-                        document.getElementById('sec-line').setAttribute('x1', lx1);
-                        document.getElementById('sec-line').setAttribute('y1', ly1);
-                        document.getElementById('sec-line').setAttribute('x2', lx2);
-                        document.getElementById('sec-line').setAttribute('y2', ly2);
+                        let line = document.getElementById('anim-line');
+                        let glow = document.getElementById('anim-line-glow');
 
-                        // DX bracket
-                        if(mode === 2) {
-                            document.getElementById('sec-dx-line').style.opacity = "0";
-                            document.getElementById('sec-dx-tick1').style.opacity = "0";
-                            document.getElementById('sec-dx-tick2').style.opacity = "0";
-                            document.getElementById('sec-dx-label').style.opacity = "0";
+                        line.setAttribute('x1', lx1);
+                        line.setAttribute('y1', ly1);
+                        line.setAttribute('x2', lx2);
+                        line.setAttribute('y2', ly2);
+
+                        glow.setAttribute('x1', lx1);
+                        glow.setAttribute('y1', ly1);
+                        glow.setAttribute('x2', lx2);
+                        glow.setAttribute('y2', ly2);
+
+                        // State Toggle Styling
+                        let phaseBadge = document.getElementById('anim-phase');
+                        let tangentLbl = document.getElementById('anim-tangent-lbl');
+
+                        if (isTangent) {
+                            phaseBadge.className = "phase-badge phase-tangent";
+                            phaseBadge.textContent = "Tangent Line";
+                            line.setAttribute('stroke', '#10b981'); // Green
+                            glow.setAttribute('stroke', '#d1fae5');
+                            tangentLbl.style.opacity = "1";
                         } else {
-                            document.getElementById('sec-dx-line').style.opacity = "1";
-                            document.getElementById('sec-dx-tick1').style.opacity = "1";
-                            document.getElementById('sec-dx-tick2').style.opacity = "1";
-                            document.getElementById('sec-dx-label').style.opacity = "1";
-                            document.getElementById('sec-dx-line').setAttribute('x2', px1);
-                            document.getElementById('sec-dx-tick2').setAttribute('x1', px1);
-                            document.getElementById('sec-dx-tick2').setAttribute('x2', px1);
-                            document.getElementById('sec-dx-label').setAttribute('x', cx + (1.0 + dx/2)*scX);
+                            phaseBadge.className = "phase-badge phase-secant";
+                            phaseBadge.textContent = "Secant Line";
+                            line.setAttribute('stroke', '#d97706'); // Orange
+                            glow.setAttribute('stroke', '#fef3c7');
+                            tangentLbl.style.opacity = "0";
                         }
 
-                        // Texts
-                        if(mode === 0) {
-                            document.getElementById('sec-tel-phase').textContent = "Average Velocity";
-                            document.getElementById('sec-preview-text').textContent = "We are measuring the vehicle's position from t=1 to t=3. The wide secant line shows the average speed was 4 m/s.";
-                            document.getElementById('sec-pane-what').innerHTML = "The interval $\\Delta x$ is $2.0$. The average slope $m_{av} = \\frac{3^2 - 1^2}{3 - 1} = \\frac{8}{2} = 4.0$.";
-                            document.getElementById('sec-pane-why').innerHTML = "Because $\\Delta x$ is so large, the straight secant line deeply misses the true curvature of the physical system. It is a crude average.";
-                        } else if (mode === 1) {
-                            document.getElementById('sec-tel-phase').textContent = "The Limit Process";
-                            document.getElementById('sec-preview-text').textContent = "We shrink the measurement window down to just 0.5 seconds. The secant line begins to hug the true curve much tighter.";
-                            document.getElementById('sec-pane-what').innerHTML = "The interval $\\Delta x$ shrinks to $0.5$. The slope is $m_{av} = \\frac{1.5^2 - 1^2}{1.5 - 1} = \\frac{1.25}{0.5} = 2.5$.";
-                            document.getElementById('sec-pane-why').innerHTML = "By driving $\\Delta x$ toward zero, the calculated slope becomes a highly accurate approximation of the object's speed at exactly $x_0 = 1$.";
-                        } else {
-                            document.getElementById('sec-tel-phase').textContent = "Instantaneous Velocity";
-                            document.getElementById('sec-preview-text').textContent = "We have hit Δx = 0. The secant line has collapsed into a single Tangent Line that perfectly kisses the curve.";
-                            document.getElementById('sec-pane-what').innerHTML = "The interval $\\Delta x$ is exactly $0$. We evaluate the limit to find the exact slope $m = 2.0$.";
-                            document.getElementById('sec-pane-why').innerHTML = "The paradox of $0/0$ is solved. The limit reveals the exact instantaneous rate of change (the derivative) at a single frozen moment in time.";
+                        reqId = requestAnimationFrame(animate);
+                    }
+
+                    return {
+                        init: function() {
+                            drawCurve();
+                            requestAnimationFrame(animate);
+                        }
+                    };
+                })();
+                document.addEventListener('DOMContentLoaded', limitAnim.init);
+            </script>
+
+            <!-- SECTION 2: THE LIMIT DEFINITION -->
+            <h2 id="section-limit">2. The Limit Definition of the Derivative</h2>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                As you saw in the animation, if we let the second point slide perfectly on top of the first point, the secant line becomes the tangent line. But there is a massive algebraic roadblock here: <strong>The 0/0 Paradox</strong>.
+            </p>
+
+            <div class="aside-box" style="border-left-color: #ef4444; background: #fef2f2;">
+                <h4 style="color: #b91c1c;">⚠️ The Division by Zero Problem</h4>
+                <p style="margin-bottom: 0;">
+                    If we want the instantaneous speed at exactly $x_0$, why not just plug $x_1 = x_0$ into our average speed formula?
+                    $$m_{av} = \frac{f(x_0) - f(x_0)}{x_0 - x_0} = \frac{0}{0}$$
+                    The formula explodes. We are asking the math to divide by zero, which is undefined. This paradox is why it took humanity thousands of years to invent calculus! We cannot actually reach a distance of $0$; we must use a <em>limit</em> to see what the slope is approaching as the distance shrinks infinitely close to $0$.
+                </p>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                By defining $\Delta x = x_1 - x_0$ (meaning "the change in $x$"), we can rewrite our slope formula. Instead of two separate points $x_0$ and $x_1$, we now have our starting point $x$ and a tiny step forward $x + \Delta x$. This gives us the formal definition of the derivative.
+            </p>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                How do we actually write this as a mathematical formula? We start with the classic slope formula from algebra:
+                $$m = \frac{y_1 - y_0}{x_1 - x_0}$$
+            </p>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                Instead of defining two completely separate points $x_0$ and $x_1$, let's reframe the journey. Let our starting point simply be $x$. We then take a tiny step forward along the horizontal axis. We will call the size of this step $\Delta x$ (literally meaning "change in $x$"). That makes our second point $x + \Delta x$.
+            </p>
+
+            <ul style="color: #334155; line-height: 1.75; font-size: 1.05rem; padding-left: 1.5rem; margin-bottom: 1.5rem;">
+                <li style="margin-bottom: 0.5rem;"><strong>The Start Point:</strong> $(x, f(x))$</li>
+                <li><strong>The End Point:</strong> $(x + \Delta x, f(x + \Delta x))$</li>
+            </ul>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                Now, plug those coordinates directly into the slope formula:
+            </p>
+            <ul style="color: #334155; line-height: 1.75; font-size: 1.05rem; padding-left: 1.5rem; margin-bottom: 1.5rem;">
+                <li style="margin-bottom: 0.5rem;">The numerator ("rise") becomes $f(x + \Delta x) - f(x)$.</li>
+                <li>The denominator ("run") becomes $(x + \Delta x) - x$. The $x$'s cancel out beautifully, leaving just the step size $\Delta x$.</li>
+            </ul>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                Apply the limit to this simplified fraction, driving that step size to zero, and we have the most important formula in calculus.
+            </p>
+
+            <div class="definition-box" style="border-left-color: #8b5cf6; background: #f5f3ff;">
+                <h4 style="margin: 0 0 0.5rem 0; color: #6d28d9; font-size: 1.1rem">The Limit Definition of the Derivative</h4>
+                <p style="margin: 0 0 0.5rem 0; color: #0f172a; font-size: 0.95rem; line-height: 1.6">
+                    The derivative of a function $f(x)$, denoted $f'(x)$, is the exact instantaneous rate of change (the slope of the tangent line) at point $x$. It is defined as:
+                </p>
+                <div style="text-align: center; margin: 1rem 0; font-size: 1.2rem; font-weight: bold; color: #0f172a">
+                    $$f'(x) = \lim_{\Delta x \to 0} \frac{f(x + \Delta x) - f(x)}{\Delta x}$$
+                </div>
+                <p style="margin: 0; color: #334155; font-size: 0.95rem; line-height: 1.6">
+                    <em>Note: Many textbooks use the letter $h$ instead of $\Delta x$ simply because it is easier to write. Both mean exactly the same thing: a small horizontal step along the x-axis.</em>
+                </p>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.5rem">
+                Let's see this engine work in practice. We will calculate the derivative of the parabola $f(x) = x^2$ from <em>first principles</em> (meaning directly from the limit definition, without using any shortcuts).
+            </p>
+
+            <!-- WORKED EXAMPLE: FIRST PRINCIPLES -->
+            <div class="worked-example-box" style="border-left-color: #10b981; background: #f0fdf4;">
+                <h4 style="color: #047857; margin-bottom: 0.75rem">🎯 Worked Example: Differentiating $f(x) = x^2$</h4>
+
+                <p style="margin-bottom: 0.25rem; font-size: 0.95rem; font-weight: bold; color: #065f46;">Step 1: Set up the limit formula.</p>
+                <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">Substitute our specific function $f(x) = x^2$ into the definition:</p>
+                <div style="text-align: center; margin: 0.75rem 0 1.25rem 0; font-size: 1.05rem">
+                    $$f'(x) = \lim_{\Delta x \to 0} \frac{(x + \Delta x)^2 - x^2}{\Delta x}$$
+                </div>
+
+                <p style="margin-bottom: 0.25rem; font-size: 0.95rem; font-weight: bold; color: #065f46;">Step 2: Expand the algebra.</p>
+                <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">Multiply out the $(x + \Delta x)^2$ term:</p>
+                <div style="text-align: center; margin: 0.75rem 0 1.25rem 0; font-size: 1.05rem">
+                    $$f'(x) = \lim_{\Delta x \to 0} \frac{(x^2 + 2x\Delta x + (\Delta x)^2) - x^2}{\Delta x}$$
+                </div>
+
+                <p style="margin-bottom: 0.25rem; font-size: 0.95rem; font-weight: bold; color: #065f46;">Step 3: Cancel and factor.</p>
+                <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">The $x^2$ and $-x^2$ perfectly cancel each other out. We are left with terms that all share a $\Delta x$, allowing us to factor it out and cancel the denominator (dodging the $0/0$ trap!).</p>
+                <div style="text-align: center; margin: 0.75rem 0 1.25rem 0; font-size: 1.05rem">
+                    $$f'(x) = \lim_{\Delta x \to 0} \frac{\Delta x(2x + \Delta x)}{\Delta x}$$
+                    <br>
+                    $$f'(x) = \lim_{\Delta x \to 0} (2x + \Delta x)$$
+                </div>
+
+                <p style="margin-bottom: 0.25rem; font-size: 0.95rem; font-weight: bold; color: #065f46;">Step 4: Evaluate the limit.</p>
+                <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">Now that the division-by-zero threat is gone, we can safely let $\Delta x$ shrink to exactly $0$:</p>
+                <div style="text-align: center; margin: 0.75rem 0 0.75rem 0; font-size: 1.15rem; font-weight: bold; color: #047857">
+                    $$f'(x) = 2x + 0 = 2x$$
+                </div>
+                <p style="margin: 0; font-size: 0.95rem; color: #065f46;"><strong>Conclusion:</strong> For the curve $y = x^2$, the exact steepness of the tangent line at any point $x$ is simply double the x-coordinate!</p>
+            </div>
+
+            <!-- SECTION 3: DIFFERENTIALS -->
+            <h2 id="section-differentials">3. Differentials and Linear Approximation</h2>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                Let's take a deep breath. The words "linear approximation" and "differentials" sound incredibly intimidating, but they are actually based on one of the most comforting and intuitive ideas in all of mathematics.
+            </p>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
+                Think about standing in an open field. We know the Earth is a sphere, but to your eyes, the ground looks perfectly flat. Why? Because you are zoomed in so incredibly close to the surface that the curvature becomes invisible.
+            </p>
+
+            <div class="infobox" style="border-left-color: #3b82f6; background-color: #eff6ff; border: 1px solid #bfdbfe">
+                <h4 style="color: #1e3a8a">🔍 The Principle of Local Linearity</h4>
+                <p style="margin: 0; color: #1e3a8a; line-height: 1.6; font-size: 0.95rem">
+                    Calculus relies on this exact same optical illusion. If you take a smooth, complicated, bending curve and zoom in closely enough on a single point, <strong>the curve will look like a perfectly straight line</strong>. That straight line is the tangent line we just worked so hard to find.
+                </p>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.5rem">
+                Why is this useful? Because curves are hard to calculate, but straight lines are easy. If we want to find a difficult value on a curve, we can use the easy, straight tangent line to <em>approximate</em> (guess) the answer. As long as we don't step too far away from our starting point, our straight-line guess will be incredibly accurate.
+            </p>
+
+            <div class="definition-box" style="border-left-color: #d97706; background: #fffbeb;">
+                <h4 style="margin: 0 0 0.5rem 0; color: #b45309; font-size: 1.1rem">Decoding the Notation: $\Delta y$ vs $dy$</h4>
+                <p style="margin: 0 0 0.75rem 0; color: #0f172a; font-size: 0.95rem; line-height: 1.6">
+                    When we take a small step forward (which we call $dx$), we have two different "heights" to think about:
+                </p>
+                <ul style="margin: 0; padding-left: 1.25rem; color: #0f172a; line-height: 1.6; font-size: 0.95rem">
+                    <li style="margin-bottom: 0.5rem"><strong>The True Change ($\Delta y$):</strong> How much the <em>actual, physical curve</em> went up or down. This is often very hard to calculate without a calculator.</li>
+                    <li><strong>The Estimated Change ($dy$):</strong> How much our <em>straight tangent line</em> went up or down. We call this estimated change the <strong>differential</strong>.</li>
+                </ul>
+                <div style="text-align: center; margin: 1rem 0 0.5rem 0; font-size: 1.2rem; font-weight: bold; color: #b45309">
+                    $$dy = \text{Slope} \times \text{Step Size}$$
+                    $$dy = f'(x) \cdot dx$$
+                </div>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.5rem">
+                Instead of dealing with a nightmare equation, we simply take our current derivative (the slope), multiply it by our tiny step forward ($dx$), and it tells us roughly how much the function will grow or shrink! Let's see this reassuring shortcut in action.
+            </p>
+
+            <!-- INTERACTIVE DIAGRAM: LOCAL LINEARITY ZOOM LENS -->
+            <div id="zoom-lens-widget" style="margin: 2.5rem 0; font-family: var(--font-ui); background: #ffffff; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); overflow: hidden;">
+                <style>
+                    #zoom-lens-widget .zl-header { background: #0f172a; padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+                    #zoom-lens-widget .zl-metric { display: flex; flex-direction: column; }
+                    #zoom-lens-widget .zl-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #94a3b8; font-weight: 700; margin-bottom: 0.25rem; }
+                    #zoom-lens-widget .zl-value { font-family: monospace; font-size: 1.15rem; font-weight: 700; color: #ffffff; }
+                    #zoom-lens-widget .zl-controls { display: flex; gap: 0.5rem; }
+                    #zoom-lens-widget .zl-btn { background: #334155; color: #cbd5e1; border: 1px solid #475569; padding: 0.45rem 0.85rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+                    #zoom-lens-widget .zl-btn:hover { background: #475569; color: #ffffff; }
+                    #zoom-lens-widget .zl-btn.active { background: #d97706; color: #ffffff; border-color: #f59e0b; }
+                </style>
+
+                <!-- Header Controls & Telemetry -->
+                <div class="zl-header">
+                    <div style="display: flex; gap: 2rem;">
+                        <div class="zl-metric">
+                            <span class="zl-label">Zoom Level</span>
+                            <span class="zl-value" id="zl-zoom-lbl">1x (Macro View)</span>
+                        </div>
+                        <div class="zl-metric">
+                            <span class="zl-label">Tangent Est. vs True</span>
+                            <span class="zl-value" id="zl-comparison" style="color: #38bdf8">dy = 0.0250</span>
+                        </div>
+                    </div>
+                    <div class="zl-controls">
+                        <button class="zl-btn active" id="btn-zoom-1" onclick="zoomLens.setZoom(1)">1x View</button>
+                        <button class="zl-btn" id="btn-zoom-5" onclick="zoomLens.setZoom(5)">5x Zoom</button>
+                        <button class="zl-btn" id="btn-zoom-20" onclick="zoomLens.setZoom(20)">20x Micro Zoom</button>
+                    </div>
+                </div>
+
+                <!-- SVG Canvas -->
+                <div style="padding: 2rem 1.5rem; background: #f8fafc; display: flex; justify-content: center; position: relative;">
+                    <svg id="zl-svg" viewBox="0 0 600 320" style="width: 100%; max-width: 560px; height: auto; display: block; overflow: visible;">
+                        <!-- Axes -->
+                        <line x1="50" y1="270" x2="550" y2="270" stroke="#94a3b8" stroke-width="1.5" />
+                        <line x1="80" y1="300" x2="80" y2="30" stroke="#94a3b8" stroke-width="1.5" />
+                        <text x="560" y="275" font-size="13" font-weight="bold" fill="#64748b">x</text>
+                        <text x="70" y="25" font-size="13" font-weight="bold" fill="#64748b" text-anchor="end">y</text>
+
+                        <!-- The Tangent Line (Straight Proxy) -->
+                        <line id="zl-tangent-line" x1="0" y1="0" x2="0" y2="0" stroke="#d97706" stroke-width="3" stroke-dasharray="6,4" />
+
+                        <!-- The Actual Curve f(x) = sqrt(x) -->
+                        <path id="zl-curve" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round" />
+
+                        <!-- Step dx and dy bracket indicators -->
+                        <g id="zl-indicators">
+                            <line id="zl-dx-line" x1="0" y1="0" x2="0" y2="0" stroke="#0284c7" stroke-width="2" stroke-dasharray="3,3" />
+                            <line id="zl-dy-line" x1="0" y1="0" x2="0" y2="0" stroke="#10b981" stroke-width="2" />
+                            <text id="zl-dx-text" x="0" y="0" font-size="11" font-weight="bold" fill="#0284c7" text-anchor="middle">dx = 0.1</text>
+                            <text id="zl-dy-text" x="0" y="0" font-size="11" font-weight="bold" fill="#10b981" text-anchor="start">dy = 0.025</text>
+                        </g>
+
+                        <!-- Anchor Point P(4, 2) -->
+                        <circle id="zl-anchor-dot" cx="0" cy="0" r="6" fill="#1d4ed8" stroke="#ffffff" stroke-width="2" />
+                        <text id="zl-anchor-lbl" x="0" y="0" font-size="12" font-weight="bold" fill="#1e3a8a">Anchor P (4, 2)</text>
+
+                        <!-- Target Point Q(4.1) -->
+                        <circle id="zl-target-dot" cx="0" cy="0" r="5" fill="#ef4444" stroke="#ffffff" stroke-width="2" />
+                        <text id="zl-target-lbl" x="0" y="0" font-size="11" font-weight="bold" fill="#b91c1c">Q (4.1)</text>
+                    </svg>
+                </div>
+
+                <!-- Explanation Box -->
+                <div style="background: #ffffff; padding: 1.5rem; border-top: 1px solid #cbd5e1;">
+                    <p id="zl-desc" style="margin: 0; color: #334155; font-size: 0.95rem; line-height: 1.6;">
+                        <strong>Macro View (1x):</strong> Notice the clear gap between the dark curve (&radic;<i>x</i>) and the dashed orange tangent line. Over a wide window, the curve bends away from our straight-line estimate.
+                    </p>
+                </div>
+            </div>
+
+            <script>
+                const zoomLens = (function() {
+                    let currentZoom = 1;
+
+                    const centerX = 280;
+                    const centerY = 170;
+
+                    function updateView() {
+                        const scaleX = 100 * currentZoom;
+                        const scaleY = 100 * currentZoom;
+
+                        function toScreen(x, y) {
+                            return {
+                                px: centerX + (x - 4.0) * scaleX,
+                                py: centerY - (y - 2.0) * scaleY
+                            };
                         }
 
-                        renderMathInElement(document.getElementById('sec-pane-what'), {delimiters: [{left: '$', right: '$', display: false}]});
-                        renderMathInElement(document.getElementById('sec-pane-why'), {delimiters: [{left: '$', right: '$', display: false}]});
+                        // 1. Draw Curve f(x) = sqrt(x)
+                        let pathData = [];
+                        let xMin = 4.0 - (220 / scaleX);
+                        let xMax = 4.0 + (280 / scaleX);
+                        xMin = Math.max(0.05, xMin);
 
-                        for(let i=0; i<3; i++) {
-                            document.getElementById('btn-sec-mode-'+i).className = (i === mode) ? "mode-btn active" : "mode-btn";
+                        for (let x = xMin; x <= xMax; x += 0.002) {
+                            let pt = toScreen(x, Math.sqrt(x));
+                            pathData.push((pathData.length === 0 ? "M " : "L ") + pt.px.toFixed(1) + " " + pt.py.toFixed(1));
+                        }
+                        document.getElementById('zl-curve').setAttribute('d', pathData.join(" "));
+
+                        // 2. Draw Tangent Line: y = 2 + 0.25(x - 4)
+                        let tP1 = toScreen(2.2, 2 + 0.25*(2.2 - 4));
+                        let tP2 = toScreen(5.8, 2 + 0.25*(5.8 - 4));
+                        let tLine = document.getElementById('zl-tangent-line');
+                        tLine.setAttribute('x1', tP1.px);
+                        tLine.setAttribute('y1', tP1.py);
+                        tLine.setAttribute('x2', tP2.px);
+                        tLine.setAttribute('y2', tP2.py);
+
+                        // 3. Anchor P(4, 2) & Target Q(4.1, sqrt(4.1))
+                        let dxVal = 0.1;
+                        let targetX = 4.0 + dxVal;
+                        let pPt = toScreen(4.0, 2.0);
+                        let qTrueY = Math.sqrt(targetX);
+                        let qPt = toScreen(targetX, qTrueY);
+                        let qTangentY = 2 + 0.25 * dxVal; // 2.025
+                        let qTanPt = toScreen(targetX, qTangentY);
+
+                        // Non-crowding label positions for Anchor P
+                        document.getElementById('zl-anchor-dot').setAttribute('cx', pPt.px);
+                        document.getElementById('zl-anchor-dot').setAttribute('cy', pPt.py);
+                        let aLbl = document.getElementById('zl-anchor-lbl');
+                        aLbl.setAttribute('x', pPt.px - 65);
+                        aLbl.setAttribute('y', pPt.py + 20);
+                        aLbl.textContent = `Anchor P (4, 2)`;
+
+                        // Non-crowding label positions for Target Q
+                        document.getElementById('zl-target-dot').setAttribute('cx', qPt.px);
+                        document.getElementById('zl-target-dot').setAttribute('cy', qPt.py);
+                        let tLbl = document.getElementById('zl-target-lbl');
+                        tLbl.setAttribute('x', qPt.px + 10);
+                        tLbl.setAttribute('y', qPt.py - 6);
+                        tLbl.textContent = `Q (4.1)`;
+
+                        // 4. Indicators (dx and dy) with safe offsets
+                        let pDx = toScreen(targetX, 2.0);
+                        let dxLine = document.getElementById('zl-dx-line');
+                        dxLine.setAttribute('x1', pPt.px);
+                        dxLine.setAttribute('y1', pPt.py);
+                        dxLine.setAttribute('x2', pDx.px);
+                        dxLine.setAttribute('y2', pDx.py);
+
+                        let dyLine = document.getElementById('zl-dy-line');
+                        dyLine.setAttribute('x1', pDx.px);
+                        dyLine.setAttribute('y1', pDx.py);
+                        dyLine.setAttribute('x2', qTanPt.px);
+                        dyLine.setAttribute('y2', qTanPt.py);
+
+                        let dxTxt = document.getElementById('zl-dx-text');
+                        dxTxt.setAttribute('x', (pPt.px + pDx.px)/2);
+                        dxTxt.setAttribute('y', pPt.py + 18); // Safely below the dx bracket
+                        dxTxt.textContent = `dx = ${dxVal}`;
+
+                        let dyTxt = document.getElementById('zl-dy-text');
+                        dyTxt.setAttribute('x', qTanPt.px + 10); // Safely to the right of dy line
+                        dyTxt.setAttribute('y', (pDx.py + qTanPt.py)/2 + 4);
+                        let estDy = 0.25 * dxVal;
+                        dyTxt.textContent = `dy = ${estDy.toFixed(3)}`;
+
+                        // 5. Update UI Text descriptions (Clean HTML, no LaTeX leakage)
+                        let zoomLbl = document.getElementById('zl-zoom-lbl');
+                        let compLbl = document.getElementById('zl-comparison');
+                        let desc = document.getElementById('zl-desc');
+
+                        for(let i of [1, 5, 20]) {
+                            document.getElementById('btn-zoom-'+i).className = (i === currentZoom) ? "zl-btn active" : "zl-btn";
+                        }
+
+                        if (currentZoom === 1) {
+                            zoomLbl.textContent = "1x (Macro View)";
+                            compLbl.textContent = `dy: ${estDy.toFixed(3)} | True: ${(qTrueY - 2.0).toFixed(4)}`;
+                            desc.innerHTML = "<strong>Macro View (1x):</strong> Notice the clear gap between the dark curve (&radic;<i>x</i>) and the dashed orange tangent line. Over a wide window, the curve bends away from our straight-line estimate.";
+                        } else if (currentZoom === 5) {
+                            zoomLbl.textContent = "5x Zoom (Focusing In)";
+                            compLbl.textContent = "Gap is narrowing...";
+                            desc.innerHTML = "<strong>5x Zoom:</strong> As we magnify the neighborhood around <i>x</i> = 4, the curve and the tangent line begin hugging each other tightly. The visual error becomes minuscule.";
+                        } else {
+                            zoomLbl.textContent = "20x Micro Zoom (Local Linearity)";
+                            compLbl.textContent = "Curve & Tangent Match!";
+                            desc.innerHTML = "<strong>20x Micro Zoom:</strong> Look closely! At this magnification, you can no longer tell the difference between the curved function (&radic;<i>x</i>) and the straight tangent line. <em>This is Local Linearity</em>—proving why simple multiplication (<i>dy</i> = 0.025) gives us an astonishingly accurate estimate without heavy calculus.";
                         }
                     }
 
                     return {
-                        init: function() { drawCurve(); updateUI(); },
-                        changeMode: function(m) { mode = m; updateUI(); }
+                        setZoom: function(z) {
+                            currentZoom = z;
+                            updateView();
+                        },
+                        init: function() {
+                            updateView();
+                        }
                     };
                 })();
-                document.addEventListener('DOMContentLoaded', secSim.init);
+                document.addEventListener('DOMContentLoaded', zoomLens.init);
             </script>
 
-            <!-- SECTION 3: THE LIMIT DEFINITION -->
-            <h2 id="section-limit">3. The Limit Definition of the Derivative</h2>
+            <!-- WORKED EXAMPLE: LINEAR APPROXIMATION -->
+            <div class="worked-example-box" style="border-left-color: #10b981; background: #f0fdf4;">
+                <h4 style="color: #047857; margin-bottom: 0.75rem">🎯 Worked Example: Estimating $\sqrt{4.1}$ without a calculator</h4>
 
-            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
-                As you saw in the interactive lab, if we let the second point $x_1$ approach the first point $x_0$ without ever actually touching it (which would trigger a $\frac{0}{0}$ explosion), the secant line perfectly resolves into the tangent line.
-            </p>
-
-            <div class="definition-box" style="border-left-color: #8b5cf6; background: #f5f3ff;">
-                <h4 style="margin: 0 0 0.5rem 0; color: #6d28d9; font-size: 1.1rem">The Derivative of a Function</h4>
-                <p style="margin: 0 0 0.5rem 0; color: #0f172a; font-size: 0.95rem; line-height: 1.6">
-                    If the limit exists, we say the function $f$ is differentiable at $x_0$, and the instantaneous rate of change is defined as:
-                </p>
-                <div style="text-align: center; margin: 1rem 0; font-size: 1.2rem; font-weight: bold; color: #0f172a">
-                    $$m = \lim_{x_1 \to x_0} \frac{f(x_1) - f(x_0)}{x_1 - x_0}$$
-                </div>
-                <p style="margin: 0; color: #334155; font-size: 0.95rem; line-height: 1.6">
-                    By defining the increment $\Delta x = x_1 - x_0$, this famous limit is more commonly written as:
-                    $$f'(x_0) = \lim_{\Delta x \to 0} \frac{f(x_0 + \Delta x) - f(x_0)}{\Delta x}$$
-                </p>
-            </div>
-
-            <!-- SECTION 4: DIFFERENTIALS -->
-            <h2 id="section-differentials">4. Differentials and Linear Approximation</h2>
-
-            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
-                Once we have the tangent line, it serves a secondary, powerful purpose. Because a smooth curve looks increasingly like a straight line the closer you zoom in, we can use the linear tangent equation to approximate complicated non-linear functions locally.
-            </p>
-            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem">
-                The tangent line equation is $y = l(x) = y_0 + m(x - x_0)$. We capture this linear shift using <strong>differentials</strong>.
-            </p>
-
-            <div class="infobox" style="border-left-color: #d97706; background: #fffbeb;">
-                <h4 style="color: #b45309;">⚙️ The Differential $df$</h4>
                 <p style="margin-bottom: 0.5rem; font-size: 0.95rem; line-height: 1.6;">
-                    The differential $df$ represents the theoretical change along the perfect tangent line (unlike $\Delta f$, which is the actual change on the curve).
+                    Imagine you are taking a test, and you need to calculate the square root of $4.1$. You don't have a calculator. The true function is $f(x) = \sqrt{x}$, which is a complicated curve.
                 </p>
-                <div style="text-align: center; margin: 0.5rem 0; font-size: 1.15rem; font-weight: bold; color: #0f172a">
-                    $$df = m \, dx$$
+
+                <p style="margin-bottom: 0.25rem; font-size: 0.95rem; font-weight: bold; color: #065f46;">Step 1: Start at a safe, known location.</p>
+                <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">We don't know $\sqrt{4.1}$, but we <em>do</em> know $\sqrt{4}$. So, we anchor our tangent line at $x = 4$. At this point, the height is exactly $2$.</p>
+
+                <p style="margin-bottom: 0.25rem; font-size: 0.95rem; font-weight: bold; color: #065f46;">Step 2: Find the slope (the derivative).</p>
+                <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">The derivative of $f(x) = x^{1/2}$ is $f'(x) = \frac{1}{2\sqrt{x}}$. If we plug in our safe starting point $x=4$, the slope is $\frac{1}{2\sqrt{4}} = \frac{1}{4} = 0.25$.</p>
+
+                <p style="margin-bottom: 0.25rem; font-size: 0.95rem; font-weight: bold; color: #065f46;">Step 3: Calculate the Differential ($dy$).</p>
+                <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">We are taking a tiny step from $x = 4$ to $x = 4.1$. So our step size $dx = 0.1$. How much height do we gain on the straight tangent line?</p>
+                <div style="text-align: center; margin: 0.75rem 0 1.25rem 0; font-size: 1.05rem">
+                    $$dy = f'(x) \cdot dx$$
+                    $$dy = 0.25 \cdot 0.1 = 0.025$$
                 </div>
-                <p style="margin: 0; font-size: 0.95rem; line-height: 1.6;">
-                    This gives rise to the classic Leibniz notation for the derivative: $\frac{df}{dx} = m$.
-                </p>
+
+                <p style="margin-bottom: 0.25rem; font-size: 0.95rem; font-weight: bold; color: #065f46;">Step 4: Make the final estimate.</p>
+                <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">We started at a height of $2$, and our straight-line estimate says we should gain $0.025$. Therefore, our approximated guess is $2 + 0.025 = 2.025$.</p>
+
+                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed #a7f3d0;">
+                    <p style="margin: 0; font-size: 0.95rem; color: #065f46;"><strong>The Reveal:</strong> If you type $\sqrt{4.1}$ into a computer, the exact true answer is $2.02484...$ By simply zooming in and riding the straight tangent line, we got the answer right using basic multiplication!</p>
+                </div>
             </div>
 
-            <!-- SECTION 5: WHEN DIFFERENTIABILITY FAILS -->
-            <h2 id="section-differentiability">5. When Differentiability Fails</h2>
+            <!-- SECTION 4: WHEN DIFFERENTIABILITY FAILS -->
+            <h2 id="section-differentiability">4. When Differentiability Fails</h2>
 
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
                 Is every continuous function differentiable? No. In order to have a single, well-defined tangent line, the function must be "smooth". Sharp jagged corners break the machinery.
