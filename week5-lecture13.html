@@ -325,7 +325,7 @@
 
             <div id="widget-sine" class="ped-widget">
                 <div class="ped-header">
-                    <h3 class="ped-title">Interactive Lab: Oscillating Velocity</h3>
+                    <h3 class="ped-title">Interactive Lab: Tracing the Velocity Wave</h3>
                 </div>
 
                 <div class="ped-telemetry">
@@ -340,15 +340,21 @@
                         <!-- Grid & Axes -->
                         <g stroke="#e2e8f0" stroke-width="1">
                             <line x1="50" y1="125" x2="550" y2="125" stroke="#cbd5e1" stroke-width="2"/> <!-- Time Axis -->
-                            <line x1="50" y1="25" x2="50" y2="225" stroke="#cbd5e1" stroke-width="2"/> <!-- Pos Axis -->
+                            <line x1="50" y1="25" x2="50" y2="225" stroke="#cbd5e1" stroke-width="2"/> <!-- Y Axis -->
                         </g>
-                        <!-- Sine Wave Path -->
-                        <path d="M 50 125 Q 112 25 175 125 T 300 125 T 425 125 T 550 125" fill="none" stroke="#bfdbfe" stroke-width="4"/>
-                        <path id="sw-active-path" d="M 50 125" fill="none" stroke="#3b82f6" stroke-width="4"/>
 
-                        <!-- Tangent Line & Weight (Corrected initial coordinates for SVG inverted Y-axis) -->
-                        <line id="sw-tangent" x1="20" y1="173" x2="80" y2="77" stroke="#d946ef" stroke-width="3" stroke-linecap="round"/>
-                        <circle id="sw-dot" cx="50" cy="125" r="8" fill="#1e3a8a"/>
+                        <!-- Background Faint Traces -->
+                        <path d="M 50 125 Q 112.5 25 175 125 T 300 125 T 425 125 T 550 125" fill="none" stroke="#e0f2fe" stroke-width="4"/> <!-- Sine Ghost -->
+                        <path d="M 50 75 Q 81.25 75 112.5 125 Q 143.75 175 175 175 Q 206.25 175 237.5 125 Q 268.75 75 300 75 Q 331.25 75 362.5 125 Q 393.75 175 425 175 Q 456.25 175 487.5 125 Q 518.75 75 550 75" fill="none" stroke="#fdf4ff" stroke-width="3" stroke-dasharray="6"/> <!-- Cosine Ghost -->
+
+                        <!-- Active Paths -->
+                        <path id="sw-cos-path" d="M 50 75" fill="none" stroke="#d946ef" stroke-width="4"/> <!-- Velocity Trace -->
+                        <path id="sw-active-path" d="M 50 125" fill="none" stroke="#3b82f6" stroke-width="4"/> <!-- Position Trace -->
+
+                        <!-- Tangent Line & Dots -->
+                        <line id="sw-tangent" x1="20" y1="173" x2="80" y2="77" stroke="#334155" stroke-width="2" stroke-linecap="round"/>
+                        <circle id="sw-cos-dot" cx="50" cy="75" r="6" fill="#d946ef"/> <!-- Velocity Point -->
+                        <circle id="sw-dot" cx="50" cy="125" r="8" fill="#1e3a8a"/> <!-- Position Point -->
                     </svg>
                 </div>
 
@@ -359,115 +365,130 @@
                         <button class="ped-step-btn" id="sw-btn-reset" onclick="sineLab.reset()">Reset</button>
                     </div>
                     <div id="sw-preview" class="ped-preview">
-                        At t=0, the spring is whipping through the center resting point. Its position is 0, but it is moving at its absolute maximum upward speed.
+                        At t=0, the spring is whipping through the center resting point. Its position is 0, but it is moving at its absolute maximum upward speed, mapping a velocity (magenta) of 1.
                     </div>
                 </div>
 
                 <div class="ped-panes">
                     <div class="ped-pane ped-pane-what">
                         <h4>What Is Happening (Mechanics)</h4>
-                        <div id="sw-pane-what" class="ped-pane-content"><p>The position curve (sine) is crossing the x-axis. The tangent line is pitched at its steepest positive angle.</p></div>
+                        <div id="sw-pane-what" class="ped-pane-content"><p>The position curve (blue) is crossing the x-axis. The tangent line is pitched at its steepest positive angle. We map that slope directly to the height of the velocity curve (magenta).</p></div>
                     </div>
                     <div class="ped-pane ped-pane-why">
                         <h4>Why The System Does This (Rationale)</h4>
-                        <div id="sw-pane-why" class="ped-pane-content"><p>Because the spring isn't fighting gravity or tension at the center, its velocity (cosine) hits its maximum peak exactly when position is 0.</p></div>
+                        <div id="sw-pane-why" class="ped-pane-content"><p>Because the spring isn't fighting gravity or tension at the center, its velocity hits its maximum peak exactly when position is 0.</p></div>
                     </div>
                 </div>
             </div>
 
-
             <script>
                 const sineLab = (function() {
                     let currentStep = 0;
-                    const maxSteps = 9; // Expanded to trace the entire visible canvas (4π)
+                    const maxSteps = 9;
 
                     const data = [
                         {
                             phase: "t = 0 (Center)", pos: "0 (Resting)", vel: "Max Upward", tan: "m = 1",
-                            preview: "At t=0, the spring is whipping through the center resting point. Its position is 0, but it is moving at its absolute maximum upward speed.",
-                            what: "The position curve (sine) is crossing the x-axis. The tangent line is pitched at its steepest positive angle.",
-                            why: "Because the spring isn't fighting gravity or tension at the center, its velocity (cosine) hits its maximum peak exactly when position is 0.",
+                            preview: "At t=0, the spring is whipping through the center resting point. Its position is 0, but it is moving at its absolute maximum upward speed, mapping a velocity (magenta) of 1.",
+                            what: "The position curve (blue) is crossing the x-axis. The tangent line is pitched at its steepest positive angle. We map that slope directly to the height of the velocity curve (magenta).",
+                            why: "Because the spring isn't fighting gravity or tension at the center, its velocity hits its maximum peak exactly when position is 0.",
                             anim: () => {
                                 setSvg('sw-active-path', 'M 50 125');
+                                setSvg('sw-cos-path', 'M 50 75');
                                 setSvg('sw-dot', {cx: 50, cy: 125});
-                                setSvg('sw-tangent', {x1: 20, y1: 173, x2: 80, y2: 77});
+                                setSvg('sw-cos-dot', {cx: 50, cy: 75});
+                                setSvg('sw-tangent', {x1: 20, y1: 173, x2: 80, y2: 77, opacity: 1});
                             }
                         },
                         {
                             phase: "t = π/4 (Climbing)", pos: "0.707 (Rising)", vel: "Slowing Down", tan: "m = 0.707",
-                            preview: "The weight is climbing up, fighting gravity and spring tension. It's getting higher, but its speed is bleeding off.",
-                            what: "The height (sine) is increasing, but the steepness of the tangent line is flattening out. Velocity is decaying toward zero.",
-                            why: "The physical tension of the stretched spring is actively decelerating the weight, causing the slope of the position curve to drop.",
+                            preview: "The weight is climbing up, fighting gravity and spring tension. It's getting higher, but its speed is bleeding off. The velocity trace drops.",
+                            what: "The height (sine) is increasing, but the steepness of the tangent line is flattening out. Velocity (cosine) is actively decaying toward zero.",
+                            why: "The physical tension of the stretched spring is decelerating the weight, causing the slope of the position curve to drop, pulling the magenta curve down.",
                             anim: () => {
                                 setSvg('sw-active-path', 'M 50 125 Q 65.6 100 81.25 87.5');
+                                setSvg('sw-cos-path', 'M 50 75 Q 65.6 75 81.25 87.5');
                                 setSvg('sw-dot', {cx: 81.25, cy: 87.5});
-                                setSvg('sw-tangent', {x1: 41.25, y1: 119.5, x2: 121.25, y2: 55.5});
+                                setSvg('sw-cos-dot', {cx: 81.25, cy: 87.5});
+                                setSvg('sw-tangent', {x1: 41.25, y1: 119.5, x2: 121.25, y2: 55.5, opacity: 1});
                             }
                         },
                         {
                             phase: "t = π/2 (Peak Height)", pos: "1 (Maximum)", vel: "Absolute Zero", tan: "m = 0",
-                            preview: "The weight hits the absolute ceiling of its bounce. For a single, frozen millisecond, it must completely stop moving to reverse direction.",
-                            what: "The position curve (sine) reaches its physical peak. Because the object stops moving, the tangent line is perfectly flat (slope = 0).",
+                            preview: "The weight hits the absolute ceiling of its bounce. For a frozen millisecond, it must completely stop moving to reverse direction.",
+                            what: "The position curve reaches its physical peak. Because the object stops moving, the tangent line is perfectly flat (slope = 0), driving the magenta velocity line to 0.",
                             why: "This is the core identity of Cosine: when Sine is at its peak, Cosine must cross zero. The derivative forces this quarter-phase shift to obey physical momentum.",
                             anim: () => {
                                 setSvg('sw-active-path', 'M 50 125 Q 81.25 75 112.5 75');
+                                setSvg('sw-cos-path', 'M 50 75 Q 81.25 75 112.5 125');
                                 setSvg('sw-dot', {cx: 112.5, cy: 75});
-                                setSvg('sw-tangent', {x1: 72.5, y1: 75, x2: 152.5, y2: 75});
+                                setSvg('sw-cos-dot', {cx: 112.5, cy: 125});
+                                setSvg('sw-tangent', {x1: 72.5, y1: 75, x2: 152.5, y2: 75, opacity: 1});
                             }
                         },
                         {
                             phase: "t = π (Falling)", pos: "0 (Resting)", vel: "Max Downward", tan: "m = -1",
-                            preview: "The weight falls back through the center resting point, but this time it is plunging downward at maximum speed.",
-                            what: "The position (sine) returns to 0, but the tangent line is pitched violently downward.",
-                            why: "The velocity (cosine) is now at its minimum peak. The cycle proves that measuring the slope of Sine physically reconstructs the Cosine wave.",
+                            preview: "The weight falls back through the center point, plunging downward at maximum speed. Velocity bottoms out.",
+                            what: "The position (blue) returns to 0, but the tangent line is pitched violently downward. We map this negative slope to the trough of the magenta curve.",
+                            why: "Velocity is now at its minimum peak (-1). The act of tracing the tangent slopes is organically rebuilding the perfect Cosine curve.",
                             anim: () => {
                                 setSvg('sw-active-path', 'M 50 125 Q 112.5 25 175 125');
+                                setSvg('sw-cos-path', 'M 50 75 Q 81.25 75 112.5 125 Q 143.75 175 175 175');
                                 setSvg('sw-dot', {cx: 175, cy: 125});
-                                setSvg('sw-tangent', {x1: 145, y1: 77, x2: 205, y2: 173});
+                                setSvg('sw-cos-dot', {cx: 175, cy: 175});
+                                setSvg('sw-tangent', {x1: 145, y1: 77, x2: 205, y2: 173, opacity: 1});
                             }
                         },
                         {
                             phase: "t = 3π/2 (Trough)", pos: "-1 (Minimum)", vel: "Absolute Zero", tan: "m = 0",
-                            preview: "The weight hits the absolute bottom of its bounce. Once again, it must momentarily stop before gravity and tension snap it back up.",
-                            what: "The position curve (sine) bottoms out at its minimum peak. The object is momentarily stationary, making the tangent line perfectly flat.",
+                            preview: "The weight hits the absolute bottom of its bounce. It momentarily stops before gravity and tension snap it back up.",
+                            what: "The position curve bottoms out. The object is momentarily stationary, making the tangent line perfectly flat. The velocity trace returns to 0.",
                             why: "Cosine crosses zero again. Velocity must be zero when position hits its maximum stretch in either direction.",
                             anim: () => {
                                 setSvg('sw-active-path', 'M 50 125 Q 112.5 25 175 125 Q 206.25 175 237.5 175');
+                                setSvg('sw-cos-path', 'M 50 75 Q 81.25 75 112.5 125 Q 143.75 175 175 175 Q 206.25 175 237.5 125');
                                 setSvg('sw-dot', {cx: 237.5, cy: 175});
-                                setSvg('sw-tangent', {x1: 197.5, y1: 175, x2: 277.5, y2: 175});
+                                setSvg('sw-cos-dot', {cx: 237.5, cy: 125});
+                                setSvg('sw-tangent', {x1: 197.5, y1: 175, x2: 277.5, y2: 175, opacity: 1});
                             }
                         },
                         {
                             phase: "t = 2π (Full Cycle)", pos: "0 (Resting)", vel: "Max Upward", tan: "m = 1",
                             preview: "The weight completes one full physical cycle, whipping back through the center moving upward at maximum speed, resetting the system.",
-                            what: "The sine wave has completed one full period. The tangent line is back to its steepest positive angle, matching our starting state.",
+                            what: "The blue sine wave has completed one full period. The tangent line is back to its steepest positive angle, matching our starting state.",
                             why: "Because physical bouncing is periodic, both Sine (Position) and Cosine (Velocity) are periodic. The physics cycle resets, seamlessly repeating the math.",
                             anim: () => {
                                 setSvg('sw-active-path', 'M 50 125 Q 112.5 25 175 125 T 300 125');
+                                setSvg('sw-cos-path', 'M 50 75 Q 81.25 75 112.5 125 Q 143.75 175 175 175 Q 206.25 175 237.5 125 Q 268.75 75 300 75');
                                 setSvg('sw-dot', {cx: 300, cy: 125});
-                                setSvg('sw-tangent', {x1: 270, y1: 173, x2: 330, y2: 77});
+                                setSvg('sw-cos-dot', {cx: 300, cy: 75});
+                                setSvg('sw-tangent', {x1: 270, y1: 173, x2: 330, y2: 77, opacity: 1});
                             }
                         },
                         {
                             phase: "t = 5π/2 (Second Peak)", pos: "1 (Maximum)", vel: "Absolute Zero", tan: "m = 0",
                             preview: "The cycle continues into a second bounce. The weight hits the ceiling again, momentarily freezing.",
-                            what: "The sine wave reaches its second crest. The tangent line is completely flat once more.",
-                            why: "The physical periodicity of the system means every time position hits 1, velocity must be 0. The derivative curve behaves just like the original curve.",
+                            what: "The sine wave reaches its second crest. The tangent line is completely flat once more. Velocity hits 0.",
+                            why: "The physical periodicity of the system means every time position hits a peak, velocity must be 0. The derivative curve behaves just like the original curve.",
                             anim: () => {
                                 setSvg('sw-active-path', 'M 50 125 Q 112.5 25 175 125 T 300 125 Q 331.25 75 362.5 75');
+                                setSvg('sw-cos-path', 'M 50 75 Q 81.25 75 112.5 125 Q 143.75 175 175 175 Q 206.25 175 237.5 125 Q 268.75 75 300 75 Q 331.25 75 362.5 125');
                                 setSvg('sw-dot', {cx: 362.5, cy: 75});
-                                setSvg('sw-tangent', {x1: 322.5, y1: 75, x2: 402.5, y2: 75});
+                                setSvg('sw-cos-dot', {cx: 362.5, cy: 125});
+                                setSvg('sw-tangent', {x1: 322.5, y1: 75, x2: 402.5, y2: 75, opacity: 1});
                             }
                         },
                         {
                             phase: "t = 3π (Second Fall)", pos: "0 (Resting)", vel: "Max Downward", tan: "m = -1",
                             preview: "Passing through the center point for the third time, plunging downward as the spring compresses.",
                             what: "The curve drops through the axis again, matching the exact steep downward behavior at t = π.",
-                            why: "Cosine is perfectly periodic alongside Sine. The velocity wave repeats exactly every 2π.",
+                            why: "Cosine is perfectly periodic alongside Sine. The magenta velocity wave repeats exactly every 2π.",
                             anim: () => {
                                 setSvg('sw-active-path', 'M 50 125 Q 112.5 25 175 125 T 300 125 T 425 125');
+                                setSvg('sw-cos-path', 'M 50 75 Q 81.25 75 112.5 125 Q 143.75 175 175 175 Q 206.25 175 237.5 125 Q 268.75 75 300 75 Q 331.25 75 362.5 125 Q 393.75 175 425 175');
                                 setSvg('sw-dot', {cx: 425, cy: 125});
-                                setSvg('sw-tangent', {x1: 395, y1: 77, x2: 455, y2: 173});
+                                setSvg('sw-cos-dot', {cx: 425, cy: 175});
+                                setSvg('sw-tangent', {x1: 395, y1: 77, x2: 455, y2: 173, opacity: 1});
                             }
                         },
                         {
@@ -477,19 +498,23 @@
                             why: "The velocity returns to zero. The mathematical derivative perfectly mirrors the looping nature of physical energy.",
                             anim: () => {
                                 setSvg('sw-active-path', 'M 50 125 Q 112.5 25 175 125 T 300 125 T 425 125 Q 456.25 175 487.5 175');
+                                setSvg('sw-cos-path', 'M 50 75 Q 81.25 75 112.5 125 Q 143.75 175 175 175 Q 206.25 175 237.5 125 Q 268.75 75 300 75 Q 331.25 75 362.5 125 Q 393.75 175 425 175 Q 456.25 175 487.5 125');
                                 setSvg('sw-dot', {cx: 487.5, cy: 175});
-                                setSvg('sw-tangent', {x1: 447.5, y1: 175, x2: 527.5, y2: 175});
+                                setSvg('sw-cos-dot', {cx: 487.5, cy: 125});
+                                setSvg('sw-tangent', {x1: 447.5, y1: 175, x2: 527.5, y2: 175, opacity: 1});
                             }
                         },
                         {
                             phase: "t = 4π (The Very End)", pos: "0 (Resting)", vel: "Max Upward", tan: "m = 1",
                             preview: "Two full physical cycles complete. The spring returns to the center moving upward.",
                             what: "The wave has hit the far right edge of our visual canvas. Two complete sine periods have been traced.",
-                            why: "By tracking the tangent slope across two full cycles, we have physically drawn two full cosine waves, proving the unbreakable periodic relationship: f'(sin(t)) = cos(t).",
+                            why: "By mapping the steepness of the tangent slope across two full cycles, we have physically drawn two full cosine waves, proving the mathematical law: f'(sin(t)) = cos(t).",
                             anim: () => {
                                 setSvg('sw-active-path', 'M 50 125 Q 112.5 25 175 125 T 300 125 T 425 125 T 550 125');
+                                setSvg('sw-cos-path', 'M 50 75 Q 81.25 75 112.5 125 Q 143.75 175 175 175 Q 206.25 175 237.5 125 Q 268.75 75 300 75 Q 331.25 75 362.5 125 Q 393.75 175 425 175 Q 456.25 175 487.5 125 Q 518.75 75 550 75');
                                 setSvg('sw-dot', {cx: 550, cy: 125});
-                                setSvg('sw-tangent', {x1: 520, y1: 173, x2: 580, y2: 77});
+                                setSvg('sw-cos-dot', {cx: 550, cy: 75});
+                                setSvg('sw-tangent', {x1: 520, y1: 173, x2: 580, y2: 77, opacity: 0.3}); // Fade tangent slightly to emphasize final curve
                             }
                         }
                     ];
