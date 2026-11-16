@@ -177,7 +177,8 @@
                 </div>
 
                 <div class="ped-canvas-wrap">
-                    <svg id="pw-svg" class="ped-svg" viewBox="0 0 400 400">
+                    <!-- Constrained max-width to 320px to prevent the square from blowing out the vertical layout -->
+                    <svg id="pw-svg" class="ped-svg" viewBox="0 0 400 400" style="max-width: 320px;">
                         <!-- Grid lines -->
                         <g stroke="#e2e8f0" stroke-width="1"><line x1="0" y1="200" x2="400" y2="200"/><line x1="200" y1="0" x2="200" y2="400"/></g>
                         <!-- Base Square (x^2) -->
@@ -314,6 +315,26 @@
                 })();
             </script>
 
+            <!-- EXPLANATORY TEXT: HISTORY AND INTUITION -->
+            <div style="margin-top: 2rem; margin-bottom: 4rem;">
+                <h4 style="color: #0f172a; font-size: 1.1rem; margin-bottom: 1rem;">The Power and Danger of the "Intuitive" Proof</h4>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-bottom: 1.25rem;">
+                    The interactive stepper above demonstrates what mathematicians call an <strong>intuitive proof</strong>. For a beginner, this type of physical, spatial reasoning is absolutely vital. If you only learn calculus as a set of blind algebraic rules, your working memory will eventually collapse under the weight of abstract symbol manipulation. By seeing the physical square expand, you anchor the abstract rule ($2x$) to a tangible reality: the derivative of a square is simply the act of pushing out its two outer edges.
+                </p>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-bottom: 1.25rem;">
+                    This physical approach is not a modern pedagogical trick; it is the exact conceptual framework that birthed calculus. In 300 BCE, Euclid mapped the static geometry of a cut square. By the 1630s, Pierre de Fermat "animated" Euclid's square to find the slopes of parabolas by introducing a tiny hypothetical nudge. In 1687, Isaac Newton formalized this in his <em>Principia</em>. Newton argued geometrically that the two outer rectangles represented the true flow of the area's growth, while the tiny corner square was infinitely smaller—a "moment of a moment"—and could simply be thrown away.
+                </p>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-bottom: 1.25rem;">
+                    But the act of throwing away that corner square sparked one of the greatest controversies in the history of science. In 1734, the philosopher and cleric Bishop George Berkeley published a scathing critique of Newton's logic. Berkeley pointed out a glaring mathematical fallacy: if your tiny nudge ($\Delta x$) is a real, non-zero number, you cannot just delete the corner square because it is inconveniently small. But if $\Delta x$ is exactly zero, you cannot divide by it to find a rate of change. Berkeley famously mocked these vanishing increments, calling them <strong>"the ghosts of departed quantities."</strong>
+                </p>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-bottom: 0;">
+                    This brings us full circle to the crisis of the Weierstrass Monster. Intuition is a powerful scaffold for learning, but human eyesight and physical analogies completely break down at the scale of infinity. If we rely <em>only</em> on intuitive geometry, we have no defense against logical fallacies or pathological curves. Bishop Berkeley’s criticism is exactly what forced later mathematicians to abandon physical shapes and invent the rigorous $\epsilon\text{-}\delta$ limit. The formal algebraic limit ($h \to 0$) is the rigorous engine that legally proves deleting that corner square is mathematically sound, protecting our calculations when our physical intuition ultimately fails.
+                </p>
+            </div>
 
             <!-- ================================================================= -->
             <!-- WIDGET 2: SINE & COSINE (PHYSICS OF THE SPRING)                   -->
