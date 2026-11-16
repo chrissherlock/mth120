@@ -116,52 +116,562 @@
                 </ul>
             </div>
 
-            <!-- SECTION 1: FORGING THE BASE PARTS -->
-            <h2 id="section-powers">1. Forging the Base Parts: Powers, Sine, and Exponentials</h2>
-
-            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
-                Before we can build complex machines, we need the basic parts. We will use the limit definition of the derivative one last time to forge the exact derivative rules for polynomials, trigonometric waves, and exponential growth.
+            <!-- ================================================================= -->
+            <!-- SECTION: FORGING THE BASE PARTS (POWERS, SINE, EXPONENTIALS)      -->
+            <!-- ================================================================= -->
+            <h2 style="color: #0f172a; margin-top: 3.5rem;">Forging the Base Parts: Powers, Sine, and Exponentials</h2>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-bottom: 2rem;">
+                Standard calculus often treats base derivatives as a list of algebraic flashcards to be memorized: "bring the power down," or "sine becomes cosine." However, if we treat calculus as blind symbol manipulation, the rules will collapse under the weight of working memory. By anchoring these abstract algebraic rules to physical geometry and tangible physics, we don't have to memorize the rules—we just remember the physical shapes.
             </p>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin: 2rem 0">
+            <!-- SHARED WIDGET STYLES -->
+            <style>
+                .ped-widget { margin: 2.5rem 0; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); font-family: system-ui, -apple-system, sans-serif; overflow: hidden; }
+                .ped-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; padding: 1.25rem 1.5rem; background: #0f172a; border-bottom: 1px solid #1e293b; }
+                .ped-title { margin: 0; font-size: 1.15rem; font-weight: 800; color: #f8fafc; letter-spacing: 0.02em; }
+                .ped-toggles { display: flex; gap: 0.5rem; background: #1e293b; padding: 0.35rem; border-radius: 8px; border: 1px solid #334155; }
+                .ped-dim-btn { padding: 0.45rem 0.9rem; font-size: 0.85rem; font-weight: 700; border-radius: 6px; border: none; background: transparent; color: #94a3b8; cursor: pointer; transition: all 0.2s ease; }
+                .ped-dim-btn.active { background: #3b82f6; color: #ffffff; box-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+                .ped-telemetry { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1px; background: #e2e8f0; border-bottom: 1px solid #cbd5e1; }
+                .ped-tel-card { background: #f8fafc; padding: 0.85rem 1.25rem; display: flex; flex-direction: column; gap: 0.25rem; }
+                .ped-tel-lbl { font-size: 0.7rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
+                .ped-tel-val { font-size: 0.95rem; font-weight: 800; color: #0f172a; font-variant-numeric: tabular-nums; }
+                .ped-canvas-wrap { position: relative; width: 100%; background: #ffffff; padding: 1.5rem; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: center; }
+                .ped-svg { width: 100%; max-width: 600px; height: auto; display: block; background: #f8fafc; }
+                .ped-nav-panel { padding: 1.25rem 1.5rem; background: #f1f5f9; border-bottom: 1px solid #e2e8f0; display: flex; gap: 1.5rem; align-items: flex-start; }
+                @media (max-width: 600px) { .ped-nav-panel { flex-direction: column; gap: 1rem; } }
+                .ped-stepper-controls { display: flex; gap: 0.5rem; flex-shrink: 0; }
+                .ped-step-btn { display: flex; align-items: center; justify-content: center; padding: 0.5rem 1rem; font-size: 0.9rem; font-weight: 700; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #334155; cursor: pointer; transition: all 0.1s; }
+                .ped-step-btn:hover:not(:disabled) { background: #e2e8f0; color: #0f172a; }
+                .ped-step-btn:active:not(:disabled) { transform: scale(0.96); }
+                .ped-step-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+                .ped-preview { margin: 0; font-size: 0.95rem; line-height: 1.6; color: #1e293b; border-left: 4px solid #3b82f6; padding-left: 1rem; min-height: 4.5rem; display: flex; align-items: center; flex-grow: 1; }
+                .ped-panes { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; background: #e2e8f0; }
+                .ped-pane { background: #ffffff; padding: 1.5rem; }
+                .ped-pane h4 { margin: 0 0 0.75rem 0; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
+                .ped-pane-what h4 { color: #0284c7; }
+                .ped-pane-why h4 { color: #b45309; }
+                .ped-pane-content { min-height: 5.5rem; }
+                .ped-pane p { margin: 0; font-size: 0.92rem; line-height: 1.65; color: #334155; }
+            </style>
 
-                <!-- POWER RULE -->
-                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-top: 4px solid #10b981; border-radius: 8px; padding: 1.5rem">
-                    <h4 style="margin: 0 0 0.5rem 0; color: #047857; font-size: 1.05rem">The Power Rule</h4>
-                    <p style="margin: 0 0 1rem 0; color: #475569; font-size: 0.95rem; line-height: 1.6">
-                        For any power $f(x) = x^p$, we apply the limit:
-                        $$f'(x) = \lim_{\Delta x \to 0} \frac{(x + \Delta x)^p - x^p}{\Delta x}$$
-                        Using the binomial theorem, $(x + \Delta x)^p$ expands to $x^p + px^{p-1}\Delta x + o(\Delta x)$, where $o(\Delta x)$ contains all the higher powers of $\Delta x$ that crush to zero. The $x^p$ terms cancel, the $\Delta x$ divides out, and we are left with exactly:
-                    </p>
-                    <div style="text-align: center; background: #f0fdf4; padding: 0.75rem; border-radius: 6px; font-weight: 700; color: #065f46">
-                        $$f'(x) = px^{p-1}$$
+
+            <!-- ================================================================= -->
+            <!-- WIDGET 1: POWERS (GEOMETRY OF DIMENSIONS)                         -->
+            <!-- ================================================================= -->
+            <h3 style="color: #0f172a; margin-top: 2rem;">1. Powers ($x^n$): The Geometry of Growing Dimensions</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Imagine a factory stamping out square ceramic tiles with a side length of $x$. If we need to slightly expand the dimensions of the tile by a microscopic amount $\Delta x$, where does the new surface area physically go? Let's track the geometry of the derivative.
+            </p>
+
+            <div id="widget-powers" class="ped-widget">
+                <div class="ped-header">
+                    <h3 class="ped-title">Interactive Lab: The Expanding Square ($x^2$)</h3>
+                </div>
+
+                <div class="ped-telemetry">
+                    <div class="ped-tel-card"><span class="ped-tel-lbl">Production Phase</span><span id="pw-tel-phase" class="ped-tel-val">0: Base Tile</span></div>
+                    <div class="ped-tel-card"><span class="ped-tel-lbl">Total Area Function</span><span id="pw-tel-area" class="ped-tel-val" style="color: #3b82f6;">x²</span></div>
+                    <div class="ped-tel-card"><span class="ped-tel-lbl">Linear Expansion Edges</span><span id="pw-tel-edges" class="ped-tel-val" style="color: #10b981;">0</span></div>
+                    <div class="ped-tel-card"><span class="ped-tel-lbl">Microscopic Error (Δx)²</span><span id="pw-tel-error" class="ped-tel-val" style="color: #ef4444;">0</span></div>
+                </div>
+
+                <div class="ped-canvas-wrap">
+                    <svg id="pw-svg" class="ped-svg" viewBox="0 0 400 400">
+                        <!-- Grid lines -->
+                        <g stroke="#e2e8f0" stroke-width="1"><line x1="0" y1="200" x2="400" y2="200"/><line x1="200" y1="0" x2="200" y2="400"/></g>
+                        <!-- Base Square (x^2) -->
+                        <rect x="50" y="50" width="220" height="220" fill="#bfdbfe" stroke="#3b82f6" stroke-width="2"/>
+                        <text x="160" y="165" font-size="24" font-weight="bold" fill="#1e3a8a" font-family="sans-serif">x²</text>
+
+                        <!-- Right Edge (x * dx) -->
+                        <rect id="pw-edge-r" x="270" y="50" width="0" height="220" fill="#a7f3d0" stroke="#10b981" stroke-width="0" opacity="0"/>
+                        <text id="pw-txt-r" x="295" y="165" font-size="16" font-weight="bold" fill="#065f46" font-family="sans-serif" opacity="0">x·Δx</text>
+
+                        <!-- Bottom Edge (x * dx) -->
+                        <rect id="pw-edge-b" x="50" y="270" width="220" height="0" fill="#a7f3d0" stroke="#10b981" stroke-width="0" opacity="0"/>
+                        <text id="pw-txt-b" x="145" y="305" font-size="16" font-weight="bold" fill="#065f46" font-family="sans-serif" opacity="0">x·Δx</text>
+
+                        <!-- Corner Square (dx^2) -->
+                        <rect id="pw-corner" x="270" y="270" width="0" height="0" fill="#fecaca" stroke="#ef4444" stroke-width="0" opacity="0"/>
+                        <text id="pw-txt-c" x="282" y="305" font-size="14" font-weight="bold" fill="#991b1b" font-family="sans-serif" opacity="0">Δx²</text>
+                    </svg>
+                </div>
+
+                <div class="ped-nav-panel">
+                    <div class="ped-stepper-controls">
+                        <button class="ped-step-btn" id="pw-btn-prev" onclick="powersLab.step(-1)" disabled>Prev</button>
+                        <button class="ped-step-btn" id="pw-btn-next" onclick="powersLab.step(1)">Next</button>
+                        <button class="ped-step-btn" id="pw-btn-reset" onclick="powersLab.reset()">Reset</button>
+                    </div>
+                    <div id="pw-preview" class="ped-preview">
+                        We begin with our standard square tile of side length x. Its total physical area is exactly x².
                     </div>
                 </div>
 
-                <!-- TRIGONOMETRIC WAVES -->
-                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-top: 4px solid #3b82f6; border-radius: 8px; padding: 1.5rem">
-                    <h4 style="margin: 0 0 0.5rem 0; color: #1d4ed8; font-size: 1.05rem">Trigonometric Waves</h4>
-                    <p style="margin: 0 0 1rem 0; color: #475569; font-size: 0.95rem; line-height: 1.6">
-                        For $f(x) = \sin x$, we use the addition formula $\sin(x + \Delta x) = \sin x \cos \Delta x + \cos x \sin \Delta x$. Using the fundamental trigonometric limits $\lim_{\Delta x \to 0} \frac{\sin \Delta x}{\Delta x} = 1$ and $\lim_{\Delta x \to 0} \frac{\cos \Delta x - 1}{\Delta x} = 0$, the equation collapses beautifully into:
-                    </p>
-                    <div style="text-align: center; background: #eff6ff; padding: 0.75rem; border-radius: 6px; font-weight: 700; color: #1e3a8a">
-                        $$\frac{d}{dx}(\sin x) = \cos x$$
-                        $$\frac{d}{dx}(\cos x) = -\sin x$$
+                <div class="ped-panes">
+                    <div class="ped-pane ped-pane-what">
+                        <h4>What Is Happening (Mechanics)</h4>
+                        <div id="pw-pane-what" class="ped-pane-content"><p>We are looking at the base function f(x) = x² in its static state before any change (Δx) is applied.</p></div>
                     </div>
-                </div>
-
-                <!-- EXPONENTIALS -->
-                <div style="background: #ffffff; border: 1px solid #cbd5e1; border-top: 4px solid #8b5cf6; border-radius: 8px; padding: 1.5rem">
-                    <h4 style="margin: 0 0 0.5rem 0; color: #6d28d9; font-size: 1.05rem">Exponential Growth</h4>
-                    <p style="margin: 0 0 1rem 0; color: #475569; font-size: 0.95rem; line-height: 1.6">
-                        For $f(x) = a^x$, the limit evaluates to $a^x \lim_{\Delta x \to 0} \frac{a^{\Delta x} - 1}{\Delta x}$. This limit evaluates exactly to the natural logarithm $\ln a$. If we choose Euler's number $e$ as our base, then $\ln e = 1$, revealing the most remarkable property in all of mathematics—it is its own derivative:
-                    </p>
-                    <div style="text-align: center; background: #f5f3ff; padding: 0.75rem; border-radius: 6px; font-weight: 700; color: #4c1d95">
-                        $$\frac{d}{dx}(a^x) = a^x \ln a$$
-                        $$\frac{d}{dx}(e^x) = e^x$$
+                    <div class="ped-pane ped-pane-why">
+                        <h4>Why The System Does This (Rationale)</h4>
+                        <div id="pw-pane-why" class="ped-pane-content"><p>Calculus tracks rates of change. To understand the derivative, we must first establish the original physical boundaries of the object before we stretch it.</p></div>
                     </div>
                 </div>
             </div>
+
+            <script>
+                const powersLab = (function() {
+                    let currentStep = 0;
+                    const maxSteps = 3;
+
+                    const data = [
+                        {
+                            phase: "0: Base Tile", area: "x²", edges: "0", error: "0",
+                            preview: "We begin with our standard square tile of side length x. Its total physical area is exactly x².",
+                            what: "We are looking at the base function f(x) = x² in its static state before any change (Δx) is applied.",
+                            why: "Calculus tracks rates of change. To understand the derivative, we must first establish the original physical boundaries of the object before we stretch it.",
+                            anim: () => {
+                                setAttr('pw-edge-r', {width: 0, 'stroke-width': 0, opacity: 0});
+                                setAttr('pw-edge-b', {height: 0, 'stroke-width': 0, opacity: 0});
+                                setAttr('pw-corner', {width: 0, height: 0, 'stroke-width': 0, opacity: 0});
+                                setAttr('pw-txt-r', {opacity: 0}); setAttr('pw-txt-b', {opacity: 0}); setAttr('pw-txt-c', {opacity: 0});
+                            }
+                        },
+                        {
+                            phase: "1: The Micro-Expansion", area: "(x + Δx)²", edges: "+ 2(x·Δx)", error: "+ (Δx)²",
+                            preview: "We expand the side length by a tiny nudge (Δx). The new area spills outward, forming three distinct new geometric pieces.",
+                            what: "The new area (x+Δx)² algebraically expands to x² + 2xΔx + (Δx)². Geometrically, this translates to two long green rectangular edges, and one tiny red corner square.",
+                            why: "This physically represents the numerator of the difference quotient: f(x+h) - f(x). The new added area is the raw difference before we divide by the time/nudge factor.",
+                            anim: () => {
+                                setAttr('pw-edge-r', {width: 60, 'stroke-width': 2, opacity: 1});
+                                setAttr('pw-edge-b', {height: 60, 'stroke-width': 2, opacity: 1});
+                                setAttr('pw-corner', {width: 60, height: 60, 'stroke-width': 2, opacity: 1});
+                                setAttr('pw-txt-r', {opacity: 1}); setAttr('pw-txt-b', {opacity: 1}); setAttr('pw-txt-c', {opacity: 1});
+                            }
+                        },
+                        {
+                            phase: "2: Factoring the Rate", area: "Rate extraction", edges: "2x", error: "Δx",
+                            preview: "We divide the entire new added area by our nudge (Δx) to find the 'rate of change'.",
+                            what: "We factor out Δx from the added area components. The two long edges (2xΔx) simply become 2x. The tiny corner square (Δx)² shrinks down to a single Δx.",
+                            why: "Dividing by Δx represents finding the secant line slope. We are measuring how much area we gained *per unit* of expansion.",
+                            anim: () => {
+                                // Visually highlight the 2x edges, dim the corner
+                                setAttr('pw-edge-r', {fill: '#34d399'}); setAttr('pw-edge-b', {fill: '#34d399'});
+                                setAttr('pw-corner', {opacity: 0.4});
+                            }
+                        },
+                        {
+                            phase: "3: The Limit (Δx → 0)", area: "Derivative f'(x)", edges: "2x", error: "Vanished to 0",
+                            preview: "As we shrink the nudge Δx to absolute zero, the tiny red corner square vanishes infinitely faster than the green edges. Only the edges remain.",
+                            what: "Taking the limit as Δx → 0 deletes the lingering (Δx) term from the corner square. The only surviving geometry is the linear push of the two outer edges: 2x.",
+                            why: "This is why the derivative of x² is 2x! The 'power rule' isn't arbitrary algebra; it literally describes pushing out the 2 flat edges of a square dimension.",
+                            anim: () => {
+                                setAttr('pw-edge-r', {width: 15, x: 270}); setAttr('pw-edge-b', {height: 15, y: 270});
+                                setAttr('pw-corner', {width: 15, height: 15, x: 270, y: 270, opacity: 0});
+                                setAttr('pw-txt-r', {opacity: 0}); setAttr('pw-txt-b', {opacity: 0}); setAttr('pw-txt-c', {opacity: 0});
+                            }
+                        }
+                    ];
+
+                    function setAttr(id, attrs) {
+                        const el = document.getElementById(id);
+                        for(let key in attrs) {
+                            el.style.transition = "all 0.5s ease";
+                            if(key === 'width' || key === 'height' || key === 'x' || key === 'y') el.setAttribute(key, attrs[key]);
+                            else el.style[key] = attrs[key];
+                        }
+                    }
+
+                    function render() {
+                        const d = data[currentStep];
+                        document.getElementById('pw-tel-phase').textContent = d.phase;
+                        document.getElementById('pw-tel-area').textContent = d.area;
+                        document.getElementById('pw-tel-edges').textContent = d.edges;
+                        document.getElementById('pw-tel-error').textContent = d.error;
+
+                        document.getElementById('pw-preview').textContent = d.preview;
+                        document.getElementById('pw-pane-what').innerHTML = `<p>${d.what}</p>`;
+                        document.getElementById('pw-pane-why').innerHTML = `<p>${d.why}</p>`;
+
+                        document.getElementById('pw-btn-prev').disabled = (currentStep === 0);
+                        document.getElementById('pw-btn-next').disabled = (currentStep === maxSteps);
+
+                        d.anim();
+                    }
+
+                    return {
+                        step: function(dir) {
+                            currentStep = Math.max(0, Math.min(maxSteps, currentStep + dir));
+                            render();
+                        },
+                        reset: function() {
+                            currentStep = 0;
+                            render();
+                        }
+                    };
+                })();
+            </script>
+
+
+            <!-- ================================================================= -->
+            <!-- WIDGET 2: SINE & COSINE (PHYSICS OF THE SPRING)                   -->
+            <!-- ================================================================= -->
+            <h3 style="color: #0f172a; margin-top: 3.5rem;">2. Sine and Cosine: The Physics of the Spring</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Why does the derivative of Sine equal Cosine? If we track a heavy weight bouncing on a physical spring, Sine tracks its <em>Position</em> (height) over time, and the derivative tracks its <em>Velocity</em> (speed). Step through the bounce to watch physics lock the two waves into a perfect quarter-phase shift.
+            </p>
+
+            <div id="widget-sine" class="ped-widget">
+                <div class="ped-header">
+                    <h3 class="ped-title">Interactive Lab: Oscillating Velocity</h3>
+                </div>
+
+                <div class="ped-telemetry">
+                    <div class="ped-tel-card"><span class="ped-tel-lbl">Time Phase</span><span id="sw-tel-phase" class="ped-tel-val">t = 0 (Center)</span></div>
+                    <div class="ped-tel-card"><span class="ped-tel-lbl">Position: sin(t)</span><span id="sw-tel-pos" class="ped-tel-val" style="color: #3b82f6;">0 (Resting)</span></div>
+                    <div class="ped-tel-card"><span class="ped-tel-lbl">Velocity: cos(t)</span><span id="sw-tel-vel" class="ped-tel-val" style="color: #d946ef;">Maximum Fast</span></div>
+                    <div class="ped-tel-card"><span class="ped-tel-lbl">Tangent Slope</span><span id="sw-tel-tan" class="ped-tel-val" style="color: #d946ef;">m = 1</span></div>
+                </div>
+
+                <div class="ped-canvas-wrap">
+                    <svg id="sw-svg" class="ped-svg" viewBox="0 0 600 250">
+                        <!-- Grid & Axes -->
+                        <g stroke="#e2e8f0" stroke-width="1">
+                            <line x1="50" y1="125" x2="550" y2="125" stroke="#cbd5e1" stroke-width="2"/> <!-- Time Axis -->
+                            <line x1="50" y1="25" x2="50" y2="225" stroke="#cbd5e1" stroke-width="2"/> <!-- Pos Axis -->
+                        </g>
+                        <!-- Sine Wave Path -->
+                        <path d="M 50 125 Q 112 25 175 125 T 300 125 T 425 125 T 550 125" fill="none" stroke="#bfdbfe" stroke-width="4"/>
+                        <path id="sw-active-path" d="M 50 125" fill="none" stroke="#3b82f6" stroke-width="4"/>
+
+                        <!-- Tangent Line & Weight (Corrected initial coordinates for SVG inverted Y-axis) -->
+                        <line id="sw-tangent" x1="20" y1="173" x2="80" y2="77" stroke="#d946ef" stroke-width="3" stroke-linecap="round"/>
+                        <circle id="sw-dot" cx="50" cy="125" r="8" fill="#1e3a8a"/>
+                    </svg>
+                </div>
+
+                <div class="ped-nav-panel">
+                    <div class="ped-stepper-controls">
+                        <button class="ped-step-btn" id="sw-btn-prev" onclick="sineLab.step(-1)" disabled>Prev</button>
+                        <button class="ped-step-btn" id="sw-btn-next" onclick="sineLab.step(1)">Next</button>
+                        <button class="ped-step-btn" id="sw-btn-reset" onclick="sineLab.reset()">Reset</button>
+                    </div>
+                    <div id="sw-preview" class="ped-preview">
+                        At t=0, the spring is whipping through the center resting point. Its position is 0, but it is moving at its absolute maximum upward speed.
+                    </div>
+                </div>
+
+                <div class="ped-panes">
+                    <div class="ped-pane ped-pane-what">
+                        <h4>What Is Happening (Mechanics)</h4>
+                        <div id="sw-pane-what" class="ped-pane-content"><p>The position curve (sine) is crossing the x-axis. The tangent line is pitched at its steepest positive angle.</p></div>
+                    </div>
+                    <div class="ped-pane ped-pane-why">
+                        <h4>Why The System Does This (Rationale)</h4>
+                        <div id="sw-pane-why" class="ped-pane-content"><p>Because the spring isn't fighting gravity or tension at the center, its velocity (cosine) hits its maximum peak exactly when position is 0.</p></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <script>
+                const sineLab = (function() {
+                    let currentStep = 0;
+                    const maxSteps = 9; // Expanded to trace the entire visible canvas (4π)
+
+                    const data = [
+                        {
+                            phase: "t = 0 (Center)", pos: "0 (Resting)", vel: "Max Upward", tan: "m = 1",
+                            preview: "At t=0, the spring is whipping through the center resting point. Its position is 0, but it is moving at its absolute maximum upward speed.",
+                            what: "The position curve (sine) is crossing the x-axis. The tangent line is pitched at its steepest positive angle.",
+                            why: "Because the spring isn't fighting gravity or tension at the center, its velocity (cosine) hits its maximum peak exactly when position is 0.",
+                            anim: () => {
+                                setSvg('sw-active-path', 'M 50 125');
+                                setSvg('sw-dot', {cx: 50, cy: 125});
+                                setSvg('sw-tangent', {x1: 20, y1: 173, x2: 80, y2: 77});
+                            }
+                        },
+                        {
+                            phase: "t = π/4 (Climbing)", pos: "0.707 (Rising)", vel: "Slowing Down", tan: "m = 0.707",
+                            preview: "The weight is climbing up, fighting gravity and spring tension. It's getting higher, but its speed is bleeding off.",
+                            what: "The height (sine) is increasing, but the steepness of the tangent line is flattening out. Velocity is decaying toward zero.",
+                            why: "The physical tension of the stretched spring is actively decelerating the weight, causing the slope of the position curve to drop.",
+                            anim: () => {
+                                setSvg('sw-active-path', 'M 50 125 Q 65.6 100 81.25 87.5');
+                                setSvg('sw-dot', {cx: 81.25, cy: 87.5});
+                                setSvg('sw-tangent', {x1: 41.25, y1: 119.5, x2: 121.25, y2: 55.5});
+                            }
+                        },
+                        {
+                            phase: "t = π/2 (Peak Height)", pos: "1 (Maximum)", vel: "Absolute Zero", tan: "m = 0",
+                            preview: "The weight hits the absolute ceiling of its bounce. For a single, frozen millisecond, it must completely stop moving to reverse direction.",
+                            what: "The position curve (sine) reaches its physical peak. Because the object stops moving, the tangent line is perfectly flat (slope = 0).",
+                            why: "This is the core identity of Cosine: when Sine is at its peak, Cosine must cross zero. The derivative forces this quarter-phase shift to obey physical momentum.",
+                            anim: () => {
+                                setSvg('sw-active-path', 'M 50 125 Q 81.25 75 112.5 75');
+                                setSvg('sw-dot', {cx: 112.5, cy: 75});
+                                setSvg('sw-tangent', {x1: 72.5, y1: 75, x2: 152.5, y2: 75});
+                            }
+                        },
+                        {
+                            phase: "t = π (Falling)", pos: "0 (Resting)", vel: "Max Downward", tan: "m = -1",
+                            preview: "The weight falls back through the center resting point, but this time it is plunging downward at maximum speed.",
+                            what: "The position (sine) returns to 0, but the tangent line is pitched violently downward.",
+                            why: "The velocity (cosine) is now at its minimum peak. The cycle proves that measuring the slope of Sine physically reconstructs the Cosine wave.",
+                            anim: () => {
+                                setSvg('sw-active-path', 'M 50 125 Q 112.5 25 175 125');
+                                setSvg('sw-dot', {cx: 175, cy: 125});
+                                setSvg('sw-tangent', {x1: 145, y1: 77, x2: 205, y2: 173});
+                            }
+                        },
+                        {
+                            phase: "t = 3π/2 (Trough)", pos: "-1 (Minimum)", vel: "Absolute Zero", tan: "m = 0",
+                            preview: "The weight hits the absolute bottom of its bounce. Once again, it must momentarily stop before gravity and tension snap it back up.",
+                            what: "The position curve (sine) bottoms out at its minimum peak. The object is momentarily stationary, making the tangent line perfectly flat.",
+                            why: "Cosine crosses zero again. Velocity must be zero when position hits its maximum stretch in either direction.",
+                            anim: () => {
+                                setSvg('sw-active-path', 'M 50 125 Q 112.5 25 175 125 Q 206.25 175 237.5 175');
+                                setSvg('sw-dot', {cx: 237.5, cy: 175});
+                                setSvg('sw-tangent', {x1: 197.5, y1: 175, x2: 277.5, y2: 175});
+                            }
+                        },
+                        {
+                            phase: "t = 2π (Full Cycle)", pos: "0 (Resting)", vel: "Max Upward", tan: "m = 1",
+                            preview: "The weight completes one full physical cycle, whipping back through the center moving upward at maximum speed, resetting the system.",
+                            what: "The sine wave has completed one full period. The tangent line is back to its steepest positive angle, matching our starting state.",
+                            why: "Because physical bouncing is periodic, both Sine (Position) and Cosine (Velocity) are periodic. The physics cycle resets, seamlessly repeating the math.",
+                            anim: () => {
+                                setSvg('sw-active-path', 'M 50 125 Q 112.5 25 175 125 T 300 125');
+                                setSvg('sw-dot', {cx: 300, cy: 125});
+                                setSvg('sw-tangent', {x1: 270, y1: 173, x2: 330, y2: 77});
+                            }
+                        },
+                        {
+                            phase: "t = 5π/2 (Second Peak)", pos: "1 (Maximum)", vel: "Absolute Zero", tan: "m = 0",
+                            preview: "The cycle continues into a second bounce. The weight hits the ceiling again, momentarily freezing.",
+                            what: "The sine wave reaches its second crest. The tangent line is completely flat once more.",
+                            why: "The physical periodicity of the system means every time position hits 1, velocity must be 0. The derivative curve behaves just like the original curve.",
+                            anim: () => {
+                                setSvg('sw-active-path', 'M 50 125 Q 112.5 25 175 125 T 300 125 Q 331.25 75 362.5 75');
+                                setSvg('sw-dot', {cx: 362.5, cy: 75});
+                                setSvg('sw-tangent', {x1: 322.5, y1: 75, x2: 402.5, y2: 75});
+                            }
+                        },
+                        {
+                            phase: "t = 3π (Second Fall)", pos: "0 (Resting)", vel: "Max Downward", tan: "m = -1",
+                            preview: "Passing through the center point for the third time, plunging downward as the spring compresses.",
+                            what: "The curve drops through the axis again, matching the exact steep downward behavior at t = π.",
+                            why: "Cosine is perfectly periodic alongside Sine. The velocity wave repeats exactly every 2π.",
+                            anim: () => {
+                                setSvg('sw-active-path', 'M 50 125 Q 112.5 25 175 125 T 300 125 T 425 125');
+                                setSvg('sw-dot', {cx: 425, cy: 125});
+                                setSvg('sw-tangent', {x1: 395, y1: 77, x2: 455, y2: 173});
+                            }
+                        },
+                        {
+                            phase: "t = 7π/2 (Second Trough)", pos: "-1 (Minimum)", vel: "Absolute Zero", tan: "m = 0",
+                            preview: "The second bottoming-out. The weight halts before springing back upwards.",
+                            what: "The position bottoms out for the second time, momentarily pausing the weight.",
+                            why: "The velocity returns to zero. The mathematical derivative perfectly mirrors the looping nature of physical energy.",
+                            anim: () => {
+                                setSvg('sw-active-path', 'M 50 125 Q 112.5 25 175 125 T 300 125 T 425 125 Q 456.25 175 487.5 175');
+                                setSvg('sw-dot', {cx: 487.5, cy: 175});
+                                setSvg('sw-tangent', {x1: 447.5, y1: 175, x2: 527.5, y2: 175});
+                            }
+                        },
+                        {
+                            phase: "t = 4π (The Very End)", pos: "0 (Resting)", vel: "Max Upward", tan: "m = 1",
+                            preview: "Two full physical cycles complete. The spring returns to the center moving upward.",
+                            what: "The wave has hit the far right edge of our visual canvas. Two complete sine periods have been traced.",
+                            why: "By tracking the tangent slope across two full cycles, we have physically drawn two full cosine waves, proving the unbreakable periodic relationship: f'(sin(t)) = cos(t).",
+                            anim: () => {
+                                setSvg('sw-active-path', 'M 50 125 Q 112.5 25 175 125 T 300 125 T 425 125 T 550 125');
+                                setSvg('sw-dot', {cx: 550, cy: 125});
+                                setSvg('sw-tangent', {x1: 520, y1: 173, x2: 580, y2: 77});
+                            }
+                        }
+                    ];
+
+                    function setSvg(id, attrs) {
+                        const el = document.getElementById(id);
+                        el.style.transition = "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)";
+                        if (typeof attrs === 'string') {
+                            el.setAttribute('d', attrs);
+                        } else {
+                            for(let key in attrs) el.setAttribute(key, attrs[key]);
+                        }
+                    }
+
+                    function render() {
+                        const d = data[currentStep];
+                        document.getElementById('sw-tel-phase').textContent = d.phase;
+                        document.getElementById('sw-tel-pos').textContent = d.pos;
+                        document.getElementById('sw-tel-vel').textContent = d.vel;
+                        document.getElementById('sw-tel-tan').textContent = d.tan;
+
+                        document.getElementById('sw-preview').textContent = d.preview;
+                        document.getElementById('sw-pane-what').innerHTML = `<p>${d.what}</p>`;
+                        document.getElementById('sw-pane-why').innerHTML = `<p>${d.why}</p>`;
+
+                        document.getElementById('sw-btn-prev').disabled = (currentStep === 0);
+                        document.getElementById('sw-btn-next').disabled = (currentStep === maxSteps);
+
+                        d.anim();
+                    }
+
+                    window.addEventListener('DOMContentLoaded', render);
+
+                    return {
+                        step: function(dir) {
+                            currentStep = Math.max(0, Math.min(maxSteps, currentStep + dir));
+                            render();
+                        },
+                        reset: function() {
+                            currentStep = 0;
+                            render();
+                        }
+                    };
+                })();
+            </script>
+
+            <!-- ================================================================= -->
+            <!-- WIDGET 3: EXPONENTIALS (THE MACHINE THAT BUILDS ITSELF)           -->
+            <!-- ================================================================= -->
+            <h3 style="color: #0f172a; margin-top: 3.5rem;">3. The Natural Exponential ($e^x$): The Machine That Builds Itself</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1rem;">
+                Imagine a bacterial colony where every single organism acts as a microscopic factory, constantly giving birth to new bacteria. The rate of growth (the slope) is entirely dependent on the current population (the height). But what happens if we tweak the genetic reproduction rate of the bacteria? Toggle through the bases below to discover why the number <em>e</em> is mathematically inevitable.
+            </p>
+
+            <div id="widget-exp" class="ped-widget">
+                <div class="ped-header">
+                    <h3 class="ped-title">Interactive Lab: Tuning the Factory Base</h3>
+                    <div class="ped-toggles">
+                        <button id="ew-toggle-2" class="ped-dim-btn active" onclick="expLab.setBase('2')">Base 2ˣ</button>
+                        <button id="ew-toggle-e" class="ped-dim-btn" onclick="expLab.setBase('e')">Base eˣ</button>
+                        <button id="ew-toggle-3" class="ped-dim-btn" onclick="expLab.setBase('3')">Base 3ˣ</button>
+                    </div>
+                </div>
+
+                <div class="ped-telemetry">
+                    <div class="ped-tel-card"><span class="ped-tel-lbl">Population Base</span><span id="ew-tel-base" class="ped-tel-val">Base 2</span></div>
+                    <div class="ped-tel-card"><span class="ped-tel-lbl">Population at x=1</span><span id="ew-tel-height" class="ped-tel-val" style="color: #3b82f6;">Height = 2.0</span></div>
+                    <div class="ped-tel-card"><span class="ped-tel-lbl">Growth Rate at x=1</span><span id="ew-tel-slope" class="ped-tel-val" style="color: #d946ef;">Slope = 1.38</span></div>
+                    <div class="ped-tel-card"><span class="ped-tel-lbl">Efficiency Ratio</span><span id="ew-tel-ratio" class="ped-tel-val" style="color: #ef4444;">Slope < Height</span></div>
+                </div>
+
+                <div class="ped-canvas-wrap">
+                    <svg id="ew-svg" class="ped-svg" viewBox="0 0 400 300">
+                        <g stroke="#e2e8f0" stroke-width="1">
+                            <line x1="50" y1="250" x2="350" y2="250" stroke="#cbd5e1" stroke-width="2"/> <!-- X Axis -->
+                            <line x1="200" y1="20" x2="200" y2="250" stroke="#cbd5e1" stroke-width="2"/> <!-- Y Axis -->
+                        </g>
+                        <!-- Dynamic Curves -->
+                        <path id="ew-curve-ghost1" d="M 50 250" fill="none" stroke="#e2e8f0" stroke-width="2" stroke-dasharray="4"/>
+                        <path id="ew-curve-ghost2" d="M 50 250" fill="none" stroke="#e2e8f0" stroke-width="2" stroke-dasharray="4"/>
+                        <path id="ew-curve-active" d="M 50 240 Q 150 220 200 150 T 350 20" fill="none" stroke="#3b82f6" stroke-width="4"/>
+
+                        <!-- Tangent Line & Focus Point at x=1 -->
+                        <line id="ew-tangent" x1="200" y1="180" x2="300" y2="120" stroke="#d946ef" stroke-width="3" stroke-linecap="round"/>
+                        <circle id="ew-dot" cx="250" cy="150" r="6" fill="#1e3a8a"/>
+                    </svg>
+                </div>
+
+                <div class="ped-panes">
+                    <div class="ped-pane ped-pane-what">
+                        <h4>What Is Happening (Mechanics)</h4>
+                        <div id="ew-pane-what" class="ped-pane-content"><p>In the Base 2 model, the slope of the tangent line (1.38) is noticeably shallower than the actual height of the curve (2.0) at x=1.</p></div>
+                    </div>
+                    <div class="ped-pane ped-pane-why">
+                        <h4>Why The System Does This (Rationale)</h4>
+                        <div id="ew-pane-why" class="ped-pane-content"><p>The bacteria reproduce too slowly. The physical derivative curve f'(x) runs below the population curve f(x). It requires an artificial multiplier (ln 2 ≈ 0.69) to correct the math.</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                const expLab = (function() {
+                    let activeBase = '2';
+
+                    const data = {
+                        '2': {
+                            base: "Base 2", height: "Height = 2.0", slope: "Slope = 1.38", ratio: "Slope < Height", rColor: "#ef4444",
+                            what: "In the Base 2 model, the slope of the tangent line (1.38) is noticeably shallower than the actual height of the curve (2.0) at x=1.",
+                            why: "The bacteria reproduce too slowly. The physical derivative curve f'(x) runs entirely below the population curve f(x). It requires an artificial multiplier (ln 2 ≈ 0.69) to correct the math.",
+                            anim: () => {
+                                document.getElementById('ew-curve-active').setAttribute('d', 'M 50 245 Q 150 230 200 200 Q 250 160 300 100 Q 330 50 350 0');
+                                document.getElementById('ew-dot').setAttribute('cx', '250');
+                                document.getElementById('ew-dot').setAttribute('cy', '160');
+                                document.getElementById('ew-tangent').setAttribute('x1', '190');
+                                document.getElementById('ew-tangent').setAttribute('y1', '210');
+                                document.getElementById('ew-tangent').setAttribute('x2', '310');
+                                document.getElementById('ew-tangent').setAttribute('y2', '110');
+                            }
+                        },
+                        '3': {
+                            base: "Base 3", height: "Height = 3.0", slope: "Slope = 3.29", ratio: "Slope > Height", rColor: "#ef4444",
+                            what: "In the Base 3 model, the slope of the tangent line (3.29) is now much steeper than the actual height of the curve (3.0) at x=1.",
+                            why: "The bacteria reproduce too aggressively. The physical derivative curve f'(x) runs entirely above the population curve f(x). It requires a dampening multiplier (ln 3 ≈ 1.09).",
+                            anim: () => {
+                                document.getElementById('ew-curve-active').setAttribute('d', 'M 50 248 Q 150 240 200 200 Q 225 150 250 50 Q 260 0 270 -50');
+                                document.getElementById('ew-dot').setAttribute('cx', '225');
+                                document.getElementById('ew-dot').setAttribute('cy', '150');
+                                document.getElementById('ew-tangent').setAttribute('x1', '200');
+                                document.getElementById('ew-tangent').setAttribute('y1', '250');
+                                document.getElementById('ew-tangent').setAttribute('x2', '250');
+                                document.getElementById('ew-tangent').setAttribute('y2', '50');
+                            }
+                        },
+                        'e': {
+                            base: "Base e ≈ 2.718", height: "Height = 2.71", slope: "Slope = 2.71", ratio: "Slope = Height (1:1)", rColor: "#10b981",
+                            what: "We have found the Goldilocks zone. In the Base e model, the steepness of the tangent line is completely identical to the height of the curve at every single point.",
+                            why: "The number e wasn't chosen at random; it is the unique, mathematically perfect constant where the rate of growth is exactly 1:1 with the current state. The machine is its own derivative: d/dx(eˣ) = eˣ.",
+                            anim: () => {
+                                document.getElementById('ew-curve-active').setAttribute('d', 'M 50 247 Q 150 235 200 200 Q 235 150 270 50 Q 285 -20 300 -100');
+                                document.getElementById('ew-dot').setAttribute('cx', '235');
+                                document.getElementById('ew-dot').setAttribute('cy', '150');
+                                document.getElementById('ew-tangent').setAttribute('x1', '195');
+                                document.getElementById('ew-tangent').setAttribute('y1', '230');
+                                document.getElementById('ew-tangent').setAttribute('x2', '275');
+                                document.getElementById('ew-tangent').setAttribute('y2', '70');
+                            }
+                        }
+                    };
+
+                    function render() {
+                        const d = data[activeBase];
+
+                        document.getElementById('ew-tel-base').textContent = d.base;
+                        document.getElementById('ew-tel-height').textContent = d.height;
+                        document.getElementById('ew-tel-slope').textContent = d.slope;
+
+                        const ratioEl = document.getElementById('ew-tel-ratio');
+                        ratioEl.textContent = d.ratio;
+                        ratioEl.style.color = d.rColor;
+
+                        document.getElementById('ew-pane-what').innerHTML = `<p>${d.what}</p>`;
+                        document.getElementById('ew-pane-why').innerHTML = `<p>${d.why}</p>`;
+
+                        ['2', 'e', '3'].forEach(b => {
+                            document.getElementById('ew-toggle-' + b).classList.toggle('active', activeBase === b);
+                        });
+
+                        document.querySelectorAll('#ew-svg path, #ew-svg line, #ew-svg circle').forEach(el => {
+                            el.style.transition = "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)";
+                        });
+
+                        d.anim();
+                    }
+
+                    return {
+                        setBase: function(base) {
+                            activeBase = base;
+                            render();
+                        }
+                    };
+                })();
+            </script>
 
             <!-- SECTION 2: THE ASSEMBLY LINE -->
             <h2 id="section-rules">2. The Assembly Line: Product and Quotient Rules</h2>
