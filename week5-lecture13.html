@@ -582,6 +582,27 @@
                 })();
             </script>
 
+            <!-- EXPLANATORY TEXT: HISTORY AND INTUITION OF THE SPRING -->
+            <div style="margin-top: 2rem; margin-bottom: 4rem;">
+                <h4 style="color: #0f172a; font-size: 1.1rem; margin-bottom: 1rem;">From Static Stars to Dynamic Motion</h4>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-bottom: 1.25rem;">
+                    Just as the expanding square protects students from treating the power rule as arbitrary symbol manipulation, the bouncing spring grounds the derivatives of trigonometric functions in physical reality. When beginners are told to simply memorize that the derivative of Sine is Cosine, it feels like a random algebraic switch. But by mapping it to kinematics—where the derivative of position is velocity—the quarter-phase shift becomes a physical inevitability. When a bouncing object is at its maximum height, it must momentarily stop moving. Therefore, when position (Sine) is at a peak, velocity (Cosine) must be zero.
+                </p>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-bottom: 1.25rem;">
+                    Historically, Sine and Cosine were never meant to track motion. They were born in antiquity as static geometry. From the Greek astronomer Hipparchus mapping the heavens using the chords of circles, to the Indian mathematician Aryabhata formulating the modern sine ratio (<em>jya</em>) in the 5th century, trigonometry was used almost exclusively for static surveying, architecture, and tracking the fixed positions of stars. For over a thousand years, these functions had absolutely nothing to do with time, velocity, or rates of change.
+                </p>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-bottom: 1.25rem;">
+                    The mathematical leap from static triangles to dynamic physics required two 17th-century breakthroughs. First, in 1660, English polymath Robert Hooke discovered the physical law of elasticity (Hooke's Law), proving that the force pulling a spring back to its center is directly proportional to how far it has been stretched. Shortly after, Isaac Newton invented calculus to measure continuous change over time. Yet, even Newton initially calculated the derivatives of sine and cosine using cumbersome infinite geometric series, rather than elegantly mapping them to physical oscillators.
+                </p>
+
+                <p style="color: #334155; line-height: 1.75; font-size: 1rem; margin-bottom: 0;">
+                    The true unification happened in the 18th century, championed by the Swiss mathematical giant Leonhard Euler. Euler liberated Sine and Cosine from the static right-angled triangle and redefined them as continuous fluid functions of variables (like time). By applying calculus to Hooke's physical springs, Euler and his contemporaries proved that simple harmonic motion is mathematically governed by differential equations whose only solutions are Sine and Cosine. The interactive spring above is the culmination of Euler's work: proving that the derivative of a wave isn't just a geometric trick, but the fundamental law of momentum and energy conservation playing out in real time.
+                </p>
+            </div>
+
             <!-- ================================================================= -->
             <!-- WIDGET 3: EXPONENTIALS (THE MACHINE THAT BUILDS ITSELF)           -->
             <!-- ================================================================= -->
@@ -609,18 +630,19 @@
 
                 <div class="ped-canvas-wrap">
                     <svg id="ew-svg" class="ped-svg" viewBox="0 0 400 300">
+                        <!-- Grid & Axes -->
                         <g stroke="#e2e8f0" stroke-width="1">
-                            <line x1="50" y1="250" x2="350" y2="250" stroke="#cbd5e1" stroke-width="2"/> <!-- X Axis -->
-                            <line x1="200" y1="20" x2="200" y2="250" stroke="#cbd5e1" stroke-width="2"/> <!-- Y Axis -->
+                            <line x1="50" y1="250" x2="350" y2="250" stroke="#cbd5e1" stroke-width="1"/> <!-- X Axis (y=0) -->
+                            <line x1="200" y1="10" x2="200" y2="250" stroke="#cbd5e1" stroke-width="1"/> <!-- Y Axis (x=0) -->
+                            <!-- Focus Line at x=1 -->
+                            <line x1="250" y1="10" x2="250" y2="250" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="4"/>
+                            <text x="255" y="240" font-size="11" font-weight="bold" fill="#94a3b8" font-family="sans-serif">x = 1</text>
                         </g>
-                        <!-- Dynamic Curves -->
-                        <path id="ew-curve-ghost1" d="M 50 250" fill="none" stroke="#e2e8f0" stroke-width="2" stroke-dasharray="4"/>
-                        <path id="ew-curve-ghost2" d="M 50 250" fill="none" stroke="#e2e8f0" stroke-width="2" stroke-dasharray="4"/>
-                        <path id="ew-curve-active" d="M 50 240 Q 150 220 200 150 T 350 20" fill="none" stroke="#3b82f6" stroke-width="4"/>
 
-                        <!-- Tangent Line & Focus Point at x=1 -->
-                        <line id="ew-tangent" x1="200" y1="180" x2="300" y2="120" stroke="#d946ef" stroke-width="3" stroke-linecap="round"/>
-                        <circle id="ew-dot" cx="250" cy="150" r="6" fill="#1e3a8a"/>
+                        <!-- Dynamic Paths (coordinates auto-generated by JS, line weights reduced) -->
+                        <path id="ew-curve-active" d="" fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+                        <line id="ew-tangent" stroke="#d946ef" stroke-width="2" stroke-linecap="round"/>
+                        <circle id="ew-dot" r="4.5" fill="#1e3a8a"/>
                     </svg>
                 </div>
 
@@ -642,48 +664,31 @@
 
                     const data = {
                         '2': {
-                            base: "Base 2", height: "Height = 2.0", slope: "Slope = 1.38", ratio: "Slope < Height", rColor: "#ef4444",
+                            base: "Base 2", height: "Height = 2.0", slope: "Slope = 1.38", ratio: "Slope < Height", rColor: "#ef4444", bValue: 2,
                             what: "In the Base 2 model, the slope of the tangent line (1.38) is noticeably shallower than the actual height of the curve (2.0) at x=1.",
-                            why: "The bacteria reproduce too slowly. The physical derivative curve f'(x) runs entirely below the population curve f(x). It requires an artificial multiplier (ln 2 ≈ 0.69) to correct the math.",
-                            anim: () => {
-                                document.getElementById('ew-curve-active').setAttribute('d', 'M 50 245 Q 150 230 200 200 Q 250 160 300 100 Q 330 50 350 0');
-                                document.getElementById('ew-dot').setAttribute('cx', '250');
-                                document.getElementById('ew-dot').setAttribute('cy', '160');
-                                document.getElementById('ew-tangent').setAttribute('x1', '190');
-                                document.getElementById('ew-tangent').setAttribute('y1', '210');
-                                document.getElementById('ew-tangent').setAttribute('x2', '310');
-                                document.getElementById('ew-tangent').setAttribute('y2', '110');
-                            }
+                            why: "The bacteria reproduce too slowly. The physical derivative curve f'(x) runs entirely below the population curve f(x). It requires an artificial multiplier (ln 2 ≈ 0.69) to correct the math."
                         },
                         '3': {
-                            base: "Base 3", height: "Height = 3.0", slope: "Slope = 3.29", ratio: "Slope > Height", rColor: "#ef4444",
-                            what: "In the Base 3 model, the slope of the tangent line (3.29) is now much steeper than the actual height of the curve (3.0) at x=1.",
-                            why: "The bacteria reproduce too aggressively. The physical derivative curve f'(x) runs entirely above the population curve f(x). It requires a dampening multiplier (ln 3 ≈ 1.09).",
-                            anim: () => {
-                                document.getElementById('ew-curve-active').setAttribute('d', 'M 50 248 Q 150 240 200 200 Q 225 150 250 50 Q 260 0 270 -50');
-                                document.getElementById('ew-dot').setAttribute('cx', '225');
-                                document.getElementById('ew-dot').setAttribute('cy', '150');
-                                document.getElementById('ew-tangent').setAttribute('x1', '200');
-                                document.getElementById('ew-tangent').setAttribute('y1', '250');
-                                document.getElementById('ew-tangent').setAttribute('x2', '250');
-                                document.getElementById('ew-tangent').setAttribute('y2', '50');
-                            }
+                            base: "Base 3", height: "Height = 3.0", slope: "Slope = 3.30", ratio: "Slope > Height", rColor: "#ef4444", bValue: 3,
+                            what: "In the Base 3 model, the slope of the tangent line (3.30) is now much steeper than the actual height of the curve (3.0) at x=1.",
+                            why: "The bacteria reproduce too aggressively. The physical derivative curve f'(x) runs entirely above the population curve f(x). It requires a dampening multiplier (ln 3 ≈ 1.10)."
                         },
                         'e': {
-                            base: "Base e ≈ 2.718", height: "Height = 2.71", slope: "Slope = 2.71", ratio: "Slope = Height (1:1)", rColor: "#10b981",
+                            base: "Base e ≈ 2.718", height: "Height = 2.72", slope: "Slope = 2.72", ratio: "Slope = Height (1:1)", rColor: "#10b981", bValue: Math.E,
                             what: "We have found the Goldilocks zone. In the Base e model, the steepness of the tangent line is completely identical to the height of the curve at every single point.",
-                            why: "The number e wasn't chosen at random; it is the unique, mathematically perfect constant where the rate of growth is exactly 1:1 with the current state. The machine is its own derivative: d/dx(eˣ) = eˣ.",
-                            anim: () => {
-                                document.getElementById('ew-curve-active').setAttribute('d', 'M 50 247 Q 150 235 200 200 Q 235 150 270 50 Q 285 -20 300 -100');
-                                document.getElementById('ew-dot').setAttribute('cx', '235');
-                                document.getElementById('ew-dot').setAttribute('cy', '150');
-                                document.getElementById('ew-tangent').setAttribute('x1', '195');
-                                document.getElementById('ew-tangent').setAttribute('y1', '230');
-                                document.getElementById('ew-tangent').setAttribute('x2', '275');
-                                document.getElementById('ew-tangent').setAttribute('y2', '70');
-                            }
+                            why: "The number e wasn't chosen at random; it is the unique, mathematically perfect constant where the rate of growth is exactly 1:1 with the current state. The machine is its own derivative: d/dx(eˣ) = eˣ."
                         }
                     };
+
+                    function generateExponentialPath(baseVal) {
+                        let d = "";
+                        for (let x = -3; x <= 3; x += 0.05) {
+                            let screenX = 200 + (x * 50);
+                            let screenY = 250 - (Math.pow(baseVal, x) * 50);
+                            d += (x === -3) ? `M ${screenX} ${screenY} ` : `L ${screenX} ${screenY} `;
+                        }
+                        return d;
+                    }
 
                     function render() {
                         const d = data[activeBase];
@@ -703,12 +708,29 @@
                             document.getElementById('ew-toggle-' + b).classList.toggle('active', activeBase === b);
                         });
 
-                        document.querySelectorAll('#ew-svg path, #ew-svg line, #ew-svg circle').forEach(el => {
-                            el.style.transition = "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)";
-                        });
+                        const pathString = generateExponentialPath(d.bValue);
+                        const curveEl = document.getElementById('ew-curve-active');
+                        curveEl.style.transition = "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)";
+                        curveEl.setAttribute('d', pathString);
 
-                        d.anim();
+                        const cx = 250;
+                        const cy = 250 - (d.bValue * 50);
+                        const dotEl = document.getElementById('ew-dot');
+                        dotEl.style.transition = "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)";
+                        dotEl.setAttribute('cx', cx);
+                        dotEl.setAttribute('cy', cy);
+
+                        const slope = d.bValue * Math.log(d.bValue);
+                        const tangentEl = document.getElementById('ew-tangent');
+                        tangentEl.style.transition = "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)";
+
+                        tangentEl.setAttribute('x1', cx - 100);
+                        tangentEl.setAttribute('y1', cy + (100 * slope));
+                        tangentEl.setAttribute('x2', cx + 100);
+                        tangentEl.setAttribute('y2', cy - (100 * slope));
                     }
+
+                    window.addEventListener('DOMContentLoaded', render);
 
                     return {
                         setBase: function(base) {
