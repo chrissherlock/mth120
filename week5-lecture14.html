@@ -150,32 +150,204 @@
             <h2 id="section-first-deriv">1. The First Derivative: Tracking Increase &amp; Decrease</h2>
 
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
-                If the derivative $f'(x)$ represents the slope of the tangent line, its sign is incredibly informative. A positive slope means the curve is aiming upward; a negative slope means it is aiming downward.
+                Before we use calculus to analyze a curve, we need a precise way to describe what it means for a function to climb or fall. Intuitively, a function is <strong>increasing</strong> if its graph rises as you read it from left to right, and <strong>decreasing</strong> if it falls.
             </p>
 
-            <div class="definition-box" style="border-left-color: #10b981; background: #f0fdf4;">
-                <h4 style="margin: 0 0 0.5rem 0; color: #047857; font-size: 1.1rem">Theorem 14: Monotonicity</h4>
-                <p style="margin: 0 0 0.5rem 0; color: #065f46; font-size: 0.95rem; line-height: 1.6">
-                    Suppose the function $f$ is continuous on $[a, b]$ and differentiable on $(a, b)$.
+            <!-- VISUALIZATION: INCREASING VS DECREASING -->
+            <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; margin: 1.5rem 0; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);">
+                <div style="display: flex; justify-content: center; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem;">
+                    <svg viewBox="0 0 640 245" style="width: 100%; max-width: 620px; height: auto; display: block;" role="img" aria-label="Comparison of strictly increasing and strictly decreasing functions">
+                        <!-- ==================== LEFT PANEL: INCREASING ==================== -->
+                        <text x="170" y="22" font-size="13" font-weight="800" fill="#047857" text-anchor="middle" font-family="system-ui, sans-serif">Strictly Increasing (Rising Left → Right)</text>
+
+                        <!-- Axes -->
+                        <line x1="40" y1="190" x2="290" y2="190" stroke="#94a3b8" stroke-width="1.5" />
+                        <line x1="50" y1="200" x2="50" y2="38" stroke="#94a3b8" stroke-width="1.5" />
+                        <text x="296" y="194" font-size="11" font-weight="bold" fill="#64748b">x</text>
+                        <text x="44" y="42" font-size="11" font-weight="bold" fill="#64748b" text-anchor="end">y</text>
+
+                        <!-- Rising Curve -->
+                        <path d="M 70 165 Q 160 150, 270 55" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" />
+
+                        <!-- Projections for x1 (116.25, 152.5) and x2 (216.25, 97.5) -->
+                        <line x1="116.25" y1="152.5" x2="116.25" y2="190" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+                        <line x1="116.25" y1="152.5" x2="50" y2="152.5" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+                        <line x1="216.25" y1="97.5" x2="216.25" y2="190" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+                        <line x1="216.25" y1="97.5" x2="50" y2="97.5" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+
+                        <!-- Points -->
+                        <circle cx="116.25" cy="152.5" r="4.5" fill="#047857" stroke="#ffffff" stroke-width="1.5" />
+                        <circle cx="216.25" cy="97.5" r="4.5" fill="#047857" stroke="#ffffff" stroke-width="1.5" />
+
+                        <!-- Labels -->
+                        <text x="116.25" y="206" font-size="11" font-style="italic" fill="#0f172a" text-anchor="middle">x₁</text>
+                        <text x="216.25" y="206" font-size="11" font-style="italic" fill="#0f172a" text-anchor="middle">x₂</text>
+                        <text x="44" y="156" font-size="11" font-style="italic" fill="#0f172a" text-anchor="end">f(x₁)</text>
+                        <text x="44" y="101" font-size="11" font-style="italic" fill="#0f172a" text-anchor="end">f(x₂)</text>
+                        <text x="170" y="232" font-size="12" font-weight="700" fill="#047857" text-anchor="middle" font-family="monospace">x₁ &lt; x₂  ⇒  f(x₁) &lt; f(x₂)</text>
+
+                        <!-- Divider -->
+                        <line x1="320" y1="15" x2="320" y2="235" stroke="#e2e8f0" stroke-width="1.5" />
+
+                        <!-- ==================== RIGHT PANEL: DECREASING ==================== -->
+                        <text x="490" y="22" font-size="13" font-weight="800" fill="#b91c1c" text-anchor="middle" font-family="system-ui, sans-serif">Strictly Decreasing (Falling Left → Right)</text>
+
+                        <!-- Axes -->
+                        <line x1="360" y1="190" x2="610" y2="190" stroke="#94a3b8" stroke-width="1.5" />
+                        <line x1="370" y1="200" x2="370" y2="38" stroke="#94a3b8" stroke-width="1.5" />
+                        <text x="616" y="194" font-size="11" font-weight="bold" fill="#64748b">x</text>
+                        <text x="364" y="42" font-size="11" font-weight="bold" fill="#64748b" text-anchor="end">y</text>
+
+                        <!-- Falling Curve -->
+                        <path d="M 390 55 Q 480 150, 590 165" fill="none" stroke="#ef4444" stroke-width="3" stroke-linecap="round" />
+
+                        <!-- Projections for x1 (436.25, 97.5) and x2 (536.25, 152.5) -->
+                        <line x1="436.25" y1="97.5" x2="436.25" y2="190" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+                        <line x1="436.25" y1="97.5" x2="370" y2="97.5" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+                        <line x1="536.25" y1="152.5" x2="536.25" y2="190" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+                        <line x1="536.25" y1="152.5" x2="370" y2="152.5" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+
+                        <!-- Points -->
+                        <circle cx="436.25" cy="97.5" r="4.5" fill="#b91c1c" stroke="#ffffff" stroke-width="1.5" />
+                        <circle cx="536.25" cy="152.5" r="4.5" fill="#b91c1c" stroke="#ffffff" stroke-width="1.5" />
+
+                        <!-- Labels -->
+                        <text x="436.25" y="206" font-size="11" font-style="italic" fill="#0f172a" text-anchor="middle">x₁</text>
+                        <text x="536.25" y="206" font-size="11" font-style="italic" fill="#0f172a" text-anchor="middle">x₂</text>
+                        <text x="364" y="101" font-size="11" font-style="italic" fill="#0f172a" text-anchor="end">f(x₁)</text>
+                        <text x="364" y="156" font-size="11" font-style="italic" fill="#0f172a" text-anchor="end">f(x₂)</text>
+                        <text x="490" y="232" font-size="12" font-weight="700" fill="#b91c1c" text-anchor="middle" font-family="monospace">x₁ &lt; x₂  ⇒  f(x₁) &gt; f(x₂)</text>
+                    </svg>
+                </div>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                Algebraically, we lock this down by comparing any two inputs $x_1$ and $x_2$ on an interval $I$:
+            </p>
+
+            <div class="definition-box" style="border-left-color: #0284c7; background: #f8fafc;">
+                <h4 style="margin: 0 0 0.5rem 0; color: #0369a1; font-size: 1.05rem">Definition: Monotone Functions</h4>
+                <p style="margin: 0 0 0.5rem 0; color: #334155; font-size: 0.95rem; line-height: 1.6">
+                    Let $f$ be a function defined on an interval $I$. For any two points $x_1, x_2 \in I$ with $x_1 < x_2$:
                 </p>
-                <ul style="margin: 0; padding-left: 1.25rem; color: #065f46; line-height: 1.6; font-size: 0.95rem">
-                    <li>If <strong>$f'(x) > 0$</strong> for all $x \in (a, b)$, then $f$ is <strong>strictly increasing</strong> on $[a, b]$.</li>
-                    <li>If <strong>$f'(x) < 0$</strong> for all $x \in (a, b)$, then $f$ is <strong>strictly decreasing</strong> on $[a, b]$.</li>
-                    <li>If <strong>$f'(x) = 0$</strong> for all $x \in (a, b)$, then $f$ is perfectly <strong>constant</strong> on $[a, b]$.</li>
+                <ul style="margin: 0; padding-left: 1.25rem; color: #334155; line-height: 1.6; font-size: 0.95rem">
+                    <li style="margin-bottom: 0.35rem">$f$ is <strong>strictly increasing</strong> on $I$ if $f(x_1) < f(x_2)$.</li>
+                    <li style="margin-bottom: 0.35rem">$f$ is <strong>strictly decreasing</strong> on $I$ if $f(x_1) > f(x_2)$.</li>
+                    <li>A function that is either strictly increasing or strictly decreasing on $I$ is called <strong>monotone</strong> on $I$.</li>
                 </ul>
             </div>
 
-            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.5rem">
-                To prove this rigorously, mathematicians rely on a foundational concept called the <strong>Mean Value Theorem (MVT)</strong>. Geometrically, the MVT states that if you draw a secant line connecting two points on a smooth curve, there must exist at least one point $c$ strictly between them where the instantaneous tangent is perfectly parallel to the secant line.
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
+                Testing every possible pair of points $x_1 < x_2$ by hand is impossible. This is where the first derivative $f'(x)$ becomes our compass. Because $f'(x)$ measures the instantaneous slope of the tangent line, its sign tells us which way the curve is heading: a positive slope aims upward, and a negative slope aims downward.
             </p>
 
+            <div class="definition-box" style="border-left-color: #10b981; background: #f0fdf4;">
+                <h4 style="margin: 0 0 0.5rem 0; color: #047857; font-size: 1.1rem">Theorem 14: Monotonicity Test</h4>
+                <p style="margin: 0 0 0.5rem 0; color: #065f46; font-size: 0.95rem; line-height: 1.6">
+                    Suppose the function $f$ is continuous on the closed interval $[a, b]$ and differentiable on the open interval $(a, b)$.
+                </p>
+                <ul style="margin: 0; padding-left: 1.25rem; color: #065f46; line-height: 1.6; font-size: 0.95rem">
+                    <li style="margin-bottom: 0.35rem">If <strong>$f'(x) > 0$</strong> for all $x \in (a, b)$, then $f$ is <strong>strictly increasing</strong> on $[a, b]$.</li>
+                    <li style="margin-bottom: 0.35rem">If <strong>$f'(x) < 0$</strong> for all $x \in (a, b)$, then $f$ is <strong>strictly decreasing</strong> on $[a, b]$.</li>
+                    <li>If <strong>$f'(x) = 0$</strong> for all $x \in (a, b)$, then $f$ is <strong>constant</strong> on $[a, b]$.</li>
+                </ul>
+            </div>
+
+            <h3>The Foundation: Rolle's Theorem</h3>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                There is a subtle logical leap hidden inside Theorem 14. The derivative $f'(x)$ is a purely <strong>local</strong> measurement—it only inspects an infinitely tiny neighborhood around a single point $x$. Monotonicity, on the other hand, is a <strong>global</strong> property—it compares the heights of two separate points, $x_1$ and $x_2$, across an entire interval.
+            </p>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                To bridge local slopes to global behavior, we start with the simplest possible case. Imagine throwing a ball straight up into the air and catching it at the exact same height you threw it from ($f(a) = f(b)$). If its flight is smooth and unbroken, there <em>must</em> be at least one instant $c$ in the middle where the ball momentarily stops rising and turns around—meaning its instantaneous velocity is zero ($f'(c) = 0$).
+            </p>
+
+            <div class="definition-box" style="border-left-color: #6366f1; background: #eef2ff;">
+                <h4 style="margin: 0 0 0.5rem 0; color: #3730a3; font-size: 1.05rem">Rolle's Theorem</h4>
+                <p style="margin: 0 0 0.5rem 0; color: #1e1b4b; font-size: 0.95rem; line-height: 1.6">
+                    Suppose a function $f$ satisfies three conditions on an interval $[a, b]$:
+                </p>
+                <ol style="margin: 0 0 0.65rem 0; padding-left: 1.25rem; color: #1e1b4b; line-height: 1.6; font-size: 0.95rem">
+                    <li>$f$ is <strong>continuous</strong> on the closed interval $[a, b]$.</li>
+                    <li>$f$ is <strong>differentiable</strong> on the open interval $(a, b)$.</li>
+                    <li>The endpoints are at the exact same height: <strong>$f(a) = f(b)$</strong>.</li>
+                </ol>
+                <p style="margin: 0; color: #1e1b4b; font-size: 0.95rem; line-height: 1.6">
+                    Then there exists at least one number $c \in (a, b)$ such that <strong>$f'(c) = 0$</strong>.
+                </p>
+            </div>
+
+            <!-- VISUALIZATION: ROLLE'S THEOREM -->
+            <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin: 1.75rem 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+                <div style="display: flex; justify-content: center; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem;">
+                    <svg viewBox="0 0 600 240" style="width: 100%; max-width: 560px; height: auto; display: block;" role="img" aria-label="Rolle's Theorem Diagram">
+                        <!-- Axes -->
+                        <line x1="40" y1="200" x2="560" y2="200" stroke="#94a3b8" stroke-width="1.5" />
+                        <line x1="60" y1="220" x2="60" y2="20" stroke="#94a3b8" stroke-width="1.5" />
+                        <text x="570" y="204" font-size="12" font-weight="bold" fill="#64748b">x</text>
+                        <text x="50" y="24" font-size="12" font-weight="bold" fill="#64748b" text-anchor="end">y</text>
+
+                        <!-- Horizontal Secant Line f(a) = f(b) -->
+                        <line x1="60" y1="150" x2="490" y2="150" stroke="#d97706" stroke-width="1.5" stroke-dasharray="5,4" />
+
+                        <!-- Smooth Arch Curve (exact peak at x=300, y=80) -->
+                        <path d="M 110 150 Q 300 10, 490 150" fill="none" stroke="#0f172a" stroke-width="2.5" />
+
+                        <!-- Endpoints -->
+                        <circle cx="110" cy="150" r="5" fill="#d97706" />
+                        <circle cx="490" cy="150" r="5" fill="#d97706" />
+
+                        <!-- Horizontal Tangent at Peak -->
+                        <line x1="210" y1="80" x2="390" y2="80" stroke="#6366f1" stroke-width="2.5" />
+                        <circle cx="300" cy="80" r="5" fill="#6366f1" />
+
+                        <!-- Projections to X axis -->
+                        <line x1="110" y1="150" x2="110" y2="200" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+                        <line x1="300" y1="80" x2="300" y2="200" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+                        <line x1="490" y1="150" x2="490" y2="200" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+
+                        <!-- Labels -->
+                        <text x="110" y="218" font-size="12" font-style="italic" fill="#0f172a" text-anchor="middle">a</text>
+                        <text x="300" y="218" font-size="12" font-style="italic" font-weight="bold" fill="#6366f1" text-anchor="middle">c</text>
+                        <text x="490" y="218" font-size="12" font-style="italic" fill="#0f172a" text-anchor="middle">b</text>
+                        <text x="54" y="154" font-size="11" font-style="italic" fill="#0f172a" text-anchor="end">f(a) = f(b)</text>
+                        <text x="300" y="65" font-size="13" font-family="monospace" font-weight="bold" fill="#6366f1" text-anchor="middle">f'(c) = 0</text>
+                    </svg>
+                </div>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                Why must this point $c$ exist? If $f$ is flat the whole way, then $f'(x) = 0$ everywhere. Otherwise, because $f$ is continuous on the closed interval $[a, b]$, it must rise to a peak or dip to a valley somewhere strictly inside $(a, b)$. At that smooth interior peak or valley, the tangent line must flatten out to zero. Ironically, French mathematician Michel Rolle first stated this result in 1691 (for polynomials) while he was a fierce critic of calculus—dismissing it as a "collection of ingenious fallacies"—only for his theorem to become one of calculus's load-bearing pillars.
+            </p>
+
+            <h3>Tilting the Picture: The Mean Value Theorem</h3>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                Now drop the requirement that $f(a) = f(b)$. Allow the endpoints to sit at <em>any</em> two heights. The straight secant line connecting $(a, f(a))$ and $(b, f(b))$ is no longer flat—it has a tilted slope of $\frac{f(b) - f(a)}{b - a}$.
+            </p>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                If we measure the vertical gap between our curve $f(x)$ and that straight secant line, we get a new function $g(x)$ whose endpoints are both at height $0$ (since the curve and secant line meet at $a$ and $b$). Applying Rolle's Theorem to that gap function $g(x)$ guarantees a point $c \in (a, b)$ where $g'(c) = 0$—meaning the curve's slope matches the secant's slope. That tilted version of Rolle's Theorem is the <strong>Mean Value Theorem (MVT)</strong>, first proved by Joseph-Louis Lagrange in 1797 and formalized by Augustin-Louis Cauchy.
+            </p>
+
+            <div class="definition-box" style="border-left-color: #d97706; background: #fffbeb;">
+                <h4 style="margin: 0 0 0.5rem 0; color: #b45309; font-size: 1.05rem">The Mean Value Theorem (MVT)</h4>
+                <p style="margin: 0 0 0.5rem 0; color: #92400e; font-size: 0.95rem; line-height: 1.6">
+                    If $f$ is <strong>continuous</strong> on the closed interval $[a, b]$ and <strong>differentiable</strong> on the open interval $(a, b)$, then there exists at least one number $c \in (a, b)$ such that:
+                </p>
+                <div style="text-align: center; margin: 0.75rem 0; color: #0f172a;">
+                    $$f'(c) = \frac{f(b) - f(a)}{b - a} \quad \Longleftrightarrow \quad f(b) - f(a) = f'(c)(b - a)$$
+                </div>
+            </div>
+
             <!-- VISUALIZATION: MEAN VALUE THEOREM -->
-            <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin: 2.5rem 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+            <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin: 2rem 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
                 <div style="margin-bottom: 1.5rem">
-                    <span style="font-size: 0.85rem; font-weight: 800; color: #0284c7; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.25rem">Geometric Intuition</span>
-                    <h3 style="margin: 0 0 0.5rem 0; color: #0f172a; font-size: 1.25rem">The Mean Value Theorem</h3>
+                    <span style="font-size: 0.85rem; font-weight: 800; color: #0284c7; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.25rem">Geometric &amp; Physical Intuition</span>
+                    <h3 style="margin: 0 0 0.5rem 0; color: #0f172a; font-size: 1.25rem">The Mean Value Theorem (Average-Speed Cameras)</h3>
                     <p style="margin: 0; color: #334155; font-size: 0.95rem; line-height: 1.6">
-                        If your average speed on a road trip was 100 km/h, the MVT guarantees that your speedometer must have struck exactly 100 km/h at least once during the journey. The secant line (average rate of change) guarantees the existence of a parallel tangent line (instantaneous rate of change).
+                        This is the exact mathematics behind point-to-point average-speed cameras on a highway. If you pass Camera A and arrive at Camera B 100 km away in 50 minutes, your average speed (the secant slope) is 120 km/h. Even if no camera saw you speeding at a specific instant, the MVT legally guarantees that your speedometer (the tangent slope) <em>must</em> have hit at least 120 km/h at some point $c$ along the road.
                     </p>
                 </div>
 
@@ -197,14 +369,14 @@
                         <circle cx="100" cy="200" r="5" fill="#d97706" />
                         <circle cx="500" cy="50" r="5" fill="#d97706" />
 
-                        <!-- Parallel Tangent Line (at approx x = 250, y = 92) -->
-                        <line x1="170" y1="122" x2="330" y2="62" stroke="#0284c7" stroke-width="2" />
-                        <circle cx="250" cy="92" r="5" fill="#0284c7" />
+                        <!-- Parallel Tangent Line (exact tangency at x = 213.9, y = 98.9, slope = -0.375) -->
+                        <line x1="133.9" y1="128.9" x2="293.9" y2="68.9" stroke="#0284c7" stroke-width="2" />
+                        <circle cx="213.9" cy="98.9" r="5" fill="#0284c7" />
 
                         <!-- Projections to X axis -->
                         <line x1="100" y1="200" x2="100" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
                         <line x1="500" y1="50" x2="500" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
-                        <line x1="250" y1="92" x2="250" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+                        <line x1="213.9" y1="98.9" x2="213.9" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
 
                         <!-- Projections to Y axis -->
                         <line x1="100" y1="200" x2="60" y2="200" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
@@ -213,7 +385,7 @@
                         <!-- Labels -->
                         <text x="100" y="258" font-size="12" font-style="italic" fill="#0f172a" text-anchor="middle">a</text>
                         <text x="500" y="258" font-size="12" font-style="italic" fill="#0f172a" text-anchor="middle">b</text>
-                        <text x="250" y="258" font-size="12" font-style="italic" font-weight="bold" fill="#0284c7" text-anchor="middle">c</text>
+                        <text x="213.9" y="258" font-size="12" font-style="italic" font-weight="bold" fill="#0284c7" text-anchor="middle">c</text>
                         <text x="55" y="204" font-size="12" font-style="italic" fill="#0f172a" text-anchor="end">f(a)</text>
                         <text x="55" y="54" font-size="12" font-style="italic" fill="#0f172a" text-anchor="end">f(b)</text>
 
@@ -221,6 +393,104 @@
                         <text x="360" y="40" font-size="13" font-family="monospace" font-weight="bold" fill="#0284c7">f'(c) = [f(b) - f(a)] / (b - a)</text>
                     </svg>
                 </div>
+            </div>
+
+            <!-- HOW MVT PROVES THEOREM 14 -->
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                <strong>How this proves Theorem 14:</strong> Pick <em>any</em> two points $x_1 < x_2$ inside $[a, b]$. Applying the rearranged Mean Value Theorem to the sub-interval $[x_1, x_2]$ guarantees a point $c \in (x_1, x_2)$ such that:
+            </p>
+            <div style="text-align: center; margin: 0.75rem 0; color: #0f172a;">
+                $$f(x_2) - f(x_1) = f'(c)\underbrace{(x_2 - x_1)}_{> \, 0}$$
+            </div>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                Because $x_2 > x_1$, the factor $(x_2 - x_1)$ is strictly positive. Therefore, the sign of the total height change $f(x_2) - f(x_1)$ is dictated <em>entirely</em> by the sign of the local derivative $f'(c)$:
+            </p>
+            <ul style="color: #334155; line-height: 1.7; font-size: 1rem; margin-bottom: 1.5rem;">
+                <li>If $f'(x) > 0$ everywhere on $(a, b)$, then $f'(c) > 0$, forcing $f(x_2) - f(x_1) > 0 \implies f(x_2) > f(x_1)$ (strictly increasing).</li>
+                <li>If $f'(x) < 0$ everywhere on $(a, b)$, then $f'(c) < 0$, forcing $f(x_2) - f(x_1) < 0 \implies f(x_2) < f(x_1)$ (strictly decreasing).</li>
+                <li>If $f'(x) = 0$ everywhere on $(a, b)$, then $f'(c) = 0$, forcing $f(x_2) - f(x_1) = 0 \implies f(x_2) = f(x_1)$ (constant).</li>
+            </ul>
+
+            <!-- WHY BOTH HYPOTHESES MATTER -->
+            <div class="aside-box">
+                <h4>🔍 Why Both Hypotheses Matter (When Rolle's &amp; MVT Break)</h4>
+                <p style="margin: 0 0 0.65rem 0; font-size: 0.95rem; line-height: 1.6;">
+                    Both Rolle's Theorem and the MVT require the function to be <strong>continuous on $[a, b]$</strong> and <strong>differentiable on $(a, b)$</strong>. Drop either condition, and the guarantee collapses:
+                </p>
+                <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.95rem; line-height: 1.65;">
+                    <li style="margin-bottom: 0.5rem">
+                        <strong>Drop Continuity (Teleportation):</strong> A step function that sits at $y = 0$ for $x < 0$ and jumps to $y = 1$ for $x \ge 0$ has a positive average slope across $[-1, 1]$, yet its derivative is $0$ everywhere except the jump. It changed height without ever having a positive slope.
+                    </li>
+                    <li>
+                        <strong>Drop Differentiability (Sharp Corners):</strong> Consider $f(x) = |x|$ on $[-1, 1]$. It is continuous everywhere and $f(-1) = f(1) = 1$, so it meets Rolle's endpoint condition. Yet the derivative is $-1$ on the left, $+1$ on the right, and undefined at the sharp corner $x = 0$—it never hits $0$ anywhere.
+                    </li>
+                </ul>
+            </div>
+
+            <!-- WORKED EXAMPLE: THE SIGN CHART METHOD -->
+            <div class="worked-example-box">
+                <h4>🧮 Worked Example: Finding Intervals of Increase &amp; Decrease</h4>
+                <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; line-height: 1.6;">
+                    Find the intervals on which $f(x) = x^3 - 3x^2 - 9x + 5$ is increasing and decreasing.
+                </p>
+                <ol style="margin: 0 0 1rem 0; padding-left: 1.25rem; font-size: 0.95rem; line-height: 1.7;">
+                    <li><strong>Differentiate:</strong> $f'(x) = 3x^2 - 6x - 9$.</li>
+                    <li><strong>Factor &amp; find where $f'(x) = 0$:</strong>
+                        $$3(x^2 - 2x - 3) = 3(x - 3)(x + 1) = 0 \implies x = -1 \text{ and } x = 3$$
+                        These boundary points slice the real number line into three open intervals: $(-\infty, -1)$, $(-1, 3)$, and $(3, \infty)$.
+                    </li>
+                    <li><strong>Build a Sign Chart:</strong> Because $f'(x)$ is continuous and only equals zero at $-1$ and $3$, its sign cannot change inside any of those intervals. Pick one easy test point in each interval:</li>
+                </ol>
+
+                <div style="overflow-x: auto; margin-bottom: 1rem;">
+                    <table style="width: 100%; border-collapse: collapse; background: #ffffff; font-size: 0.9rem; border: 1px solid #bbf7d0;">
+                        <thead>
+                            <tr style="background: #dcfce7; color: #065f46; text-align: left;">
+                                <th style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">Interval</th>
+                                <th style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">Test Point</th>
+                                <th style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">Sign of $f'(x) = 3(x-3)(x+1)$</th>
+                                <th style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">Behavior of $f(x)$</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">$(-\infty, -1)$</td>
+                                <td style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">$x = -2$</td>
+                                <td style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">$3(-)(-)= +$ (Positive)</td>
+                                <td style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;"><strong>Increasing</strong> $\nearrow$</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">$(-1, 3)$</td>
+                                <td style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">$x = 0$</td>
+                                <td style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">$3(-)(+)= -$ (Negative)</td>
+                                <td style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;"><strong>Decreasing</strong> $\searrow$</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">$(3, \infty)$</td>
+                                <td style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">$x = 4$</td>
+                                <td style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">$3(+)(+)= +$ (Positive)</td>
+                                <td style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;"><strong>Increasing</strong> $\nearrow$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p style="margin: 0; font-size: 0.95rem; line-height: 1.6;">
+                    <strong>Conclusion:</strong> $f(x)$ is strictly increasing on $(-\infty, -1]$ and $[3, \infty)$, and strictly decreasing on $[-1, 3]$.
+                </p>
+            </div>
+
+            <!-- COMMON PITFALLS ASIDE -->
+            <div class="aside-box">
+                <h4>⚠️ Two Classic Traps to Watch For</h4>
+                <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.95rem; line-height: 1.65;">
+                    <li style="margin-bottom: 0.5rem">
+                        <strong>Isolated flat spots don't stop a climb:</strong> Consider $f(x) = x^3$. Its derivative is $f'(x) = 3x^2$, which equals $0$ at $x = 0$. Even though $f'(0)$ is not strictly positive, $x^3$ is still strictly increasing across the entire real line—it just pauses horizontally for a single instant at the origin before continuing upward.
+                    </li>
+                    <li>
+                        <strong>Never ignore discontinuities:</strong> Theorem 14 requires $f$ to be <em>continuous</em> on the interval. For $f(x) = -\frac{1}{x}$, the derivative is $f'(x) = \frac{1}{x^2} > 0$ everywhere it exists. Yet $f$ is <em>not</em> increasing across $x = 0$ (for example, $f(-1) = 1 > f(1) = -1$). It is increasing on $(-\infty, 0)$ and on $(0, \infty)$ separately, never across the vertical asymptote.
+                    </li>
+                </ul>
             </div>
 
             <!-- SECTION 2: CRITICAL POINTS -->
