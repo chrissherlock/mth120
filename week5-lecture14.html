@@ -318,8 +318,30 @@
             </div>
 
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
-                Why must this point $c$ exist? If $f$ is flat the whole way, then $f'(x) = 0$ everywhere. Otherwise, because $f$ is continuous on the closed interval $[a, b]$, it must rise to a peak or dip to a valley somewhere strictly inside $(a, b)$. At that smooth interior peak or valley, the tangent line must flatten out to zero. Ironically, French mathematician Michel Rolle first stated this result in 1691 (for polynomials) while he was a fierce critic of calculus—dismissing it as a "collection of ingenious fallacies"—only for his theorem to become one of calculus's load-bearing pillars.
+                Why must this point $c$ exist? If $f$ is flat the whole way, then $f'(x) = 0$ everywhere. Otherwise, because $f$ is continuous on the closed interval $[a, b]$, it must rise to a peak or dip to a valley somewhere strictly inside $(a, b)$. At that smooth interior peak or valley, the tangent line must flatten out to zero.
             </p>
+
+            <!-- HISTORICAL ASIDE: MICHEL ROLLE -->
+            <div class="aside-box" style="background: #f5f3ff; border-color: #ddd6fe; border-left-color: #7c3aed;">
+                <h4 style="color: #5b21b6;">📜 Historical Aside: Michel Rolle (1652–1719) — The Reluctant Pillar of Calculus</h4>
+                <div style="display: flex; gap: 1.25rem; align-items: flex-start; flex-wrap: wrap; margin-top: 0.75rem;">
+                    <figure style="margin: 0; flex: 0 0 135px;">
+                        <img src="images/rolle.jpg" alt="Portrait of Michel Rolle" style="width: 135px; height: auto; border-radius: 6px; border: 1px solid #ddd6fe; display: block; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);" />
+                        <figcaption style="font-size: 0.78rem; color: #5b21b6; text-align: center; margin-top: 0.35rem; line-height: 1.3;">Michel Rolle (1652–1719)</figcaption>
+                    </figure>
+                    <div style="flex: 1 1 280px;">
+                        <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; line-height: 1.65;">
+                            There is a rich historical irony behind Rolle's Theorem: the man whose name sits at the foundation of differential calculus spent years trying to destroy it. Born in Ambert, France, <a href="https://en.wikipedia.org/wiki/Michel_Rolle" target="_blank" rel="noopener noreferrer" style="color: #6d28d9; font-weight: 600;">Michel Rolle</a> had almost no formal university education. He worked as a lowly scribe for notaries and attorneys, teaching himself algebra in his spare time until he solved a notorious number-theory problem in 1682—a feat that won him a royal pension and a seat in the French Academy of Sciences.
+                        </p>
+                        <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; line-height: 1.65;">
+                            When Rolle published his famous theorem in 1691, he did not use derivatives, limits, or geometry. He was working strictly on polynomials, trying to isolate their roots using a purely algebraic technique he called the <em>method of cascades</em>. To Rolle, the newly invented infinitesimal calculus of Leibniz was logically unsound—he publicly denounced it in the Academy as a <strong>"collection of ingenious fallacies"</strong> and waged a bitter, years-long feud against its defenders.
+                        </p>
+                        <p style="margin: 0; font-size: 0.95rem; line-height: 1.65;">
+                            By 1706, Rolle softened his stance and acknowledged the usefulness of calculus, though he never saw how central his own result would become. More than a century later, mathematicians generalized his polynomial rule to all differentiable functions, turning the skeptic's algebraic tool into the load-bearing proof behind the Mean Value Theorem.
+                        </p>
+                    </div>
+                </div>
+            </div>
 
             <h3>Tilting the Picture: The Mean Value Theorem</h3>
 
@@ -427,6 +449,96 @@
                 </ul>
             </div>
 
+            <!-- VISUALIZATION: WHEN THE MEAN VALUE THEOREM FAILS -->
+            <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; margin: 1.5rem 0; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);">
+                <div style="display: flex; justify-content: center; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem;">
+                    <svg viewBox="0 0 640 255" style="width: 100%; max-width: 620px; height: auto; display: block;" role="img" aria-label="Two counterexamples showing how the Mean Value Theorem fails when continuity or differentiability is dropped">
+                        <!-- ==================== LEFT PANEL: NOT CONTINUOUS, BUT DIFFERENTIABLE ==================== -->
+                        <text x="170" y="20" font-size="13" font-weight="800" fill="#b91c1c" text-anchor="middle" font-family="system-ui, sans-serif">Not Continuous on [a, b]</text>
+                        <text x="170" y="36" font-size="10.5" fill="#64748b" text-anchor="middle" font-family="system-ui, sans-serif">Differentiable on (a, b), jump at b</text>
+
+                        <!-- Axes -->
+                        <line x1="40" y1="195" x2="290" y2="195" stroke="#94a3b8" stroke-width="1.5" />
+                        <line x1="55" y1="205" x2="55" y2="50" stroke="#94a3b8" stroke-width="1.5" />
+                        <text x="296" y="199" font-size="11" font-weight="bold" fill="#64748b">x</text>
+                        <text x="49" y="54" font-size="11" font-weight="bold" fill="#64748b" text-anchor="end">y</text>
+
+                        <!-- Projections to Axes -->
+                        <line x1="95" y1="160" x2="95" y2="195" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+                        <line x1="255" y1="80" x2="255" y2="195" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+                        <line x1="55" y1="160" x2="95" y2="160" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+                        <line x1="55" y1="80" x2="255" y2="80" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+
+                        <!-- Secant Line -->
+                        <line x1="95" y1="160" x2="255" y2="80" stroke="#d97706" stroke-width="1.5" stroke-dasharray="5,4" />
+
+                        <!-- Flat Curve on [a, b) -->
+                        <line x1="95" y1="160" x2="255" y2="160" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" />
+
+                        <!-- Endpoints: closed at (a, f(a)), open at (b, 160), closed at (b, f(b)) -->
+                        <circle cx="95" cy="160" r="4.5" fill="#d97706" />
+                        <circle cx="255" cy="160" r="4.5" fill="#f8fafc" stroke="#ef4444" stroke-width="2.5" />
+                        <circle cx="255" cy="80" r="4.5" fill="#d97706" />
+
+                        <!-- Annotations -->
+                        <text x="175" y="177" font-size="11" font-weight="700" fill="#b91c1c" text-anchor="middle" font-family="monospace">f'(x) = 0</text>
+                        <text x="155" y="114" font-size="10.5" font-weight="700" fill="#b45309" text-anchor="middle" font-family="system-ui, sans-serif">Secant slope &gt; 0</text>
+                        <text x="262" y="124" font-size="10.5" font-weight="600" fill="#b91c1c" text-anchor="start" font-family="system-ui, sans-serif">Jump</text>
+
+                        <!-- Axis Labels -->
+                        <text x="95" y="211" font-size="11" font-style="italic" fill="#0f172a" text-anchor="middle">a</text>
+                        <text x="255" y="211" font-size="11" font-style="italic" fill="#0f172a" text-anchor="middle">b</text>
+                        <text x="50" y="164" font-size="10.5" font-style="italic" fill="#0f172a" text-anchor="end">f(a)</text>
+                        <text x="50" y="84" font-size="10.5" font-style="italic" fill="#0f172a" text-anchor="end">f(b)</text>
+                        <text x="170" y="238" font-size="11.5" font-weight="700" fill="#b91c1c" text-anchor="middle" font-family="monospace">No tangent parallel to secant</text>
+
+                        <!-- Divider -->
+                        <line x1="320" y1="12" x2="320" y2="245" stroke="#e2e8f0" stroke-width="1.5" />
+
+                        <!-- ==================== RIGHT PANEL: CONTINUOUS, NOT DIFFERENTIABLE ==================== -->
+                        <text x="490" y="20" font-size="13" font-weight="800" fill="#b45309" text-anchor="middle" font-family="system-ui, sans-serif">Not Differentiable on (a, b)</text>
+                        <text x="490" y="36" font-size="10.5" fill="#64748b" text-anchor="middle" font-family="system-ui, sans-serif">Continuous on [a, b], sharp corner at c</text>
+
+                        <!-- Axes -->
+                        <line x1="360" y1="195" x2="610" y2="195" stroke="#94a3b8" stroke-width="1.5" />
+                        <line x1="375" y1="205" x2="375" y2="50" stroke="#94a3b8" stroke-width="1.5" />
+                        <text x="616" y="199" font-size="11" font-weight="bold" fill="#64748b">x</text>
+                        <text x="369" y="54" font-size="11" font-weight="bold" fill="#64748b" text-anchor="end">y</text>
+
+                        <!-- Projections to Axes -->
+                        <line x1="415" y1="160" x2="415" y2="195" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+                        <line x1="495" y1="65" x2="495" y2="195" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+                        <line x1="575" y1="95" x2="575" y2="195" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+                        <line x1="375" y1="160" x2="415" y2="160" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+                        <line x1="375" y1="95" x2="575" y2="95" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+
+                        <!-- Secant Line -->
+                        <line x1="415" y1="160" x2="575" y2="95" stroke="#d97706" stroke-width="1.5" stroke-dasharray="5,4" />
+
+                        <!-- Sharp Corner Curve -->
+                        <polyline points="415,160 495,65 575,95" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="miter" />
+
+                        <!-- Endpoints & Sharp Corner -->
+                        <circle cx="415" cy="160" r="4.5" fill="#d97706" />
+                        <circle cx="575" cy="95" r="4.5" fill="#d97706" />
+                        <circle cx="495" cy="65" r="4.5" fill="#ef4444" stroke="#ffffff" stroke-width="1.5" />
+
+                        <!-- Annotations -->
+                        <text x="495" y="54" font-size="10.5" font-weight="700" fill="#b91c1c" text-anchor="middle" font-family="system-ui, sans-serif">Sharp corner (f' undefined)</text>
+                        <text x="444" y="106" font-size="10.5" font-weight="700" fill="#0284c7" text-anchor="end" font-family="system-ui, sans-serif">Too steep</text>
+                        <text x="546" y="74" font-size="10.5" font-weight="700" fill="#ef4444" text-anchor="start" font-family="system-ui, sans-serif">Negative</text>
+
+                        <!-- Axis Labels -->
+                        <text x="415" y="211" font-size="11" font-style="italic" fill="#0f172a" text-anchor="middle">a</text>
+                        <text x="495" y="211" font-size="11" font-style="italic" font-weight="bold" fill="#b91c1c" text-anchor="middle">c</text>
+                        <text x="575" y="211" font-size="11" font-style="italic" fill="#0f172a" text-anchor="middle">b</text>
+                        <text x="370" y="164" font-size="10.5" font-style="italic" fill="#0f172a" text-anchor="end">f(a)</text>
+                        <text x="370" y="99" font-size="10.5" font-style="italic" fill="#0f172a" text-anchor="end">f(b)</text>
+                        <text x="490" y="238" font-size="11.5" font-weight="700" fill="#b45309" text-anchor="middle" font-family="monospace">No tangent parallel to secant</text>
+                    </svg>
+                </div>
+            </div>
+
             <!-- WORKED EXAMPLE: THE SIGN CHART METHOD -->
             <div class="worked-example-box">
                 <h4>🧮 Worked Example: Finding Intervals of Increase &amp; Decrease</h4>
@@ -497,31 +609,320 @@
             <h2 id="section-critical">2. Critical Points &amp; The First Derivative Test</h2>
 
             <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem">
-                If the derivative is positive when the curve is rising, and negative when the curve is falling, what happens at the exact peak of a mountain or the very bottom of a valley? The tangent line must perfectly flatten out. Its slope becomes exactly zero.
+                If the first derivative tells us where a curve is climbing and where it is falling, its most practical payoff is locating the exact peaks and valleys—known formally as <strong>relative (or local) extrema</strong> (<em>extrema</em> is the plural of <em>extremum</em>, a blanket term covering both maxima and minima).
+            </p>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                The word <em>local</em> is crucial: a mountain peak doesn't have to be Mount Everest to count as a peak. It only needs to be higher than the terrain immediately surrounding it. To make "immediately surrounding" mathematically precise, we wrap the point $c$ in a small open interval $(c - \delta, c + \delta)$, called a <strong>neighborhood</strong>:
+            </p>
+
+            <div class="definition-box" style="border-left-color: #0284c7; background: #f8fafc;">
+                <h4 style="margin: 0 0 0.5rem 0; color: #0369a1; font-size: 1.05rem">Definition: Relative (Local) Extrema</h4>
+                <p style="margin: 0 0 0.5rem 0; color: #334155; font-size: 0.95rem; line-height: 1.6">
+                    Let $c$ be a point in the domain of $f$.
+                </p>
+                <ul style="margin: 0; padding-left: 1.25rem; color: #334155; line-height: 1.65; font-size: 0.95rem">
+                    <li style="margin-bottom: 0.4rem">
+                        $f$ has a <strong>relative (local) maximum</strong> at $x = c$ if there exists an open interval $(c - \delta, c + \delta)$ around $c$ such that <strong>$f(c) \ge f(x)$</strong> for all $x$ in that interval.
+                    </li>
+                    <li>
+                        $f$ has a <strong>relative (local) minimum</strong> at $x = c$ if there exists an open interval $(c - \delta, c + \delta)$ around $c$ such that <strong>$f(c) \le f(x)$</strong> for all $x$ in that interval.
+                    </li>
+                </ul>
+            </div>
+
+            <!-- VISUALIZATION: LOCAL VS GLOBAL EXTREMA -->
+            <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; margin: 1.75rem 0; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);">
+                <div style="display: flex; justify-content: center; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem;">
+                    <svg viewBox="0 0 600 255" style="width: 100%; max-width: 580px; height: auto; display: block;" role="img" aria-label="Diagram distinguishing local extrema from global extrema with a shaded neighborhood">
+                        <!-- Shaded Neighborhood around Local Max at x = 175 -->
+                        <rect x="140" y="30" width="70" height="190" fill="#dbeafe" opacity="0.55" />
+                        <line x1="140" y1="30" x2="140" y2="220" stroke="#93c5fd" stroke-width="1" stroke-dasharray="3,3" />
+                        <line x1="210" y1="30" x2="210" y2="220" stroke="#93c5fd" stroke-width="1" stroke-dasharray="3,3" />
+                        <text x="175" y="45" font-size="10.5" font-weight="700" fill="#1d4ed8" text-anchor="middle" font-family="system-ui, sans-serif">Neighborhood</text>
+                        <text x="175" y="58" font-size="10" fill="#1d4ed8" text-anchor="middle" font-family="monospace">(c−δ, c+δ)</text>
+
+                        <!-- Axes -->
+                        <line x1="40" y1="220" x2="560" y2="220" stroke="#94a3b8" stroke-width="1.5" />
+                        <line x1="55" y1="235" x2="55" y2="20" stroke="#94a3b8" stroke-width="1.5" />
+                        <text x="568" y="224" font-size="12" font-weight="bold" fill="#64748b">x</text>
+                        <text x="48" y="24" font-size="12" font-weight="bold" fill="#64748b" text-anchor="end">y</text>
+
+                        <!-- Smooth Curve with exact horizontal tangents at (175,100), (310,190), (435,55) -->
+                        <path d="M 90 170 C 120 170, 135 100, 175 100 C 225 100, 260 190, 310 190 C 360 190, 385 55, 435 55 C 475 55, 490 115, 510 115" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" />
+
+                        <!-- Endpoints -->
+                        <circle cx="90" cy="170" r="4" fill="#64748b" />
+                        <circle cx="510" cy="115" r="4" fill="#64748b" />
+                        <text x="90" y="238" font-size="12" font-style="italic" fill="#64748b" text-anchor="middle">a</text>
+                        <text x="510" y="238" font-size="12" font-style="italic" fill="#64748b" text-anchor="middle">b</text>
+
+                        <!-- Local Max (not global) -->
+                        <line x1="175" y1="100" x2="175" y2="220" stroke="#3b82f6" stroke-width="1" stroke-dasharray="3,3" />
+                        <circle cx="175" cy="100" r="5" fill="#0284c7" stroke="#ffffff" stroke-width="1.5" />
+                        <text x="175" y="90" font-size="11.5" font-weight="700" fill="#0369a1" text-anchor="middle" font-family="system-ui, sans-serif">Local Max</text>
+                        <text x="175" y="238" font-size="12" font-style="italic" font-weight="bold" fill="#0284c7" text-anchor="middle">c</text>
+
+                        <!-- Local & Global Min -->
+                        <circle cx="310" cy="190" r="5" fill="#ef4444" stroke="#ffffff" stroke-width="1.5" />
+                        <text x="310" y="210" font-size="11.5" font-weight="700" fill="#b91c1c" text-anchor="middle" font-family="system-ui, sans-serif">Local &amp; Absolute Min</text>
+
+                        <!-- Local & Global Max -->
+                        <circle cx="435" cy="55" r="5" fill="#10b981" stroke="#ffffff" stroke-width="1.5" />
+                        <text x="435" y="42" font-size="11.5" font-weight="700" fill="#047857" text-anchor="middle" font-family="system-ui, sans-serif">Local &amp; Absolute Max</text>
+                    </svg>
+                </div>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                Two distinctions are worth keeping sharp:
+            </p>
+            <ul style="color: #334155; line-height: 1.7; font-size: 1rem; margin-bottom: 1.5rem;">
+                <li style="margin-bottom: 0.45rem">
+                    <strong>Local vs. Absolute (Global) Extrema:</strong> An <em>absolute</em> maximum is the single highest point across the entire domain of $f$. As the diagram above shows, a function can have a local maximum at $c$ that is still lower than another peak elsewhere—it only has to beat its immediate neighbors inside $(c - \delta, c + \delta)$.
+                </li>
+                <li>
+                    <strong>Location vs. Value:</strong> Be careful with wording. We say the relative maximum <em>occurs at</em> $x = c$, while the <em>maximum value</em> itself is the output height $f(c)$.
+                </li>
+            </ul>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                To hunt down these peaks and valleys without graphing the function, we first narrow our search to a small list of suspects called <strong>critical points</strong>.
             </p>
 
             <div class="definition-box" style="border-left-color: #ef4444; background: #fef2f2;">
                 <h4 style="margin: 0 0 0.5rem 0; color: #b91c1c; font-size: 1.1rem">Stationary vs. Critical Points</h4>
+                <p style="margin: 0 0 0.5rem 0; color: #7f1d1d; font-size: 0.95rem; line-height: 1.6">
+                    Let $c$ be an interior point in the <strong>domain</strong> of $f$:
+                </p>
                 <ul style="margin: 0; padding-left: 1.25rem; color: #7f1d1d; line-height: 1.6; font-size: 0.95rem">
-                    <li style="margin-bottom: 0.5rem"><strong>Stationary Points:</strong> Any point where the derivative equals zero ($f'(x) = 0$). The tangent is completely horizontal.</li>
-                    <li><strong>Critical Points:</strong> A broader category that includes all stationary points, PLUS any points where the derivative is <em>undefined</em> (such as sharp, jagged corners like the absolute value function $f(x) = |x|$ at $x = 0$).</li>
+                    <li style="margin-bottom: 0.5rem"><strong>Stationary Points:</strong> Any point where the derivative equals zero ($f'(c) = 0$). The tangent line is completely horizontal.</li>
+                    <li><strong>Critical Points:</strong> A broader category that includes all stationary points, <strong>plus</strong> any point in the domain where $f'(c)$ is <em>undefined</em> (such as sharp corners like $f(x) = |x|$ or vertical cusps like $f(x) = x^{2/3}$ at $x = 0$).</li>
                 </ul>
             </div>
 
-            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.5rem">
-                <strong>Theorem 18:</strong> If a function $f$ has a relative extremum (a local peak or valley) at $x = c$, then $x = c$ MUST be a critical point. However, the reverse is not always true. Sometimes a curve flattens out to a zero slope but then keeps going up (like a terrace on a mountain). To verify if a critical point is truly a peak or valley, we use the First Derivative Test.
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem; margin-top: 1.25rem;">
+                Why do we bother with the broader category of <strong>critical points</strong> instead of just looking for stationary points? Because a function can reverse direction in two fundamentally different ways. A smooth curve has to slow down and momentarily level off ($f'(c) = 0$) before turning around. A non-smooth curve, however, can snap abruptly from falling to rising at a sharp corner or a vertical cusp—producing a genuine peak or valley where no single tangent line exists at all.
             </p>
 
+            <!-- VISUALIZATION: THREE FACES OF A CRITICAL POINT -->
+            <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; margin: 1.5rem 0; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);">
+                <div style="display: flex; justify-content: center; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem;">
+                    <svg viewBox="0 0 660 215" style="width: 100%; max-width: 640px; height: auto; display: block;" role="img" aria-label="Three types of critical points: smooth stationary point, sharp corner, and vertical cusp">
+                        <!-- ==================== PANEL 1: STATIONARY POINT ==================== -->
+                        <text x="110" y="22" font-size="13" font-weight="800" fill="#0369a1" text-anchor="middle" font-family="system-ui, sans-serif">Smooth Peak (Stationary)</text>
+                        <path d="M 40 155 Q 110 25, 180 155" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" />
+                        <line x1="70" y1="90" x2="150" y2="90" stroke="#0284c7" stroke-width="2" />
+                        <circle cx="110" cy="90" r="4.5" fill="#0284c7" stroke="#ffffff" stroke-width="1.5" />
+                        <text x="110" y="185" font-size="12" font-weight="700" fill="#0369a1" text-anchor="middle" font-family="monospace">f'(c) = 0</text>
+                        <text x="110" y="203" font-size="11" fill="#64748b" text-anchor="middle" font-family="system-ui, sans-serif">Horizontal tangent</text>
+
+                        <!-- Divider 1 -->
+                        <line x1="220" y1="15" x2="220" y2="205" stroke="#e2e8f0" stroke-width="1.5" />
+
+                        <!-- ==================== PANEL 2: SHARP CORNER ==================== -->
+                        <text x="330" y="22" font-size="13" font-weight="800" fill="#b91c1c" text-anchor="middle" font-family="system-ui, sans-serif">Sharp Corner (e.g. |x|)</text>
+                        <polyline points="260,75 330,145 400,75" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="miter" />
+                        <circle cx="330" cy="145" r="4.5" fill="#ef4444" stroke="#ffffff" stroke-width="1.5" />
+                        <text x="330" y="185" font-size="12" font-weight="700" fill="#b91c1c" text-anchor="middle" font-family="monospace">f'(c) undefined</text>
+                        <text x="330" y="203" font-size="11" fill="#64748b" text-anchor="middle" font-family="system-ui, sans-serif">Slope jumps abruptly</text>
+
+                        <!-- Divider 2 -->
+                        <line x1="440" y1="15" x2="440" y2="205" stroke="#e2e8f0" stroke-width="1.5" />
+
+                        <!-- ==================== PANEL 3: VERTICAL CUSP ==================== -->
+                        <text x="550" y="22" font-size="13" font-weight="800" fill="#b45309" text-anchor="middle" font-family="system-ui, sans-serif">Vertical Cusp (e.g. x²/³)</text>
+                        <path d="M 480 80 Q 542 90, 550 145 Q 558 90, 620 80" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" />
+                        <line x1="550" y1="65" x2="550" y2="160" stroke="#d97706" stroke-width="1.5" stroke-dasharray="4,3" />
+                        <circle cx="550" cy="145" r="4.5" fill="#d97706" stroke="#ffffff" stroke-width="1.5" />
+                        <text x="550" y="185" font-size="12" font-weight="700" fill="#b45309" text-anchor="middle" font-family="monospace">f'(c) undefined</text>
+                        <text x="550" y="203" font-size="11" fill="#64748b" text-anchor="middle" font-family="system-ui, sans-serif">Vertical tangent (±∞)</text>
+                    </svg>
+                </div>
+            </div>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                Notice the domain requirement in the definition: a point $c$ is only a critical point if <strong>$f(c)$ actually exists</strong>. If $f'(c)$ is undefined simply because the original function has a vertical asymptote or a hole at $c$, then $c$ is <em>not</em> a critical point—there is no point on the curve there to be a peak or valley. Think of critical points as the complete candidate list for interior extrema: every true interior peak or valley must appear on this list, though not every candidate on the list will turn out to be an extremum.
+            </p>
+
+            <h3>Fermat's Theorem: Why Extrema Must Be Critical Points</h3>
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                <strong>Theorem 18 (Fermat's Theorem):</strong> If a function $f$ has a relative extremum at an interior point $x = c$, then $x = c$ <strong>must</strong> be a critical point (either $f'(c) = 0$ or $f'(c)$ does not exist).
+            </p>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                The logic is straightforward: suppose $f'(c)$ existed and were strictly positive ($f'(c) > 0$). That means the curve is actively climbing through $c$—so stepping infinitesimally to the right would land you at a higher point, and stepping to the left would land you at a lower point. Therefore, $c$ could be neither a peak nor a valley. The same argument rules out $f'(c) < 0$. The only way a smooth curve can turn around is by momentarily flattening to $f'(c) = 0$, or by snapping sharply so that no tangent exists at all.
+            </p>
+
+            <p style="color: #334155; line-height: 1.75; font-size: 1.05rem;">
+                However, <strong>the reverse is not true</strong>. Finding $f'(c) = 0$ only puts $c$ on the suspect list; it does not convict it as a peak or valley. A curve can flatten out into a horizontal terrace and then keep moving in the exact same direction. To classify each critical point, we check the sign of $f'(x)$ on either side of it.
+            </p>
+
+            <!-- DIAGRAMMED EXAMPLE: FALSE ALARM AT f'(0) = 0 -->
+            <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin: 1.75rem 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+                <div style="margin-bottom: 1.25rem;">
+                    <span style="font-size: 0.85rem; font-weight: 800; color: #b45309; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.25rem;">Diagrammed Example</span>
+                    <h4 style="margin: 0 0 0.5rem 0; color: #0f172a; font-size: 1.15rem;">Why $f'(c) = 0$ Is Not Enough: The Terrace of $f(x) = x^3$</h4>
+                    <p style="margin: 0; color: #334155; font-size: 0.95rem; line-height: 1.6;">
+                        For $f(x) = x^3$, the derivative is $f'(x) = 3x^2$, which equals $0$ at $x = 0$. That makes the origin a stationary point—yet it is neither a peak nor a valley. On the left ($x = -1$), the tangent slopes upward ($f'(-1) = 3 > 0$). At $x = 0$, the curve pauses horizontally for a single instant. On the right ($x = 1$), it resumes climbing ($f'(1) = 3 > 0$).
+                    </p>
+                </div>
+
+                <div style="display: flex; justify-content: center; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem;">
+                    <svg viewBox="0 0 600 265" style="width: 100%; max-width: 560px; height: auto; display: block;" role="img" aria-label="Graph of f(x) = x^3 showing positive tangent slopes on both sides of the horizontal tangent at x = 0">
+                        <!-- Axes -->
+                        <line x1="60" y1="135" x2="540" y2="135" stroke="#94a3b8" stroke-width="1.5" />
+                        <line x1="300" y1="250" x2="300" y2="20" stroke="#94a3b8" stroke-width="1.5" />
+                        <text x="548" y="139" font-size="12" font-weight="bold" fill="#64748b">x</text>
+                        <text x="292" y="24" font-size="12" font-weight="bold" fill="#64748b" text-anchor="end">y</text>
+
+                        <!-- Exact Cubic Bezier for f(x) = x^3 on [-1.3, 1.3] -->
+                        <path d="M 157 233.9 C 252.3 36.1, 347.7 233.9, 443 36.1" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" />
+
+                        <!-- Left Tangent at x = -1 (190, 180), slope = +3 -->
+                        <line x1="162" y1="214.4" x2="218" y2="145.6" stroke="#0284c7" stroke-width="2" stroke-linecap="round" />
+                        <circle cx="190" cy="180" r="4.5" fill="#0284c7" stroke="#ffffff" stroke-width="1.5" />
+                        <text x="150" y="168" font-size="11.5" font-weight="700" fill="#0284c7" text-anchor="end" font-family="monospace">f'(-1) = +3</text>
+                        <text x="150" y="182" font-size="10.5" fill="#64748b" text-anchor="end" font-family="system-ui, sans-serif">Rising</text>
+
+                        <!-- Horizontal Tangent at x = 0 (300, 135), slope = 0 -->
+                        <line x1="242" y1="135" x2="358" y2="135" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" />
+                        <circle cx="300" cy="135" r="5" fill="#d97706" stroke="#ffffff" stroke-width="1.5" />
+                        <text x="300" y="114" font-size="12" font-weight="700" fill="#b45309" text-anchor="middle" font-family="monospace">f'(0) = 0</text>
+                        <text x="300" y="160" font-size="11" font-weight="600" fill="#b45309" text-anchor="middle" font-family="system-ui, sans-serif">Flat terrace (no extremum)</text>
+
+                        <!-- Right Tangent at x = 1 (410, 90), slope = +3 -->
+                        <line x1="382" y1="124.4" x2="438" y2="55.6" stroke="#0284c7" stroke-width="2" stroke-linecap="round" />
+                        <circle cx="410" cy="90" r="4.5" fill="#0284c7" stroke="#ffffff" stroke-width="1.5" />
+                        <text x="450" y="88" font-size="11.5" font-weight="700" fill="#0284c7" text-anchor="start" font-family="monospace">f'(1) = +3</text>
+                        <text x="450" y="102" font-size="10.5" fill="#64748b" text-anchor="start" font-family="system-ui, sans-serif">Still rising</text>
+
+                        <!-- Curve Label -->
+                        <text x="455" y="42" font-size="13" font-style="italic" font-weight="700" fill="#0f172a" font-family="serif">f(x) = x³</text>
+                    </svg>
+                </div>
+            </div>
+
             <!-- FIRST DERIVATIVE TEST -->
-            <div class="worked-example-box" style="margin-top: 2rem;">
-                <h4 style="color: #047857; margin-bottom: 0.5rem">📈 Theorem 19: The First Derivative Test</h4>
-                <p style="margin-bottom: 0.75rem; font-size: 0.95rem; line-height: 1.6;">
-                    Let $f$ be continuous at a critical point $x = c$, and differentiable in the surrounding neighborhood. Check the sign of the derivative just before and just after $c$:
+            <div class="definition-box" style="border-left-color: #10b981; background: #f0fdf4; margin-top: 1.5rem;">
+                <h4 style="margin: 0 0 0.5rem 0; color: #047857; font-size: 1.1rem">Theorem 19: The First Derivative Test</h4>
+                <p style="margin: 0 0 0.65rem 0; color: #065f46; font-size: 0.95rem; line-height: 1.6;">
+                    Suppose $f$ is continuous at a critical point $x = c$ and differentiable in an open interval around $c$ (except possibly at $c$ itself). As $x$ moves from left to right across $c$:
                 </p>
-                <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.95rem; line-height: 1.6;">
-                    <li style="margin-bottom: 0.5rem">If $f'(x)$ changes from <strong>positive to negative</strong> across $c$, the curve rose to a peak and fell. It is a <strong>Relative Maximum</strong>.</li>
-                    <li style="margin-bottom: 0.5rem">If $f'(x)$ changes from <strong>negative to positive</strong> across $c$, the curve fell into a valley and rose. It is a <strong>Relative Minimum</strong>.</li>
-                    <li>If $f'(x)$ <strong>does not change sign</strong> (e.g., positive to positive), the point is merely a flat terrace, not an extremum.</li>
+                <ul style="margin: 0; padding-left: 1.25rem; color: #065f46; font-size: 0.95rem; line-height: 1.65;">
+                    <li style="margin-bottom: 0.45rem">If $f'(x)$ changes from <strong>positive to negative</strong> ($+ \to -$), the curve rose to a peak and fell: $f(c)$ is a <strong>Relative Maximum</strong>.</li>
+                    <li style="margin-bottom: 0.45rem">If $f'(x)$ changes from <strong>negative to positive</strong> ($- \to +$), the curve fell into a valley and rose: $f(c)$ is a <strong>Relative Minimum</strong>.</li>
+                    <li>If $f'(x)$ <strong>does not change sign</strong> ($+ \to +$ or $- \to -$), $c$ is merely a flat terrace—<strong>no relative extremum</strong> occurs at $c$.</li>
+                </ul>
+            </div>
+
+            <!-- VISUALIZATION: THE THREE OUTCOMES OF THE FIRST DERIVATIVE TEST -->
+            <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; margin: 1.75rem 0; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);">
+                <div style="display: flex; justify-content: center; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem;">
+                    <svg viewBox="0 0 660 225" style="width: 100%; max-width: 640px; height: auto; display: block;" role="img" aria-label="Three outcomes of the First Derivative Test: Relative Maximum, Relative Minimum, and No Extremum">
+                        <!-- ==================== PANEL 1: RELATIVE MAX ==================== -->
+                        <text x="110" y="22" font-size="13" font-weight="800" fill="#047857" text-anchor="middle" font-family="system-ui, sans-serif">Relative Maximum</text>
+                        <path d="M 40 160 Q 110 30, 180 160" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" />
+                        <line x1="72" y1="95" x2="148" y2="95" stroke="#10b981" stroke-width="2" />
+                        <circle cx="110" cy="95" r="4.5" fill="#10b981" stroke="#ffffff" stroke-width="1.5" />
+                        <text x="64" y="118" font-size="12" font-weight="bold" fill="#0284c7" text-anchor="middle">f' &gt; 0</text>
+                        <text x="156" y="118" font-size="12" font-weight="bold" fill="#ef4444" text-anchor="middle">f' &lt; 0</text>
+                        <text x="110" y="195" font-size="12" font-weight="700" fill="#047857" text-anchor="middle" font-family="monospace">+  →  0  →  -</text>
+                        <text x="110" y="213" font-size="11" fill="#64748b" text-anchor="middle" font-family="system-ui, sans-serif">Rises, then falls</text>
+
+                        <!-- Divider 1 -->
+                        <line x1="220" y1="15" x2="220" y2="215" stroke="#e2e8f0" stroke-width="1.5" />
+
+                        <!-- ==================== PANEL 2: RELATIVE MIN ==================== -->
+                        <text x="330" y="22" font-size="13" font-weight="800" fill="#0284c7" text-anchor="middle" font-family="system-ui, sans-serif">Relative Minimum</text>
+                        <path d="M 260 60 Q 330 190, 400 60" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" />
+                        <line x1="292" y1="125" x2="368" y2="125" stroke="#0284c7" stroke-width="2" />
+                        <circle cx="330" cy="125" r="4.5" fill="#0284c7" stroke="#ffffff" stroke-width="1.5" />
+                        <text x="284" y="110" font-size="12" font-weight="bold" fill="#ef4444" text-anchor="middle">f' &lt; 0</text>
+                        <text x="376" y="110" font-size="12" font-weight="bold" fill="#0284c7" text-anchor="middle">f' &gt; 0</text>
+                        <text x="330" y="195" font-size="12" font-weight="700" fill="#0284c7" text-anchor="middle" font-family="monospace">-  →  0  →  +</text>
+                        <text x="330" y="213" font-size="11" fill="#64748b" text-anchor="middle" font-family="system-ui, sans-serif">Falls, then rises</text>
+
+                        <!-- Divider 2 -->
+                        <line x1="440" y1="15" x2="440" y2="215" stroke="#e2e8f0" stroke-width="1.5" />
+
+                        <!-- ==================== PANEL 3: NO EXTREMUM ==================== -->
+                        <text x="550" y="22" font-size="13" font-weight="800" fill="#b45309" text-anchor="middle" font-family="system-ui, sans-serif">No Extremum (Terrace)</text>
+                        <path d="M 480 165 C 515 165, 520 110, 550 110 C 580 110, 585 55, 620 55" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" />
+                        <line x1="512" y1="110" x2="588" y2="110" stroke="#d97706" stroke-width="2" />
+                        <circle cx="550" cy="110" r="4.5" fill="#d97706" stroke="#ffffff" stroke-width="1.5" />
+                        <text x="498" y="132" font-size="12" font-weight="bold" fill="#0284c7" text-anchor="middle">f' &gt; 0</text>
+                        <text x="602" y="96" font-size="12" font-weight="bold" fill="#0284c7" text-anchor="middle">f' &gt; 0</text>
+                        <text x="550" y="195" font-size="12" font-weight="700" fill="#b45309" text-anchor="middle" font-family="monospace">+  →  0  →  +</text>
+                        <text x="550" y="213" font-size="11" fill="#64748b" text-anchor="middle" font-family="system-ui, sans-serif">No sign change</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- WORKED EXAMPLE: CLASSIFYING CRITICAL POINTS -->
+            <div class="worked-example-box">
+                <h4>🧮 Worked Example: Classifying Critical Points (Including a False Alarm)</h4>
+                <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; line-height: 1.6;">
+                    Find and classify all critical points of $f(x) = x^4 - 4x^3$.
+                </p>
+                <ol style="margin: 0 0 1rem 0; padding-left: 1.25rem; font-size: 0.95rem; line-height: 1.7;">
+                    <li><strong>Differentiate and factor:</strong>
+                        $$f'(x) = 4x^3 - 12x^2 = 4x^2(x - 3)$$
+                    </li>
+                    <li><strong>Find the critical points:</strong> Since $f'(x)$ is a polynomial, it is defined everywhere. Setting $f'(x) = 0$ gives two stationary points: <strong>$x = 0$</strong> and <strong>$x = 3$</strong>.</li>
+                    <li><strong>Test the sign of $f'(x)$ on each interval:</strong> Notice that $4x^2$ is always positive away from $0$, so the sign of $f'(x)$ depends solely on $(x - 3)$:</li>
+                </ol>
+
+                <div style="overflow-x: auto; margin-bottom: 1rem;">
+                    <table style="width: 100%; border-collapse: collapse; background: #ffffff; font-size: 0.9rem; border: 1px solid #bbf7d0;">
+                        <thead>
+                            <tr style="background: #dcfce7; color: #065f46; text-align: left;">
+                                <th style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">Interval</th>
+                                <th style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">Test Point</th>
+                                <th style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">Sign of $f'(x) = 4x^2(x - 3)$</th>
+                                <th style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">Behavior of $f(x)$</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">$(-\infty, 0)$</td>
+                                <td style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">$x = -1$</td>
+                                <td style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">$(+)(-) = -$ (Negative)</td>
+                                <td style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;"><strong>Decreasing</strong> $\searrow$</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">$(0, 3)$</td>
+                                <td style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">$x = 1$</td>
+                                <td style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">$(+)(-) = -$ (Negative)</td>
+                                <td style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;"><strong>Decreasing</strong> $\searrow$</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">$(3, \infty)$</td>
+                                <td style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">$x = 4$</td>
+                                <td style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;">$(+)(+) = +$ (Positive)</td>
+                                <td style="padding: 0.6rem 0.85rem; border: 1px solid #bbf7d0;"><strong>Increasing</strong> $\nearrow$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p style="margin: 0; font-size: 0.95rem; line-height: 1.65;">
+                    <strong>Classification:</strong><br>
+                    • At <strong>$x = 0$</strong>, $f'(x)$ stays negative ($- \to -$). The curve flattens briefly at $(0, 0)$ and keeps falling—a flat terrace, <strong>not an extremum</strong>.<br>
+                    • At <strong>$x = 3$</strong>, $f'(x)$ switches from negative to positive ($- \to +$). Therefore, $f$ has a <strong>Relative Minimum</strong> at $(3, f(3)) = (3, -27)$.
+                </p>
+            </div>
+
+            <!-- COMMON PITFALLS ASIDE -->
+            <div class="aside-box">
+                <h4>⚠️ Two Common Mistakes with Critical Points</h4>
+                <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.95rem; line-height: 1.65;">
+                    <li style="margin-bottom: 0.5rem">
+                        <strong>Asymptotes are not critical points:</strong> A critical point <em>must</em> belong to the domain of $f$. For $f(x) = \frac{1}{x}$, $f'(x) = -\frac{1}{x^2}$ is undefined at $x = 0$, but $x = 0$ is not in the domain of $f$—it is a vertical asymptote, not a critical point. You should still include it as a divider on your sign chart, because $f'(x)$ can change sign across an asymptote.
+                    </li>
+                    <li>
+                        <strong>Don't forget non-differentiable corners:</strong> If you only solve $f'(x) = 0$, you will miss sharp peaks and valleys like $f(x) = |x|$ at $x = 0$. The First Derivative Test still works on them: $f'(x)$ jumps from $-1$ to $+1$ across $x = 0$, confirming a relative minimum at the corner.
+                    </li>
                 </ul>
             </div>
 
